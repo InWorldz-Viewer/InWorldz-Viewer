@@ -66,6 +66,7 @@ set(viewer_SOURCE_FILES
 	aoremotectrl.cpp
     floaterao.cpp
     jcfloaterareasearch.cpp
+    hbfloatergrouptitles.cpp
     llagent.cpp
     llagentaccess.cpp
     llagentdata.cpp
@@ -486,6 +487,7 @@ set(viewer_HEADER_FILES
     aoremotectrl.h
     floaterao.h
     jcfloaterareasearch.h
+    hbfloatergrouptitles.h
     llagent.h
     llagentaccess.h
     llagentdata.h
