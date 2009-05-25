@@ -5009,7 +5009,7 @@ class LLWorldTeleportHome : public view_listener_t
 {
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
 	{
-		gAgent.teleportHome();
+		gAgent.teleportHomeConfirm();
 		return true;
 	}
 };
