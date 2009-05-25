@@ -499,7 +499,7 @@ public:
 	void teleportViaLandmark(const LLUUID& landmark_id);
 
 	// go home
-	void teleportHome()	{ teleportViaLandmark(LLUUID::null); }
+	void teleportHome();
 
 	// to an invited location
 	void teleportViaLure(const LLUUID& lure_id, BOOL godlike);
