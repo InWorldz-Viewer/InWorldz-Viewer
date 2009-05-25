@@ -6178,6 +6178,21 @@ void LLAgent::teleportHome()
 	teleportViaLandmark(LLUUID::null);
 }
 
+void LLAgent::teleportHomeConfirm()
+{
+	gViewerWindow->alertXml("ConfirmTeleportHome", LLAgent::teleportHomeCallback, (void *)this);
+}
+
+// static
+void LLAgent::teleportHomeCallback(S32 option, void *userdata)
+{
+	if( option == 0 )
+	{
+		// They confirmed it. Here we go!
+		((LLAgent *) userdata)->teleportHome();
+	}
+}
+
 
 void LLAgent::setTeleportState(ETeleportState state)
 {
