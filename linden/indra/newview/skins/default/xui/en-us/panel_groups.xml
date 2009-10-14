@@ -41,4 +41,7 @@
   <search_editor bottom="-24" enabled="true" follows="left|right|top" font="SansSerif"
        height="18" left="10" right="-100" name="group_search"
        label="Type here to search your groups" width="130" />
+  <string name="none">
+		none
+  </string>
 </panel>
