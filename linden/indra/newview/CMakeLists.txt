@@ -63,6 +63,7 @@ include_directories(
     )
 
 set(viewer_SOURCE_FILES
+    floaterao.cpp
     jcfloaterareasearch.cpp
     llagent.cpp
     llagentaccess.cpp
@@ -480,7 +481,7 @@ endif (LINUX)
 set(viewer_HEADER_FILES
     CMakeLists.txt
     ViewerInstall.cmake
-
+    floaterao.h
     jcfloaterareasearch.h
     llagent.h
     llagentaccess.h

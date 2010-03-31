@@ -83,6 +83,7 @@
 #include "llface.h"
 #include "llfirstuse.h"
 #include "llfloater.h"
+#include "floaterao.h"
 #include "llfloaterabout.h"
 #include "llfloaterbuycurrency.h"
 #include "llfloateractivespeakers.h"
@@ -7697,6 +7698,29 @@ class LLWorldDayCycle : public view_listener_t
 };
 
 
+class LLAvatarReportAbuse : public view_listener_t
+{
+		bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+		{
+			LLVOAvatar* avatar = find_avatar_from_object( LLSelectMgr::getInstance()->getSelection()->getPrimaryObject() );
+			if(avatar)
+			{
+				LLFloaterReporter::showFromObject(avatar->getID());
+			}
+			return true;
+		}
+};
+
+
+class LLAO : public view_listener_t
+{
+	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+	{
+		LLFloaterAO::show(NULL);
+		return true;
+	}
+};
+
 
 static void addMenu(view_listener_t *menu, const std::string& name)
 {
@@ -7795,6 +7819,7 @@ void initialize_menus()
 	addMenu(new LLViewCheckHighlightTransparent(), "View.CheckHighlightTransparent");
 	addMenu(new LLViewCheckRenderType(), "View.CheckRenderType");
 	addMenu(new LLViewCheckHUDAttachments(), "View.CheckHUDAttachments");
+	addMenu(new LLAO(), "View.AO");
 
 	// World menu
 	addMenu(new LLWorldChat(), "World.Chat");
