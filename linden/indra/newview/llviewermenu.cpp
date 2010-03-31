@@ -7698,6 +7698,26 @@ class LLWorldDayCycle : public view_listener_t
 };
 
 
+
+class LLViewToggleAO : public view_listener_t
+{
+	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+	{
+		LLFloaterAO::show(NULL);
+		return true;
+	}
+};
+
+class LLViewCheckAO: public view_listener_t
+{
+	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+	{
+		gMenuHolder->findControl(userdata["control"].asString())->setValue(LLFloaterAO::getInstance());
+		return true;
+	}
+};
+
+
 class LLAvatarReportAbuse : public view_listener_t
 {
 		bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
@@ -7709,16 +7729,6 @@ class LLAvatarReportAbuse : public view_listener_t
 			}
 			return true;
 		}
-};
-
-
-class LLAO : public view_listener_t
-{
-	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
-	{
-		LLFloaterAO::show(NULL);
-		return true;
-	}
 };
 
 
@@ -7808,6 +7818,7 @@ void initialize_menus()
 	addMenu(new LLZoomer(DEFAULT_FIELD_OF_VIEW, false), "View.ZoomDefault");
 	addMenu(new LLViewFullscreen(), "View.Fullscreen");
 	addMenu(new LLViewDefaultUISize(), "View.DefaultUISize");
+	addMenu(new LLViewToggleAO(), "View.ToggleAO");
 
 	addMenu(new LLViewEnableMouselook(), "View.EnableMouselook");
 	addMenu(new LLViewEnableJoystickFlycam(), "View.EnableJoystickFlycam");
@@ -7819,7 +7830,7 @@ void initialize_menus()
 	addMenu(new LLViewCheckHighlightTransparent(), "View.CheckHighlightTransparent");
 	addMenu(new LLViewCheckRenderType(), "View.CheckRenderType");
 	addMenu(new LLViewCheckHUDAttachments(), "View.CheckHUDAttachments");
-	addMenu(new LLAO(), "View.AO");
+	addMenu(new LLViewCheckAO(), "View.CheckAO");
 
 	// World menu
 	addMenu(new LLWorldChat(), "World.Chat");
