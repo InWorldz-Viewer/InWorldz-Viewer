@@ -84,10 +84,11 @@ public:
 	// asset system. :(
 	void refreshFromInventory();
 
+
+	bool saveIfNeeded(LLInventoryItem* copyitem = NULL);
 protected:
 
 	virtual void loadAsset();
-	bool saveIfNeeded(LLInventoryItem* copyitem = NULL);
 
 	static LLPreviewNotecard* getInstance(const LLUUID& uuid);
 
