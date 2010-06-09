@@ -4178,12 +4178,12 @@ Visit the Second Life Support Web site?
    name="ConfirmQuit"
    type="alertmodal">
 Are you sure you want to quit?
-    <usetemplate
-     ignoretext="When quitting [VIEWER_NAME]."
-     name="okcancelignore"
-     notext="Continue"
-     yestext="Quit"/>
-  </notification>
+  <usetemplate
+   ignoretext="When quitting [VIEWER_NAME]."
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Quit"/>
+</notification>
 
   <notification
    icon="alertmodal.tga"
