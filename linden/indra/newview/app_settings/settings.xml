@@ -86,6 +86,28 @@
       <integer>100</integer>
     </array>
   </map>
+  <key>EnableAORemote</key>
+  <map>
+    <key>Comment</key>
+    <string>Enable AO quick access remote in toolbar</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>ShowAOSitPopup</key>
+  <map>
+    <key>Comment</key>
+    <string>Show AO sit popup</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
 
   <key>AFKTimeout</key>
     <map>
