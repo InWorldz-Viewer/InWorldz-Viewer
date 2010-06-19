@@ -195,6 +195,8 @@
 #include "lldxhardware.h"
 #endif
 
+#include "floaterao.h"
+
 //
 // exported globals
 //
@@ -3327,6 +3329,12 @@ bool idle_startup()
 	if (STATE_CLEANUP == LLStartUp::getStartupState())
 	{
 		set_startup_status(1.0, "", "");
+
+		// Start the AO now that settings have loaded and login successful -- MC
+		if (!gAOInvTimer)
+		{
+			gAOInvTimer = new AOInvTimer();
+		}
 
 		// Let the map know about the inventory.
 		if(gFloaterWorldMap)

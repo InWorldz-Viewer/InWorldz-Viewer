@@ -150,6 +150,7 @@
 #include "llvosurfacepatch.h"
 
 // includes for idle() idleShutdown()
+#include "floaterao.h"
 #include "llviewercontrol.h"
 #include "lleventnotifier.h"
 #include "llcallbacklist.h"
@@ -1119,13 +1120,17 @@ bool LLAppViewer::cleanup()
 	// to ensure shutdown order
 	LLMortician::setZealous(TRUE);
 
-	LLVoiceClient::terminate();
+	{
+		LLVoiceClient::terminate();
+	}
 	
 	disconnectViewer();
 
 	llinfos << "Viewer disconnected" << llendflush;
 
-	display_cleanup(); 
+	{
+		display_cleanup();
+	}
 
 	release_start_screen(); // just in case
 
@@ -1142,6 +1147,9 @@ bool LLAppViewer::cleanup()
 
 	LLKeyframeDataCache::clear();
 	
+	// Cleaned up elsewhere
+	gAOInvTimer = NULL;
+
  	// End TransferManager before deleting systems it depends on (Audio, VFS, AssetStorage)
 #if 0 // this seems to get us stuck in an infinite loop...
 	gTransferManager.cleanup();
