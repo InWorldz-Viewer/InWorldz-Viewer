@@ -6210,6 +6210,7 @@ void LLVOAvatar::getOffObject()
 	mRoot.getXform()->update();
 
 	startMotion(ANIM_AGENT_BODY_NOISE);
+	LLFloaterAO::ChangeStand();
 
 	if (mIsSelf)
 	{
