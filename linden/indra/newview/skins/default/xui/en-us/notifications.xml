@@ -5856,17 +5856,21 @@ An object named [OBJECTFROMNAME] owned by (an unknown user) has given you a [OBJ
 [MESSAGE]
 
 (By default, you will be able to see each other&apos;s online status.)
-    <form name="form">
-      <button
-       index="0"
-       name="Accept"
-       text="Accept"/>
-      <button
-       index="1"
-       name="Decline"
-       text="Decline"/>
-    </form>
-  </notification>
+  <form name="form">
+    <button
+     index="0"
+     name="Accept"
+     text="Accept"/>
+    <button
+     index="1"
+     name="Decline"
+     text="Decline"/>
+    <button
+     index="2"
+     name="Ignore"
+     text="Ignore"/>
+  </form>
+</notification>
 
   <notification
    icon="notify.tga"
@@ -5875,17 +5879,21 @@ An object named [OBJECTFROMNAME] owned by (an unknown user) has given you a [OBJ
 [NAME] is offering friendship.
 
 (By default, you will be able to see each other&apos;s online status.)
-    <form name="form">
-      <button
-       index="0"
-       name="Accept"
-       text="Accept"/>
-      <button
-       index="1"
-       name="Decline"
-       text="Decline"/>
-    </form>
-  </notification>
+  <form name="form">
+    <button
+     index="0"
+     name="Accept"
+     text="Accept"/>
+    <button
+     index="1"
+     name="Decline"
+     text="Decline"/>
+    <button
+     index="2"
+     name="Ignore"
+     text="Ignore"/>
+  </form>
+</notification>
 
   <notification
    icon="notify.tga"
@@ -5907,17 +5915,21 @@ An object named [OBJECTFROMNAME] owned by (an unknown user) has given you a [OBJ
    type="notify">
 [FIRST] [LAST] is offering their calling card.
 This will add a bookmark in your inventory so you can quickly IM this resident.
-    <form name="form">
-      <button
-       index="0"
-       name="Accept"
-       text="Accept"/>
-      <button
-       index="1"
-       name="Decline"
-       text="Decline"/>
-    </form>
-  </notification>
+  <form name="form">
+    <button
+     index="0"
+     name="Accept"
+     text="Accept"/>
+    <button
+     index="1"
+     name="Decline"
+     text="Decline"/>
+    <button
+     index="2"
+     name="Ignore"
+     text="Ignore"/>
+  </form>
+</notification>
 
   <notification
    icon="notify.tga"
@@ -6463,7 +6475,340 @@ The URL you clicked cannot be opened from this web browser.
   <!--End Imprudence notifications-->
 
 
-  <global name="UnsupportedCPU">
+PX  --  X-axis position
+PY  --  Y-axis position
+PZ  --  Z-axis position
+SX  --  X-axis size
+SY  --  Y-axis size
+SZ  --  Z-axis size
+RX  --  X-axis rotation
+RY  --  Y-axis rotation
+RZ  --  Z-axis rotation
+CB  --  Path cut begin
+CE  --  Path cut end
+HLW  --  Hollow size
+SKW  --  Skew
+PB  --  Slice/Dimple/Profile cut begin
+PE  --  Slice/Dimple/Profile cut end
+TB  --  Twist begin
+TE  --  Twist end
+SHX  --  X-axis top shear
+SHY  --  Y-axis top shear
+HLX  --  X-axis hole size
+HLY  --  Y-axis hole size
+TPX  --  X-axis taper
+TPY  --  Y-axis taper
+ROF  --  Radius offset
+REV  --  Revolutions
+
+PI  --  pi
+TWO_PI  --  2pi
+PI_BY_TWO  --  pi/2
+SQRT2  --  Square root of 2
+DEG_TO_RAD  --  DEG_TO_RAD conversion (pi/180)
+RAD_TO_DEG  --  RAD_TO_DEG conversion (180/pi)
+GRAVITY  --  -9.8
+
+*  --  Multiplication
+\  --  Division
++  --  Addition
+-  --  Subtraction
+
+For information about this feature, click "More Info".
+  <url option="1" name="url">
+    http://imprudenceviewer.org/wiki/Build_Math_Expressions
+  </url>
+  <usetemplate
+   name="okhelpbuttons"
+   yestext="OK"
+   helptext="More Info"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="ClickTextureConstants"
+ type="alert">
+The following constants are accepted in this tab:
+
+TSU  --  Repeats per face (horizontal)
+TSV  --  Repeats per face (vertical)
+TOU  --  Offsets per face (horizontal)
+TOV  --  Offsets per face (vertical)
+TRNS --  Transparency
+TROT --  Texture rotation
+GLOW --  Glow
+
+*  --  Multiplication
+\  --  Division
++  --  Addition
+-  --  Subtraction
+
+For information about this feature, click "More Info".
+  <url option="1" name="url">
+    http://imprudenceviewer.org/wiki/Build_Math_Expressions
+  </url>
+  <usetemplate
+   name="okhelpbuttons"
+   yestext="OK"
+   helptext="More Info"/>
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="ConfirmAutoPilot"
+ type="alertmodal">
+Are you sure you want to move here?
+  <usetemplate
+   ignoretext="When using auto-pilot"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Move"/>
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="ConfirmDoubleClickTP"
+ type="alertmodal">
+Are you sure you want to teleport here?
+  <usetemplate
+   ignoretext="When double-click teleporting"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Teleport"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="ConfirmMuteAgent"
+ type="alert">
+Are you sure you want to mute [NAME] (resident)?
+  <usetemplate
+    ignoretext="When muting a Resident"
+    name="okcancelignore"
+    notext="Cancel"
+    yestext="Mute"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="ConfirmMuteObject"
+ type="alert">
+Are you sure you want to mute [NAME] (object)?
+   <usetemplate
+    ignoretext="When muting an object"
+    name="okcancelignore"
+    notext="Cancel"
+    yestext="Mute"/>
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="ConfirmToggleFullscreen"
+ type="alertmodal">
+Are you sure you want to toggle fullscreen mode?
+  <usetemplate
+   name="okcancelbuttons"
+   notext="Cancel"
+   yestext="Toggle"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="ConfirmRemoveAllClothes"
+ type="alert">
+Are you sure you want to take off all clothes?
+  <usetemplate
+   ignoretext="When taking off all clothes"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Take Off"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="ConfirmResetAllPreferences"
+ type="alert">
+Are you sure you want to reset ALL preferences?
+
+Preferences will be reset when you restart [VIEWER_NAME].
+  <usetemplate
+   ignoretext="When resetting preferences"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Reset"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="ConfirmRestoreToWorld"
+ type="alert">
+Are you sure you want to restore the object to its last position?
+
+WARNING: Don't restore if you aren't sure where the object will go!
+
+For information about this feature, click "More Info".
+  <url option="1" name="url">
+    http://imprudenceviewer.org/wiki/Restore_to_Last_Position
+  </url>
+  <usetemplate
+   name="okcancelhelpignore"
+   yestext="Restore"
+   helptext="More Info"
+   notext="Cancel"
+   ignoretext="When restoring objects to their last positions" />
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="ConfirmTeleportHome"
+ type="alertmodal">
+Are you sure you want to teleport home?
+  <usetemplate
+   ignoretext="When teleporting home"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Teleport"/>
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="ConnectingToRegionError"
+ type="alertmodal">
+Unable to connect to the current region. Try logging into a different region instead. 
+
+The default login location can be set in the General tab in Preferences.
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="DisconnectedFromRegion"
+ type="alertmodal">
+You have been disconnected from the region you were in. Unable to continue.
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="GridsNoNick"
+ type="alertmodal">
+Cannot save new grid information.
+
+You need to specify a unique grid nickname.
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="GridsNoLoginUri"
+ type="alertmodal">
+Cannot save new grid '[NAME]'.
+
+You need to specify a login URI.
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="GridExists"
+ type="alertmodal">
+Cannot save new grid '[NAME]'.
+
+A grid with the same nickname already exists.
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="GridInfoNoLoginUri"
+ type="alertmodal">
+A login URI is required to retrieve the grid info.
+</notification>
+
+<notification
+ icon="alertmodal.tga"
+ name="GridInfoError"
+ type="alertmodal">
+Cannot retrieve grid info from server.
+</notification>
+  
+<notification
+ icon="alert.tga"
+ name="IMLogNotFound"
+ type="alert">
+IM history could not be found for [NAME].
+  <usetemplate
+   name="okbutton"
+   yestext="OK"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="ShowLookAtInfo"
+ type="alert">
+Show Look At is a debug setting that displays where an avatar's head is looking. Be aware: this will *NOT* show where an avatar's camera is actually pointed. This setting should not be relied on for any form of privacy!
+  <usetemplate
+   name="okignore"
+   yestext="OK"/>
+</notification>
+  
+<notification
+ icon="alert.tga"
+ name="WebLaunchImprudenceBlog"
+ type="alert">
+Go to the Official Imprudence Blog, for the Latest News and Information.
+  <usetemplate
+   ignoretext="When launching web browser to view the blog"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Go to page"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="WebLaunchImprudenceForums"
+ type="alert">
+Go to the Official Imprudence Forums to discuss the Imprudence Project.
+  <usetemplate
+   ignoretext="When launching web browser to view the forums"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Go to page"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="WebLaunchAutoscript"
+ type="alert">
+Launch autoscript generator (by 3greeneggs.com)?
+  <usetemplate
+   ignoretext="When launching autoscript generator"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="OK"/>
+</notification>
+
+<notification
+ icon="notify.tga"
+ name="FirstAO"
+ type="notify">
+For instructions, make a new template in the AO. Use the toolbar to toggle the AO on/off.
+</notification>
+
+<notification
+ icon="notifytip.tga"
+ name="NoShadows"
+ type="notifytip">
+Shadows cannot be enabled due to your graphics settings being set too low. Make sure your graphics settings are set to Ultra with Basic and Atmospheric Shaders enabled.
+</notification>
+
+<notification
+ icon="notifytip.tga"
+ name="NoTextureExportSL"
+ type="notifytip">
+Note: To comply with the Second Life Terms of Service, Imprudence did not download any texture files for the exported object(s).
+</notification>
+
+
+<!--End Imprudence notifications-->
+
+
+<global name="UnsupportedCPU">
 - Your CPU speed does not meet the minimum requirements.
   </global>
 
