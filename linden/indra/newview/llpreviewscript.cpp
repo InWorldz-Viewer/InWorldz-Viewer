@@ -346,11 +346,11 @@ void LLScriptEdCore::initMenu()
 	menuItem->setMenuCallback(onBtnHelp, this);
 	menuItem->setEnabledCallback(NULL);
 
-	menuItem = getChild<LLMenuItemCallGL>("Load from Disk");
+	menuItem = getChild<LLMenuItemCallGL>("Import Script...");
 	menuItem->setMenuCallback(onBtnLoadFromDisc, this);
 	menuItem->setEnabledCallback(NULL);
 
-	menuItem = getChild<LLMenuItemCallGL>("Save to Disk");
+	menuItem = getChild<LLMenuItemCallGL>("Export Script...");
 	menuItem->setMenuCallback(onBtnSaveToDisc, this);
 	menuItem->setEnabledCallback(NULL);
 
@@ -794,36 +794,34 @@ void LLScriptEdCore::onBtnUndoChanges( void* userdata )
 
 void LLScriptEdCore::onBtnSaveToDisc( void* userdata )
 {
-
 	LLViewerStats::getInstance()->incStat( LLViewerStats::ST_LSL_SAVE_COUNT );
 
-   LLScriptEdCore* self = (LLScriptEdCore*) userdata;
+	LLScriptEdCore* self = (LLScriptEdCore*) userdata;
 
-   if( self->mSaveCallback )
-   {
-      LLFilePicker& file_picker = LLFilePicker::instance();
-	if( !file_picker.getSaveFile( LLFilePicker::FFSAVE_TEXT ) )
+	if (self->mSaveCallback)
 	{
-		return;
-	}
-	
+		LLFilePicker& file_picker = LLFilePicker::instance();
+		const LLViewerInventoryItem *item = ((LLPreviewLSL*)self->getParent())->getItem();
+		if (!file_picker.getSaveFile(LLFilePicker::FFSAVE_LSL, item ? LLDir::getScrubbedFileName(item->getName()) : LLStringUtil::null))
+		{
+			return;
+		}
+
 		std::string filename = file_picker.getFirstFile();
-      std::string scriptText=self->mEditor->getText();
-	  std::ofstream fout(filename.c_str());
-      fout<<(scriptText);
-      fout.close();
-      self->mSaveCallback( self->mUserdata, FALSE );
-         
-   }
-	
+		std::string scriptText=self->mEditor->getText();
+		std::ofstream fout(filename.c_str());
+		fout << scriptText;
+		fout.close();
+		self->mSaveCallback(self->mUserdata, FALSE);
+	}
 }
+
 void LLScriptEdCore::onBtnLoadFromDisc( void* data )
 {
-
 	LLScriptEdCore* self = (LLScriptEdCore*) data;
 	
 	LLFilePicker& file_picker = LLFilePicker::instance();
-	if( !file_picker.getOpenFile( LLFilePicker::FFLOAD_TEXT ) )
+	if (!file_picker.getOpenFile(LLFilePicker::FFLOAD_TEXT))
 	{
 		return;
 	}
@@ -833,17 +831,14 @@ void LLScriptEdCore::onBtnLoadFromDisc( void* data )
 	std::ifstream fin(filename.c_str());
 	
 	std::string line;
-	std::string linetotal;
 	self->mEditor->clear();
 	while (!fin.eof())
 	{ 
 		getline(fin,line);
-		line=line+"\n";
+		line = line + "\n";
 		self->mEditor->insertText(line);
-
 	}
 	fin.close();
-	
 }
 
 void LLScriptEdCore::onSearchMenu(void* userdata)
