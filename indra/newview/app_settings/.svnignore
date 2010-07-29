@@ -1,0 +1,12 @@
+# This file is the source for the svn:ignore property.
+# If you change it, please run:
+#
+#   svn propset svn:ignore -F .svnignore .
+#
+
+*.db2
+
+# These are symbolic links that have to be created if one
+# wants the run the compiled viewer without creating a package.
+message_template.msg
+message.xml

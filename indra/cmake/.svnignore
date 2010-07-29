@@ -1,0 +1,10 @@
+# This file is the source for the svn:ignore property.
+# If you change it, please run:
+#
+#   svn propset svn:ignore -F .svnignore .
+#
+
+#
+#
+# Installed by SNOW-173 patch
+Cwdebug.cmake

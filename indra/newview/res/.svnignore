@@ -1,0 +1,13 @@
+# This file is the source for the svn:ignore property.
+# If you change it, please run:
+#
+#   svn propset svn:ignore -F .svnignore .
+#
+
+# All *.ico except snowglobe_icon.ico which is under version control.
+*.ico
+# All *.BMP except snowglobe_icon.BMP which is under version control.
+*.BMP
+# All *.png except snowglobe_icon.png which is under version control.
+*.png
+*.cur
