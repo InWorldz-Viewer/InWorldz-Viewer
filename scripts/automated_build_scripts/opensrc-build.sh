@@ -300,7 +300,7 @@ then
 else
   # By right, this should be in the branched source tree, but for now it will be a helper
   python "$update_version_files" --verbose --src-root=. --viewer > indra/build.log
-  [ x"$VIEWER_CHANNEL" = x ] && export VIEWER_CHANNEL="Snowglobe Test Build"
+  [ x"$VIEWER_CHANNEL" = x ] && export VIEWER_CHANNEL="Snowglobe Release"
 fi
 
 # First, go into the directory where the code was checked out by Parabuild
