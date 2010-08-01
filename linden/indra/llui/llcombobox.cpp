@@ -216,6 +216,21 @@ LLView* LLComboBox::fromXML(LLXMLNodePtr node, LLView *parent, LLUICtrlFactory *
 		combo_box->selectFirstItem();
 	}
 
+	const std::string& control_name = combo_box->getControlName();
+	if (!control_name.empty())
+	{
+		LLControlVariable* control = combo_box->findControl(control_name);
+		if (control != NULL)
+		{
+			combo_box->setValue( control->getValue() );
+		}
+		else
+		{
+			llwarns << "combo_box \"" << name << "\" has control_name \""
+			        << control_name << "\", but control is NULL." << llendl;
+		}
+	}
+
 	return combo_box;
 }
 
@@ -247,6 +262,7 @@ void LLComboBox::onCommit()
 		mTextEntry->setValue(getSimple());
 		mTextEntry->setTentative(FALSE);
 	}
+	setControlValue( getValue() );
 	LLUICtrl::onCommit();
 }
 
