@@ -3500,10 +3500,11 @@ void process_sound_trigger(LLMessageSystem *msg, void **)
 	}
 
 	// Don't play sounds from a region with maturity above current agent maturity
-	if( !gAgent.canAccessMaturityInRegion( region_handle ) )
+	// Actually, let's -- MC
+	/*if( !gAgent.canAccessMaturityInRegion( region_handle ) )
 	{
 		return;
-	}
+	}*/
 		
 	gAudiop->triggerSound(sound_id, owner_id, gain, LLAudioEngine::AUDIO_TYPE_SFX, pos_global);
 }
