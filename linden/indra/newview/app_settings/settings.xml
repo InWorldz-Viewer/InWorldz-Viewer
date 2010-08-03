@@ -2,6 +2,31 @@
 <llsd>
 <map>
 
+  <!-- begin InWorldz-specific settings -->	
+	
+  <key>AudioLevelGestures</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of environment gestures</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.5</real>
+  </map>
+  <key>MuteGestures</key>
+  <map>
+    <key>Comment</key>
+    <string>Gesture sound effects, play at 0 volume</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+
   <!-- Begin: AO-->
 
   <key>AOEnabled</key>

@@ -20,10 +20,10 @@
 	     mouse_opaque="true" name="audio_prefs_text" v_pad="0" width="128">
 		Audio Preferences:
 	</text>
-	<panel border="true" bottom="-195" enabled="true" filename="panel_audio.xml"
+	<panel border="true" bottom="-187" enabled="true" filename="panel_audio.xml"
 	     follows="left|top|right|bottom" height="180" label="Volume" left="148"
 	     mouse_opaque="true" name="Volume Panel" width="260" />
-	<check_box bottom="-220" control_name="AudioStreamingMusic" enabled="true"
+	<check_box bottom="-205" control_name="AudioStreamingMusic" enabled="true"
 	     follows="left|top" font="SansSerifSmall" height="16" initial_value="true"
 	     label="Play Streaming Music When Available (uses more bandwidth)"
 	     left="142" mouse_opaque="true" name="streaming_music" radio_style="false"
