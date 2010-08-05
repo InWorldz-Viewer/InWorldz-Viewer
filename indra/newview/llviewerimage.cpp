@@ -1439,6 +1439,11 @@ bool LLViewerImage::doLoadedCallbacks()
 
 		destroyRawImage();
 		readBackRawImage(gl_discard);
+		if (mRawImage.isNull())
+		{
+			llwarns << "SNOW-169: mRawImage is NULL for " << getID() << llendl;
+			return false;
+		}
 		llassert_always(mRawImage.notNull());
 		llassert_always(!mNeedsAux || mAuxRawImage.notNull());
 	}
