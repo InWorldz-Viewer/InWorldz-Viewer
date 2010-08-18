@@ -332,6 +332,15 @@ do
   build_dir=`build_dir_$arch $variant`
   rm -rf "$build_dir"
   get_asset "$libs_asset" # This plunks stuff into the build dir, so have to restore it now.
+  
+  # SNOW-713 : hack around a Darwin lib 1.23.4.0 tarball issue introduced by the move from universal to i386 
+  # Should be removed when libs are rebuilt cleanly
+  if test -r build-darwin-universal-Release
+  then
+    mv build-darwin-universal-Release/ "$build_dir/"
+  fi
+  # End SNOW-713 hack
+  
   # This is the way it will work in future
   #for target_dir in $target_dirs
   #do
