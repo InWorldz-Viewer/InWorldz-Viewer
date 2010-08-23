@@ -171,6 +171,12 @@ public:
 	//HACK: need a better way of enumerating existing session, or listening to session create/destroy events
 	const std::set<LLHandle<LLFloater> >& getIMFloaterHandles() { return mFloaters; }
 
+	void loadIgnoreGroup();
+	void saveIgnoreGroup();
+	void updateIgnoreGroup(const LLUUID& group_id, const bool& ignore);
+	// Returns true if group chat is ignored for the UUID, false if not
+	bool getIgnoreGroup(const LLUUID& group_id);
+
 private:
 	// create a panel and update internal representation for
 	// consistency. Returns the pointer, caller (the class instance
@@ -207,8 +213,10 @@ private:
 	// An IM has been received that you haven't seen yet.
 	BOOL mIMReceived;
 
-	LLSD mPendingInvitations;
-	LLSD mPendingAgentListUpdates;
+	LLSD	mPendingInvitations;
+	LLSD	mPendingAgentListUpdates;
+
+	std::map<LLUUID, bool> mIgnoreGroupList;
 };
 
 
