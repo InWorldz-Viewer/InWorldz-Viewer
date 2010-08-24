@@ -216,7 +216,7 @@ private:
 	LLSD	mPendingInvitations;
 	LLSD	mPendingAgentListUpdates;
 
-	std::map<LLUUID, bool> mIgnoreGroupList;
+	std::list<LLUUID> mIgnoreGroupList;
 };
 
 
