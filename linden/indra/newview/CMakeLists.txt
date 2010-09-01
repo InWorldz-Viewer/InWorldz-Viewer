@@ -458,7 +458,7 @@ set(viewer_SOURCE_FILES
     )
 
 # This gets renamed in the packaging step
-set(VIEWER_BINARY_NAME "secondlife-bin" CACHE STRING
+set(VIEWER_BINARY_NAME "inworldz-bin" CACHE STRING
     "The name of the viewer executable to create.")
 
 if (LINUX)
@@ -904,7 +904,7 @@ if (DARWIN)
     macview.r
     gpu_table.txt
     Info-${VIEWER_BRANDING_NAME_CAMELCASE}.plist
-    SecondLife.nib/
+    InWorldz.nib/
     # CMake doesn't seem to support Xcode language variants well just yet
     English.lproj/InfoPlist.strings
     English.lproj/language.txt
@@ -1319,9 +1319,9 @@ target_link_libraries(${VIEWER_BINARY_NAME}
 
 if (LINUX)
   add_custom_command(
-      OUTPUT secondlife-stripped
+      OUTPUT inworldz-stripped
       COMMAND strip
-      ARGS --strip-debug -o secondlife-stripped ${VIEWER_BINARY_NAME}
+      ARGS --strip-debug -o inworldz-stripped ${VIEWER_BINARY_NAME}
       DEPENDS ${VIEWER_BINARY_NAME}
       )
 
@@ -1344,7 +1344,7 @@ if (LINUX)
         --dest=${CMAKE_CURRENT_BINARY_DIR}/packaged
         --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/.${product}.touched
         --buildtype=${CMAKE_BUILD_TYPE}
-      DEPENDS secondlife-stripped ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
+      DEPENDS inworldz-stripped ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
       )
 
   add_dependencies(${VIEWER_BINARY_NAME} SLPlugin media_plugin_gstreamer010 media_plugin_webkit)

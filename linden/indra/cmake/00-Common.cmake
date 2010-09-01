@@ -1,6 +1,6 @@
 # -*- cmake -*-
 #
-# Compilation options shared by all Second Life components.
+# Compilation options shared by all viewer components.
 
 include(Variables)
 
@@ -152,7 +152,7 @@ if (LINUX)
   endif (SERVER)
 
   if (VIEWER)
-    add_definitions(-DAPPID=secondlife)
+    add_definitions(-DAPPID=inworldz)
     add_definitions(-fvisibility=hidden)
     # don't catch SIGCHLD in our base application class for the viewer - some of our 3rd party libs may need their *own* SIGCHLD handler to work.  Sigh!  The viewer doesn't need to catch SIGCHLD anyway.
     add_definitions(-DLL_IGNORE_SIGCHLD)
