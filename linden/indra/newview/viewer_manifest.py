@@ -115,7 +115,7 @@ class ViewerManifest(LLManifest):
     def channel(self):
         return self.args['channel']
     def channel_unique(self):
-        return self.channel().replace("Second Life", "").strip()
+        return self.channel().replace("InWorldz", "").strip()
     def channel_oneword(self):
         return "".join(self.channel_unique().split())
     def channel_lowerword(self):
@@ -123,8 +123,7 @@ class ViewerManifest(LLManifest):
     def viewer_branding_id(self):
         return self.args['branding_id']
     def installer_prefix(self):
-        mapping={"secondlife":'SecondLife_',
-                 "snowglobe":'Snowglobe_'}
+        mapping={"inworldz":'InWorldz_'}
         return mapping[self.viewer_branding_id()]
 
     def flags_list(self):
@@ -132,11 +131,11 @@ class ViewerManifest(LLManifest):
         for the grid"""
 
         # Set command line flags relating to the target grid
-        grid_flags = ''
-        if not self.default_grid():
-            grid_flags = "--grid %(grid)s "\
-                         "--helperuri http://preview-%(grid)s.secondlife.com/helpers/" %\
-                           {'grid':self.grid()}
+        #grid_flags = ''
+        #if not self.default_grid():
+        #    grid_flags = "--grid %(grid)s "\
+        #                 "--helperuri http://preview-%(grid)s.secondlife.com/helpers/" %\
+        #                   {'grid':self.grid()}
 
         # set command line flags for channel
         channel_flags = ''
@@ -160,13 +159,11 @@ class ViewerManifest(LLManifest):
 
 class WindowsManifest(ViewerManifest):
     def final_exe(self):
-        if self.default_channel() and self.viewer_branding_id()=="secondlife":
+        if self.default_channel() and self.viewer_branding_id()=="inworldz":
             if self.default_grid():
-                return "SecondLife.exe"
+                return "InWorldz.exe"
             else:
-                return "SecondLifePreview.exe"
-        elif(self.viewer_branding_id=="snowglobe"):
-            return "Snowglobe.exe"
+                return "InWorldzDevelopment.exe"
         else:
             return ''.join(self.channel().split()) + '.exe'
 
@@ -175,7 +172,7 @@ class WindowsManifest(ViewerManifest):
         super(WindowsManifest, self).construct()
         # the final exe is complicated because we're not sure where it's coming from,
         # nor do we have a fixed name for the executable
-        self.path(self.find_existing_file('debug/secondlife-bin.exe', 'release/secondlife-bin.exe', 'relwithdebinfo/secondlife-bin.exe'), dst=self.final_exe())
+        self.path(self.find_existing_file('debug/inworldz-bin.exe', 'release/inworldz-bin.exe', 'relwithdebinfo/inworldz-bin.exe'), dst=self.final_exe())
 
         # Plugin host application
         self.path(os.path.join(os.pardir,
@@ -262,7 +259,7 @@ class WindowsManifest(ViewerManifest):
             self.end_prefix()
 
         # The config file name needs to match the exe's name.
-        self.path(src="%s/secondlife-bin.exe.config" % self.args['configuration'], dst=self.final_exe() + ".config")
+        self.path(src="%s/inworldz-bin.exe.config" % self.args['configuration'], dst=self.final_exe() + ".config")
 
         # Vivox runtimes
         if self.prefix(src="vivox-runtime/i686-win32", dst=""):
@@ -356,58 +353,45 @@ class WindowsManifest(ViewerManifest):
         !define VERSION_LONG "%(version)s"
         !define VERSION_DASHES "%(version_dashes)s"
         """ % substitution_strings
-        if self.default_channel() and self.viewer_branding_id()=="secondlife":
+        if self.default_channel() and self.viewer_branding_id()=="inworldz":
             if self.default_grid():
                 # release viewer
-                installer_file = "Second_Life_%(version_dashes)s_Setup.exe"
+                installer_file = "InWorldz_%(version_dashes)s_Setup.exe"
                 grid_vars_template = """
                 OutFile "%(installer_file)s"
-                !define VIEWERNAME "Second Life"
+                !define VIEWERNAME "InWorldz"
                 !define INSTFLAGS "%(flags)s"
-                !define INSTNAME   "SecondLife"
-                !define SHORTCUT   "Second Life"
-                !define URLNAME   "secondlife"
+                !define INSTNAME   "InWorldz"
+                !define SHORTCUT   "InWorldz"
+                !define URLNAME   "inworldz"
                 !define INSTALL_ICON "install_icon.ico"
                 !define UNINSTALL_ICON "uninstall_icon.ico"
-                Caption "Second Life ${VERSION}"
+                Caption "InWorldz ${VERSION}"
                 """
             else:
                 # beta grid viewer
-                installer_file = "Second_Life_%(version_dashes)s_(%(grid_caps)s)_Setup.exe"
+                installer_file = "InWorldz_%(version_dashes)s_(%(grid_caps)s)_Setup.exe"
                 grid_vars_template = """
                 OutFile "%(installer_file)s"
-                !define VIEWERNAME "Second Life"
+                !define VIEWERNAME "InWorldz"
                 !define INSTFLAGS "%(flags)s"
-                !define INSTNAME   "SecondLife%(grid_caps)s"
-                !define SHORTCUT   "Second Life (%(grid_caps)s)"
-                !define URLNAME   "secondlife%(grid)s"
+                !define INSTNAME   "InWorldz%(grid_caps)s"
+                !define SHORTCUT   "InWorldz (%(grid_caps)s)"
+                !define URLNAME   "inworldz%(grid)s"
                 !define INSTALL_ICON "install_icon.ico"
                 !define UNINSTALL_ICON "uninstall_icon.ico"
                 !define UNINSTALL_SETTINGS 1
-                Caption "Second Life %(grid)s ${VERSION}"
-                """
-        elif self.viewer_branding_id()=="snowglobe":
-                installer_file = "Snowglobe_%(version_dashes)s_Setup.exe"
-                grid_vars_template = """
-                OutFile "%(installer_file)s"
-                !define VIEWERNAME "Snowglobe"
-                !define INSTFLAGS "%(flags)s"
-                !define INSTNAME   "Snowglobe"
-                !define SHORTCUT   "Snowglobe"
-                !define URLNAME   "secondlife"
-                !define INSTALL_ICON "install_icon_snowglobe.ico"
-                !define UNINSTALL_ICON "uninstall_icon_snowglobe.ico"
-                Caption "Snowglobe ${VERSION}"
+                Caption "InWorldz %(grid)s ${VERSION}"
                 """
         else:
             # some other channel on some grid
-            installer_file = "Second_Life_%(version_dashes)s_%(channel_oneword)s_Setup.exe"
+            installer_file = "InWorldz_%(version_dashes)s_%(channel_oneword)s_Setup.exe"
             grid_vars_template = """
             OutFile "%(installer_file)s"
             !define INSTFLAGS "%(flags)s"
-            !define INSTNAME   "SecondLife%(channel_oneword)s"
+            !define INSTNAME   "InWorldz%(channel_oneword)s"
             !define SHORTCUT   "%(channel)s"
-            !define URLNAME   "secondlife"
+            !define URLNAME   "inworldz"
             !define UNINSTALL_SETTINGS 1
             Caption "%(channel)s ${VERSION}"
             """
@@ -417,7 +401,7 @@ class WindowsManifest(ViewerManifest):
             installer_file = installer_file % substitution_strings
         substitution_strings['installer_file'] = installer_file
 
-        tempfile = "secondlife_setup_tmp.nsi"
+        tempfile = "inworldz_setup_tmp.nsi"
         # the following replaces strings in the nsi template
         # it also does python-style % substitution
         self.replace_in("installers/windows/installer_template.nsi", tempfile, {
@@ -465,17 +449,15 @@ class DarwinManifest(ViewerManifest):
 
                 self.path("licenses-mac.txt", dst="licenses.txt")
                 self.path("featuretable_mac.txt")
-                self.path("SecondLife.nib")
+                self.path("InWorldz.nib")
 
-                if self.viewer_branding_id()=='secondlife':
+                if self.viewer_branding_id()=='inworldz':
                     # If we are not using the default channel, use the 'Firstlook
                     # icon' to show that it isn't a stable release.
                     if self.default_channel() and self.default_grid():
-                        self.path("secondlife.icns")
+                        self.path("inworldz.icns")
                     else:
-                        self.path("secondlife_firstlook.icns", "secondlife.icns")
-                elif self.viewer_branding_id()=="snowglobe":
-                    self.path("snowglobe.icns")
+                        self.path("inworldz_development.icns", "inworldz.icns")
 
                 # Translations
                 self.path("English.lproj")
@@ -582,13 +564,11 @@ class DarwinManifest(ViewerManifest):
                                  { 'viewer_binary' : self.dst_path_of('Contents/MacOS/'+self.app_name())})
 
     def app_name(self):
-        mapping={"secondlife":"Second Life",
-                 "snowglobe":"Snowglobe"}
+        mapping={"inworldz":"InWorldz"}
         return mapping[self.viewer_branding_id()]
         
     def info_plist_name(self):
-        mapping={"secondlife":"Info-SecondLife.plist",
-                 "snowglobe":"Info-Snowglobe.plist"}
+        mapping={"inworldz":"Info-InWorldz.plist"}
         return mapping[self.viewer_branding_id()]
 
     def package_finish(self):
@@ -640,9 +620,9 @@ class DarwinManifest(ViewerManifest):
 		# Added a .DS_Store for snowglobe - Merov 2009-06-17
 		
 		# We have a single branded installer for all snowglobe channels so snowglobe logic is a bit different
-        if (self.app_name()=="Snowglobe"):
-            dmg_template = os.path.join ('installers', 'darwin', 'snowglobe-dmg')
-        else:
+        if (self.app_name()=="InWorldz"):
+        #    dmg_template = os.path.join ('installers', 'darwin', 'snowglobe-dmg')
+        #else:
             dmg_template = os.path.join(
                 'installers', 
                 'darwin',
@@ -692,18 +672,18 @@ class LinuxManifest(ViewerManifest):
             self.path("client-readme-voice.txt","README-linux-voice.txt")
             self.path("client-readme-joystick.txt","README-linux-joystick.txt")
             self.path("wrapper.sh",self.wrapper_name())
-            self.path("handle_secondlifeprotocol.sh")
-            self.path("register_secondlifeprotocol.sh")
+            self.path("handle_inworldzprotocol.sh")
+            self.path("register_inworldzprotocol.sh")
             self.end_prefix("linux_tools")
 
         # Create an appropriate gridargs.dat for this package, denoting required grid.
         self.put_in_file(self.flags_list(), 'gridargs.dat')
 
         if self.buildtype().lower()=='release':
-            self.path("secondlife-stripped","bin/"+self.binary_name())
+            self.path("inworldz-stripped","bin/"+self.binary_name())
             self.path("../linux_crash_logger/linux-crash-logger-stripped","linux-crash-logger.bin")
         else:
-            self.path("secondlife-bin","bin/"+self.binary_name())
+            self.path("inworldz-bin","bin/"+self.binary_name())
             self.path("../linux_crash_logger/linux-crash-logger","linux-crash-logger.bin")
 
         self.path("linux_tools/launch_url.sh","launch_url.sh")
@@ -727,18 +707,15 @@ class LinuxManifest(ViewerManifest):
         self.path("featuretable_linux.txt")
 
     def wrapper_name(self):
-        mapping={"secondlife":"secondlife",
-                 "snowglobe":"snowglobe"}
+        mapping={"inworldz":"inworldz"}
         return mapping[self.viewer_branding_id()]
 
     def binary_name(self):
-        mapping={"secondlife":"do-not-directly-run-secondlife-bin",
-                 "snowglobe":"snowglobe-do-not-run-directly"}
+        mapping={"inworldz":"do-not-directly-run-inworldz-bin"}
         return mapping[self.viewer_branding_id()]
     
     def icon_name(self):
-        mapping={"secondlife":"secondlife_icon.png",
-                 "snowglobe":"snowglobe_icon.png"}
+        mapping={"inworldz":"inworldz_icon.png"}
         return mapping[self.viewer_branding_id()]
 
     def package_finish(self):
@@ -843,7 +820,7 @@ class Linux_x86_64Manifest(LinuxManifest):
         super(Linux_x86_64Manifest, self).construct()
 
         # support file for valgrind debug tool
-        self.path("secondlife-i686.supp")
+        self.path("inworldz-i686.supp")
 
 if __name__ == "__main__":
     main()

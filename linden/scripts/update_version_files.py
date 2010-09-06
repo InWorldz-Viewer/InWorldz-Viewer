@@ -150,20 +150,16 @@ re_map['indra/newview/res/viewerRes.rc'] = \
       'VALUE "ProductVersion", "%(VER_MAJOR)s.%(VER_MINOR)s.%(VER_PATCH)s.%(VER_BUILD)s"'))
 
 # Trailing ',' in top level tuple is special form to avoid parsing issues with one element tuple
-re_map['indra/newview/Info-SecondLife.plist'] = \
-    (('<key>CFBundleVersion</key>\n\t<string>[0-9.]+</string>',
-      '<key>CFBundleVersion</key>\n\t<string>%(VER_MAJOR)s.%(VER_MINOR)s.%(VER_PATCH)s.%(VER_BUILD)s</string>'),)
-
-re_map['indra/newview/Info-Snowglobe.plist'] = \
+re_map['indra/newview/Info-InWorldz.plist'] = \
     (('<key>CFBundleVersion</key>\n\t<string>[0-9.]+</string>',
       '<key>CFBundleVersion</key>\n\t<string>%(VER_MAJOR)s.%(VER_MINOR)s.%(VER_PATCH)s.%(VER_BUILD)s</string>'),)
 
 # This will probably only work as long as InfoPlist.strings is NOT UTF16, which is should be...
 re_map['indra/newview/English.lproj/InfoPlist.strings'] = \
-    (('CFBundleShortVersionString = "Second Life version [0-9.]+";',
-      'CFBundleShortVersionString = "Second Life version %(VER_MAJOR)s.%(VER_MINOR)s.%(VER_PATCH)s.%(VER_BUILD)s";'),
-     ('CFBundleGetInfoString = "Second Life version [0-9.]+',
-      'CFBundleGetInfoString = "Second Life version %(VER_MAJOR)s.%(VER_MINOR)s.%(VER_PATCH)s.%(VER_BUILD)s'))
+    (('CFBundleShortVersionString = "InWorldz version [0-9.]+";',
+      'CFBundleShortVersionString = "InWorldz version %(VER_MAJOR)s.%(VER_MINOR)s.%(VER_PATCH)s.%(VER_BUILD)s";'),
+     ('CFBundleGetInfoString = "InWorldz version [0-9.]+',
+      'CFBundleGetInfoString = "InWorldz version %(VER_MAJOR)s.%(VER_MINOR)s.%(VER_PATCH)s.%(VER_BUILD)s'))
 
 
 version_re      = re.compile('(\d+).(\d+).(\d+).(\d+)')

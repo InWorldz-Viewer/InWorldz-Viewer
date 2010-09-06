@@ -77,7 +77,7 @@ class PlatformSetup(object):
     standalone = 'OFF'
     unattended = 'OFF'
     universal = 'OFF'
-    project_name = 'SecondLife'
+    project_name = 'InWorldz'
     distcc = True
     cmake_opts = []
     word_size = 32
@@ -648,9 +648,9 @@ class WindowsSetup(PlatformSetup):
                 continue
             vstool_cmd = (os.path.join('tools','vstool','VSTool.exe') +
                           ' --solution ' +
-                          os.path.join(build_dir,'SecondLife.sln') +
+                          os.path.join(build_dir,'InWorldz.sln') +
                           ' --config ' + self.build_type +
-                          ' --startup secondlife-bin')
+                          ' --startup inworldz-bin')
             print 'Running %r in %r' % (vstool_cmd, getcwd())
             self.run(vstool_cmd)        
             print >> open(stamp, 'w'), self.build_type

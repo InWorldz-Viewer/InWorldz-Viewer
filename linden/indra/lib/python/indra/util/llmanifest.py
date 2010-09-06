@@ -98,8 +98,7 @@ def get_channel(srctree):
     
 
 DEFAULT_SRCTREE = os.path.dirname(sys.argv[0])
-DEFAULT_CHANNEL = 'Second Life Release'
-DEFAULT_CHANNEL_SNOWGLOBE = 'Snowglobe Release'
+DEFAULT_CHANNEL = 'InWorldz Release'
 
 ARGUMENTS=[
     dict(name='actions',
@@ -124,8 +123,8 @@ ARGUMENTS=[
         Default is Release """,
          default="Release"),
     dict(name='branding_id', description="""Identifier for the branding set to 
-        use.  Currently, 'secondlife' or 'snowglobe')""", 
-         default='secondlife'),
+        use.  Currently, 'inworldz')""", 
+         default='inworldz'),
     dict(name='configuration',
          description="""The build configuration used. Only used on OS X for
         now, but it could be used for other platforms as well.""",
@@ -163,7 +162,7 @@ ARGUMENTS=[
         for use by a .bat file.""",
          default=None),
     dict(name='version',
-         description="""This specifies the version of Second Life that is
+         description="""This specifies the version of InWorldz that is
         being packaged up.""",
          default=get_default_version)
     ]
@@ -284,10 +283,8 @@ class LLManifest(object):
         return self.args.get('channel', None) == DEFAULT_CHANNEL
     
     def default_channel_for_brand(self):
-        if self.viewer_branding_id()=='secondlife':
+        if self.viewer_branding_id()=='inworldz':
             return self.args.get('channel', None) == DEFAULT_CHANNEL
-        elif self.viewer_branding_id()=="snowglobe":
-            return self.args.get('channel', None) == DEFAULT_CHANNEL_SNOWGLOBE
         raise ValueError, "Invalid branding id: " + self.viewer_branding_id()
 
     def construct(self):
