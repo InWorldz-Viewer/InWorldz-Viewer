@@ -1,11 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; secondlife setup.nsi
+;; inworldz setup.nsi
 ;; Copyright 2004-2008, Linden Research, Inc.
+;; Copyright 2010, InWorldz LLC
 ;;
 ;; NSIS Unicode 2.38.1 or higher required
 ;; http://www.scratchpaper.com/
 ;;
-;; Author: James Cook, Don Kjer, Callum Prentice
+;; Author: James Cook, Don Kjer, Callum Prentice, McCabe Maxsted
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -28,9 +29,9 @@ RequestExecutionLevel admin	; on Vista we must be admin because we write to Prog
 ;; Tweak for different servers/builds (this placeholder is replaced by viewer_manifest.py)
 ;; For example:
 ;; !define INSTFLAGS "%(flags)s"
-;; !define INSTNAME   "SecondLife%(grid_caps)s"
-;; !define SHORTCUT   "Second Life (%(grid_caps)s)"
-;; !define URLNAME   "secondlife%(grid)s"
+;; !define INSTNAME   "InWorldz%(grid_caps)s"
+;; !define SHORTCUT   "InWorldz (%(grid_caps)s)"
+;; !define URLNAME   "InWorldz%(grid)s"
 ;; !define UNINSTALL_SETTINGS 1
 
 %%GRID_VARS%%
@@ -195,21 +196,21 @@ FunctionEnd
 ; Close the program, if running. Modifies no variables.
 ; Allows user to bail out of install process.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Function CloseSecondLife
+Function CloseInWorldz
   Push $0
-  FindWindow $0 "Second Life" ""
+  FindWindow $0 "InWorldz" ""
   IntCmp $0 0 DONE
-  MessageBox MB_OKCANCEL $(CloseSecondLifeInstMB) IDOK CLOSE IDCANCEL CANCEL_INSTALL
+  MessageBox MB_OKCANCEL $(CloseInWorldzInstMB) IDOK CLOSE IDCANCEL CANCEL_INSTALL
 
   CANCEL_INSTALL:
     Quit
 
   CLOSE:
-    DetailPrint $(CloseSecondLifeInstDP)
+    DetailPrint $(CloseInWorldzInstDP)
     SendMessage $0 16 0 0
 
   LOOP:
-	  FindWindow $0 "Second Life" ""
+	  FindWindow $0 "InWorldz" ""
 	  IntCmp $0 0 DONE
 	  Sleep 500
 	  Goto LOOP
@@ -220,9 +221,9 @@ Function CloseSecondLife
 FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Test our connection to secondlife.com
+; Test our connection to inworldz.com
 ; Also allows us to count attempted installs by examining web logs.
-; *TODO: Return current SL version info and have installer check
+; *TODO: Return current version info and have installer check
 ; if it is up to date.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function CheckNetworkConnection
@@ -239,7 +240,7 @@ Function CheckNetworkConnection
     ; Don't show secondary progress bar, this will be quick.
     NSISdl::download_quiet \
         /TIMEOUT=${HTTP_TIMEOUT} \
-        "http://install.secondlife.com/check/?stubtag=$2&version=${VERSION_LONG}" \
+        "http://install.inworldz.com/check/?stubtag=$2&version=${VERSION_LONG}" \
         $0
     Pop $1 ; Return value, either "success", "cancel" or an error message
     ; MessageBox MB_OK "Download result: $1"
@@ -254,12 +255,12 @@ Function CheckNetworkConnection
 FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Delete files in Documents and Settings\<user>\SecondLife\cache
-; Delete files in Documents and Settings\All Users\SecondLife\cache
+; Delete files in Documents and Settings\<user>\InWorldz\cache
+; Delete files in Documents and Settings\All Users\InWorldz\cache
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;Function RemoveCacheFiles
 ;
-;; Delete files in Documents and Settings\<user>\SecondLife
+;; Delete files in Documents and Settings\<user>\InWorldz
 ;Push $0
 ;Push $1
 ;Push $2
@@ -278,7 +279,7 @@ FunctionEnd
 ;    ExpandEnvStrings $2 $2
 ;
 ;	; When explicitly uninstalling, everything goes away
-;    RMDir /r "$2\Application Data\SecondLife\cache"
+;    RMDir /r "$2\Application Data\InWorldz\cache"
 ;
 ;  CONTINUE:
 ;    IntOp $0 $0 + 1
@@ -288,17 +289,17 @@ FunctionEnd
 ;Pop $1
 ;Pop $0
 ;
-;; Delete files in Documents and Settings\All Users\SecondLife
+;; Delete files in Documents and Settings\All Users\InWorldz
 ;Push $0
 ;  ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" "Common AppData"
 ;  StrCmp $0 "" +2
-;  RMDir /r "$0\SecondLife\cache"
+;  RMDir /r "$0\InWorldz\cache"
 ;Pop $0
 ;
-;; Delete filse in C:\Windows\Application Data\SecondLife
+;; Delete filse in C:\Windows\Application Data\InWorldz
 ;; If the user is running on a pre-NT system, Application Data lives here instead of
 ;; in Documents and Settings.
-;RMDir /r "$WINDIR\Application Data\SecondLife\cache"
+;RMDir /r "$WINDIR\Application Data\InWorldz\cache"
 ;
 ;FunctionEnd
 
@@ -358,12 +359,12 @@ Delete "$INSTDIR\skins\silver\xui\en-us\floater_about_land.xml"
 FunctionEnd
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Delete files in Documents and Settings\<user>\SecondLife
-; Delete files in Documents and Settings\All Users\SecondLife
+; Delete files in Documents and Settings\<user>\InWorldz
+; Delete files in Documents and Settings\All Users\InWorldz
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function un.DocumentsAndSettingsFolder
 
-; Delete files in Documents and Settings\<user>\SecondLife
+; Delete files in Documents and Settings\<user>\InWorldz
 Push $0
 Push $1
 Push $2
@@ -386,13 +387,13 @@ Push $2
 	; Otherwise (preview/dmz etc) just remove cache
     StrCmp $INSTFLAGS "" RM_ALL RM_CACHE
       RM_ALL:
-        RMDir /r "$2\Application Data\SecondLife"
+        RMDir /r "$2\Application Data\InWorldz"
       RM_CACHE:
         # Local Settings directory is the cache, there is no "cache" subdir
-        RMDir /r "$2\Local Settings\Application Data\SecondLife"
+        RMDir /r "$2\Local Settings\Application Data\InWorldz"
         # Vista version of the same
-        RMDir /r "$2\AppData\Local\SecondLife"
-        Delete "$2\Application Data\SecondLife\user_settings\settings_windlight.xml"
+        RMDir /r "$2\AppData\Local\InWorldz"
+        Delete "$2\Application Data\InWorldz\user_settings\settings_windlight.xml"
 
   CONTINUE:
     IntOp $0 $0 + 1
@@ -403,17 +404,17 @@ Pop $2
 Pop $1
 Pop $0
 
-; Delete files in Documents and Settings\All Users\SecondLife
+; Delete files in Documents and Settings\All Users\InWorldz
 Push $0
   ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders" "Common AppData"
   StrCmp $0 "" +2
-  RMDir /r "$0\SecondLife"
+  RMDir /r "$0\InWorldz"
 Pop $0
 
-; Delete filse in C:\Windows\Application Data\SecondLife
+; Delete filse in C:\Windows\Application Data\InWorldz
 ; If the user is running on a pre-NT system, Application Data lives here instead of
 ; in Documents and Settings.
-RMDir /r "$WINDIR\Application Data\SecondLife"
+RMDir /r "$WINDIR\Application Data\InWorldz"
 
 FunctionEnd
 
@@ -421,21 +422,21 @@ FunctionEnd
 ; Close the program, if running. Modifies no variables.
 ; Allows user to bail out of uninstall process.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-Function un.CloseSecondLife
+Function un.CloseInWorldz
   Push $0
-  FindWindow $0 "Second Life" ""
+  FindWindow $0 "InWorldz" ""
   IntCmp $0 0 DONE
-  MessageBox MB_OKCANCEL $(CloseSecondLifeUnInstMB) IDOK CLOSE IDCANCEL CANCEL_UNINSTALL
+  MessageBox MB_OKCANCEL $(CloseInWorldzUnInstMB) IDOK CLOSE IDCANCEL CANCEL_UNINSTALL
 
   CANCEL_UNINSTALL:
     Quit
 
   CLOSE:
-    DetailPrint $(CloseSecondLifeUnInstDP)
+    DetailPrint $(CloseInWorldzUnInstDP)
     SendMessage $0 16 0 0
 
   LOOP:
-	  FindWindow $0 "Second Life" ""
+	  FindWindow $0 "InWorldz" ""
 	  IntCmp $0 0 DONE
 	  Sleep 500
 	  Goto LOOP
@@ -453,10 +454,10 @@ FunctionEnd
 ;
 Function un.RemovePassword
 
-DetailPrint "Removing Second Life password"
+DetailPrint "Removing InWorldz password"
 
 SetShellVarContext current
-Delete "$APPDATA\SecondLife\user_settings\password.dat"
+Delete "$APPDATA\InWorldz\user_settings\password.dat"
 SetShellVarContext all
 
 FunctionEnd
@@ -483,8 +484,8 @@ Delete "$INSTDIR\dronesettings.ini"
 Delete "$INSTDIR\message_template.msg"
 Delete "$INSTDIR\newview.pdb"
 Delete "$INSTDIR\newview.map"
-Delete "$INSTDIR\SecondLife.pdb"
-Delete "$INSTDIR\SecondLife.map"
+Delete "$INSTDIR\InWorldz.pdb"
+Delete "$INSTDIR\InWorldz.map"
 Delete "$INSTDIR\comm.dat"
 Delete "$INSTDIR\*.glsl"
 Delete "$INSTDIR\motions\*.lla"
@@ -537,7 +538,7 @@ Call un.CheckIfAdministrator		; Make sure the user can install/uninstall
 SetShellVarContext all			
 
 ; Make sure we're not running
-Call un.CloseSecondLife
+Call un.CloseInWorldz
 
 ; Clean up registry keys and subkeys (these should all be !defines somewhere)
 DeleteRegKey HKEY_LOCAL_MACHINE "SOFTWARE\Linden Research, Inc.\$INSTPROG"
@@ -728,8 +729,8 @@ StrCpy $INSTSHORTCUT "${SHORTCUT}"
 Call CheckWindowsVersion		; warn if on Windows 98/ME
 Call CheckIfAdministrator		; Make sure the user can install/uninstall
 Call CheckIfAlreadyCurrent		; Make sure that we haven't already installed this version
-Call CloseSecondLife			; Make sure we're not running
-Call CheckNetworkConnection		; ping secondlife.com
+Call CloseInWorldz			; Make sure we're not running
+Call CheckNetworkConnection		; ping inworldz.com
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Don't remove cache files during a regular install, removing the inventory cache on upgrades results in lots of damage to the servers.
@@ -769,13 +770,13 @@ CreateShortCut	"$SMPROGRAMS\$INSTSHORTCUT\$INSTSHORTCUT.lnk" \
 				"$INSTDIR\$INSTEXE" "$INSTFLAGS $SHORTCUT_LANG_PARAM"
 
 
-WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\SL Create Account.url" \
+WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\Create InWorldz Account.url" \
 				"InternetShortcut" "URL" \
-				"http://www.secondlife.com/registration/"
-WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\SL Your Account.url" \
+				"http://inworldz.com/register"
+WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\Your InWorldz Account.url" \
 				"InternetShortcut" "URL" \
-				"http://www.secondlife.com/account/"
-WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\SL Scripting Language Help.url" \
+				"http://inworldz.com/account.php"
+;WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\SL Scripting Language Help.url" \
 				"InternetShortcut" "URL" \
                 "http://wiki.secondlife.com/wiki/LSL_Portal"
 CreateShortCut	"$SMPROGRAMS\$INSTSHORTCUT\Uninstall $INSTSHORTCUT.lnk" \
@@ -804,7 +805,7 @@ WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninst
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Write URL registry info
-WriteRegStr HKEY_CLASSES_ROOT "${URLNAME}" "(default)" "URL:Second Life"
+WriteRegStr HKEY_CLASSES_ROOT "${URLNAME}" "(default)" "URL:InWorldz"
 WriteRegStr HKEY_CLASSES_ROOT "${URLNAME}" "URL Protocol" ""
 WriteRegStr HKEY_CLASSES_ROOT "${URLNAME}\DefaultIcon" "" '"$INSTDIR\$INSTEXE"'
 ;; URL param must be last item passed to viewer, it ignores subsequent params
