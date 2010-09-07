@@ -179,15 +179,6 @@ class WindowsManifest(ViewerManifest):
                                'llplugin', 'slplugin', self.args['configuration'], "SLPlugin.exe"),
                   "SLPlugin.exe")
         
-      	# need to get the kdu dll from any of the build directories as well
-        try:
-            self.path(self.find_existing_file('../llkdu/%s/llkdu.dll' % self.args['configuration'],
-                '../../libraries/i686-win32/lib/release/llkdu.dll'), 
-                  dst='llkdu.dll')
-            pass
-        except:
-            print "Skipping llkdu.dll"
-            pass
         self.path(src="licenses-win32.txt", dst="licenses.txt")
 
         self.path("featuretable.txt")
@@ -195,8 +186,9 @@ class WindowsManifest(ViewerManifest):
         # For use in crash reporting (generates minidumps)
         self.path("dbghelp.dll")
 
-        # For using FMOD for sound... DJS
-        self.path("fmod.dll")
+        # For using sound.
+        self.path("openal.dll")
+		self.path("alut.dll")
 
         # Get llcommon and deps.
         if self.prefix(src=self.args['configuration'], dst=""):
@@ -487,29 +479,10 @@ class DarwinManifest(ViewerManifest):
                 libdir = "../../libraries/universal-darwin/lib_release"
                 dylibs = {}
 
-                # need to get the kdu dll from any of the build directories as well
-                for lib in "llkdu", "llcommon":
-                    libfile = "lib%s.dylib" % lib
-                    try:
-                        self.path(self.find_existing_file(os.path.join(os.pardir,
-                                                                       lib,
-                                                                       self.args['configuration'],
-                                                                       libfile),
-                                                          os.path.join(libdir, libfile)),
-                                  dst=libfile)
-                    except RuntimeError:
-                        print "Skipping %s" % libfile
-                        dylibs[lib] = False
-                    else:
-                        dylibs[lib] = True
-
                 for libfile in ("libapr-1.0.3.7.dylib",
                                 "libaprutil-1.0.3.8.dylib",
                                 "libexpat.0.5.0.dylib"):
                     self.path(os.path.join(libdir, libfile), libfile)
-
-                #libfmodwrapper.dylib
-                self.path(self.args['configuration'] + "/libfmodwrapper.dylib", "libfmodwrapper.dylib")
                 
                 # our apps
                 self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
@@ -764,33 +737,7 @@ class Linux_i686Manifest(LinuxManifest):
     def construct(self):
         super(Linux_i686Manifest, self).construct()
 
-        # install either the libllkdu we just built, or a prebuilt one, in
-        # decreasing order of preference.  for linux package, this goes to bin/
-        try:
-            self.path(self.find_existing_file('../llkdu/libllkdu.so',
-                '../../libraries/i686-linux/lib_release_client/libllkdu.so'), 
-                  dst='bin/libllkdu.so')
-            # keep this one to preserve syntax, open source mangling removes previous lines
-            pass
-        except:
-            print "Skipping libllkdu.so - not found"
-            pass
-
         if self.prefix("../../libraries/i686-linux/lib_release_client", dst="lib"):
-
-            try:
-                self.path("libkdu_v42R.so", "libkdu.so")
-                pass
-            except:
-                print "Skipping libkdu_v42R.so - not found"
-                pass
-
-            try:
-                self.path("libfmod-3.75.so")
-                pass
-            except:
-                print "Skipping libfmod-3.75.so - not found"
-                pass
 
             self.path("libapr-1.so.0")
             self.path("libaprutil-1.so.0")
