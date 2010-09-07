@@ -35,11 +35,13 @@ set(LL_TESTS ON CACHE BOOL "Build and run unit and integration tests (disable fo
 set(LIBS_PREBUILT_DIR ${CMAKE_SOURCE_DIR}/../libraries CACHE PATH
     "Location of prebuilt libraries.")
 
-if (EXISTS ${CMAKE_SOURCE_DIR}/Server.cmake)
-  # We use this as a marker that you can try to use the proprietary libraries.
-  set(INSTALL_PROPRIETARY ON CACHE BOOL "Install proprietary binaries")
-endif (EXISTS ${CMAKE_SOURCE_DIR}/Server.cmake)
+# if (EXISTS ${CMAKE_SOURCE_DIR}/Server.cmake)
+  # # We use this as a marker that you can try to use the proprietary libraries.
+  # set(INSTALL_PROPRIETARY ON CACHE BOOL "Install proprietary binaries")
+# endif (EXISTS ${CMAKE_SOURCE_DIR}/Server.cmake)
 
+# we'll never be using this
+set(INSTALL_PROPRIETARY OFF CACHE BOOL "Install proprietary binaries")
 
 if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
   set(WINDOWS ON BOOL FORCE)
