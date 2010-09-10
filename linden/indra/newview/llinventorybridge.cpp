@@ -3316,10 +3316,25 @@ void LLObjectBridge::performAction(LLFolderView* folder, LLInventoryModel* model
 
 void LLObjectBridge::openItem()
 {
-	/* Disabled -- this preview isn't useful. JC */
-	// CP: actually, this code is required - made changes to match LLAnimationBridge::openItem() idiom
-	// The properties preview is useful, converting to show object properties. - DaveP
-	LLShowProps::showProperties(mUUID);
+	LLVOAvatar* avatar = gAgent.getAvatarObject();
+	if (!avatar)
+	{
+		return;
+	}
+	if (avatar->isWearingAttachment(mUUID))
+	{
+#ifdef LL_RRINTERFACE_H //MK
+		if (gRRenabled && !gAgent.mRRInterface.canDetach(avatar->getWornAttachment(mUUID)))
+		{
+			return;
+		}
+#endif //mk
+		performAction(NULL, NULL, "detach");
+	}
+	else
+	{
+		performAction(NULL, NULL, "attach");
+	}
 }
 
 LLFontGL::StyleFlags LLObjectBridge::getLabelStyle() const
@@ -4371,9 +4386,13 @@ void LLWearableBridge::openItem()
 	}
 	else if(isAgentInventory())
 	{
-		if( !gAgent.isWearingItem( mUUID ) )
+		if (gAgent.isWearingItem(mUUID))
 		{
-			wearOnAvatar();
+			performAction(NULL, NULL, "take_off");
+		}
+		else
+		{
+			performAction(NULL, NULL, "wear");
 		}
 	}
 	else
