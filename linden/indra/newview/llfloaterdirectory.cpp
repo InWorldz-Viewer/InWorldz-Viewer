@@ -115,7 +115,7 @@ LLFloaterDirectory::LLFloaterDirectory(const std::string& name)
 
 	factory_map["Panel Avatar"] = LLCallbackMap(createPanelAvatar, this);
 	
-	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_directory2.xml", &factory_map);
+	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_directory.xml", &factory_map);
 
 	moveResizeHandlesToFront();
 
