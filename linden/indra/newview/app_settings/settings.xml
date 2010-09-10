@@ -10761,6 +10761,17 @@
       <key>Value</key>
       <string>5748decc-f629-461c-9a36-a35a221fe21f</string>
     </map>
+    <key>UIImgInvisibleUUID</key>
+    <map>
+      <key>Comment</key>
+      <string />
+      <key>Persist</key>
+      <integer>0</integer>
+      <key>Type</key>
+      <string>String</string>
+      <key>Value</key>
+      <string>38b86f85-2575-52a9-a531-23108d8da837</string>
+    </map>
     <key>UIScaleFactor</key>
     <map>
       <key>Comment</key>
