@@ -33,7 +33,6 @@ include(NDOF)
 include(GooglePerfTools)
 include(TemplateCheck)
 include(UI)
-include(LLKDU)
 include(ViewerMiscLibs)
 include(ViewerArtwork.cmake)
 
@@ -1185,10 +1184,6 @@ add_executable(${VIEWER_BINARY_NAME}
     ${viewer_SOURCE_FILES}
     )
 check_message_template(${VIEWER_BINARY_NAME})
-
-if (LLKDU_LIBRARY)
-  add_dependencies(${VIEWER_BINARY_NAME} ${LLKDU_LIBRARY})
-endif (LLKDU_LIBRARY)
 
 # We package by default on Linux so we can run from newview/packaged.
 if (LINUX)

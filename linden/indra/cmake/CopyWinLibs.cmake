@@ -98,7 +98,6 @@ set(plugintest_release_files
     libgmodule-2.0-0.dll
     libgobject-2.0-0.dll
     libgthread-2.0-0.dll
-#    llkdu.dll        (not required for plugin test)
     qtcore4.dll
     qtgui4.dll
     qtnetwork4.dll

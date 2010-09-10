@@ -49,7 +49,6 @@ set(cmake_SOURCE_FILES
     LLImage.cmake
     LLImageJ2COJ.cmake
     LLInventory.cmake
-    LLKDU.cmake
     LLMath.cmake
     LLMessage.cmake
     LLPlugin.cmake
