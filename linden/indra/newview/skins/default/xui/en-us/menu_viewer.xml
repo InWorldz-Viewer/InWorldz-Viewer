@@ -7,6 +7,22 @@
 	     opaque="true" tear_off="true" width="243">
 		<tearoff_menu bottom="-10" enabled="true" height="10" label="~~~~~~~~~~~" left="0"
 		     mouse_opaque="true" name="~~~~~~~~~~~" width="243" />
+	<menu bottom="-554" create_jump_keys="true" drop_shadow="true" enabled="true"
+		height="79" label="Import/Export" left="0" mouse_opaque="false"
+		name="Import/Export" opaque="true" tear_off="true" width="158">
+		<menu_item_call enabled="false" hidden="false" label="Import" mouse_opaque="true" name="Import">
+			<on_click function="Object.Import" />
+			<on_enable function="Object.EnableImport" />
+		</menu_item_call>
+		<menu_item_call enabled="false" hidden="false" label="Upload Textures + Import" mouse_opaque="true" name="Import">
+			<on_click function="Object.ImportUpload" />
+			<on_enable function="Object.EnableImport" />
+		</menu_item_call>
+		<menu_item_call enabled="false" hidden="false" label="Export" mouse_opaque="true" name="Export">
+			<on_click function="Object.Export" />
+			<on_enable function="Object.EnableExport" />
+		</menu_item_call>
+	</menu>
     <menu label="Upload" name="upload" 
         create_jump_keys="true" drop_shadow="true" enabled="true" mouse_opaque="false"
 		    opaque="true" tear_off="true">

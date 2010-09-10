@@ -6723,6 +6723,31 @@ This ensures that you have the latest information available regarding other clie
 The URL you clicked cannot be opened from this web browser.
 </notification>
 
+  <!--Begin InWorldz notifications-->
+
+  <notification
+   icon="alertmodal.tga"
+   name="ExportFailed"
+   type="alertmodal">
+    Bad permissions for the exported object. Export aborted.
+  </notification>
+  
+  <notification
+   icon="alertmodal.tga"
+   name="ExportPartial"
+   type="alertmodal">
+    Object exported. Some textures could not be saved due to: [REASON]
+  </notification>
+
+  <notification
+   icon="notifytip.tga"
+   name="ExportSuccessful"
+   type="notifytip">
+Export successful.
+  </notification>
+  
+  <!--End InWorldz notifications-->
+
 <!--Begin Imprudence notifications-->
 
 <notification

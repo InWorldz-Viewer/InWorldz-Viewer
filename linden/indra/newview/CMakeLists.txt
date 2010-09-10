@@ -399,6 +399,7 @@ set(viewer_SOURCE_FILES
     llviewermessage.cpp
     llviewernetwork.cpp
     llviewerobject.cpp
+    llviewerobjectbackup.cpp
     llviewerobjectlist.cpp
     llviewerparcelmedia.cpp
     llviewerparcelmediaautoplay.cpp
@@ -817,6 +818,7 @@ set(viewer_HEADER_FILES
     llviewermessage.h
     llviewernetwork.h
     llviewerobject.h
+    llviewerobjectbackup.h
     llviewerobjectlist.h
     llviewerparcelmedia.h
     llviewerparcelmediaautoplay.h
