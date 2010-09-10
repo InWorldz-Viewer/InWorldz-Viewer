@@ -63,6 +63,7 @@ include_directories(
     )
 
 set(viewer_SOURCE_FILES
+    jcfloaterareasearch.cpp
     llagent.cpp
     llagentaccess.cpp
     llagentdata.cpp
@@ -479,6 +480,7 @@ set(viewer_HEADER_FILES
     CMakeLists.txt
     ViewerInstall.cmake
 
+    jcfloaterareasearch.h
     llagent.h
     llagentaccess.h
     llagentdata.h
