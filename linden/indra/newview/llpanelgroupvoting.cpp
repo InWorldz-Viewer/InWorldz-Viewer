@@ -139,6 +139,7 @@ public:
 
 	std::vector<LLSD> mActiveReceived;
 	std::vector<LLSD> mHistoryReceived;
+	U32 mOtherGroupHistoryItems;
 
 	int mProposalColumnWidths[10];
 	int mHistoryColumnWidths[10];
@@ -215,6 +216,8 @@ LLPanelGroupVoting::impl::impl(LLPanelGroupVoting& panel, const LLUUID& group_id
 	mVoteHistoryTextLbl = NULL;
 	mBtnViewHistoryList = NULL;
 	mBtnViewHistoryItem = NULL;
+
+	mOtherGroupHistoryItems = 0;
 }
 
 LLPanelGroupVoting::impl::~impl()
@@ -588,6 +591,7 @@ void LLPanelGroupVoting::impl::sendGroupProposalsRequest(const LLUUID& group_id)
 	mProposalTransID.generate();
 	mProposals->deleteAllItems(); //this should delete all the objects
 	mActiveReceived.clear();
+	mOtherGroupHistoryItems = 0;
 
 	//fill in some text so the user will at least know that
 	//we're pining the server in high latency situations
@@ -1245,10 +1249,15 @@ void LLPanelGroupVoting::impl::processGroupVoteHistoryItemReply(LLMessageSystem 
 
 			self->mHistoryReceived.push_back(row);
 		} //end if proposal
+		else
+		{
+			llinfos << "Vote is not a proposal, but a " << vote_type << llendl;
+			self->mOtherGroupHistoryItems++;
+		}
 	} //end if vote_items > 0
 
 	int received = self->mHistoryReceived.size();
-	if ( (U32)received != num_expected )
+	if ( (U32)received + self->mOtherGroupHistoryItems != num_expected )
 	{
 		self->addPendingHistoryScrollListItem(received,
 											  num_expected,
