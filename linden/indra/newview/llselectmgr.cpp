@@ -5519,8 +5519,12 @@ void LLSelectMgr::updateSelectionCenter()
 		// Initialize the bounding box to the root prim, so the BBox orientation
 		// matches the root prim's (affecting the orientation of the manipulators).
 		bbox.addBBoxAgent( (mSelectedObjects->getFirstRootObject(TRUE))->getBoundingBoxAgent() );
-		
+
 		std::vector < LLViewerObject *> jointed_objects;
+
+		// Initialize the bounding box to the root prim, so the BBox orientation
+		// matches the root prim's (affecting the orientation of the manipulators).
+		bbox.addBBoxAgent( (mSelectedObjects->getFirstRootObject(TRUE))->getBoundingBoxAgent() );
 
 		for (LLObjectSelection::iterator iter = mSelectedObjects->begin();
 			 iter != mSelectedObjects->end(); iter++)
