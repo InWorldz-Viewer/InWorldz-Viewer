@@ -747,7 +747,8 @@ LLVOAvatar::LLVOAvatar(const LLUUID& id,
 	mNeedsSkin(FALSE),
 	mUpdatePeriod(1),
 	mFullyLoadedInitialized(FALSE),
-	mHasBakedHair( FALSE )
+	mHasBakedHair(FALSE),
+	mSupportsAlphaLayers(FALSE)
 {
 	LLMemType mt(LLMemType::MTYPE_AVATAR);
 	//VTResume();  // VTune
@@ -4211,15 +4212,9 @@ U32 LLVOAvatar::renderSkinned(EAvatarRenderPass pass)
 
 	if (pass == AVATAR_RENDER_PASS_SINGLE)
 	{
-		const bool should_alpha_mask = mHasBakedHair && isTextureDefined(TEX_HEAD_BAKED) && isTextureDefined(TEX_UPPER_BAKED) 
-										&& isTextureDefined(TEX_LOWER_BAKED) 
-										&& mBakedTextureData[BAKED_HEAD].mIsLoaded
-										&& mBakedTextureData[BAKED_UPPER].mIsLoaded && mBakedTextureData[BAKED_LOWER].mIsLoaded
-										&& mBakedTextureData[BAKED_HEAD].mIsUsed
-										&& mBakedTextureData[BAKED_UPPER].mIsUsed && mBakedTextureData[BAKED_LOWER].mIsUsed
-										&& !LLDrawPoolAlpha::sShowDebugAlpha // Don't alpha mask if "Highlight Transparent" checked
-										&& !(isSelf() && gAgent.cameraCustomizeAvatar()); // don't alpha mask if in customize mode
-
+		const bool should_alpha_mask = mSupportsAlphaLayers && mHasBakedHair
+									    && !LLDrawPoolAlpha::sShowDebugAlpha // Don't alpha mask if "Highlight Transparent" checked
+										&& !LLDrawPoolAvatar::sSkipTransparent;
 		LLGLState test(GL_ALPHA_TEST, should_alpha_mask);
 
 		if (should_alpha_mask)
@@ -4331,27 +4326,25 @@ U32 LLVOAvatar::renderRigid()
 		return 0;
 	}
 
+	const bool should_alpha_mask = mSupportsAlphaLayers && mHasBakedHair
+								    && !LLDrawPoolAlpha::sShowDebugAlpha // Don't alpha mask if "Highlight Transparent" checked
+									&& !LLDrawPoolAvatar::sSkipTransparent;
+
+	LLGLState test(GL_ALPHA_TEST, should_alpha_mask);
+
+	if (should_alpha_mask)
+	{
+		gGL.setAlphaRejectSettings(LLRender::CF_GREATER, 0.5f);
+	}
+
 	if (isTextureVisible(TEX_EYES_BAKED) || mIsDummy)
 	{
-		// If the meshes need to be drawn, enable alpha masking but not blending
-		bool should_alpha_mask = mHasBakedHair 
-					&& mBakedTextureData[BAKED_EYES].mIsLoaded
-					&& mBakedTextureData[BAKED_EYES].mIsUsed
-					&& !(isSelf() && gAgent.cameraCustomizeAvatar());
-
-		LLGLState test(GL_ALPHA_TEST, should_alpha_mask);
-		
-		if (should_alpha_mask)
-		{
-			gGL.setAlphaRejectSettings(LLRender::CF_GREATER, 0.5f);
-		}
-
 		num_indices += mMeshLOD[MESH_ID_EYEBALL_LEFT]->render(mAdjustedPixelArea, TRUE, mIsDummy);
 		num_indices += mMeshLOD[MESH_ID_EYEBALL_RIGHT]->render(mAdjustedPixelArea, TRUE, mIsDummy);
-
-		gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
 	}
-	
+
+	gGL.setAlphaRejectSettings(LLRender::CF_DEFAULT);
+
 	return num_indices;
 }
 
@@ -4524,6 +4517,7 @@ void LLVOAvatar::updateTextures()
 			// Spam if this is a baked texture, not set to default image, without valid host info
 			if (isIndexBakedTexture((ETextureIndex)index)
 				&& imagep->getID() != IMG_DEFAULT_AVATAR
+				&& imagep->getID() != IMG_INVISIBLE
 				&& !imagep->getTargetHost().isOk())
 			{
 				LL_WARNS_ONCE("Texture") << "LLVOAvatar::updateTextures No host for texture "
@@ -5311,6 +5305,7 @@ BOOL LLVOAvatar::loadAvatar()
 				if (layer_set->isBodyRegion(baked_dict->mName))
 				{
 					mBakedTextureData[baked_iter->first].mTexLayerSet = layer_set;
+					layer_set->setBakedTexIndex(baked_iter->first);
 					found_baked_entry = true;
 					break;
 				}
@@ -6976,6 +6971,9 @@ void LLVOAvatar::updateMeshTextures()
 
 	}
 
+	// Turn on alpha masking correctly for yourself and other avatars on 1.23+
+	mSupportsAlphaLayers = isSelf() || is_layer_baked[BAKED_HAIR];
+
 	// Baked textures should be requested from the sim this avatar is on. JC
 	const LLHost target_host = getObjectHost();
 	if (!target_host.isOk())
@@ -7005,7 +7003,7 @@ void LLVOAvatar::updateMeshTextures()
 			else
 			{
 				mBakedTextureData[i].mIsLoaded = FALSE;
-				if ( (i == BAKED_HEAD) || (i == BAKED_UPPER) || (i == BAKED_LOWER) )
+				if ((baked_img->getID() != IMG_INVISIBLE) && (i == BAKED_HEAD || i == BAKED_UPPER || i == BAKED_LOWER))
 				{
 					baked_img->setLoadedCallback(onBakedTextureMasksLoaded, MORPH_MASK_REQUESTED_DISCARD, TRUE, TRUE, new LLTextureMaskData( mID ));	
 				}
@@ -7277,7 +7275,13 @@ void LLVOAvatar::setNewBakedTexture( ETextureIndex te, const LLUUID& uuid )
 	// Baked textures live on other sims.
 	LLHost target_host = getObjectHost();	
 	setTEImage( te, gImageList.getImageFromHost( uuid, target_host ) );
-	updateMeshTextures();
+	if (uuid != IMG_INVISIBLE)
+	{
+		// Do not update textures when setting a new invisible baked texture as
+		// it would result in destroying the calling object (setNewBakedTexture()
+		// is called by LLTexLayerSetBuffer::render()) !
+		updateMeshTextures();
+	}
 	dirtyMesh();
 
 
@@ -7290,7 +7294,7 @@ void LLVOAvatar::setNewBakedTexture( ETextureIndex te, const LLUUID& uuid )
 	if (text_dict->mIsBakedTexture)
 	{
 		llinfos << "New baked texture: " << text_dict->mName << " UUID: " << uuid <<llendl;
-		mBakedTextureData[text_dict->mBakedTextureIndex].mTexLayerSet->requestUpdate();
+		//mBakedTextureData[text_dict->mBakedTextureIndex].mTexLayerSet->requestUpdate();
 	}
 	else
 	{
@@ -7534,6 +7538,10 @@ void LLVOAvatar::dumpAvatarTEs( const std::string& context )
 		{
 			llinfos << "       " << text_dict->mName << ": IMG_DEFAULT" << llendl;
 		}
+		else if (te_image->getID() == IMG_INVISIBLE)
+		{
+			llinfos << "       " << text_dict->mName << ": IMG_INVISIBLE" << llendl;
+		}
 		else if( te_image->getID() == IMG_DEFAULT_AVATAR )
 		{
 			llinfos << "       " << text_dict->mName << ": IMG_DEFAULT_AVATAR" << llendl;
@@ -7705,11 +7713,11 @@ BOOL LLVOAvatar::isWearingWearableType( EWearableType type )
 }
 
 //-----------------------------------------------------------------------------
-// updatedWearable( EWearableType type )
+// wearableUpdated(EWearableType type, BOOL upload_result)
 // forces an update to any baked textures relevant to type.
-// Should be called only on saving the wearable
+// will force an upload of the resulting bake if the second parameter is TRUE
 //-----------------------------------------------------------------------------
-void LLVOAvatar::wearableUpdated( EWearableType type )
+void LLVOAvatar::wearableUpdated(EWearableType type, BOOL upload_result)
 {
 	for (LLVOAvatarDictionary::wearable_map_t::const_iterator wearable_iter = LLVOAvatarDictionary::getInstance()->getWearables().begin();
 		wearable_iter != LLVOAvatarDictionary::getInstance()->getWearables().end();
@@ -7728,8 +7736,8 @@ void LLVOAvatar::wearableUpdated( EWearableType type )
 				{
 					if (mBakedTextureData[index].mTexLayerSet)
 					{
-						mBakedTextureData[index].mTexLayerSet->requestUpdate();
-						mBakedTextureData[index].mTexLayerSet->requestUpload();
+						invalidateComposite(mBakedTextureData[index].mTexLayerSet, upload_result);
+						updateMeshTextures();
 					}
 					break;	
 				}
@@ -7828,7 +7836,7 @@ void LLVOAvatar::onFirstTEMessageReceived()
 				LLViewerImage* image = getTEImage( mBakedTextureData[i].mTextureIndex );
 				mBakedTextureData[i].mLastTextureIndex = image->getID();
 				// If we have more than one texture for the other baked layers, we'll want to call this for them too.
-				if ( (i == BAKED_HEAD) || (i == BAKED_UPPER) || (i == BAKED_LOWER) )
+				if ((image->getID() != IMG_INVISIBLE) && (i == BAKED_HEAD || i == BAKED_UPPER || i == BAKED_LOWER))
 				{
 					image->setLoadedCallback( onBakedTextureMasksLoaded, MORPH_MASK_REQUESTED_DISCARD, TRUE, TRUE, new LLTextureMaskData( mID ));
 				}
@@ -8085,7 +8093,7 @@ void LLVOAvatar::onBakedTextureMasksLoaded( BOOL success, LLViewerImage *src_vi,
 				{
 					const ETextureIndex texture_index = iter->first;
 					const LLViewerImage *baked_img = self->getTEImage(texture_index);
-					if (id == baked_img->getID())
+					if (baked_img && id == baked_img->getID())
 					{
 						const EBakedTextureIndex baked_index = text_dict->mBakedTextureIndex;
 						if (self->mBakedTextureData[baked_index].mTexLayerSet)

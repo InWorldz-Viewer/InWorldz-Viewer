@@ -53,6 +53,12 @@
 	<check_box bottom="-376" enabled="true" follows="left|top" font="SansSerifSmall"
 	     height="16" initial_value="false" label="Skirt" left="113"
 	     mouse_opaque="true" name="checkbox_Skirt" radio_style="false" width="100" />
+	<check_box bottom="-396" enabled="true" follows="left|top" font="SansSerifSmall"
+	     height="16" initial_value="false" label="Tattoo" left="113"
+	     mouse_opaque="true" name="checkbox_Tattoo" radio_style="false" width="100" />
+	<check_box bottom="-416" enabled="true" follows="left|top" font="SansSerifSmall"
+	     height="16" initial_value="false" label="Alpha" left="113"
+	     mouse_opaque="true" name="checkbox_Alpha" radio_style="false" width="100" />
 	<check_box bottom="-216" enabled="false" follows="left|top" font="SansSerifSmall"
 	     height="16" initial_value="false" label="Chest" left="213"
 	     mouse_opaque="true" name="checkbox_Chest" radio_style="false" width="100" />
