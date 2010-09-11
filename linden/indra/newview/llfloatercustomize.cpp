@@ -1019,6 +1019,19 @@ void LLPanelEditWearable::setUIPermissions(U32 perm_mask, BOOL is_complete)
 	}
 }
 
+void updateAvatarHeightDisplay()
+{
+	if (gFloaterCustomize)
+	{
+		LLVOAvatar* avatar = gAgent.getAvatarObject();
+		F32 avatar_size = (avatar->mBodySize.mV[VZ]) + (F32)0.17; //mBodySize is actually quite a bit off.
+		gFloaterCustomize->getChild<LLTextBox>("HeightTextM")->setValue(llformat("%.2f", avatar_size) + "m");
+		F32 feet = avatar_size / 0.3048;
+		F32 inches = (feet - (F32)((U32)feet)) * 12.0;
+		gFloaterCustomize->getChild<LLTextBox>("HeightTextI")->setValue(llformat("%d'%d\"", (U32)feet, (U32)inches));
+	}
+}
+
 /////////////////////////////////////////////////////////////////////
 // LLScrollingPanelParam
 
@@ -1215,6 +1228,7 @@ void LLScrollingPanelParam::onSliderMoved(LLUICtrl* ctrl, void* userdata)
 	F32 new_weight = self->percentToWeight( (F32)slider->getValue().asReal() );
 	if (current_weight != new_weight )
 	{
+		updateAvatarHeightDisplay();
 		gAgent.getAvatarObject()->setVisualParamWeight( param, new_weight, FALSE);
 		gAgent.getAvatarObject()->updateVisualParams();
 	}
@@ -1993,6 +2007,8 @@ void LLFloaterCustomize::draw()
 	// to be called when the tabs change or an inventory item
 	// arrives. Figure out some way to avoid this if possible.
 	updateInventoryUI();
+
+	updateAvatarHeightDisplay();
 
 	LLScrollingPanelParam::sUpdateDelayFrames = 0;
 	
