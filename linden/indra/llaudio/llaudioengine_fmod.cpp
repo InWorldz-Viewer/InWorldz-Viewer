@@ -493,6 +493,12 @@ bool LLAudioChannelFMOD::updateBuffer()
 		// Actually play the sound.  Start it off paused so we can do all the necessary
 		// setup.
 		mChannelID = FSOUND_PlaySoundEx(FSOUND_FREE, samplep, FSOUND_DSP_GetSFXUnit(), true);
+		if (!mChannelID)
+		{
+// 			llwarns << "Could not allocate a new channel ID" << llendl;
+			mCurrentBufferp = NULL;
+			return FALSE;
+		}
 
 		//llinfos << "Setting up channel " << std::hex << mChannelID << std::dec << llendl;
 	}
