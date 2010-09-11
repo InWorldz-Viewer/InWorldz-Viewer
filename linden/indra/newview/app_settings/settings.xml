@@ -6674,6 +6674,17 @@
       <key>Value</key>
       <integer>1</integer>
     </map>
+    <key>PlayTypingSound</key>
+    <map>
+      <key>Comment</key>
+      <string>TRUE to play and hear the typing sound whenever you or another avatar types in the chat bar</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>1</integer>
+    </map>
     <key>PrecachingDelay</key>
     <map>
       <key>Comment</key>

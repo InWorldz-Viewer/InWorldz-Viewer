@@ -4788,7 +4788,7 @@ BOOL LLVOAvatar::processSingleAnimationStateChange( const LLUUID& anim_id, BOOL 
 
 	if ( start ) // start animation
 	{
-		if (anim_id == ANIM_AGENT_TYPE)
+		if (anim_id == ANIM_AGENT_TYPE && gSavedSettings.getBOOL("PlayTypingSound"))
 		{
 			if (gAudiop)
 			{
