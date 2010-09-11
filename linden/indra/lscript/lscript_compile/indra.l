@@ -304,8 +304,8 @@ extern "C" { int yyerror(const char *fmt, ...); }
 "ATTACH_LULEG"		{ count(); yylval.ival = 26; return(INTEGER_CONSTANT); }
 "ATTACH_LLLEG"		{ count(); yylval.ival = 27; return(INTEGER_CONSTANT); }
 "ATTACH_BELLY"		{ count(); yylval.ival = 28; return(INTEGER_CONSTANT); }
-"ATTACH_RPEC"		{ count(); yylval.ival = 29; return(INTEGER_CONSTANT); }
-"ATTACH_LPEC"		{ count(); yylval.ival = 30; return(INTEGER_CONSTANT); }
+"ATTACH_LPEC"		{ count(); yylval.ival = 29; return(INTEGER_CONSTANT); }
+"ATTACH_RPEC"		{ count(); yylval.ival = 30; return(INTEGER_CONSTANT); }
 "ATTACH_HUD_CENTER_2"	{ count(); yylval.ival = 31; return(INTEGER_CONSTANT); }
 "ATTACH_HUD_TOP_RIGHT"	{ count(); yylval.ival = 32; return(INTEGER_CONSTANT); }
 "ATTACH_HUD_TOP_CENTER"	{ count(); yylval.ival = 33; return(INTEGER_CONSTANT); }
