@@ -1288,8 +1288,14 @@ BOOL LLViewerWindow::handleActivate(LLWindow *window, BOOL activated)
 			gAgent.setAFK();
 		}
 		
-		// SL-53351: Make sure we're not in mouselook when minimised, to prevent control issues
-		gAgent.changeCameraToDefault();
+		if (gAgent.cameraMouselook())
+		{
+			// Switch back to mouselook toolset
+			LLToolMgr::getInstance()->setCurrentToolset(gMouselookToolset);
+			LLSelectMgr::getInstance()->deselectAll();
+			gViewerWindow->hideCursor();
+			gViewerWindow->moveCursorToCenter();
+		}
 		
 		send_agent_pause();
 		
