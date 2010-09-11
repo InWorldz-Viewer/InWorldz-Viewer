@@ -309,6 +309,11 @@
 			<on_click function="ShowFloater" userdata="mute list" />
 			<on_check function="FloaterVisible" userdata="mute list" />
 		</menu_item_check>
+		<menu_item_check bottom="189" enabled="true" height="19" label="Teleport History" left="0"
+						 mouse_opaque="true" name="Teleport History" shortcut="" width="211">
+			<on_click function="ShowFloater" userdata="teleport history" />
+			<on_check function="FloaterVisible" userdata="teleport history" />
+		</menu_item_check>
 		<menu_item_separator bottom="-197" enabled="true" height="8" label="-----------" left="0"
 		     mouse_opaque="true" name="separator2" width="211" />
 		<menu_item_check bottom="-216" enabled="true" height="19" label="Camera Controls" left="0"

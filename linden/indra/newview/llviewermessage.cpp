@@ -86,6 +86,7 @@
 #include "llfloatermute.h"
 #include "llfloaterpostcard.h"
 #include "llfloaterpreference.h"
+#include "llfloaterteleporthistory.h"
 #include "llfollowcam.h"
 #include "llgroupnotify.h"
 #include "llhudeffect.h"
@@ -2939,6 +2940,9 @@ void process_agent_movement_complete(LLMessageSystem* msg, void**)
 		{
 			gAgent.setTeleportState( LLAgent::TELEPORT_NONE );
 		}
+
+		// add teleport destination to the list of visited places
+		gFloaterTeleportHistory->addPendingEntry(regionp->getName(), (S16)agent_pos.mV[VX], (S16)agent_pos.mV[VY], (S16)agent_pos.mV[VZ]);
 	}
 	else
 	{

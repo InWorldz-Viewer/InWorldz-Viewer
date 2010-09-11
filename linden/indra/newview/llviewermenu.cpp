@@ -132,6 +132,7 @@
 #include "llfloaterenvsettings.h"
 #include "llfloaterstats.h"
 #include "llfloaterteleport.h"
+#include "llfloaterteleporthistory.h"
 #include "llfloatertest.h"
 #include "llfloatertools.h"
 #include "llfloaterwater.h"
@@ -5334,6 +5335,10 @@ class LLShowFloater : public view_listener_t
 		{
 			LLFloaterChat::toggleInstance(LLSD());
 		}
+		else if (floater_name == "teleport history")
+		{
+			gFloaterTeleportHistory->setVisible(!gFloaterTeleportHistory->getVisible());
+		}
 		else if (floater_name == "im")
 		{
 			LLFloaterChatterBox::toggleInstance(LLSD());
@@ -5482,6 +5487,10 @@ class LLFloaterVisible : public view_listener_t
 		else if (floater_name == "chat history")
 		{
 			new_value = LLFloaterChat::instanceVisible();
+		}
+		else if (floater_name == "teleport history")
+		{
+			new_value = gFloaterTeleportHistory->getVisible();
 		}
 		else if (floater_name == "im")
 		{
