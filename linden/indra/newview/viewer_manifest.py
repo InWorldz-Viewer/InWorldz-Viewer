@@ -155,7 +155,8 @@ class ViewerManifest(LLManifest):
             setting_flags = '--settings settings_%s_%s.xml'\
                             % (self.grid(), self.channel_lowerword())
                                                 
-        return " ".join((channel_flags, grid_flags, setting_flags)).strip()
+        #return " ".join((channel_flags, grid_flags, setting_flags)).strip()
+        return " ".join((channel_flags, setting_flags)).strip()
 
 class WindowsManifest(ViewerManifest):
     def final_exe(self):
