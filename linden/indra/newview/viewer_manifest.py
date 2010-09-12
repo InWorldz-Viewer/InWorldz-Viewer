@@ -268,11 +268,11 @@ class WindowsManifest(ViewerManifest):
                 "../win_crash_logger/release/windows-crash-logger.exe",
                 "../win_crash_logger/relwithdebinfo/windows-crash-logger.exe"),
                   dst="win_crash_logger.exe")
-        self.path(src=self.find_existing_file(
-                "../win_updater/debug/windows-updater.exe",
-                "../win_updater/release/windows-updater.exe",
-                "../win_updater/relwithdebinfo/windows-updater.exe"),
-                  dst="updater.exe")
+        #self.path(src=self.find_existing_file(
+        #        "../win_updater/debug/windows-updater.exe",
+        #        "../win_updater/release/windows-updater.exe",
+        #        "../win_updater/relwithdebinfo/windows-updater.exe"),
+        #          dst="updater.exe")
 
         # For google-perftools tcmalloc allocator.
         #if self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):
@@ -486,11 +486,11 @@ class DarwinManifest(ViewerManifest):
                 
                 # our apps
                 self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
-                self.path("../mac_updater/" + self.args['configuration'] + "/mac-updater.app", "mac-updater.app")
+                #self.path("../mac_updater/" + self.args['configuration'] + "/mac-updater.app", "mac-updater.app")
 
                 # our apps dependencies on shared libs
                 mac_crash_logger_res_path = self.dst_path_of("mac-crash-logger.app/Contents/Resources")
-                mac_updater_res_path = self.dst_path_of("mac-updater.app/Contents/Resources")
+                #mac_updater_res_path = self.dst_path_of("mac-updater.app/Contents/Resources")
                 for libfile in ("libllcommon.dylib",
                                 "libapr-1.0.3.7.dylib",
                                 "libaprutil-1.0.3.8.dylib",
@@ -500,10 +500,10 @@ class DarwinManifest(ViewerManifest):
                                      {'target': target_lib,
                                       'link' : os.path.join(mac_crash_logger_res_path, libfile)}
                                      )
-                    self.run_command("ln -sf %(target)r %(link)r" %
-                                     {'target': target_lib,
-                                      'link' : os.path.join(mac_updater_res_path, libfile)}
-                                     )
+                    #self.run_command("ln -sf %(target)r %(link)r" %
+                    #                 {'target': target_lib,
+                    #                  'link' : os.path.join(mac_updater_res_path, libfile)}
+                    #                 )
 
                 # plugin launcher
                 self.path("../llplugin/slplugin/" + self.args['configuration'] + "/SLPlugin", "SLPlugin")
