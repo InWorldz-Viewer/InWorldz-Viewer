@@ -3095,7 +3095,7 @@ void LLAppViewer::badNetworkHandler()
 		"the issue. \n"
 		" \n"
 		"If the problem continues, see the Tech Support FAQ at: \n"
-		"www.secondlife.com/support";
+		"http://inworldz.com/support.php";
 	forceDisconnect(message.str());
 }
 

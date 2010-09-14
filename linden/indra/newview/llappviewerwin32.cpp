@@ -475,7 +475,6 @@ bool LLAppViewerWin32::initHardwareTest()
 			if (OSBTN_NO== button)
 			{
 				LL_INFOS("AppInit") << "User quitting after failed DirectX 9 detection" << LL_ENDL;
-				LLWeb::loadURLExternal(DIRECTX_9_URL);
 				return false;
 			}
 			gSavedSettings.setWarning("AboutDirectX9", FALSE);
