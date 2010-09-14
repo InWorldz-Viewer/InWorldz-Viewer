@@ -24,13 +24,13 @@
 		Escriba aquí el mensaje.
 	</text_editor>
 	<text name="fine_print" bottom_delta="-21">
-		Si su destinatario se registra en Second Life,
+		Si su destinatario se registra en InWorldz,
 usted conseguirá un bono de referido.
 	</text>
 	<button label="Cancelar" name="cancel_btn"/>
 	<button label="Enviar" name="send_btn"/>
 	<string name="default_subject">
-		Postal desde Second Life.
+		Postal desde InWorldz.
 	</string>
 	<string name="default_message">
 		¡Mira esto!

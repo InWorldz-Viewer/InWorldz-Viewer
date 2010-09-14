@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater name="directory" title="Cerca in Second Life">
+<floater name="directory" title="Cerca in InWorldz">
 	<tab_container name="Directory Tabs">
 		<panel label="Tutto" name="find_all_panel">
 			<string name="searching_text">
@@ -11,7 +11,7 @@
 			<text name="find">
 				Trova:
 			</text>
-			<line_editor label="Cerca" name="search_editor" tool_tip="Cerca Second Life"/>
+			<line_editor label="Cerca" name="search_editor" tool_tip="Cerca InWorldz"/>
 			<button label="Indietro" name="back_btn"/>
 			<button label="Avanti" name="forward_btn"/>
 			<button label="Cerca" name="search_btn"/>
@@ -387,7 +387,7 @@ Per acquistare direttamente, visita la terra e clicca sul nome del terreno nella
 			<text name="find">
 				Trova:
 			</text>
-			<line_editor label="Cerca" name="search_editor" tool_tip="Cerca Second Life"/>
+			<line_editor label="Cerca" name="search_editor" tool_tip="Cerca InWorldz"/>
 			<button label="Indietro" name="back_btn"/>
 			<button label="Avanti" name="forward_btn"/>
 			<button label="Cerca" name="search_btn"/>

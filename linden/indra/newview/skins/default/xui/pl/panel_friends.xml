@@ -8,7 +8,7 @@
 		<column name="icon_online_status" tool_tip="Status dostępności" />
 		<column label="Imię" name="friend_name" tool_tip="Imię" />
 		<column name="icon_visible_online"
-		     tool_tip="Ta osoba może widzieć czy jesteś w Second Life" />
+		     tool_tip="Ta osoba może widzieć czy jesteś w InWorldz" />
 		<column name="icon_visible_map"
 		     tool_tip="Ta osoba może zlokalizować Cię na mapie" />
 		<column name="icon_edit_mine"

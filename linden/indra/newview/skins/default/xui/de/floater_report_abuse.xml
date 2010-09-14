@@ -45,10 +45,10 @@ dann auf das Objekt:
 			Alter&gt; Age-Play
 		</combo_item>
 		<combo_item name="Age__Adult_resident_on_Teen_Second_Life">
-			Alter&gt; Erwachsener Einwohner in Teen Second Life
+			Alter&gt; Erwachsener Einwohner in Teen InWorldz
 		</combo_item>
 		<combo_item name="Age__Underage_resident_outside_of_Teen_Second_Life">
-			Alter &gt; Minderjähriger Einwohner außerhalb Teen Second Life
+			Alter &gt; Minderjähriger Einwohner außerhalb Teen InWorldz
 		</combo_item>
 		<combo_item name="Assault__Combat_sandbox___unsafe_area">
 			Angriff&gt; Kampf-Sandbox / unsichere Region
@@ -69,7 +69,7 @@ dann auf das Objekt:
 			Offenlegung &gt; Abhören eines Chats aus der Ferne
 		</combo_item>
 		<combo_item name="Disclosure__Second_Life_information_chat_IMs">
-			Offenlegung &gt; Second Life-Informationen/Chat/IMs
+			Offenlegung &gt; InWorldz-Informationen/Chat/IMs
 		</combo_item>
 		<combo_item name="Disturbing_the_peace__Unfair_use_of_region_resources">
 			Ruhestörung &gt; Unfaire Nutzung von Regionsressourcen

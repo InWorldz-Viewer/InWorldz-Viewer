@@ -120,7 +120,7 @@
 			</text>
 		</panel>
 		<panel label="관심장소" name="Picks">
-			<text name="Tell everyone about your favorite places in Second Life.">
+			<text name="Tell everyone about your favorite places in InWorldz.">
 				세컨드라이프에서 가장 즐겨찾는 장소를 알려주십시오.
 			</text>
 			<button label="신규…" label_selected="신규…" name="New..."/>
@@ -130,7 +130,7 @@
 			</text>
 		</panel>
 		<panel label="광고" name="Classified">
-			<text name="Place an ad in Second Life&apos;s classified listings.">
+			<text name="Place an ad in InWorldz&apos;s classified listings.">
 				세컨드라이프  광고 목록에 광고 내기
 			</text>
 			<button label="신규…" label_selected="신규…" name="New..."/>

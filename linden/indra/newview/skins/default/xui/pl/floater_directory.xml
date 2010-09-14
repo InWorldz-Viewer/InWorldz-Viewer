@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater name="directory" title="Przeszukaj Second Life">
+<floater name="directory" title="Przeszukaj InWorldz">
 	<tab_container name="Directory Tabs">
 		<panel label="Wszystko" name="find_all_panel">
 			<string name="searching_text">
@@ -11,7 +11,7 @@
 			<text name="find">
 				Szukaj:
 			</text>
-			<line_editor label="Szukaj" name="search_editor" tool_tip="Search Second Life"/>
+			<line_editor label="Szukaj" name="search_editor" tool_tip="Search InWorldz"/>
 			<button label="Wróć" name="back_btn"/>
 			<button label="Dalej" name="forward_btn"/>
 			<button label="Szukaj" name="search_btn"/>
@@ -398,7 +398,7 @@ By zakupić posiadłość bezpośrednio, odwiedź ją oraz kliknij na nazwę pos
 			<text name="find">
 				Szukaj:
 			</text>
-			<line_editor label="Szukaj" name="search_editor" tool_tip="Szukaj w Second Life"/>
+			<line_editor label="Szukaj" name="search_editor" tool_tip="Szukaj w InWorldz"/>
 			<button label="Wróć" name="back_btn"/>
 			<button label="Dalej" name="forward_btn"/>
 			<button label="Szukaj" name="search_btn"/>

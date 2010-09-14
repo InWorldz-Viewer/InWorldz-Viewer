@@ -30,7 +30,7 @@
 	<button label="취소" name="cancel_btn" />
 	<button label="보내기" name="send_btn" />
 	<text name="default_subject">
-		Second Life로부터의 엽서
+		InWorldz로부터의 엽서
 	</text>
 	<text name="default_message">
 		여기를 체크하여 주십시요.

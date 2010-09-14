@@ -44,10 +44,10 @@
 			Вік &gt; Неправдива інформація про вік
 		</combo_item>
 		<combo_item name="Age__Adult_resident_on_Teen_Second_Life">
-			Вік &gt; Adult резидент у Teen Second Life
+			Вік &gt; Adult резидент у Teen InWorldz
 		</combo_item>
 		<combo_item name="Age__Underage_resident_outside_of_Teen_Second_Life">
-			Вік &gt; Неповнолітній резидент за межами Teen Second Life
+			Вік &gt; Неповнолітній резидент за межами Teen InWorldz
 		</combo_item>
 		<combo_item name="Assault__Combat_sandbox___unsafe_area">
 			Напад &gt; Бойова пісочниця / небезпечна зона
@@ -68,7 +68,7 @@
 			Розкриття &gt; Віддалений моніторинг чату
 		</combo_item>
 		<combo_item name="Disclosure__Second_Life_information_chat_IMs">
-			Розкриття &gt; Інформація з Second Life/Чат/ПП
+			Розкриття &gt; Інформація з InWorldz/Чат/ПП
 		</combo_item>
 		<combo_item name="Disturbing_the_peace__Unfair_use_of_region_resources">
 			Порушення миру &gt; Нечесне використання ресурсів регіону

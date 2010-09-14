@@ -43,10 +43,10 @@
 			Idade &gt; Idade no jogo
 		</combo_item>
 		<combo_item name="Age__Adult_resident_on_Teen_Second_Life">
-			Idade &gt; Residente adulto no Second Life Jovem
+			Idade &gt; Residente adulto no InWorldz Jovem
 		</combo_item>
 		<combo_item name="Age__Underage_resident_outside_of_Teen_Second_Life">
-			Idade &gt; Residente menor de idade fora do Second Life Teen
+			Idade &gt; Residente menor de idade fora do InWorldz Teen
 		</combo_item>
 		<combo_item name="Assault__Combat_sandbox___unsafe_area">
 			Assalto &gt; Sandbox de combate / área não segura
@@ -67,7 +67,7 @@
 			Revelar &gt; Conversa monitorada remotamente
 		</combo_item>
 		<combo_item name="Disclosure__Second_Life_information_chat_IMs">
-			Revelar &gt; Informação do Second Life/conversa/MIs
+			Revelar &gt; Informação do InWorldz/conversa/MIs
 		</combo_item>
 		<combo_item name="Disturbing_the_peace__Unfair_use_of_region_resources">
 			Distúrbio da paz &gt; Uso injusto dos recursos da região

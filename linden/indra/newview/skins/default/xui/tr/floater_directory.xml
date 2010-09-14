@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater name="directory" title="Second Life&apos;da Ara">
+<floater name="directory" title="InWorldz&apos;da Ara">
 	<tab_container name="Directory Tabs">
 		<panel label="Tümü" name="find_all_panel">
 			<string name="searching_text">
@@ -11,7 +11,7 @@
 			<text name="find">
 				Bul:
 			</text>
-			<line_editor label="Ara" name="search_editor" tool_tip="Second Life&apos;da Ara"/>
+			<line_editor label="Ara" name="search_editor" tool_tip="InWorldz&apos;da Ara"/>
 			<button label="Geri" name="back_btn"/>
 			<button label="İleri" name="forward_btn"/>
 			<button label="Ara" name="search_btn"/>
@@ -386,7 +386,7 @@ Doğrudan satın almak için, araziyi ziyaret ediniz ve başlık çubuğundaki l
 			<text name="find">
 				Bul:
 			</text>
-			<line_editor label="Ara" name="search_editor" tool_tip="Second Life&apos;da Ara"/>
+			<line_editor label="Ara" name="search_editor" tool_tip="InWorldz&apos;da Ara"/>
 			<button label="Geri" name="back_btn"/>
 			<button label="İleri" name="forward_btn"/>
 			<button label="Ara" name="search_btn"/>

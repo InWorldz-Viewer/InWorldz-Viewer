@@ -25,7 +25,7 @@
 	<button label="İptal" name="cancel_btn" />
 	<button label="Gönder" name="send_btn" />
 	<string name="default_subject">
-		Second Life&apos;dan bir postakartı.
+		InWorldz&apos;dan bir postakartı.
 	</string>
 	<string name="default_message">
 		Bakın!

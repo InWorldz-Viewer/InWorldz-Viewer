@@ -31,9 +31,9 @@
 	<button label="" label_selected="" name="status_no_voice"
 	     tool_tip="Hangüzenetek küldése tiltott" />
 	<button label="" label_selected="" name="buyland" tool_tip="Telek megvásárlása" />
-	<line_editor label="Keresés" name="search_editor" tool_tip="Keresés a Second Life-ban" />
+	<line_editor label="Keresés" name="search_editor" tool_tip="Keresés a InWorldz-ban" />
 	<button label="" label_selected="" name="search_btn"
-	     tool_tip="Keresés a Second Life-ban" />
+	     tool_tip="Keresés a InWorldz-ban" />
 	<string name="packet_loss_tooltip">
 		Csomagveszteség
 	</string>

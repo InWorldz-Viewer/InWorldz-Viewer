@@ -6,7 +6,7 @@
 			外部のウェブ・ブラウザ (Firefox, Safari, Internet Explorer) を使用
 		</radio_item>
 		<radio_item name="internal"
-		     tool_tip="ヘルプやWebリンクに埋め込みWebブラウザを使用します。ブラウザはSecond Lifeの新しいウィンドウとして開きます。">
+		     tool_tip="ヘルプやWebリンクに埋め込みWebブラウザを使用します。ブラウザはInWorldzの新しいウィンドウとして開きます。">
 			内蔵のウェブ・ブラウザを使用
 		</radio_item>
 	</radio_group>

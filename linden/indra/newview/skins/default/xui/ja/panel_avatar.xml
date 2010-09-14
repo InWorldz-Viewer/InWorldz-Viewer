@@ -49,12 +49,12 @@
 			</text>
 			<view_border name="acct_border" width="161" />
 			<text name="acct" width="161" />
-			<text name="partner_label" tool_tip="Second Lifeパートナーです。 設定方法の詳細については、www.secondlife.com/partnerを参照してください。">
+			<text name="partner_label" tool_tip="InWorldzパートナーです。 設定方法の詳細については、www.secondlife.com/partnerを参照してください。">
 				パートナー：
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="クリックして、パートナーのプロフィールを開けてください。" left_delta="64"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="Second Lifeパートナーです。 設定方法の詳細については、www.secondlife.com/partnerを参照してください。" width="161">
+			<line_editor name="partner_edit" tool_tip="InWorldzパートナーです。 設定方法の詳細については、www.secondlife.com/partnerを参照してください。" width="161">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">
@@ -133,8 +133,8 @@
 		</panel>
 		<panel label="ピック" name="Picks" width="458">
 			<tab_container name="picks tab" width="452" />
-			<text name="Tell everyone about your favorite places in Second Life.">
-				Second Lifeのお気入りの場所を皆に教えてください
+			<text name="Tell everyone about your favorite places in InWorldz.">
+				InWorldzのお気入りの場所を皆に教えてください
 			</text>
 			<button label="新規..." label_selected="新規..." name="New..."/>
 			<button label="削除..." label_selected="削除..." name="Delete..."/>
@@ -144,7 +144,7 @@
 		</panel>
 		<panel label="広告" name="Classified" width="458">
 			<tab_container name="classified tab" width="452" />
-			<text name="Place an ad in Second Life&apos;s classified listings.">
+			<text name="Place an ad in InWorldz&apos;s classified listings.">
 				SecondLifeのクラシファイドリストに広告を載せます。
 			</text>
 			<button label="新規..." label_selected="新規..." name="New..."/>

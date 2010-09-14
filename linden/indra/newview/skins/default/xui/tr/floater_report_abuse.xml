@@ -44,10 +44,10 @@
 			Yaş &gt; Yaş oyunu
 		</combo_item>
 		<combo_item name="Age__Adult_resident_on_Teen_Second_Life">
-			Yaş &gt; Genç Second Life&apos;da yetişkin üye
+			Yaş &gt; Genç InWorldz&apos;da yetişkin üye
 		</combo_item>
 		<combo_item name="Age__Underage_resident_outside_of_Teen_Second_Life">
-			Yaş &gt; Genç Second Life dışında genç üye
+			Yaş &gt; Genç InWorldz dışında genç üye
 		</combo_item>
 		<combo_item name="Assault__Combat_sandbox___unsafe_area">
 			Saldırı &gt; Dövüş atölyesi/güvensiz alan
@@ -68,7 +68,7 @@
 			İfşa &gt; Uzaktan sohbet takibi
 		</combo_item>
 		<combo_item name="Disclosure__Second_Life_information_chat_IMs">
-			İfşa &gt; Second Life bilgisi/sohbet/HM
+			İfşa &gt; InWorldz bilgisi/sohbet/HM
 		</combo_item>
 		<combo_item name="Disturbing_the_peace__Unfair_use_of_region_resources">
 			Huzuru bozma &gt; Bölge kaynaklarını adil kullanmama

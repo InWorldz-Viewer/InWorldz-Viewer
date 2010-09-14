@@ -49,12 +49,12 @@
 			</text>
 			<view_border name="acct_border" width="191"/>
 			<text name="acct" width="191"/>
-			<text name="partner_label" tool_tip="Партнер Second Life. Для информации, как им стать, см. www.secondlife.com/partner">
+			<text name="partner_label" tool_tip="Партнер InWorldz. Для информации, как им стать, см. www.secondlife.com/partner">
 				Партнер
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="Кликните для просмотра профиля партнера"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="Партнер Second Life. Для информации, как им стать, см. www.secondlife.com/partner" width="191">
+			<line_editor name="partner_edit" tool_tip="Партнер InWorldz. Для информации, как им стать, см. www.secondlife.com/partner" width="191">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">
@@ -132,8 +132,8 @@
 			<line_editor name="languages_edit" width="390"/>
 		</panel>
 		<panel label="Избранное" name="Picks" width="488">
-			<text name="Tell everyone about your favorite places in Second Life.">
-				Рассказать всем о Ваших любимых местах в Second Life
+			<text name="Tell everyone about your favorite places in InWorldz.">
+				Рассказать всем о Ваших любимых местах в InWorldz
 			</text>
 			<button label="Новый..." label_selected="Новый..." name="New..."/>
 			<button label="Удалить..." label_selected="Удалить..." name="Delete..."/>
@@ -143,8 +143,8 @@
 			</text>
 		</panel>
 		<panel label="Реклама" name="Classified" width="488">
-			<text name="Place an ad in Second Life&apos;s classified listings.">
-				Поместить рекламу в Second Life.
+			<text name="Place an ad in InWorldz&apos;s classified listings.">
+				Поместить рекламу в InWorldz.
 			</text>
 			<button label="Новый..." label_selected="Новый..." name="New..."/>
 			<button label="Удалить..." label_selected="Удалить..." name="Delete..."/>

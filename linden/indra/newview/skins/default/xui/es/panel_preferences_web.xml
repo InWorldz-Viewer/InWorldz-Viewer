@@ -4,7 +4,7 @@
 		<radio_item name="external" tool_tip="Usar el navegador incorporado del sistema para ayuda, enlaces web, etc. No es aconsejable si se está trabajando a pantalla completa.">
 			Usar un navegador externo (Firefox, Safari, Internet Explorer)
 		</radio_item>
-		<radio_item name="internal" tool_tip="Usar el navegador incorporado para ayuda, enlaces web, etc. Este navegador se abre en una ventana nueva dentro de Second Life.">
+		<radio_item name="internal" tool_tip="Usar el navegador incorporado para ayuda, enlaces web, etc. Este navegador se abre en una ventana nueva dentro de InWorldz.">
 			Usar el navegador incorporado
 		</radio_item>
 	</radio_group>

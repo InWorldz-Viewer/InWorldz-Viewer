@@ -121,7 +121,7 @@
 			</text>
 		</panel>
 		<panel label="收藏" name="Picks">
-			<text name="Tell everyone about your favorite places in Second Life.">
+			<text name="Tell everyone about your favorite places in InWorldz.">
 				告诉大家你在第二人生中最喜欢的地点。
 			</text>
 			<button label="新建..." label_selected="新建..." name="New..."/>
@@ -131,7 +131,7 @@
 			</text>
 		</panel>
 		<panel label="分类广告" name="Classified">
-			<text name="Place an ad in Second Life&apos;s classified listings.">
+			<text name="Place an ad in InWorldz&apos;s classified listings.">
 				在第二人生的分类栏中刊登广告。
 			</text>
 			<button label="新建..." label_selected="新建..." name="New..."/>

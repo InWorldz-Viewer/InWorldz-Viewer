@@ -11,7 +11,7 @@
 			<text name="find">
 				Suchen:
 			</text>
-			<line_editor label="Suchen" name="search_editor" tool_tip="Second Life durchsuchen"/>
+			<line_editor label="Suchen" name="search_editor" tool_tip="InWorldz durchsuchen"/>
 			<button label="Zurück" name="back_btn"/>
 			<button label="Weiter" name="forward_btn"/>
 			<button label="Suchen" name="search_btn"/>
@@ -393,7 +393,7 @@ Um direkt zu kaufen, klicken Sie auf dem betreffenden Land in der Titelleiste au
 			<text left_delta="38" name="find">
 				Suchen:
 			</text>
-			<line_editor label="Suchen" name="search_editor" tool_tip="Second Life durchsuchen"/>
+			<line_editor label="Suchen" name="search_editor" tool_tip="InWorldz durchsuchen"/>
 			<button label="Zurück" name="back_btn"/>
 			<button label="Weiter" name="forward_btn"/>
 			<button label="Suchen" name="search_btn"/>

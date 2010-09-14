@@ -29,7 +29,7 @@
 	<button label="Mégsem" name="cancel_btn"/>
 	<button label="Elküld" name="send_btn"/>
 	<string name="default_subject">
-		Képeslap a Second Life-ból.
+		Képeslap a InWorldz-ból.
 	</string>
 	<string name="default_message">
 		Nézd meg!

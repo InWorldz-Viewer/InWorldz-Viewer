@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater name="directory" title="Second Life keresés">
+<floater name="directory" title="InWorldz keresés">
 	<tab_container name="Directory Tabs">
 		<panel label="Minden" name="find_all_panel">
 			<string name="searching_text">
@@ -11,7 +11,7 @@
 			<text name="find">
 				Keres:
 			</text>
-			<line_editor label="Keresés" name="search_editor" tool_tip="Second Life keresés"/>
+			<line_editor label="Keresés" name="search_editor" tool_tip="InWorldz keresés"/>
 			<button label="Vissza" name="back_btn"/>
 			<button label="Előre" name="forward_btn"/>
 			<button label="Keresés" name="search_btn"/>
@@ -399,7 +399,7 @@ A közvetlen vásárláshoz, látogasd meg a földet és kattints a helyszín ne
 			<text name="find">
 				Keres:
 			</text>
-			<line_editor label="Keresés" name="search_editor" tool_tip="Second Life keresés"/>
+			<line_editor label="Keresés" name="search_editor" tool_tip="InWorldz keresés"/>
 			<button label="Vissza" name="back_btn"/>
 			<button label="Előre" name="forward_btn"/>
 			<button label="Keres" name="search_btn"/>

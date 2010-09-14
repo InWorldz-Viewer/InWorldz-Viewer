@@ -46,12 +46,12 @@
 			<text name="label2">
 				Hesap:
 			</text>
-			<text name="partner_label" tool_tip="Second Life evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,www.secondlife.com/partner adresini ziyaret ediniz.">
+			<text name="partner_label" tool_tip="InWorldz evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,www.secondlife.com/partner adresini ziyaret ediniz.">
 				Eş:
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="Eş profilini açmak için tıklayınız"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="Second Life evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,www.secondlife.com/partner adresini ziyaret ediniz.">
+			<line_editor name="partner_edit" tool_tip="InWorldz evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,www.secondlife.com/partner adresini ziyaret ediniz.">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">
@@ -120,8 +120,8 @@
 			</text>
 		</panel>
 		<panel label="Resimler" name="Picks">
-			<text name="Tell everyone about your favorite places in Second Life.">
-				Second Life&apos;daki favori lokasyonlarınızı herkese anlatın.
+			<text name="Tell everyone about your favorite places in InWorldz.">
+				InWorldz&apos;daki favori lokasyonlarınızı herkese anlatın.
 			</text>
 			<button label="Yeni..." label_selected="Yeni..." name="New..."/>
 			<button label="Sil..." label_selected="Sil..." name="Delete..."/>
@@ -130,8 +130,8 @@
 			</text>
 		</panel>
 		<panel label="İlan" name="Classified">
-			<text name="Place an ad in Second Life&apos;s classified listings.">
-				Second Life ilan listelerinde reklam verin.
+			<text name="Place an ad in InWorldz&apos;s classified listings.">
+				InWorldz ilan listelerinde reklam verin.
 			</text>
 			<button label="Yeni..." label_selected="Yeni..." name="New..."/>
 			<button label="Sil..." label_selected="Sil..." name="Delete..."/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <panel label="Grafika" name="Display panel">
 	<button label="?" name="GraphicsPreferencesHelpButton"/>
-	<check_box label="Second Life futtatása ablakban" name="windowed mode"/>
+	<check_box label="InWorldz futtatása ablakban" name="windowed mode"/>
 	<text_editor length="1" name="FullScreenInfo" type="string" bottom="-56" height="40" width="480">
 		Ha nincs bejelölve, akkor a kliens teljesképernyős üzemmódban fut.
 	</text_editor>

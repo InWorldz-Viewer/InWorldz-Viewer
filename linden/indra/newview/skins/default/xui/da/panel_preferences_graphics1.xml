@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <panel label="Grafik" name="Display panel">
 	<button label="?" name="GraphicsPreferencesHelpButton" />
-	<check_box label="Kør Second Life i et vindue" name="windowed mode" />
+	<check_box label="Kør InWorldz i et vindue" name="windowed mode" />
 	<text_editor type="string" length="1" name="FullScreenInfo">
-		Hvis dette ikke er valgt kører Second Life i Fuld skærm.
+		Hvis dette ikke er valgt kører InWorldz i Fuld skærm.
 	</text_editor>
 	<text type="string" length="1" name="WindowSizeLabel">
 		Opløsning:

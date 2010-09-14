@@ -2,7 +2,7 @@
 <floater name="floaterreleasemessage" title="Stai entrando nella regione">
 	<button label="Chiudi" name="close_btn"/>
 	<string name="in-world_help_title">
-		Aiuto in Second Life
+		Aiuto in InWorldz
 	</string>
 	<string name="in-world_help_url">
 		http://www.secondlife.com/app/support/inworld.html

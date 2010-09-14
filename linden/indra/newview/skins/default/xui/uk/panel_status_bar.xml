@@ -36,9 +36,9 @@
 	<button label="" label_selected="" name="buyland"
 	     tool_tip="Купити цю ділянку" />
 	<button label="" name="menubar_search_bevel_bg" />
-	<line_editor label="Пошук" name="search_editor" tool_tip="Пошук в Second Life" />
+	<line_editor label="Пошук" name="search_editor" tool_tip="Пошук в InWorldz" />
 	<button label="" label_selected="" name="search_btn"
-	     tool_tip="Пошук в Second Life" />
+	     tool_tip="Пошук в InWorldz" />
 	<string name="packet_loss_tooltip">
 		Втрати пакетів
 	</string>

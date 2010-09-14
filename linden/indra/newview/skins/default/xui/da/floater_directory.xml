@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater name="directory" title="Søg i Second Life">
+<floater name="directory" title="Søg i InWorldz">
 	<tab_container name="Directory Tabs">
 		<panel label="Alt" name="find_all_panel">
 			<string name="searching_text">
@@ -11,7 +11,7 @@
 			<text name="find">
 				Find:
 			</text>
-			<line_editor label="Søg" name="search_editor" tool_tip="Søg i Second Life"/>
+			<line_editor label="Søg" name="search_editor" tool_tip="Søg i InWorldz"/>
 			<button label="Retur" name="back_btn"/>
 			<button label="Frem" name="forward_btn"/>
 			<button label="Søg" name="search_btn"/>
@@ -398,7 +398,7 @@ for at købe direkte, besøg landet du vil købe og klik på stedets navn i den 
 			<text name="find">
 				Find:
 			</text>
-			<line_editor label="Søg" name="search_editor" tool_tip="Søg i Second Life"/>
+			<line_editor label="Søg" name="search_editor" tool_tip="Søg i InWorldz"/>
 			<button label="Retur" name="back_btn"/>
 			<button label="Frem" name="forward_btn"/>
 			<button label="Søg" name="search_btn"/>

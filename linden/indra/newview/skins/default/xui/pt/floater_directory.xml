@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater name="directory" title="Busca no Second Life">
+<floater name="directory" title="Busca no InWorldz">
 	<tab_container name="Directory Tabs">
 		<panel label="Todos" name="find_all_panel">
 			<string name="searching_text">
@@ -11,7 +11,7 @@
 			<text name="find" width="60">
 				Encontrar:
 			</text>
-			<line_editor label="Buscar" name="search_editor" tool_tip="Busca no Second Life" width="150" left_delta="66"/>
+			<line_editor label="Buscar" name="search_editor" tool_tip="Busca no InWorldz" width="150" left_delta="66"/>
 			<button label="Voltar" name="back_btn"/>
 			<button label="Adiantar" name="forward_btn"/>
 			<button label="Buscar" name="search_btn"/>
@@ -379,7 +379,7 @@ Para comprar direto, visite a terra e clique no nome do lugar, na barra de títu
 			<text name="find" width="60">
 				Encontrar:
 			</text>
-			<line_editor label="Buscar" name="search_editor" tool_tip="Busca no Second Life" left_delta="66" width="150"/>
+			<line_editor label="Buscar" name="search_editor" tool_tip="Busca no InWorldz" left_delta="66" width="150"/>
 			<button label="Voltar" name="back_btn"/>
 			<button label="Adiantar" name="forward_btn"/>
 			<button label="Buscar" name="search_btn"/>

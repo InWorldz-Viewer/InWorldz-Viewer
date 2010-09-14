@@ -102,14 +102,14 @@
 	     font="SansSerifSmall" handle_edit_keys_directly="false" height="13"
 	     label="Search" left="-95" max_length="254" mouse_opaque="true"
 	     name="search_editor" select_all_on_focus_received="false"
-	     select_on_focus="false" tab_group="1" tool_tip="Search Second Life"
+	     select_on_focus="false" tab_group="1" tool_tip="Search InWorldz"
 	     width="80" />
 	<button bottom="-16" enabled="true" follows="right|bottom" font="SansSerifSmall"
 	     halign="center" height="12" image_disabled="status_search.tga"
 	     image_disabled_selected="status_search.tga"
 	     image_selected="status_search.tga" image_unselected="status_search.tga"
 	     label="" label_selected="" left="-16" mouse_opaque="true" name="search_btn"
-	     tool_tip="Search Second Life" width="12" scale_image="true"/>
+	     tool_tip="Search InWorldz" width="12" scale_image="true"/>
 	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 	     bottom="-16" enabled="false" follows="right|bottom" font="SansSerifSmall"
 	     halign="center" height="12" left="-20" mouse_opaque="true"

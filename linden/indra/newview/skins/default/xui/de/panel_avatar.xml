@@ -49,12 +49,12 @@
 			</text>
 			<view_border name="acct_border" width="161" />
 			<text name="acct" width="161" />
-			<text name="partner_label" tool_tip="Second Life Partner. Weitere Informationen finden Sie auf www.secondlife.com/partner">
+			<text name="partner_label" tool_tip="InWorldz Partner. Weitere Informationen finden Sie auf www.secondlife.com/partner">
 				Partner:
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="Klicken Sie, um das Profil Ihres Partners anzuzeigen"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="Second Life Partner. Weitere Informationen finden Sie auf www.secondlife.com/partner" width="161">
+			<line_editor name="partner_edit" tool_tip="InWorldz Partner. Weitere Informationen finden Sie auf www.secondlife.com/partner" width="161">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">
@@ -132,8 +132,8 @@
 			<line_editor name="languages_edit" width="360" />
 		</panel>
 		<panel label="Auswahl" name="Picks" width="458">
-			<text name="Tell everyone about your favorite places in Second Life.">
-				Erzählen Sie von Ihren Lieblingsorten in Second Life.
+			<text name="Tell everyone about your favorite places in InWorldz.">
+				Erzählen Sie von Ihren Lieblingsorten in InWorldz.
 			</text>
 			<button label="Neu..." label_selected="Neu..." name="New..."/>
 			<button label="Löschen..." label_selected="Löschen..." name="Delete..."/>
@@ -143,8 +143,8 @@
 			</text>
 		</panel>
 		<panel label="Anzeige" name="Classified" width="458">
-			<text name="Place an ad in Second Life&apos;s classified listings.">
-				Anzeige in Second Life aufgeben.
+			<text name="Place an ad in InWorldz&apos;s classified listings.">
+				Anzeige in InWorldz aufgeben.
 			</text>
 			<button label="Neu..." label_selected="Neu..." name="New..."/>
 			<button label="Löschen..." label_selected="Löschen..." name="Delete..."/>

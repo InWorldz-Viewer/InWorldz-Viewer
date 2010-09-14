@@ -28,8 +28,8 @@
 	<button label="" label_selected="" name="status_no_voice" tool_tip="Burada sesli sohbet edilemez"/>
 	<button label="" label_selected="" name="buyland" tool_tip="Bu parseli satın alın"/>
 	<button label="" name="menubar_search_bevel_bg"/>
-	<line_editor label="Ara" name="search_editor" tool_tip="Second Life&apos;da arayın"/>
-	<button label="" label_selected="" name="search_btn" tool_tip="Second Life&apos;da arayın"/>
+	<line_editor label="Ara" name="search_editor" tool_tip="InWorldz&apos;da arayın"/>
+	<button label="" label_selected="" name="search_btn" tool_tip="InWorldz&apos;da arayın"/>
 	<string name="packet_loss_tooltip">
 		Packet kaybı
 	</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<floater name="directory" title="Buscar en Second Life">
+<floater name="directory" title="Buscar en InWorldz">
 	<tab_container name="Directory Tabs">
 		<panel label="Todo" name="find_all_panel">
 			<string name="searching_text">
@@ -11,7 +11,7 @@
 			<text name="find">
 				Buscar:
 			</text>
-			<line_editor label="Buscar" name="search_editor" tool_tip="Buscar en Second Life"/>
+			<line_editor label="Buscar" name="search_editor" tool_tip="Buscar en InWorldz"/>
 			<button label="Atrás" name="back_btn"/>
 			<button label="Adelante" name="forward_btn"/>
 			<button label="Buscar" name="search_btn"/>
@@ -398,7 +398,7 @@ subasta. Para comprarlo directamente, visítelo y pulse su nombre en la barra su
 			<text name="find">
 				Buscar:
 			</text>
-			<line_editor label="Buscar" name="search_editor" tool_tip="Buscar en Second Life"/>
+			<line_editor label="Buscar" name="search_editor" tool_tip="Buscar en InWorldz"/>
 			<button label="Atrás" name="back_btn"/>
 			<button label="Adelante" name="forward_btn"/>
 			<button label="Buscar" name="search_btn"/>

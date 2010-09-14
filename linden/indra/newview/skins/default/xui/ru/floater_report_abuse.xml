@@ -44,10 +44,10 @@
 			Возраст &gt; Ложная информация о возрасте
 		</combo_item>
 		<combo_item name="Age__Adult_resident_on_Teen_Second_Life">
-			Возраст &gt; Adult резидент в Teen Second Life
+			Возраст &gt; Adult резидент в Teen InWorldz
 		</combo_item>
 		<combo_item name="Age__Underage_resident_outside_of_Teen_Second_Life">
-			Возраст &gt; Несовершеннолетний резидент вне Teen Second Life
+			Возраст &gt; Несовершеннолетний резидент вне Teen InWorldz
 		</combo_item>
 		<combo_item name="Assault__Combat_sandbox___unsafe_area">
 			Нападение &gt; Боевая песочница / небезопасная зона
@@ -68,7 +68,7 @@
 			Раскрытие &gt; Удаленный просмотр чата
 		</combo_item>
 		<combo_item name="Disclosure__Second_Life_information_chat_IMs">
-			Раскрытие &gt; Информация из Second Life/Чат/ЛС
+			Раскрытие &gt; Информация из InWorldz/Чат/ЛС
 		</combo_item>
 		<combo_item name="Disturbing_the_peace__Unfair_use_of_region_resources">
 			Нарушение мира &gt; Нечестное использование ресурсов региона

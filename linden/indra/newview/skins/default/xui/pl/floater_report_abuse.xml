@@ -44,10 +44,10 @@
 			Wiek &gt; Udawanie Nieletniej Osoby
 		</combo_item>
 		<combo_item name="Age__Adult_resident_on_Teen_Second_Life">
-			Wiek &gt; Dorosły Rezydent w Teen Second Life
+			Wiek &gt; Dorosły Rezydent w Teen InWorldz
 		</combo_item>
 		<combo_item name="Age__Underage_resident_outside_of_Teen_Second_Life">
-			Wiek &gt; Nieletni Rezydent poza Teen Second Life
+			Wiek &gt; Nieletni Rezydent poza Teen InWorldz
 		</combo_item>
 		<combo_item name="Assault__Combat_sandbox___unsafe_area">
 			Napaść &gt; Strefa Militarna / Niebezpieczny Obszar
@@ -68,7 +68,7 @@
 			Ujawnienie &gt; Monitorowanie Czatu
 		</combo_item>
 		<combo_item name="Disclosure__Second_Life_information_chat_IMs">
-			Ujawnienie &gt; Dane z Second Life / Czatu / IM
+			Ujawnienie &gt; Dane z InWorldz / Czatu / IM
 		</combo_item>
 		<combo_item name="Disturbing_the_peace__Unfair_use_of_region_resources">
 			Zakłócanie Spokoju &gt; Nieuczciwe Używanie Zasobów Regionu

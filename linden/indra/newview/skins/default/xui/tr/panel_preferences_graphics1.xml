@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <panel label="Grafik" name="Display panel">
 	<button label="?" name="GraphicsPreferencesHelpButton"/>
-	<check_box label="Second Life&apos;ı pencerede çalıştır" name="windowed mode"/>
+	<check_box label="InWorldz&apos;ı pencerede çalıştır" name="windowed mode"/>
 	<text_editor length="1" name="FullScreenInfo" type="string">
 		Eğer işaretlenmezse,görüntüleyici tam ekrana dönüşecektir.
 	</text_editor>

@@ -50,12 +50,12 @@
 			</text>
 			<view_border name="acct_border"/>
 			<text name="acct"/>
-			<text name="partner_label" tool_tip="Partner w Second Life. Więcej informacji na www.secondlife.com/partner">
+			<text name="partner_label" tool_tip="Partner w InWorldz. Więcej informacji na www.secondlife.com/partner">
 				Partner:
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="Kliknij żeby zobaczyć profil partnera"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="Partner w Second Life. Więcej informacji pod www.secondlife.com/partner">
+			<line_editor name="partner_edit" tool_tip="Partner w InWorldz. Więcej informacji pod www.secondlife.com/partner">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">
@@ -134,8 +134,8 @@
 			<line_editor name="languages_edit"/>
 		</panel>
 		<panel label="Lubię" name="Picks">
-			<text name="Tell everyone about your favorite places in Second Life.">
-				Pokaż Twoje ulubione miejsca w Second Life.
+			<text name="Tell everyone about your favorite places in InWorldz.">
+				Pokaż Twoje ulubione miejsca w InWorldz.
 			</text>
 			<button label="Dodaj..." label_selected="Dodaj..." name="New..."/>
 			<button label="Usuń..." label_selected="Usuń..." name="Delete..."/>
@@ -145,8 +145,8 @@
 			</text>
 		</panel>
 		<panel label="Reklama" name="Classified">
-			<text name="Place an ad in Second Life&apos;s classified listings.">
-				Zamieść reklamę w Second Life.
+			<text name="Place an ad in InWorldz&apos;s classified listings.">
+				Zamieść reklamę w InWorldz.
 			</text>
 			<button label="Dodaj..." label_selected="Dodaj..." name="New..."/>
 			<button label="Usuń..." label_selected="Usuń..." name="Delete..."/>
@@ -193,7 +193,7 @@ nie jesteście znajomymi.
 	<string name="ShowOnMapFriendOffline">
 		Zlokalizuj na mapie.
 Nie możesz tego użyć ponieważ
-osoby nie ma obecnie w Second Life.
+osoby nie ma obecnie w InWorldz.
 	</string>
 	<string name="ShowOnMapFriendOnline">
 		Zlokalizuj na mapie.
