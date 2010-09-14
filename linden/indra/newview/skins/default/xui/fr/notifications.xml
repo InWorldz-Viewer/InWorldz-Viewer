@@ -2139,7 +2139,7 @@ En cliquant sur le bouton Ciel Avancé, vous aurez accès à tous les réglages 
 En cliquant sur le bouton Eau Avancée, vous aurez accès à tous les réglages relatifs à l&apos;eau.
 	</notification>
 	<notification name="HelpDayCycle">
-		L&apos;éditeur du cycle du jour vous permet de contrôler le ciel au cours du cycle jour/nuit de second Life. C&apos;est ce même cycle qui est contrôlé par le curseur Heure de la journée dans l&apos;éditeur d&apos;environnement basique.
+		L&apos;éditeur du cycle du jour vous permet de contrôler le ciel au cours du cycle jour/nuit de [SECOND_LIFE]. C&apos;est ce même cycle qui est contrôlé par le curseur Heure de la journée dans l&apos;éditeur d&apos;environnement basique.
 
 L&apos;éditeur du jour fonctionne grâce au réglage d&apos;images-clés. Ces images-clés sont représentées par les marques grises sur la ligne du temps et ont des préréglages qui leurs sont associées. Au cours de la journée et de la nuit, le ciel WindLight s&apos;anime en passant d&apos;une clé à l&apos;autre.
 
