@@ -359,7 +359,21 @@ std::string LLDir_Win32::getCurPath()
 	WCHAR w_str[MAX_PATH];
 	GetCurrentDirectory(MAX_PATH, w_str);
 
-	return utf16str_to_utf8str(llutf16string(w_str));
+	std::string path = utf16str_to_utf8str(llutf16string(w_str));
+
+	// make sure when we're debugging, we're using the right current directory
+	// i.e. linden/indra/newview -- MC
+	size_t debug_start = path.rfind("\\build-");
+	if (debug_start != std::string::npos)
+	{
+		size_t newview_start = path.rfind("\\newview");
+		if (newview_start != std::string::npos)
+		{
+			path.erase(debug_start, newview_start-debug_start);
+		}
+	}
+
+	return path;
 }
 
 
