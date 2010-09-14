@@ -868,7 +868,7 @@ bool LLTextureCache::updateTextureEntryList(const LLUUID& id, S32 bodysize)
 
 //static
 const S32 MAX_REASONABLE_FILE_SIZE = 512*1024*1024; // 512 MB
-F32 LLTextureCache::sHeaderCacheVersion = 1.2f;
+F32 LLTextureCache::sHeaderCacheVersion = 1.4f;
 U32 LLTextureCache::sCacheMaxEntries = MAX_REASONABLE_FILE_SIZE / TEXTURE_CACHE_ENTRY_SIZE;
 S64 LLTextureCache::sCacheMaxTexturesSize = 0; // no limit
 const char* entries_filename = "texture.entries";
@@ -1062,6 +1062,13 @@ void LLTextureCache::writeEntryAndClose(S32 idx, Entry& entry)
 		if (!mReadOnly)
 		{
 			entry.mTime = time(NULL);
+			if(entry.mImageSize < entry.mBodySize)
+			{
+				// Just say no, due to my messing around to cache discards other than 0 we can end up here
+				// after recalling an image from cache at a lower discard than cached. RC
+				return;
+			}
+			
 			llassert_always(entry.mImageSize == 0 || entry.mImageSize == -1 || entry.mImageSize > entry.mBodySize);
 			if (entry.mBodySize > 0)
 			{
