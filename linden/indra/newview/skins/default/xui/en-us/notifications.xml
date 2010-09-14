@@ -567,7 +567,7 @@ Your selling price will be [CURRENCY][SALE_PRICE] and will be authorized for sal
  icon="alertmodal.tga"
  name="ConfirmLandSaleToAnyoneChange"
  type="alertmodal">
-ATTENTION: Clicking &apos;sell to anyone&apos; makes your land available to the entire [GRID_NAME] community, even those not in this region.
+ATTENTION: Clicking &apos;sell to anyone&apos; makes your land available to the entire [SECOND_LIFE] community, even those not in this region.
 
 The selected [LAND_SIZE] m² land is being set for sale.
 
@@ -759,7 +759,7 @@ There was a problem uploading a report screenshot due to the following reason: [
  icon="alertmodal.tga"
  name="MustAgreeToLogIn"
  type="alertmodal">
-You must agree to the Terms of Service to continue logging into [GRID_NAME].
+You must agree to the Terms of Service to continue logging into [SECOND_LIFE].
 </notification>
 
 <notification
@@ -793,7 +793,7 @@ Oops! Something was left blank.
 
 You need to enter both the First and Last name of your avatar.
 
-You need an account to enter [GRID_NAME]. Would you like to create one now?
+You need an account to enter [SECOND_LIFE]. Would you like to create one now?
   <usetemplate
    name="okcancelbuttons"
    notext="Try again"
@@ -858,7 +858,7 @@ Delete pick [PICK]?
  icon="alertmodal.tga"
  name="PromptGoToEventsPage"
  type="alertmodal">
-Go to the [GRID_NAME] events web page?
+Go to the [SECOND_LIFE] events web page?
   <usetemplate
    name="okcancelbuttons"
    notext="Cancel"
@@ -991,7 +991,7 @@ The new skin will appear after you restart [VIEWER_NAME].
  icon="alertmodal.tga"
  name="GoToAuctionPage"
  type="alertmodal">
-Go to the [GRID_NAME] web page to see auction details or make a bid?
+Go to the [SECOND_LIFE] web page to see auction details or make a bid?
   <usetemplate
    name="okcancelbuttons"
    notext="Cancel"
@@ -1787,7 +1787,7 @@ Cannot find the region this land is in.
  icon="alertmodal.tga"
  name="CannotCloseFloaterBuyLand"
  type="alertmodal">
-You cannot close the Buy Land window until [GRID_NAME] estimates the price of this transaction.
+You cannot close the Buy Land window until [SECOND_LIFE] estimates the price of this transaction.
 </notification>
 
 <notification
@@ -2121,7 +2121,7 @@ If this problem persists, please click on the &apos;Tools &gt; Report Bug&apos; 
  icon="alertmodal.tga"
  name="YouHaveBeenLoggedOut"
  type="alertmodal">
-You have been logged out of [GRID_NAME]:
+You have been logged out of [SECOND_LIFE]:
 
 [MESSAGE]
 
@@ -2468,7 +2468,7 @@ You have been moved into a nearby region.
  type="alertmodal">
 Your clothing is still downloading.
 
-You can use [GRID_NAME] normally and other users will see you correctly.
+You can use [SECOND_LIFE] normally and other users will see you correctly.
   <form name="form">
     <ignore name="ignore"
      text="When clothing is taking a long time to download"/>
@@ -2481,7 +2481,7 @@ You can use [GRID_NAME] normally and other users will see you correctly.
  type="alertmodal">
 [VIEWER_NAME] installation is complete.
 
-If this is your first time using [GRID_NAME], you will need to create an account before you can log on.
+If this is your first time using [SECOND_LIFE], you will need to create an account before you can log on.
 
 Return to [GRID_SITE] to create a new account?
   <usetemplate
@@ -2494,7 +2494,7 @@ Return to [GRID_SITE] to create a new account?
  icon="alertmodal.tga"
  name="LoginPacketNeverReceived"
  type="alertmodal">
-We&apos;re having trouble connecting. There may be a problem with your internet connection or the [GRID_NAME] servers.
+We&apos;re having trouble connecting. There may be a problem with your internet connection or the [SECOND_LIFE] servers.
 
 You can either check your internet connection and try again in a few minutes, click Help to connect to our support site, or click Teleport to attempt to teleport home.
   <form name="form">
@@ -2520,7 +2520,7 @@ You can either check your internet connection and try again in a few minutes, cl
  type="alertmodal">
 Your character will appear in a moment.
 
-Use arrow keys to walk. Press the F1 key at any time for help or to learn more about [GRID_NAME].
+Use arrow keys to walk. Press the F1 key at any time for help or to learn more about [SECOND_LIFE].
 
 Please choose the male or female avatar. You can change your mind later.
   <usetemplate
@@ -2735,7 +2735,7 @@ A new version of [VIEWER_NAME] is available.
 
 [MESSAGE]
 
-You must download this update to connect to [GRID_NAME].
+You must download this update to connect to [SECOND_LIFE].
   <usetemplate
    name="okcancelbuttons"
    notext="Quit"
@@ -2780,7 +2780,7 @@ A new version of [VIEWER_NAME] is available.
 
 [MESSAGE]
 
-You must download this update to connect to [GRID_NAME].
+You must download this update to connect to [SECOND_LIFE].
 
 Download to your Applications folder?
   <usetemplate
@@ -4342,7 +4342,7 @@ As a service to residents and visitors, the owner of the region you are in has e
 The region owner will resolve reports based on the local rules of this region as outlined in the estate Covenant.
 (View covenants by going to the World menu and selecting About Land.)
 
-The resolution of this report applies only to this Region; Residents access to other areas of [GRID_NAME] will not be affected by the outcome of this report. <!-- Only Linden Lab can restrict access to the entirety of [GRID_NAME]. -->
+The resolution of this report applies only to this Region; Residents access to other areas of [SECOND_LIFE] will not be affected by the outcome of this report. <!-- Only Linden Lab can restrict access to the entirety of [SECOND_LIFE]. -->
 </notification>
 
 <notification
@@ -4687,7 +4687,7 @@ Click &quot;Advanced Water&quot; to bring up an editor with more advanced settin
  icon="alertmodal.tga"
  name="HelpDayCycle"
  type="alertmodal">
-The Day Cycle Editor gives you control over the sky during [GRID_NAME]&apos;s day/night cycle. This is the cycle that is used by the Basic Environment Editor&apos;s Time of Day slider.
+The Day Cycle Editor gives you control over the sky during [SECOND_LIFE]&apos;s day/night cycle. This is the cycle that is used by the Basic Environment Editor&apos;s Time of Day slider.
 
 The Day Cycle Editor works by setting keyframes. These are nodes (represented by the gray blips on the time graph) that have Sky Presets associated with them. As the Time of Day progresses, the WindLight sky &quot;animates&quot; as it interpolates between these keyframes.
 
@@ -6274,7 +6274,7 @@ Use the controls on the right to find things and display different backgrounds.
  icon="notify.tga"
  name="FirstBuild"
  type="notify">
-You can build new objects in some areas of [GRID_NAME].
+You can build new objects in some areas of [SECOND_LIFE].
 
 Use the tools in the upper left to build, and try holding down Ctrl or Alt to rapidly switch tools.
 
