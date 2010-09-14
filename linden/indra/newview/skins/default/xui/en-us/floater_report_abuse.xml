@@ -86,10 +86,8 @@
 Select category
 </combo_item><combo_item name="Age__Age_play" value="31">
 Age > Age play
-</combo_item><combo_item name="Age__Adult_resident_on_Teen_Second_Life" value="32">
-Age > Adult resident on Teen InWorldz
 </combo_item><combo_item name="Age__Underage_resident_outside_of_Teen_Second_Life" value="33">
-Age > Underage resident outside of Teen InWorldz
+Age > Underage resident in InWorldz
 </combo_item><combo_item name="Assault__Combat_sandbox___unsafe_area" value="34">
 Assault > Combat sandbox / unsafe area
 </combo_item><combo_item name="Assault__Safe_area" value="35">
