@@ -46,12 +46,12 @@
 			<text name="label2">
 				Hesap:
 			</text>
-			<text name="partner_label" tool_tip="InWorldz evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,www.secondlife.com/partner adresini ziyaret ediniz.">
+			<text name="partner_label" tool_tip="InWorldz evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,http://inworldz.com/account.php adresini ziyaret ediniz.">
 				Eş:
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="Eş profilini açmak için tıklayınız"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="InWorldz evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,www.secondlife.com/partner adresini ziyaret ediniz.">
+			<line_editor name="partner_edit" tool_tip="InWorldz evliliği.Nasıl kullandığında dair daha fazla bilgi almak için,http://inworldz.com/account.php adresini ziyaret ediniz.">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">

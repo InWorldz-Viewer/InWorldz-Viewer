@@ -46,12 +46,12 @@
 			<text name="label2">
 				계정:
 			</text>
-			<text name="partner_label" tool_tip="세컨드라이프 파트너. 자세한 설정 방법은 www.secondlife.com/partner를 참고함">
+			<text name="partner_label" tool_tip="세컨드라이프 파트너. 자세한 설정 방법은 http://inworldz.com/account.php를 참고함">
 				파트너:
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="파트너 프로필을 열려면 클릭하십시오."/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="세컨드라이프 파트너. 자세한 설정 방법은 www.secondlife.com/partner를 참고함">
+			<line_editor name="partner_edit" tool_tip="세컨드라이프 파트너. 자세한 설정 방법은 http://inworldz.com/account.php를 참고함">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">

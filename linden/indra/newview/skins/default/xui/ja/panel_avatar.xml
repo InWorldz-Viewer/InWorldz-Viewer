@@ -49,12 +49,12 @@
 			</text>
 			<view_border name="acct_border" width="161" />
 			<text name="acct" width="161" />
-			<text name="partner_label" tool_tip="InWorldzパートナーです。 設定方法の詳細については、www.secondlife.com/partnerを参照してください。">
+			<text name="partner_label" tool_tip="InWorldzパートナーです。 設定方法の詳細については、http://inworldz.com/account.phpを参照してください。">
 				パートナー：
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="クリックして、パートナーのプロフィールを開けてください。" left_delta="64"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="InWorldzパートナーです。 設定方法の詳細については、www.secondlife.com/partnerを参照してください。" width="161">
+			<line_editor name="partner_edit" tool_tip="InWorldzパートナーです。 設定方法の詳細については、http://inworldz.com/account.phpを参照してください。" width="161">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">

@@ -80,7 +80,7 @@
 			     bottom_delta="-20" drop_shadow_visible="true" follows="left|top"
 			     font="SansSerifSmall" h_pad="0" halign="left" height="16" left="279"
 			     mouse_opaque="true" name="partner_label"
-			     tool_tip="InWorldz partner. For more info on how to set, see www.secondlife.com/partner"
+			     tool_tip="InWorldz partner. For more info on how to set, see http://inworldz.com/account.php"
 			     v_pad="0" width="130">
 				Partner:
 			</text>
@@ -95,7 +95,7 @@
 			     border_thickness="1" bottom_delta="-16" enabled="true" follows="left|top"
 			     font="SansSerifSmall" height="16" is_unicode="false" left="279"
 			     max_length="254" mouse_opaque="false" name="partner_edit"
-			     tool_tip="InWorldz partner. For more info on how to set, see www.secondlife.com/partner"
+			     tool_tip="InWorldz partner. For more info on how to set, see http://inworldz.com/account.php"
 			     width="121">
 				[FIRST] [LAST]
 			</line_editor>

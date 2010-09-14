@@ -46,12 +46,12 @@
 			<text name="label2">
 				Konto:
 			</text>
-			<text name="partner_label" tool_tip="InWorldz partner eller kæreste. For mere info om hvordan, se www.secondlife.com/partner">
+			<text name="partner_label" tool_tip="InWorldz partner eller kæreste. For mere info om hvordan, se http://inworldz.com/account.php">
 				Partner:
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="Klik for at åbne partnerens profil"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="InWorldz partner eller kæreste. For mere info om hvordan, se www.secondlife.com/partner">
+			<line_editor name="partner_edit" tool_tip="InWorldz partner eller kæreste. For mere info om hvordan, se http://inworldz.com/account.php">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">

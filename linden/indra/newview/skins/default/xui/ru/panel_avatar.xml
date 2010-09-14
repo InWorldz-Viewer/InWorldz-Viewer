@@ -49,12 +49,12 @@
 			</text>
 			<view_border name="acct_border" width="191"/>
 			<text name="acct" width="191"/>
-			<text name="partner_label" tool_tip="Партнер InWorldz. Для информации, как им стать, см. www.secondlife.com/partner">
+			<text name="partner_label" tool_tip="Партнер InWorldz. Для информации, как им стать, см. http://inworldz.com/account.php">
 				Партнер
 			</text>
 			<button label="i" label_selected="i" name="partner_info" tool_tip="Кликните для просмотра профиля партнера"/>
 			<button label="?" label_selected="?" name="partner_help"/>
-			<line_editor name="partner_edit" tool_tip="Партнер InWorldz. Для информации, как им стать, см. www.secondlife.com/partner" width="191">
+			<line_editor name="partner_edit" tool_tip="Партнер InWorldz. Для информации, как им стать, см. http://inworldz.com/account.php" width="191">
 				[FIRST] [LAST]
 			</line_editor>
 			<text name="Photo:">
