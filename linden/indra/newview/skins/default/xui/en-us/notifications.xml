@@ -2898,11 +2898,11 @@ Go to the Scripting Guide for scripting help?
 
 <notification
  icon="alertmodal.tga"
- name="WebLaunchLSLWiki"
+ name="WebLaunchWiki"
  type="alertmodal">
-Go to the LSL Portal for scripting help?
-  <usetemplate
-   ignoretext="When launching web browser to view the LSL Portal"
+Go to the Official [SECOND_LIFE] Wiki?
+	<usetemplate
+   ignoretext="When launching web browser to view the Official Wiki"
    name="okcancelignore"
    notext="Cancel"
    yestext="Go to page"/>
