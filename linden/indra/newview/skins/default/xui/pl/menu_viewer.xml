@@ -181,10 +181,10 @@
 		<menu_item_call label="Wstrzymaj Działanie Skryptów w Selekcji" name="Set Scripts to Not Running in Selection"/>
 	</menu>
 	<menu label="Pomoc" name="Help">
-		<menu_item_call label="Second Life/InWorldz: Pomoc" name="Second Life Help"/>
+		<menu_item_call label="InWorldz: Pomoc" name="Second Life Help"/>
 		<menu_item_call label="Samouczek" name="Tutorial"/>
 		<menu_item_separator label="-----------" name="separator"/>
-		<menu_item_call label="Oficjalny Blog Second Life..." name="Official Linden Blog..."/>
+		<menu_item_call label="Oficjalny Blog InWorldz..." name="Official Linden Blog..."/>
 		<menu_item_separator label="-----------" name="separator2"/>
 		<menu_item_call label="Portal dla Skrypterów..." name="Scripting Portal..."/>
 		<menu_item_separator label="-----------" name="separator3"/>

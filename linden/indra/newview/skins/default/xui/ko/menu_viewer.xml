@@ -232,7 +232,7 @@
 		     name="Set Scripts to Not Running in Selection" />
 	</menu>
 	<menu label="도움말" name="Help">
-		<menu_item_call label="세컨드라이프 도움말" name="Second Life Help" />
+		<menu_item_call label="InWorldz Help" name="Second Life Help" />
 		<menu_item_call label="인월드 도움말" name="In-World Help" />
 		<menu_item_call label="추가 도움말" name="Additional Help" />
 		<menu_item_call label="튜토리얼" name="Tutorial" />
@@ -261,6 +261,6 @@
 		</menu>
 		<menu_item_call label="출시 정보" name="Release Notes..." />
 		<menu_item_separator label="-----------" name="separator6" />
-		<menu_item_call label="세컨드라이프 정보" name="About Second Life..." />
+		<menu_item_call label="About InWorldz..." name="About Second Life..." />
 	</menu>
 </menu_bar>

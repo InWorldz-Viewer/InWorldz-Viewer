@@ -181,7 +181,7 @@
 		<menu_item_call label="Seçilen betikleri çalıştırma" name="Set Scripts to Not Running in Selection"/>
 	</menu>
 	<menu label="Yardım" name="Help">
-		<menu_item_call label="Second Life Yardımı" name="Second Life Help"/>
+		<menu_item_call label="InWorldz Yardımı" name="Second Life Help"/>
 		<menu_item_call label="Eğitim" name="Tutorial"/>
 		<menu_item_separator label="-----------" name="separator"/>
 		<menu_item_call label="Yasal Linden Bloğu..." name="Official Linden Blog..."/>
@@ -202,6 +202,6 @@
 			<menu_item_separator label="-----------" name="separator9"/>
 			<menu_item_call label="Hata raporla..." name="Report Bug..."/>
 		</menu>
-		<menu_item_call label="Second Life hakkında..." name="About Second Life..."/>
+		<menu_item_call label="InWorldz hakkında..." name="About Second Life..."/>
 	</menu>
 </menu_bar>

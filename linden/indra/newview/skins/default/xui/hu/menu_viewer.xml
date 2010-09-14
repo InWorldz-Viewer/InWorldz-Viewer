@@ -181,7 +181,7 @@
 		<menu_item_call label="Kód futtatásának tiltása a kijelölt területen" name="Set Scripts to Not Running in Selection"/>
 	</menu>
 	<menu label="Segítség" name="Help">
-		<menu_item_call label="Second Life támogatás" name="Second Life Help"/>
+		<menu_item_call label="InWorldz támogatás" name="Second Life Help"/>
 		<menu_item_call label="Oktatási anyagok" name="Tutorial"/>
 		<menu_item_separator label="-----------" name="separator"/>
 		<menu_item_call label="Hivatalos Linden blog..." name="Official Linden Blog..."/>
@@ -202,6 +202,6 @@
 			<menu_item_separator label="-----------" name="separator9"/>
 			<menu_item_call label="Hiba jelentése..." name="Report Bug..."/>
 		</menu>
-		<menu_item_call label="Second Life-ról..." name="About Second Life..."/>
+		<menu_item_call label="InWorldz-ról..." name="About Second Life..."/>
 	</menu>
 </menu_bar>

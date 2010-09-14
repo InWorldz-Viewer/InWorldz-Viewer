@@ -180,7 +180,7 @@
 		<menu_item_call label="设置所选项中脚本不运行" name="Set Scripts to Not Running in Selection"/>
 	</menu>
 	<menu label="帮助" name="Help">
-		<menu_item_call label="第二人生帮助" name="Second Life Help"/>
+		<menu_item_call label="InWorldz Help" name="Second Life Help"/>
 		<menu_item_call label="教程" name="Tutorial"/>
 		<menu_item_separator label="-----------" name="separator"/>
 		<menu_item_call label="官方林登博客..." name="Official Linden Blog..."/>
@@ -199,6 +199,6 @@
 			<menu_item_call label="质量保证 Wiki..." name="QA Wiki..."/>
 			<menu_item_call label="汇报错误..." name="Report Bug..."/>
 		</menu>
-		<menu_item_call label="关于第二人生..." name="About Second Life..."/>
+		<menu_item_call label="About InWorldz..." name="About Second Life..."/>
 	</menu>
 </menu_bar>
