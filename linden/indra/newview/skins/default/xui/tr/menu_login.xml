@@ -7,7 +7,7 @@
 		<menu_item_call label="Ayarlar..." name="Preferences..." />
 	</menu>
 	<menu label="Yardım" name="Help">
-		<menu_item_call label="Second Life Yardımı" name="Second Life Help" />
-		<menu_item_call label="Second Life Hakkında..." name="About Second Life..." />
+		<menu_item_call label="InWorldz Yardımı" name="Second Life Help" />
+		<menu_item_call label="InWorldz Hakkında..." name="About Second Life..." />
 	</menu>
 </menu_bar>
