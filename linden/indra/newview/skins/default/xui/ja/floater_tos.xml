@@ -15,13 +15,13 @@
 	</text>
 	<check_box label="利用規約に同意します" name="agree_chk" />
 	<text name="tos_heading">
-		以下の利用規約を注意深くお読みください。 SecondLifeへログインするには、
+		以下の利用規約を注意深くお読みください。 InWorldzへログインするには、
 規約に同意しなければなりません。
 	</text>
 	<text_editor name="tos_text">
 		TOS_TEXT
 	</text_editor>
 	<text name="real_url">
-		http://secondlife.com/app/tos/
+		http://inworldz.com/tos.php
 	</text>
 </floater>
