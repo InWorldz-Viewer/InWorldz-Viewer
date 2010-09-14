@@ -2862,71 +2862,23 @@ Go to [GRID_SITE] to manage your account?
 
 <notification
  icon="alertmodal.tga"
- name="WebLaunchBugReport101"
- type="alertmodal">
-Visit the [SECOND_LIFE] Wiki and learn how to report bugs correctly.
-  <usetemplate
-   ignoretext="When launching web browser to view the Bug Reporting 101 Wiki"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="OK"/>
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="WebLaunchSecurityIssues"
- type="alertmodal">
-Visit the [SECOND_LIFE] Wiki for details of how to report a security issue.
-  <usetemplate
-   ignoretext="When launching web browser to view Security Issues Wiki"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="OK"/>
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="WebLaunchQAWiki"
- type="alertmodal">
-Visit the [SECOND_LIFE] QA Wiki.
-  <usetemplate
-   ignoretext="When launching web browser to view the QA Wiki"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="OK"/>
-</notification>
-
-<notification
- icon="alertmodal.tga"
  name="WebLaunchPublicIssue"
  type="alertmodal">
-Visit the [SECOND_LIFE] Public Issue Tracker, where you can report bugs and other issues.
-  <usetemplate
-   ignoretext="When launching web browser to view the Public Issue Tracker"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="Go to page"/>
+Visit the [SECOND_LIFE] Issue Tracker, where you can report bugs and other issues?
+	<usetemplate
+	 ignoretext="When launching web browser to view the Issue Tracker"
+	 name="okcancelignore"
+	 notext="Cancel"
+	 yestext="Go to page"/>
 </notification>
 
 <notification
  icon="alertmodal.tga"
- name="WebLaunchPublicIssueHelp"
+ name="WebLaunchForums"
  type="alertmodal">
-Visit the [SECOND_LIFE] Wiki for info on how to use the Public Issue Tracker.
+Go to the Official [SECOND_LIFE] Forums?
   <usetemplate
-   ignoretext="When launching web browser to view Public Issue Tracker Wiki"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="Go to page"/>
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="WebLaunchSupportWiki"
- type="alertmodal">
-Go to the Official Linden Blog, for the latest news and information.
-  <usetemplate
-   ignoretext="When launching web browser to view the blog"
+   ignoretext="When launching web browser to view the forums"
    name="okcancelignore"
    notext="Cancel"
    yestext="OK"/>
@@ -4345,9 +4297,9 @@ Go to the [SECOND_LIFE] web site to see your account history?
  icon="alertmodal.tga"
  name="ClickOpenF1Help"
  type="alertmodal">
-Visit the [GRID_NAME] Support Web site?
-  <usetemplate
-   ignoretext="When visiting [GRID_NAME]'s support website."
+Visit the [SECOND_LIFE] Support Web site?
+	<usetemplate
+	 ignoretext="When visiting [SECOND_LIFE]'s support website."
    name="okcancelignore"
    notext="Cancel"
    yestext="Go"/>
@@ -7026,30 +6978,6 @@ Show Look At is a debug setting that displays where an avatar's head is looking.
   <usetemplate
    name="okignore"
    yestext="OK"/>
-</notification>
-  
-<notification
- icon="alert.tga"
- name="WebLaunchImprudenceBlog"
- type="alert">
-Go to the Official Imprudence Blog, for the Latest News and Information.
-  <usetemplate
-   ignoretext="When launching web browser to view the blog"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="Go to page"/>
-</notification>
-
-<notification
- icon="alert.tga"
- name="WebLaunchImprudenceForums"
- type="alert">
-Go to the Official Imprudence Forums to discuss the Imprudence Project.
-  <usetemplate
-   ignoretext="When launching web browser to view the forums"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="Go to page"/>
 </notification>
 
 <notification
