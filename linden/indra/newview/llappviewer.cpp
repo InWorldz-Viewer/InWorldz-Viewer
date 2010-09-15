@@ -279,15 +279,15 @@ static std::string gPlaceAvatarCap;	//OGPX TODO: should belong elsewhere, as par
 // Internal globals... that should be removed.
 static std::string gArgs;
 
-const std::string MARKER_FILE_NAME("SecondLife.exec_marker");
-const std::string ERROR_MARKER_FILE_NAME("SecondLife.error_marker");
-const std::string LLERROR_MARKER_FILE_NAME("SecondLife.llerror_marker");
-const std::string LOGOUT_MARKER_FILE_NAME("SecondLife.logout_marker");
+const std::string MARKER_FILE_NAME("InWorldz.exec_marker");
+const std::string ERROR_MARKER_FILE_NAME("InWorldz.error_marker");
+const std::string LLERROR_MARKER_FILE_NAME("InWorldz.llerror_marker");
+const std::string LOGOUT_MARKER_FILE_NAME("InWorldz.logout_marker");
 static BOOL gDoDisconnect = FALSE;
 static std::string gLaunchFileOnQuit;
 
 // Used on Win32 for other apps to identify our window (eg, win_setup)
-const char* const VIEWER_WINDOW_CLASSNAME = "Second Life";
+const char* const VIEWER_WINDOW_CLASSNAME = "InWorldz";
 
 //----------------------------------------------------------------------------
 // File scope definitons
@@ -558,7 +558,7 @@ bool LLAppViewer::init()
 	
 	// Need to do this initialization before we do anything else, since anything
 	// that touches files should really go through the lldir API
-	gDirUtilp->initAppDirs("SecondLife");
+	gDirUtilp->initAppDirs("InWorldz");
 	// set skin search path to default, will be overridden later
 	// this allows simple skinned file lookups to work
 	gDirUtilp->setSkinFolder("default");
@@ -1513,15 +1513,15 @@ bool LLAppViewer::initLogging()
 	
 	// Remove the last ".old" log file.
 	std::string old_log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-							     "SecondLife.old");
+							     "InWorldz.old");
 	LLFile::remove(old_log_file);
 
 	// Rename current log file to ".old"
 	std::string log_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-							     "SecondLife.log");
+							     "InWorldz.log");
 	LLFile::rename(log_file, old_log_file);
 
-	// Set the log file to SecondLife.log
+	// Set the log file to InWorldz.log
 
 	LLError::logToFile(log_file);
 
@@ -1668,7 +1668,7 @@ bool LLAppViewer::initConfiguration()
 	if(!loadSettingsFromDirectory("Default", set_defaults))
 	{
 		std::ostringstream msg;
-		msg << "Second Life could not load its default settings file. \n" 
+		msg << "InWorldz could not load its default settings file. \n" 
 		    << "The installation may be corrupted. \n";
 
 		OSMessageBox(
@@ -1743,7 +1743,7 @@ bool LLAppViewer::initConfiguration()
 		llinfos	<< "Command	line usage:\n" << clp << llendl;
 
 		std::ostringstream msg;
-		msg << "Second Life found an error parsing the command line. \n" 
+		msg << "InWorldz found an error parsing the command line. \n" 
 			<< "Please see: http://wiki.secondlife.com/wiki/Client_parameters \n"
 			<< "Error: " << clp.getErrorMessage();
 
@@ -2542,10 +2542,10 @@ void LLAppViewer::initMarkerFile()
 	LL_DEBUGS("MarkerFile") << "Checking marker file for lock..." << LL_ENDL;
 
 	//We've got 4 things to test for here
-	// - Other Process Running (SecondLife.exec_marker present, locked)
-	// - Freeze (SecondLife.exec_marker present, not locked)
-	// - LLError Crash (SecondLife.llerror_marker present)
-	// - Other Crash (SecondLife.error_marker present)
+	// - Other Process Running (InWorldz.exec_marker present, locked)
+	// - Freeze (InWorldz.exec_marker present, not locked)
+	// - LLError Crash (InWorldz.llerror_marker present)
+	// - Other Crash (InWorldz.error_marker present)
 	// These checks should also remove these files for the last 2 cases if they currently exist
 
 	//LLError/Error checks. Only one of these should ever happen at a time.
@@ -2711,18 +2711,18 @@ void LLAppViewer::abortQuit()
 void LLAppViewer::migrateCacheDirectory()
 {
 #if LL_WINDOWS || LL_DARWIN
-	// NOTE: (Nyx) as of 1.21, cache for mac is moving to /library/caches/SecondLife from
-	// /library/application support/SecondLife/cache This should clear/delete the old dir.
+	// NOTE: (Nyx) as of 1.21, cache for mac is moving to /library/caches/InWorldz from
+	// /library/application support/InWorldz/cache This should clear/delete the old dir.
 
 	// As of 1.23 the Windows cache moved from
-	//   C:\Documents and Settings\James\Application Support\SecondLife\cache
+	//   C:\Documents and Settings\James\Application Support\InWorldz\cache
 	// to
-	//   C:\Documents and Settings\James\Local Settings\Application Support\SecondLife
+	//   C:\Documents and Settings\James\Local Settings\Application Support\InWorldz
 	//
 	// The Windows Vista equivalent is from
-	//   C:\Users\James\AppData\Roaming\SecondLife\cache
+	//   C:\Users\James\AppData\Roaming\InWorldz\cache
 	// to
-	//   C:\Users\James\AppData\Local\SecondLife
+	//   C:\Users\James\AppData\Local\InWorldz
 	//
 	// Note the absence of \cache on the second path.  James.
 

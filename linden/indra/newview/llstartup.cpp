@@ -134,7 +134,6 @@
 #include "llpreviewscript.h"
 #include "llproductinforequest.h"
 #include "llsdhttpserver.h" // OGPX might not need when EVENTHACK is sorted
-#include "llsecondlifeurls.h"
 #include "llselectmgr.h"
 #include "llsky.h"
 #include "llsrv.h"

@@ -261,7 +261,7 @@ bool LLCrashLoggerWindows::init(void)
 	/*
 	mbstowcs( gProductName, mProductName.c_str(), LL_ARRAY_SIZE(gProductName) );
 	gProductName[ LL_ARRY_SIZE(gProductName) - 1 ] = 0;
-	swprintf(gProductName, L"Second Life");
+	swprintf(gProductName, L"InWorldz");
 	*/
 
 	llinfos << "Loading dialogs" << llendl;
@@ -299,7 +299,7 @@ void LLCrashLoggerWindows::gatherPlatformSpecificFiles()
 	// At this point we're responsive enough the user could click the close button
 	SetCursor(gCursorArrow);
 	mDebugLog["DisplayDeviceInfo"] = gDXHardware.getDisplayInfo();
-	mFileMap["CrashLog"] = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,"SecondLifeException.log");
+	mFileMap["CrashLog"] = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,"InWorldzException.log");
 }
 
 bool LLCrashLoggerWindows::mainLoop()

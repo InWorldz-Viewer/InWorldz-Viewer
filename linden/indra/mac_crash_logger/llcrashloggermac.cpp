@@ -223,24 +223,24 @@ void LLCrashLoggerMac::gatherPlatformSpecificFiles()
 			std::string mBuf;
 			bool isLeopard = false;
 			// Try the 10.3 path first...
-			std::string dw_file_name = std::string(path) + std::string("/CrashReporter/Second Life.crash.log");
+			std::string dw_file_name = std::string(path) + std::string("/CrashReporter/InWorldz.crash.log");
 			int res = stat(dw_file_name.c_str(), &dw_stat);
 
 			if (res)
 			{
 				// Try the 10.2 one next...
-				dw_file_name = std::string(path) + std::string("/Second Life.crash.log");
+				dw_file_name = std::string(path) + std::string("/InWorldz.crash.log");
 				res = stat(dw_file_name.c_str(), &dw_stat);
 			}
 	
 			if(res)
 			{
 				//10.5: Like 10.3+, except it puts the crash time in the file instead of dividing it up
-				//using asterisks. Get a directory listing, search for files starting with second life,
+				//using asterisks. Get a directory listing, search for files starting with InWorldz,
 				//use the last one found.
 				std::string old_file_name, current_file_name, pathname, mask;
 				pathname = std::string(path) + std::string("/CrashReporter/");
-				mask = "Second Life*";
+				mask = "InWorldz*";
 				while(gDirUtilp->getNextFileInDir(pathname, mask, current_file_name, false))
 				{
 					old_file_name = current_file_name;

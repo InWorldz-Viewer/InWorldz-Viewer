@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 {
 	//time(&gLaunchTime);
 	
-	llinfos << "Starting Second Life Viewer Crash Reporter" << llendl;
+	llinfos << "Starting InWorldz Viewer Crash Reporter" << llendl;
 
 	LLCrashLoggerMac app;
 	app.parseCommandOptions(argc, argv);

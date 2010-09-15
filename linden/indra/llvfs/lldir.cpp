@@ -248,7 +248,7 @@ std::string LLDir::buildSLOSCacheDir() const
 	}
 	else
 	{
-		res = getOSCacheDir() + mDirDelimiter + "SecondLife";
+		res = getOSCacheDir() + mDirDelimiter + "InWorldz";
 	}
 	return res;
 }
@@ -611,7 +611,7 @@ void LLDir::setSkinFolder(const std::string &skin_folder)
 	mSkinDir += skin_folder;
 
 	// user modifications to current skin
-	// e.g. c:\documents and settings\users\username\application data\second life\skins\dazzle
+	// e.g. c:\documents and settings\users\username\application data\inworldz\skins\dazzle
 	mUserSkinDir = getOSUserAppDir();
 	mUserSkinDir += mDirDelimiter;
 	mUserSkinDir += "skins";
@@ -619,7 +619,7 @@ void LLDir::setSkinFolder(const std::string &skin_folder)
 	mUserSkinDir += skin_folder;
 
 	// base skin which is used as fallback for all skinned files
-	// e.g. c:\program files\secondlife\skins\default
+	// e.g. c:\program files\inworldz\skins\default
 	mDefaultSkinDir = getAppRODataDir();
 	mDefaultSkinDir += mDirDelimiter;
 	mDefaultSkinDir += "skins";

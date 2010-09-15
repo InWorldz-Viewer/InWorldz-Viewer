@@ -303,7 +303,7 @@ void LLAppViewerMacOSX::handleCrashReporting(bool reportFreeze)
 	// Make sure the crash reporter launches in front of the SL window.
 	
 	std::string command_str;
-	//command_str = "open Second Life.app/Contents/Resources/mac-crash-logger.app";
+	//command_str = "open InWorldz.app/Contents/Resources/mac-crash-logger.app";
 	command_str = "mac-crash-logger.app/Contents/MacOS/mac-crash-logger";
 	
 	FSRef appRef;
@@ -403,7 +403,7 @@ void LLAppViewerMacOSX::handleCrashReporting(bool reportFreeze)
 		if(FSRefMakePath(&folder, (UInt8*)&path, sizeof(path)) == noErr)
 		{
 			std::string pathname = std::string(path) + std::string("/CrashReporter/");
-			std::string mask = "Second Life*";
+			std::string mask = "InWorldz*";
 			std::string file_name;
 			while(gDirUtilp->getNextFileInDir(pathname, mask, file_name, false))
 			{
@@ -523,7 +523,7 @@ void init_apple_menu(const char* product)
 		OSStatus err;
 		IBNibRef nib = NULL;
 		// NOTE: DO NOT translate or brand this string.  It's an internal name in the .nib file, and MUST match exactly.
-		err = CreateNibReference(CFSTR("SecondLife"), &nib);
+		err = CreateNibReference(CFSTR("InWorldz"), &nib);
 		
 		if(err == noErr)
 		{

@@ -185,7 +185,7 @@ void LLCrashLogger::gatherFiles()
 
 		mCrashInPreviousExec = mDebugLog["CrashNotHandled"].asBoolean();
 
-		mFileMap["SecondLifeLog"] = mDebugLog["SLLog"].asString();
+		mFileMap["InWorldzLog"] = mDebugLog["SLLog"].asString();
 		mFileMap["SettingsXml"] = mDebugLog["SettingsFilename"].asString();
 		if(mDebugLog.has("CAFilename"))
 		{
@@ -196,14 +196,14 @@ void LLCrashLogger::gatherFiles()
 			LLCurl::setCAFile(gDirUtilp->getCAFile());
 		}
 
-		llinfos << "Using log file from debug log " << mFileMap["SecondLifeLog"] << llendl;
+		llinfos << "Using log file from debug log " << mFileMap["InWorldzLog"] << llendl;
 		llinfos << "Using settings file from debug log " << mFileMap["SettingsXml"] << llendl;
 	}
 	else
 	{
-		// Figure out the filename of the second life log
+		// Figure out the filename of the InWorldz log
 		LLCurl::setCAFile(gDirUtilp->getCAFile());
-		mFileMap["SecondLifeLog"] = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,"SecondLife.log");
+		mFileMap["InWorldzLog"] = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,"InWorldz.log");
 		mFileMap["SettingsXml"] = gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS,"settings.xml");
 	}
 
@@ -214,10 +214,10 @@ void LLCrashLogger::gatherFiles()
 	{
 		// Replace the log file ext with .old, since the 
 		// instance that launched this process has overwritten
-		// SecondLife.log
-		std::string log_filename = mFileMap["SecondLifeLog"];
+		// InWorldz.log
+		std::string log_filename = mFileMap["InWorldzLog"];
 		log_filename.replace(log_filename.size() - 4, 4, ".old");
-		mFileMap["SecondLifeLog"] = log_filename;
+		mFileMap["InWorldzLog"] = log_filename;
 	}
 
 	gatherPlatformSpecificFiles();
@@ -261,7 +261,7 @@ void LLCrashLogger::gatherFiles()
 		s << f.rdbuf();
 
 		std::string crash_info = s.str();
-		if(itr->first == "SecondLifeLog")
+		if(itr->first == "InWorldzLog")
 		{
 			if(!mCrashInfo["DebugLog"].has("StartupState"))
 			{
@@ -335,7 +335,7 @@ bool LLCrashLogger::sendCrashLogs()
 	updateApplication("Sending reports...");
 
 	std::string dump_path = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-															   "SecondLifeCrashReport");
+															   "InWorldzCrashReport");
 	std::string report_file = dump_path + ".log";
 
 	std::ofstream out_file(report_file.c_str());
@@ -369,10 +369,10 @@ void LLCrashLogger::updateApplication(const std::string& message)
 bool LLCrashLogger::init()
 {
 	// We assume that all the logs we're looking for reside on the current drive
-	gDirUtilp->initAppDirs("SecondLife");
+	gDirUtilp->initAppDirs("InWorldz");
 
-	// Default to the product name "Second Life" (this is overridden by the -name argument)
-	mProductName = "Second Life";
+	// Default to the product name "InWorldz" (this is overridden by the -name argument)
+	mProductName = "InWorldz";
 	
 	mCrashSettings.declareS32(CRASH_BEHAVIOR_SETTING, CRASH_BEHAVIOR_ASK, "Controls behavior when viewer crashes "
 		"(0 = ask before sending crash report, 1 = always send crash report, 2 = never send crash report)");
@@ -394,7 +394,7 @@ bool LLCrashLogger::init()
 	//If we've opened the crash logger, assume we can delete the marker file if it exists	
 	if( gDirUtilp )
 	{
-		std::string marker_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,"SecondLife.exec_marker");
+		std::string marker_file = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,"InWorldz.exec_marker");
 		LLAPRFile::remove( marker_file );
 	}
 	

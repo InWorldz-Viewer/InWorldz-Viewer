@@ -78,7 +78,7 @@ extern "C" {
 #endif
 #endif
 
-const std::string LLAppViewerWin32::sWindowClass = "Second Life";
+const std::string LLAppViewerWin32::sWindowClass = "InWorldz";
 
 LONG WINAPI viewer_windows_exception_handler(struct _EXCEPTION_POINTERS *exception_infop)
 {
@@ -128,7 +128,7 @@ LONG WINAPI viewer_windows_exception_handler(struct _EXCEPTION_POINTERS *excepti
 // Create app mutex creates a unique global windows object. 
 // If the object can be created it returns true, otherwise
 // it returns false. The false result can be used to determine 
-// if another instance of a second life app (this vers. or later)
+// if another instance of a InWorldz app (this vers. or later)
 // is running.
 // *NOTE: Do not use this method to run a single instance of the app.
 // This is intended to help debug problems with the cross-platform 
@@ -136,7 +136,7 @@ LONG WINAPI viewer_windows_exception_handler(struct _EXCEPTION_POINTERS *excepti
 bool create_app_mutex()
 {
 	bool result = true;
-	LPCWSTR unique_mutex_name = L"SecondLifeAppMutex";
+	LPCWSTR unique_mutex_name = L"InWorldzAppMutex";
 	HANDLE hMutex;
 	hMutex = CreateMutex(NULL, TRUE, unique_mutex_name); 
 	if(GetLastError() == ERROR_ALREADY_EXISTS) 

@@ -854,7 +854,7 @@ void LLWinDebug::generateCrashStacks(struct _EXCEPTION_POINTERS *exception_infop
 	//
 	LLSD info;
 	std::string dump_path = gDirUtilp->getExpandedFilename(LL_PATH_LOGS,
-												"SecondLifeException");
+												"InWorldzException");
 	std::string log_path = dump_path + ".log";
 
 	if (exception_infop)
@@ -870,8 +870,8 @@ void LLWinDebug::generateCrashStacks(struct _EXCEPTION_POINTERS *exception_infop
 			ExInfo.ExceptionPointers = exception_infop;
 			ExInfo.ClientPointers = NULL;
 
-			writeDumpToFile(MiniDumpNormal, &ExInfo, "SecondLife.dmp");
-			writeDumpToFile((MINIDUMP_TYPE)(MiniDumpWithDataSegs | MiniDumpWithIndirectlyReferencedMemory), &ExInfo, "SecondLifePlus.dmp");
+			writeDumpToFile(MiniDumpNormal, &ExInfo, "InWorldzCrashDump.dmp");
+			writeDumpToFile((MINIDUMP_TYPE)(MiniDumpWithDataSegs | MiniDumpWithIndirectlyReferencedMemory), &ExInfo, "InWorldzCrashDumpPlus.dmp");
 		}
 
 		info = Get_Exception_Info(exception_infop);
@@ -907,6 +907,6 @@ void LLWinDebug::generateCrashStacks(struct _EXCEPTION_POINTERS *exception_infop
 void LLWinDebug::clearCrashStacks()
 {
 	LLSD info;
-	std::string dump_path = gDirUtilp->getExpandedFilename(LL_PATH_LOGS, "SecondLifeException.log");
+	std::string dump_path = gDirUtilp->getExpandedFilename(LL_PATH_LOGS, "InWorldzException.log");
 	LLFile::remove(dump_path);
 }
