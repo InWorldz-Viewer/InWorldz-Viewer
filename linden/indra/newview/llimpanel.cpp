@@ -1553,7 +1553,7 @@ void LLFloaterIMPanel::addHistoryLine(const std::string &utf8msg, const LLColor4
 	// 'name' is a sender name that we want to hotlink so that clicking on it opens a profile.
 	if (!name.empty()) // If name exists, then add it to the front of the message.
 	{
-		// Don't hotlink any messages from the system (e.g. "Second Life:"), so just add those in plain text.
+		// Don't hotlink any messages from the system (e.g. "InWorldz:"), so just add those in plain text.
 		if (name == SYSTEM_FROM)
 		{
 			mHistoryEditor->appendColoredText(name,false,prepend_newline,color);

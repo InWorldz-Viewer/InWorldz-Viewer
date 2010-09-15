@@ -1496,7 +1496,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 	{
 	case IM_CONSOLE_AND_CHAT_HISTORY:
 		// These are used for system messages, hence don't need the name,
-		// as it is always "Second Life".
+		// as it is always "InWorldz".
 	  	// *TODO:translate
 		args["MESSAGE"] = message;
 
@@ -1564,7 +1564,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 		}
 		else if (from_id.isNull())
 		{
-			// Messages from "Second Life" ID don't go to IM history
+			// Messages from "InWorldz" ID don't go to IM history
 			// messages which should be routed to IM window come from a user ID with name=SYSTEM_NAME
 			chat.mText = name + ": " + message;
 			LLFloaterChat::addChat(chat, FALSE, FALSE);
