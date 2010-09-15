@@ -3,10 +3,10 @@
 	<menu label="Dosya" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="Yükle" name="upload">
-			<menu_item_call label="Resim ([COST]L$)..." name="Upload Image"/>
-			<menu_item_call label="Ses ([COST]L$)..." name="Upload Sound"/>
-			<menu_item_call label="Animasyon ([COST]L$)..." name="Upload Animation"/>
-			<menu_item_call label="Çoklu (dosya başına [COST]L$)..." name="Bulk Upload"/>
+			<menu_item_call label="Resim ([COST]I'z$)..." name="Upload Image"/>
+			<menu_item_call label="Ses ([COST]I'z$)..." name="Upload Sound"/>
+			<menu_item_call label="Animasyon ([COST]I'z$)..." name="Upload Animation"/>
+			<menu_item_call label="Çoklu (dosya başına [COST]I'z$)..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="Varsayılan izinler düzenleniyor..." name="perm prefs"/>
 		</menu>
@@ -121,7 +121,7 @@
 		<menu_item_separator label="-----------" name="separator4"/>
 		<menu_item_call label="Hesap geçmişi..." name="Account History..."/>
 		<menu_item_call label="Hesabımı yönet..." name="Manage My Account..."/>
-		<menu_item_call label="L$ satın al..." name="Buy and Sell L$..."/>
+		<menu_item_call label="I'z$ satın al..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="Arazim..." name="My Land..."/>
 		<menu_item_call label="Arazi hakkında..." name="About Land..."/>

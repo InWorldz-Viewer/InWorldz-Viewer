@@ -209,7 +209,7 @@
 				什么也没找到。
 			</string>
 			<string name="land_help_text">
-				土地可以直接用林登元购买（L$），也可以用林登元或美元拍卖。
+				土地可以直接用林登元购买（I'z$），也可以用林登元或美元拍卖。
 要直接购买, 进入该地块，然后点击菜单栏上的地点名称。
 			</string>
 			<text name="find">
@@ -234,7 +234,7 @@
 			</combo_box>
 			<check_box label="标价 &#8804; " name="pricecheck"/>
 			<text name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="地区 &#8805; " name="areacheck"/>
 			<text left="190" name="areacheck_symbol" width="75">
@@ -248,9 +248,9 @@
 				<column label="" name="type"/>
 				<column label="名称" name="name"/>
 				<column label="类型" name="landtype"/>
-				<column label="L$ 价格" name="price"/>
+				<column label="I'z$ 价格" name="price"/>
 				<column label="面积" name="area"/>
-				<column label="L$/m²" name="per_meter"/>
+				<column label="I'z$/m²" name="per_meter"/>
 			</scroll_list>
 			<button label="下一页&gt;" label_selected="下一页&gt;" name="Next &gt;"/>
 			<button label="&lt; 之前" label_selected="&lt; 之前" name="&lt; Prev"/>

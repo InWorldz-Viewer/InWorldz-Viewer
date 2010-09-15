@@ -7,5 +7,5 @@
 		Tanım:
 	</text>
 	<button label="İptal" label_selected="İptal" name="cancel_btn" />
-	<button label="Yükle ([AMOUNT] L$)" label_selected="Yükle ([AMOUNT] L$)" name="ok_btn" />
+	<button label="Yükle ([AMOUNT] I'z$)" label_selected="Yükle ([AMOUNT] I'z$)" name="ok_btn" />
 </floater>

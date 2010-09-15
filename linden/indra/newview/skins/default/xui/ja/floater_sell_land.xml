@@ -24,10 +24,10 @@
 		この土地に対する適切な価格を選択してください
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m" width="230" left_delta="106">
-		（1平方メートル当たりL$ [PER_METER]）
+		（1平方メートル当たりI'z$ [PER_METER]）
 	</text>
 	<text name="sell_to_label">
 		土地の販売先：

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel label="Land und L$" name="land_money_tab">
+<panel label="Land und I'z$" name="land_money_tab">
 	<string name="help_text">
 		Parzellen in Gruppenbesitz werden zusammen mit Beitragsdetails angezeigt. Ein Warnhinweis wird angezeigt, solange der Wert für das insgesamt verwendete Land gleich oder weniger ist als der Gesamtbeitrag. Die Registerkarten „Planung“, „Details“ und „Verkäufe“ enthalten Informationen über die Gruppenfinanzen.
 	</string>
@@ -56,7 +56,7 @@
 das verwendete Land gehalten werden kann.
 	</text>
 	<text name="group_money_heading">
-		Gruppen-L$
+		Gruppen-I'z$
 	</text>
 	<tab_container name="group_money_tab_container">
 		<panel label="Planung" name="group_money_planning_tab">

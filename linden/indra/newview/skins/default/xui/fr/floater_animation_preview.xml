@@ -148,7 +148,7 @@ Nous recommandons les fichiers BVH extraits de
 Poser 4.
 	</text>
 	<button label="Annuler" name="cancel_btn"/>
-	<button label="Charger ([AMOUNT] L$)" name="ok_btn"/>
+	<button label="Charger ([AMOUNT] I'z$)" name="ok_btn"/>
 	<string name="failed_to_initialize">
 		Echec de l&apos;initialisation du mouvement
 	</string>

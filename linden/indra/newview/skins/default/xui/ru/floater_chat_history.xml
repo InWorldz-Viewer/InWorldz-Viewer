@@ -28,7 +28,7 @@
 		&apos;[OBJECTNAME]&apos;, объект принадлежащий &apos;[OWNERNAME]&apos;, находящийся в [REGIONNAME] at [REGIONPOS], потерял разрешения: [PERMISSIONS].
 	</string>
 	<string name="ScriptTakeMoney">
-		Получить с Вас Линден-доллары (L$)
+		Получить с Вас Линден-доллары (I'z$)
 	</string>
 	<string name="ActOnControlInputs">
 		Работать на Ваших клавишах

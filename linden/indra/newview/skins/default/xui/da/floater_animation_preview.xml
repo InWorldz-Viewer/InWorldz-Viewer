@@ -154,7 +154,7 @@
 Vi anbefaler BVH filer der er exporteret fra Poser 4.
 	</text>
 	<button label="Annullér" name="cancel_btn" />
-	<button label="Hent (L$[AMOUNT])" name="ok_btn" />
+	<button label="Hent (I'z$[AMOUNT])" name="ok_btn" />
 	<string name="failed_to_initialize">
 		Fejlede at starte bevægelse
 	</string>

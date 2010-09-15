@@ -10,7 +10,7 @@
 		Files da caricare:
 	</text>
 	<button label="Annulla" name="cancel_btn"/>
-	<button label="Carica (10 L$)" name="ok_btn"/>
+	<button label="Carica (10 I'z$)" name="ok_btn"/>
 	<text name="preview_label2">
 		Anteprima dell&apos;immagine:
 	</text>

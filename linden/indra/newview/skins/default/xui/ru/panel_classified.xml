@@ -20,7 +20,7 @@
 	<combo_box label="" name="classified_category_combo"/>
 	<button label="Обновить" name="classified_update_btn"/>
 	<string name="ad_placed_paid">
-		Реклама размещена: [DATE], Уплачено L$[AMT] за публикацию.
+		Реклама размещена: [DATE], Уплачено I'z$[AMT] за публикацию.
 	</string>
 	<string name="update_txt">
 		Обновить

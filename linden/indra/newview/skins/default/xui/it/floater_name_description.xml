@@ -7,5 +7,5 @@
 		Descrizione:
 	</text>
 	<button label="Annulla" name="cancel_btn"/>
-	<button label="Carica ([AMOUNT] L$)" name="ok_btn"/>
+	<button label="Carica ([AMOUNT] I'z$)" name="ok_btn"/>
 </floater>

@@ -4,7 +4,7 @@
 		et ses contenus :
 	</text>
 	<text name="buy_text">
-		Acheter pour [AMOUNT] L$ à [NAME] ?
+		Acheter pour [AMOUNT] I'z$ à [NAME] ?
 	</text>
 	<button label="Annuler" label_selected="Annuler" name="cancel_btn"/>
 	<button label="Acheter" label_selected="Acheter" name="buy_btn"/>

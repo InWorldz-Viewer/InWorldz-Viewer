@@ -23,7 +23,7 @@
 	<button label="Телепорт..." name="offer_teleport_btn"
 	     tool_tip="Запропонув. Другу телепортуватися в Ваше поточне місцезнаходження" />
 	<button label="Платити..." name="pay_btn"
-	     tool_tip="Передати Linden-долари (L$) цього другу" />
+	     tool_tip="Передати Linden-долари (I'z$) цього другу" />
 	<button label="Видалити..." name="remove_btn"
 	     tool_tip="Видалити цього аватара зі списку друзів" />
 	<button label="Додати..." name="add_btn"

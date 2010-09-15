@@ -10,7 +10,7 @@
 		上传的文件:
 	</text>
 	<button label="取消" name="cancel_btn" />
-	<button label="上传 (L$10)" name="ok_btn" />
+	<button label="上传 (I'z$10)" name="ok_btn" />
 	<text name="preview_label2">
 		图片预览:
 	</text>

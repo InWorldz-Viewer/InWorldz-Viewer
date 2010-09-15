@@ -224,8 +224,8 @@ Når du ser din egen profil, kan du skrive hvilken som helst adresse og klikke o
 Andre beboere kan besøge den adresse du har sat, når de besøger din profil.
 	</notification>
 	<notification name="JoinGroupCannotAfford">
-		Tilmelding til denne gruppe koster L$[COST].
-Du har ikke nok L$ til denne tilmelding.
+		Tilmelding til denne gruppe koster I'z$[COST].
+Du har ikke nok I'z$ til denne tilmelding.
 	</notification>
 	<notification name="PromptMissingSubjMsg">
 		E-mail dette billede med standard emne eller besked?
@@ -352,7 +352,7 @@ Tilbyd venskab til [NAME]?
 		</form>
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] L$ [PRICE] Du har ikke nok L$ til dette.
+		[NAME] I'z$ [PRICE] Du har ikke nok I'z$ til dette.
 	</notification>
 	<notification name="BuyOneObjectOnly">
 		Ikke muligt at købe mere end et objekt ad gangen. Vælg kun ét objekt og prøv igen.
@@ -583,7 +583,7 @@ Linden Lab
 (Tager omkring 5 minutter.)
 	</notification>
 	<notification name="UploadPayment">
-		Du betalte L$[AMOUNT] for at uploade.
+		Du betalte I'z$[AMOUNT] for at uploade.
 	</notification>
 	<notification name="UploadWebSnapshotDone">
 		Billeder fra www er uploadet.
@@ -1012,12 +1012,12 @@ Imødekom denne forespørgsel?
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		Du har lige modtaget L$[AMOUNT].
-Genstande og andre brugere kan give dig L$.
+		Du har lige modtaget I'z$[AMOUNT].
+Genstande og andre brugere kan give dig I'z$.
 Din saldo er vist i øverste højre hjørne af skærmen.
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		Du har lige modtaget L$[AMOUNT].
+		Du har lige modtaget I'z$[AMOUNT].
 Din saldo er vist i øverste højre hjørne af skærmen.
 	</notification>
 	<notification name="FirstSit">

@@ -240,7 +240,7 @@ void LLFloaterPay::processPayPriceReply(LLMessageSystem* msg, void **userdata)
 			msg->getS32Fast(_PREHASH_ButtonData,_PREHASH_PayButton,pay_button,i);
 			if (pay_button > 0)
 			{
-				std::string button_str = "L$";
+				std::string button_str = "I'z$";
 				button_str += LLResMgr::getInstance()->getMonetaryString( pay_button );
 
 				self->mQuickPayButton[i]->setLabelSelected(button_str);
@@ -261,7 +261,7 @@ void LLFloaterPay::processPayPriceReply(LLMessageSystem* msg, void **userdata)
 		}
 
 		// build a string containing the maximum value and calc nerw button width from it.
-		std::string balance_str = "L$";
+		std::string balance_str = "I'z$";
 		balance_str += LLResMgr::getInstance()->getMonetaryString( max_pay_amount );
 		const LLFontGL* font = LLResMgr::getInstance()->getRes(LLFONT_SANSSERIF);
 		S32 new_button_width = font->getWidth( std::string(balance_str));
@@ -323,7 +323,7 @@ void LLFloaterPay::payViaObject(money_callback callback, const LLUUID& object_id
 	LLViewerObject* object = gObjectList.findObject(object_id);
 	if (!object) return;
 	
-	LLFloaterPay *floater = new LLFloaterPay("Give L$", callback, object_id, TRUE);
+	LLFloaterPay *floater = new LLFloaterPay("Give I'z$", callback, object_id, TRUE);
 	if (!floater) return;
 
 	LLSelectNode* node = floater->mObjectSelection->getFirstRootNode();
@@ -356,7 +356,7 @@ void LLFloaterPay::payDirectly(money_callback callback,
 							   const LLUUID& target_id,
 							   BOOL is_group)
 {
-	LLFloaterPay *floater = new LLFloaterPay("Give L$", callback, target_id, FALSE);
+	LLFloaterPay *floater = new LLFloaterPay("Give I'z$", callback, target_id, FALSE);
 	if (!floater) return;
 
 	floater->childSetVisible("amount", TRUE);
@@ -491,7 +491,7 @@ void LLFloaterPay::give(S32 amount)
 		}
 		else
 		{
-			// just transfer the L$
+			// just transfer the I'z$
 			mCallback(mTargetUUID, gAgent.getRegion(), amount, mTargetIsGroup, TRANS_GIFT, LLStringUtil::null);
 
 			// check if the payee needs to be unmuted

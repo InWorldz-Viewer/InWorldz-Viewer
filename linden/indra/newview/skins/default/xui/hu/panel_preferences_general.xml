@@ -33,7 +33,7 @@
 	</text>
 	<check_box label="Felbontás független méretezés használata" name="ui_auto_scale"/>
 	<spinner label="Nincs a gépnél idő:" name="afk_timeout_spinner"/>
-	<check_box label="Értesítés linden dollár (L$) kiadásakor és fogadásakor" name="notify_money_change_checkbox"/>
+	<check_box label="Értesítés linden dollár (I'z$) kiadásakor és fogadásakor" name="notify_money_change_checkbox"/>
 	<text name="maturity_desired_label">
 		Minősítés:
 	</text>

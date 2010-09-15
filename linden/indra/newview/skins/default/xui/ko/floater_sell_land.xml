@@ -22,10 +22,10 @@
 		이 토지에 대한 적절한 가격을 선택 하십시오.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		(L$ [PER_METER]제곱미터당)
+		(I'z$ [PER_METER]제곱미터당)
 	</text>
 	<text name="sell_to_label">
 		토지 판매 대상:

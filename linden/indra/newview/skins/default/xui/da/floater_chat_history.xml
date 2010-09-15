@@ -28,7 +28,7 @@
 	&apos;[OBJECTNAME]&apos;, en genstand, ejet af &apos;[OWNERNAME]&apos;, lokaliseret i [REGIONNAME] på [REGIONPOS], er afvist tilladelse til: [PERMISSIONS].
   </string>
   <string name="ScriptTakeMoney">
-	Tag Linden dollars (L$) fra dig
+	Tag Linden dollars (I'z$) fra dig
   </string>
   <string name="ActOnControlInputs">
 	Reagér på dine kontrol-taster

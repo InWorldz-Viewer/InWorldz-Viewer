@@ -249,24 +249,24 @@ A beállított URL címet a többi lakó is megtekintheti az adatlapodon.
 
 
 	<notification name="JoinGroupCannotAfford">
-		Csoport tagsági díj: [COST] L$.
+		Csoport tagsági díj: [COST] I'z$.
 Nincs elég pénzed a csoportba való lépéshez.
 	</notification>
 
 
 	<notification name="SalePriceRestriction">
-		Az eladási árnak nagyobbnak kell lennie 0 L$ összegtől, amennyiben bárkinek el szeretnél adni.
-Kérjük válaszd ki azt a személyt, akinek el szeretnéd adni 0 L$ összegért.
+		Az eladási árnak nagyobbnak kell lennie 0 I'z$ összegtől, amennyiben bárkinek el szeretnél adni.
+Kérjük válaszd ki azt a személyt, akinek el szeretnéd adni 0 I'z$ összegért.
 	</notification>
 	<notification name="ConfirmLandSaleChange">
 		A kijelölt [LAND_SIZE] m² területű föld eladásra beállítva.
-Az eladási ár [SALE_PRICE] L$ lesz valamint jóváhagyva ennek: [NAME].
+Az eladási ár [SALE_PRICE] I'z$ lesz valamint jóváhagyva ennek: [NAME].
 	</notification>
 	<notification name="ConfirmLandSaleToAnyoneChange">
 		FIGYELEM: A &apos;bárkinek eladás&apos; beállítása révén az eladásra szánt föld megvásárolhatóvá válik bármely személy részére a [GRID_NAME] közösségében.
 
 A kijelölt [LAND_SIZE] m² területű föld eladásra beállítva.
-Az eladási ár [SALE_PRICE] L$ valamint jóváhagyva ennek: [NAME].
+Az eladási ár [SALE_PRICE] I'z$ valamint jóváhagyva ennek: [NAME].
 	</notification>
 	<notification name="ReturnObjectsDeededToGroup">
 		Biztos, hogy az összes telken található &apos;[NAME]&apos; csoporttal megosztott tárgyat visszaküldöd az előző tulajdonos készlettárába?
@@ -821,7 +821,7 @@ Válaszd ki egy telket vagy oszd fel először.
 	</notification>
 	<notification name="ReleaseLandWarning">
 		[AREA] m² területű telek felszabadítását végzed.
-Amennyiben a telket felszabadítod, akkor ez eltávolításra kerül a föld hozzájárulásaid közül, de ez nem jár semennyi L$ jóváírással.
+Amennyiben a telket felszabadítod, akkor ez eltávolításra kerül a föld hozzájárulásaid közül, de ez nem jár semennyi I'z$ jóváírással.
 
 Telek felszabadítása?
 	</notification>
@@ -960,7 +960,7 @@ amely ennek a tulajdonában van:
 		A hirdetésnek nevet kell adnod.
 	</notification>
 	<notification name="MinClassifiedPrice">
-		A hirdetés megjelenésének ára legalább ennyi kell, hogy legyen: [MIN_PRICE] L$.
+		A hirdetés megjelenésének ára legalább ennyi kell, hogy legyen: [MIN_PRICE] I'z$.
 
 Kérjük magasabb árat adj meg.
 	</notification>
@@ -1076,7 +1076,7 @@ A segítséghez vagy további információk kéréséhez használd az F1 gombot.
 Kérjük válassz férfi vagy női avatárt. Ezt bármikor megváltoztathatod.
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] L$ [PRICE] Nem áll rendelkezésre elég L$ ennek végrehajtásához.
+		[NAME] I'z$ [PRICE] Nem áll rendelkezésre elég I'z$ ennek végrehajtásához.
 	</notification>
 	<notification name="GrantedModifyRights">
 		[FIRST_NAME] [LAST_NAME] tárgyainak szerkesztésére jogosultságot szereztél.
@@ -1191,7 +1191,7 @@ Letöltés a programok könyvtárába?
 	</notification>
 	<notification name="DeedObjectToGroup">
 		Tárgy átruházása a csoport részére:
-* Tárgyra fizetett L$ fogadása
+* Tárgyra fizetett I'z$ fogadása
 	</notification>
 	<notification name="WebLaunchExternalTarget">
 		Tartalom megtekintése böngészőben?
@@ -1327,7 +1327,7 @@ Folytatod?
 	<notification label="Linden telek belépésének változtatása" name="ChangeLindenAccess">
 		Linden tulajdonú telek változtatása folyamatban (mainland, teen grid, orientation, stb.).
 
-This is DANGEROUS and should only be done to invoke the hack allowing objects/L$ to be transfered in/out of a grid.
+This is DANGEROUS and should only be done to invoke the hack allowing objects/I'z$ to be transfered in/out of a grid.
 A mainland-en ez régiók ezreit befolyásolja, amely a &apos;spaceserver&apos; működésében akadályokat okoz.
 	</notification>
 	<notification label="Ingatlan kiválasztása" name="EstateAllowedAgentAdd">
@@ -1495,7 +1495,7 @@ Kattints a &apos;Tulajdonságok megváltoztatása&apos; menüre a Minősítés m
 	<notification name="PublishClassified">
 		Emlékeztető: Hirdetések feladásának díjai nem visszatérítendők.
 
-Hirdetés feladása most ennyiért: [AMOUNT] L$?
+Hirdetés feladása most ennyiért: [AMOUNT] I'z$?
 	</notification>
 	<notification name="SetClassifiedMature">
 		Ez a hirdetés Mature tartalmú?
@@ -1732,7 +1732,7 @@ Kérjük csak egy tárgyat válassz és próbáld újra.
 Kérjük csak egy tárgyat válassz és próbáld újra.
 	</notification>
 	<notification name="BuyOriginal">
-		Eredeti tárgy vásárlása ettől: [OWNER] ezen az áron: [PRICE] L$?
+		Eredeti tárgy vásárlása ettől: [OWNER] ezen az áron: [PRICE] I'z$?
 A tárgy tulajdonosa te leszel.
 Jogosultságod lesz:
  Módosítás: [MODIFYPERM]
@@ -1740,7 +1740,7 @@ Jogosultságod lesz:
  Eladás vagy átadás: [RESELLPERM]
 	</notification>
 	<notification name="BuyOriginalNoOwner">
-		Eredeti tárgy vásárlása ezen az áron: [PRICE] L$?
+		Eredeti tárgy vásárlása ezen az áron: [PRICE] I'z$?
 A tárgy tulajdonosa te leszel.
 Jogosultságod lesz:
  Módosítás: [MODIFYPERM]
@@ -1748,7 +1748,7 @@ Jogosultságod lesz:
  Eladás vagy átadás: [RESELLPERM]
 	</notification>
 	<notification name="BuyCopy">
-		Másolat vásárlása ettől: [OWNER] ezen az áron: [PRICE] L$?
+		Másolat vásárlása ettől: [OWNER] ezen az áron: [PRICE] I'z$?
 A tárgy a másolásra kerül a készlettáradba.
 Jogosultságod lesz:
  Módosítás: [MODIFYPERM]
@@ -1757,7 +1757,7 @@ Jogosultságod lesz:
 	<usetemplate name="okcancelbuttons" notext="Mégsem" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopyNoOwner">
-		Másolat vásárlása ezen az áron: [PRICE] L$?
+		Másolat vásárlása ezen az áron: [PRICE] I'z$?
 A tárgy a másolásra kerül a készlettáradba.
 Jogosultságod lesz:
  Módosítás: [MODIFYPERM]
@@ -1765,11 +1765,11 @@ Jogosultságod lesz:
  Eladás vagy átadás: [RESELLPERM]
 	</notification>
 	<notification name="BuyContents">
-		Tartalom vásárlása ettől: [OWNER] ezen az áron: [PRICE] L$?
+		Tartalom vásárlása ettől: [OWNER] ezen az áron: [PRICE] I'z$?
 Ezek másolásra kerülnek a készlettáradba.
 	</notification>
 	<notification name="BuyContentsNoOwner">
-		Tartalom vásárlása ezen az áron: [PRICE] L$?
+		Tartalom vásárlása ezen az áron: [PRICE] I'z$?
 Ezek másolásra kerülnek a készlettáradba.
 	</notification>
 	<notification name="ConfirmPurchase">
@@ -1977,7 +1977,7 @@ Domborzat részletei: A domborzat textúrájának részletezettsége.
 		Azok az elemek, melyek egy csatolt tárgy részei, nem vásárolhatók meg.
 	</notification>
 	<notification label="About Requests for the Debit Permission" name="DebitPermissionDetails">
-		Granting this request gives a script ongoing permission to take Linden dollars (L$) from your account. To revoke this permission, the object owner must delete the object or reset the scripts in the object.
+		Granting this request gives a script ongoing permission to take Linden dollars (I'z$) from your account. To revoke this permission, the object owner must delete the object or reset the scripts in the object.
 	</notification>
 	<notification name="AutoWearNewClothing">
 		Az elkészített ruházat automatikus felvétele?
@@ -2035,7 +2035,7 @@ Ennek beállításához meglátogatod ez erre vonatkozó honlapot?
 (Kb. 5 percig tart.)
 	</notification>
 	<notification name="UploadPayment">
-		Ennyi összeget fizettél a feltöltésért: [AMOUNT] L$.
+		Ennyi összeget fizettél a feltöltésért: [AMOUNT] I'z$.
 	</notification>
 	<notification name="UploadWebSnapshotDone">
 		Kép honlapra történő feltöltése megtörtént.
@@ -2476,12 +2476,12 @@ Jóváhagyod a kérést?
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		Ennyi összeget kaptál: [AMOUNT] L$.
-Tárgyak és egyéb személyek is adhatnak L$.
+		Ennyi összeget kaptál: [AMOUNT] I'z$.
+Tárgyak és egyéb személyek is adhatnak I'z$.
 Az jelenlegi egyenleged a képernyő felső jobb sarkában látható.
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		Ennyi összeget fizettél: [AMOUNT] L$.
+		Ennyi összeget fizettél: [AMOUNT] I'z$.
 Az jelenlegi egyenleged a képernyő felső jobb sarkában látható.
 	</notification>
 	<notification name="FirstSit">

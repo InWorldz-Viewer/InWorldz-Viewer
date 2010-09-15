@@ -14,7 +14,7 @@
 	<button width="86" label="MI/Chamar" name="im_btn" tool_tip="Abrir sessão de Mensagem Instantânea"/>
 	<button width="86" label="Perfil" name="profile_btn" tool_tip="Mostrar foto, grupos e outras informações"/>
 	<button width="86" label="Teletransp..." name="offer_teleport_btn" tool_tip="Oferecer a este amigo o teletransporte para sua localização atual"/>
-	<button width="86" label="Pagar..." name="pay_btn" tool_tip="Dar Linden dólares (L$) a este amigo"/>
+	<button width="86" label="Pagar..." name="pay_btn" tool_tip="Dar Linden dólares (I'z$) a este amigo"/>
 	<button width="86" label="Remover..." name="remove_btn" tool_tip="Remover esta pessoa de sua lista de amigos"/>
 	<button width="86" label="Adicionar..." name="add_btn" tool_tip="Oferecer amizade a um residente"/>
 </panel>

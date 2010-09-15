@@ -7,5 +7,5 @@
 		Leírás:
 	</text>
 	<button label="Mégsem" name="cancel_btn" />
-	<button label="Feltölt (L$[AMOUNT])" name="ok_btn" />
+	<button label="Feltölt (I'z$[AMOUNT])" name="ok_btn" />
 </floater>

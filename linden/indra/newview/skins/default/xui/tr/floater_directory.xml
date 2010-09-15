@@ -209,7 +209,7 @@
 				Bulunamadı.
 			</string>
 			<string name="land_help_text">
-				Arazi doğrudan Linden Doları (L$) ile veya açık arttırmada hem L$ hem de U$ ile satın alınabilir.
+				Arazi doğrudan Linden Doları (I'z$) ile veya açık arttırmada hem I'z$ hem de U$ ile satın alınabilir.
 Doğrudan satın almak için, araziyi ziyaret ediniz ve başlık çubuğundaki lokasyon adına tıklayınız.
 			</string>
 			<text name="find">
@@ -234,7 +234,7 @@ Doğrudan satın almak için, araziyi ziyaret ediniz ve başlık çubuğundaki l
 			</combo_box>
 			<check_box label="Ücret &#8804; " name="pricecheck"/>
 			<text left="180" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Alan &#8805; " name="areacheck"/>
 			<text left="180" name="areacheck_symbol">
@@ -248,9 +248,9 @@ Doğrudan satın almak için, araziyi ziyaret ediniz ve başlık çubuğundaki l
 				<column label="" name="type"/>
 				<column label="Ad" name="name"/>
 				<column label="Tür" name="landtype"/>
-				<column label="L$ Ücreti" name="price"/>
+				<column label="I'z$ Ücreti" name="price"/>
 				<column label="Alan" name="area"/>
-				<column label="L$/m²" name="per_meter"/>
+				<column label="I'z$/m²" name="per_meter"/>
 			</scroll_list>
 			<button label="İleri &gt;" label_selected="İleri &gt;" name="Next &gt;"/>
 			<button label="&lt; Geri" label_selected="&lt; Geri" name="&lt; Prev"/>

@@ -3,10 +3,10 @@
 	<menu label="File" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="Carica" name="upload">
-			<menu_item_call label="Immagine ([COST]L$)..." name="Upload Image"/>
-			<menu_item_call label="Suono ([COST]L$)..." name="Upload Sound"/>
-			<menu_item_call label="Animazione ([COST]L$)..." name="Upload Animation"/>
-			<menu_item_call label="Multiplo ([COST]L$ per file)..." name="Bulk Upload"/>
+			<menu_item_call label="Immagine ([COST]I'z$)..." name="Upload Image"/>
+			<menu_item_call label="Suono ([COST]I'z$)..." name="Upload Sound"/>
+			<menu_item_call label="Animazione ([COST]I'z$)..." name="Upload Animation"/>
+			<menu_item_call label="Multiplo ([COST]I'z$ per file)..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="Imposta i permessi di base..." name="perm prefs"/>
 		</menu>
@@ -121,7 +121,7 @@
 		<menu_item_separator label="-----------" name="separator4"/>
 		<menu_item_call label="Estratto conto..." name="Account History..."/>
 		<menu_item_call label="Gestisci il mio account..." name="Manage My Account..."/>
-		<menu_item_call label="Compra L$..." name="Buy and Sell L$..."/>
+		<menu_item_call label="Compra I'z$..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="Il mio terreno..." name="My Land..."/>
 		<menu_item_call label="Informazioni sul terreno..." name="About Land..."/>

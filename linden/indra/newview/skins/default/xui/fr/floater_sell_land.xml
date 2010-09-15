@@ -24,10 +24,10 @@ parcelle :
 		Fixez un prix convenable pour ce terrain.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		([PER_METER] L$ par mètre carré)
+		([PER_METER] I'z$ par mètre carré)
 	</text>
 	<text name="sell_to_label">
 		Vos acheteurs :

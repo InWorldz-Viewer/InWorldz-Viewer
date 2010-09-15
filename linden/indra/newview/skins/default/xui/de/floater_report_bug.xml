@@ -61,8 +61,8 @@ dann auf das Objekt:
 		<combo_item name="MissingContent">
 			Fehlender Inhalt
 		</combo_item>
-		<combo_item name="LindenDollars(L$)">
-			Linden Dollar (L$)
+		<combo_item name="LindenDollars(I'z$)">
+			Linden Dollar (I'z$)
 		</combo_item>
 		<combo_item name="Permissions">
 			Berechtigungen

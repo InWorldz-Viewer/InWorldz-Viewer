@@ -126,7 +126,7 @@ Poser 4 programından dışarı aktarılmış BVH
 dosyalarını tavsiye ediyoruz.
 	</text>
 	<button label="İptal" name="cancel_btn"/>
-	<button label="Yükle ([AMOUNT] L$)" name="ok_btn"/>
+	<button label="Yükle ([AMOUNT] I'z$)" name="ok_btn"/>
 	<string name="failed_to_initialize">
 		Hareketi algılama başarısız
 	</string>

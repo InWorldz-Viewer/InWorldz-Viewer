@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel label="土地和 L$" name="land_money_tab">
+<panel label="土地和 I'z$" name="land_money_tab">
 	<string name="help_text">
 		社团所拥有的土地在捐献清单中详细列出。当使用土地总量少于或者等于总捐献量时，将有警告提示。“计划”，“详细”以及“在售”栏提供社团的财政状况。
 	</string>
@@ -55,7 +55,7 @@
 		社团成员必须贡献更多的土地额度，来支持土地的使用。
 	</text>
 	<text name="group_money_heading">
-		社团资产 L$
+		社团资产 I'z$
 	</text>
 	<tab_container name="group_money_tab_container">
 		<panel label="计划" name="group_money_planning_tab">

@@ -39,7 +39,7 @@
 				Fator cobrança:
 			</text>
 			<text name="land cost text">
-				L$ por metros quadrados
+				I'z$ por metros quadrados
 			</text>
 			<button label="Atualizar" label_selected="Atualizar" name="Refresh" tool_tip="Clique aqui para atualizar a informação acima."/>
 			<button label="Aplicar" label_selected="Aplicar" name="Apply" tool_tip="Clique aqui para aplicar qualquer mudança acima"/>

@@ -28,7 +28,7 @@
 	&apos;[OBJECTNAME]&apos;, tulajdonos: &apos;[OWNERNAME]&apos;, megtalálható: [REGIONNAME] [REGIONPOS], a következő jogosultságot ajánlja fel: [PERMISSIONS].
   </string>
   <string name="ScriptTakeMoney">
-	Linden dollár (L$) levonása
+	Linden dollár (I'z$) levonása
   </string>
   <string name="ActOnControlInputs">
 	Vezérlő indítása

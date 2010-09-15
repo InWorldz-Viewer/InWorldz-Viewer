@@ -23,10 +23,10 @@
 		Válaszd ki a megfelelő árat a föld eladásához.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		(L$[PER_METER]/m²)
+		(I'z$[PER_METER]/m²)
 	</text>
 	<text name="sell_to_label">
 		Föld eladása ennek:

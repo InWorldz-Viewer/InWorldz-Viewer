@@ -10,7 +10,7 @@
 		업로드할 파일:
 	</text>
 	<button label="취소" name="cancel_btn" />
-	<button label="업로드(L$10)" name="ok_btn" />
+	<button label="업로드(I'z$10)" name="ok_btn" />
 	<text name="preview_label2">
 		이미지 미리보기:
 	</text>

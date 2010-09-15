@@ -68,7 +68,7 @@
 		</radio_item>
 	</radio_group>
 	<text name="TextPrice">
-		Ár: L$
+		Ár: I'z$
 	</text>
 	<line_editor left_delta="36" name="EditPrice" />
 	<text name="unknown">

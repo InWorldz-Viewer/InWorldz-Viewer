@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel label="Föld és L$" name="land_money_tab">
+<panel label="Föld és I'z$" name="land_money_tab">
 	<string name="help_text">
 		A csoport tulajdonában lévő telkek kerülnek itt listázásra a hozzájárulások alapján. A figyelmeztetés mindaddig megmarad, amíg az összes használatban lévő földterület kevesebb vagy egyenlő az összes hozzájáruláshoz viszonyítva. A tervezett, részletek és az eladás rész a csoport pénzügyi információit mutatja.
 	</string>
@@ -57,7 +57,7 @@
 a föld használatához.
 	</text>
 	<text name="group_money_heading">
-		Csoport L$
+		Csoport I'z$
 	</text>
 	<tab_container name="group_money_tab_container">
 		<panel label="Tervezett" name="group_money_planning_tab">

@@ -28,7 +28,7 @@
 		&apos;[OBJECTNAME]&apos;, un objet appartenant à [OWNERNAME], situé dans [REGIONNAME] à [REGIONPOS], n&apos;a pas reçu le droit de : [PERMISSIONS].
 	</string>
 	<string name="ScriptTakeMoney">
-		Débiter vos Linden dollars (L$)
+		Débiter vos Linden dollars (I'z$)
 	</string>
 	<string name="ActOnControlInputs">
 		Utiliser vos touches de commandes

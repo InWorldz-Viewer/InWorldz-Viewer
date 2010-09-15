@@ -40,8 +40,8 @@
 			<text name="Not for sale.">
 				Nicht zu verkaufen.
 			</text>
-			<text name="For Sale: Price L$[PRICE].">
-				Preis: [PRICE] L$ ([PRICE_PER_SQM] L$/qm.).
+			<text name="For Sale: Price I'z$[PRICE].">
+				Preis: [PRICE] I'z$ ([PRICE_PER_SQM] I'z$/qm.).
 			</text>
 			<text name="SalePending"/>
 			<button bottom="-222" label="Land verkaufen..." label_selected="Land verkaufen..." name="Sell Land..."/>
@@ -292,7 +292,7 @@ und geteilt werden.
 			</text>
 			<check_box label="Sicher (kein Schaden)" name="check safe" tool_tip="Falls aktiviert, wird Land auf Option „Sicher“ eingestellt, Kampfschäden sind deaktiviert. Falls nicht aktiviert, sind Kampfschäden aktiviert."/>
 			<check_box label="Kein Stoßen" name="PushRestrictCheck" tool_tip="Verhindert Skripte am Stoßen. Durch Aktivieren dieser Option verhindern Sie störendes Verhalten auf Ihrem Land."/>
-			<check_box label="Ort in Suche anzeigen (30 L$/Woche) unter" name="ShowDirectoryCheck" tool_tip="Diese Parzelle in Suchergebnissen anzeigen."/>
+			<check_box label="Ort in Suche anzeigen (30 I'z$/Woche) unter" name="ShowDirectoryCheck" tool_tip="Diese Parzelle in Suchergebnissen anzeigen."/>
 			<string name="search_enabled_tooltip">
 				Diese Parzelle in Suchergebnissen anzeigen.
 			</string>
@@ -505,7 +505,7 @@ Optionen:
 					Gruppe
 				</combo_item>
 			</combo_box>
-			<spinner label="Preis in L$:" name="PriceSpin"/>
+			<spinner label="Preis in I'z$:" name="PriceSpin"/>
 			<spinner label="Online-Zeit:" name="HoursSpin"/>
 			<text label="Immer erlauben" name="AllowedText">
 				Zulässige Einwohner

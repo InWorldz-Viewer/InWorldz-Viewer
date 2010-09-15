@@ -17,13 +17,13 @@
 		Kontakter LindeX...
 	</text>
 	<text name="buy_action_unknown">
-		Køb L$ på LindeX valuta marked
+		Køb I'z$ på LindeX valuta marked
 	</text>
 	<text name="buy_action">
-		[NAME] L$ [PRICE]
+		[NAME] I'z$ [PRICE]
 	</text>
 	<text name="currency_action">
-		Køb L$
+		Køb I'z$
 	</text>
 	<line_editor name="currency_amt">
 		1234
@@ -38,19 +38,19 @@
 		Du har i øjeblikket
 	</text>
 	<text name="balance_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="buying_label">
 		Du køber
 	</text>
 	<text name="buying_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="total_label">
 		Din balance bliver
 	</text>
 	<text name="total_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="purchase_warning_repurchase">
 		Bekræfter at denne handel kun omfatter valuta.
@@ -63,6 +63,6 @@ og prøv igen.
 	<button label="Annullér" name="cancel_btn" />
 	<button label="Køb" name="buy_btn" />
 	<string name="buy_currency">
-		Køb L$ [LINDENS] for ca. US$ [USD]
+		Køb I'z$ [LINDENS] for ca. US$ [USD]
 	</string>
 </floater>

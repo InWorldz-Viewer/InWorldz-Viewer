@@ -50,5 +50,5 @@
 	<check_box label="Использовать беспотерьное сжатие"
 	     name="lossless_check" />
 	<button label="Отмена" name="cancel_btn" />
-	<button label="Загрузить (L$[AMOUNT])" name="ok_btn" width="135" />
+	<button label="Загрузить (I'z$[AMOUNT])" name="ok_btn" width="135" />
 </floater>

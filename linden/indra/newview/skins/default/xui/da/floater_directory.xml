@@ -221,7 +221,7 @@
 				Intet Fundet.
 			</string>
 			<string name="land_help_text">
-				Land kan købes direkte for Linden Dollars (L$) eller på en auktion for enten L$ eller US$.
+				Land kan købes direkte for Linden Dollars (I'z$) eller på en auktion for enten I'z$ eller US$.
 for at købe direkte, besøg landet du vil købe og klik på stedets navn i den øverste titel-linie.
 			</string>
 			<text name="find">
@@ -246,7 +246,7 @@ for at købe direkte, besøg landet du vil købe og klik på stedets navn i den 
 			</combo_box>
 			<check_box label="Pris &#8804; " name="pricecheck"/>
 			<text name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Areal &#8805; " name="areacheck"/>
 			<text name="areacheck_symbol">
@@ -260,9 +260,9 @@ for at købe direkte, besøg landet du vil købe og klik på stedets navn i den 
 				<column label="" name="type"/>
 				<column label="Navn" name="name"/>
 				<column label="Type" name="landtype"/>
-				<column label="L$ Pris" name="price"/>
+				<column label="I'z$ Pris" name="price"/>
 				<column label="Areal" name="area"/>
-				<column label="L$/m²" name="per_meter"/>
+				<column label="I'z$/m²" name="per_meter"/>
 			</scroll_list>
 			<button label="Næste &gt;" label_selected="Næste &gt;" name="Next &gt;"/>
 			<button label="&lt; Forrige" label_selected="&lt; Forrige" name="&lt; Prev"/>

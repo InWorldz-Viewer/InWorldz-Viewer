@@ -8,7 +8,7 @@
 			Send via e-mail
 		</radio_item>
 		<radio_item name="texture">
-			Gem i din beholdning (L$[AMOUNT])
+			Gem i din beholdning (I'z$[AMOUNT])
 		</radio_item>
 		<radio_item name="local">
 			Gem på din computer
@@ -19,7 +19,7 @@
 	</text>
 	<button label="Tag nyt foto" name="new_snapshot_btn"/>
 	<button label="Send" name="send_btn"/>
-	<button label="Gem (L$[AMOUNT])" name="upload_btn"/>
+	<button label="Gem (I'z$[AMOUNT])" name="upload_btn"/>
 	<flyout_button label="Gem" name="save_btn" tool_tip="Gem billede i på din computer">
 		<flyout_button_item name="save_item">
 			Gem

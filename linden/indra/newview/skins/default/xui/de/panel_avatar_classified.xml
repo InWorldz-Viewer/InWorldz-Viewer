@@ -26,7 +26,7 @@
 	<button label="Veröffentlichen..." name="classified_update_btn"/>
 	<check_box label="Jede Woche automatisch erneuern" name="auto_renew_check"/>
 	<string name="ad_placed_paid">
-		Anzeige: [DATE], [AMT] L$ für Eintrag bezahlt.
+		Anzeige: [DATE], [AMT] I'z$ für Eintrag bezahlt.
 	</string>
 	<string name="update_txt">
 		Aktualisieren

@@ -3,10 +3,10 @@
 	<menu label="Fichier" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="Importer" name="upload">
-			<menu_item_call label="Image ([COST] L$)..." name="Upload Image"/>
-			<menu_item_call label="Son ([COST] L$)..." name="Upload Sound"/>
-			<menu_item_call label="Animation ([COST] L$)..." name="Upload Animation"/>
-			<menu_item_call label="Lot ([COST] L$ par fichier)..." name="Bulk Upload"/>
+			<menu_item_call label="Image ([COST] I'z$)..." name="Upload Image"/>
+			<menu_item_call label="Son ([COST] I'z$)..." name="Upload Sound"/>
+			<menu_item_call label="Animation ([COST] I'z$)..." name="Upload Animation"/>
+			<menu_item_call label="Lot ([COST] I'z$ par fichier)..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="Définir les droits par défaut..." name="perm prefs"/>
 		</menu>
@@ -125,7 +125,7 @@
 		<menu_item_call label="Gérer mon compte..." name="Manage My Account...">
 			<on_click name="ManageMyAccount_url" userdata="WebLaunchJoinNow,http://secondlife.com/account/index.php?lang=fr"/>
 		</menu_item_call>
-		<menu_item_call label="Acheter des L$..." name="Buy and Sell L$..."/>
+		<menu_item_call label="Acheter des I'z$..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="Mes terrains..." name="My Land..."/>
 		<menu_item_call label="À propos du terrain..." name="About Land..."/>

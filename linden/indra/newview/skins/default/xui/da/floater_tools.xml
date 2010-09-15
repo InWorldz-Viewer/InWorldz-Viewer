@@ -127,7 +127,7 @@
 			<check_box label="Vis i søgning" name="search_check" tool_tip="Lad folk se dette objekt i søgeresultater"/>
 			<check_box label="Til salg" name="checkbox for sale"/>
 			<text name="Cost">
-				Pris:  L$
+				Pris:  I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -206,13 +206,13 @@
 				Du skal vælge hele objektet for at sætte rettigheder.
 			</string>
 			<string name="Cost Default">
-				Pris:            L$
+				Pris:            I'z$
 			</string>
 			<string name="Cost Total">
-				Total pris:   L$
+				Total pris:   I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Pris Pr:       L$
+				Pris Pr:       I'z$
 			</string>
 			<string name="Cost Mixed">
 				Blandet pris
@@ -564,7 +564,7 @@
 			Parcel information
 		</text>
 		<text name="label_area_price">
-			Pris: L$[PRICE] for [AREA] m².
+			Pris: I'z$[PRICE] for [AREA] m².
 		</text>
 		<text name="label_area">
 			Område: [AREA] m².

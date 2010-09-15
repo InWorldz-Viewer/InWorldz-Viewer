@@ -59,7 +59,7 @@
 				請求率：
 			</text>
 			<text name="land cost text">
-				平方メートル当たりL$：
+				平方メートル当たりI'z$：
 			</text>
 			<button label="更新" label_selected="更新" name="Refresh"
 			     tool_tip="上記の情報を更新するには、ここをクリックします。" />

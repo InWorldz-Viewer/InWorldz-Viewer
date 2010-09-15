@@ -28,7 +28,7 @@
 		Dem Objekt „[OBJECTNAME]“, ein Objekt von „[OWNERNAME]“, in [REGIONNAME] [REGIONPOS], wurde folgende Berechtigung verweigert: [PERMISSIONS].
 	</string>
 	<string name="ScriptTakeMoney">
-		Linden-Dollar (L$) von Ihnen nehmen
+		Linden-Dollar (I'z$) von Ihnen nehmen
 	</string>
 	<string name="ActOnControlInputs">
 		Steuerung festlegen

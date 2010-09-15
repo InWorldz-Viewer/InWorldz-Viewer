@@ -26,7 +26,7 @@
 	<button label="Offentliggør..." name="classified_update_btn"/>
 	<check_box label="Forny automatisk hver uge" name="auto_renew_check"/>
 	<string name="ad_placed_paid">
-		Annonce anbragt:: [DATE], Betalt L$[AMT] for opslaget.
+		Annonce anbragt:: [DATE], Betalt I'z$[AMT] for opslaget.
 	</string>
 	<string name="update_txt">
 		Opdatér

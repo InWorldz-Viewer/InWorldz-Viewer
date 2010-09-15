@@ -405,7 +405,7 @@ notifications.xml에 &apos;[_NAME]&apos;이(가) 없습니다.
    
    name="JoinGroupCanAfford"
    >
-이 그룹 가입 비용은 L$[COST]입니다.
+이 그룹 가입 비용은 I'z$[COST]입니다.
 계속하겠습니까?
     <usetemplate
      name="okcancelbuttons"
@@ -417,7 +417,7 @@ notifications.xml에 &apos;[_NAME]&apos;이(가) 없습니다.
    
    name="JoinGroupCannotAfford"
    >
-이 그룹 가입 비용은 L$[COST]입니다.
+이 그룹 가입 비용은 I'z$[COST]입니다.
 이 그룹에 가입하기 위한 잔액이 부족합니다.
   </notification>
 
@@ -425,7 +425,7 @@ notifications.xml에 &apos;[_NAME]&apos;이(가) 없습니다.
    
    name="LandBuyPass"
    >
-L$[COST]로 이 토지(&apos;[PARCEL_NAME]&apos;)에 [TIME]시간동안 머무를 수 있습니다.
+I'z$[COST]로 이 토지(&apos;[PARCEL_NAME]&apos;)에 [TIME]시간동안 머무를 수 있습니다.
 패스를 구매합니까?
     <usetemplate
      name="okcancelbuttons"
@@ -437,8 +437,8 @@ L$[COST]로 이 토지(&apos;[PARCEL_NAME]&apos;)에 [TIME]시간동안 머무�
    
    name="SalePriceRestriction"
    >
-판매하는 경우, 판매 가격은 &gt; L$0(으)로 설정되어야 함.
-L$0로 판매하는 경우, 팔 사람을 선택하십시오.
+판매하는 경우, 판매 가격은 &gt; I'z$0(으)로 설정되어야 함.
+I'z$0로 판매하는 경우, 팔 사람을 선택하십시오.
   </notification>
 
   <notification
@@ -447,7 +447,7 @@ L$0로 판매하는 경우, 팔 사람을 선택하십시오.
    
    >
 선택된 [LAND_SIZE] 제곱미터의 토지는 판매용으로 설정되어 있습니다.
-판매 가격은 L$[SALE_PRICE]이고 [NAME]에게 판매가 승인됩니다.
+판매 가격은 I'z$[SALE_PRICE]이고 [NAME]에게 판매가 승인됩니다.
     <usetemplate
      name="okcancelbuttons"
      notext="취소"
@@ -461,7 +461,7 @@ L$0로 판매하는 경우, 팔 사람을 선택하십시오.
 주의사항: &apos;다른 사람에게 판매&apos;를 클릭하면 이 지역에 토지가 속하지 않은 경우에도 전체 [GRID_NAME] 커뮤니티에서 해당 토지를 사용할 수 있도록 설정할 수 있습니다.
 
 선택된 [LAND_SIZE]제곱미터의 토지는 판매용으로 설정되어 있습니다.
-판매 가격은 L$[SALE_PRICE]이고 [NAME]에게 판매가 승인됩니다.
+판매 가격은 I'z$[SALE_PRICE]이고 [NAME]에게 판매가 승인됩니다.
     <usetemplate
      name="okcancelbuttons"
      notext="취소"
@@ -1148,7 +1148,7 @@ MINSPECS
    >
 [EXTRA]
 
-린든달러(L$) 구매 정보를 보기 위해 [URL](으)로 이동하시겠습니까?
+린든달러(I'z$) 구매 정보를 보기 위해 [URL](으)로 이동하시겠습니까?
     <usetemplate
      name="okcancelbuttons"
      notext="취소"
@@ -1650,7 +1650,7 @@ WAV 헤더에서 &apos;데이터&apos; 를 찾을 수 없습니다:
    >
 귀하께서는 토지의 [AREA] 제곱미터를 포기하려고 합니다.
 이 구획을 포기하면 소유한 토지에서 제거되지만
-토지에 대한 크레딧(L$)이 적립되지 않습니다.
+토지에 대한 크레딧(I'z$)이 적립되지 않습니다.
 
 이 토지를 포기하시겠습니까?
     <usetemplate
@@ -1958,7 +1958,7 @@ WAV 헤더에서 &apos;데이터&apos; 를 찾을 수 없습니다:
    
    name="MinClassifiedPrice"
    >
-게재 비용은 최소 L$ [MIN_PRICE]이어야 합니다.
+게재 비용은 최소 I'z$ [MIN_PRICE]이어야 합니다.
 
 더 높은 액수를 입력해 주십시오.
   </notification>
@@ -2255,7 +2255,7 @@ WAV 헤더에서 &apos;데이터&apos; 를 찾을 수 없습니다:
    
    name="NotEnoughCurrency"
    >
-[NAME]님 L$ [PRICE] 보유. 린든달러(L$)가 부족하여 이를 수행할 수 없습니다.
+[NAME]님 I'z$ [PRICE] 보유. 린든달러(I'z$)가 부족하여 이를 수행할 수 없습니다.
   </notification>
 
   <notification
@@ -3168,7 +3168,7 @@ Applications 폴더에 다운로드하시겠습니까?
    >
 주의: 광고 수수료는 환불이 되지 않음.
 
-L$[AMOUNT]의 비용을 지불하고 이 광고물을 지금 게재하시겠습니까?
+I'z$[AMOUNT]의 비용을 지불하고 이 광고물을 지금 게재하시겠습니까?
     <usetemplate
      name="okcancelbuttons"
      notext="취소"
@@ -3718,7 +3718,7 @@ http://secondlife.com/tiki/tiki-index.php?page=RawTerrainFile
    
    name="BuyOriginal"
    >
-L$[PRICE]에 [OWNER](으)로부터 원본 오브젝트를 구매 하시겠습니까?
+I'z$[PRICE]에 [OWNER](으)로부터 원본 오브젝트를 구매 하시겠습니까?
 귀하는 이 오브젝트의 소유주가 됩니다.
 다음을 수행할 수 있습니다:
  수정: [MODIFYPERM]
@@ -3734,7 +3734,7 @@ L$[PRICE]에 [OWNER](으)로부터 원본 오브젝트를 구매 하시겠습니
    
    name="BuyOriginalNoOwner"
    >
-L$[PRICE]에 원본 오브젝트를 구매 하시겠습니까?
+I'z$[PRICE]에 원본 오브젝트를 구매 하시겠습니까?
 귀하는 이 오브젝트의 소유주가 됩니다.
 다음을 수행할 수 있습니다:
  수정: [MODIFYPERM]
@@ -3750,7 +3750,7 @@ L$[PRICE]에 원본 오브젝트를 구매 하시겠습니까?
    
    name="BuyCopy"
    >
-L$[PRICE]에 [OWNER](으)로부터 복사본을 구매 하시겠습니까?
+I'z$[PRICE]에 [OWNER](으)로부터 복사본을 구매 하시겠습니까?
 오브젝트는 사용자의 인벤토리로 복사됩니다.
 다음을 수행할 수 있습니다:
  수정: [MODIFYPERM]
@@ -3766,7 +3766,7 @@ L$[PRICE]에 [OWNER](으)로부터 복사본을 구매 하시겠습니까?
    
    name="BuyCopyNoOwner"
    >
-L$[PRICE]에 복사본을 구매 하시겠습니까?
+I'z$[PRICE]에 복사본을 구매 하시겠습니까?
 오브젝트는 사용자의 인벤토리로 복사됩니다.
 다음을 수행할 수 있습니다:
  수정: [MODIFYPERM]
@@ -3782,7 +3782,7 @@ L$[PRICE]에 복사본을 구매 하시겠습니까?
    
    name="BuyContents"
    >
-L$[PRICE]에 [OWNER](으)로부터 컨텐츠를 구매 하시겠습니까?
+I'z$[PRICE]에 [OWNER](으)로부터 컨텐츠를 구매 하시겠습니까?
 컨텐츠는 사용자의 인벤토리로 복사됩니다.
     <usetemplate
      name="okcancelbuttons"
@@ -3794,7 +3794,7 @@ L$[PRICE]에 [OWNER](으)로부터 컨텐츠를 구매 하시겠습니까?
    
    name="BuyContentsNoOwner"
    >
-L$[PRICE]에 컨텐츠를 구매하시겠습니까?
+I'z$[PRICE]에 컨텐츠를 구매하시겠습니까?
 컨텐츠는 사용자의 인벤토리로 복사됩니다.
     <usetemplate
      name="okcancelbuttons"
@@ -4722,7 +4722,7 @@ D 슬라이더를 사용해서는 구름의 농도를
    label="직불 허용 요청에 관하여"
    name="DebitPermissionDetails"
    >
-이 요청을 수락하면 귀하의 계정에서 린든 달러(L$)를 가져갈 수 있는 지속적인 스크립트 권한을 부여하는 것입니다. 이 권한을 취소하려면 오브젝트 소유자가 해당 오브젝트를 삭제하거나 오브젝트의 스크립트를 초기화해야 합니다.
+이 요청을 수락하면 귀하의 계정에서 린든 달러(I'z$)를 가져갈 수 있는 지속적인 스크립트 권한을 부여하는 것입니다. 이 권한을 취소하려면 오브젝트 소유자가 해당 오브젝트를 삭제하거나 오브젝트의 스크립트를 초기화해야 합니다.
     <usetemplate
      name="okbutton"
      yestext="확인"/>
@@ -4860,7 +4860,7 @@ strings.xml에 [STRING_NAME] 문자열이 없습니다.
    
    name="UploadPayment"
    >
-업로드를 위해 L$[AMOUNT]을(를) 지불하셨습니다.
+업로드를 위해 I'z$[AMOUNT]을(를) 지불하셨습니다.
   </notification>
 
   <notification
@@ -5645,8 +5645,8 @@ Apple의 QuickTime 소프트웨어가 사용자의 시스템에 설치되지 않
    
    name="FirstBalanceIncrease"
    >
-L$[AMOUNT]을(를) 수령하셨습니다.
-오브젝트 판매 및 다른 사용자의 기부로 린든달러(L$)를 벌 수 있습니다.
+I'z$[AMOUNT]을(를) 수령하셨습니다.
+오브젝트 판매 및 다른 사용자의 기부로 린든달러(I'z$)를 벌 수 있습니다.
 화면의 우측 상단 코너에 현재 소유 잔고가
 표시됩니다.
   </notification>
@@ -5655,7 +5655,7 @@ L$[AMOUNT]을(를) 수령하셨습니다.
    
    name="FirstBalanceDecrease"
    >
-L$[AMOUNT]을(를) 결제하셨습니다.
+I'z$[AMOUNT]을(를) 결제하셨습니다.
 화면의 우측 상단 코너에 현재 소유 잔고가
 표시됩니다.
   </notification>

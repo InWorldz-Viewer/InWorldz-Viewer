@@ -20,7 +20,7 @@
 	     tool_tip="Pokaż zdjęcia, grupy i inne informacje" />
 	<button label="Teleportuj..." name="offer_teleport_btn"
 	     tool_tip="Zaoferuj teleportację do siebie" />
-	<button label="Zapłać..." name="pay_btn" tool_tip="Zapłać L$ tej osobie" />
+	<button label="Zapłać..." name="pay_btn" tool_tip="Zapłać I'z$ tej osobie" />
 	<button label="Usuń..." name="remove_btn"
 	     tool_tip="Usuń tę osobę z listy znajomych" />
 	<button label="Dodaj..." name="add_btn" tool_tip="Zaproponuj znajomość" />

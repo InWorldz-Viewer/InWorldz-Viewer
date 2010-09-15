@@ -214,7 +214,7 @@
 				Nicht gefunden.
 			</string>
 			<string name="land_help_text">
-				Land kann direkt für Linden Dollar (L$) oder bei einer Auktion für L$ oder US$ erworben werden.
+				Land kann direkt für Linden Dollar (I'z$) oder bei einer Auktion für I'z$ oder US$ erworben werden.
 Um direkt zu kaufen, klicken Sie auf dem betreffenden Land in der Titelleiste auf den Namen.
 			</string>
 			<text name="find">
@@ -239,7 +239,7 @@ Um direkt zu kaufen, klicken Sie auf dem betreffenden Land in der Titelleiste au
 			</combo_box>
 			<check_box label="Preis &#8804; " name="pricecheck"/>
 			<text left="183" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Gebiet &#8805; " name="areacheck"/>
 			<text left="183" name="areacheck_symbol">
@@ -253,9 +253,9 @@ Um direkt zu kaufen, klicken Sie auf dem betreffenden Land in der Titelleiste au
 				<column label="" name="type"/>
 				<column label="Name" name="name"/>
 				<column label="Typ" name="landtype"/>
-				<column label="L$ Price" name="price"/>
+				<column label="I'z$ Price" name="price"/>
 				<column label="Area" name="area"/>
-				<column label="L$/qm" name="per_meter"/>
+				<column label="I'z$/qm" name="per_meter"/>
 			</scroll_list>
 			<button label="Weiter &gt;" label_selected="Weiter &gt;" name="Next &gt;"/>
 			<button label="&lt; Vorherige" label_selected="&lt; Vorherige" name="&lt; Prev"/>

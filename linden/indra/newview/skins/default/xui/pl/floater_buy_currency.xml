@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <floater name="buy currency" title="Kup $L">
 	<text name="info_buying">
-		Kup L$:
+		Kup I'z$:
 	</text>
 	<text name="info_cannot_buy">
-		Brak możliwości zakupu L$ teraz:
+		Brak możliwości zakupu I'z$ teraz:
 	</text>
 	<text name="info_need_more">
-		Potrzebujesz wiecęj L$:
+		Potrzebujesz wiecęj I'z$:
 	</text>
 	<text name="error_message">
 		Pojawienie się błędu.
@@ -17,10 +17,10 @@
 		Kontaktowanie z LindeX...
 	</text>
 	<text name="buy_action_unknown">
-		Kup L$ w systemie walutowej wymiany LindeX
+		Kup I'z$ w systemie walutowej wymiany LindeX
 	</text>
 	<text name="buy_action">
-		[NAME] [PRICE]L$
+		[NAME] [PRICE]I'z$
 	</text>
 	<text name="currency_action">
 		Kup
@@ -29,7 +29,7 @@
 		1234
 	</line_editor>
 	<text name="currency_est">
-		L$ za [USD]US$
+		I'z$ za [USD]US$
 	</text>
 	<text name="getting_data">
 		Otrzymywanie danych...
@@ -38,19 +38,19 @@
 		Obecnie posiadasz
 	</text>
 	<text name="balance_amount">
-		[AMT]L$
+		[AMT]I'z$
 	</text>
 	<text name="buying_label">
 		Kupujesz
 	</text>
 	<text name="buying_amount">
-		[AMT]L$
+		[AMT]I'z$
 	</text>
 	<text name="total_label">
 		Twój nowy stan konta
 	</text>
 	<text name="total_amount">
-		[AMT]L$
+		[AMT]I'z$
 	</text>
 	<text name="purchase_warning_repurchase" height="48" bottom_delta="-64" right="-10">
 		Dokonując potwierdzenia na podaną transakcję,
@@ -64,6 +64,6 @@ Proszę zwiększyć ilość.
 	<button label="Anuluj" name="cancel_btn" />
 	<button label="Kup" name="buy_btn" />
 	<string name="buy_currency">
-		Kup [LINDENS]L$ za [USD]US$
+		Kup [LINDENS]I'z$ za [USD]US$
 	</string>
 </floater>

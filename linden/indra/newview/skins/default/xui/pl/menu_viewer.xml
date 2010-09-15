@@ -3,10 +3,10 @@
 	<menu label="Plik" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="Załaduj" name="upload">
-			<menu_item_call label="Obraz (L$[COST])..." name="Upload Image"/>
-			<menu_item_call label="Dźwięk (L$[COST])..." name="Upload Sound"/>
-			<menu_item_call label="Animacja (L$[COST])..." name="Upload Animation"/>
-			<menu_item_call label="Zbiór plików (L$[COST] za plik)..." name="Bulk Upload"/>
+			<menu_item_call label="Obraz (I'z$[COST])..." name="Upload Image"/>
+			<menu_item_call label="Dźwięk (I'z$[COST])..." name="Upload Sound"/>
+			<menu_item_call label="Animacja (I'z$[COST])..." name="Upload Animation"/>
+			<menu_item_call label="Zbiór plików (I'z$[COST] za plik)..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="Wybierz ustawienia domyślne..." name="perm prefs"/>
 		</menu>
@@ -121,7 +121,7 @@
 		<menu_item_separator label="-----------" name="separator4"/>
 		<menu_item_call label="Historia Konta..." name="Account History..."/>
 		<menu_item_call label="Zarządzaj Kontem..." name="Manage My Account..."/>
-		<menu_item_call label="Kup L$..." name="Buy and Sell L$..."/>
+		<menu_item_call label="Kup I'z$..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="Moje Posiadłości..." name="My Land..."/>
 		<menu_item_call label="O Posiadłości..." name="About Land..."/>

@@ -19,7 +19,7 @@
 	</combo_box>
 	<button label="Update" name="classified_update_btn"/>
 	<string name="ad_placed_paid">
-		Anúncio colocado: [DATE], Pagos L$[AMT] para constar na lista.
+		Anúncio colocado: [DATE], Pagos I'z$[AMT] para constar na lista.
 	</string>
 	<string name="update_txt">
 		Atualizar

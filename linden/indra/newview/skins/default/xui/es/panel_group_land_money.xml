@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel label="Terreno y L$" name="land_money_tab">
+<panel label="Terreno y I'z$" name="land_money_tab">
 	<string name="help_text">
 		Se listan las parcelas propiedad del grupo, detallando las contribuciones. Aparece una advertencia si el Terreno total en uso es menor que o igual a la Contribución total. Las pestañas &apos;Planificación&apos;, &apos;Detalles&apos; y &apos;Ventas&apos; aportan información sobre las finanzas del grupo
 	</string>
@@ -56,7 +56,7 @@
 para mantener el terreno en uso.
 	</text>
 	<text name="group_money_heading">
-		L$ del grupo
+		I'z$ del grupo
 	</text>
 	<tab_container name="group_money_tab_container">
 		<panel label="Planificación" name="group_money_planning_tab">

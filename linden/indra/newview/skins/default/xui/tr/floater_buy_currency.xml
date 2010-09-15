@@ -17,13 +17,13 @@
 		LindeX ile iletişime geçiliyor...
 	</text>
 	<text name="buy_action_unknown">
-		LindeX döviz bürosundan L$ satın alımı
+		LindeX döviz bürosundan I'z$ satın alımı
 	</text>
 	<text name="buy_action">
-		[NAME] [PRICE] L$
+		[NAME] [PRICE] I'z$
 	</text>
 	<text name="currency_action">
-		L$
+		I'z$
 	</text>
 	<line_editor name="currency_amt">
 		1234
@@ -38,19 +38,19 @@
 		Mevcut bakiyeniz
 	</text>
 	<text name="balance_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="buying_label">
 		Alacağınız miktar
 	</text>
 	<text name="buying_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="total_label">
 		Gelecek bakiyeniz
 	</text>
 	<text name="total_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="purchase_warning_repurchase">
 		Bu satışı onaylamak sadece dövizi satın alır.
@@ -63,6 +63,6 @@ Satın almak için tutarı arttırınız.
 	<button label="İptal" name="cancel_btn"/>
 	<button label="Satın al" name="buy_btn"/>
 	<string name="buy_currency">
-		[LINDENS] L$ satın alımı yaklaşık US$ [USD]
+		[LINDENS] I'z$ satın alımı yaklaşık US$ [USD]
 	</string>
 </floater>

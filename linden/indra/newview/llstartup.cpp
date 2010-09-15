@@ -139,7 +139,7 @@
 #include "llsrv.h"
 #include "llstatview.h"
 #include "lltrans.h"
-#include "llstatusbar.h"		// sendMoneyBalanceRequest(), owns L$ balance
+#include "llstatusbar.h"		// sendMoneyBalanceRequest(), owns I'z$ balance
 #include "llsurface.h"
 #include "lltexturecache.h"
 #include "lltexturefetch.h"
@@ -2992,7 +2992,7 @@ bool idle_startup()
 		llinfos << "Requesting Mute List" << llendl;
 		LLMuteList::getInstance()->requestFromServer(gAgent.getID());
 
-		// Get L$ and ownership credit information
+		// Get I'z$ and ownership credit information
 		llinfos << "Requesting Money Balance" << llendl;
 		LLStatusBar::sendMoneyBalanceRequest();
 
@@ -3146,7 +3146,7 @@ bool idle_startup()
 
 		
 		// Ignore stipend information for now.  Money history is on the web site.
-		// if needed, show the L$ history window
+		// if needed, show the I'z$ history window
 		//if (stipend_since_login && !gNoRender)
 		//{
 		//}

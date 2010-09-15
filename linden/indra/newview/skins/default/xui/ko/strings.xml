@@ -93,8 +93,8 @@
 	<string name="TooltipFlagTouch">
 		만지기
 	</string>
-	<string name="TooltipFlagL$">
-		L$
+	<string name="TooltipFlagI'z$">
+		I'z$
 	</string>
 	<string name="TooltipFlagDropInventory">
 		인벤토리 드롭
@@ -111,10 +111,10 @@
 	<string name="TooltipFreeToCopy">
 		무료 복사
 	</string>
-	<string name="TooltipForSaleL$">
-		판매: L$ [AMOUNT]
+	<string name="TooltipForSaleI'z$">
+		판매: I'z$ [AMOUNT]
 	</string>
-	<!-- L$ version -->
+	<!-- I'z$ version -->
 	<string name="TooltipForSaleMsg">
 		판매: [MESSAGE]
 	</string>

@@ -56,8 +56,8 @@
 		Ár:
 	</text>
 	<text name="info_price">
-		1500 L$
-(1.1/m² L$)
+		1500 I'z$
+(1.1/m² I'z$)
 eladva tárgyakkal együtt
 	</text>
 	<text name="info_action" width="350">
@@ -92,13 +92,13 @@ eladva tárgyakkal együtt
 Ez a telek 512 m² területű föld.
 	</text>
 	<text name="purchase_action">
-		Fizess Joe nevű lakónak 4000 L$ összeget a földért
+		Fizess Joe nevű lakónak 4000 I'z$ összeget a földért
 	</text>
 	<text name="currency_reason">
-		2100 L$ rendelkezésre áll.
+		2100 I'z$ rendelkezésre áll.
 	</text>
 	<text name="currency_action">
-		További L$ vásárlása
+		További I'z$ vásárlása
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -107,7 +107,7 @@ Ez a telek 512 m² területű föld.
 		kb. [AMOUNT2] US$
 	</text>
 	<text name="currency_balance">
-		2100 L$ rendelkezésre áll.
+		2100 I'z$ rendelkezésre áll.
 	</text>
 	<check_box label="[AMOUNT] m² területű földhozzájárulásnak eltávolítása a csoportból." name="remove_contribution"/>
 	<button label="Megvásárol" name="buy_btn"/>
@@ -189,10 +189,10 @@ Próbálj kijelölni egy kisebb területet.
 		Jelenleg a tulajdonodban van [BUYER] m² föld.
 	</string>
 	<string name="pay_to_for_land">
-		L$ fizetése a földért ennek az eladónak: [SELLER]
+		I'z$ fizetése a földért ennek az eladónak: [SELLER]
 	</string>
 	<string name="buy_for_US">
-		[AMOUNT] L$ vásárlása kb. [AMOUNT2] US$ értékben,
+		[AMOUNT] I'z$ vásárlása kb. [AMOUNT2] US$ értékben,
 	</string>
 	<string name="parcel_meters">
 		Ennek a földnek a területe [AMOUNT] m².
@@ -214,29 +214,29 @@ Próbálj kijelölni egy kisebb területet.
 		tárgyakat nem tartalmazza
 	</string>
 	<string name="info_price_string">
-		[PRICE] L$
-([PRICE_PER_SQM] L$/m²)
+		[PRICE] I'z$
+([PRICE_PER_SQM] I'z$/m²)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		A [GROUP] csoportnak elegendő földhozzájárulással kell rendelkeznie a telek megvásárláshoz.
 	</string>
 	<string name="have_enough_lindens">
-		[AMOUNT] L$ összeggel rendelkezel, mely elegendő a föld megvásárlásához.
+		[AMOUNT] I'z$ összeggel rendelkezel, mely elegendő a föld megvásárlásához.
 	</string>
 	<string name="not_enough_lindens">
-		Csak [AMOUNT] L$ összeg áll rendelkezésre, szükséged van [AMOUNT2] L$ vagy több összegre.
+		Csak [AMOUNT] I'z$ összeg áll rendelkezésre, szükséged van [AMOUNT2] I'z$ vagy több összegre.
 	</string>
 	<string name="balance_left">
-		A vásárlás után [AMOUNT] L$ összeg maradt.
+		A vásárlás után [AMOUNT] I'z$ összeg maradt.
 	</string>
 	<string name="balance_needed">
-		Legalább [AMOUNT] L$ pénzt kell vásárolnod a föld fenntartásához.
+		Legalább [AMOUNT] I'z$ pénzt kell vásárolnod a föld fenntartásához.
 	</string>
 	<string name="no_parcel_selected">
 		(nincs terület kiválasztva)
 	</string>
 	<string name="buy_currency">
-		[LINDENS] L$ vásárlása kb [USD] US$ összegért.
+		[LINDENS] I'z$ vásárlása kb [USD] US$ összegért.
 	</string>
 </floater>

@@ -26,7 +26,7 @@
 	<button label="Yayınla..." name="classified_update_btn"/>
 	<check_box label="Her hafta otomatik olarak yenile" name="auto_renew_check"/>
 	<string name="ad_placed_paid">
-		Reklam verildi: [DATE], listeleme ücreti [AMT] L$.
+		Reklam verildi: [DATE], listeleme ücreti [AMT] I'z$.
 	</string>
 	<string name="update_txt">
 		Güncelle

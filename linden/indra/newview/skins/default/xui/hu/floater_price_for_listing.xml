@@ -8,7 +8,7 @@ Minél több pénzt fordítasz hirdetésre, annál
 magasabb helyre rangsorolják a hirdetéseket.
 	</text>
 	<text name="price_text">
-		Hirdetés ára (L$):
+		Hirdetés ára (I'z$):
 	</text>
 	<button label="Mégsem" name="cancel_btn" />
 	<button label="Árat beállít" name="set_price_btn" />

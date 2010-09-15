@@ -82,8 +82,8 @@
 	<string name="TooltipFlagTouch">
 		触る
 	</string>
-	<string name="TooltipFlagL$">
-		L$
+	<string name="TooltipFlagI'z$">
+		I'z$
 	</string>
 	<string name="TooltipFlagDropInventory">
 		持ち物をドロップする
@@ -100,8 +100,8 @@
 	<string name="TooltipFreeToCopy">
 		コピー可能
 	</string>
-	<string name="TooltipForSaleL$">
-		売り出し中:L$[AMOUNT]
+	<string name="TooltipForSaleI'z$">
+		売り出し中:I'z$[AMOUNT]
 	</string>
 	<string name="TooltipForSaleMsg">
 		売り出し中: [MESSAGE]

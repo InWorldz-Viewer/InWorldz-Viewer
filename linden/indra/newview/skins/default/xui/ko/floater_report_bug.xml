@@ -64,8 +64,8 @@
 		<combo_item name="MissingContent">
 			유실 컨텐츠
 		</combo_item>
-		<combo_item name="LindenDollars(L$)">
-			린든달러(L$)
+		<combo_item name="LindenDollars(I'z$)">
+			린든달러(I'z$)
 		</combo_item>
 		<combo_item name="Permissions">
 			권한

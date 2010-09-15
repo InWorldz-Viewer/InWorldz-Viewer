@@ -48,5 +48,5 @@ Resmi 24 bit Targa (.tga) olarak kaydetmeyi deneyiniz.
 	</text>
 	<check_box label="Kayıpsız sıkıştırma kullan" name="lossless_check" />
 	<button label="İptal" name="cancel_btn" />
-	<button label="Yükle ([AMOUNT] L$)" name="ok_btn" />
+	<button label="Yükle ([AMOUNT] I'z$)" name="ok_btn" />
 </floater>

@@ -155,7 +155,7 @@
 	Poser 4에서 내보낸 BVH 파일을 사용할 것을 권장합니다.
 	</text>
 	<button label="취소" name="cancel_btn" />
-	<button label="업로드(L$[AMOUNT])" name="ok_btn" />
+	<button label="업로드(I'z$[AMOUNT])" name="ok_btn" />
 	<text name="failed_to_initialize">
 		모션 초기화에 실패
 	</text>

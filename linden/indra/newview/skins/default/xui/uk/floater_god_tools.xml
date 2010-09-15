@@ -59,7 +59,7 @@
 				Фактор оплати:
 			</text>
 			<text name="land cost text">
-				L$ за кв.метр:
+				I'z$ за кв.метр:
 			</text>
 			<button label="Оновити" label_selected="Оновити" name="Refresh"
 			     tool_tip="Натисніть тут, щоб оновити вищезазначену інформацію." />

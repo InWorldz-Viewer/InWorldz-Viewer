@@ -96,8 +96,8 @@
 	</text>
 	<text bottom_delta="-5" follows="top|left" font="SansSerif" height="16" left_delta="50"
 	     name="info_price" right="400" width="180">
-		L$ 1500
-(L$ 1.1/sq.m.)
+		I'z$ 1500
+(I'z$ 1.1/sq.m.)
 sold with objects
 	</text>
 	<text bottom="-180" follows="top|left" font="SansSerifHuge" height="24" left="16"
@@ -152,14 +152,14 @@ This parcel is 512 sq.m. of land.
 	     name="step_3" width="64" />
 	<text bottom_delta="38" follows="top|left" height="16" left="72"
 	     name="purchase_action" right="438" font="SansSerifBig" >
-		Pay Joe Resident L$ 4000 for the land
+		Pay Joe Resident I'z$ 4000 for the land
 	</text>
 	<text follows="top|left" height="16" left="72" name="currency_reason" right="400">
-		You have L$ 2,100.
+		You have I'z$ 2,100.
 	</text>
 	<text bottom_delta="-25" follows="top|left" height="16" left="72"
 	     name="currency_action" width="90">
-		Buy additional L$
+		Buy additional I'z$
 	</text>
 	<pad height="0" width="8" />
 	<line_editor bottom_delta="5" follows="top|right" height="16" left="170" name="currency_amt"
@@ -172,7 +172,7 @@ This parcel is 512 sq.m. of land.
 		for approx. US$ [AMOUNT2]
 	</text>
 	<text follows="top|left" height="16" left="72" name="currency_balance" right="400">
-		You have L$ 2,100.
+		You have I'z$ 2,100.
 	</text>
 	<check_box bottom_delta="-18" follows="bottom|left" height="20"
 	     label="Remove [AMOUNT] square meters of contribution from group." left="75"
@@ -258,10 +258,10 @@ Try selecting a smaller area.
 		You hold [BUYER] sq.m. of land.
 	</string>
 	<string name="pay_to_for_land">
-		Pay L$ [AMOUNT] to [SELLER] for this land
+		Pay I'z$ [AMOUNT] to [SELLER] for this land
 	</string>
 	<string name="buy_for_US">
-		Buy L$ [AMOUNT] for approx. US$ [AMOUNT2],
+		Buy I'z$ [AMOUNT] for approx. US$ [AMOUNT2],
 	</string>
 	<string name="parcel_meters">
 		This parcel is [AMOUNT] sq.m.
@@ -283,29 +283,29 @@ supports [AMOUNT2] objects
 		objects not included
 	</string>
 	<string name="info_price_string">
-		L$ [PRICE]
-(L$ [PRICE_PER_SQM]/sq.m.)
+		I'z$ [PRICE]
+(I'z$ [PRICE_PER_SQM]/sq.m.)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		The group [GROUP] will need sufficient contributed land use credits to cover this parcel before the purchase will complete.
 	</string>
 	<string name="have_enough_lindens">
-		You have L$ [AMOUNT], which is enough to buy this land.
+		You have I'z$ [AMOUNT], which is enough to buy this land.
 	</string>
 	<string name="not_enough_lindens">
-		You have only L$ [AMOUNT], and need L$ [AMOUNT2] more.
+		You have only I'z$ [AMOUNT], and need I'z$ [AMOUNT2] more.
 	</string>
 	<string name="balance_left">
-		After the purchase, you will have L$ [AMOUNT] left.
+		After the purchase, you will have I'z$ [AMOUNT] left.
 	</string>
 	<string name="balance_needed">
-		You need to buy at least L$ [AMOUNT] to afford this land.
+		You need to buy at least I'z$ [AMOUNT] to afford this land.
 	</string>
 	<string name="no_parcel_selected">
 		(no parcel selected)
 	</string>
 	<string name="buy_currency">
-		Buy L$ [LINDENS] for approx. US$ [USD]
+		Buy I'z$ [LINDENS] for approx. US$ [USD]
 	</string>
 </floater>

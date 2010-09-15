@@ -26,7 +26,7 @@
 		面積：[AREA]平方ﾒｰﾄﾙ。 
 	</string>
 	<string name="forsale_text">
-		L$[PRICE]で売出し中。
+		I'z$[PRICE]で売出し中。
 	</string>
 	<string name="auction_text">
 		オークションID [ID]

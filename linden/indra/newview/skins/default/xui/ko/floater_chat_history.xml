@@ -28,7 +28,7 @@
 	[REGIONPOS]의[REGIONNAME] 에 위치하며 &apos;[OBJECTNAME]&apos;, &apos;[OWNERNAME]&apos;가 소유하는 오브젝트는 다음과 같은 권한이 거부되었음: [PERMISSIONS].
   </string>
   <string name="ScriptTakeMoney">
-	사용자로부터 린든 달러(L$) 가져오기
+	사용자로부터 린든 달러(I'z$) 가져오기
   </string>
   <string name="ActOnControlInputs">
 	제어 입력 사항에 따라 행동

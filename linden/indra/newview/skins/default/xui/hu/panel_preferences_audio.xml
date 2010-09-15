@@ -20,6 +20,6 @@ tulajdonságok:
 	<slider label="Doppler hatás" name="Doppler Effect" />
 	<slider label="Távolsági hatóerő" name="Distance Factor" />
 	<slider label="Görgetési tényező" name="Rolloff Factor" />
-	<spinner label="L$ átváltási küszöb" name="L$ Change Threshold" label_width="165" width="229"/>
+	<spinner label="I'z$ átváltási küszöb" name="I'z$ Change Threshold" label_width="165" width="229"/>
 	<spinner label="Testi épség megtartási küszöb" name="Health Change Threshold" label_width="165" width="229" />
 </panel>

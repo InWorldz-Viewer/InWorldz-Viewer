@@ -10,7 +10,7 @@
 		Archivos a subir:
 	</text>
 	<button label="Cancelar" name="cancel_btn"/>
-	<button label="Subir (10 L$)" name="ok_btn"/>
+	<button label="Subir (10 I'z$)" name="ok_btn"/>
 	<text name="preview_label2">
 		Previsualización de la imagen:
 	</text>

@@ -17,10 +17,10 @@
 		Contactando con el LindeX...
 	</text>
 	<text name="buy_action_unknown" right="-5">
-		Comprar L$ en el sistema LindeX de cambio
+		Comprar I'z$ en el sistema LindeX de cambio
 	</text>
 	<text name="buy_action">
-		[NAME] [PRICE] L$
+		[NAME] [PRICE] I'z$
 	</text>
 	<text name="currency_action" width="50">
 		Comprar 
@@ -29,7 +29,7 @@
 		1234
 	</line_editor>
 	<text name="currency_est" width="138" left_delta="68">
-		L$  por, aprox., [USD] US$
+		I'z$  por, aprox., [USD] US$
 	</text>
 	<text name="getting_data">
 		Obteniendo los datos...
@@ -38,19 +38,19 @@
 		Actualmente, tiene
 	</text>
 	<text name="balance_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="buying_label">
 		Está comprando
 	</text>
 	<text name="buying_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="total_label">
 		Su saldo será de
 	</text>
 	<text name="total_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="purchase_warning_repurchase" right="-10">
 		Confirmando esta compra sólo compra la moneda.
@@ -63,6 +63,6 @@ Aumente la cantidad a comprar.
 	<button label="Cancelar" name="cancel_btn"/>
 	<button label="Comprar" name="buy_btn"/>
 	<string name="buy_currency">
-		Compre [LINDENS] L$ por, aprox., [USD] US$
+		Compre [LINDENS] I'z$ por, aprox., [USD] US$
 	</string>
 </floater>

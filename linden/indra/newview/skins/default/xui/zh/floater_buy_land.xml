@@ -56,8 +56,8 @@
 		价格:
 	</text>
 	<text name="info_price">
-		包括物品共售L$1500
-(L$1.1/m²)
+		包括物品共售I'z$1500
+(I'z$1.1/m²)
 	</text>
 	<text name="info_action">
 		购买该土地将会:
@@ -91,13 +91,13 @@
 这块土地为512m²。
 	</text>
 	<text name="purchase_action">
-		支付祖儿L$4000以购买土地。
+		支付祖儿I'z$4000以购买土地。
 	</text>
 	<text name="currency_reason">
-		你有L$2,100.
+		你有I'z$2,100.
 	</text>
 	<text name="currency_action">
-		购买额外的 L$
+		购买额外的 I'z$
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -106,7 +106,7 @@
 		以大约 US$ [AMOUNT2]
 	</text>
 	<text name="currency_balance">
-		你有L$2,100.
+		你有I'z$2,100.
 	</text>
 	<check_box label="从团队配额贡献中撤去 [AMOUNT] 平方米。" name="remove_contribution" visible="false"/>
 	<button label="购买" name="buy_btn"/>
@@ -186,10 +186,10 @@
 		你拥有[BUYER]平方米的土地。
 	</string>
 	<string name="pay_to_for_land">
-		支付L$ [AMOUNT] 至 [SELLER] 购买这块土地
+		支付I'z$ [AMOUNT] 至 [SELLER] 购买这块土地
 	</string>
 	<string name="buy_for_US">
-		以大约US$[AMOUNT2]购买L$[AMOUNT]，
+		以大约US$[AMOUNT2]购买I'z$[AMOUNT]，
 	</string>
 	<string name="parcel_meters">
 		这块土地的面积为[AMOUNT]平方米。
@@ -211,29 +211,29 @@
 		物品不包括在其中
 	</string>
 	<string name="info_price_string">
-		L$[PRICE]
-（L$[PRICE_PER_SQM]/m²）
+		I'z$[PRICE]
+（I'z$[PRICE_PER_SQM]/m²）
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		在这次购买完成之前，社团[GROUP]将需要足够的被贡献的土地所用的信用额度，来覆盖这片土地。
 	</string>
 	<string name="have_enough_lindens">
-		你有L$ [AMOUNT], 这些钱足够购买这块土地。
+		你有I'z$ [AMOUNT], 这些钱足够购买这块土地。
 	</string>
 	<string name="not_enough_lindens">
-		你只有L$ [AMOUNT], 你还需要 L$ [AMOUNT2]。
+		你只有I'z$ [AMOUNT], 你还需要 I'z$ [AMOUNT2]。
 	</string>
 	<string name="balance_left">
-		此项消费后, 你还会有L$ [AMOUNT]结余.
+		此项消费后, 你还会有I'z$ [AMOUNT]结余.
 	</string>
 	<string name="balance_needed">
-		你需要购买至少 L$ [AMOUNT]来购买这块土地。
+		你需要购买至少 I'z$ [AMOUNT]来购买这块土地。
 	</string>
 	<string name="no_parcel_selected">
 		(没有选择地块)
 	</string>
 	<string name="buy_currency">
-		以大约 US$ [USD] 购买 L$ [LINDENS]
+		以大约 US$ [USD] 购买 I'z$ [LINDENS]
 	</string>
 </floater>

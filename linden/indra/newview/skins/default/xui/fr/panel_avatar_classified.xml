@@ -26,7 +26,7 @@
 	<button label="Publier..." name="classified_update_btn"/>
 	<check_box label="Publier chaque semaine" name="auto_renew_check"/>
 	<string name="ad_placed_paid">
-		Annonce passée le : [DATE]. Prix : [AMT] L$.
+		Annonce passée le : [DATE]. Prix : [AMT] I'z$.
 	</string>
 	<string name="update_txt">
 		Mise à jour

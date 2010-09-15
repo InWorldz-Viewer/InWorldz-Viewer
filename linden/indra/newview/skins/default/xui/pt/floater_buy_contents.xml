@@ -4,7 +4,7 @@
 		[NAME] contém:
 	</text>
 	<text name="buy_text">
-		Comprar por L$[AMOUNT] de(a) [NAME]?
+		Comprar por I'z$[AMOUNT] de(a) [NAME]?
 	</text>
 	<button label="Cancelar" label_selected="Cancelar" name="cancel_btn" width="73"/>
 	<button label="Comprar" label_selected="Comprar" name="buy_btn" width="73" left_delta="-77"/>

@@ -33,7 +33,7 @@
 	</text>
 	<check_box label="Usar escala independente da resolução" name="ui_auto_scale"/>
 	<spinner label="Tempo para ficar Ausente:" name="afk_timeout_spinner"/>
-	<check_box label="Avisar quando receber ou gastar Linden dollars (L$)" name="notify_money_change_checkbox"/>
+	<check_box label="Avisar quando receber ou gastar Linden dollars (I'z$)" name="notify_money_change_checkbox"/>
 	<text name="maturity_desired_label" bottom="-312">
 		Classificação:
 	</text>

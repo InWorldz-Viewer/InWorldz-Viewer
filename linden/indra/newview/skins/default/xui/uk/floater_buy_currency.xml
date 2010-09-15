@@ -17,13 +17,13 @@
 		Зв&apos;язуємося з LindeX...
 	</text>
 	<text name="buy_action_unknown">
-		Покупка L$ на пункті обміну LindeX
+		Покупка I'z$ на пункті обміну LindeX
 	</text>
 	<text name="buy_action">
-		[NAME] L$ [PRICE]
+		[NAME] I'z$ [PRICE]
 	</text>
 	<text name="currency_action" width="60">
-		Купити L$
+		Купити I'z$
 	</text>
 	<line_editor name="currency_amt" width="45" left_delta="62">
 		1234
@@ -38,19 +38,19 @@
 		Зараз у вас
 	</text>
 	<text name="balance_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="buying_label">
 		Ви купуєте
 	</text>
 	<text name="buying_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="total_label">
 		Ваш баланс буде
 	</text>
 	<text name="total_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="purchase_warning_repurchase" height="48" bottom_delta="-64" right="-10">
 		Підтвердження того, що Ви тільки купуєте
@@ -64,6 +64,6 @@
 	<button label="Відміна" name="cancel_btn" />
 	<button label="Купити" name="buy_btn" />
 	<string name="buy_currency">
-		Покупка L$ [LINDENS] приблиз. US$ [USD]
+		Покупка I'z$ [LINDENS] приблиз. US$ [USD]
 	</string>
 </floater>

@@ -22,10 +22,10 @@
 		Vælg en passende pris for jorden.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		(L$[PER_METER] pr. kvadratmeter)
+		(I'z$[PER_METER] pr. kvadratmeter)
 	</text>
 	<text name="sell_to_label">
 		Sælg denne jord til:

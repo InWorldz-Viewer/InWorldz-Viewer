@@ -57,8 +57,8 @@
 		Pris:
 	</text>
 	<text left_delta="62" name="info_price">
-		L$ 1500
-(L$ 1.1/m²)
+		I'z$ 1500
+(I'z$ 1.1/m²)
 sælges med objekter
 	</text>
 	<text name="info_action">
@@ -93,13 +93,13 @@ sælges med objekter
 This parcel is 512 m² of land.
 	</text>
 	<text name="purchase_action">
-		Betal Joe Resident L$ 4000 dette areal
+		Betal Joe Resident I'z$ 4000 dette areal
 	</text>
 	<text name="currency_reason">
-		Du har L$2,100.
+		Du har I'z$2,100.
 	</text>
 	<text name="currency_action">
-		Køb yderligere L$
+		Køb yderligere I'z$
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -108,7 +108,7 @@ This parcel is 512 m² of land.
 		for ca. US$ [AMOUNT2]
 	</text>
 	<text name="currency_balance">
-		Du har L$2,100.
+		Du har I'z$2,100.
 	</text>
 	<check_box label="Fjern [AMOUNT] kvadratmeter af bidrag fra gruppe." name="remove_contribution"/>
 	<button label="Køb" name="buy_btn"/>
@@ -190,10 +190,10 @@ Prøv at vælge et mindre område.
 		Du har [BUYER] m² jord.
 	</string>
 	<string name="pay_to_for_land">
-		Betal L$ [AMOUNT] til [SELLER] for dette stykke jord
+		Betal I'z$ [AMOUNT] til [SELLER] for dette stykke jord
 	</string>
 	<string name="buy_for_US">
-		Køb L$ [AMOUNT] for ca. US$ [AMOUNT2],
+		Køb I'z$ [AMOUNT] for ca. US$ [AMOUNT2],
 	</string>
 	<string name="parcel_meters">
 		Denne parcel er [AMOUNT] m².
@@ -215,8 +215,8 @@ kan indeholder [AMOUNT2] objekter
 		objekter ikke inkluderet
 	</string>
 	<string name="info_price_string">
-		L$ [PRICE]
-(L$ [PRICE_PER_SQM]/m²)
+		I'z$ [PRICE]
+(I'z$ [PRICE_PER_SQM]/m²)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
@@ -225,21 +225,21 @@ kredit for at dække dette parcel før købet vil blive
 gennemført.
 	</string>
 	<string name="have_enough_lindens">
-		Du har L$ [AMOUNT], hvilket er nok til at købe denne jord.
+		Du har I'z$ [AMOUNT], hvilket er nok til at købe denne jord.
 	</string>
 	<string name="not_enough_lindens">
-		Du har kun L$ [AMOUNT], og har brug for yderligere L$ [AMOUNT2].
+		Du har kun I'z$ [AMOUNT], og har brug for yderligere I'z$ [AMOUNT2].
 	</string>
 	<string name="balance_left">
-		Efter købet, vil du have L$ [AMOUNT] tilbage.
+		Efter købet, vil du have I'z$ [AMOUNT] tilbage.
 	</string>
 	<string name="balance_needed">
-		Du skal købe mindst L$ [AMOUNT] for at have råd til denne jord.
+		Du skal købe mindst I'z$ [AMOUNT] for at have råd til denne jord.
 	</string>
 	<string name="no_parcel_selected">
 		(intet parcel er valgt)
 	</string>
 	<string name="buy_currency">
-		Køb L$ [LINDENS] for omkring US$ [USD]
+		Køb I'z$ [LINDENS] for omkring US$ [USD]
 	</string>
 </floater>

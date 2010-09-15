@@ -57,8 +57,8 @@
 		Цена:
 	</text>
 	<text name="info_price">
-		L$ 1500
-(L$ 1.1/м²)
+		I'z$ 1500
+(I'z$ 1.1/м²)
 продано с объектами
 	</text>
 	<text name="info_action">
@@ -93,13 +93,13 @@
 Этот участок 512 м² земли.
 	</text>
 	<text name="purchase_action">
-		Заплатить Резиденту Joe L$ 4000 за землю
+		Заплатить Резиденту Joe I'z$ 4000 за землю
 	</text>
 	<text name="currency_reason">
-		У Вас L$ 2,100.
+		У Вас I'z$ 2,100.
 	</text>
 	<text name="currency_action" width="161">
-		Купить дополнительные L$
+		Купить дополнительные I'z$
 	</text>
 	<line_editor name="currency_amt" left="235" width="40">
 		1000
@@ -108,7 +108,7 @@
 		приблизительно US$[AMOUNT2]
 	</text>
 	<text name="currency_balance">
-		У Вас L$ 2,100.
+		У Вас I'z$ 2,100.
 	</text>
 	<check_box label="Удалить право группы на закупку [AMOUNT] кв. м." name="remove_contribution"/>
 	<button label="Покупка" name="buy_btn"/>
@@ -190,10 +190,10 @@
 		Вы содержите [BUYER] м² земли.
 	</string>
 	<string name="pay_to_for_land">
-		Заплатить L$ [AMOUNT] [SELLER] за эту землю
+		Заплатить I'z$ [AMOUNT] [SELLER] за эту землю
 	</string>
 	<string name="buy_for_US">
-		Купить L$ [AMOUNT] за приблиз. US$ [AMOUNT2],
+		Купить I'z$ [AMOUNT] за приблиз. US$ [AMOUNT2],
 	</string>
 	<string name="parcel_meters">
 		Этот участок [AMOUNT] м².
@@ -215,29 +215,29 @@
 		Объекты не включены
 	</string>
 	<string name="info_price_string">
-		L$ [PRICE]
-(L$ [PRICE_PER_SQM]/м²)
+		I'z$ [PRICE]
+(I'z$ [PRICE_PER_SQM]/м²)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		Группе [GROUP] потребуется достаточно прав на использование земли, чтобы покрыть этот участок перед тем, как покупка будет завершена.
 	</string>
 	<string name="have_enough_lindens">
-		Вы имеете L$ [AMOUNT] и их достаточно для покупки этой земли.
+		Вы имеете I'z$ [AMOUNT] и их достаточно для покупки этой земли.
 	</string>
 	<string name="not_enough_lindens">
-		Вы имеете только L$ [AMOUNT], и еще не хватает [AMOUNT2].
+		Вы имеете только I'z$ [AMOUNT], и еще не хватает [AMOUNT2].
 	</string>
 	<string name="balance_left">
-		После покупки у Вас останется: L$ [AMOUNT].
+		После покупки у Вас останется: I'z$ [AMOUNT].
 	</string>
 	<string name="balance_needed">
-		Вы сперва должны приобрести минимум L$ [AMOUNT] для того, чтобы претендовать на эту землю.
+		Вы сперва должны приобрести минимум I'z$ [AMOUNT] для того, чтобы претендовать на эту землю.
 	</string>
 	<string name="no_parcel_selected">
 		(участок не выбран)
 	</string>
 	<string name="buy_currency">
-		Купить L$ [LINDENS] приблиз. US$ [USD]
+		Купить I'z$ [LINDENS] приблиз. US$ [USD]
 	</string>
 </floater>

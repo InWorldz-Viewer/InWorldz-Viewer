@@ -158,7 +158,7 @@
  Poser 4からエクスポートされたBVHファイルを推奨します。
 	</text>
 	<button label="取り消し" name="cancel_btn" />
-	<button label="ｱｯﾌﾟﾛｰﾄﾞL$[AMOUNT]" name="ok_btn" />
+	<button label="ｱｯﾌﾟﾛｰﾄﾞI'z$[AMOUNT]" name="ok_btn" />
 	<text name="failed_to_initialize">
 		モーションを初期化できませんでした
 	</text>

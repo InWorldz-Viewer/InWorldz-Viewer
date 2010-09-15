@@ -7,5 +7,5 @@
 		Megnevezés:
 	</text>
 	<button label="Mégsem" label_selected="Mégsem" name="cancel_btn" />
-	<button label="Feltölt ([AMOUNT] L$)" label_selected="Feltölt ([AMOUNT] L$)" name="ok_btn" width="140" left_delta="-150"/>
+	<button label="Feltölt ([AMOUNT] I'z$)" label_selected="Feltölt ([AMOUNT] I'z$)" name="ok_btn" width="140" left_delta="-150"/>
 </floater>

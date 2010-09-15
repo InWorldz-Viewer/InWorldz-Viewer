@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel label="Posiadłości i L$" name="land_money_tab">
+<panel label="Posiadłości i I'z$" name="land_money_tab">
 	<string name="help_text">
 		Posiadłości, które są własnością grupy zawierają dane poszczególnych kontrybucji ich członków. W przypadku kiedy całkowita ilość metrów przypisanej danej posiadłości przez grupę jest mniejsza lub równa całkowitej liczbie kontrybucji dla przypisanej ilości metrów pojawia się ostrzeżenie. Zakładki: Planowanie, Szczegóły oraz Sprzedaże udostępniają informacje na temat statusu finansowego grupy.
 	</string>
@@ -55,7 +55,7 @@
 		Członkowie Grupy muszą zwiększyć kredyt na używanie Posiadłości.
 	</text>
 	<text name="group_money_heading">
-		L$ Grupy
+		I'z$ Grupy
 	</text>
 	<tab_container name="group_money_tab_container">
 		<panel label="Planowanie" name="group_money_planning_tab">

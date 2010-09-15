@@ -221,7 +221,7 @@
 				Не знайдено.
 			</string>
 			<string name="land_help_text">
-				Земля може бути куплена напряму за Лінден Долари (L$) або на аукціоні за L$ або US$.
+				Земля може бути куплена напряму за Лінден Долари (I'z$) або на аукціоні за I'z$ або US$.
 Щоб купити напряму, відвідайте землю і натисніть на назву місця у стрічці заголовку.
 			</string>
 			<text name="find">
@@ -246,7 +246,7 @@
 			</combo_box>
 			<check_box label="Ціна &#8804; " name="pricecheck"/>
 			<text left="120" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Площ. &#8805; " name="areacheck"/>
 			<text left="190" name="areacheck_symbol" width="30">
@@ -260,9 +260,9 @@
 				<column label="" name="type"/>
 				<column label="Назва" name="name"/>
 				<column label="Тип" name="landtype"/>
-				<column label="L$" name="price"/>
+				<column label="I'z$" name="price"/>
 				<column label="Площ." name="area"/>
-				<column label="L$/м²" name="per_meter"/>
+				<column label="I'z$/м²" name="per_meter"/>
 			</scroll_list>
 			<button label="Наст. &gt;" label_selected="Наст. &gt;" name="Next &gt;"/>
 			<button label="&lt; Поп." label_selected="&lt; Поп." name="&lt; Prev"/>

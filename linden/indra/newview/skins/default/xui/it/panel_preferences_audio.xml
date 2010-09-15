@@ -19,6 +19,6 @@
 	<slider label="Effetto Doppler" name="Doppler Effect" label_width="140" width="270" />
 	<slider label="Fattore di Distanza" name="Distance Factor" label_width="140" width="270"/>
 	<slider label="Fattore di Allontanamento" name="Rolloff Factor" label_width="140" width="270"/>
-	<spinner label="Suono di Avviso Transazioni &#8805; a L$" name="L$ Change Threshold" label_width="195" width="259"/>
+	<spinner label="Suono di Avviso Transazioni &#8805; a I'z$" name="I'z$ Change Threshold" label_width="195" width="259"/>
 	<spinner label="Livello vitale dell&apos;avatar" name="Health Change Threshold" label_width="195" width="259"/>
 </panel>

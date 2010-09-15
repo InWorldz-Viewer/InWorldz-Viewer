@@ -61,8 +61,8 @@
 		<combo_item name="MissingContent">
 			Contenu manquant
 		</combo_item>
-		<combo_item name="LindenDollars(L$)">
-			Dollar Linden (L$)
+		<combo_item name="LindenDollars(I'z$)">
+			Dollar Linden (I'z$)
 		</combo_item>
 		<combo_item name="Permissions">
 			Autorisations

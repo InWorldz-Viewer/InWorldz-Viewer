@@ -14,7 +14,7 @@
 	<button label="聊天/呼叫" name="im_btn" tool_tip="打开即时通信会话"/>
 	<button label="档案" name="profile_btn" tool_tip="显示图片、社团和其他信息"/>
 	<button label="瞬间移动..." name="offer_teleport_btn" tool_tip="邀请该好友瞬间移动到你的当前位置"/>
-	<button label="付款..." name="pay_btn" tool_tip="给这位好友林登币 (L$)"/>
+	<button label="付款..." name="pay_btn" tool_tip="给这位好友林登币 (I'z$)"/>
 	<button label="移除..." name="remove_btn" tool_tip="将这个人从你的好友列表中去除"/>
 	<button label="添加..." name="add_btn" tool_tip="邀请其他居民成为你的好友"/>
 </panel>

@@ -23,10 +23,10 @@
 		Elija un precio adecuado para esta parcela.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		([PER_METER] L$ por metro cuadrado)
+		([PER_METER] I'z$ por metro cuadrado)
 	</text>
 	<text name="sell_to_label">
 		Vender este terreno a:

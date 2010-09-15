@@ -28,7 +28,7 @@
 		[REGIONNAME]の[REGIONPOS]という場所にある「[OWNERNAME]」所有の「[OBJECTNAME]」というオブジェクトは、次の権限を拒否しました： [PERMISSIONS]
 	</string>
 	<string name="ScriptTakeMoney">
-		リンデンドル（L$）を支払う
+		リンデンドル（I'z$）を支払う
 	</string>
 	<string name="ActOnControlInputs">
 		制御入力に基づいて行動

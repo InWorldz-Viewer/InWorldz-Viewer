@@ -28,7 +28,7 @@
 	&apos;[OBJECTNAME]&apos;, właściciel: &apos;[OWNERNAME]&apos;, położenie: [REGIONNAME] [REGIONPOS], nie pozwala Ci na: [PERMISSIONS].
   </string>
   <string name="ScriptTakeMoney">
-	Zabiera Lindeny (L$) od Ciebie
+	Zabiera Lindeny (I'z$) od Ciebie
   </string>
   <string name="ActOnControlInputs">
 	Używaj klawiszy sterowania

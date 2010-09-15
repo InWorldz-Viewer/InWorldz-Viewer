@@ -63,8 +63,8 @@
 		<combo_item name="MissingContent">
 			コンテンツなし
 		</combo_item>
-		<combo_item name="LindenDollars(L$)">
-			リンデン・ドル(L$)
+		<combo_item name="LindenDollars(I'z$)">
+			リンデン・ドル(I'z$)
 		</combo_item>
 		<combo_item name="Permissions">
 			権限

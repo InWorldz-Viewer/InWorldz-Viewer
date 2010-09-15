@@ -147,7 +147,7 @@
 我们推荐从Poser 4软件中导出的BVH文件
 	</text>
 	<button label="取消" name="cancel_btn"/>
-	<button label="上传(L$[AMOUNT])" name="ok_btn"/>
+	<button label="上传(I'z$[AMOUNT])" name="ok_btn"/>
 	<string name="failed_to_initialize">
 		初始化动作失败。
 	</string>

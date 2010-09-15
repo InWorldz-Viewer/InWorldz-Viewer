@@ -3,10 +3,10 @@
 	<menu label="文件" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="上传" name="upload">
-			<menu_item_call label="图像（L$[COST]）..." name="Upload Image"/>
-			<menu_item_call label="声音（L$[COST]）..." name="Upload Sound"/>
-			<menu_item_call label="动画（L$[COST]）..." name="Upload Animation"/>
-			<menu_item_call label="大宗（每份需付L$[COST]）..." name="Bulk Upload"/>
+			<menu_item_call label="图像（I'z$[COST]）..." name="Upload Image"/>
+			<menu_item_call label="声音（I'z$[COST]）..." name="Upload Sound"/>
+			<menu_item_call label="动画（I'z$[COST]）..." name="Upload Animation"/>
+			<menu_item_call label="大宗（每份需付I'z$[COST]）..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="设置默认权限..." name="perm prefs"/>
 		</menu>
@@ -121,7 +121,7 @@
 		<menu_item_separator label="-----------" name="separator4"/>
 		<menu_item_call label="帐户历史纪录..." name="Account History..."/>
 		<menu_item_call label="管理我的帐户..." name="Manage My Account..."/>
-		<menu_item_call label="购买 L$..." name="Buy and Sell L$..."/>
+		<menu_item_call label="购买 I'z$..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="我的土地..." name="My Land..."/>
 		<menu_item_call label="关于土地..." name="About Land..."/>

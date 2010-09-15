@@ -26,7 +26,7 @@
 	<button label="Опубликовать..." name="classified_update_btn" width="115" />
 	<check_box label="Автообновление еженедельно" name="auto_renew_check"/>
 	<string name="ad_placed_paid">
-		Реклама размещена: [DATE], Оплата L$[AMT] за публикацию.
+		Реклама размещена: [DATE], Оплата I'z$[AMT] за публикацию.
 	</string>
 	<string name="update_txt">
 		Обновить

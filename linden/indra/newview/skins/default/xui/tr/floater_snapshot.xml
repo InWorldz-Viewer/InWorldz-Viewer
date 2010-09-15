@@ -8,7 +8,7 @@
 			E-posta ile gönderin
 		</radio_item>
 		<radio_item name="texture">
-			Envanterinize kaydedin ([AMOUNT] L$)
+			Envanterinize kaydedin ([AMOUNT] I'z$)
 		</radio_item>
 		<radio_item name="local">
 			Sabit diskinize kaydedin
@@ -19,7 +19,7 @@
 	</text>
 	<button label="Resmi yenile" name="new_snapshot_btn"/>
 	<button label="Gönder" name="send_btn"/>
-	<button label="Kaydet ([AMOUNT] L$)" name="upload_btn"/>
+	<button label="Kaydet ([AMOUNT] I'z$)" name="upload_btn"/>
 	<flyout_button label="Kaydet" name="save_btn" tool_tip="Resmi dosyaya kaydet">
 		<flyout_button_item name="save_item">
 			Kaydet

@@ -56,8 +56,8 @@
 		Cena:
 	</text>
 	<text left_delta="62" name="info_price">
-		L$ 1500
-(L$ 1.1/m²)
+		I'z$ 1500
+(I'z$ 1.1/m²)
 sprzedaż z obiektami
 	</text>
 	<text name="info_action">
@@ -92,13 +92,13 @@ sprzedaż z obiektami
 Posiadłość ta zawiera 512 m² ziemi.
 	</text>
 	<text name="purchase_action">
-		Pay Joe Resident L$ 4000 for the land
+		Pay Joe Resident I'z$ 4000 for the land
 	</text>
 	<text name="currency_reason">
-		You have L$ 2,100.
+		You have I'z$ 2,100.
 	</text>
 	<text name="currency_action">
-		Kup więcej L$
+		Kup więcej I'z$
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -107,7 +107,7 @@ Posiadłość ta zawiera 512 m² ziemi.
 		za około [AMOUNT2]US$
 	</text>
 	<text name="currency_balance">
-		Masz 2,100L$.
+		Masz 2,100I'z$.
 	</text>
 	<check_box label="Zabierz [AMOUNT] metrów donacji z Grupy." name="remove_contribution"/>
 	<button label="Zakup" name="buy_btn"/>
@@ -189,10 +189,10 @@ Spróbuj wybrać inny obszar.
 		Jesteś właścicielem [BUYER] m² ziemi.
 	</string>
 	<string name="pay_to_for_land">
-		Zapłać [SELLER] [AMOUNT]L$ za Posiadłość
+		Zapłać [SELLER] [AMOUNT]I'z$ za Posiadłość
 	</string>
 	<string name="buy_for_US">
-		Kup L$ [AMOUNT] za US$ [AMOUNT2],
+		Kup I'z$ [AMOUNT] za US$ [AMOUNT2],
 	</string>
 	<string name="parcel_meters">
 		Podana posiadłość to [AMOUNT] m² ziemi.
@@ -214,8 +214,8 @@ wspiera [AMOUNT2] obiektów
 		obiekty nie są zawarte w sprzedaży
 	</string>
 	<string name="info_price_string">
-		L$ [PRICE]
-(L$ [PRICE_PER_SQM]/m²)
+		I'z$ [PRICE]
+(I'z$ [PRICE_PER_SQM]/m²)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
@@ -223,21 +223,21 @@ wspiera [AMOUNT2] obiektów
 używanie Posiadłości żeby sfinalizować ten zakup.
 	</string>
 	<string name="have_enough_lindens">
-		Masz [AMOUNT]L$ co wystarcza na zakup tej Posiadłości.
+		Masz [AMOUNT]I'z$ co wystarcza na zakup tej Posiadłości.
 	</string>
 	<string name="not_enough_lindens">
-		Masz tylko [AMOUNT]L$ i potrzebujesz [AMOUNT2]L$ dodatkowo.
+		Masz tylko [AMOUNT]I'z$ i potrzebujesz [AMOUNT2]I'z$ dodatkowo.
 	</string>
 	<string name="balance_left">
-		Po zakupie zostanie Ci [AMOUNT]L$.
+		Po zakupie zostanie Ci [AMOUNT]I'z$.
 	</string>
 	<string name="balance_needed">
-		Musisz dokupić [AMOUNT]L$ żeby kupić tą Posiadłość.
+		Musisz dokupić [AMOUNT]I'z$ żeby kupić tą Posiadłość.
 	</string>
 	<string name="no_parcel_selected">
 		(Posiadłość nie wybrana)
 	</string>
 	<string name="buy_currency">
-		Kup [LINDENS]L$ za około [USD]US$
+		Kup [LINDENS]I'z$ za około [USD]US$
 	</string>
 </floater>

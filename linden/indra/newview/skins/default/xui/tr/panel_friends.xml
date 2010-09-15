@@ -14,7 +14,7 @@
 	<button label="HM/Ara" name="im_btn" tool_tip="Hızlı mesaj oturumu açın"/>
 	<button label="Profil" name="profile_btn" tool_tip="Resim, gruplar ve diğer bilgileri görün"/>
 	<button label="Işınla..." name="offer_teleport_btn" tool_tip="Bu arkadaşınızı bulunduğunuz yere ışınlanma teklifi gönderin"/>
-	<button label="Öde..." name="pay_btn" tool_tip="Bu arkadaşınıza Linden doları(L$) verin"/>
+	<button label="Öde..." name="pay_btn" tool_tip="Bu arkadaşınıza Linden doları(I'z$) verin"/>
 	<button label="Sil..." name="remove_btn" tool_tip="Bu kişiyi arkadaşlar listenizden silin"/>
 	<button label="Ekle..." name="add_btn" tool_tip="Üyeye arkadaşlık teklif edin"/>
 </panel>

@@ -148,7 +148,7 @@
 Wir empfehlen exportierte BVH-Dateien aus Poser 4.
 	</text>
 	<button label="Abbrechen" name="cancel_btn"/>
-	<button label="Hochladen ([AMOUNT] L$)" name="ok_btn"/>
+	<button label="Hochladen ([AMOUNT] I'z$)" name="ok_btn"/>
 	<string name="failed_to_initialize">
 		Bewegung konnte nicht initialisiert werden
 	</string>

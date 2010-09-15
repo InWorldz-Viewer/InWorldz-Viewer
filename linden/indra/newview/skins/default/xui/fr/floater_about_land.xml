@@ -43,8 +43,8 @@
 			<text length="1" name="Not for sale." type="string">
 				Pas à vendre
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				Prix : [PRICE] L$ ([PRICE_PER_SQM] L$/m²).
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				Prix : [PRICE] I'z$ ([PRICE_PER_SQM] I'z$/m²).
 			</text>
 			<text name="SalePending"/>
 			<button label="Vendre le terrain..." label_selected="Vendre le terrain..." name="Sell Land..."/>
@@ -295,7 +295,7 @@ ou divisé.
 			</text>
 			<check_box label="Sécurisé (pas de dégâts)" name="check safe" tool_tip="Si cette option est cochée, le terrain est sécurisé et il n&apos;y pas de risques de dommages causés par des combats. Si elle est décochée, des dommages causés par les combats peuvent avoir lieu."/>
 			<check_box bottom="-140" label="Pas de bousculades" left="14" name="PushRestrictCheck" tool_tip="Empêche l&apos;utilisation de scripts causant des bousculades. Cette option est utile pour empêcher les comportements abusifs sur votre terrain."/>
-			<check_box bottom="-160" label="Afficher dans la recherche (30 L$/semaine) sous" name="ShowDirectoryCheck" tool_tip="Afficher la parcelle dans les résultats de recherche"/>
+			<check_box bottom="-160" label="Afficher dans la recherche (30 I'z$/semaine) sous" name="ShowDirectoryCheck" tool_tip="Afficher la parcelle dans les résultats de recherche"/>
 			<string name="search_enabled_tooltip">
 				Permettre aux autres résidents de voir cette parcelle dans les résultats de recherche
 			</string>
@@ -512,7 +512,7 @@ musique :
 					Groupe
 				</combo_item>
 			</combo_box>
-			<spinner label="Prix en L$ :" name="PriceSpin"/>
+			<spinner label="Prix en I'z$ :" name="PriceSpin"/>
 			<spinner label="Durée en heures :" name="HoursSpin"/>
 			<text label="Toujours autoriser" name="AllowedText">
 				Résidents autorisés

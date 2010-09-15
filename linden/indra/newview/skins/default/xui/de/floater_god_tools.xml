@@ -56,7 +56,7 @@
 				Abrechnungsfaktor:
 			</text>
 			<text name="land cost text">
-				L$ pro qm:
+				I'z$ pro qm:
 			</text>
 			<button label="Aktualisieren" label_selected="Aktualisieren" name="Refresh"
 			     tool_tip="Klicken Sie hier, um die obigen Informationen zu aktualisieren." />

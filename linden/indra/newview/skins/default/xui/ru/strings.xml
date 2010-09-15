@@ -82,8 +82,8 @@
 	<string name="TooltipFlagTouch">
 		Дотронуться
 	</string>
-	<string name="TooltipFlagL$">
-		L$
+	<string name="TooltipFlagI'z$">
+		I'z$
 	</string>
 	<string name="TooltipFlagDropInventory">
 		Удалить Инвентарь
@@ -100,8 +100,8 @@
 	<string name="TooltipFreeToCopy">
 		Свободно для копирования
 	</string>
-	<string name="TooltipForSaleL$">
-		Для продажи: L$[AMOUNT]
+	<string name="TooltipForSaleI'z$">
+		Для продажи: I'z$[AMOUNT]
 	</string>
 	<string name="TooltipForSaleMsg">
 		Для продажи: [MESSAGE]

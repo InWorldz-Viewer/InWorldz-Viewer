@@ -40,8 +40,8 @@
 			<text length="1" name="Not for sale." type="string">
 				Не на продаж.
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				Ціна: L$[PRICE] (L$[PRICE_PER_SQM]/м²).
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				Ціна: I'z$[PRICE] (I'z$[PRICE_PER_SQM]/м²).
 			</text>
 			<button bottom="-222" label="Продати Землю..." label_selected="Продати Землю..." name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -288,7 +288,7 @@
 			</text>
 			<check_box label="Безпечна" name="check safe" tool_tip="Якщо відмічено, земля - безпечна зона, в якій вимкнені пошкодження. Якщо ні, пошкодження увімкнені."/>
 			<check_box label="Не штовхати" name="PushRestrictCheck" tool_tip="Запобігає штовханню. Ця опція може запобігти небажаній поведінці на Вашій землі."/>
-			<check_box label="Показувати в пошуку (L$30/тиждень):" name="ShowDirectoryCheck" tool_tip="Показувати ділянку в результатах пошуку."/>
+			<check_box label="Показувати в пошуку (I'z$30/тиждень):" name="ShowDirectoryCheck" tool_tip="Показувати ділянку в результатах пошуку."/>
 			<string name="search_enabled_tooltip">
 				Дозволити людям бачити цю ділянку в результатах пошуку
 			</string>
@@ -501,7 +501,7 @@
 					Групі
 				</combo_item>
 			</combo_box>
-			<spinner label="Ціна в L$:" name="PriceSpin"/>
+			<spinner label="Ціна в I'z$:" name="PriceSpin"/>
 			<spinner label="Години доступу:" name="HoursSpin"/>
 			<text label="Завжди можна" name="AllowedText">
 				Допустимі резиденти

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel label="Arazi &amp; L$" name="land_money_tab">
+<panel label="Arazi &amp; I'z$" name="land_money_tab">
 	<string name="help_text">
 		Gruba ait parseller bağış detayları ile birlikte listelenir. Kullanımdaki toplam alan toplam bağıştan az veya eşit olana kadar bir uyarı görünür. Planlama, Detaylar, ve Satışlar sekmeleri grup finansı hakkında bilgi verir.
 	</string>
@@ -56,7 +56,7 @@
 kredisi bağışlamalıdırlar.
 	</text>
 	<text name="group_money_heading">
-		Gruba ait L$
+		Gruba ait I'z$
 	</text>
 	<tab_container name="group_money_tab_container">
 		<panel label="Planlama" name="group_money_planning_tab">

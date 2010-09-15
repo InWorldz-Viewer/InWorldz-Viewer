@@ -159,7 +159,7 @@
 экспортированный из Poser 4.
 	</text>
 	<button label="Отмена" name="cancel_btn" />
-	<button label="Загрузить (L$[AMOUNT])" name="ok_btn" width="143" left_delta="-149"/>
+	<button label="Загрузить (I'z$[AMOUNT])" name="ok_btn" width="143" left_delta="-149"/>
 	<string name="failed_to_initialize">
 		Ошибка при попытке инициализировать движение.
 	</string>

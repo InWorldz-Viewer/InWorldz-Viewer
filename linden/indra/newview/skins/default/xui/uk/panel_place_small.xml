@@ -25,7 +25,7 @@
 		Площа: [AREA] м².
 	</string>
 	<string name="forsale_text">
-		Продається за L$[PRICE]
+		Продається за I'z$[PRICE]
 	</string>
 	<string name="auction_text">
 		ID аукціона [ID].

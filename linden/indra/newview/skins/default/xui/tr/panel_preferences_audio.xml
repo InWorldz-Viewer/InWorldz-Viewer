@@ -16,6 +16,6 @@
 	<check_box label="Pencere küçüldüğünde sesi kapat" name="mute_when_minimized"/>
 	<slider label="Işık efekti" name="Doppler Effect"/>
 	<slider label="Rolloff faktörü" name="Rolloff Factor"/>
-	<spinner label="L$ değişim değeri" name="L$ Change Threshold"/>
+	<spinner label="I'z$ değişim değeri" name="I'z$ Change Threshold"/>
 	<spinner label="Sağlık değişim değeri" name="Health Change Threshold"/>
 </panel>

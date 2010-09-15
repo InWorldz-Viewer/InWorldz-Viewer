@@ -242,33 +242,33 @@ In Ihrem eigenen Profil können Sie jeden beliebigen URL als Ihr Webprofil einge
 Wenn sich andere Einwohner Ihr Profil ansehen, können sie diesen URL besuchen.
 	</notification>
 	<notification name="JoinGroupCanAfford">
-		Der Beitritt zu dieser Gruppe kostet [COST] L$.
+		Der Beitritt zu dieser Gruppe kostet [COST] I'z$.
 Fortfahren?
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="Beitreten"/>
 	</notification>
 	<notification name="JoinGroupCannotAfford">
-		Der Beitritt zu dieser Gruppe kostet [COST] L$.
-Sie haben nicht genug L$, um dieser Gruppe beizutreten.
+		Der Beitritt zu dieser Gruppe kostet [COST] I'z$.
+Sie haben nicht genug I'z$, um dieser Gruppe beizutreten.
 	</notification>
 	<notification name="LandBuyPass">
-		Sie können dieses Land („[PARCEL_NAME]“) für [COST] L$
+		Sie können dieses Land („[PARCEL_NAME]“) für [COST] I'z$
 [TIME] Stunden lang betreten.  Pass kaufen?
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="SalePriceRestriction">
-		Der Verkaufspreis muss beim allgemeinen Verkauf über 0 L$ liegen.
-Wählen Sie eine bestimmte Person aus, wenn Sie für 0 L$ verkaufen.
+		Der Verkaufspreis muss beim allgemeinen Verkauf über 0 I'z$ liegen.
+Wählen Sie eine bestimmte Person aus, wenn Sie für 0 I'z$ verkaufen.
 	</notification>
 	<notification name="ConfirmLandSaleChange">
 		Die ausgewählten [LAND_SIZE] qm Land werden zum Verkauf freigegeben.
-Der Verkaufspreis beträgt [SALE_PRICE] L$ und wird automatisch für den Verkauf an [NAME] autorisiert.
+Der Verkaufspreis beträgt [SALE_PRICE] I'z$ und wird automatisch für den Verkauf an [NAME] autorisiert.
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="ConfirmLandSaleToAnyoneChange">
 		ACHTUNG: Wenn Sie auf „An jeden verkaufen“ klicken, kann jeder in [GRID_NAME] Ihr Land kaufen, auch Einwohner in anderen Regionen.
 
 Die ausgewählten [LAND_SIZE] qm Land werden zum Verkauf freigegeben.
-Der Verkaufspreis beträgt [SALE_PRICE] L$ und wird automatisch für den Verkauf an [NAME] autorisiert.
+Der Verkaufspreis beträgt [SALE_PRICE] I'z$ und wird automatisch für den Verkauf an [NAME] autorisiert.
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="ReturnObjectsDeededToGroup">
@@ -855,7 +855,7 @@ Wählen Sie eine ganze Parzelle oder teilen Sie Ihre Parzelle.
 	</notification>
 	<notification name="ReleaseLandWarning">
 		Sie sind im Begriff, [AREA] qm Land aufzugeben.
-Wenn Sie diese Parzelle aufgeben, wird sie ohne L$-Erstattung von Ihrem Landbesitz entfernt.
+Wenn Sie diese Parzelle aufgeben, wird sie ohne I'z$-Erstattung von Ihrem Landbesitz entfernt.
 
 Dieses Land aufgeben?
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
@@ -1008,7 +1008,7 @@ auf ALLEN LÄNDERN in diesem Sim LÖSCHEN?
 		Geben Sie einen Namen für die Anzeige ein.
 	</notification>
 	<notification name="MinClassifiedPrice">
-		Der Mindestbetrag für die Listung ist [MIN_PRICE] L$.
+		Der Mindestbetrag für die Listung ist [MIN_PRICE] I'z$.
 
 Geben sie einen höheren Betrag ein.
 	</notification>
@@ -1150,7 +1150,7 @@ Sie können sich später noch umentscheiden.
 		<usetemplate name="okcancelbuttons" notext="Weiblich" yestext="Männlich"/>
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] [PRICE] L$  Sie haben nicht genügend L$, um diese Aktion auszuführen.
+		[NAME] [PRICE] I'z$  Sie haben nicht genügend I'z$, um diese Aktion auszuführen.
 	</notification>
 	<notification name="GrantedModifyRights">
 		Sie verfügen über Änderungsrechte für die Objekte von [FIRST_NAME] [LAST_NAME].
@@ -1277,7 +1277,7 @@ In Ihren Anwendungsordner herunterladen?
 	</notification>
 	<notification name="DeedObjectToGroup">
 		Bei Übertragung dieses Objekts erhält die Gruppe:
-* An das Objekt bezahlte L$
+* An das Objekt bezahlte I'z$
 		<usetemplate ignoretext="Beim Übertragen von Objekten an Gruppen" name="okcancelignore" notext="Abbrechen" yestext="Übertragung"/>
 	</notification>
 	<notification name="WebLaunchExternalTarget">
@@ -1453,7 +1453,7 @@ Fortfahren?
 	<notification label="Zugang zu Linden-Grundstück ändern" name="ChangeLindenAccess">
 		Sie sind im Begriff, die Zugangsliste für ein Grundstück in Linden-Besitz (Mainland, Teen-Raster, Orientierung usw.) zu verändern.
 
-Dies ist GEFÄHRLICH und sollte nur erfolgen, um Objekte/L$ per Hack in und aus dem Raster zu entfernen.
+Dies ist GEFÄHRLICH und sollte nur erfolgen, um Objekte/I'z$ per Hack in und aus dem Raster zu entfernen.
 Tausende Regionen werden verändert und der Spaceserver wird dadurch stark belastet.
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
@@ -1605,7 +1605,7 @@ Klicken Sie auf „Einstellung ändern“, um Ihre Einstellung für Altereinstuf
 	<notification name="PublishClassified">
 		Hinweis: Anzeigengebühren werden nicht zurückerstattet.
 
-Anzeige für [AMOUNT] L$ veröffentlichen?
+Anzeige für [AMOUNT] I'z$ veröffentlichen?
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="SetClassifiedMature">
@@ -1850,7 +1850,7 @@ Wählen Sie ein einzelnes Objekt aus und versuchen Sie es erneut.
 Wählen Sie ein einzelnes Objekt aus und versuchen Sie es erneut.
 	</notification>
 	<notification name="BuyOriginal">
-		Von [OWNER] Originalobjekt für [PRICE] L$ kaufen?
+		Von [OWNER] Originalobjekt für [PRICE] I'z$ kaufen?
 Sie werden der Eigentümer dieses Objekts.
 Sie können das Objekt:
  Bearbeiten: [MODIFYPERM]
@@ -1859,7 +1859,7 @@ Sie können das Objekt:
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="BuyOriginalNoOwner">
-		Originalobjekt für [PRICE] L$ kaufen?
+		Originalobjekt für [PRICE] I'z$ kaufen?
 Sie werden der Eigentümer dieses Objekts.
 Sie können das Objekt:
  Bearbeiten: [MODIFYPERM]
@@ -1868,7 +1868,7 @@ Sie können das Objekt:
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopy">
-		Von [OWNER] Kopie für [PRICE] L$ kaufen?
+		Von [OWNER] Kopie für [PRICE] I'z$ kaufen?
 Das Objekt wird in Ihr Inventar kopiert.
 Sie können das Objekt:
  Bearbeiten: [MODIFYPERM]
@@ -1877,7 +1877,7 @@ Sie können das Objekt:
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopyNoOwner">
-		Kopie für [PRICE] L$ kaufen?
+		Kopie für [PRICE] I'z$ kaufen?
 Das Objekt wird in Ihr Inventar kopiert.
 Sie können das Objekt:
  Bearbeiten: [MODIFYPERM]
@@ -1886,12 +1886,12 @@ Sie können das Objekt:
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="BuyContents">
-		Von [OWNER] Inhalte für [PRICE] L$ kaufen?
+		Von [OWNER] Inhalte für [PRICE] I'z$ kaufen?
 Die Inhalte werden in Ihr Inventar kopiert.
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
 	<notification name="BuyContentsNoOwner">
-		Inhalte für [PRICE] L$ kaufen?
+		Inhalte für [PRICE] I'z$ kaufen?
 Die Inhalte werden in Ihr Inventar kopiert.
 		<usetemplate name="okcancelbuttons" notext="Abbrechen" yestext="OK"/>
 	</notification>
@@ -2311,7 +2311,7 @@ Entspricht dem Azimut.
 		Objekte können nicht gekauft werden, solange sie Teil eines Anhangs sind.
 	</notification>
 	<notification label="Info zur Abfrage der Abbucherlaubnis" name="DebitPermissionDetails">
-		Wenn Sie dieser Anfrage zustimmen, erhält das Skript die Erlaubnis, regelmäßig Linden-Dollar (L$) von Ihrem Konto abzubuchen. Diese Erlaubnis kann nur zurückgezogen werden, wenn der Eigentümer das Objekt löscht oder die Skripts in dem Objekt zurücksetzt.
+		Wenn Sie dieser Anfrage zustimmen, erhält das Skript die Erlaubnis, regelmäßig Linden-Dollar (I'z$) von Ihrem Konto abzubuchen. Diese Erlaubnis kann nur zurückgezogen werden, wenn der Eigentümer das Objekt löscht oder die Skripts in dem Objekt zurücksetzt.
 		<usetemplate name="okbutton" yestext="OK"/>
 	</notification>
 	<notification name="AutoWearNewClothing">
@@ -2373,7 +2373,7 @@ Möchten Sie die [SECOND_LIFE] Website öffnen, um diese Angaben zu hinterlegen?
 (Dauert ca. 5 Minuten.)
 	</notification>
 	<notification name="UploadPayment">
-		Sie haben für das Hochladen [AMOUNT] L$ bezahlt.
+		Sie haben für das Hochladen [AMOUNT] I'z$ bezahlt.
 	</notification>
 	<notification name="UploadWebSnapshotDone">
 		Das Website-Foto wurde hochgeladen.
@@ -2816,12 +2816,12 @@ Anfrage gestatten?
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		Sie haben gerade [AMOUNT] L$ erhalten.
-Objekte und andere Benutzer können Ihnen L$ geben.
+		Sie haben gerade [AMOUNT] I'z$ erhalten.
+Objekte und andere Benutzer können Ihnen I'z$ geben.
 Ihren Kontostand sehen Sie in der oberen rechten Ecke des Bildschirms.
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		Sie haben gerade [AMOUNT] L$ bezahlt.
+		Sie haben gerade [AMOUNT] I'z$ bezahlt.
 Ihren Kontostand sehen Sie in der oberen rechten Ecke des Bildschirms.
 	</notification>
 	<notification name="FirstSit">

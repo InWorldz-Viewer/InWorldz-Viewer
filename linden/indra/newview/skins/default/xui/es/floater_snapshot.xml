@@ -8,7 +8,7 @@
 			Enviar por correo electrónico
 		</radio_item>
 		<radio_item name="texture">
-			Guardarla en su inventario ([AMOUNT] L$)
+			Guardarla en su inventario ([AMOUNT] I'z$)
 		</radio_item>
 		<radio_item name="local">
 			Guardarla en su disco duro
@@ -19,7 +19,7 @@
 	</text>
 	<button label="Actualizar la foto" name="new_snapshot_btn"/>
 	<button label="Enviar" name="send_btn"/>
-	<button label="Guardar ([AMOUNT] L$)" name="upload_btn"/>
+	<button label="Guardar ([AMOUNT] I'z$)" name="upload_btn"/>
 	<flyout_button label="Guardar" name="save_btn" tool_tip="Guardar la imagen en un archivo">
 		<flyout_button_item name="save_item">
 			Guardar

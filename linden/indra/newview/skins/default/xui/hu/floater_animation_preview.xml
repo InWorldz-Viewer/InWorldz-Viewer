@@ -148,7 +148,7 @@ Javasoljuk, hogy a BVH fájlokat Poser-ből
 exportálja ki.
 	</text>
 	<button label="Mégsem" name="cancel_btn"/>
-	<button label="Feltölt ([AMOUNT] L$)" name="ok_btn"/>
+	<button label="Feltölt ([AMOUNT] I'z$)" name="ok_btn"/>
 	<string name="failed_to_initialize">
 		A mozgás elindítása nem sikerült
 	</string>

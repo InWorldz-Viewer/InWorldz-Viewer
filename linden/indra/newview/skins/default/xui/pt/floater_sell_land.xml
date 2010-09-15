@@ -23,10 +23,10 @@
 		Escolha um preço apropriado para esta terra.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		(L$[PER_METER] por m²)
+		(I'z$[PER_METER] por m²)
 	</text>
 	<text name="sell_to_label">
 		Vender esta terra para:

@@ -20,7 +20,7 @@
 	<combo_box label="" name="classified_category_combo"/>
 	<button label="更新" name="classified_update_btn"/>
 	<string name="ad_placed_paid">
-		广告地址：[DATE],发布付款 L$[AMT]
+		广告地址：[DATE],发布付款 I'z$[AMT]
 	</string>
 	<string name="update_txt">
 		更新

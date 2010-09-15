@@ -41,8 +41,8 @@
 			<text length="1" name="Not for sale." type="string">
 				販売対象外
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				価格： L$[PRICE] （L$[PRICE_PER_SQM]/平方メートル）
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				価格： I'z$[PRICE] （I'z$[PRICE_PER_SQM]/平方メートル）
 			</text>
 			<button label="土地を販売..." label_selected="土地を販売..." name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -292,7 +292,7 @@
 			</text>
 			<check_box label="安全（ダメージなし）" name="check safe" tool_tip="チェックを入れるとこの土地でのダメージコンバットが無効になり、「安全」に設定されます。 チェックを外すとダメージコンバットが有効になります。"/>
 			<check_box label="プッシングを制限" name="PushRestrictCheck" tool_tip="スクリプトによるプッシングを制限します。 このオプションを選択することにより、あなたの土地での破壊的行動を妨げることができます。"/>
-			<check_box label="検索に表示＞（週L$30）以下の場所" name="ShowDirectoryCheck" tool_tip="検索結果でこの区画を表示させる"/>
+			<check_box label="検索に表示＞（週I'z$30）以下の場所" name="ShowDirectoryCheck" tool_tip="検索結果でこの区画を表示させる"/>
 			<string name="search_enabled_tooltip">
 				この区画を検索結果に表示する
 			</string>
@@ -506,7 +506,7 @@
 					グループ
 				</combo_item>
 			</combo_box>
-			<spinner label="価格（L$）：" name="PriceSpin"/>
+			<spinner label="価格（I'z$）：" name="PriceSpin"/>
 			<spinner label="アクセス時間：" name="HoursSpin"/>
 			<text label="常に許可" name="AllowedText">
 				許可された住人

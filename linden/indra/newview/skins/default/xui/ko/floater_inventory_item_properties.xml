@@ -68,7 +68,7 @@
 		</radio_item>
 	</radio_group>
 	<text name="TextPrice">
-		가격:  L$
+		가격:  I'z$
 	</text>
 	<text name="unknown">
 		(알 수 없음)

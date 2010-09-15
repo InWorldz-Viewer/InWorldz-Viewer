@@ -1,6 +1,6 @@
 /** 
  * @file llpanelgrouplandmoney.cpp
- * @brief Panel for group land and L$.
+ * @brief Panel for group land and I'z$.
  *
  * $LicenseInfo:firstyear=2006&license=viewergpl$
  * 
@@ -569,7 +569,7 @@ void LLPanelGroupLandMoney::update(LLGroupChange gc)
 
 		panelp = tabp->getCurrentPanel();
 
-		//now pull the event handler associated with that L$ tab
+		//now pull the event handler associated with that I'z$ tab
 		if ( panelp )
 		{
 			eh = get_if_there(LLGroupMoneyTabEventHandler::sTabsToHandlers,
@@ -701,7 +701,7 @@ BOOL LLPanelGroupLandMoney::postBuild()
 
 	std::string loading_text = getString("loading_txt");
 	
-	//pull out the widgets for the L$ details tab
+	//pull out the widgets for the I'z$ details tab
 	earlierp = getChild<LLButton>("earlier_details_button", true);
 	laterp = getChild<LLButton>("later_details_button", true);
 	textp = getChild<LLTextEditor>("group_money_details_text", true);
@@ -741,7 +741,7 @@ BOOL LLPanelGroupLandMoney::postBuild()
 													mGroupID);
 	}
 
-	//pull out the widgets for the L$ sales tab
+	//pull out the widgets for the I'z$ sales tab
 	earlierp = getChild<LLButton>("earlier_sales_button", true);
 	laterp = getChild<LLButton>("later_sales_button", true);
 	textp = getChild<LLTextEditor>("group_money_sales_text", true);
@@ -779,7 +779,7 @@ void LLPanelGroupLandMoney::processPlacesReply(LLMessageSystem* msg, void**)
 	LLPanelGroupLandMoney* selfp = sGroupIDs.getIfThere(group_id);
 	if(!selfp)
 	{
-		llinfos << "Group Panel Land L$ " << group_id << " no longer in existence."
+		llinfos << "Group Panel Land I'z$ " << group_id << " no longer in existence."
 				<< llendl;
 		return;
 	}
@@ -1116,7 +1116,7 @@ void LLPanelGroupLandMoney::processGroupAccountDetailsReply(LLMessageSystem* msg
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id );
 	if (gAgent.getID() != agent_id)
 	{
-		llwarns << "Got group L$ history reply for another agent!" << llendl;
+		llwarns << "Got group I'z$ history reply for another agent!" << llendl;
 		return;
 	}
 
@@ -1287,7 +1287,7 @@ void LLPanelGroupLandMoney::processGroupAccountTransactionsReply(LLMessageSystem
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id );
 	if (gAgent.getID() != agent_id)
 	{
-		llwarns << "Got group L$ history reply for another agent!" << llendl;
+		llwarns << "Got group I'z$ history reply for another agent!" << llendl;
 		return;
 	}
 
@@ -1428,7 +1428,7 @@ void LLGroupMoneyPlanningTabEventHandler::processReply(LLMessageSystem* msg,
 		text.append("The next stipend day is ");
 		text.append(next_stipend_date);
 		text.append("\n\n");
-		text.append(llformat("%-24sL$%6d\n", "Balance", balance ));
+		text.append(llformat("%-24sI'z$%6d\n", "Balance", balance ));
 		text.append(1, '\n');
 	}
 
@@ -1458,7 +1458,7 @@ void LLPanelGroupLandMoney::processGroupAccountSummaryReply(LLMessageSystem* msg
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id );
 	if (gAgent.getID() != agent_id)
 	{
-		llwarns << "Got group L$ history reply for another agent!" << llendl;
+		llwarns << "Got group I'z$ history reply for another agent!" << llendl;
 		return;
 	}
 
@@ -1470,7 +1470,7 @@ void LLPanelGroupLandMoney::processGroupAccountSummaryReply(LLMessageSystem* msg
 	self = LLGroupMoneyTabEventHandler::sInstanceIDs.getIfThere(request_id);
 	if (!self)
 	{
-		llwarns << "GroupAccountSummary recieved for non-existent group L$ planning tab." << llendl;
+		llwarns << "GroupAccountSummary recieved for non-existent group I'z$ planning tab." << llendl;
 		return;
 	}
 

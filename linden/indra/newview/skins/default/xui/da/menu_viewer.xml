@@ -3,10 +3,10 @@
 	<menu label="Filer" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="Hent" name="upload">
-			<menu_item_call label="Billede (L$[COST])..." name="Upload Image"/>
-			<menu_item_call label="Lyd (L$[COST])..." name="Upload Sound"/>
-			<menu_item_call label="Animation (L$[COST])..." name="Upload Animation"/>
-			<menu_item_call label="Hent mange (L$[COST] per file)..." name="Bulk Upload"/>
+			<menu_item_call label="Billede (I'z$[COST])..." name="Upload Image"/>
+			<menu_item_call label="Lyd (I'z$[COST])..." name="Upload Sound"/>
+			<menu_item_call label="Animation (I'z$[COST])..." name="Upload Animation"/>
+			<menu_item_call label="Hent mange (I'z$[COST] per file)..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="Sæt standard rettigheder..." name="perm prefs"/>
 		</menu>
@@ -121,7 +121,7 @@
 		<menu_item_separator label="-----------" name="separator4"/>
 		<menu_item_call label="Konto historik..." name="Account History..."/>
 		<menu_item_call label="Vedligehold konto..." name="Manage My Account..."/>
-		<menu_item_call label="Køb L$..." name="Buy and Sell L$..."/>
+		<menu_item_call label="Køb I'z$..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="Mit land..." name="My Land..."/>
 		<menu_item_call label="Om land..." name="About Land..."/>

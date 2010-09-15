@@ -17,6 +17,6 @@
 	<slider label="多普勒效应" name="Doppler Effect" width="250"/>
 	<slider label="距离系数" name="Distance Factor"/>
 	<slider label="衰减系数:" name="Rolloff Factor"/>
-	<spinner label="L$ 变化阈值" name="L$ Change Threshold"/>
+	<spinner label="I'z$ 变化阈值" name="I'z$ Change Threshold"/>
 	<spinner label="生命值变化阈值" name="Health Change Threshold"/>
 </panel>

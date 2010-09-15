@@ -22,7 +22,7 @@
 		Obszar: [AREA] m².
 	</string>
 	<string name="forsale_text">
-		Na Sprzedaż za L$[PRICE]
+		Na Sprzedaż za I'z$[PRICE]
 	</string>
 	<string name="auction_text">
 		ID Aukcji: [ID]

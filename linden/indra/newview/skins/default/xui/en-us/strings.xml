@@ -38,13 +38,13 @@
 	<string name="TooltipFlagScript">Script</string>
 	<string name="TooltipFlagPhysics">Physics</string>
 	<string name="TooltipFlagTouch">Touch</string>
-	<string name="TooltipFlagL$">L$</string>
+	<string name="TooltipFlagI'z$">I'z$</string>
 	<string name="TooltipFlagDropInventory">Drop Inventory</string>
 	<string name="TooltipFlagPhantom">Phantom</string>
 	<string name="TooltipFlagTemporary">Temporary</string>
 	<string name="TooltipFlagRightClickMenu">(Right-click for menu)</string>
 	<string name="TooltipFreeToCopy">Free to copy</string>
-	<string name="TooltipForSaleL$">For Sale: L$[AMOUNT]</string> <!-- L$ version -->
+	<string name="TooltipForSaleI'z$">For Sale: I'z$[AMOUNT]</string> <!-- I'z$ version -->
 	<string name="TooltipForSaleMsg">For Sale: [MESSAGE]</string> <!-- Message (RetrievingData) -->
 	<string name="TooltipFlagGroupBuild">Group Build</string>
 	<string name="TooltipFlagNoBuild">No Build</string>
@@ -611,7 +611,7 @@ Returns a string that is src with all lower-case characters
   </string>
   <string name="LSLTipText_llGiveMoney">
 llGiveMoney(key destination, integer amount)
-Transfers amount of L$ from script owner to destination
+Transfers amount of I'z$ from script owner to destination
   </string>
   <string name="LSLTipText_llMakeExplosion">
 llMakeExplosion(integer particles, float scale, float vel, float lifetime, float arc, string texture, vector offset)

@@ -212,7 +212,7 @@
 				何も見つかりませんでした
 			</string>
 			<string name="land_help_text">
-				土地は直接リンデンドル（L$）、またはオークションでL$かUS$を用いて購入できます。
+				土地は直接リンデンドル（I'z$）、またはオークションでI'z$かUS$を用いて購入できます。
 直接買うには土地に行きタイトルバーの地名をクリックしてください。
 			</string>
 			<text name="find">
@@ -237,7 +237,7 @@
 			</combo_box>
 			<check_box label="価格 &#8804; " name="pricecheck"/>
 			<text name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="面積 &#8805; " name="areacheck"/>
 			<text left="190" name="areacheck_symbol" width="75">
@@ -251,9 +251,9 @@
 				<column label="" name="type"/>
 				<column label="名前" name="name"/>
 				<column label="種類" name="landtype"/>
-				<column label="L$ 価格" name="price"/>
+				<column label="I'z$ 価格" name="price"/>
 				<column label="面積" name="area"/>
-				<column label="L$/平方メートル" name="per_meter"/>
+				<column label="I'z$/平方メートル" name="per_meter"/>
 			</scroll_list>
 			<button label="次へ＞" label_selected="次へ＞" name="Next &gt;"/>
 			<button label="＜以前" label_selected="＜以前" name="&lt; Prev"/>

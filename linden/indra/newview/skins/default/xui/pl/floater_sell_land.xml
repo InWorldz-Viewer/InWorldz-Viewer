@@ -22,10 +22,10 @@
 		Wybierz właściwą cenę za tą Posiadłość.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		([PER_METER]L$ za metr)
+		([PER_METER]I'z$ za metr)
 	</text>
 	<text name="sell_to_label">
 		Kupiec:

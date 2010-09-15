@@ -34,7 +34,7 @@
 	<slider name="ui_scale_slider"/>
 	<check_box label="Utiliser une échelle indépendante de la résolution" name="ui_auto_scale"/>
 	<spinner label="Absent(e) après :" name="afk_timeout_spinner"/>
-	<check_box label="M&apos;avertir lorsque je dépense ou reçois des L$" name="notify_money_change_checkbox"/>
+	<check_box label="M&apos;avertir lorsque je dépense ou reçois des I'z$" name="notify_money_change_checkbox"/>
 	<text name="maturity_desired_label">
 		Catégorie de contenu :
 	</text>

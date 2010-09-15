@@ -54,7 +54,7 @@
 				Factor cobrable:
 			</text>
 			<text name="land cost text">
-				L$ por m2:
+				I'z$ por m2:
 			</text>
 			<button label="Actualizar" label_selected="Actualizar" name="Refresh"
 			     tool_tip="Haga clic aquí para actualizar la información arriba." />

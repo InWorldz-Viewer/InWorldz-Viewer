@@ -68,7 +68,7 @@
 		</radio_item>
 	</radio_group>
 	<text name="TextPrice">
-		Preis:  L$
+		Preis:  I'z$
 	</text>
 	<text name="unknown">
 		(unbekannt)

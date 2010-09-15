@@ -223,7 +223,7 @@
 				Aucun résultat.
 			</string>
 			<string name="land_help_text">
-				Vous pouvez acheter un terrain directement en dollars Linden (L$) ou aux enchères (en L$ ou US$).
+				Vous pouvez acheter un terrain directement en dollars Linden (I'z$) ou aux enchères (en I'z$ ou US$).
 Pour acheter directement, visitez le terrain et cliquez sur le nom de l&apos;endroit dans la barre de titre.
 			</string>
 			<text name="find">
@@ -248,7 +248,7 @@ Pour acheter directement, visitez le terrain et cliquez sur le nom de l&apos;end
 			</combo_box>
 			<check_box label="Prix &#8804; " name="pricecheck"/>
 			<text left="186" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Surface &#8805; " name="areacheck" width="90"/>
 			<text left="186" name="areacheck_symbol">
@@ -262,9 +262,9 @@ Pour acheter directement, visitez le terrain et cliquez sur le nom de l&apos;end
 				<column label="" name="type"/>
 				<column label="Nom" name="name"/>
 				<column label="Type" name="landtype"/>
-				<column label="Prix en L$" name="price" width="75"/>
+				<column label="Prix en I'z$" name="price" width="75"/>
 				<column label="Surface" name="area" width="65"/>
-				<column label="L$/m²" name="per_meter"/>
+				<column label="I'z$/m²" name="per_meter"/>
 			</scroll_list>
 			<button label="Suivante &gt;" label_selected="Suivante &gt;" name="Next &gt;"/>
 			<button label="&lt; Préc" label_selected="&lt; Préc" name="&lt; Prev"/>

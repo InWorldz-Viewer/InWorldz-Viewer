@@ -28,7 +28,7 @@
 		[REGIONNAME] bölgesinde [REGIONPOS] koordinatlarında bulunan &apos;[OWNERNAME]&apos; kişisine ait &apos;[OBJECTNAME]&apos;, [PERMISSIONS izinlerine sahip değil.
 	</string>
 	<string name="ScriptTakeMoney">
-		Sizden Linden doları(L$) alır
+		Sizden Linden doları(I'z$) alır
 	</string>
 	<string name="ActOnControlInputs">
 		Kontrol girdilerine göre davran

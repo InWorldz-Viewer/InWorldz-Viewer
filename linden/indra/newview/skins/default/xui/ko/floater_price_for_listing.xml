@@ -10,7 +10,7 @@
 검색 시 더 높은 순위로 나타납니다.
 	</text>
 	<text name="price_text">
-		광고 비용(L$):
+		광고 비용(I'z$):
 	</text>
 	<button label="가격 설정" name="set_price_btn" />
 	<button label="취소" name="cancel_btn" />

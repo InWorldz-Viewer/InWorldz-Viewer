@@ -127,7 +127,7 @@
 			<check_box label="Mostrar en la búsqueda" name="search_check" tool_tip="Dejar que la gente vea este objeto en los resultados de la búsqueda"/>
 			<check_box label="En venta" name="checkbox for sale"/>
 			<text name="Cost">
-				Precio:  L$
+				Precio:  I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -206,13 +206,13 @@
 				Debe seleccionar todo el objeto para definir los permisos.
 			</string>
 			<string name="Cost Default">
-				Precio:         L$
+				Precio:         I'z$
 			</string>
 			<string name="Cost Total">
-				Precio total:  L$
+				Precio total:  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Precio por:     L$
+				Precio por:     I'z$
 			</string>
 			<string name="Cost Mixed">
 				Precio variable
@@ -562,7 +562,7 @@
 			Información de la parcela
 		</text>
 		<text name="label_area_price">
-			Precio: [PRICE] L$ por [AREA] m²
+			Precio: [PRICE] I'z$ por [AREA] m²
 		</text>
 		<text name="label_area">
 			Superficie: [AREA] m²

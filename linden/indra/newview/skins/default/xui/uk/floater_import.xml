@@ -10,7 +10,7 @@
 		Файли для завантаж.:
 	</text>
 	<button label="Відміна" name="cancel_btn" />
-	<button label="Завантаж.(L$10)" name="ok_btn" />
+	<button label="Завантаж.(I'z$10)" name="ok_btn" />
 	<text name="preview_label2">
 		Перегляд картинки:
 	</text>

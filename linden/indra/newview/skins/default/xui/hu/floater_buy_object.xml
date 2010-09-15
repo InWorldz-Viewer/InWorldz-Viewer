@@ -4,7 +4,7 @@
 		tartalmával együtt:
 	</text>
 	<text name="buy_text">
-		[AMOUNT] L$ értékű tárgy vásárlása a következő
+		[AMOUNT] I'z$ értékű tárgy vásárlása a következő
 személytől: [NAME]?
 	</text>
 	<button label="Mégsem" label_selected="Mégsem" name="cancel_btn" bottom="-250"/>

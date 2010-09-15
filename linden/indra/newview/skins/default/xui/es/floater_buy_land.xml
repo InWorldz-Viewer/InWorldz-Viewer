@@ -57,8 +57,8 @@
 		Precio:
 	</text>
 	<text name="info_price">
-		1500 L$
-(1.1 L$/m²)
+		1500 I'z$
+(1.1 I'z$/m²)
 incluyendo los objetos
 	</text>
 	<text name="info_action">
@@ -93,13 +93,13 @@ incluyendo los objetos
 Esta parcela mide 512 m².
 	</text>
 	<text name="purchase_action">
-		Pagar al residente Joe 4.000 L$ por el terreno
+		Pagar al residente Joe 4.000 I'z$ por el terreno
 	</text>
 	<text name="currency_reason">
-		Tiene 2.100 L$.
+		Tiene 2.100 I'z$.
 	</text>
 	<text name="currency_action">
-		Comprar más L$
+		Comprar más I'z$
 	</text>
 	<line_editor name="currency_amt">
 		1.000
@@ -108,7 +108,7 @@ Esta parcela mide 512 m².
 		por, aprox., [AMOUNT2] US$
 	</text>
 	<text name="currency_balance">
-		Tiene 2.100 L$.
+		Tiene 2.100 I'z$.
 	</text>
 	<check_box label="Quitar [AMOUNT] m² de la contribución del grupo." name="remove_contribution"/>
 	<button label="Comprar" name="buy_btn"/>
@@ -190,10 +190,10 @@ Inténtelo seleccionando un área más pequeña.
 		Usted tiene [BUYER] m² de terreno.
 	</string>
 	<string name="pay_to_for_land">
-		Pagar por este terreno [AMOUNT] L$ a [SELLER]
+		Pagar por este terreno [AMOUNT] I'z$ a [SELLER]
 	</string>
 	<string name="buy_for_US">
-		Comprar [AMOUNT] L$ por, aprox., [AMOUNT2] US$,
+		Comprar [AMOUNT] I'z$ por, aprox., [AMOUNT2] US$,
 	</string>
 	<string name="parcel_meters">
 		Esta parcela tiene [AMOUNT] m².
@@ -215,8 +215,8 @@ admite [AMOUNT2] objetos
 		objetos no incluidos
 	</string>
 	<string name="info_price_string">
-		[PRICE] L$
-([PRICE_PER_SQM] L$/m²)
+		[PRICE] I'z$
+([PRICE_PER_SQM] I'z$/m²)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
@@ -225,21 +225,21 @@ los suficientes créditos de uso en contribución de terreno
 para cubrir esta parcela.
 	</string>
 	<string name="have_enough_lindens">
-		Tiene [AMOUNT] L$, cantidad suficiente para comprar este terreno.
+		Tiene [AMOUNT] I'z$, cantidad suficiente para comprar este terreno.
 	</string>
 	<string name="not_enough_lindens">
-		Sólo tiene [AMOUNT] L$. Necesitaría [AMOUNT2] L$ más.
+		Sólo tiene [AMOUNT] I'z$. Necesitaría [AMOUNT2] I'z$ más.
 	</string>
 	<string name="balance_left">
-		Tras la compra, aún tendrá [AMOUNT] L$.
+		Tras la compra, aún tendrá [AMOUNT] I'z$.
 	</string>
 	<string name="balance_needed">
-		Para costearse este terreno, deberá comprar, al menos, [AMOUNT] L$.
+		Para costearse este terreno, deberá comprar, al menos, [AMOUNT] I'z$.
 	</string>
 	<string name="no_parcel_selected">
 		(No se ha seleccionado una parcela)
 	</string>
 	<string name="buy_currency">
-		Comprar [LINDENS] L$ por, aprox., [USD] US$
+		Comprar [LINDENS] I'z$ por, aprox., [USD] US$
 	</string>
 </floater>

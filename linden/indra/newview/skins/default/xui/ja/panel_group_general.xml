@@ -28,7 +28,7 @@
 	<text_editor name="charter">
 		グループの理念、指針を記入してください
 	</text_editor>
-	<button label="参加する（L$0）" label_selected="参加する（L$0）" name="join_button"/>
+	<button label="参加する（I'z$0）" label_selected="参加する（I'z$0）" name="join_button"/>
 	<button label="詳細表示" label_selected="詳細表示" name="info_button"/>
 	<text name="text_owners_and_visible_members">
 		オーナーと公開メンバー
@@ -47,7 +47,7 @@
 	<panel name="preferences_container">
 		<check_box label="検索に表示" name="show_in_group_list" tool_tip="このグループを検索結果に表示させます"/>
 		<check_box label="会員募集" name="open_enrollement" tool_tip="招待状なしに自由にこのグループに加入することを許可するかどうかを指定します"/>
-		<check_box label="入会費：L$" name="check_enrollment_fee" tool_tip="このグループへの参加に入会費を必須とするかどうかを指定します"/>
+		<check_box label="入会費：I'z$" name="check_enrollment_fee" tool_tip="このグループへの参加に入会費を必須とするかどうかを指定します"/>
 		<spinner name="spin_enrollment_fee" tool_tip="「入会費」がチェックされている場合、新規会員は入会時にここに指定された金額を支払う必要があります"/>
 		<combo_box name="group_mature_check" tool_tip="グループ情報がMature向けかどうかの設定をします。">
 			<combo_item name="select_mature">
@@ -73,8 +73,8 @@
 		メンバー・データを検索
 	</string>
 	<string name="confirm_group_create_str">
-		このグループの作成にはL$100かかります。 
-このグループの作成にL$100ものお金をかけてもかまいませんか？ 慎重に判断してください。
+		このグループの作成にはI'z$100かかります。 
+このグループの作成にI'z$100ものお金をかけてもかまいませんか？ 慎重に判断してください。
 48時間以内に誰もこのグループに参加しなかった場合、グループは解体され、グループの名前は今後使用できなくなります。
 	</string>
 </panel>

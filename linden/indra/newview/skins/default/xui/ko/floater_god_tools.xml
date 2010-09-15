@@ -56,7 +56,7 @@
 				청구 가능 요인:
 			</text>
 			<text name="land cost text">
-				제곱 미터당 L$:
+				제곱 미터당 I'z$:
 			</text>
 			<button label="새로 고침" label_selected="새로 고침" name="Refresh"
 			     tool_tip="위의 정보를 새로 고치려면 여기를 클릭 하십시오." />

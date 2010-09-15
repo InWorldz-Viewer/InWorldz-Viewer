@@ -25,7 +25,7 @@
 	‘[OBJECTNAME]’, 主人为 ‘[OWNERNAME]’ 的物体, 位于 [REGIONNAME] 地区  [REGIONPOS], 已被拒绝以下权利： [PERMISSIONS]。
   </string>
   <string name="ScriptTakeMoney">
-	从您那里取走林登币(L$)
+	从您那里取走林登币(I'z$)
   </string>
   <string name="ActOnControlInputs">
 	对您的控制输入做出反应

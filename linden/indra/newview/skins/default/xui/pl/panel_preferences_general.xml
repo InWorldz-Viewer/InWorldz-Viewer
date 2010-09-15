@@ -34,7 +34,7 @@
 	<slider name="ui_scale_slider"/>
 	<check_box label="Używaj Skali Nizależnej od Rozdzielczości" name="ui_auto_scale"/>
 	<spinner label="Zasypiaj w:" name="afk_timeout_spinner"/>
-	<check_box label="Powiadamiaj o Wydatkach i Zarobkach (L$)" name="notify_money_change_checkbox"/>
+	<check_box label="Powiadamiaj o Wydatkach i Zarobkach (I'z$)" name="notify_money_change_checkbox"/>
 	<text name="maturity_desired_label" bottom="-312">
 		Treść:
 	</text>

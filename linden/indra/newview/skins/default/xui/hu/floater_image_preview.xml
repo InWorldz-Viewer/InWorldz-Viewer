@@ -49,5 +49,5 @@ formátumban.
 	</text>
 	<check_box label="Veszteség nélküli tömörítés használata" name="lossless_check" />
 	<button label="Mégsem" name="cancel_btn" />
-	<button label="Feltölt ([AMOUNT] L$)" name="ok_btn" />
+	<button label="Feltölt ([AMOUNT] I'z$)" name="ok_btn" />
 </floater>

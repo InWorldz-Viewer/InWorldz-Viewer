@@ -26,7 +26,7 @@
 	<button label="公開．．．" name="classified_update_btn"/>
 	<check_box label="毎週自動更新" name="auto_renew_check"/>
 	<string name="ad_placed_paid">
-		広告掲載：[DATE]、L$[AMT] 支払い済み
+		広告掲載：[DATE]、I'z$[AMT] 支払い済み
 	</string>
 	<string name="update_txt">
 		アップデート

@@ -7,5 +7,5 @@
 		Beskrivelse:
 	</text>
 	<button label="Annullér" name="cancel_btn" />
-	<button label="Upload (L$[AMOUNT])" name="ok_btn" />
+	<button label="Upload (I'z$[AMOUNT])" name="ok_btn" />
 </floater>

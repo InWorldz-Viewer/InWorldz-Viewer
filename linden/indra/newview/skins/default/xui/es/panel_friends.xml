@@ -14,7 +14,7 @@
 	<button label="MI/Llamada" name="im_btn" tool_tip="Abrir sesión de mensajes instantáneos"/>
 	<button label="Perfil" name="profile_btn" tool_tip="Mostrar la imagen, los grupos, y otra información"/>
 	<button label="Teleportar..." name="offer_teleport_btn" tool_tip="Ofrecer a este amigo teleportarle hasta su posición"/>
-	<button label="Pagar..." name="pay_btn" tool_tip="Dar dólares Linden (L$) a este amigo"/>
+	<button label="Pagar..." name="pay_btn" tool_tip="Dar dólares Linden (I'z$) a este amigo"/>
 	<button label="Quitar..." name="remove_btn" tool_tip="Quitar a esta persona de su lista de amigos"/>
 	<button label="Añadir..." name="add_btn" tool_tip="Ofrecer ser mi amigo a un residente"/>
 </panel>

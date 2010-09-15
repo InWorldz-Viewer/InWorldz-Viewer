@@ -131,7 +131,7 @@
 			<check_box label="Pokaż w wyszukiwarce" name="search_check" tool_tip="Udostępnij wyświetlanie się tego przedmiotu w wynikach wyszukiwania"/>
 			<check_box label="Na Sprzedaż" name="checkbox for sale"/>
 			<text name="Cost">
-				Cena:  L$
+				Cena:  I'z$
 			</text>
 			<line_editor name="Edit Cost"/>
 			<radio_group name="sale type">
@@ -211,13 +211,13 @@
 				Musisz zaznaczyć cały obiekt by ustawić prawa.
 			</string>
 			<string name="Cost Default">
-				Cena:           L$
+				Cena:           I'z$
 			</string>
 			<string name="Cost Total">
-				Cena Całości:  L$
+				Cena Całości:  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Cena Za:     L$
+				Cena Za:     I'z$
 			</string>
 			<string name="Cost Mixed">
 				Cena Mieszana
@@ -573,7 +573,7 @@
 			Informacje o Posiadłości
 		</text>
 		<text name="label_area_price">
-			Cena: L$[PRICE] za [AREA] m
+			Cena: I'z$[PRICE] za [AREA] m
 		</text>
 		<text name="label_area">
 			Obszar: [AREA] m

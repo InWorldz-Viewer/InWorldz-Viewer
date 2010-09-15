@@ -10,7 +10,7 @@
 		Файлы для загрузки:
 	</text>
 	<button label="Отмена" name="cancel_btn" />
-	<button label="Загрузить(L$10)" name="ok_btn" />
+	<button label="Загрузить(I'z$10)" name="ok_btn" />
 	<text name="preview_label2">
 		Предпросмотр картинки:
 	</text>

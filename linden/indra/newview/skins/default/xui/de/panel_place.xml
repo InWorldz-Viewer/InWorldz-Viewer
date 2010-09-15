@@ -22,7 +22,7 @@
 		Gebiet: [AREA] qm.
 	</text>
 	<text name="forsale_text">
-		Zum Verkauf für [PRICE] L$
+		Zum Verkauf für [PRICE] I'z$
 	</text>
 	<text name="auction_text">
 		Auktions-ID [ID].

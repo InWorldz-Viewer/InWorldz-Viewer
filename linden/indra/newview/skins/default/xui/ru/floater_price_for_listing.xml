@@ -10,7 +10,7 @@
 и будет в первых рядах в поиске.
 	</text>
 	<text name="price_text">
-		Оплатить (L$):
+		Оплатить (I'z$):
 	</text>
 	<button label="Отменить" name="cancel_btn" />
 	<button label="Установить цену" name="set_price_btn" />

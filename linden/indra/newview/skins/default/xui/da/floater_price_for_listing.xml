@@ -10,7 +10,7 @@ De højest betalte annoncer vises øverst på listen,
 og vises højere i søgningen.
 	</text>
 	<text name="price_text" width="146" bottom="44">
-		Pris for annonce (L$):
+		Pris for annonce (I'z$):
 	</text>
 	<line_editor left="136" name="price_edit" />
 	<button label="Annullér" name="cancel_btn" />

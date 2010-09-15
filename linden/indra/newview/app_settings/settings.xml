@@ -6326,7 +6326,7 @@
     <key>NotifyMoneyChange</key>
     <map>
       <key>Comment</key>
-      <string>Pop up notifications for all L$ transactions</string>
+      <string>Pop up notifications for all I'z$ transactions</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -10934,7 +10934,7 @@
     <key>UISndMoneyChangeDown</key>
     <map>
       <key>Comment</key>
-      <string>Sound file for L$ balance increase (uuid for sound asset)</string>
+      <string>Sound file for I'z$ balance increase (uuid for sound asset)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -10945,7 +10945,7 @@
     <key>UISndMoneyChangeThreshold</key>
     <map>
       <key>Comment</key>
-      <string>Amount of change in L$ balance required to trigger "money" sound</string>
+      <string>Amount of change in I'z$ balance required to trigger "money" sound</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -10956,7 +10956,7 @@
     <key>UISndMoneyChangeUp</key>
     <map>
       <key>Comment</key>
-      <string>Sound file for L$ balance decrease(uuid for sound asset)</string>
+      <string>Sound file for I'z$ balance decrease(uuid for sound asset)</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>

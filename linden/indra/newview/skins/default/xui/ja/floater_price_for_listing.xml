@@ -10,7 +10,7 @@
 上位に表示されます。
 	</text>
 	<text name="price_text">
-		広告料金（L$）：
+		広告料金（I'z$）：
 	</text>
 	<button label="価格を設定" name="set_price_btn" />
 	<button label="取り消し" name="cancel_btn" />

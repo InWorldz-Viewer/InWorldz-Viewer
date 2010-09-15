@@ -3,10 +3,10 @@
 	<menu label="Fájl" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="Feltöltés" name="upload">
-			<menu_item_call label="Kép ([COST] L$)..." name="Upload Image"/>
-			<menu_item_call label="Hang ([COST] L$)..." name="Upload Sound"/>
-			<menu_item_call label="Animáció ([COST] L$)..." name="Upload Animation"/>
-			<menu_item_call label="Tömeges ([COST] L$/fájl)..." name="Bulk Upload"/>
+			<menu_item_call label="Kép ([COST] I'z$)..." name="Upload Image"/>
+			<menu_item_call label="Hang ([COST] I'z$)..." name="Upload Sound"/>
+			<menu_item_call label="Animáció ([COST] I'z$)..." name="Upload Animation"/>
+			<menu_item_call label="Tömeges ([COST] I'z$/fájl)..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="Jogosultságok alapbeállítása..." name="perm prefs"/>
 		</menu>
@@ -121,7 +121,7 @@
 		<menu_item_separator label="-----------" name="separator4"/>
 		<menu_item_call label="Felhasználói eseménytörténet..." name="Account History..."/>
 		<menu_item_call label="Felhasználó fiók beállításai..." name="Manage My Account..."/>
-		<menu_item_call label="L$ tranzakciók..." name="Buy and Sell L$..."/>
+		<menu_item_call label="I'z$ tranzakciók..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="Saját föld..." name="My Land..."/>
 		<menu_item_call label="Föld információk..." name="About Land..."/>

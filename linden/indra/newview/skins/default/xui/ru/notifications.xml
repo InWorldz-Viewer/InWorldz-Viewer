@@ -254,32 +254,32 @@
 Другие резиденты смогут посетить этот URL, когда будут просматривать Ваш профиль.
 	</notification>
 	<notification name="JoinGroupCanAfford">
-		Вступление в группу стоит L$[COST].
+		Вступление в группу стоит I'z$[COST].
 Вы уверены в продолжении операции?
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="Вступить"/>
 	</notification>
 	<notification name="JoinGroupCannotAfford">
-		Присоединиться к этой группе стоит L$[COST].
-У Вас недостаточно L$, чтобы присоединиться к этой группе.
+		Присоединиться к этой группе стоит I'z$[COST].
+У Вас недостаточно I'z$, чтобы присоединиться к этой группе.
 	</notification>
 	<notification name="LandBuyPass">
-		За L$[COST] Вы можете войти на (&apos;[PARCEL_NAME]&apos;) на [TIME] часов. Купить доступ?
+		За I'z$[COST] Вы можете войти на (&apos;[PARCEL_NAME]&apos;) на [TIME] часов. Купить доступ?
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="SalePriceRestriction">
-		Цена продажи должна быть больше L$0, если Вы продаете это кому-нибудь.
-Пожалуйста, выберите кого-то, чтобы продать это за L$0.
+		Цена продажи должна быть больше I'z$0, если Вы продаете это кому-нибудь.
+Пожалуйста, выберите кого-то, чтобы продать это за I'z$0.
 	</notification>
 	<notification name="ConfirmLandSaleChange">
 		Выбранные [LAND_SIZE] кв.м. земли выставлены на продажу.
-Ваша цена продажи должна быть L$[SALE_PRICE] и Вы должны быть уполномочены для продажи в [NAME].
+Ваша цена продажи должна быть I'z$[SALE_PRICE] и Вы должны быть уполномочены для продажи в [NAME].
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="ConfirmLandSaleToAnyoneChange">
 		ВНИМАНИЕ: Установка &apos;&apos;продавать кому-либо&apos;&apos; сделает землю доступной для покупки всем людям, в т.ч. за пределами этого региона.
 
 Выбранные [LAND_SIZE] кв.м. земли выставлены на продажу.
-Ваша цена продажи должна быть L$[SALE_PRICE] и Вы должны быть уполномочены для продажи в [NAME].
+Ваша цена продажи должна быть I'z$[SALE_PRICE] и Вы должны быть уполномочены для продажи в [NAME].
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="ReturnObjectsDeededToGroup">
@@ -868,7 +868,7 @@ www.secondlife.com/support
 	</notification>
 	<notification name="ReleaseLandWarning">
 		Вы хотите освободить [AREA] кв.м. земли.
-Эта операция лишит Вас выбранного участка из Ваших владений и не принесет L$.
+Эта операция лишит Вас выбранного участка из Ваших владений и не принесет I'z$.
 
 Освободить эту землю?
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
@@ -1021,7 +1021,7 @@ www.secondlife.com/support
 		Вы должны указать имя Вашей рекламы.
 	</notification>
 	<notification name="MinClassifiedPrice">
-		Цена оплаты листинга должна быть минимум L$[MIN_PRICE].
+		Цена оплаты листинга должна быть минимум I'z$[MIN_PRICE].
 
 Укажите цену повыше.
 	</notification>
@@ -1162,7 +1162,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="Женщина" yestext="Мужчина"/>
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] L$ [PRICE] Недостаточно L$ для этого действия.
+		[NAME] I'z$ [PRICE] Недостаточно I'z$ для этого действия.
 	</notification>
 	<notification name="GrantedModifyRights">
 		Вам дали право менять объекты резидента [FIRST_NAME] [LAST_NAME].
@@ -1285,7 +1285,7 @@ www.secondlife.com/support
 	</notification>
 	<notification name="DeedObjectToGroup">
 		Использование этого объекта позволит группе
-* Получать L$ из оплаты этого объекта
+* Получать I'z$ из оплаты этого объекта
 		<usetemplate ignoretext="При использовании объектов группами" name="okcancelignore" notext="Отмена" yestext="Использовать"/>
 	</notification>
 	<notification name="WebLaunchExternalTarget">
@@ -1463,7 +1463,7 @@ www.secondlife.com/support
 	<notification label="Изменить доступ к участку Линденов" name="ChangeLindenAccess">
 		Вы хотите сменить поместья, принадлежащие Линденам (материк, детский Grid, остров ориентации и т.д.).
 
-Это ЧРЕЗВЫЧАЙНО ОПАСНО и может использоватся только для того, чтобы вызвать методы, позволяющие перемещать объекты/L$ в/из Grid.
+Это ЧРЕЗВЫЧАЙНО ОПАСНО и может использоватся только для того, чтобы вызвать методы, позволяющие перемещать объекты/I'z$ в/из Grid.
 Это может изменить тысячи регионов, и испортить работу серверов.
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
@@ -1641,7 +1641,7 @@ www.secondlife.com/support
 	<notification name="PublishClassified">
 		Запомните: Плата за рекламу не возвращается.
 
-Публиковать рекламу за L$[AMOUNT]?
+Публиковать рекламу за I'z$[AMOUNT]?
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="SetClassifiedMature">
@@ -1902,7 +1902,7 @@ www.secondlife.com/support
 Выберите один объект и повторите снова.
 	</notification>
 	<notification name="BuyOriginal">
-		Купить оригинальный объект у [OWNER] за L$[PRICE]?
+		Купить оригинальный объект у [OWNER] за I'z$[PRICE]?
 Вы станете владельцем этого объекта.
 Вы сможете:
  Править: [MODIFYPERM]
@@ -1911,7 +1911,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="BuyOriginalNoOwner">
-		Купить оригинальный объект за L$[PRICE]?
+		Купить оригинальный объект за I'z$[PRICE]?
 Вы станете владельцем этого объекта.
 Вы сможете:
  Править: [MODIFYPERM]
@@ -1920,7 +1920,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopy">
-		Купить копию у [OWNER] за L$[PRICE]?
+		Купить копию у [OWNER] за I'z$[PRICE]?
 Объект скопируется в Ваш инвентарь.
 Вы сможете:
  Править: [MODIFYPERM]
@@ -1929,7 +1929,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopyNoOwner">
-		Купить копию за L$[PRICE]?
+		Купить копию за I'z$[PRICE]?
 Объект скопируется в Ваш инвентарь.
 Вы сможете:
  Править: [MODIFYPERM]
@@ -1938,12 +1938,12 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="BuyContents">
-		Купить содержание у [OWNER] за L$[PRICE]?
+		Купить содержание у [OWNER] за I'z$[PRICE]?
 Все это скопируется в Ваш инвентарь.
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
 	<notification name="BuyContentsNoOwner">
-		Купить содержание за L$[PRICE]?
+		Купить содержание за I'z$[PRICE]?
 Все это скопируется в Ваш инвентарь.
 		<usetemplate name="okcancelbuttons" notext="Отмена" yestext="OK"/>
 	</notification>
@@ -2375,8 +2375,8 @@ X и Y задает их позицию. D (плотность) определя
 	<notification name="Cannot_Purchase_an_Attachment">
 		Части не могут быть куплены, пока они являются частью прикрепления
 	</notification>
-	<notification label="Запрос на право Дебета ваших L$" name="DebitPermissionDetails">
-		Объект хочет получить право распоряжаться Вашим балансом (L$). Чтобы отобрать у него эти права потребуется либо удалить объект, либо перезапустить его скрипты.
+	<notification label="Запрос на право Дебета ваших I'z$" name="DebitPermissionDetails">
+		Объект хочет получить право распоряжаться Вашим балансом (I'z$). Чтобы отобрать у него эти права потребуется либо удалить объект, либо перезапустить его скрипты.
 		<usetemplate name="okbutton" yestext="OK"/>
 	</notification>
 	<notification name="AutoWearNewClothing">
@@ -2429,7 +2429,7 @@ X и Y задает их позицию. D (плотность) определя
 (Займет примерно 5 минут)
 	</notification>
 	<notification name="UploadPayment">
-		Вы заплатили для загрузки L$[AMOUNT]
+		Вы заплатили для загрузки I'z$[AMOUNT]
 	</notification>
 	<notification name="UploadWebSnapshotDone">
 		Загрузка снимка на вебсайт завершена
@@ -2870,12 +2870,12 @@ X и Y задает их позицию. D (плотность) определя
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		Вы только что получили L$[AMOUNT].
-Объекты и другие пользователи могут давать Вам L$
+		Вы только что получили I'z$[AMOUNT].
+Объекты и другие пользователи могут давать Вам I'z$
 Ваш баланс показывается в правом верхнем углу экрана
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		Вы только что заплатили L$[AMOUNT].
+		Вы только что заплатили I'z$[AMOUNT].
 Ваш баланс показывается в правом верхнем углу экрана
 	</notification>
 	<notification name="FirstSit">

@@ -127,7 +127,7 @@
 			<check_box label="Afficher dans la recherche" name="search_check" tool_tip="Afficher l&apos;objet dans les résultats de recherche"/>
 			<check_box label="À vendre" name="checkbox for sale"/>
 			<text name="Cost">
-				Prix : L$
+				Prix : I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -206,13 +206,13 @@
 				Sélectionnez l&apos;objet en entier.
 			</string>
 			<string name="Cost Default">
-				Prix :           L$
+				Prix :           I'z$
 			</string>
 			<string name="Cost Total">
-				Prix total :  L$
+				Prix total :  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Prix par :     L$
+				Prix par :     I'z$
 			</string>
 			<string name="Cost Mixed">
 				Prix mixte
@@ -562,7 +562,7 @@
 			Informations sur la parcelle
 		</text>
 		<text name="label_area_price">
-			Prix : [PRICE] L$ pour [AREA] m².
+			Prix : [PRICE] I'z$ pour [AREA] m².
 		</text>
 		<text name="label_area">
 			Surface : [AREA] m²

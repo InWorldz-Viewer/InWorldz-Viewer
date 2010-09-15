@@ -19,6 +19,6 @@
 	<slider label="Doppler effekt" name="Doppler Effect" />
 	<slider label="Rækkevidde" name="Distance Factor" />
 	<slider label="Styrkefald/afstand" name="Rolloff Factor" />
-	<spinner label="Penge lydstyrke" name="L$ Change Threshold" />
+	<spinner label="Penge lydstyrke" name="I'z$ Change Threshold" />
 	<spinner label="Livspoint lydstyrke" name="Health Change Threshold" />
 </panel>

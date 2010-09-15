@@ -148,7 +148,7 @@ Recomendamos usar archivos BVH exportados de
 Poser 4.
 	</text>
 	<button label="Cancelar" name="cancel_btn"/>
-	<button label="Subir ([AMOUNT] L$)" name="ok_btn"/>
+	<button label="Subir ([AMOUNT] I'z$)" name="ok_btn"/>
 	<string name="failed_to_initialize">
 		Fallo al iniciar el movimiento
 	</string>

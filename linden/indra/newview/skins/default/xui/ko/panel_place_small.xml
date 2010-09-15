@@ -22,7 +22,7 @@
 		면적: [AREA]제곱미터
 	</string>
 	<string name="forsale_text">
-		L$ [PRICE]에 판매.
+		I'z$ [PRICE]에 판매.
 	</string>
 	<string name="auction_text">
 		경매 ID [ID].

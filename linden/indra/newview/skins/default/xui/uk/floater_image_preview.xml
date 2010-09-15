@@ -50,5 +50,5 @@
 	<check_box label="Використовувати безвтратне стиснення"
 	     name="lossless_check" />
 	<button label="Відміна" name="cancel_btn" />
-	<button label="Завантаж. (L$[AMOUNT])" name="ok_btn"  width="135"/>
+	<button label="Завантаж. (I'z$[AMOUNT])" name="ok_btn"  width="135"/>
 </floater>

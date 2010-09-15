@@ -10,7 +10,7 @@
 		Dateien für Upload:
 	</text>
 	<button label="Abbrechen" name="cancel_btn" />
-	<button label="Hochladen (10 L$)" name="ok_btn" />
+	<button label="Hochladen (10 I'z$)" name="ok_btn" />
 	<text name="preview_label2">
 		Bildvorschau:
 	</text>

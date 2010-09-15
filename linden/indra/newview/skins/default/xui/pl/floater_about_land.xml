@@ -40,8 +40,8 @@
 			<text length="1" name="Not for sale." type="string">
 				Nie
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				Cena: L$[PRICE] (L$[PRICE_PER_SQM]/m²).
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				Cena: I'z$[PRICE] (I'z$[PRICE_PER_SQM]/m²).
 			</text>
 			<button label="Sprzedaj Posiadłość..." label_selected="Sprzedaj Posiadłość..." name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -290,7 +290,7 @@ Idź do Świat &gt; O Posiadłości albo wybierz inną posiadłość żeby pokaz
 			</text>
 			<check_box label="Bezpieczna (brak zniszczeń)" name="check safe" tool_tip="Wybrana - posiadłość jest bezpieczna - zniszczenia w walce są zablokowane. Nie wybrana - zniszczenia w walce są włączone."/>
 			<check_box label="Popychanie niedozwolone" name="PushRestrictCheck" tool_tip="Nie pozwalaj skryptom na popychanie. Wybranie tej opcji może być przydatne do ograniczenia zakłóceń spokoju w Twojej posiadłości."/>
-			<check_box label="Wyświetlaj w wyszukiwarce (30L$/tyg.)" name="ShowDirectoryCheck" tool_tip="Udostępnij ukazywanie się nazwy posiadłości w wyszukiwarce"/>
+			<check_box label="Wyświetlaj w wyszukiwarce (30I'z$/tyg.)" name="ShowDirectoryCheck" tool_tip="Udostępnij ukazywanie się nazwy posiadłości w wyszukiwarce"/>
 			<string name="search_enabled_tooltip">
 				Udostępnij wyświetlanie tej posiadłości w wyszukiwarce
 			</string>
@@ -504,7 +504,7 @@ Mediów:
 					Grupie
 				</combo_item>
 			</combo_box>
-			<spinner label="Cena w L$:" name="PriceSpin"/>
+			<spinner label="Cena w I'z$:" name="PriceSpin"/>
 			<spinner label="Ilość godzin dostępu:" name="HoursSpin"/>
 			<text label="Zawsze udostępniaj" name="AllowedText">
 				Dozwoleni Rezydenci

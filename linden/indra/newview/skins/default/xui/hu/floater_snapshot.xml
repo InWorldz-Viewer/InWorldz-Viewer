@@ -8,7 +8,7 @@
 			Kép küldése e-mailen
 		</radio_item>
 		<radio_item name="texture">
-			Készlettárba ment ([AMOUNT] L$)
+			Készlettárba ment ([AMOUNT] I'z$)
 		</radio_item>
 		<radio_item name="local">
 			Merevlemezre ment
@@ -19,7 +19,7 @@
 	</text>
 	<button label="Kép frissítése" name="new_snapshot_btn"/>
 	<button label="Elküld" name="send_btn"/>
-	<button label="Elment ([AMOUNT] L$)" name="upload_btn"/>
+	<button label="Elment ([AMOUNT] I'z$)" name="upload_btn"/>
 	<flyout_button label="Elment" name="save_btn" tool_tip="Kép mentése fájlként">
 		<flyout_button_item name="save_item">
 			Elment

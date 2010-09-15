@@ -28,7 +28,7 @@
 	A &apos;[OBJECTNAME]&apos;, un objeto propiedad de &apos;[OWNERNAME]&apos;, localizado en [REGIONNAME] con la posición [REGIONPOS], se le ha denegado el permiso para: [PERMISSIONS].
   </string>
   <string name="ScriptTakeMoney">
-	Cogerle a usted dólares Linden (L$)
+	Cogerle a usted dólares Linden (I'z$)
   </string>
   <string name="ActOnControlInputs">
 	Actuar en sus controles de entrada

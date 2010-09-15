@@ -56,8 +56,8 @@
 		Ücret:
 	</text>
 	<text name="info_price">
-		1500 L$
-(L$ 1.1/m²)
+		1500 I'z$
+(I'z$ 1.1/m²)
 objeler ile satıldı
 	</text>
 	<text name="info_action">
@@ -92,13 +92,13 @@ objeler ile satıldı
 Bu parsel 512 m² arazidir.
 	</text>
 	<text name="purchase_action">
-		Joe Resident&apos;a arazi için 4000 L$ ödeyiniz
+		Joe Resident&apos;a arazi için 4000 I'z$ ödeyiniz
 	</text>
 	<text name="currency_reason">
-		2,100 L$&apos;a sahipsiniz.
+		2,100 I'z$&apos;a sahipsiniz.
 	</text>
 	<text name="currency_action" width="160">
-		Daha fazla L$ satın alınız
+		Daha fazla I'z$ satın alınız
 	</text>
 	<line_editor name="currency_amt" left="200">
 		1000
@@ -107,7 +107,7 @@ Bu parsel 512 m² arazidir.
 		yaklaşık [AMOUNT2] US$
 	</text>
 	<text name="currency_balance">
-		2,100 L$&apos;a sahipsiniz.
+		2,100 I'z$&apos;a sahipsiniz.
 	</text>
 	<check_box label="Grubunuzdan [AMOUNT] metre kare bağış çıkarır." name="remove_contribution"/>
 	<button label="Satın al" name="buy_btn"/>
@@ -189,10 +189,10 @@ Daha küçük bir alan seçmeyi deneyiniz.
 		[BUYER] m² araziye sahipsiniz.
 	</string>
 	<string name="pay_to_for_land">
-		[SELLER] kişisine bu arazi için [AMOUNT] L$ öder
+		[SELLER] kişisine bu arazi için [AMOUNT] I'z$ öder
 	</string>
 	<string name="buy_for_US">
-		Yaklaşık [AMOUNT2] US$&apos;a [AMOUNT] L$ satın alınız,
+		Yaklaşık [AMOUNT2] US$&apos;a [AMOUNT] I'z$ satın alınız,
 	</string>
 	<string name="parcel_meters">
 		Bu parsel [AMOUNT] m².
@@ -214,29 +214,29 @@ Daha küçük bir alan seçmeyi deneyiniz.
 		objeler dahil değil
 	</string>
 	<string name="info_price_string">
-		[PRICE] L$
-(L$ [PRICE_PER_SQM]/m².)
+		[PRICE] I'z$
+(I'z$ [PRICE_PER_SQM]/m².)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		[GROUP] grubu arazi satın alım işlemi gerçekleşmeden önce bu arazi için yeterli derecede arazi bağışı tahsis etmesi gerekecektir.
 	</string>
 	<string name="have_enough_lindens">
-		Bu araziyi satın alabilmek için yeterli [AMOUNT] L$ bakiyeniz var.
+		Bu araziyi satın alabilmek için yeterli [AMOUNT] I'z$ bakiyeniz var.
 	</string>
 	<string name="not_enough_lindens">
-		Sadece [AMOUNT] L$ bakiyeniz var,[AMOUNT2] L$ daha gerekli.
+		Sadece [AMOUNT] I'z$ bakiyeniz var,[AMOUNT2] I'z$ daha gerekli.
 	</string>
 	<string name="balance_left">
-		Satın alımdan sonra,hesabınızda [AMOUNT] L$ kalacak.
+		Satın alımdan sonra,hesabınızda [AMOUNT] I'z$ kalacak.
 	</string>
 	<string name="balance_needed">
-		Bu araziyi satın alabilmek için en az [AMOUNT] L$ satın almanız gerekli.
+		Bu araziyi satın alabilmek için en az [AMOUNT] I'z$ satın almanız gerekli.
 	</string>
 	<string name="no_parcel_selected">
 		(hiçbir parsel seçili değil)
 	</string>
 	<string name="buy_currency">
-		Yaklaşık [USD] US$&apos;a [LINDENS] L$ satın alınız
+		Yaklaşık [USD] US$&apos;a [LINDENS] I'z$ satın alınız
 	</string>
 </floater>

@@ -23,6 +23,6 @@
 	<slider label="Ефект доплера:" name="Doppler Effect" />
 	<slider label="Фактор відстані:" name="Distance Factor" />
 	<slider label="Фактор розсіювання:" name="Rolloff Factor" />
-	<spinner label="Поріг зміни L$" name="L$ Change Threshold" />
+	<spinner label="Поріг зміни I'z$" name="I'z$ Change Threshold" />
 	<spinner label="Поріг зм. здоров&apos;я" name="Health Change Threshold" />
 </panel>

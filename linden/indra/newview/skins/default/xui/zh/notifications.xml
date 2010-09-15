@@ -262,33 +262,33 @@
 其他居民在观看你的档案的时候可以访问你所指定的URL。
 	</notification>
 	<notification name="JoinGroupCanAfford">
-		加入该社团需花费L$[COST]。
+		加入该社团需花费I'z$[COST]。
 你愿意继续吗？
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="加入"/>
 	</notification>
 	<notification name="JoinGroupCannotAfford">
-		加入该社团需花费 L$[COST]。
-您拥有的 L$ 不够。
+		加入该社团需花费 I'z$[COST]。
+您拥有的 I'z$ 不够。
 	</notification>
 	<notification name="LandBuyPass">
-		花费 L$[COST] 你就可以进入这块土地(‘[PARCEL_NAME]’)
+		花费 I'z$[COST] 你就可以进入这块土地(‘[PARCEL_NAME]’)
 [TIME]小时。是否购买通行证？
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="购买"/>
 	</notification>
 	<notification name="SalePriceRestriction">
-		如果出售给任何人，出售价格必须 &gt; L$0。
-如果售价为L$0，请选定一个用户来售出。
+		如果出售给任何人，出售价格必须 &gt; I'z$0。
+如果售价为I'z$0，请选定一个用户来售出。
 	</notification>
 	<notification name="ConfirmLandSaleChange">
 		所选的 [LAND_SIZE]平方米土地正被设置为代售。
-你的售价将是为 L$[SALE_PRICE]并将被授权售给[NAME]。
+你的售价将是为 I'z$[SALE_PRICE]并将被授权售给[NAME]。
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="确定"/>
 	</notification>
 	<notification name="ConfirmLandSaleToAnyoneChange">
 		请注意： 点击 ‘售出给任何人’ 将使你的土地对整个第[GRID_NAME]社区开放，包括当前不在这个地区中的人。
 
 所选的 [LAND_SIZE]平方米土地正被设置为代售。
-你的售价将是为 L$[SALE_PRICE]并将被授权售给[NAME]。
+你的售价将是为 I'z$[SALE_PRICE]并将被授权售给[NAME]。
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="确定"/>
 	</notification>
 	<notification name="ReturnObjectsDeededToGroup">
@@ -909,7 +909,7 @@ www.secondlife.com/support
 	<notification name="ReleaseLandWarning">
 		你将放弃面积为 [AREA] 平方米的土地。
 放弃该土地会将他从你拥有的土地中
-移走, 不会兑换成任何 L$。
+移走, 不会兑换成任何 I'z$。
 
 是否放弃土地？
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="确定"/>
@@ -1069,7 +1069,7 @@ www.secondlife.com/support
 		你必须给分类广告设定一个名字。
 	</notification>
 	<notification name="MinClassifiedPrice">
-		广告刊登出价必须大于 L$[MIN_PRICE]。
+		广告刊登出价必须大于 I'z$[MIN_PRICE]。
 
 请输入一个更高的价格。
 	</notification>
@@ -1227,7 +1227,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="女性" yestext="男性"/>
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] L$ [PRICE] 您没有足够的 L$ 来这样做。
+		[NAME] I'z$ [PRICE] 您没有足够的 I'z$ 来这样做。
 	</notification>
 	<notification name="GrantedModifyRights">
 		你已经被授予特权，你可以任意修改[FIRST_NAME] [LAST_NAME]的物体。
@@ -1364,7 +1364,7 @@ www.secondlife.com/support
 	</notification>
 	<notification name="DeedObjectToGroup">
 		转让此物体会导致社团：
-* 收到付给该物体的L$。
+* 收到付给该物体的I'z$。
 		<usetemplate ignoretext="转让物体到社团" name="okcancelignore" notext="取消" yestext="转让"/>
 	</notification>
 	<notification name="WebLaunchExternalTarget">
@@ -1732,7 +1732,7 @@ www.secondlife.com/support
 	<notification name="PublishClassified">
 		请遵记： 分类广告费用不会退还。
 
-是否以L$[AMOUNT]发布广告？
+是否以I'z$[AMOUNT]发布广告？
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="发布"/>
 	</notification>
 	<notification name="SetClassifiedMature">
@@ -2051,7 +2051,7 @@ www.secondlife.com/support
 请仅选择一件物体，再试一次。
 	</notification>
 	<notification name="BuyOriginal">
-		是否以 L$[PRICE] 购买原物体？
+		是否以 I'z$[PRICE] 购买原物体？
 你将成为物体的主人。
 你将可以：
  修改： [MODIFYPERM]
@@ -2060,7 +2060,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="购买"/>
 	</notification>
 	<notification name="BuyOriginalNoOwner">
-		是否以 L$[PRICE] 购买原物体？
+		是否以 I'z$[PRICE] 购买原物体？
 你将成为物体的主人。
 你将可以：
  修改： [MODIFYPERM]
@@ -2069,7 +2069,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="购买"/>
 	</notification>
 	<notification name="BuyCopy">
-		是否以 L$[PRICE] 从 [OWNER] 购买物体的副本？
+		是否以 I'z$[PRICE] 从 [OWNER] 购买物体的副本？
 这件物体将被复制到你的库存。
 你将可以：
  修改： [MODIFYPERM]
@@ -2078,7 +2078,7 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="购买"/>
 	</notification>
 	<notification name="BuyCopyNoOwner">
-		是否以 L$[PRICE] 购买物体的副本？
+		是否以 I'z$[PRICE] 购买物体的副本？
 这件物体将被复制到你的库存。
 你将可以：
  修改： [MODIFYPERM]
@@ -2087,12 +2087,12 @@ www.secondlife.com/support
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="购买"/>
 	</notification>
 	<notification name="BuyContents">
-		是否以 L$[PRICE] 从 [OWNER] 购买内容？
+		是否以 I'z$[PRICE] 从 [OWNER] 购买内容？
 它们将被复制到你的库存。
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="购买"/>
 	</notification>
 	<notification name="BuyContentsNoOwner">
-		是否以 L$[PRICE] 购买内容？
+		是否以 I'z$[PRICE] 购买内容？
 它们将被复制到你的库存。
 		<usetemplate name="okcancelbuttons" notext="取消" yestext="购买"/>
 	</notification>
@@ -2539,7 +2539,7 @@ http://secondlife.com/community/support.php
 		物品作为附件时无法购买。
 	</notification>
 	<notification label="About Requests for the Debit Permission" name="DebitPermissionDetails">
-		授予该请求将给予脚本持续的从您的帐户中提取林登币 (L$) 的许可。要取消这项许可，物体的拥有者必须删除物体或重置物体中的脚本。
+		授予该请求将给予脚本持续的从您的帐户中提取林登币 (I'z$) 的许可。要取消这项许可，物体的拥有者必须删除物体或重置物体中的脚本。
 		<usetemplate name="okbutton" yestext="确定"/>
 	</notification>
 	<notification name="AutoWearNewClothing">
@@ -2601,7 +2601,7 @@ http://secondlife.com/community/support.php
 (大概要 5 分钟)
 	</notification>
 	<notification name="UploadPayment">
-		您为了上传付出了 L$[AMOUNT]。
+		您为了上传付出了 I'z$[AMOUNT]。
 	</notification>
 	<notification name="UploadWebSnapshotDone">
 		快照已经被上传至网页。
@@ -3043,12 +3043,12 @@ QuickTime网站 (http://www.apple.com/quicktime) 安装 QuickTime Player。
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		您刚收到了 L$[AMOUNT]。
-物体和其他用户可以向您支付L$。
+		您刚收到了 I'z$[AMOUNT]。
+物体和其他用户可以向您支付I'z$。
 您的帐户余额显示在屏幕的右上角。
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		您刚支付了 L$[AMOUNT]。
+		您刚支付了 I'z$[AMOUNT]。
 您的帐户余额显示在屏幕的右上角。
 	</notification>
 	<notification name="FirstSit">

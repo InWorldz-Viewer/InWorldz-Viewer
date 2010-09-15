@@ -151,11 +151,11 @@
 			<check_box label="검색 보기" name="search_check"
 			     tool_tip="사람들이 이 오브젝트 검색 결과를 보게 합니다." />
 			<check_box label="판매 여부" name="checkbox for sale" />
-			<text name="Price:  L$">
-				가격:  L$
+			<text name="Price:  I'z$">
+				가격:  I'z$
 			</text>
 			<text name="Cost">
-				가격:  L$
+				가격:  I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -234,13 +234,13 @@
 				권한을 설정하려면 전체 오브젝트를 선택해야 합니다.
 			</text>
 			<string name="Cost Default">
-				가격:           L$
+				가격:           I'z$
 			</string>
 			<string name="Cost Total">
-				총 가격:  L$
+				총 가격:  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				단가:     L$
+				단가:     I'z$
 			</string>
 			<string name="Cost Mixed">
 				혼합 가격
@@ -593,7 +593,7 @@
 	</tab_container>
 	<panel name="land info panel">
 		<text name="label_area_price">
-			가격: [AREA] 제곱 미터 당 L$[PRICE]
+			가격: [AREA] 제곱 미터 당 I'z$[PRICE]
 		</text>
 		<text name="label_area">
 			면적: [AREA]sq. m.

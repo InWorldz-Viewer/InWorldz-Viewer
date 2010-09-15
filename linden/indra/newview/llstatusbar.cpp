@@ -661,7 +661,7 @@ void LLStatusBar::creditBalance(S32 credit)
 void LLStatusBar::setBalance(S32 balance)
 {
 	std::string money_str = LLResMgr::getInstance()->getMonetaryString( balance );
-	std::string balance_str = "L$";
+	std::string balance_str = "I'z$";
 	balance_str += money_str;
 	mTextBalance->setText( balance_str );
 
@@ -927,7 +927,7 @@ BOOL can_afford_transaction(S32 cost)
 }
 
 
-// Implements secondlife:///app/balance/request to request a L$ balance
+// Implements secondlife:///app/balance/request to request a I'z$ balance
 // update via UDP message system. JC
 class LLBalanceHandler : public LLCommandHandler
 {

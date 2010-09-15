@@ -48,5 +48,5 @@ Spróbuj zapisać obraz jako 24 bitową Targa (.tga).
 	</text>
 	<check_box label="Użyj kompresji bez strat" name="lossless_check" />
 	<button label="Anuluj" name="cancel_btn" />
-	<button label="Załaduj ([AMOUNT]L$)" name="ok_btn" />
+	<button label="Załaduj ([AMOUNT]I'z$)" name="ok_btn" />
 </floater>

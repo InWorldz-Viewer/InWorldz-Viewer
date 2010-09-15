@@ -40,8 +40,8 @@
 			<text length="1" name="Not for sale." type="string">
 				No está en venta.
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				Precio: [PRICE] L$ ([PRICE_PER_SQM] L$/m²).
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				Precio: [PRICE] I'z$ ([PRICE_PER_SQM] I'z$/m²).
 			</text>
 			<button label="Vender el terreno..." label_selected="Vender el terreno..." name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -288,7 +288,7 @@ Vaya al menú Mundo &gt; Acerca del terreno o seleccione otra parcela para ver s
 			</text>
 			<check_box label="Seguro (sin daño)" name="check safe" tool_tip="Si se marca, convierte el terreno en &apos;seguro&apos;, desactivando el daño en combate. Si no, se activa el daño en combate."/>
 			<check_box label="Sin &apos;empujones&apos;" name="PushRestrictCheck" tool_tip="Previene scripts que empujen. Marcando esta opción prevendrá que en su terreno haya comportamientos destructivos."/>
-			<check_box label="Mostrar la parcela en Buscar (30 L$/semana) en" name="ShowDirectoryCheck" tool_tip="Let people see this parcel in search results"/>
+			<check_box label="Mostrar la parcela en Buscar (30 I'z$/semana) en" name="ShowDirectoryCheck" tool_tip="Let people see this parcel in search results"/>
 			<string name="search_enabled_tooltip">
 				Permitir que aparezca esta parcela en los resultados de la búsqueda
 			</string>
@@ -504,7 +504,7 @@ música:
 					Grupo
 				</combo_item>
 			</combo_box>
-			<spinner label="Precio en L$:" name="PriceSpin"/>
+			<spinner label="Precio en I'z$:" name="PriceSpin"/>
 			<spinner label="Horas de acceso:" name="HoursSpin"/>
 			<text label="Permitir siempre" name="AllowedText">
 				Residentes autorizados

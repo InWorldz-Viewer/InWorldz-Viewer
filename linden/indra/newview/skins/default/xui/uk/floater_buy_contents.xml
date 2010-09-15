@@ -5,7 +5,7 @@
 	</text>
 	<scroll_list name="item_list" width="310"/>
 	<text name="buy_text" width="320">
-		Купити за L$[AMOUNT] у [NAME]?
+		Купити за I'z$[AMOUNT] у [NAME]?
 	</text>
 	<button label="Відміна" label_selected="Відміна" name="cancel_btn" left="256"/>
 	<button label="Купити" label_selected="Купити" name="buy_btn" />

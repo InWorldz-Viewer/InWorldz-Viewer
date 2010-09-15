@@ -19,6 +19,6 @@
 	<slider label="Efekt Dopplera" name="Doppler Effect" />
 	<slider label="Wpływ Dystansu" name="Distance Factor" />
 	<slider label="Wyciszanie" name="Rolloff Factor" />
-	<spinner label="Próg Zmiany L$" name="L$ Change Threshold" />
+	<spinner label="Próg Zmiany I'z$" name="I'z$ Change Threshold" />
 	<spinner label="Próg Zmiany Statusu" name="Health Change Threshold" />
 </panel>

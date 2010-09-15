@@ -14,7 +14,7 @@
 	<button label="Üzenet" name="im_btn" tool_tip="Azonnali üzenetküldés indítása"/>
 	<button label="Adatlap" name="profile_btn" tool_tip="Kép, csoport és egyéb információk megjelenítése"/>
 	<button label="Teleportál..." name="offer_teleport_btn" tool_tip="Teleportálás felajánlása a te helyszínedre ennek a barátnak"/>
-	<button label="Fizet..." name="pay_btn" tool_tip="Linden dollár (L$) átadása ennek a barátnak"/>
+	<button label="Fizet..." name="pay_btn" tool_tip="Linden dollár (I'z$) átadása ennek a barátnak"/>
 	<button label="Eltávolít..." name="remove_btn" tool_tip="Személy eltávolítása a barátok listája közül"/>
 	<button label="Hozzáad..." name="add_btn" tool_tip="Barátság felajánlása ennek a lakónak"/>
 </panel>

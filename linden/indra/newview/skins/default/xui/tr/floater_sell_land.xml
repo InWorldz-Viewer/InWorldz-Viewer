@@ -22,10 +22,10 @@
 		Bu arazi için uygun ücreti giriniz.
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		([PER_METER] L$/m²)
+		([PER_METER] I'z$/m²)
 	</text>
 	<text name="sell_to_label">
 		Satılacak kişi:

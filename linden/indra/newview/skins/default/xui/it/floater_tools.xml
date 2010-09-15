@@ -128,7 +128,7 @@
 			<check_box label="Mostra nella ricerca" name="search_check" tool_tip="Permetti che l&apos;oggetto sia visibile nella ricerca"/>
 			<check_box label="In vendita" name="checkbox for sale"/>
 			<text name="Cost">
-				Prezzo:  L$
+				Prezzo:  I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -207,13 +207,13 @@
 				Devi selezionare l&apos;intero oggetto per impostare i permessi.
 			</string>
 			<string name="Cost Default">
-				Prezzo:         L$
+				Prezzo:         I'z$
 			</string>
 			<string name="Cost Total">
-				Prezzo totale:  L$
+				Prezzo totale:  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Prezzo per:     L$
+				Prezzo per:     I'z$
 			</string>
 			<string name="Cost Mixed">
 				Prezzo misto
@@ -564,7 +564,7 @@
 			Informazioni sul terreno
 		</text>
 		<text name="label_area_price">
-			Prezzo: [PRICE] L$ per [AREA] m²
+			Prezzo: [PRICE] I'z$ per [AREA] m²
 		</text>
 		<text name="label_area">
 			Area: [AREA] m²

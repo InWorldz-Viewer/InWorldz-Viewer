@@ -25,7 +25,7 @@
 		Område: [AREA] m².
 	</string>
 	<string name="forsale_text">
-		Til salg for L$[PRICE]
+		Til salg for I'z$[PRICE]
 	</string>
 	<string name="auction_text">
 		Auktion ID [ID].

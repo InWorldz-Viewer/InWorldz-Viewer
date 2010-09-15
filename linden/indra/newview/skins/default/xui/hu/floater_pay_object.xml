@@ -21,10 +21,10 @@
 	<text type="string" length="1" name="amount text">
 		Összeg:
 	</text>
-	<button label="L$1" label_selected="L$1" name="fastpay 1" />
-	<button label="5 L$" label_selected="5 L$" name="fastpay 5" />
-	<button label="10 L$" label_selected="10 L$" name="fastpay 10" />
-	<button label="L$20" label_selected="L$20" name="fastpay 20" />
+	<button label="I'z$1" label_selected="I'z$1" name="fastpay 1" />
+	<button label="5 I'z$" label_selected="5 I'z$" name="fastpay 5" />
+	<button label="10 I'z$" label_selected="10 I'z$" name="fastpay 10" />
+	<button label="I'z$20" label_selected="I'z$20" name="fastpay 20" />
 	<button label="Fizet" label_selected="Fizet" name="pay btn" />
 	<button label="Töröl" label_selected="Töröl" name="cancel btn" />
 </floater>

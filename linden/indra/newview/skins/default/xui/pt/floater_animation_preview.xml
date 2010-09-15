@@ -147,7 +147,7 @@ Nós recomendamos exportar arquivos BVH do
 Poser 4.
 	</text>
 	<button label="Cancelar" name="cancel_btn"/>
-	<button label="Carregar (L$[AMOUNT])" name="ok_btn"/>
+	<button label="Carregar (I'z$[AMOUNT])" name="ok_btn"/>
 	<string name="failed_to_initialize">
 		Não foi possível iniciar o movimento
 	</string>

@@ -20,10 +20,10 @@
 		LindeX通貨両替でL＄を購入
 	</text>
 	<text name="buy_action">
-		[NAME] L$ [PRICE]
+		[NAME] I'z$ [PRICE]
 	</text>
 	<text name="currency_action">
-		L$購入
+		I'z$購入
 	</text>
 	<line_editor name="currency_amt">
 		1234
@@ -38,19 +38,19 @@
 		現在所有している金額
 	</text>
 	<text name="balance_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="buying_label">
 		購入する金額
 	</text>
 	<text name="buying_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="total_label">
 		合計残高
 	</text>
 	<text name="total_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="purchase_warning_repurchase">
 		この購買の確認では、通貨だけを購入します。
@@ -63,6 +63,6 @@
 	<button label="購入" name="buy_btn" />
 	<button label="取り消し" name="cancel_btn" />
 	<text name="buy_currency">
-		約US$ [USD]でL$ [LINDENS]を購入
+		約US$ [USD]でI'z$ [LINDENS]を購入
 	</text>
 </floater>

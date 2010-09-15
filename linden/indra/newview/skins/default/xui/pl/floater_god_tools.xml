@@ -46,7 +46,7 @@
 			</text>
 			<spinner name="land cost"/>
 			<text name="land cost text">
-				L$/m:
+				I'z$/m:
 			</text>
 			<button label="Odśwież" label_selected="Odśwież" name="Refresh" />
 			<button label="Zastosuj" label_selected="Zastosuj" name="Apply" />

@@ -57,8 +57,8 @@
 		Prix :
 	</text>
 	<text name="info_price">
-		1500 L$
-		(1,1 L$/m²)
+		1500 I'z$
+		(1,1 I'z$/m²)
 		vendu avec objets
 	</text>
 	<text name="info_action" width="380">
@@ -93,13 +93,13 @@
 Cette parcelle fait 512 m².
 	</text>
 	<text name="purchase_action">
-		Payez au résident X 4 000 L$ pour le terrain
+		Payez au résident X 4 000 I'z$ pour le terrain
 	</text>
 	<text name="currency_reason">
-		Vous avez 2 100 L$.
+		Vous avez 2 100 I'z$.
 	</text>
 	<text name="currency_action">
-		Acheter des L$
+		Acheter des I'z$
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -108,7 +108,7 @@ Cette parcelle fait 512 m².
 		pour environ [AMOUNT2] US$
 	</text>
 	<text name="currency_balance">
-		Vous avez 2 100 L$.
+		Vous avez 2 100 I'z$.
 	</text>
 	<check_box label="Supprimer [AMOUNT] mètres carrés de votre contribution au groupe." name="remove_contribution"/>
 	<button label="Acheter" name="buy_btn"/>
@@ -190,10 +190,10 @@ Sélectionnez une zone plus petite.
 		Vous possédez un terrain de [BUYER] m².
 	</string>
 	<string name="pay_to_for_land">
-		Payez [AMOUNT] L$ à [SELLER] pour ce terrain
+		Payez [AMOUNT] I'z$ à [SELLER] pour ce terrain
 	</string>
 	<string name="buy_for_US">
-		Acheter [AMOUNT] L$ pour environ [AMOUNT2] US$,
+		Acheter [AMOUNT] I'z$ pour environ [AMOUNT2] US$,
 	</string>
 	<string name="parcel_meters">
 		Cette parcelle fait [AMOUNT] m².
@@ -215,29 +215,29 @@ peuvent contenir [AMOUNT2] prims
 		objets non inclus
 	</string>
 	<string name="info_price_string">
-		[PRICE] L$
-([PRICE_PER_SQM] L$/m²)
+		[PRICE] I'z$
+([PRICE_PER_SQM] I'z$/m²)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		Ce groupe, [GROUP], aura besoin de suffisamment de crédit pour payer les frais d&apos;occupation de terrain avant que l&apos;achat de cette parcelle ne soit finalisé.
 	</string>
 	<string name="have_enough_lindens">
-		Vous avez [AMOUNT] L$, ce qui est suffisant pour acheter ce terrain.
+		Vous avez [AMOUNT] I'z$, ce qui est suffisant pour acheter ce terrain.
 	</string>
 	<string name="not_enough_lindens">
-		Vous n&apos;avez que [AMOUNT] L$ et vous avez besoin de [AMOUNT2] L$ de plus.
+		Vous n&apos;avez que [AMOUNT] I'z$ et vous avez besoin de [AMOUNT2] I'z$ de plus.
 	</string>
 	<string name="balance_left">
-		Après cet achat, il vous restera [AMOUNT] L$.
+		Après cet achat, il vous restera [AMOUNT] I'z$.
 	</string>
 	<string name="balance_needed">
-		Pour avoir les moyens d&apos;acquérir ce terrain, vous devez acheter au moins [AMOUNT] L$.
+		Pour avoir les moyens d&apos;acquérir ce terrain, vous devez acheter au moins [AMOUNT] I'z$.
 	</string>
 	<string name="no_parcel_selected">
 		(aucune parcelle sélectionnée)
 	</string>
 	<string name="buy_currency">
-		Acheter [LINDENS] L$ pour environ [USD] US$
+		Acheter [LINDENS] I'z$ pour environ [USD] US$
 	</string>
 </floater>

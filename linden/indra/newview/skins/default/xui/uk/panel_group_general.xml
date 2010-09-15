@@ -28,7 +28,7 @@
 	<text_editor name="charter">
 		Устав Групи
 	</text_editor>
-	<button label="Приєднатися (L$0)" label_selected="Приєднатися (L$0)" name="join_button"/>
+	<button label="Приєднатися (I'z$0)" label_selected="Приєднатися (I'z$0)" name="join_button"/>
 	<button label="Детальний вид" label_selected="Детальний вид" name="info_button"/>
 	<text name="text_owners_and_visible_members">
 		Власник і Видимі учасники
@@ -47,7 +47,7 @@
 	<panel name="preferences_container">
 		<check_box label="Показ. в пошуку" name="show_in_group_list" tool_tip="Дозволити людям бачити цю Групу в результатах пошуку."/>
 		<check_box label="Відкрита реєстрація" name="open_enrollement" tool_tip="В цю групу можна зареєструватися без запрошення."/>
-		<check_box label="Сбір за рег.: L$" name="check_enrollment_fee" tool_tip="Вимагати грошовий сбір за реєстрацію в групу."/>
+		<check_box label="Сбір за рег.: I'z$" name="check_enrollment_fee" tool_tip="Вимагати грошовий сбір за реєстрацію в групу."/>
 		<spinner name="spin_enrollment_fee" tool_tip="Нові учасники повинні будуть оплатити внесок, якщо вказаний &apos;&apos;Внесок за Вступ&apos;&apos;."/>
 		<combo_box name="group_mature_check" tool_tip="Встановлює чи є інформація про Вашу групу mature.">
 			<combo_item name="select_mature">
@@ -73,8 +73,8 @@
 		Отримати дані учасників
 	</string>
 	<string name="confirm_group_create_str">
-		Створення цієї групи буде коштувати L$100. 
-Ви дійсно, дійсно, ДІЙСНО хочете потратить L$100, щоб створити цю групу?
+		Створення цієї групи буде коштувати I'z$100. 
+Ви дійсно, дійсно, ДІЙСНО хочете потратить I'z$100, щоб створити цю групу?
 Пам&apos;ятайте, що якщо протягом 48 годин ніхто не приєднається до Вашої групи, вона буде розформована, і це ім&apos;я стане недоступним для майбутнього використання.
 	</string>
 </panel>

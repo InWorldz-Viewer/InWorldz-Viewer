@@ -221,7 +221,7 @@
 				Не найдено.
 			</string>
 			<string name="land_help_text">
-				Земля может быть куплена напрямую за Линден Доллары (L$) или на аукционе за L$ либо US$.
+				Земля может быть куплена напрямую за Линден Доллары (I'z$) или на аукционе за I'z$ либо US$.
 Чтобы купить напрямую, посетите землю и щелкните на название места в строке заголовка.
 			</string>
 			<text name="find">
@@ -246,7 +246,7 @@
 			</combo_box>
 			<check_box label="Цена &#8804; " name="pricecheck"/>
 			<text left="120" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Площ. &#8805; " name="areacheck"/>
 			<text left="190" name="areacheck_symbol" width="30">
@@ -260,9 +260,9 @@
 				<column label="" name="type"/>
 				<column label="Название" name="name"/>
 				<column label="Тип" name="landtype"/>
-				<column label="L$" name="price"/>
+				<column label="I'z$" name="price"/>
 				<column label="Площ." name="area"/>
-				<column label="L$/м²" name="per_meter"/>
+				<column label="I'z$/м²" name="per_meter"/>
 			</scroll_list>
 			<button label="След. &gt;" label_selected="След. &gt;" name="Next &gt;"/>
 			<button label="&lt; Пред." label_selected="&lt; Пред." name="&lt; Prev"/>

@@ -18,6 +18,6 @@ Streaming:
 	<slider label="Efeito Doppler" name="Doppler Effect"/>
 	<slider label="Fator Distância" name="Distance Factor"/>
 	<slider label="Fator Rolloff" name="Rolloff Factor"/>
-	<spinner label="Mudar nível de alerta de L$" name="L$ Change Threshold" label_width="165" width="229"/>
+	<spinner label="Mudar nível de alerta de I'z$" name="I'z$ Change Threshold" label_width="165" width="229"/>
 	<spinner label="Mudar nível de alerta de Saúde" name="Health Change Threshold" label_width="165" width="229"/>
 </panel>

@@ -7,5 +7,5 @@
 		Description :
 	</text>
 	<button label="Annuler" name="cancel_btn"/>
-	<button label="Importer ([AMOUNT] L$)" name="ok_btn"/>
+	<button label="Importer ([AMOUNT] I'z$)" name="ok_btn"/>
 </floater>

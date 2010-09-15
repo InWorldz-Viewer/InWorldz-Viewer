@@ -82,7 +82,7 @@ void LLGlobalEconomy::processEconomyData(LLMessageSystem *msg, LLGlobalEconomy* 
 	if (fakeprice_str)
 	{
 		S32 fakeprice = (S32)atoi(fakeprice_str);
-		llwarns << "LL_FAKE_UPLOAD_PRICE: Faking upload price as L$" << fakeprice << llendl;
+		llwarns << "LL_FAKE_UPLOAD_PRICE: Faking upload price as I'z$" << fakeprice << llendl;
 		econ_data->setPriceUpload(fakeprice);
 	}
 #endif

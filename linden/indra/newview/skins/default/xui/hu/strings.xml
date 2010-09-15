@@ -82,8 +82,8 @@
 	<string name="TooltipFlagTouch">
 		Érintés
 	</string>
-	<string name="TooltipFlagL$">
-		L$
+	<string name="TooltipFlagI'z$">
+		I'z$
 	</string>
 	<string name="TooltipFlagDropInventory">
 		Elem eldobása
@@ -100,8 +100,8 @@
 	<string name="TooltipFreeToCopy">
 		Szabadon másolható
 	</string>
-	<string name="TooltipForSaleL$">
-		Eladási ár: L$[AMOUNT]
+	<string name="TooltipForSaleI'z$">
+		Eladási ár: I'z$[AMOUNT]
 	</string>
 	<string name="TooltipForSaleMsg">
 		Eladó: [MESSAGE]

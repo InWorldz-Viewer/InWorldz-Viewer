@@ -57,8 +57,8 @@
 		Preis:
 	</text>
 	<text name="info_price">
-		1500 L$
-(L$ 1,1 L$/qm)
+		1500 I'z$
+(I'z$ 1,1 I'z$/qm)
 Objekte im Verkauf eingeschlossen
 	</text>
 	<text name="info_action">
@@ -93,13 +93,13 @@ Objekte im Verkauf eingeschlossen
 Diese Parzelle ist 512 qm groß.
 	</text>
 	<text name="purchase_action">
-		Joe Resident 4000 L$ für das Land bezahlen
+		Joe Resident 4000 I'z$ für das Land bezahlen
 	</text>
 	<text name="currency_reason">
-		Sie haben 2.100 L$.
+		Sie haben 2.100 I'z$.
 	</text>
 	<text name="currency_action">
-		Mehr L$ kaufen
+		Mehr I'z$ kaufen
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -108,7 +108,7 @@ Diese Parzelle ist 512 qm groß.
 		für ca. [AMOUNT2] US$
 	</text>
 	<text name="currency_balance">
-		Sie haben 2.100 L$.
+		Sie haben 2.100 I'z$.
 	</text>
 	<check_box label="[AMOUNT] Quadratmeter des Beitrags von Gruppe nehmen." name="remove_contribution"/>
 	<button label="Kaufen" name="buy_btn"/>
@@ -190,10 +190,10 @@ Verkleinern Sie Ihre Auswahl.
 		Sie besitzen [BUYER] qm Land.
 	</string>
 	<string name="pay_to_for_land">
-		[SELLER] [AMOUNT] L$ für das Land bezahlen
+		[SELLER] [AMOUNT] I'z$ für das Land bezahlen
 	</string>
 	<string name="buy_for_US">
-		[AMOUNT] L$ für circa [AMOUNT2] US$ kaufen,
+		[AMOUNT] I'z$ für circa [AMOUNT2] US$ kaufen,
 	</string>
 	<string name="parcel_meters">
 		Diese Parzelle ist [AMOUNT] qm groß.
@@ -215,29 +215,29 @@ unterstützt [AMOUNT2] Objekte
 		Objekte nicht im Verkauf mit eingeschlossen
 	</string>
 	<string name="info_price_string">
-		[PRICE] L$
-([PRICE_PER_SQM] L$/qm)
+		[PRICE] I'z$
+([PRICE_PER_SQM] I'z$/qm)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		Die Gruppe [GROUP] benötigt ausreichende gespendete Landnutzungsrechte, um die Parzelle abzudecken, bevor der Kauf abgeschlossen werden kann.
 	</string>
 	<string name="have_enough_lindens">
-		Sie haben [AMOUNT] L$, genug zum Kauf dieses Landes.
+		Sie haben [AMOUNT] I'z$, genug zum Kauf dieses Landes.
 	</string>
 	<string name="not_enough_lindens">
-		Sie haben nur [AMOUNT] L$, brauchen aber mindestens [AMOUNT2] L$.
+		Sie haben nur [AMOUNT] I'z$, brauchen aber mindestens [AMOUNT2] I'z$.
 	</string>
 	<string name="balance_left">
-		Nach dem Einkauf verbleiben Ihnen noch [AMOUNT] L$.
+		Nach dem Einkauf verbleiben Ihnen noch [AMOUNT] I'z$.
 	</string>
 	<string name="balance_needed">
-		Für dieses Land müssen Sie mindestens [AMOUNT] L$ kaufen.
+		Für dieses Land müssen Sie mindestens [AMOUNT] I'z$ kaufen.
 	</string>
 	<string name="no_parcel_selected">
 		(keine Parzelle ausgewählt)
 	</string>
 	<string name="buy_currency">
-		[LINDENS] L$ für ca. [USD] US$ kaufen
+		[LINDENS] I'z$ für ca. [USD] US$ kaufen
 	</string>
 </floater>

@@ -40,8 +40,8 @@
 			<text length="1" name="Not for sale." type="string">
 				Ikke til salg.
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				Pris: L$[PRICE] (L$[PRICE_PER_SQM]/m²).
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				Pris: I'z$[PRICE] (I'z$[PRICE_PER_SQM]/m²).
 			</text>
 			<button label="Sælg land..." label_selected="Sælg land..." name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -287,7 +287,7 @@ Gå til &apos;Verden&apos; &gt; &apos;Om land&apos; eller vælg en anden parcel 
 			</text>
 			<check_box label="Sikker (ingen skade)" name="check safe" tool_tip="Hvis valgt, er det ikke muligt at forårsage skade på andre beboere. Hvis fravalgt er det muligt at få skader (f.eks. ved kamp)."/>
 			<check_box label="Skub forbudt" name="PushRestrictCheck" tool_tip="Forhindrer scripts i at skubbe. Valg af denne mulighed, kan være nyttigt for at forhindre forstyrrende adfærd på dit land."/>
-			<check_box label="Vis sted i søgning (L$30/uge) i kategorien:" name="ShowDirectoryCheck" tool_tip="Lad dit parcel blive vist i søge resultaterne"/>
+			<check_box label="Vis sted i søgning (I'z$30/uge) i kategorien:" name="ShowDirectoryCheck" tool_tip="Lad dit parcel blive vist i søge resultaterne"/>
 			<string name="search_enabled_tooltip">
 				Lad beboere se denne parcel i søgeresultater
 			</string>
@@ -498,7 +498,7 @@ web-siden, efter du klikker på play knappen.)
 					Gruppe
 				</combo_item>
 			</combo_box>
-			<spinner label="Pris i L$:" name="PriceSpin"/>
+			<spinner label="Pris i I'z$:" name="PriceSpin"/>
 			<spinner label="Timers adgang:" name="HoursSpin"/>
 			<text label="Tillad altid" name="AllowedText">
 				Altid godkendte beboere

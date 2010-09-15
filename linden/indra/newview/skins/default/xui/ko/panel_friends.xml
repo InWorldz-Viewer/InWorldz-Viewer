@@ -40,7 +40,7 @@
 	<button label="텔레포트..." name="offer_teleport_btn"
 	     tool_tip="친구에게 내 현재 위치로 텔레포트를 제공함"
 	     width="90" />
-	<button label="지불" name="pay_btn" tool_tip="친구에게 린든 달러(L$) 주기"
+	<button label="지불" name="pay_btn" tool_tip="친구에게 린든 달러(I'z$) 주기"
 	     width="90" />
 	<button label="제거" name="remove_btn"
 	     tool_tip="이 사람을 내 친구 목록에서 삭제" width="90" />

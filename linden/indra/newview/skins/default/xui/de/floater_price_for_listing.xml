@@ -10,7 +10,7 @@ desto weiter oben wird die Anzeige in der Liste
 und in Suchergebnissen platziert.
 	</text>
 	<text name="price_text">
-		Anzeigenpreis (L$):
+		Anzeigenpreis (I'z$):
 	</text>
 	<button label="Preis festlegen" name="set_price_btn" />
 	<button label="Abbrechen" name="cancel_btn" />

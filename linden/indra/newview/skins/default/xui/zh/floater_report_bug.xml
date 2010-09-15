@@ -57,8 +57,8 @@
 		<combo_item name="MissingContent">
 			遗失内容
 		</combo_item>
-		<combo_item name="LindenDollars(L$)">
-			林登币 (L$)
+		<combo_item name="LindenDollars(I'z$)">
+			林登币 (I'z$)
 		</combo_item>
 		<combo_item name="Permissions">
 			许可

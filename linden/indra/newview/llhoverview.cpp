@@ -370,7 +370,7 @@ void LLHoverView::updateText()
 
 					if (object->flagTakesMoney() || (parent && parent->flagTakesMoney()) )
 					{
-						line.append(LLTrans::getString("TooltipFlagL$") + " ");
+						line.append(LLTrans::getString("TooltipFlagI'z$") + " ");
 						suppressObjectHoverDisplay = FALSE;		//  Show tip
 					}
 
@@ -399,7 +399,7 @@ void LLHoverView::updateText()
 					mText.push_back(line);
 				}
 
-				// Free to copy / For Sale: L$
+				// Free to copy / For Sale: I'z$
 				line.clear();
 				if (nodep->mValid)
 				{
@@ -417,7 +417,7 @@ void LLHoverView::updateText()
 					{
 						LLStringUtil::format_map_t args;
 						args["[AMOUNT]"] = llformat("%d", nodep->mSaleInfo.getSalePrice());
-						line.append(LLTrans::getString("TooltipForSaleL$", args));
+						line.append(LLTrans::getString("TooltipForSaleI'z$", args));
 						suppressObjectHoverDisplay = FALSE;		//  Show tip
 					}
 					else
@@ -592,7 +592,7 @@ void LLHoverView::updateText()
 		{
 			LLStringUtil::format_map_t args;
 			args["[AMOUNT]"] = llformat("%d", hover_parcel->getSalePrice());
-			line = LLTrans::getString("TooltipForSaleL$", args);
+			line = LLTrans::getString("TooltipForSaleI'z$", args);
 			mText.push_back(line);
 		}
 	}

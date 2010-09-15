@@ -40,8 +40,8 @@
 			<text length="1" name="Not for sale." type="string">
 				非卖状态。
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				价格: L$[PRICE]（L$[PRICE_PER_SQM]/m²）。
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				价格: I'z$[PRICE]（I'z$[PRICE_PER_SQM]/m²）。
 			</text>
 			<button label="出售土地..." label_selected="出售土地..." name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -289,7 +289,7 @@
 			</text>
 			<check_box label="安全 (不会受伤)" name="check safe" tool_tip="如果选中的话，土地设置为安全，禁用格斗伤害。不选中的话，启用格斗伤害。"/>
 			<check_box label="不允许推动" name="PushRestrictCheck" tool_tip="防止脚本进行推动。选中该项也许对防止在您的土地上发生扰乱行为有帮助。llPushObject 将只能通过土地主人的脚本代码运行，或者通过推动源本身是脚本所有者的脚本。"/>
-			<check_box label="显示在搜索中 (L$30/周)，分类为" name="ShowDirectoryCheck" tool_tip="在查询结果中显示该土地"/>
+			<check_box label="显示在搜索中 (I'z$30/周)，分类为" name="ShowDirectoryCheck" tool_tip="在查询结果中显示该土地"/>
 			<string name="search_enabled_tooltip">
 				允许此地块在搜索结果中显示
 			</string>
@@ -500,7 +500,7 @@
 					社团
 				</combo_item>
 			</combo_box>
-			<spinner label="L$ 标价:" name="PriceSpin"/>
+			<spinner label="I'z$ 标价:" name="PriceSpin"/>
 			<spinner label="访问时间:" name="HoursSpin"/>
 			<text label="总是允许" name="AllowedText">
 				被允许的居民

@@ -28,7 +28,7 @@
 		&apos;[OBJECTNAME]&apos;, об&apos;єкт , що належить &apos;[OWNERNAME]&apos;, і знаходиться в [REGIONNAME] at [REGIONPOS], втратив дозволи: [PERMISSIONS].
 	</string>
 	<string name="ScriptTakeMoney">
-		Отримати з Вас Лінден-долари (L$)
+		Отримати з Вас Лінден-долари (I'z$)
 	</string>
 	<string name="ActOnControlInputs">
 		Працювати на Ваших кнопках

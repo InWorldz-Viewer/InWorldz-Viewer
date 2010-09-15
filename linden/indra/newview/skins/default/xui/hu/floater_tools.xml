@@ -127,7 +127,7 @@
 			<check_box label="Keresőben megjelenít" name="search_check" tool_tip="A tárgy megjelenítése a keresési eredmények között"/>
 			<check_box label="Eladó" name="checkbox for sale"/>
 			<text name="Cost">
-				Ár:  L$
+				Ár:  I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -206,13 +206,13 @@
 				Ki kell választani az egész tárgyat a jogosultságok beállításához.
 			</string>
 			<string name="Cost Default">
-				Ár:                L$
+				Ár:                I'z$
 			</string>
 			<string name="Cost Total">
-				Végösszeg:  L$
+				Végösszeg:  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Ár/:     L$
+				Ár/:     I'z$
 			</string>
 			<string name="Cost Mixed">
 				Vegyes ár
@@ -560,7 +560,7 @@
 			Telekinformáció
 		</text>
 		<text name="label_area_price">
-			Ár: [PRICE] L$/[AREA] m².
+			Ár: [PRICE] I'z$/[AREA] m².
 		</text>
 		<text name="label_area">
 			Terület: [AREA] m².

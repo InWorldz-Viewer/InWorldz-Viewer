@@ -40,7 +40,7 @@
 			     bottom_delta="-16" drop_shadow_visible="true" follows="left|top"
 			     font="SansSerifSmall" h_pad="0" halign="left" height="16" left="12"
 			     mouse_opaque="true" name="group_create_text" v_pad="0" width="436">
-				Creating a group costs L$100.
+				Creating a group costs I'z$100.
 			</text>
 			<text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 			     bottom_delta="-32" drop_shadow_visible="true" follows="left|top"

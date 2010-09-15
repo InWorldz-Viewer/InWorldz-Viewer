@@ -57,8 +57,8 @@
 		価格：
 	</text>
 	<text name="info_price">
-		L$ 1500
-		(L$ 1.1/平方メートル)
+		I'z$ 1500
+		(I'z$ 1.1/平方メートル)
 		オブジェクトも土地販売価格に含まれます
 	</text>
 	<text name="info_action">
@@ -93,13 +93,13 @@
 この区画は512平方メートルです。
 	</text>
 	<text name="purchase_action">
-		Joe ResidentにL$4000支払って土地を購入
+		Joe ResidentにI'z$4000支払って土地を購入
 	</text>
 	<text name="currency_reason">
-		所持金は L$2,100です。
+		所持金は I'z$2,100です。
 	</text>
 	<text name="currency_action">
-		追加でL$の購入
+		追加でI'z$の購入
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -108,7 +108,7 @@
 		約US$ [AMOUNT2]
 	</text>
 	<text name="currency_balance">
-		所持金は L$2,100です。
+		所持金は I'z$2,100です。
 	</text>
 	<check_box label="[AMOUNT]平方メートルの貢献面積をグループから取り除く" name="remove_contribution"/>
 	<button label="購入" name="buy_btn"/>
@@ -190,10 +190,10 @@
 		あなたは [BUYER] 平方メートルの土地を所有しています
 	</string>
 	<string name="pay_to_for_land">
-		この土地の代金として、[SELLER]にL$[AMOUNT]を支払う
+		この土地の代金として、[SELLER]にI'z$[AMOUNT]を支払う
 	</string>
 	<string name="buy_for_US">
-		約US$ [AMOUNT2]でL$ [AMOUNT]を購入
+		約US$ [AMOUNT2]でI'z$ [AMOUNT]を購入
 	</string>
 	<string name="parcel_meters">
 		この区画は [AMOUNT] 平方メートルあります
@@ -216,29 +216,29 @@
 		オブジェクトは含まれていません
 	</string>
 	<string name="info_price_string">
-		L$ [PRICE]
-（L$ [PRICE_PER_SQM]/平方メートル）
+		I'z$ [PRICE]
+（I'z$ [PRICE_PER_SQM]/平方メートル）
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
 		この [GROUP] が区画の購入手続きを完了するには、 価格に見合うだけの寄付された土地の利用実績が必要です
 	</string>
 	<string name="have_enough_lindens">
-		あなたの所持する L$ [AMOUNT]で、この土地を購入できます
+		あなたの所持する I'z$ [AMOUNT]で、この土地を購入できます
 	</string>
 	<string name="not_enough_lindens">
-		あなたの所持金は L$ [AMOUNT]だけで、あとL$ [AMOUNT2] 必要です
+		あなたの所持金は I'z$ [AMOUNT]だけで、あとI'z$ [AMOUNT2] 必要です
 	</string>
 	<string name="balance_left">
-		購入後、あなたの残額はL$[AMOUNT]になります
+		購入後、あなたの残額はI'z$[AMOUNT]になります
 	</string>
 	<string name="balance_needed">
-		この土地を買うには、少なくとも L$ [AMOUNT] を購入する必要があります
+		この土地を買うには、少なくとも I'z$ [AMOUNT] を購入する必要があります
 	</string>
 	<string name="no_parcel_selected">
 		(区画が選定されていません)
 	</string>
 	<string name="buy_currency">
-		約US$ [USD]でL$ [LINDENS]を購入
+		約US$ [USD]でI'z$ [LINDENS]を購入
 	</string>
 </floater>

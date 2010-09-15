@@ -10,7 +10,7 @@
 		アップロードするファイル：
 	</text>
 	<button label="取り消し" name="cancel_btn" />
-	<button label="アップロード（L$10）" name="ok_btn" />
+	<button label="アップロード（I'z$10）" name="ok_btn" />
 	<text name="preview_label2">
 		画像プレビュー：
 	</text>

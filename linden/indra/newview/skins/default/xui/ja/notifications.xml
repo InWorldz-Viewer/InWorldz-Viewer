@@ -248,28 +248,28 @@
 それを見た他の住人がそのサイトを訪れることができます。
 	</notification>
 	<notification name="JoinGroupCanAfford">
-		このグループに参加するには、L$[COST]かかります。
+		このグループに参加するには、I'z$[COST]かかります。
 続行しますか？
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="参加"/>
 	</notification>
 	<notification name="JoinGroupCannotAfford">
-		このグループに加入するには、L$[COST]必要です。
-L$が不足しているのでこのグループに参加することができません。
+		このグループに加入するには、I'z$[COST]必要です。
+I'z$が不足しているのでこのグループに参加することができません。
 	</notification>
 	<notification name="LandBuyPass">
-		L$[COST]で [TIME]時間この土地[PARCEL_NAME]に入ることができます。
+		I'z$[COST]で [TIME]時間この土地[PARCEL_NAME]に入ることができます。
 入場許可を購入しますか？
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
 	<notification name="SalePriceRestriction">
 		不特定の人に売却する場合には、
-売却価格はL$0以上に設定する必要があります。
-売却価格をL$0に設定する場合は、
+売却価格はI'z$0以上に設定する必要があります。
+売却価格をI'z$0に設定する場合は、
 売却する個人を選択してください。
 	</notification>
 	<notification name="ConfirmLandSaleChange">
 		選択された[LAND_SIZE]平方メートルの土地は、売り出し中に設定されています。
-売却価格L$[SALE_PRICE]で、[NAME]に売却を認可します。
+売却価格I'z$[SALE_PRICE]で、[NAME]に売却を認可します。
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
 	<notification name="ConfirmLandSaleToAnyoneChange">
@@ -279,7 +279,7 @@ L$が不足しているのでこのグループに参加することができま
 
 選択された[LAND_SIZE]平方メートルの土地は、
 売り出し中に設定されています。
-売却価格L$[SALE_PRICE]で、[NAME]に売却を認可します。
+売却価格I'z$[SALE_PRICE]で、[NAME]に売却を認可します。
 		<usetemplate name="okcancelbuttons" notext="キャンセル" yestext="OK"/>
 	</notification>
 	<notification name="ReturnObjectsDeededToGroup">
@@ -904,7 +904,7 @@ L$が不足しているのでこのグループに参加することができま
 	<notification name="ReleaseLandWarning">
 		あなたは、[AREA]平方メートルの土地を破棄しようとしています。
 この区画を破棄するとあなたの土地ではなくなりますが、
-L$は返金されません。
+I'z$は返金されません。
 
 土地を破棄しますか？
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
@@ -1215,7 +1215,7 @@ F1キーを押してください。
 		<usetemplate name="okcancelbuttons" notext="女性" yestext="男性"/>
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] L$[PRICE] 残高不足のため実行不可です。
+		[NAME] I'z$[PRICE] 残高不足のため実行不可です。
 	</notification>
 	<notification name="GrantedModifyRights">
 		あなたには、
@@ -1351,7 +1351,7 @@ F1キーを押してください。
 	</notification>
 	<notification name="DeedObjectToGroup">
 		このオブジェクトを譲渡するとグループは以下のことが可能です：
-* オブジェクトに支払われたL$を受領します。
+* オブジェクトに支払われたI'z$を受領します。
 		<usetemplate ignoretext="オブジェクトをグループに譲渡するとき" name="okcancelignore" notext="取り消し" yestext="譲渡"/>
 	</notification>
 	<notification name="WebLaunchExternalTarget">
@@ -1696,7 +1696,7 @@ F1キーを押してください。
 	<notification name="PublishClassified">
 		注意：クラシファイド広告の料金は払い戻しされません。
 
-L$[AMOUNT]で、このクラシファイド広告を今すぐ公開しますか？
+I'z$[AMOUNT]で、このクラシファイド広告を今すぐ公開しますか？
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
 	<notification name="SetClassifiedMature">
@@ -2045,7 +2045,7 @@ RGB、256x256で、チャンネル数が13
 単一のオブジェクトを選択し、もう一度試してください。
 	</notification>
 	<notification name="BuyOriginal">
-		オリジナルのオブジェクトを[OWNER]からL$[PRICE]で購入しますか？
+		オリジナルのオブジェクトを[OWNER]からI'z$[PRICE]で購入しますか？
 これにより、あなたがオブジェクトのオーナーになります。
 可能な操作は、
 変更：[MODIFYPERM]、コピー：[COPYPERM]、
@@ -2053,7 +2053,7 @@ RGB、256x256で、チャンネル数が13
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
 	<notification name="BuyOriginalNoOwner">
-		L$[PRICE]でオリジナルのオブジェクトを購入しますか？
+		I'z$[PRICE]でオリジナルのオブジェクトを購入しますか？
 これにより、あなたがオブジェクトのオーナーになります。
 可能な操作は、
 変更：[MODIFYPERM]、コピー：[COPYPERM]、
@@ -2061,21 +2061,21 @@ RGB、256x256で、チャンネル数が13
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopy">
-		コピーを[OWNER]からL$[PRICE]で購入しますか？
+		コピーを[OWNER]からI'z$[PRICE]で購入しますか？
 購入したオブジェクトは、あなたの持ち物にコピーされます。
 可能な操作は、変更：[MODIFYPERM]、コピー：[COPYPERM]、
 再販／プレゼント[RESELLPERM]です。
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopyNoOwner">
-		L$[PRICE]でコピーを購入しますか？
+		I'z$[PRICE]でコピーを購入しますか？
 購入したオブジェクトは、あなたの持ち物にコピーされます。
 可能な操作は、変更：[MODIFYPERM]、コピー：[COPYPERM]、
 再販／プレゼント[RESELLPERM]です。
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
 	<notification name="BuyContents">
-		コンテンツを[OWNER]からL$[PRICE]で購入しますか？
+		コンテンツを[OWNER]からI'z$[PRICE]で購入しますか？
 購入したコンテンツは、あなたの持ち物にコピーされます。
 		<usetemplate name="okcancelbuttons" notext="取り消し" yestext="OK"/>
 	</notification>
@@ -2635,7 +2635,7 @@ Linden Lab
 （所要時間：約5分）
 	</notification>
 	<notification name="UploadPayment">
-		アップロードに L$[AMOUNT] 支払いました。
+		アップロードに I'z$[AMOUNT] 支払いました。
 	</notification>
 	<notification name="UploadWebSnapshotDone">
 		Webサイトのスナップショットがアップロードされました。
@@ -3093,12 +3093,12 @@ Linden Lab
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		L$[AMOUNT]を受け取りました。
+		I'z$[AMOUNT]を受け取りました。
 オブジェクトおよび他のユーザーがあなたにお金を支払ったようです。
 あなたの残高は画面の右上に表示されて います。
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		L$[AMOUNT]を支払いました。
+		I'z$[AMOUNT]を支払いました。
 あなたの残高は画面の右上に表示されて います。
 	</notification>
 	<notification name="FirstSit">

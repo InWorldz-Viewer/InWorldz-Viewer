@@ -221,7 +221,7 @@
 				Ninguno encontrado.
 			</string>
 			<string name="land_help_text">
-				El terreno puede comprarse directamente con dólares Linden (L$), o con L$ o US$ en una
+				El terreno puede comprarse directamente con dólares Linden (I'z$), o con I'z$ o US$ en una
 subasta. Para comprarlo directamente, visítelo y pulse su nombre en la barra superior del visor.
 			</string>
 			<text name="find">
@@ -246,7 +246,7 @@ subasta. Para comprarlo directamente, visítelo y pulse su nombre en la barra su
 			</combo_box>
 			<check_box label="Precio &#8804; " name="pricecheck"/>
 			<text  left="191" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Superficie &#8805; " name="areacheck" width="100"/>
 			<text left="191" name="areacheck_symbol">
@@ -260,9 +260,9 @@ subasta. Para comprarlo directamente, visítelo y pulse su nombre en la barra su
 				<column label="" name="type"/>
 				<column label="Nombre" name="name"/>
 				<column label="Tipo" name="landtype"/>
-				<column label="Precio L$" name="price"/>
+				<column label="Precio I'z$" name="price"/>
 				<column label="Superficie" name="area"/>
-				<column label="L$/m²" name="per_meter"/>
+				<column label="I'z$/m²" name="per_meter"/>
 			</scroll_list>
 			<button label="Siguiente &gt;" label_selected="Siguiente &gt;" name="Next &gt;"/>
 			<button label="&lt; Anterior" label_selected="&lt; Anterior" name="&lt; Prev"/>

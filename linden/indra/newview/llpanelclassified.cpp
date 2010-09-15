@@ -71,7 +71,7 @@
 #include "llviewerwindow.h"	// for window width, height
 #include "llappviewer.h"	// abortQuit()
 
-const S32 MINIMUM_PRICE_FOR_LISTING = 50;	// L$
+const S32 MINIMUM_PRICE_FOR_LISTING = 50;	// I'z$
 const S32 MATURE_UNDEFINED = -1;
 const S32 MATURE_CONTENT = 1;
 const S32 PG_CONTENT = 2;

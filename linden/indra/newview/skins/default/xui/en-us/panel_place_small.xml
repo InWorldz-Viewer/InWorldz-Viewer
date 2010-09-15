@@ -43,7 +43,7 @@
 		Area: [AREA] m². 
 	</string>
 	<string name="forsale_text">
-		For Sale for L$[PRICE]
+		For Sale for I'z$[PRICE]
 	</string>
 	<string name="auction_text">
 		Auction ID [ID].

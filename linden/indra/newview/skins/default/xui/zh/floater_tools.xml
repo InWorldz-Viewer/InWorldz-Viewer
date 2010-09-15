@@ -127,7 +127,7 @@
 			<check_box label="在搜索中显示" name="search_check" tool_tip="让别人可以在搜索结果中看到这件物体。"/>
 			<check_box label="出售" name="checkbox for sale"/>
 			<text name="Cost">
-				价格:   L$
+				价格:   I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -206,13 +206,13 @@
 				必须选择一个完整的物体来设置许可。
 			</string>
 			<string name="Cost Default">
-				价格:      L$
+				价格:      I'z$
 			</string>
 			<string name="Cost Total">
-				总价格:     L$
+				总价格:     I'z$
 			</string>
 			<string name="Cost Per Unit">
-				每个的价格:  L$
+				每个的价格:  I'z$
 			</string>
 			<string name="Cost Mixed">
 				混合价格
@@ -560,7 +560,7 @@
 			土地信息
 		</text>
 		<text name="label_area_price">
-			价格: L$[PRICE] 每 [AREA]平方米.
+			价格: I'z$[PRICE] 每 [AREA]平方米.
 		</text>
 		<text name="label_area">
 			面积: [AREA] 平方米.

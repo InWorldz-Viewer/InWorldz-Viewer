@@ -249,7 +249,7 @@
 			<check_box label="가격 &#8804; " name="pricecheck" />
 			<check_box label="면적 &#8805; " name="areacheck" />
 			<text name="pricecheck_symbol" >
-				L$
+				I'z$
 			</text>
 			<text name="areacheck_symbol" >
 				m²
@@ -258,16 +258,16 @@
 			<line_editor name="areaedit" />
 			<button label="검색" label_selected="검색" name="Search" />
 			<text name="land">
-				토지는 L$로 직접 구매하거나, L$ 혹은 US$로 경매하여 구매할 수 있습니다.
+				토지는 I'z$로 직접 구매하거나, I'z$ 혹은 US$로 경매하여 구매할 수 있습니다.
 직접 구매하려면, 토지를 방문하여 타이틀 바에 있는 장소 이름을 클릭하십시오!
 			</text>
 			<scroll_list name="results">
 				<column label="" name="icon" />
 				<column label="" name="type" />
 				<column label="이름" name="name" />
-				<column label="L$ 가격" name="price" />
+				<column label="I'z$ 가격" name="price" />
 				<column label="면적" name="area" />
-				<column label="L$/m²" name="per_meter" />
+				<column label="I'z$/m²" name="per_meter" />
 			</scroll_list>
 		</panel>
 		<panel label="장소" name="places_panel">
@@ -398,7 +398,7 @@
 				<column label="시간" name="time" />
 				<column label="통행량" name="dwell" />
 				<column label="면적" name="area" />
-				<column label="L$/sq.m" name="per_meter" />
+				<column label="I'z$/sq.m" name="per_meter" />
 				<column label="온라인" name="online" />
 				<column label="회원" name="members" />
 			</scroll_list>

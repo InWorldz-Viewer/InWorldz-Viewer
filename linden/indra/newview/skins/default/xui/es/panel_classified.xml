@@ -20,7 +20,7 @@
 	<combo_box label="" name="classified_category_combo"/>
 	<button label="Actualizar" name="classified_update_btn"/>
 	<string name="ad_placed_paid">
-		Anuncio colocado: [DATE], pagados [AMT] L$ por su listado.
+		Anuncio colocado: [DATE], pagados [AMT] I'z$ por su listado.
 	</string>
 	<string name="update_txt">
 		Actualizar

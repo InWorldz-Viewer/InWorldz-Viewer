@@ -206,7 +206,7 @@
 				Nada foi encontrado.
 			</string>
 			<string name="land_help_text">
-				Terra pode ser comprada direto por Linden dólares (L$) ou em leilão por ambos L$ ou US$.
+				Terra pode ser comprada direto por Linden dólares (I'z$) ou em leilão por ambos I'z$ ou US$.
 Para comprar direto, visite a terra e clique no nome do lugar, na barra de título.
 			</string>
 			<text name="find" width="60">
@@ -231,7 +231,7 @@ Para comprar direto, visite a terra e clique no nome do lugar, na barra de títu
 			</combo_box>
 			<check_box left="66" label="Preço &#8804; " name="pricecheck"/>
 			<text left="186" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box left="66" label="Área &#8805; " name="areacheck"/>
 			<text left="186" name="areacheck_symbol">
@@ -243,9 +243,9 @@ Para comprar direto, visite a terra e clique no nome do lugar, na barra de títu
 			<scroll_list name="results">
 				<column label="Nome" name="name"/>
 				<column label="Tipo" name="landtype" width="50"/>
-				<column label="Preço L$" name="price" width="70"/>
+				<column label="Preço I'z$" name="price" width="70"/>
 				<column label="Área" name="area" width="50"/>
-				<column label="L$/m²" name="per_meter" width="65"/>
+				<column label="I'z$/m²" name="per_meter" width="65"/>
 			</scroll_list>
 			<button label="Próximo &gt;" label_selected="Próximo &gt;" name="Next &gt;"/>
 			<button label="&lt; Anterior" label_selected="&lt; Anterior" name="&lt; Prev"/>

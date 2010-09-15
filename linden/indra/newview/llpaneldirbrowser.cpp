@@ -1081,7 +1081,7 @@ void LLPanelDirBrowser::processDirLandReply(LLMessageSystem *msg, void**)
 			{
 				price_per_meter = 0.f;
 			}
-			// Prices are usually L$1 - L$10 / meter
+			// Prices are usually I'z$1 - I'z$10 / meter
 			buffer = llformat("%.1f", price_per_meter);
 			row["columns"][5]["column"] = "per_meter";
 			row["columns"][5]["value"] = buffer;
@@ -1089,7 +1089,7 @@ void LLPanelDirBrowser::processDirLandReply(LLMessageSystem *msg, void**)
 		}
 		else
 		{
-			// Auctions start at L$1 per meter
+			// Auctions start at I'z$1 per meter
 			row["columns"][5]["column"] = "per_meter";
 			row["columns"][5]["value"] = "1.0";
 			row["columns"][5]["font"] = "SANSSERIFSMALL";

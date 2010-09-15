@@ -22,10 +22,10 @@
 		Установіть ціну цієї землі:
 	</text>
 	<text name="price_ld">
-		L$
+		I'z$
 	</text>
 	<text name="price_per_m">
-		(L$[PER_METER] за кв.м)
+		(I'z$[PER_METER] за кв.м)
 	</text>
 	<text name="sell_to_label">
 		Продати землю:

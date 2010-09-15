@@ -26,7 +26,7 @@
 	<text_editor name="charter">
 		社团宪章
 	</text_editor>
-	<button label="加入(L$0)" label_selected="加入(L$0)" name="join_button"/>
+	<button label="加入(I'z$0)" label_selected="加入(I'z$0)" name="join_button"/>
 	<button label="详细视图" label_selected="详细察看" name="info_button"/>
 	<text name="text_owners_and_visible_members">
 		拥有者和可见的会员
@@ -45,7 +45,7 @@
 	<panel name="preferences_container">
 		<check_box label="在搜索中显示" name="show_in_group_list" tool_tip="让别人在搜索结果中看到这个社团。"/>
 		<check_box label="公开注册" name="open_enrollement" tool_tip="设置该社团是否允许新会员加入而不需要被邀请。"/>
-		<check_box label="注册费用: L$" name="check_enrollment_fee" tool_tip="设定是否收将取社团入会费。"/>
+		<check_box label="注册费用: I'z$" name="check_enrollment_fee" tool_tip="设定是否收将取社团入会费。"/>
 		<spinner name="spin_enrollment_fee" tool_tip="如果选择了注册费用的话，新会员加入社团时必须付出这笔费用。"/>
 		<combo_box name="group_mature_check" tool_tip="设置是否应将社团信息看作Mature内容。">
 			<combo_item name="select_mature">
@@ -71,8 +71,8 @@
 		重新获取会员信息
 	</string>
 	<string name="confirm_group_create_str">
-		创建这个社团将花费L$100. 
-你真的，真的，真----的----确定要花费L$100来创建这个社团吗?
+		创建这个社团将花费I'z$100. 
+你真的，真的，真----的----确定要花费I'z$100来创建这个社团吗?
 请注意如果没有别人在48小时内加入该社团，它将会被解散，并且这个社团名字将来将不能使用。
 	</string>
 </panel>

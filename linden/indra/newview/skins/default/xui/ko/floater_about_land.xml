@@ -31,8 +31,8 @@
 			<text type="string" length="1" name="Not for sale.">
 				비매용
 			</text>
-			<text type="string" length="1" name="For Sale: Price L$[PRICE].">
-				가격: L$[PRICE] ([PRICE_PER_SQM]L$/제곱미터).
+			<text type="string" length="1" name="For Sale: Price I'z$[PRICE].">
+				가격: I'z$[PRICE] ([PRICE_PER_SQM]I'z$/제곱미터).
 			</text>
 			<button label="토지 판매" label_selected="토지 판매" name="Sell Land..." />
 			<text type="string" length="1" name="For sale to">
@@ -274,7 +274,7 @@
 			<check_box label="안전(데미지 없음)" name="check safe" />
 			<check_box label="밀기 한정" name="PushRestrictCheck"
 			     tool_tip="llPushObject기능은 구획 소유주 스크립트이거나 기능 구현자가 스크립트 소유자인 경우에만 작동합니다." />
-			<check_box label="장소 검색(L$30/주) 표시 위치" name="ShowDirectoryCheck"
+			<check_box label="장소 검색(I'z$30/주) 표시 위치" name="ShowDirectoryCheck"
 			     tool_tip="사람들이 이 구획 검색 결과를 봅니다." />
 			<combo_box name="land category">
 				<combo_item name="AnyCategory">
@@ -480,7 +480,7 @@
 			<button label="제거" label_selected="제거" name="Remove" />
 			<check_box label="접근 허용 대상:" name="PassCheck"
 			     tool_tip="이 구획에 대한 임시 통행권 부여" />
-			<spinner label="가격 (L$):" name="PriceSpin" />
+			<spinner label="가격 (I'z$):" name="PriceSpin" />
 			<spinner label="사용시간:" name="HoursSpin" />
 			<name_list name="BannedList" tool_tip="([LISTED] 목록에 있음, [MAX] 최대)" />
 			<button label="추가" label_selected="추가" name="add_banned" />

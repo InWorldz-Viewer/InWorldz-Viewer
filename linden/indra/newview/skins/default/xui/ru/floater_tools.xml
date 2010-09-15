@@ -127,7 +127,7 @@
 			<check_box label="Показывать в поиске" name="search_check" tool_tip="Позволяет людям видеть объект в результатах поиска"/>
 			<check_box label="Для продажи" name="checkbox for sale"/>
 			<text name="Cost" left_delta="110" width="78">
-				Цена:  L$
+				Цена:  I'z$
 			</text>
 			<line_editor left_delta="80" name="Edit Cost" width="55" />
 			<radio_group name="sale type">
@@ -207,13 +207,13 @@
 				Нужно выделить весь объект для установки прав.
 			</string>
 			<string name="Cost Default">
-				Цена:           L$
+				Цена:           I'z$
 			</string>
 			<string name="Cost Total">
-				Общая цена:  L$
+				Общая цена:  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Цена за:     L$
+				Цена за:     I'z$
 			</string>
 			<string name="Cost Mixed">
 				Смешанная Цена
@@ -566,7 +566,7 @@
 			Информация об участке
 		</text>
 		<text name="label_area_price">
-			Цена: L$[PRICE] за [AREA] кв. м
+			Цена: I'z$[PRICE] за [AREA] кв. м
 		</text>
 		<text name="label_area">
 			Площадь: [AREA] кв. м.

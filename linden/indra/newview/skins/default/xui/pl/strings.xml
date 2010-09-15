@@ -82,8 +82,8 @@
 	<string name="TooltipFlagTouch">
 		Dotyk
 	</string>
-	<string name="TooltipFlagL$">
-		L$
+	<string name="TooltipFlagI'z$">
+		I'z$
 	</string>
 	<string name="TooltipFlagDropInventory">
 		Usuń z Szafy
@@ -100,8 +100,8 @@
 	<string name="TooltipFreeToCopy">
 		Za darmo
 	</string>
-	<string name="TooltipForSaleL$">
-		Na Sprzedaż: L$[AMOUNT]
+	<string name="TooltipForSaleI'z$">
+		Na Sprzedaż: I'z$[AMOUNT]
 	</string>
 	<string name="TooltipForSaleMsg">
 		Na Sprzedaż: [MESSAGE]

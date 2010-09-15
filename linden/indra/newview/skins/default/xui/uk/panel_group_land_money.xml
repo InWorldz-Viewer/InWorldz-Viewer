@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<panel label="Земля &amp; L$" name="land_money_tab">
+<panel label="Земля &amp; I'z$" name="land_money_tab">
 	<string name="help_text">
 		Ділянки, якими володіє група, вказані разом з деталями вкладу. Якщо у користуванні знаходиться меньша або рівна Загальному Вкладу кількість Всієї землі, з&apos;явиться попередження. Вкладки Планування, Деталі і Продаж надають інформацію про фінанси групи.
 	</string>
@@ -55,7 +55,7 @@
 		Учасники групи мають внести більше внесків для підтримки землі.
 	</text>
 	<text name="group_money_heading">
-		L$ групи
+		I'z$ групи
 	</text>
 	<tab_container name="group_money_tab_container">
 		<panel label="Планування" name="group_money_planning_tab">

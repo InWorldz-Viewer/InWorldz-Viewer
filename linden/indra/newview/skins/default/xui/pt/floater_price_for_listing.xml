@@ -9,7 +9,7 @@ O anúncio de maior valor pago aparecerá no topo da
 lista e aparece em primeiro nas buscas.
 	</text>
 	<text name="price_text" width="146">
-		Preço por Anúncio (L$):
+		Preço por Anúncio (I'z$):
 	</text>
 	<line_editor left="146" name="price_edit" />
 	<button label="Ajustar Preço" name="set_price_btn"/>

@@ -8,7 +8,7 @@
 			Enviar por email
 		</radio_item>
 		<radio_item name="texture">
-			Salvar no seu inventário (L$[AMOUNT])
+			Salvar no seu inventário (I'z$[AMOUNT])
 		</radio_item>
 		<radio_item name="local">
 			Salvar no seu disco rígido
@@ -19,7 +19,7 @@
 	</text>
 	<button label="Atualizar a foto" name="new_snapshot_btn"/>
 	<button label="Enviar" name="send_btn"/>
-	<button label="Salvar (L$[AMOUNT])" name="upload_btn"/>
+	<button label="Salvar (I'z$[AMOUNT])" name="upload_btn"/>
 	<flyout_button label="Salvar" name="save_btn" tool_tip="Salvar imagem em um arquivo">
 		<flyout_button_item name="save_item">
 			Salvar

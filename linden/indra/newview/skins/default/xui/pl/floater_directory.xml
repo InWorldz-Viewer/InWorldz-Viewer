@@ -221,7 +221,7 @@
 				Nie znaleziono
 			</string>
 			<string name="land_help_text">
-				Posiadłość może zostać zakupiona bezpośrednio za Linden Dollars (L$) lub w jednej z aukcji zarówno w walucie L$ lub US$.
+				Posiadłość może zostać zakupiona bezpośrednio za Linden Dollars (I'z$) lub w jednej z aukcji zarówno w walucie I'z$ lub US$.
 By zakupić posiadłość bezpośrednio, odwiedź ją oraz kliknij na nazwę posiadłości w górnym pasku widokowym.
 			</string>
 			<text name="find">
@@ -246,7 +246,7 @@ By zakupić posiadłość bezpośrednio, odwiedź ją oraz kliknij na nazwę pos
 			</combo_box>
 			<check_box label="Cena &#8804; " name="pricecheck"/>
 			<text left="186" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Obszar &#8805; " name="areacheck"/>
 			<text left="186" name="areacheck_symbol">
@@ -260,9 +260,9 @@ By zakupić posiadłość bezpośrednio, odwiedź ją oraz kliknij na nazwę pos
 				<column label="" name="type"/>
 				<column label="Nazwa" name="name"/>
 				<column label="Typ" name="landtype"/>
-				<column label="Cena L$" name="price"/>
+				<column label="Cena I'z$" name="price"/>
 				<column label="m²" name="area"/>
-				<column label="L$/m²" name="per_meter"/>
+				<column label="I'z$/m²" name="per_meter"/>
 			</scroll_list>
 			<button label="Do Przodu &gt;" label_selected="Do Przodu &gt;" name="Next &gt;"/>
 			<button label="&lt; Do Tyłu" label_selected="&lt; Do Tyłu" name="&lt; Prev"/>

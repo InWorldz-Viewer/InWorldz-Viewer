@@ -28,7 +28,7 @@ Helyezd az egeret a beállítások fölé a további segítségért.
 	<text_editor name="charter">
 		Csoport jele
 	</text_editor>
-	<button label="Belép (0 L$)" label_selected="Belép (0 L$)" name="join_button"/>
+	<button label="Belép (0 I'z$)" label_selected="Belép (0 I'z$)" name="join_button"/>
 	<button label="Részletes nézet" label_selected="Részletes nézet" name="info_button"/>
 	<text name="text_owners_and_visible_members">
 		Tulajdonosok és látható tagok
@@ -47,7 +47,7 @@ Helyezd az egeret a beállítások fölé a további segítségért.
 	<panel name="preferences_container">
 		<check_box label="Keresőben megjelenít" name="show_in_group_list" tool_tip="Csoport megjelenítése a keresési eredmények között."/>
 		<check_box label="Nyitott tagság" name="open_enrollement" tool_tip="Meghívás nélkül is be lehet lépni a csoportba."/>
-		<check_box label="Tagsági díj: L$" name="check_enrollment_fee" tool_tip="Csoporttagsághoz szükséges díj beállítása."/>
+		<check_box label="Tagsági díj: I'z$" name="check_enrollment_fee" tool_tip="Csoporttagsághoz szükséges díj beállítása."/>
 		<spinner name="spin_enrollment_fee" tool_tip="Az új tagoknak ezt a díjat kell belépéskor megfizetniük, amennyiben ez be van jelölve."/>
 		<combo_box name="group_mature_check" tool_tip="Csoport információk beállítása felnőtt tartalomként." width="136">
 			<combo_item name="select_mature">
@@ -73,7 +73,7 @@ Helyezd az egeret a beállítások fölé a további segítségért.
 		Csoporttag információk betöltése
 	</string>
 	<string name="confirm_group_create_str">
-		Csoport létrehozásának díja 100 L$. 
+		Csoport létrehozásának díja 100 I'z$. 
 Valóban létre szeretnéd hozni a csoportot?
 	</string>
 </panel>

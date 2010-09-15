@@ -40,8 +40,8 @@
 			<text length="1" name="Not for sale." type="string">
 				Nem
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				Ár: [PRICE] L$ ([PRICE_PER_SQM] L$/m²).
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				Ár: [PRICE] I'z$ ([PRICE_PER_SQM] I'z$/m²).
 			</text>
 			<button label="Föld eladása" label_selected="Föld eladása" name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -289,7 +289,7 @@ oszthatók fel.
 			</text>
 			<check_box label="Biztonságos (nincs kár)" name="check safe" tool_tip="Ha ez bejelölésre került, akkor a föld biztonságos és mentesül a károkozásoktól. Amennyiben nem, akkor lehetséges a károkozás."/>
 			<check_box label="Lökés tiltása" name="PushRestrictCheck" tool_tip="Scriptek megóvása az ütközésektől. Ennek a funkciónak bekapcsolásával megakadályozhatók a telekkel kapcsolatos károkozások."/>
-			<check_box label="Helyszín megjelenítése a keresőben (30L$/hét)" name="ShowDirectoryCheck" tool_tip="Telek megjelenítése a keresőben."/>
+			<check_box label="Helyszín megjelenítése a keresőben (30I'z$/hét)" name="ShowDirectoryCheck" tool_tip="Telek megjelenítése a keresőben."/>
 			<string name="search_enabled_tooltip">
 				Föld nevének a keresési eredmények közötti megjelenítése
 			</string>
@@ -502,7 +502,7 @@ beállítások:
 					Csoport
 				</combo_item>
 			</combo_box>
-			<spinner label="Ár (L$):" name="PriceSpin"/>
+			<spinner label="Ár (I'z$):" name="PriceSpin"/>
 			<spinner label="Időtartam (óra):" name="HoursSpin"/>
 			<text label="Mindig engedélyez" name="AllowedText">
 				Engedélyezett lakók

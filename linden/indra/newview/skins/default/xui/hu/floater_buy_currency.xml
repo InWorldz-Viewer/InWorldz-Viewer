@@ -17,13 +17,13 @@
 		Kapcoslatfelvétel a LindeX-en...
 	</text>
 	<text name="buy_action_unknown">
-		L$ vásárlása LindeX-en keresztül
+		I'z$ vásárlása LindeX-en keresztül
 	</text>
 	<text name="buy_action">
-		[NAME] L$ [PRICE]
+		[NAME] I'z$ [PRICE]
 	</text>
 	<text name="currency_action">
-		L$ vásárlása
+		I'z$ vásárlása
 	</text>
 	<line_editor name="currency_amt">
 		1234
@@ -38,19 +38,19 @@
 		Jelenleg van:
 	</text>
 	<text name="balance_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="buying_label">
 		Pénz vásárlása:
 	</text>
 	<text name="buying_amount">
-		L$ [AMT]
+		I'z$ [AMT]
 	</text>
 	<text name="total_label">
 		Egyenleged:
 	</text>
 	<text name="total_amount">
-		[AMT] L$
+		[AMT] I'z$
 	</text>
 	<text name="purchase_warning_repurchase">
 		A vásárlás jóváhagyásával csak pénzt veszel.
@@ -63,6 +63,6 @@ Próbáld újra a tranzakciót.
 	<button label="Mégsem" name="cancel_btn" />
 	<button label="Vásárlás" name="buy_btn" />
 	<text name="buy_currency">
-		[LINDENS] L$ vásárlása kb. [USD] US$-ért.
+		[LINDENS] I'z$ vásárlása kb. [USD] US$-ért.
 	</text>
 </floater>

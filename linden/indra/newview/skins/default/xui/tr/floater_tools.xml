@@ -127,7 +127,7 @@
 			<check_box label="Aramada göster" name="search_check" tool_tip="İnsanların bu objeyi arama sonuçlarında görmelerine izin verin"/>
 			<check_box label="Satılık" name="checkbox for sale"/>
 			<text name="Cost">
-				Ücret:  L$
+				Ücret:  I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -206,13 +206,13 @@
 				İzinlerini düzenlemek için tüm obje seçilmelidir.
 			</string>
 			<string name="Cost Default">
-				Ücret:           L$
+				Ücret:           I'z$
 			</string>
 			<string name="Cost Total">
-				Toplam ücret:  L$
+				Toplam ücret:  I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Birim ücreti:     L$
+				Birim ücreti:     I'z$
 			</string>
 		</panel>
 		<panel label="Obje" name="Object">
@@ -511,7 +511,7 @@
 			Parsel bilgisi
 		</text>
 		<text name="label_area_price">
-			Ücret: [AREA] m² için [PRICE]L$
+			Ücret: [AREA] m² için [PRICE]I'z$
 		</text>
 		<text name="label_area">
 			Alan: [AREA] m²

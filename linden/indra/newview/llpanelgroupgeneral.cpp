@@ -730,7 +730,7 @@ void LLPanelGroupGeneral::update(LLGroupChange gc)
 
 		if ( visible )
 		{
-			fee_buff = llformat( "Join (L$%d)", gdatap->mMembershipFee);
+			fee_buff = llformat( "Join (I'z$%d)", gdatap->mMembershipFee);
 			mBtnJoinGroup->setLabelSelected(fee_buff);
 			mBtnJoinGroup->setLabelUnselected(fee_buff);
 		}

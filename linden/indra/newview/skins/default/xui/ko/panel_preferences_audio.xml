@@ -36,7 +36,7 @@
 	<slider label="도플러 효과" name="Doppler Effect" />
 	<slider label="거리 요인" name="Distance Factor" />
 	<slider label="롤오프 요인" name="Rolloff Factor" />
-	<spinner label="L$ 변화 알림" name="L$ Change Threshold" />
+	<spinner label="I'z$ 변화 알림" name="I'z$ Change Threshold" />
 	<spinner label="건강변화 알림" name="Health Change Threshold" />
 	<text type="string" length="1" name="doppler_effect_text">
 		오디오 환경 설정:

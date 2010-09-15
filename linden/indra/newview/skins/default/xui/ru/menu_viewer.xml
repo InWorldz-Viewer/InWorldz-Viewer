@@ -3,10 +3,10 @@
 	<menu label="Файл" name="File">
 		<tearoff_menu label="~~~~~~~~~~~" name="~~~~~~~~~~~"/>
 		<menu label="Загрузить" name="upload">
-			<menu_item_call label="Изображение (L$[COST])..." name="Upload Image"/>
-			<menu_item_call label="Звук (L$[COST])..." name="Upload Sound"/>
-			<menu_item_call label="Анимация (L$[COST])..." name="Upload Animation"/>
-			<menu_item_call label="Комплект (L$[COST] за файл)..." name="Bulk Upload"/>
+			<menu_item_call label="Изображение (I'z$[COST])..." name="Upload Image"/>
+			<menu_item_call label="Звук (I'z$[COST])..." name="Upload Sound"/>
+			<menu_item_call label="Анимация (I'z$[COST])..." name="Upload Animation"/>
+			<menu_item_call label="Комплект (I'z$[COST] за файл)..." name="Bulk Upload"/>
 			<menu_item_separator label="-----------" name="separator"/>
 			<menu_item_call label="Установить права по умолчанию..." name="perm prefs"/>
 		</menu>
@@ -121,7 +121,7 @@
 		<menu_item_separator label="-----------" name="separator4"/>
 		<menu_item_call label="История аккаунта..." name="Account History..."/>
 		<menu_item_call label="Управление аккаунтом..." name="Manage My Account..."/>
-		<menu_item_call label="Купить L$..." name="Buy and Sell L$..."/>
+		<menu_item_call label="Купить I'z$..." name="Buy and Sell I'z$..."/>
 		<menu_item_separator label="-----------" name="separator5"/>
 		<menu_item_call label="Моя земля..." name="My Land..."/>
 		<menu_item_call label="О земле..." name="About Land..."/>

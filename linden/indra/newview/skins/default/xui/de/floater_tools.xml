@@ -127,7 +127,7 @@
 			<check_box label="In Suche anzeigen" left="6" name="search_check" tool_tip="Dieses Objekt in Suchergebnissen anzeigen"/>
 			<check_box label="Zu verkaufen" left="6" name="checkbox for sale"/>
 			<text name="Cost">
-				Preis:L$
+				Preis:I'z$
 			</text>
 			<radio_group name="sale type">
 				<radio_item name="Original">
@@ -206,13 +206,13 @@
 				Gesamtes Objekt muss gewählt werden, um Berechtigungen festzulegen.
 			</string>
 			<string name="Cost Default">
-				Preis:L$
+				Preis:I'z$
 			</string>
 			<string name="Cost Total">
-				Summe:L$
+				Summe:I'z$
 			</string>
 			<string name="Cost Per Unit">
-				Stückpreis:L$
+				Stückpreis:I'z$
 			</string>
 			<string name="Cost Mixed">
 				Mischpreis
@@ -564,7 +564,7 @@ Primitiv" name="sculpt texture control" tool_tip="Klicken Sie hier, um ein Bild 
 			Parzelleninformation
 		</text>
 		<text name="label_area_price">
-			Preis: L$ [PRICE] für [AREA] m2.
+			Preis: I'z$ [PRICE] für [AREA] m2.
 		</text>
 		<text name="label_area">
 			Fläche: [AREA] m2

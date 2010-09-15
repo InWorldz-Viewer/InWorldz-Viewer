@@ -4,7 +4,7 @@
 		[NAME] tartalma:
 	</text>
 	<text name="buy_text">
-		[AMOUNT] L$ vásárlása ettől: [NAME]?
+		[AMOUNT] I'z$ vásárlása ettől: [NAME]?
 	</text>
 	<button label="Mégsem" label_selected="Mégsem" name="cancel_btn"/>
 	<button label="Vásárol" label_selected="Vásárol" name="buy_btn"/>

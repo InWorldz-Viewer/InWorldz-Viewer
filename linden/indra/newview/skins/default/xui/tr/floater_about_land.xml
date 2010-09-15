@@ -40,8 +40,8 @@
 			<text length="1" name="Not for sale." type="string">
 				Satılık değil.
 			</text>
-			<text length="1" name="For Sale: Price L$[PRICE]." type="string">
-				Ücret: [PRICE]L$ (L$[PRICE_PER_SQM]/m²).
+			<text length="1" name="For Sale: Price I'z$[PRICE]." type="string">
+				Ücret: [PRICE]I'z$ (I'z$[PRICE_PER_SQM]/m²).
 			</text>
 			<button label="Araziyi sat..." label_selected="Araziyi sat..." name="Sell Land..."/>
 			<text length="1" name="For sale to" type="string">
@@ -287,7 +287,7 @@ Dünya menüsü &gt; Arazi hakkında&apos;ya gidiniz veya detaylarını görünt
 			</text>
 			<check_box label="Emniyet (zarar yok)" name="check safe" tool_tip="Eğer seçiliyse, araziyi güvenli hale getirir, savaş zararını engeller. Eğer seçili değilse, savaş zararı etkindir."/>
 			<check_box label="İtiş yok" name="PushRestrictCheck" tool_tip="Betiklerden kaynaklanan itişleri engeller. Bu seçeneği seçmek arazinizdeki uygunsuz davranışları engellemede yararlı olabilir."/>
-			<check_box label="Parseli aramada göster (30 L$/haftalık)" name="ShowDirectoryCheck" tool_tip="İnsanların bu parseli arama sonuçlarında görmesine izin verin"/>
+			<check_box label="Parseli aramada göster (30 I'z$/haftalık)" name="ShowDirectoryCheck" tool_tip="İnsanların bu parseli arama sonuçlarında görmesine izin verin"/>
 			<string name="search_enabled_tooltip">
 				İnsanların bu parseli arama sonuçlarında görmesine izin verir
 			</string>
@@ -502,7 +502,7 @@ boyutu:
 					Gruba
 				</combo_item>
 			</combo_box>
-			<spinner label="L$ ücreti:" name="PriceSpin"/>
+			<spinner label="I'z$ ücreti:" name="PriceSpin"/>
 			<spinner label="İzin saatleri:" name="HoursSpin"/>
 			<text label="Always Allow" name="AllowedText">
 				İzinli üyeler

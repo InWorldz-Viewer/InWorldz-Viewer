@@ -43,7 +43,7 @@
 	     tool_tip="このフレンドに、あなたの現在のロケーションまでのテレポートを申し出ます。"
 	     width="90" />
 	<button label="支払う..." name="pay_btn"
-	     tool_tip="リンデンドル (L$) をこのフレンドにあげる"
+	     tool_tip="リンデンドル (I'z$) をこのフレンドにあげる"
 	     width="90" />
 	<button label="削除..." name="remove_btn"
 	     tool_tip="この人物をフレンドリストから外します。"

@@ -251,32 +251,32 @@ Oglądając swój profil możesz wpisać dowolny link URL i kliknąć OK żeby g
 Rezydenci mogą odwiedzać podany adres, kiedy przeglądają Twój profil.
 	</notification>
 	<notification name="JoinGroupCanAfford">
-		Dołączenie do tej grupy kosztuje [COST]L$.
+		Dołączenie do tej grupy kosztuje [COST]I'z$.
 Chcesz kontynuować?
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="Dołącz"/>
 	</notification>
 	<notification name="JoinGroupCannotAfford">
-		Członkostwo w tej grupie kosztuje [COST]L$
-Masz za mało L$ żeby zostać członkiem.
+		Członkostwo w tej grupie kosztuje [COST]I'z$
+Masz za mało I'z$ żeby zostać członkiem.
 	</notification>
 	<notification name="LandBuyPass">
-		Za [COST]L$ możesz odwiedzić tą posiadłość (&apos;[PARCEL_NAME]&apos;) na [TIME] godzin. Chcesz kupić przepustkę?
+		Za [COST]I'z$ możesz odwiedzić tą posiadłość (&apos;[PARCEL_NAME]&apos;) na [TIME] godzin. Chcesz kupić przepustkę?
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="SalePriceRestriction">
-		Cena sprzedaży musi być wyższa niż 0L$ jeżeli sprzedajesz komukolwiek.
-Musisz wybrać kupca jeżeli chcesz sprzedać za 0L$.
+		Cena sprzedaży musi być wyższa niż 0I'z$ jeżeli sprzedajesz komukolwiek.
+Musisz wybrać kupca jeżeli chcesz sprzedać za 0I'z$.
 	</notification>
 	<notification name="ConfirmLandSaleChange">
 		Posiadłość o powierzchni [LAND_SIZE] m zostaje wystawiona na sprzedaż.
-Cena wynosi [SALE_PRICE]L$ i sprzedaż będzie autoryzowana dla [NAME].
+Cena wynosi [SALE_PRICE]I'z$ i sprzedaż będzie autoryzowana dla [NAME].
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="ConfirmLandSaleToAnyoneChange">
 		UWAGA: Wybierając Sprzedaż dla Kogokolwiek umożliwiasz zakup posiadłości wszystkim Rezydentom [GRID_NAME].
 
 Posiadłość o powierzchni [LAND_SIZE] m zostaje wystawiona na sprzedaż.
-Cena wynosi [SALE_PRICE]L$ i sprzedaż będzie autoryzowana dla [NAME].
+Cena wynosi [SALE_PRICE]I'z$ i sprzedaż będzie autoryzowana dla [NAME].
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="ReturnObjectsDeededToGroup">
@@ -1005,7 +1005,7 @@ ze wszystkich posiadłości w tym symulatorze?
 		Musisz nadać tytuł Twojej reklamie.
 	</notification>
 	<notification name="MinClassifiedPrice">
-		Minimalna cena za publikację wynosi [MIN_PRICE]L$.
+		Minimalna cena za publikację wynosi [MIN_PRICE]I'z$.
 
 Wybierz wyższą cenę.
 	</notification>
@@ -1142,7 +1142,7 @@ Ten wybór będzie można później zmienić.
 		<usetemplate name="okcancelbuttons" notext="Kobieta" yestext="Mężczyzna"/>
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] [PRICE]L$ Masz za mało L$.
+		[NAME] [PRICE]I'z$ Masz za mało I'z$.
 	</notification>
 	<notification name="GrantedModifyRights">
 		Masz teraz prawa modyfikacji obiektów należących do [FIRST_NAME] [LAST_NAME].
@@ -1268,7 +1268,7 @@ Załadować do foldera Aplikacji?
 	</notification>
 	<notification name="DeedObjectToGroup">
 		Przekazanie tego obiektu spowoduje, że grupa:
-* Otrzyma L$ zapłacone temu obiektowi
+* Otrzyma I'z$ zapłacone temu obiektowi
 		<usetemplate ignoretext="Przekazując obiekty grupom" name="okcancelignore" notext="Anuluj" yestext="Przekaż"/>
 	</notification>
 	<notification name="WebLaunchExternalTarget">
@@ -1445,7 +1445,7 @@ Kontynuować?
 	<notification label="Zmiana Dostępu do Majątku Lindenów" name="ChangeLindenAccess">
 		Dokonujesz zmiany w liście dostępu Regionu Głównego należącego do Lindenów (Regiony Główne, Teen Grid, Orientacja).
 
-Żądana operacja jest wyjątkowo niebezpieczna dla wszystkich Rezydentów przebywających w regionie i powinna być używana wyłącznie w celu zablokowania opcji pozwalającej na przeniesienie obiektów/L$ do/z sieci.
+Żądana operacja jest wyjątkowo niebezpieczna dla wszystkich Rezydentów przebywających w regionie i powinna być używana wyłącznie w celu zablokowania opcji pozwalającej na przeniesienie obiektów/I'z$ do/z sieci.
 Dodatkowo, zmiany dokonane w Regionie Głównym mogą spowodować problemy przestrzeni serwerowej innych regionów.
 
 Kontynuować?
@@ -1625,7 +1625,7 @@ Możesz wybrać &apos;Zmień Ustawienia&apos; by dokonać zmian w ustawieniach T
 	<notification name="PublishClassified">
 		Pamiętaj: Opłaty za reklamę są bezzwrotne.
 
-Zamieścić tą reklamę za [AMOUNT]L$?
+Zamieścić tą reklamę za [AMOUNT]I'z$?
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="SetClassifiedMature">
@@ -1865,7 +1865,7 @@ Wybierz pojedynczy obiekt i spróbuj jeszcze raz.
 Wybierz pojedynczy obiekt i spróbuj jeszcze raz.
 	</notification>
 	<notification name="BuyOriginal">
-		Kupić oryginalny obiekt od [OWNER] za [PRICE]L$?
+		Kupić oryginalny obiekt od [OWNER] za [PRICE]I'z$?
 Zostaniesz właścicielem tego obiektu z następującymi prawami:
  Modyfikacje: [MODIFYPERM]
  Kopiowanie: [COPYPERM]
@@ -1873,7 +1873,7 @@ Zostaniesz właścicielem tego obiektu z następującymi prawami:
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="BuyOriginalNoOwner">
-		Kupić oryginalny obiekt za [PRICE]L$?
+		Kupić oryginalny obiekt za [PRICE]I'z$?
 Zostaniesz właścicielem tego obiektu z następującymi prawami:
  Modyfikacje: [MODIFYPERM]
  Kopiowanie: [COPYPERM]
@@ -1881,7 +1881,7 @@ Zostaniesz właścicielem tego obiektu z następującymi prawami:
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopy">
-		Kupić kopię obiektu od [OWNER] za [PRICE]L$?
+		Kupić kopię obiektu od [OWNER] za [PRICE]I'z$?
 Obiekt zostanie skopiowany do Twojej szafy z następującymi prawami:
  Modyfikacje: [MODIFYPERM]
  Kopiowanie: [COPYPERM]
@@ -1889,7 +1889,7 @@ Obiekt zostanie skopiowany do Twojej szafy z następującymi prawami:
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="BuyCopyNoOwner">
-		Kupić kopię obiektu za [PRICE]L$?
+		Kupić kopię obiektu za [PRICE]I'z$?
 Obiekt zostanie skopiowany do Twojej szafy z następującymi prawami:
  Modyfikacje: [MODIFYPERM]
  Kopiowanie: [COPYPERM]
@@ -1897,12 +1897,12 @@ Obiekt zostanie skopiowany do Twojej szafy z następującymi prawami:
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="BuyContents">
-		Kupić zawartość od [OWNER] za [PRICE]L$?
+		Kupić zawartość od [OWNER] za [PRICE]I'z$?
 Zawartość zostanie skopiowana do Twojej szafy.
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
 	<notification name="BuyContentsNoOwner">
-		Kupić zawartość za [PRICE]L$?
+		Kupić zawartość za [PRICE]I'z$?
 Zawartość zostanie skopiowana do Twojej szafy.
 		<usetemplate name="okcancelbuttons" notext="Anuluj" yestext="OK"/>
 	</notification>
@@ -2329,8 +2329,8 @@ Suwak G (Gęstość) kontroluje gęstość chmur.
 		Rzeczy nie mogą być kupione jeżeli
 			są częścią załącznika.
 	</notification>
-	<notification label="Prośba o Zgodę na Pobieranie L$" name="DebitPermissionDetails">
-		Akceptując tą prośbę wyrażasz zgodę na ciągłe pobieranie Lindenów (L$) z Twojego konta. Żeby cofnąć to pozwolenie właściciel obiektu będzie musiał usunąć ten obiekt albo zresetowć skrypty obieku.
+	<notification label="Prośba o Zgodę na Pobieranie I'z$" name="DebitPermissionDetails">
+		Akceptując tą prośbę wyrażasz zgodę na ciągłe pobieranie Lindenów (I'z$) z Twojego konta. Żeby cofnąć to pozwolenie właściciel obiektu będzie musiał usunąć ten obiekt albo zresetowć skrypty obieku.
 		<usetemplate name="okbutton" yestext="OK"/>
 	</notification>
 	<notification name="AutoWearNewClothing">
@@ -2392,7 +2392,7 @@ Czy chcesz odwiedzić stronę [SECOND_LIFE] żeby to zmienić?
 (Zajmuje około 5 minut.)
 	</notification>
 	<notification name="UploadPayment">
-		Ładowanie kosztowało [AMOUNT]L$.
+		Ładowanie kosztowało [AMOUNT]I'z$.
 	</notification>
 	<notification name="UploadWebSnapshotDone">
 		Ładowanie obrazu z Internetu zakończne pomyślnie.
@@ -2835,12 +2835,12 @@ Zgadzasz się?
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		Przekazano Ci [AMOUNT]L$.
-Obiekty i inni użytkownicy mogą Ci dawać L$.
+		Przekazano Ci [AMOUNT]I'z$.
+Obiekty i inni użytkownicy mogą Ci dawać I'z$.
 Twój balans jest wyświetlony w prawym górnym rogu ekranu.
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		Pobrano od Ciebie [AMOUNT]L$.
+		Pobrano od Ciebie [AMOUNT]I'z$.
 Twój balans jest wyświetlony w prawym górnym rogu ekranu.
 	</notification>
 	<notification name="FirstSit">

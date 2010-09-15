@@ -20,7 +20,7 @@
 	<combo_box label="" name="classified_category_combo"/>
 	<button label="Frissít" name="classified_update_btn"/>
 	<string name="ad_placed_paid">
-		Feladott reklám: [DATE], Fizetve: L$[AMT] a megjelenésért.
+		Feladott reklám: [DATE], Fizetve: I'z$[AMT] a megjelenésért.
 	</string>
 	<string name="update_txt">
 		Frissít

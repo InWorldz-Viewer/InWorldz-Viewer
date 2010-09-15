@@ -4,7 +4,7 @@
 		[NAME] içerdikleri:
 	</text>
 	<text name="buy_text">
-		[NAME] kişisinden [AMOUNT] L$ ücretine alınsın mı?
+		[NAME] kişisinden [AMOUNT] I'z$ ücretine alınsın mı?
 	</text>
 	<button label="İptal" label_selected="Cancel" name="cancel_btn" />
 	<button label="Satın al" label_selected="Buy" name="buy_btn" />

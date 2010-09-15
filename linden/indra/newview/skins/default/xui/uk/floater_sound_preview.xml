@@ -7,6 +7,6 @@
 		Опис:
 	</text>
 	<button label="Відміна" label_selected="Відміна" name="cancel_btn" />
-	<button label="Завантаж. (L$[AMOUNT])" label_selected="Завантаж. (L$[AMOUNT])"
+	<button label="Завантаж. (I'z$[AMOUNT])" label_selected="Завантаж. (I'z$[AMOUNT])"
 	     name="ok_btn" />
 </floater>

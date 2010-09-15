@@ -57,8 +57,8 @@
 		Preço:
 	</text>
 	<text name="info_price">
-		L$ 1500
-(L$ 1.1/m²)
+		I'z$ 1500
+(I'z$ 1.1/m²)
 vendido com os objetos
 	</text>
 	<text name="info_action">
@@ -93,13 +93,13 @@ vendido com os objetos
 Este lote tem 512 m² de terra.
 	</text>
 	<text name="purchase_action">
-		Pagar ao Residente Joe L$4000 pela terra
+		Pagar ao Residente Joe I'z$4000 pela terra
 	</text>
 	<text name="currency_reason">
-		Você tem L$2,100.
+		Você tem I'z$2,100.
 	</text>
 	<text name="currency_action" width="116">
-		Compre L$ adicionais
+		Compre I'z$ adicionais
 	</text>
 	<line_editor name="currency_amt" left="190" width="65">
 		1000
@@ -108,7 +108,7 @@ Este lote tem 512 m² de terra.
 		por aproxim. US$ [AMOUNT2]
 	</text>
 	<text name="currency_balance">
-		Você tem L$2,100.
+		Você tem I'z$2,100.
 	</text>
 	<check_box label="Remover [AMOUNT] m² de contribuição do grupo." name="remove_contribution"/>
 	<button label="Adquirir" name="buy_btn"/>
@@ -188,10 +188,10 @@ Este lote tem 512 m² de terra.
 		Você possui [BUYER] m² de terra.
 	</string>
 	<string name="pay_to_for_land">
-		Pagar L$ [AMOUNT] para [SELLER] por esta terra
+		Pagar I'z$ [AMOUNT] para [SELLER] por esta terra
 	</string>
 	<string name="buy_for_US">
-		Comprar L$ [AMOUNT] por aprox. US$ [AMOUNT2],
+		Comprar I'z$ [AMOUNT] por aprox. US$ [AMOUNT2],
 	</string>
 	<string name="parcel_meters">
 		Este lote tem [AMOUNT] m².
@@ -213,8 +213,8 @@ aceita [AMOUNT2] objetos
 		objetos não incluídos
 	</string>
 	<string name="info_price_string">
-		L$ [PRICE]
-(L$ [PRICE_PER_SQM]/m²)
+		I'z$ [PRICE]
+(I'z$ [PRICE_PER_SQM]/m²)
 [SOLD_WITH_OBJECTS]
 	</string>
 	<string name="insufficient_land_credits">
@@ -222,21 +222,21 @@ aceita [AMOUNT2] objetos
 contribuídas para cobrir este lote antes da aquisição se completar.
 	</string>
 	<string name="have_enough_lindens">
-		Você tem L$ [AMOUNT], suficiente para comprar este lote.
+		Você tem I'z$ [AMOUNT], suficiente para comprar este lote.
 	</string>
 	<string name="not_enough_lindens">
-		Você tem somente L$ [AMOUNT], e precisa de mais L$ [AMOUNT2].
+		Você tem somente I'z$ [AMOUNT], e precisa de mais I'z$ [AMOUNT2].
 	</string>
 	<string name="balance_left">
-		Após a compra, restará L$ [AMOUNT].
+		Após a compra, restará I'z$ [AMOUNT].
 	</string>
 	<string name="balance_needed">
-		Você precisa comprar pelo menos L$ [AMOUNT] para ter recursos para este lote.
+		Você precisa comprar pelo menos I'z$ [AMOUNT] para ter recursos para este lote.
 	</string>
 	<string name="no_parcel_selected">
 		(nenhum lote selecionado)
 	</string>
 	<string name="buy_currency">
-		Comprar L$ [LINDENS] por aproxim. US$ [USD]
+		Comprar I'z$ [LINDENS] por aproxim. US$ [USD]
 	</string>
 </floater>

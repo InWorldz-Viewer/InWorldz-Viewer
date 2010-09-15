@@ -49,5 +49,5 @@
 	</text>
 	<check_box label="손실 없는 압축 사용" name="lossless_check" />
 	<button label="취소" name="cancel_btn" />
-	<button label="업로드(L$[AMOUNT])" name="ok_btn" />
+	<button label="업로드(I'z$[AMOUNT])" name="ok_btn" />
 </floater>

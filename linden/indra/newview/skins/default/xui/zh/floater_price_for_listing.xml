@@ -10,7 +10,7 @@
 也会出现在搜索栏较高的位置上。
 	</text>
 	<text name="price_text">
-		广告价格(L$):
+		广告价格(I'z$):
 	</text>
 	<button label="设置价格" name="set_price_btn" />
 	<button label="取消" name="cancel_btn" />

@@ -53,7 +53,7 @@
 				帐单明细:
 			</text>
 			<text name="land cost text">
-				L$每平方米:
+				I'z$每平方米:
 			</text>
 			<button label="更新" label_selected="更新" name="Refresh"
 			     tool_tip="点击这里来更新以上信息." />

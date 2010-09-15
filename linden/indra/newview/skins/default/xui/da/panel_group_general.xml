@@ -28,7 +28,7 @@ Bevæg din mus over mulighederne for mere hjælp.
 	<text_editor name="charter">
 		Gruppens formål
 	</text_editor>
-	<button label="Tilmeld (L$0)" label_selected="Tilmeld (L$0)" name="join_button"/>
+	<button label="Tilmeld (I'z$0)" label_selected="Tilmeld (I'z$0)" name="join_button"/>
 	<button label="Detaljeret visning" label_selected="Detaljeret visning" name="info_button"/>
 	<text name="text_owners_and_visible_members">
 		Ejere &amp; synlige medlemmer
@@ -47,7 +47,7 @@ Bevæg din mus over mulighederne for mere hjælp.
 	<panel name="preferences_container">
 		<check_box label="Vis i søgning" name="show_in_group_list" tool_tip="Lad folk se denne gruppe i søgeresultater."/>
 		<check_box label="Åben tilmelding" name="open_enrollement" tool_tip="Angiver om denne gruppe tillader nye medlemmer at tilmelde sig, uden de er inviteret."/>
-		<check_box label="Tilmeldingsgebyr: L$" name="check_enrollment_fee" tool_tip="Angiver om der kræves et gebyr, for at tilmelde sig gruppen."/>
+		<check_box label="Tilmeldingsgebyr: I'z$" name="check_enrollment_fee" tool_tip="Angiver om der kræves et gebyr, for at tilmelde sig gruppen."/>
 		<spinner name="spin_enrollment_fee" tool_tip="Nye medlemmer skal betale dette gebyr for at tilmelde sig gruppen, når Tilmeldingsgebyr er valgt." width="60" left_delta="130"/>
 		<combo_box name="group_mature_check" tool_tip="Angiver om din gruppes information anses som &apos;mature&apos;." width="150">
 			<combo_item name="select_mature">
@@ -73,8 +73,8 @@ Bevæg din mus over mulighederne for mere hjælp.
 		Henter medlemsinformationer
 	</string>
 	<string name="confirm_group_create_str">
-		Creating this group will cost L$100. 
-Er du virkelig, virkelig, VIRKELIG sikker på, at du vil bruge L$100 på at lave denne gruppe?
+		Creating this group will cost I'z$100. 
+Er du virkelig, virkelig, VIRKELIG sikker på, at du vil bruge I'z$100 på at lave denne gruppe?
 Du skal være opmærksom på, at hvis ingen andre indmelder sig i denne gruppe indenfor 48 timer, så vil gruppen blive opløst, og gruppens navn vil ikke være tilgængelig i fremtiden.
 	</string>
 </panel>

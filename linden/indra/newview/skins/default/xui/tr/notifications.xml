@@ -204,33 +204,33 @@ Kendi profilinizi görüntülerken,herhangi bir adresi web profiliniz olarak gir
 Diğer üyeler profilinize baktıklarında, girdiğiniz adresi ziyaret edebilirler.
 	</notification>
 	<notification name="JoinGroupCanAfford">
-		Bu gruba üye olmak [COST] L$ tutarındadır.
+		Bu gruba üye olmak [COST] I'z$ tutarındadır.
 Devam etmek istiyor musunuz?
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Üye Ol"/>
 	</notification>
 	<notification name="JoinGroupCannotAfford">
-		Bu gruba üye olmak [COST] L$ tutarındadır.
-Bu gruba üye olabilmek için yeterli derecede L$&apos;a sahip değilsiniz.
+		Bu gruba üye olmak [COST] I'z$ tutarındadır.
+Bu gruba üye olabilmek için yeterli derecede I'z$&apos;a sahip değilsiniz.
 	</notification>
 	<notification name="LandBuyPass">
-		[COST] L$ karşılığında bu araziye (&apos;[PARCEL_NAME]&apos;)
+		[COST] I'z$ karşılığında bu araziye (&apos;[PARCEL_NAME]&apos;)
 [TIME] saatliğine girebilirsiniz.Şifre satın almak ister misiniz?
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Tamam"/>
 	</notification>
 	<notification name="SalePriceRestriction">
-		Eğer herhangi birine satılacaksa,satış ücreti 0 L$ tutarından fazla olmalıdır.
-L$0 tutarında satmak için lütfen bir birey seçiniz.
+		Eğer herhangi birine satılacaksa,satış ücreti 0 I'z$ tutarından fazla olmalıdır.
+I'z$0 tutarında satmak için lütfen bir birey seçiniz.
 	</notification>
 	<notification name="ConfirmLandSaleChange">
 		Seçili [LAND_SIZE] m² arazi satışa çıkarılıyor.
-Satış ücretiniz L$[SALE_PRICE] ve tanımlanan alıcı [NAME] olacaktır.
+Satış ücretiniz I'z$[SALE_PRICE] ve tanımlanan alıcı [NAME] olacaktır.
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Tamam"/>
 	</notification>
 	<notification name="ConfirmLandSaleToAnyoneChange">
 		DİKKAT: Herhangi birini seçmek arazinizi tüm [GRID_NAME] toplumuna görüntüler,sadece bu bölgedekilere değil.
 
 Seçili [LAND_SIZE] m² arazi satışa çıkarılıyor.
-Satış ücretiniz L$[SALE_PRICE] ve tanımlanan alıcı [NAME] olacaktır.
+Satış ücretiniz I'z$[SALE_PRICE] ve tanımlanan alıcı [NAME] olacaktır.
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Tamam"/>
 	</notification>
 	<notification name="ReturnObjectsDeededToGroup">
@@ -714,7 +714,7 @@ Tüm parseli seçiniz, veya ilk olarak parselinizi bölümleyiniz.
 	</notification>
 	<notification name="ReleaseLandWarning">
 		[AREA] m² araziyi bırakmak üzeresiniz.
-Bu durum arazi mülklerinizden araziyi çıkaracaktır,fakat herhangi bir L$ ödemesi almayacaksınız.
+Bu durum arazi mülklerinizden araziyi çıkaracaktır,fakat herhangi bir I'z$ ödemesi almayacaksınız.
 
 Arazi bırakılsın mı?
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Tamam"/>
@@ -882,7 +882,7 @@ Daha sonra fikrinizi değiştirebilirsiniz.
 		<usetemplate name="okcancelbuttons" notext="Bayan" yestext="Bay"/>
 	</notification>
 	<notification name="NotEnoughCurrency">
-		[NAME] [PRICE] L$ Bunu yapabilmeniz için yeterli L$&apos;a sahip değilsiniz.
+		[NAME] [PRICE] I'z$ Bunu yapabilmeniz için yeterli I'z$&apos;a sahip değilsiniz.
 	</notification>
 	<notification name="GrantedModifyRights">
 		[FIRST_NAME] [LAST_NAME] kişisinin objelerini kontrol etmek için izin sahibi oldunuz.
@@ -955,7 +955,7 @@ Uygulamalar klasörünüze indirilsin mi?
 	</notification>
 	<notification name="DeedObjectToGroup">
 		Bu objeyi bağışlamanın sonucunda:
-* Objeye ödenen L$ miktarları gruba gelecektir
+* Objeye ödenen I'z$ miktarları gruba gelecektir
 		<usetemplate ignoretext="Gruplara objeler bağışlanırken" name="okcancelignore" notext="İptal" yestext="Bağışla"/>
 	</notification>
 	<notification name="WebLaunchExternalTarget">
@@ -1242,7 +1242,7 @@ Bilgi Merkezi&apos;ni ziyaret ederek yetişkinlik oranları hakkında daha fazla
 	<notification name="PublishClassified">
 		Unutmayın: İlan reklam ücretleri geri verilmez.
 
-L$[AMOUNT] ücretine bu ilan şimdi yayınlansın mı?
+I'z$[AMOUNT] ücretine bu ilan şimdi yayınlansın mı?
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Tamam"/>
 	</notification>
 	<notification name="SetClassifiedMature">
@@ -1282,12 +1282,12 @@ Eğer izinler değişirken Çoklu izinler penceresini kapatırsanız, işlem son
 	</notification>
 	<notification label="Yetişkinlik" name="HelpRegionMaturity"/>
 	<notification name="BuyContents">
-		[OWNER] kişisinden [PRICE] L$ ücretine içerikleri satın almak istiyor musunuz?
+		[OWNER] kişisinden [PRICE] I'z$ ücretine içerikleri satın almak istiyor musunuz?
 Envanterinize kopyalanacaklar.
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Tamam"/>
 	</notification>
 	<notification name="BuyContentsNoOwner">
-		[PRICE] L$ ücretine içerikleri satın almak istiyor musunuz?
+		[PRICE] I'z$ ücretine içerikleri satın almak istiyor musunuz?
 Envanterinize kopyalanacaklar.
 		<usetemplate name="okcancelbuttons" notext="İptal" yestext="Tamam"/>
 	</notification>
@@ -1446,7 +1446,7 @@ Zemin detayı: Zemin deseni için görebileceğiniz detay miktarını belirler.
 		Bir ekin parçasıyken ürünler satın alınamazlar.
 	</notification>
 	<notification label="About Requests for the Debit Permission" name="DebitPermissionDetails">
-		Bu teklifi onaylamak betiğin hesabınızdan Linden doları (L$) çekmesine izin verir.Bu izni geri almak için,obje sahibi objeyi sillmeyi veya obje içindeki betikleri yenilemelidir.
+		Bu teklifi onaylamak betiğin hesabınızdan Linden doları (I'z$) çekmesine izin verir.Bu izni geri almak için,obje sahibi objeyi sillmeyi veya obje içindeki betikleri yenilemelidir.
 		<usetemplate name="okbutton" yestext="Tamam"/>
 	</notification>
 	<notification name="AutoWearNewClothing">
@@ -1489,7 +1489,7 @@ Bunu düzenlemek için [SECOND_LIFE] web sitesini ziyaret etmek ister misiniz?
 		Kendi kendinizi arkadaş olarak ekleyemezsiniz.
 	</notification>
 	<notification name="UploadPayment">
-		Yüklemek için [AMOUNT] L$ ödediniz.
+		Yüklemek için [AMOUNT] I'z$ ödediniz.
 	</notification>
 	<notification name="TerrainDownloaded">
 		Terrain.raw indi
@@ -1847,12 +1847,12 @@ Obje: [OBJECTNAME], sahibi: [NAME]?
 		</form>
 	</notification>
 	<notification name="FirstBalanceIncrease">
-		L$[AMOUNT] aldınız.
-Objeler veya diğer üyeler size L$ vermiş olabilirler.
+		I'z$[AMOUNT] aldınız.
+Objeler veya diğer üyeler size I'z$ vermiş olabilirler.
 Hesap bakiyeniz ekranın sağ üst köşesinde görüntülenir.
 	</notification>
 	<notification name="FirstBalanceDecrease">
-		L$[AMOUNT] ödediniz.
+		I'z$[AMOUNT] ödediniz.
 Hesap bakiyeniz ekranın sağ üst köşesinde görüntülenir.
 	</notification>
 	<notification name="FirstSit">

@@ -51,7 +51,7 @@
 		가격:
 	</text>
 	<text name="info_price">
-		L$ 1500, 오브젝트 포함
+		I'z$ 1500, 오브젝트 포함
 	</text>
 	<text name="info_action">
 		이 토지 구매 내역:
@@ -85,13 +85,13 @@
 이 구획은 512 제곱 미터입니다.
 	</text>
 	<text name="purchase_action">
-		주민 Joe에게 토지 대금 L$4000 지불
+		주민 Joe에게 토지 대금 I'z$4000 지불
 	</text>
 	<text name="currency_reason">
-		현재 L$2,100를 보유하고 있습니다.
+		현재 I'z$2,100를 보유하고 있습니다.
 	</text>
 	<text name="currency_action">
-		추가로 린든달러(L$) 구매
+		추가로 린든달러(I'z$) 구매
 	</text>
 	<line_editor name="currency_amt">
 		1000
@@ -100,7 +100,7 @@
 		약 US$ [AMOUNT2]
 	</text>
 	<text name="currency_balance">
-		현재 L$2,100를 보유하고 있습니다.
+		현재 I'z$2,100를 보유하고 있습니다.
 	</text>
 	<check_box label="그룹 기부에서 [AMOUNT] 평방 미터를 제거합니다."
 	     name="remove_contribution" />
@@ -186,7 +186,7 @@
 		[SELLER](에)게 토지 대금 [AMOUNT] 지불
 	</text>
 	<text name="buy_for_US">
-		약 US$ [AMOUNT2]에 L$ [AMOUNT]를 구매 하시겠습니까?
+		약 US$ [AMOUNT2]에 I'z$ [AMOUNT]를 구매 하시겠습니까?
 	</text>
 	<text name="parcel_meters">
 		이 구획은 [AMOUNT] 평방 미터입니다.
@@ -208,21 +208,21 @@
 		그룹 [GROUP]은(는) 본 구획 전체의 사용을 위한 충분한 신용이 필요하며, 구매가 완료되기 전에 확인 되어야 합니다.
 	</text>
 	<text name="have_enough_lindens">
-		이 토지를 구입하기에 충분한 L$ [AMOUNT]을(를) 가지고 있습니다.
+		이 토지를 구입하기에 충분한 I'z$ [AMOUNT]을(를) 가지고 있습니다.
 	</text>
 	<text name="not_enough_lindens">
-		현재 L$ [AMOUNT]을(를) 보유하고 있으며 L$ [AMOUNT2]이(가) 더 필요합니다.
+		현재 I'z$ [AMOUNT]을(를) 보유하고 있으며 I'z$ [AMOUNT2]이(가) 더 필요합니다.
 	</text>
 	<text name="balance_left">
-		구입 후에 L$ [AMOUNT]가 남게 됩니다.
+		구입 후에 I'z$ [AMOUNT]가 남게 됩니다.
 	</text>
 	<text name="balance_needed">
-		이 토지를 구입하려면 최소 L$ [AMOUNT] 이상을 지불해야 합니다.
+		이 토지를 구입하려면 최소 I'z$ [AMOUNT] 이상을 지불해야 합니다.
 	</text>
 	<text name="no_parcel_selected">
 		(구획을 선택하지 않음)
 	</text>
 	<text name="buy_currency">
-		약 US$ [USD]에 L$ [LINDENS] 구매
+		약 US$ [USD]에 I'z$ [LINDENS] 구매
 	</text>
 </floater>

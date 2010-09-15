@@ -26,22 +26,22 @@
     <menu label="Upload" name="upload" 
         create_jump_keys="true" drop_shadow="true" enabled="true" mouse_opaque="false"
 		    opaque="true" tear_off="true">
-        <menu_item_call enabled="true" label="Image (L$[COST])..."
+        <menu_item_call enabled="true" label="Image (I'z$[COST])..."
 	           mouse_opaque="true" name="Upload Image" shortcut="control|U" >
           <on_click function="File.UploadImage" userdata="" />
           <on_enable function="File.EnableUpload" />
         </menu_item_call>
-        <menu_item_call label="Sound (L$[COST])..." name="Upload Sound"
+        <menu_item_call label="Sound (I'z$[COST])..." name="Upload Sound"
             mouse_opaque="true" enabled="true" >
             <on_click function="File.UploadSound" userdata="" />
             <on_enable function="File.EnableUpload" />
         </menu_item_call>
-        <menu_item_call label="Animation (L$[COST])..." name="Upload Animation"
+        <menu_item_call label="Animation (I'z$[COST])..." name="Upload Animation"
 	           mouse_opaque="true" enabled="true"  >
             <on_click function="File.UploadAnim" userdata="" />
             <on_enable function="File.EnableUpload" />
         </menu_item_call>
-        <menu_item_call label="Bulk (L$[COST] per file)..." name="Bulk Upload"
+        <menu_item_call label="Bulk (I'z$[COST] per file)..." name="Bulk Upload"
              mouse_opaque="true" enabled="true" >
             <on_click function="File.UploadBulk" userdata="" />
         </menu_item_call>
@@ -509,8 +509,8 @@
 			<on_click function="PromptShowURL" name="ManageMyAccount_url"
 			     userdata="WebLaunchJoinNow,http://secondlife.com/account/" />
 		</menu_item_call>
-		<menu_item_call bottom="-286" enabled="true" height="19" label="Buy L$..." left="0"
-		     mouse_opaque="true" name="Buy and Sell L$..." width="166">
+		<menu_item_call bottom="-286" enabled="true" height="19" label="Buy I'z$..." left="0"
+		     mouse_opaque="true" name="Buy and Sell I'z$..." width="166">
 			<on_click function="ShowFloater" userdata="buy currency" />
 		</menu_item_call>
 		<menu_item_separator bottom="-213" enabled="true" height="8" label="-----------" left="0"

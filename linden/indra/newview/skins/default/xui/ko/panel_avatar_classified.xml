@@ -20,7 +20,7 @@
 	<button label="게시하기…" name="classified_update_btn" />
 	<check_box label="매주 자동 갱신" name="auto_renew_check" />
 	<text name="ad_placed_paid">
-		게재 광고: [DATE], 게재 비용 L$[AMT]를 지불했습니다.
+		게재 광고: [DATE], 게재 비용 I'z$[AMT]를 지불했습니다.
 	</text>
 	<text name="update_txt">
 		업데이트

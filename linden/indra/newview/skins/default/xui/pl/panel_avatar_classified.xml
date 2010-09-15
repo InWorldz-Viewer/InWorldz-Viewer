@@ -26,7 +26,7 @@
 	<button label="Zamieść..." name="classified_update_btn"/>
 	<check_box label="Auto-odnawiaj co tydzień" name="auto_renew_check"/>
 	<string name="ad_placed_paid">
-		Od: [DATE], Zapłacono [AMT]L$ za zamieszczenie.
+		Od: [DATE], Zapłacono [AMT]I'z$ za zamieszczenie.
 	</string>
 	<string name="update_txt">
 		Aktualizuj

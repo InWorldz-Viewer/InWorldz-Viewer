@@ -220,7 +220,7 @@
 				Nincs találat.
 			</string>
 			<string name="land_help_text">
-				A föld megvásárolható közvetlenül linden dollárért (L$) vagy aukció keretében L$ vagy US$ ellenében.
+				A föld megvásárolható közvetlenül linden dollárért (I'z$) vagy aukció keretében I'z$ vagy US$ ellenében.
 A közvetlen vásárláshoz, látogasd meg a földet és kattints a helyszín nevére a címsorban.
 			</string>
 			<text name="find">
@@ -245,7 +245,7 @@ A közvetlen vásárláshoz, látogasd meg a földet és kattints a helyszín ne
 			</combo_box>
 			<check_box label="Ár &#8804; " name="pricecheck"/>
 			<text left="183" name="pricecheck_symbol">
-				L$
+				I'z$
 			</text>
 			<check_box label="Terület &#8805; " name="areacheck" width="85"/>
 			<text left="183" name="areacheck_symbol">
@@ -259,9 +259,9 @@ A közvetlen vásárláshoz, látogasd meg a földet és kattints a helyszín ne
 				<column label="" name="type"/>
 				<column label="Név" name="name"/>
 				<column label="Típus" name="landtype"/>
-				<column label="Ár L$" name="price"/>
+				<column label="Ár I'z$" name="price"/>
 				<column label="Terület" name="area"/>
-				<column label="L$/m²" name="per_meter"/>
+				<column label="I'z$/m²" name="per_meter"/>
 			</scroll_list>
 			<button label="Előre &gt;" label_selected="Előre &gt;" name="Next &gt;"/>
 			<button label="&lt; Vissza" label_selected="&lt; Vissza" name="&lt; Prev"/>
