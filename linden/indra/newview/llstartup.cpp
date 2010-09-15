@@ -3407,13 +3407,13 @@ bool login_show(LLSavedLogins const& saved_logins)
 {
 	LL_INFOS("AppInit") << "Initializing Login Screen" << LL_ENDL;
 
-	// Show server combo if there is a grid in saved_logins that isn't agni.
+	// Show server combo if there is a grid in saved_logins that isn't inworldz.
 	BOOL show_server = FALSE;
 	LLSavedLoginsList const& saved_login_entries = saved_logins.getEntries();
 	for (std::list<LLSavedLoginEntry>::const_iterator iter = saved_login_entries.begin();
 		iter != saved_login_entries.end(); ++iter)
 	{
-		if (iter->getGrid() != GRID_INFO_AGNI)
+		if (iter->getGrid() != GRID_INFO_INWORLDZ)
 		{
 			show_server = TRUE;
 			break;
@@ -3483,7 +3483,7 @@ bool login_show(LLSavedLogins const& saved_logins)
 	}
 
 	// Finally show the other (mostly LL internal) Linden servers.
-	for(int grid_index = GRID_INFO_ADITI; grid_index < GRID_INFO_OTHER; ++grid_index)
+	for(int grid_index = GRID_INFO_INWORLDZ_BETA; grid_index < GRID_INFO_OTHER; ++grid_index)
 	{
 		if (listed.find((EGridInfo)grid_index) == listed.end())
 		{

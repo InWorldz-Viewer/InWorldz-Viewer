@@ -47,6 +47,19 @@ struct LLGridData
 static LLGridData gGridInfo[GRID_INFO_COUNT] = 
 {
 	{ "None", "", "", ""},
+	{ "Inworldz", 
+	  "http://inworldz.com:8002/", 
+	  "http://inworldz.com:8002/",
+	  "http://inworldz.com/" },
+  	{ "InworldzBeta",
+	  "http://betagrid.inworldz.com:8002/", 
+	  "http://betagrid.inworldz.com:8002/", 
+	  "http://betagrid.inworldz.com:8002/" },
+	{ "Localhost",
+	  "http://127.0.0.1:9000",
+	  "http://127.0.0.1:9000",
+	  "http://127.0.0.1:9000" },
+/*	{ "Second Life",
 	{ "Aditi", 
 	  "util.aditi.lindenlab.com", 
 	  "https://login.aditi.lindenlab.com/cgi-bin/login.cgi",
@@ -142,7 +155,7 @@ static LLGridData gGridInfo[GRID_INFO_COUNT] =
 	{ "Other", 
 	  "", 
 	  "https://login.dmz.lindenlab.com/cgi-bin/login.cgi",
-	  "" }
+	  "" }*/
 };
 
 unsigned char gMACAddress[MAC_ADDRESS_BYTES];		/* Flawfinder: ignore */
@@ -163,11 +176,12 @@ void LLViewerLogin::setGridChoice(EGridInfo grid)
 	}
 
 	mGridChoice = grid;
-	if(GRID_INFO_LOCAL == mGridChoice)
+	// we don't want to do this -- MC
+	/*if(GRID_INFO_LOCAL == mGridChoice)
 	{
 		mGridName = LOOPBACK_ADDRESS_STRING;
 	}
-	else if (GRID_INFO_OTHER == mGridChoice)
+	else*/ if (GRID_INFO_OTHER == mGridChoice)
 	{
 		// *FIX:Mani - could this possibly be valid?
 		mGridName = "other";
@@ -376,12 +390,12 @@ void LLViewerLogin::setLoginPageURI(const std::string& uri)
 
 bool LLViewerLogin::isInProductionGrid()
 {
-	// *NOTE:Mani This used to compare GRID_INFO_AGNI to gGridChoice,
+	// *NOTE:Mani This used to compare GRID_INFO_INWORLDZ to gGridChoice,
 	// but it seems that loginURI trumps that.
 	std::vector<std::string> uris = getGridURIs();
 	if (uris.size() > 0)
 	{
-		if((getCurrentGridURI().find("agni") != std::string::npos))
+		if((getCurrentGridURI().find("inworldz") != std::string::npos))
 		{
 			return true;
 		}

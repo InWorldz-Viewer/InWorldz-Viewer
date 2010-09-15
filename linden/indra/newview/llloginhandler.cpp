@@ -76,7 +76,19 @@ void LLLoginHandler::parse(const LLSD& queryMap)
 	mLastName = queryMap["last_name"].asString();
 	
 	EGridInfo grid_choice = GRID_INFO_NONE;
-	if (queryMap["grid"].asString() == "aditi")
+	if (queryMap["grid"].asString() == "inworldz")
+	{
+		grid_choice = GRID_INFO_INWORLDZ;
+	}
+	else if (queryMap["grid"].asString() == "inworldzbeta")
+	{
+		grid_choice = GRID_INFO_INWORLDZ_BETA;
+	}
+	else if (queryMap["grid"].asString() == "localhost")
+	{
+		grid_choice = GRID_INFO_LOCALHOST;
+	}
+	/*if (queryMap["grid"].asString() == "aditi")
 	{
 		grid_choice = GRID_INFO_ADITI;
 	}
@@ -143,7 +155,7 @@ void LLLoginHandler::parse(const LLSD& queryMap)
 	else if (queryMap["grid"].asString() == "aruna")
 	{
 		grid_choice = GRID_INFO_ARUNA;
-	}
+	}*/
 
 	if(grid_choice != GRID_INFO_NONE)
 	{
