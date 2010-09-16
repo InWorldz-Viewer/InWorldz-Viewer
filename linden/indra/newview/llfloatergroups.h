@@ -114,6 +114,7 @@ protected:
 	static void onBtnInvite(void* userdata);
 	static void onBtnTitles(void* userdata);
 	static void onDoubleClickGroup(void* userdata);
+	static void onGroupSearchKeystroke(const std::string& search_string, void* user_data);
 
 	void create();
 	void activate();
@@ -124,9 +125,9 @@ protected:
 	void callVote();
 	void invite();
 	void titles();
+	void filterContacts(const std::string& search_string);
 
 	static bool callbackLeaveGroup(const LLSD& notification, const LLSD& response);
-
 };
 
 
