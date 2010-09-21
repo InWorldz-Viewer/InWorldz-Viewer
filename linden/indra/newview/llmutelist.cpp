@@ -65,6 +65,7 @@
 #include "llworld.h" //for particle system banning
 #include "llchat.h"
 #include "llfloaterchat.h"
+#include "llfloatermute.h"
 #include "llimpanel.h"
 #include "llimview.h"
 #include "llnotifications.h"
@@ -296,6 +297,45 @@ BOOL LLMuteList::isLinden(const std::string& name) const
 	return last_name == "Linden";
 }
 
+
+void LLMuteList::addMuteAgentConfirm( const LLMute &mute )
+{
+	LLMute *newmute = new LLMute(mute);
+
+	LLSD args;
+	LLSD payload;
+	args["[NAME]"] = newmute->mName;
+	LLNotifications::instance().add("ConfirmMuteAgent", 
+		args, 
+		LLSD(), 
+		boost::bind(&addMuteCallback, _1, _2, newmute));
+}
+
+void LLMuteList::addMuteObjectConfirm( const LLMute &mute )
+{
+	LLMute *newmute = new LLMute(mute);
+
+	LLSD args;
+	args["[NAME]"] = newmute->mName;
+	LLNotifications::instance().add("ConfirmMuteObject", 
+		args, 
+		LLSD(), 
+		boost::bind(&addMuteCallback, _1, _2, newmute));
+}
+
+// static
+bool LLMuteList::addMuteCallback(const LLSD& notification, const LLSD& response, LLMute *mute)
+{
+	S32 option = LLNotification::getSelectedOption(notification, response);
+	if( option == 0 )
+	{
+		// They confirmed it. Here we go!
+		LLMuteList::getInstance()->add( *mute );
+		LLFloaterMute::showInstance();
+	}
+	delete mute;
+	return false;
+}
 
 BOOL LLMuteList::add(const LLMute& mute, U32 flags)
 {
