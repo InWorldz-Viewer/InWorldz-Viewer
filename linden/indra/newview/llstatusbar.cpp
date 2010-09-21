@@ -39,7 +39,7 @@
 #include "llbutton.h"
 #include "llcommandhandler.h"
 #include "llviewercontrol.h"
-#include "llfloaterbuycurrency.h"
+//#include "llfloaterbuycurrency.h"
 #include "llfloaterchat.h"
 #include "llfloaterdirectory.h"		// to spawn search
 #include "llfloaterlagmeter.h"
@@ -69,6 +69,7 @@
 #include "llviewerthrottle.h"
 #include "lluictrlfactory.h"
 #include "llvoiceclient.h"	// for gVoiceClient
+#include "llsecondlifeurls.h" //BUY_CURRENCY_URL
 
 #include "lltoolmgr.h"
 #include "llfocusmgr.h"
@@ -109,7 +110,7 @@ const S32 TEXT_HEIGHT = 18;
 
 static void onClickParcelInfo(void*);
 static void onClickBalance(void*);
-static void onClickBuyCurrency(void*);
+//static void onClickBuyCurrency(void*);
 static void onClickHealth(void*);
 static void onClickFly(void*);
 static void onClickPush(void*);
@@ -159,7 +160,7 @@ mSquareMetersCommitted(0)
 	childSetAction("health", onClickHealth, this);
 	childSetAction("no_fly", onClickFly, this);
 	childSetAction("buyland", onClickBuyLand, this );
-	childSetAction("buycurrency", onClickBuyCurrency, this );
+	//childSetAction("buycurrency", onClickBuyCurrency, this );
 	childSetAction("no_build", onClickBuild, this );
 	childSetAction("no_scripts", onClickScripts, this );
 	childSetAction("restrictpush", onClickPush, this );
@@ -606,12 +607,12 @@ void LLStatusBar::refresh()
 	childGetRect("BalanceText", r);
 	r.translate( new_right - r.mRight, 0);
 	childSetRect("BalanceText", r);
-	new_right -= r.getWidth() - 18;
+	new_right -= r.getWidth() - 12;
 
-	childGetRect("buycurrency", r);
+	/*childGetRect("buycurrency", r);
 	r.translate( new_right - r.mRight, 0);
 	childSetRect("buycurrency", r);
-	new_right -= r.getWidth() + 6;
+	new_right -= r.getWidth() + 6;*/
 
 	childGetRect("TimeText", r);
 	// mTextTime->getTextPixelWidth();
@@ -640,7 +641,7 @@ void LLStatusBar::setVisibleForMouselook(bool visible)
 {
 	mTextBalance->setVisible(visible);
 	mTextTime->setVisible(visible);
-	childSetVisible("buycurrency", visible);
+	//childSetVisible("buycurrency", visible);
 	childSetVisible("search_editor", visible);
 	childSetVisible("search_btn", visible);
 	mSGBandwidth->setVisible(visible);
@@ -776,13 +777,14 @@ static void onClickParcelInfo(void* data)
 
 static void onClickBalance(void* data)
 {
-	onClickBuyCurrency(data);
+	//onClickBuyCurrency(data);
+	LLWeb::loadURLInternal(BUY_CURRENCY_URL);
 }
 
-static void onClickBuyCurrency(void* data)
-{
-	LLFloaterBuyCurrency::buyCurrency();
-}
+//static void onClickBuyCurrency(void* data)
+//{
+//	LLFloaterBuyCurrency::buyCurrency();
+//}
 
 static void onClickHealth(void* )
 {

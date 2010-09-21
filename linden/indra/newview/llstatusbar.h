@@ -136,7 +136,7 @@ private:
 	LLStatGraph *mSGBandwidth;
 	LLStatGraph *mSGPacketLoss;
 
-	LLButton	*mBtnBuyCurrency;
+	//LLButton	*mBtnBuyCurrency;
 
 	S32				mBalance;
 	S32				mHealth;
