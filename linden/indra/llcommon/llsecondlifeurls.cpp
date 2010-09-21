@@ -46,7 +46,7 @@ const std::string EVENTS_URL (
 const std::string SUPPORT_URL ( 
     "http://inworldz.com/support.php");
 
-// Don't exist yet? -- MC
+// Note: external buy currency site -- MC
 const std::string BUY_CURRENCY_URL (
 	"https://inworldz.com/buyiz.php");
 	//"http://secondlife.com/app/currency/");

@@ -5536,7 +5536,9 @@ class LLShowFloater : public view_listener_t
 		}
 		else if (floater_name == "buy currency")
 		{
-			LLFloaterBuyCurrency::buyCurrency();
+			//LLFloaterBuyCurrency::buyCurrency();
+			// We currently can only buy currency from the website -- MC
+			LLWeb::loadURLInternal(BUY_CURRENCY_URL);
 		}
 		else if (floater_name == "about")
 		{
