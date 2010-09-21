@@ -3418,7 +3418,7 @@ class LLViewFullscreen : public view_listener_t
 {
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
 	{
-		gViewerWindow->toggleFullscreen(TRUE);
+		gViewerWindow->toggleFullscreenConfirm();
 		return true;
 	}
 };

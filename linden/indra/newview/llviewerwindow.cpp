@@ -4751,6 +4751,29 @@ void LLViewerWindow::initFonts(F32 zoom_factor)
 								gDirUtilp->getAppRODataDir(),
 								LLUICtrlFactory::getXUIPaths());
 }
+
+
+void LLViewerWindow::toggleFullscreenConfirm()
+{
+	LLNotifications::instance().add("ConfirmToggleFullscreen", 
+		LLSD(), 
+		LLSD(), 
+		boost::bind(&toggleFullscreenCallback, _1, _2, this));
+}
+
+
+bool LLViewerWindow::toggleFullscreenCallback(const LLSD& notification, const LLSD& response, LLViewerWindow *self)
+{
+	S32 option = LLNotification::getSelectedOption(notification, response);
+	if( option == 0 )
+	{
+		// User confirmed it. Here we go!
+		self->toggleFullscreen( TRUE );
+	}
+	return false;
+}
+
+
 void LLViewerWindow::toggleFullscreen(BOOL show_progress)
 {
 	if (mWindow)
