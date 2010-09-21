@@ -505,15 +505,15 @@
 		</menu_item_call>
 		<menu_item_separator bottom="-232" enabled="true" height="8" label="-----------" left="0"
 		     mouse_opaque="true" name="separator4" width="185" />
-		<menu_item_call bottom="-232" enabled="true" height="19" label="Account History..." left="0"
-		     mouse_opaque="true" name="Account History..." width="185">
+		<menu_item_call bottom="-232" enabled="true" height="19" label="Transaction History" left="0"
+		     mouse_opaque="true" name="Transaction History..." width="185">
 			<on_click function="PromptShowURL" name="AccountHistory_url"
-			     userdata="WebLaunchAccountHistory,http://secondlife.com/account/transactions.php" />
+			     userdata="WebLaunchAccountHistory,http://inworldz.com/transactions.php" />
 		</menu_item_call>
 		<menu_item_call bottom="-267" enabled="true" height="19" label="Manage My Account..." left="0"
 		     mouse_opaque="true" name="Manage My Account..." width="166">
 			<on_click function="PromptShowURL" name="ManageMyAccount_url"
-			     userdata="WebLaunchJoinNow,http://secondlife.com/account/" />
+			     userdata="WebLaunchJoinNow,http://inworldz.com/account.php" />
 		</menu_item_call>
 		<menu_item_call bottom="-286" enabled="true" height="19" label="Buy I'z$..." left="0"
 		     mouse_opaque="true" name="Buy and Sell I'z$..." width="166">
