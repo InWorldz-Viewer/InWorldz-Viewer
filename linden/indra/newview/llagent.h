@@ -501,7 +501,7 @@ public:
 	// go home
 	void teleportHome();
 	void teleportHomeConfirm();
-	static void teleportHomeCallback(S32 option, void *userdata);
+	static bool teleportHomeCallback(const LLSD& notification, const LLSD& response );
 
 	// to an invited location
 	void teleportViaLure(const LLUUID& lure_id, BOOL godlike);

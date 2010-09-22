@@ -6180,17 +6180,19 @@ void LLAgent::teleportHome()
 
 void LLAgent::teleportHomeConfirm()
 {
-	gViewerWindow->alertXml("ConfirmTeleportHome", LLAgent::teleportHomeCallback, (void *)this);
+	LLNotifications::instance().add("ConfirmTeleportHome", LLSD(), LLSD(), &LLAgent::teleportHomeCallback);
 }
 
 // static
-void LLAgent::teleportHomeCallback(S32 option, void *userdata)
+bool LLAgent::teleportHomeCallback( const LLSD& notification, const LLSD& response )
 {
+	S32 option = LLNotification::getSelectedOption(notification, response);
 	if( option == 0 )
 	{
 		// They confirmed it. Here we go!
-		((LLAgent *) userdata)->teleportHome();
+		gAgent.teleportHome();
 	}
+	return false;
 }
 
 
