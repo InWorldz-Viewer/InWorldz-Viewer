@@ -53,8 +53,14 @@ LLPluginProcessChild::~LLPluginProcessChild()
 	if(mInstance != NULL)
 	{
 		sendMessageToPlugin(LLPluginMessage("base", "cleanup"));
-		delete mInstance;
-		mInstance = NULL;
+
+		// IMPORTANT: under some (unknown) circumstances the apr_dso_unload() triggered when mInstance is deleted
+		// appears to fail and lock up which means that a given instance of the slplugin process never exits.
+		// This is bad, especially when users try to update their version of SL - it fails because the slplugin
+		// process as well as a bunch of plugin specific files are locked and cannot be overwritten.
+		exit(0);
+		//delete mInstance;
+		//mInstance = NULL;
 	}
 }
 
@@ -270,14 +276,21 @@ bool LLPluginProcessChild::isDone(void)
 
 void LLPluginProcessChild::sendMessageToPlugin(const LLPluginMessage &message)
 {
-	std::string buffer = message.generate();
+	if (mInstance)
+	{
+		std::string buffer = message.generate();
 
-	LL_DEBUGS("Plugin") << "Sending to plugin: " << buffer << LL_ENDL;
-	LLTimer elapsed;
+		LL_DEBUGS("Plugin") << "Sending to plugin: " << buffer << LL_ENDL;
+		LLTimer elapsed;
 	
-	mInstance->sendMessage(buffer);
+		mInstance->sendMessage(buffer);
 
-	mCPUElapsed += elapsed.getElapsedTimeF64();
+		mCPUElapsed += elapsed.getElapsedTimeF64();
+	}
+	else
+	{
+		LL_WARNS("Plugin") << "mInstance == NULL" << LL_ENDL;
+	}
 }
 
 void LLPluginProcessChild::sendMessageToParent(const LLPluginMessage &message)
@@ -352,6 +365,7 @@ void LLPluginProcessChild::receiveMessageRaw(const std::string &message)
 					else
 					{
 						LL_WARNS("Plugin") << "Couldn't create a shared memory segment!" << LL_ENDL;
+						delete region;
 					}
 				}
 				

@@ -462,6 +462,19 @@ LLPluginClassMedia* LLViewerMediaImpl::newSourceFromMediaType(std::string media_
 		std::string user_data_path = gDirUtilp->getOSUserAppDir();
 		user_data_path += gDirUtilp->getDirDelimiter();
 
+		// Fix for EXT-5960 - make browser profile specific to user (cache, cookies etc.)
+		// If the linden username returned is blank, that can only mean we are
+		// at the login page displaying login Web page or Web browser test via Develop menu.
+		// In this case we just use whatever gDirUtilp->getOSUserAppDir() gives us (this
+		// is what we always used before this change)
+		std::string linden_user_dir = gDirUtilp->getLindenUserDir();
+		if (!linden_user_dir.empty())
+		{
+			// gDirUtilp->getLindenUserDir() is whole path, not just Linden name
+			user_data_path = linden_user_dir;
+			user_data_path += gDirUtilp->getDirDelimiter();
+		}
+
 		// See if the plugin executable exists
 		llstat s;
 		if(LLFile::stat(launcher_name, &s))
@@ -702,8 +715,12 @@ void LLViewerMediaImpl::navigateHome()
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-void LLViewerMediaImpl::navigateTo(const std::string& url, const std::string& mime_type,  bool rediscover_type)
+void LLViewerMediaImpl::navigateTo(const std::string& _url, const std::string& mime_type, bool rediscover_type)
 {
+	// trim whitespace from front and back of URL - fixes EXT-5363
+	std::string url(_url);
+	LLStringUtil::trim(url);
+
 	if(rediscover_type)
 	{
 
@@ -712,7 +729,12 @@ void LLViewerMediaImpl::navigateTo(const std::string& url, const std::string& mi
 
 		if(scheme.empty() || "http" == scheme || "https" == scheme)
 		{
-			LLHTTPClient::getHeaderOnly( url, new LLMimeDiscoveryResponder(this));
+			// If we don't set an Accept header, LLHTTPClient will add one like this:
+			//    Accept: application/llsd+xml
+			// which is really not what we want.
+			LLSD headers = LLSD::emptyMap();
+			headers["Accept"] = "*/*";
+			LLHTTPClient::getHeaderOnly(url, new LLMimeDiscoveryResponder(this), headers, 10.0f);
 		}
 		else if("data" == scheme || "file" == scheme || "about" == scheme)
 		{
