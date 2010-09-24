@@ -6449,7 +6449,13 @@ void handle_selected_texture_info(void*)
 			S32 height = img->getHeight();
 			S32 width = img->getWidth();
 			S32 components = img->getComponents();
-			msg = llformat("%dx%d %s on face ",
+			std::string image_id_string;
+			if (gAgent.isGodlike())
+			{
+				image_id_string = image_id.asString() + " ";
+			}
+			msg = llformat("%s%dx%d %s on face ",
+								image_id_string.c_str(),
 								width,
 								height,
 								(components == 4 ? "alpha" : "opaque"));
