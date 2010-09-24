@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>InWorldz</string>
 	<key>CFBundleIconFile</key>
-	<string>snowglobe.icns</string>
+	<string>inworldz.icns</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.inworldz.viewer</string>
 	<key>CFBundleInfoDictionaryVersion</key>
