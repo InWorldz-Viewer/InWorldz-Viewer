@@ -10,7 +10,6 @@
 # ARTWORK
 
 linden/LICENSE-logos.txt
-linden/indra/newview/res-sdl/
 linden/indra/newview/character/
 linden/indra/newview/app_settings/*.db2
 linden/indra/newview/app_settings/windlight/
