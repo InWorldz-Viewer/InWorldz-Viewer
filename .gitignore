@@ -10,22 +10,15 @@
 # ARTWORK
 
 linden/LICENSE-logos.txt
-linden/indra/newview/cursors_mac/
-linden/indra/newview/viewer.icns
 
 # LIBRARIES
 
 linden/LICENSES/
 linden/LICENSE-libraries-*.txt
 linden/libraries/
-linden/indra/newview/app_settings/mozilla*/
 linden/indra/newview/fonts/
-linden/indra/newview/lib/
 linden/indra/newview/dbghelp.dll
-linden/indra/newview/linux_tools/client-readme-voice.txt
-linden/indra/newview/vivox-runtime/
 linden/indra/newview/*.lproj/
-linden/indra/newview/mozilla-theme/
 linden/indra/test_apps/
 
 
