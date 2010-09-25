@@ -556,11 +556,16 @@ void LLAudioEngine::enableWind(bool enable)
 	if (enable && (!mEnableWind))
 	{
 		mEnableWind = initWind();
+		if (mEnableWind)
+		{
+			llinfos << "Wind audio enabled." << llendl;
+		}
 	}
 	else if (mEnableWind && (!enable))
 	{
 		mEnableWind = false;
 		cleanupWind();
+		llinfos << "Wind audio disabled." << llendl;
 	}
 }
 
@@ -722,7 +727,6 @@ void LLAudioEngine::setMuted(bool muted)
 		mMuted = muted;
 		setMasterGain(mMasterGain);
 	}
-	enableWind(!mMuted);
 }
 
 void LLAudioEngine::setMasterGain(const F32 gain)

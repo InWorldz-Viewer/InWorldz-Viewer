@@ -347,7 +347,6 @@ void handle_agent_stop_moving(void*);
 void print_packets_lost(void*);
 void drop_packet(void*);
 void velocity_interpolate( void* data );
-void toggle_wind_audio(void);
 void toggle_water_audio(void);
 void handle_rebake_textures(void*);
 BOOL check_admin_override(void*);
@@ -499,6 +498,7 @@ BOOL enable_detach(void*);
 BOOL enable_region_owner(void*);
 void menu_toggle_attached_lights(void* user_data);
 void menu_toggle_attached_particles(void* user_data);
+void menu_toggle_wind_audio(void* user_data);
 
 class LLMenuParcelObserver : public LLParcelObserver
 {
@@ -1041,6 +1041,11 @@ void init_debug_world_menu(LLMenuGL* menu)
 									   NULL, 
 									   &menu_check_control,
 									   (void*)"FixedWeather"));
+	menu->append(new LLMenuItemCheckGL("Disable Wind Audio",
+									   &menu_toggle_wind_audio,
+									   NULL,
+									   &menu_check_control,
+									   (void*)"DisableWindAudio"));
 	menu->append(new LLMenuItemCallGL("Dump Region Object Cache",
 		&handle_dump_region_object_cache, NULL, NULL));
 	menu->createJumpKeys();
@@ -3323,11 +3328,13 @@ void velocity_interpolate( void* data )
 }
 
 
-void toggle_wind_audio(void)
+void menu_toggle_wind_audio(void* user_data)
 {
+	menu_toggle_control(user_data);
+	BOOL enabled = !gSavedSettings.getBOOL("DisableWindAudio");
 	if (gAudiop)
 	{
-		gAudiop->enableWind(!(gAudiop->isWindEnabled()));
+		gAudiop->enableWind(enabled);
 	}
 }
 
