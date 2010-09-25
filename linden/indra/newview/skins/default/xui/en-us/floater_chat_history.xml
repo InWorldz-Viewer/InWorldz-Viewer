@@ -32,7 +32,7 @@
 '[OBJECTNAME]', an object owned by '[OWNERNAME]', located in [REGIONNAME] at [REGIONPOS], has been denied permission to: [PERMISSIONS].
   </string>
   <string name="ScriptTakeMoney">
-      Take Linden dollars (I'z$) from you
+      Take InWorldz I'z (I'z$) from you
   </string>
   <string name="ActOnControlInputs">
       Act on your control inputs

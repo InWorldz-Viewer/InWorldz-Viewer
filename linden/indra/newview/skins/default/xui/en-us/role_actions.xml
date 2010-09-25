@@ -53,8 +53,8 @@
 		<action description="Deed land and buy land for group"
 		     longdescription="Deed land and buy land for group. This is done in About Land &gt; General tab."
 		     name="land deed" value="12" />
-		<action description="Abandon land to Governor Linden"
-		     longdescription="Abandon land to Governor Linden. *WARNING* Any Member in a Role with this Ability can abandon group-owned land in About Land &gt; General tab, reverting it to Linden ownership without a sale! Be sure you know what you&apos;re doing before assigning this Ability."
+		<action description="Abandon land"
+		     longdescription="Abandon land. *WARNING* Any Member in a Role with this Ability can abandon group-owned land in About Land &gt; General tab, reverting it to InWorldz ownership without a sale! Be sure you know what you&apos;re doing before assigning this Ability."
 		     name="land release" value="13" />
 		<action description="Set land for sale info"
 		     longdescription="Set land for sale info. *WARNING* Any Member in a Role with this Ability can sell group-owned land in About Land &gt; General tab as they wish! Be sure you know what you&apos;re doing before assigning this Ability."
@@ -84,7 +84,7 @@
 		     longdescription="Change streaming music and movie settings in About Land &gt; Media tab."
 		     name="land change media" value="20" />
 		<action description="Toggle &apos;Edit Terrain&apos;"
-		     longdescription="Toggle &apos;Edit Terrain&apos;. *WARNING* About Land &gt; Options tab &gt; Edit Terrain allows anyone to terraform your land&apos;s shape, and place and move Linden plants. Be sure you know what you&apos;re doing before assigning this Ability. Editing terrain is toggled in About Land &gt; Options tab."
+		     longdescription="Toggle &apos;Edit Terrain&apos;. *WARNING* About Land &gt; Options tab &gt; Edit Terrain allows anyone to terraform your land&apos;s shape, and place and move InWorldz plants. Be sure you know what you&apos;re doing before assigning this Ability. Editing terrain is toggled in About Land &gt; Options tab."
 		     name="land edit" value="21" />
 		<action description="Toggle various About Land &gt; Options settings"
 		     longdescription="Toggle &apos;Safe (no damage)&apos;, &apos;Fly&apos;, and allow other Residents to: &apos;Create Objects&apos;, &apos;Edit Terrain&apos;, &apos;Create Landmarks&apos;, and &apos;Run Scripts&apos; on group-owned land in About Land &gt; Options tab."
@@ -126,7 +126,7 @@
 		     name="land admin" value="32" />
 	</action_set>
 	<action_set
-	     description="These Abilities include powers to allow members to return objects and place and move Linden plants. This is useful for Members to clean up litter and do landscaping, but it should also be used with care, because there&apos;s no undo for returning objects."
+	     description="These Abilities include powers to allow members to return objects and place and move InWorldz plants. This is useful for Members to clean up litter and do landscaping, but it should also be used with care, because there&apos;s no undo for returning objects."
 	     name="Parcel Content">
 		<action description="Return objects owned by group"
 		     longdescription="Return objects on group-owned parcels that are owned by the group in About Land &gt; Objects tab."
@@ -137,8 +137,8 @@
 		<action description="Return non-group objects"
 		     longdescription="Return objects on group-owned parcels that are non-group in About Land &gt; Objects tab."
 		     name="land return non group" value="34" />
-		<action description="Landscaping using Linden plants"
-		     longdescription="Landscaping ability to place and move Linden trees, plants, and grasses. These items can be found in your inventory&apos;s Library &gt; Objects folder or they can be created via the Build button."
+		<action description="Landscaping using InWorldz plants"
+		     longdescription="Landscaping ability to place and move InWorldz trees, plants, and grasses. These items can be found in your inventory&apos;s Library &gt; Objects folder or they can be created via the Build button."
 		     name="land gardening" value="35" />
 	</action_set>
 	<action_set

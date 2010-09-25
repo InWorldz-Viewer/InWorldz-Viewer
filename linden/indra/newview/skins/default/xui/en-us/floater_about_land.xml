@@ -210,8 +210,8 @@
 			     label_selected="Reclaim Land..." left="260" mouse_opaque="true"
 			     name="Reclaim Land..." scale_image="true" width="180" />
 			<button bottom="-324" enabled="false" follows="left|top" font="SansSerif"
-			     halign="center" height="20" label="Linden Sale..."
-			     label_selected="Linden Sale..." left="260" mouse_opaque="true"
+			     halign="center" height="20" label="InWorldz Sale..."
+			     label_selected="InWorldz Sale..." left="260" mouse_opaque="true"
 			     name="Linden Sale..." scale_image="true"
 			     tool_tip="Land must be owned, set content, and not already for auction."
 			     width="180" />
@@ -644,7 +644,7 @@ Only large parcels can be listed in search.
 					Any Category
 				</combo_item>
 				<combo_item name="LindenLocation" value="linden">
-					Linden Location
+					InWorldz Location
 				</combo_item>
 				<combo_item name="Adult" value="adult">
 					Adult
@@ -691,7 +691,7 @@ Only large parcels can be listed in search.
 					Any Category
 				</combo_item>
 				<combo_item name="LindenLocation" value="linden">
-					Linden Location
+					InWorldz Location
 				</combo_item>
 				<combo_item name="Arts&amp;Culture" value="arts">
 					Arts &amp; Culture

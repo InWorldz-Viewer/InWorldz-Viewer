@@ -36,7 +36,7 @@
 	</text_editor>
 	<text bottom_delta="-37" follows="left|bottom" font="SansSerifSmall" left="12"
 	     name="fine_print">
-		If your recipient joins SL, you&apos;ll get a referral bonus.
+		If your recipient joins InWorldz, you&apos;ll get a referral bonus.
 	</text>
 	<button bottom_delta="-32" follows="right|bottom" height="20" label="Cancel"
 	     name="cancel_btn" right="-10" width="100" />

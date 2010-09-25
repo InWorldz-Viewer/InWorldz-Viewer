@@ -106,8 +106,8 @@
 		<combo_item name="MissingContent" value="21">
 			Missing Content
 		</combo_item>
-		<combo_item name="LindenDollars(I'z$)" value="14">
-			Linden Dollars (I'z$)
+		<combo_item name="InWorldz I'z(I'z$)" value="14">
+			InWorldz I'z (I'z$)
 		</combo_item>
 		<combo_item name="Permissions" value="15">
 			Permissions

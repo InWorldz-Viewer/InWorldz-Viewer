@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <floater can_close="true" can_drag_on_left="false" can_minimize="true"
      can_resize="false" height="360" min_height="100" min_width="100"
-     name="groupinfo" title="The Lindens - Group Information" width="458">
+     name="groupinfo" title="InWorldz - Group Information" width="458">
 	<tab_container bottom="-330" height="306" left="0" mouse_opaque="false" name="tab"
 	     tab_position="top" width="458">
 		<panel bottom="-305" follows="left|top|right|bottom" height="289" label="General"
@@ -28,7 +28,7 @@
 			     bottom_delta="-16" drop_shadow_visible="true" follows="left|top"
 			     font="SansSerifSmall" h_pad="0" halign="left" height="16" left="12"
 			     mouse_opaque="true" name="txt3" v_pad="0" width="436">
-				Anyone may create a group. Each person may belong to up to 15 groups.
+				Anyone may create a group. Each person may belong to up to 50 groups.
 			</text>
 			<text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 			     bottom_delta="-16" drop_shadow_visible="true" follows="left|top"

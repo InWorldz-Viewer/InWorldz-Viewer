@@ -19,7 +19,7 @@
 	     mouse_opaque="true" name="About..." scale_image="true" width="90" />
 	<button bottom="-505" enabled="true" follows="left|bottom" font="SansSerif"
 	     halign="center" height="20"
-	     help_url="http://secondlife.com/app/help/technical/preferences.php"
+	     help_url="http://inworldz.com/support.php"
 	     label="Help" label_selected="Help" left_delta="93" mouse_opaque="true"
 	     name="Help" scale_image="true" width="90" />
 	<tab_container bottom="-466" enabled="true" follows="left|top|right|bottom" height="445"

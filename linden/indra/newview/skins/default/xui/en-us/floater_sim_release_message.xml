@@ -10,12 +10,12 @@
 		In-World Help
 	</string>
 	<string name="in-world_help_url">
-		http://www.secondlife.com/app/support/inworld.html
+		http://inworldz.com/support.php
 	</string>
 	<string name="additional_help_title">
 		Additional Help
 	</string>
 	<string name="additional_help_url">
-		http://www.secondlife.com/app/support/support.html
+		http://inworldz.com/support.php
 	</string>
 </floater>

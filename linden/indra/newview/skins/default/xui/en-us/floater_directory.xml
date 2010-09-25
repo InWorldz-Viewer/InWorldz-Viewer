@@ -295,7 +295,7 @@
 				None Found.
 			</string>
 			<string name="land_help_text">
-				Land can be bought direct for Linden Dollars (I'z$) or at auction for either I'z$ or US$.
+				Land can be bought direct for InWorldz Dollars (I'z$) or at auction for either I'z$ or US$.
 To buy direct, visit the land and click on the place name in the title bar.
 			</string>
 			<text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
