@@ -10,12 +10,6 @@
 # ARTWORK
 
 linden/LICENSE-logos.txt
-linden/indra/newview/skins/*/textures/
-linden/indra/newview/skins/default/html/btn_purplepill_bg.png
-linden/indra/newview/skins/default/html/en-us/loading/sl_logo_rotate_black.gif
-linden/indra/newview/skins/default/html/en-us/loading/Thumbs.db
-linden/indra/newview/skins/default/html/en-us/loading/imprudence_loading.png
-linden/indra/newview/skins/default/html/unabletoconnect.png
 linden/indra/newview/res/
 linden/indra/newview/res-sdl/
 linden/indra/newview/character/
