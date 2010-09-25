@@ -823,7 +823,8 @@ void LLFloaterBuyLandUI::updateNames()
 	
 	if (mIsClaim)
 	{
-		mParcelSellerName = "Linden Lab";
+		// TODO: this should be in xml. Silly LL -- MC
+		mParcelSellerName = "InWorldz";
 	}
 	else if (parcelp->getIsGroupOwned())
 	{
