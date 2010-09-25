@@ -621,15 +621,15 @@
 			</text>
 			<spinner bottom_delta="-20" decimal_digits="3" follows="left|top" height="16"
 			     increment="0.01" initial_val="0" label="X" label_width="10" left="10"
-			     max_val="128" min_val="0.01" mouse_opaque="true" name="Scale X"
+			     max_val="128" min_val="0.001" mouse_opaque="true" name="Scale X"
 			     text_enabled_color="1, 1, 1, 1" width="87" />
 			<spinner bottom_delta="-18" decimal_digits="3" follows="left|top" height="16"
 			     increment="0.01" initial_val="0" label="Y" label_width="10" left="10"
-			     max_val="128" min_val="0.01" mouse_opaque="true" name="Scale Y"
+			     max_val="128" min_val="0.001" mouse_opaque="true" name="Scale Y"
 			     text_enabled_color="1, 1, 1, 1" width="87" />
 			<spinner bottom_delta="-18" decimal_digits="3" follows="left|top" height="16"
 			     increment="0.01" initial_val="0" label="Z" label_width="10" left="10"
-			     max_val="128" min_val="0.01" mouse_opaque="true" name="Scale Z"
+			     max_val="128" min_val="0.001" mouse_opaque="true" name="Scale Z"
 			     text_enabled_color="1, 1, 1, 1" width="87" />
 			<text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 			     bottom_delta="-16" drop_shadow_visible="true" follows="left|top"
@@ -738,7 +738,7 @@
 				Skew
 			</text>
 			<spinner bottom_delta="-20" decimal_digits="1" follows="left|top" height="16"
-			     increment="5" initial_val="0" left="121" max_val="95" min_val="0"
+			     increment="1" initial_val="0" left="121" max_val="99" min_val="0"
 			     mouse_opaque="true" name="Scale 1" width="68" />
 			<spinner bottom_delta="0" decimal_digits="2" follows="left|top" height="16"
 			     increment="0.05" initial_val="0" left_delta="73" max_val="0.95"
