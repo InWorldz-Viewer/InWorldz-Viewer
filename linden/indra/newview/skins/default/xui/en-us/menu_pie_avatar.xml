@@ -30,8 +30,8 @@
 		<menu_item_call enabled="true" label="Group Invite..." mouse_opaque="true" name="Invite...">
 			<on_click function="Avatar.InviteToGroup" />
 		</menu_item_call>
-		    <menu_item_call enabled="true" label="Derender" mouse_opaque="true" name="Derender">
-      	<on_click function="Object.DERENDER" />
+		<menu_item_call enabled="true" label="Derender" mouse_opaque="true" name="Derender">
+      		<on_click function="Object.DERENDER" />
     	</menu_item_call>
 		<menu_item_call enabled="false" label="Eject..." mouse_opaque="true" name="Eject...">
 			<on_click function="Avatar.Eject" />
