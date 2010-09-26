@@ -814,10 +814,6 @@
 			</menu_item_call>
 		<menu_item_separator bottom="-148" enabled="true" height="8" label="-----------" left="0"
 		     mouse_opaque="true" name="separator3" width="166" />
-		<menu_item_call bottom="-194" enabled="true" height="19" label="Report Abuse..." left="0"
-		     mouse_opaque="true" name="Report Abuse..." width="166">
-			<on_click function="ShowFloater" userdata="complaint reporter" />
-		</menu_item_call>
 		<menu_item_call bottom="-213" enabled="true" height="19" label="Bumps, Pushes &amp; Hits"
 		     left="0" mouse_opaque="true" name="Bumps, Pushes &amp;amp; Hits..."
 		     width="166">
