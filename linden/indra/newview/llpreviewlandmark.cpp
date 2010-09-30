@@ -89,7 +89,6 @@ LLPreviewLandmark::LLPreviewLandmark(const std::string& name,
 			  inv_item),
 	mLandmark( NULL )
 {
-	
 	mFactoryMap["place_details_panel"] = LLCallbackMap(LLPreviewLandmark::createPlaceDetail, this);
 	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_preview_existing_landmark.xml", &getFactoryMap());
 
