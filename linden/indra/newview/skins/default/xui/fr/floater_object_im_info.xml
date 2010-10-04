@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		Objet :
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		Lieu :
 	</text>
-	<text name="Unknown_Slurl">
+	<text name="Unknown_Izurl">
 		(Informations indisponibles)
 	</text>
 	<text name="LabelOwnerNameTitle">

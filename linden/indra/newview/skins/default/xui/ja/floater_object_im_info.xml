@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		オブジェクト：
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		位置：
 	</text>
-	<text name="Unknown_Slurl">
+	<text name="Unknown_Izurl">
 		（位置情報が利用できません）
 	</text>
 	<text name="LabelOwnerNameTitle">

@@ -1,6 +1,6 @@
 /** 
  * @file llurlsimstring.cpp (was llsimurlstring.cpp)
- * @brief Handles "SLURL fragments" like Ahern/123/45 for
+ * @brief Handles "IZURL fragments" like Ahern/123/45 for
  * startup processing, login screen, prefs, etc.
  *
  * $LicenseInfo:firstyear=2006&license=viewergpl$

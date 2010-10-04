@@ -933,12 +933,12 @@ const LLHost& LLAgent::getRegionHost() const
 }
 
 //-----------------------------------------------------------------------------
-// getSLURL()
+// getIZURL()
 // returns empty() if getRegion() == NULL
 //-----------------------------------------------------------------------------
-std::string LLAgent::getSLURL() const
+std::string LLAgent::getIZURL() const
 {
-	std::string slurl;
+	std::string izurl;
 	LLViewerRegion *regionp = getRegion();
 	if (regionp)
 	{
@@ -946,9 +946,9 @@ std::string LLAgent::getSLURL() const
 		S32 x = llround( (F32)fmod( agentPos.mdV[VX], (F64)REGION_WIDTH_METERS ) );
 		S32 y = llround( (F32)fmod( agentPos.mdV[VY], (F64)REGION_WIDTH_METERS ) );
 		S32 z = llround( (F32)agentPos.mdV[VZ] );
-		slurl = LLURLDispatcher::buildSLURL(regionp->getName(), x, y, z);
+		izurl = LLURLDispatcher::buildIZURL(regionp->getName(), x, y, z);
 	}
-	return slurl;
+	return izurl;
 }
 
 //-----------------------------------------------------------------------------
@@ -6317,11 +6317,11 @@ void LLAgent::setTeleportState(ETeleportState state)
 	{
 		mbTeleportKeepsLookAt = false;
 	}
-	// OGPX : Only compute a 'slurl' in non-OGP mode. In OGP, set it to regionuri in floaterteleport.
+	// OGPX : Only compute a 'izurl' in non-OGP mode. In OGP, set it to regionuri in floaterteleport.
 	if ((mTeleportState == TELEPORT_MOVING)&& (!gSavedSettings.getBOOL("OpenGridProtocol")))
 	{
-		// We're outa here. Save "back" slurl.
-		mTeleportSourceSLURL = getSLURL();
+		// We're outa here. Save "back" izurl.
+		mTeleportSourceIZURL = getIZURL();
 	}
 }
 

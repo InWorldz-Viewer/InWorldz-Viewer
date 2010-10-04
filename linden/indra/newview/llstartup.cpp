@@ -119,7 +119,7 @@
 #include "llinventorymodel.h"
 #include "llinventoryview.h"
 #include "llkeyboard.h"
-#include "llloginhandler.h"			// gLoginHandler, SLURL support
+#include "llloginhandler.h"			// gLoginHandler, IZURL support
 #include "llpanellogin.h"
 #include "llmutelist.h"
 #include "llnotify.h"
@@ -1082,16 +1082,16 @@ bool idle_startup()
 		//
 		// Log on to system
 		//
-		if (!LLStartUp::sSLURLCommand.empty())
+		if (!LLStartUp::sIZURLCommand.empty())
 		{
 			// this might be a secondlife:///app/login URL
-			gLoginHandler.parseDirectLogin(LLStartUp::sSLURLCommand);
+			gLoginHandler.parseDirectLogin(LLStartUp::sIZURLCommand);
 		}
 		if (!gLoginHandler.getFirstName().empty()
 			|| !gLoginHandler.getLastName().empty()
 			|| !gLoginHandler.getWebLoginKey().isNull() )
 		{
-			// We have at least some login information on a SLURL
+			// We have at least some login information on a IZURL
 			firstname = gLoginHandler.getFirstName();
 			lastname = gLoginHandler.getLastName();
 			web_login_key = gLoginHandler.getWebLoginKey();
@@ -1296,7 +1296,7 @@ bool idle_startup()
 			}
 		}
 
-		//reset the values that could have come in from a slurl
+		//reset the values that could have come in from a izurl
 		if (!gLoginHandler.getWebLoginKey().isNull())
 		{
 			firstname = gLoginHandler.getFirstName();
@@ -3850,7 +3850,7 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 		return false;
 	}
 
-	// if a sim name was passed in via command line parameter (typically through a SLURL)
+	// if a sim name was passed in via command line parameter (typically through a IZURL)
 	if ( LLURLSimString::sInstance.mSimString.length() )
 	{
 		// record the location to start at next time
@@ -3865,7 +3865,7 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 	LLAppViewer::instance()->removeMarkerFile(); // In case updater fails
 	
 #elif LL_DARWIN
-	// if a sim name was passed in via command line parameter (typically through a SLURL)
+	// if a sim name was passed in via command line parameter (typically through a IZURL)
 	if ( LLURLSimString::sInstance.mSimString.length() )
 	{
 		// record the location to start at next time
@@ -4323,7 +4323,7 @@ void reset_login()
 
 //---------------------------------------------------------------------------
 
-std::string LLStartUp::sSLURLCommand;
+std::string LLStartUp::sIZURLCommand;
 
 bool LLStartUp::canGoFullscreen()
 {
@@ -4346,11 +4346,11 @@ void LLStartUp::multimediaInit()
 bool LLStartUp::dispatchURL()
 {
 	// ok, if we've gotten this far and have a startup URL
-	if (!sSLURLCommand.empty())
+	if (!sIZURLCommand.empty())
 	{
 		LLMediaCtrl* web = NULL;
 		const bool trusted_browser = false;
-		LLURLDispatcher::dispatch(sSLURLCommand, web, trusted_browser);
+		LLURLDispatcher::dispatch(sIZURLCommand, web, trusted_browser);
 	}
 	else if (LLURLSimString::parse())
 	{

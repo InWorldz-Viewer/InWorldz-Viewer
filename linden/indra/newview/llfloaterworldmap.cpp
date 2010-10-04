@@ -227,7 +227,7 @@ BOOL LLFloaterWorldMap::postBuild()
 	childSetAction("Show Destination", onShowTargetBtn, this);
 	childSetAction("Show My Location", onShowAgentBtn, this);
 	childSetAction("Clear", onClearBtn, this);
-	childSetAction("copy_slurl", onCopySLURL, this);
+	childSetAction("copy_izurl", onCopyIZURL, this);
 
 	mCurZoomVal = log(LLWorldMapView::sMapScale)/log(2.f);
 	childSetValue("zoom slider", LLWorldMapView::sMapScale);
@@ -470,7 +470,7 @@ void LLFloaterWorldMap::draw()
 	childSetEnabled("Teleport", (BOOL)tracking_status);
 //	childSetEnabled("Clear", (BOOL)tracking_status);
 	childSetEnabled("Show Destination", (BOOL)tracking_status || LLWorldMap::getInstance()->isTracking());
-	childSetEnabled("copy_slurl", (mSLURL.size() > 0) );
+	childSetEnabled("copy_izurl", (mIZURL.size() > 0) );
 
 	setMouseOpaque(TRUE);
 	getDragHandle()->setMouseOpaque(TRUE);
@@ -679,8 +679,8 @@ void LLFloaterWorldMap::updateLocation()
 				childSetValue("spin y", LLSD(agent_y) );
 				childSetValue("spin z", LLSD(agent_z) );
 
-				// Set the current SLURL
-				mSLURL = LLURLDispatcher::buildSLURL(agent_sim_name, agent_x, agent_y, agent_z);
+				// Set the current IZURL
+				mIZURL = LLURLDispatcher::buildIZURL(agent_sim_name, agent_x, agent_y, agent_z);
 			}
 		}
 
@@ -714,14 +714,14 @@ void LLFloaterWorldMap::updateLocation()
 		childSetValue("spin y", LLSD(region_y) );
 		childSetValue("spin z", LLSD((F32)pos_global.mdV[VZ]) );
 
-		// simNameFromPosGlobal can fail, so don't give the user an invalid SLURL
+		// simNameFromPosGlobal can fail, so don't give the user an invalid IZURL
 		if ( gotSimName )
 		{
-			mSLURL = LLURLDispatcher::buildSLURL(sim_name, llround(region_x), llround(region_y), llround((F32)pos_global.mdV[VZ]));
+			mIZURL = LLURLDispatcher::buildIZURL(sim_name, llround(region_x), llround(region_y), llround((F32)pos_global.mdV[VZ]));
 		}
 		else
-		{	// Empty SLURL will disable the "Copy SLURL to clipboard" button
-			mSLURL = "";
+		{	// Empty IZURL will disable the "Copy IZURL to clipboard" button
+			mIZURL = "";
 		}
 	}
 }
@@ -1249,7 +1249,7 @@ void LLFloaterWorldMap::onClearBtn(void* data)
 	self->mTrackedStatus = LLTracker::TRACKING_NOTHING;
 	LLTracker::stopTracking((void *)(intptr_t)TRUE);
 	LLWorldMap::getInstance()->cancelTracking();
-	self->mSLURL = "";					// Clear the SLURL since it's invalid
+	self->mIZURL = "";					// Clear the IZURL since it's invalid
 	self->mSetToUserPosition = TRUE;	// Revert back to the current user position
 }
 
@@ -1283,15 +1283,15 @@ void LLFloaterWorldMap::onClickTeleportBtn(void* data)
 }
 
 // static
-void LLFloaterWorldMap::onCopySLURL(void* data)
+void LLFloaterWorldMap::onCopyIZURL(void* data)
 {
 	LLFloaterWorldMap* self = (LLFloaterWorldMap*)data;
-	gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(self->mSLURL));
+	gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(self->mIZURL));
 	
 	LLSD args;
-	args["SLURL"] = self->mSLURL;
+	args["IZURL"] = self->mIZURL;
 
-	LLNotifications::instance().add("CopySLURL", args);
+	LLNotifications::instance().add("CopyIZURL", args);
 }
 
 void LLFloaterWorldMap::onCheckEvents(LLUICtrl*, void* data)

@@ -157,7 +157,7 @@
 #include "lltoolselectland.h"
 #include "lltoolview.h"
 #include "lluictrlfactory.h"
-#include "llurldispatcher.h"		// SLURL from other app instance
+#include "llurldispatcher.h"		// IZURL from other app instance
 #include "llvieweraudio.h"
 #include "llviewercamera.h"
 #include "llviewergesture.h"
@@ -1388,10 +1388,10 @@ void LLViewerWindow::handleWindowUnblock(LLWindow *window)
 
 void LLViewerWindow::handleDataCopy(LLWindow *window, S32 data_type, void *data)
 {
-	const S32 SLURL_MESSAGE_TYPE = 0;
+	const S32 IZURL_MESSAGE_TYPE = 0;
 	switch (data_type)
 	{
-	case SLURL_MESSAGE_TYPE:
+	case IZURL_MESSAGE_TYPE:
 		// received URL
 		std::string url = (const char*)data;
 		LLMediaCtrl* web = NULL;

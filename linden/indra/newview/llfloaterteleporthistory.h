@@ -72,16 +72,16 @@ private:
 		LIST_REGION,
 		LIST_POSITION,
 		LIST_VISITED,
-		LIST_SLURL,
+		LIST_IZURL,
 		LIST_SIMSTRING
 	};
 
 	static void onPlacesSelected(LLUICtrl* ctrl, void* data);
 	static void onTeleport(void* data);
 	static void onShowOnMap(void* data);
-	static void onCopySLURL(void* data);
+	static void onCopyIZURL(void* data);
 
-	/// @brief: enables or disables the "Teleport", "Show On Map" and "Copy To SLURL" buttons **/
+	/// @brief: enables or disables the "Teleport", "Show On Map" and "Copy To IZURL" buttons **/
 	void setButtonsEnabled(BOOL on);
 
 	LLScrollListCtrl* mPlacesList;
@@ -92,7 +92,7 @@ private:
 	std::string mPendingPosition;
 	std::string mPendingSimString;
 	std::string mPendingTimeString;
-	std::string mPendingSLURL;
+	std::string mPendingIZURL;
 };
 
 // globals

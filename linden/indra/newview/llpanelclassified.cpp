@@ -126,7 +126,7 @@ public:
 		if (tokens.size() < 2) return false;
 		LLUUID classified_id = tokens[0].asUUID();
 		if (classified_id.isNull()) return false;
-		// *HACK: construct a SLURL to do the teleport
+		// *HACK: construct a IZURL to do the teleport
 		std::string url("secondlife:///app/teleport/");
 		// skip the uuid we took off above, rebuild URL
 		// separated by slashes.

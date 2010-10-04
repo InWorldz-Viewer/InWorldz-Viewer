@@ -2139,13 +2139,13 @@ Desideri abbandonare la modalità &apos;Occupato&apos; prima di completare quest
 		Confermi di volere rimuovere permanentemente il contenuto della tua cartalla Persi e ritrovati?
 		<usetemplate ignoretext="Quando cancelli la cartella degli oggetti perduti e ritrovati del tuo inventario." name="okcancelignore" notext="No" yestext="Si"/>
 	</notification>
-	<notification name="CopySLURL">
-		Lo SLURL seguente è stato copiato nei tuoi appunti:
- [SLURL]
+	<notification name="CopyIZURL">
+		Lo IZURL seguente è stato copiato nei tuoi appunti:
+ [IZURL]
 
 Lo puoi inserire in una pagina web per dare ad altri modo di accedere a questo posto o puoi provare a copiarla nella barra indirizzi del tuo browser web.
 		<form name="form">
-			<ignore name="ignore" text="Quando copi uno SLURL negli appunti."/>
+			<ignore name="ignore" text="Quando copi uno IZURL negli appunti."/>
 		</form>
 	</notification>
 	<notification name="GraphicsPreferencesHelp">

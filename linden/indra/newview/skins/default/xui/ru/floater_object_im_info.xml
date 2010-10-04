@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		Объект:
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		Место:
 	</text>
-	<text name="Unknown_Slurl" width="300">
+	<text name="Unknown_Izurl" width="300">
 		(Информация о Месте Недоступна)
 	</text>
 	<text name="LabelOwnerNameTitle">

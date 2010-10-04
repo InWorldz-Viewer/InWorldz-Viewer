@@ -5,9 +5,9 @@
 <node name="/com/secondlife/ViewerAppAPI">
   <interface name="com.secondlife.ViewerAppAPI">
     <annotation name="org.freedesktop.DBus.GLib.CSymbol" value="viewer_app_api"/>
-    <method name="GoSLURL">
-      <annotation name="org.freedesktop.DBus.GLib.CSymbol" value="viewer_app_api_GoSLURL"/>
-      <arg type="s" name="slurl" direction="in" />
+    <method name="GoIZURL">
+      <annotation name="org.freedesktop.DBus.GLib.CSymbol" value="viewer_app_api_GoIZURL"/>
+      <arg type="s" name="izurl" direction="in" />
       <arg type="b" name="success_ret" direction="out" />
     </method>
   </interface>

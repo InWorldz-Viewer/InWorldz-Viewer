@@ -52,6 +52,6 @@
 	<button label="Mostrar el destino" label_selected="Mostrar el destino" name="Show Destination" tool_tip="Centrar el mapa en la localización elegida"/>
 	<button label="Limpiar" label_selected="Limpiar" name="Clear" tool_tip="Parar la búsqueda"/>
 	<button label="Mostrar mi posición" label_selected="Mostrar mi posición" name="Show My Location" tool_tip="Centrar el mapa en la posición de su avatar"/>
-	<button label="Copiar la SLurl al portapapeles" name="copy_slurl" tool_tip="Copiar la posición actual como una SLurl, para usarla en la web."/>
+	<button label="Copiar la IZurl al portapapeles" name="copy_izurl" tool_tip="Copiar la posición actual como una IZurl, para usarla en la web."/>
 	<slider label="Zoom" name="zoom slider"/>
 </floater>

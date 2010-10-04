@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		物品：
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		位置：
 	</text>
-	<text name="Unknown_Slurl">
+	<text name="Unknown_Izurl">
 		（无法获得位置信息）
 	</text>
 	<text name="LabelOwnerNameTitle">

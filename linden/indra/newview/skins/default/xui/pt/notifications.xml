@@ -2108,9 +2108,9 @@ Você gostaria de deixar o modo Ocupado antes de completar esta transação?
 		Deseja realmente remover permanentemente o conteúdo da pasta achados e perdidos?
 		<usetemplate ignoretext="Ao esvaziar pasta Achados e Perdidos do seu inventário" name="okcancelignore" notext="Não" yestext="Sim"/>
 	</notification>
-	<notification name="CopySLURL">
-		A seguinte SLURL foi copiada para o seu clipboard:
- [SLURL]
+	<notification name="CopyIZURL">
+		A seguinte IZURL foi copiada para o seu clipboard:
+ [IZURL]
 
 Coloque-a em uma página web para dar aos outros um fácil acesso a este local ou tente você, colando-a na barra de endereços do seu navegador.
 		<form name="form">

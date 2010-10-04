@@ -52,6 +52,6 @@
 	<button label="Érkezési pont" label_selected="Érkezési pont" name="Show Destination" tool_tip="Térkép középre pozícionálása a kijelölt helyszínhez viszonyítva"/>
 	<button label="Töröl" label_selected="Töröl" name="Clear" tool_tip="Követés kikapcsolása"/>
 	<button label="Saját hely" label_selected="Saját hely" name="Show My Location" tool_tip="Térkép középre pozícionálása az avatár helyszínéhez viszonyítva"/>
-	<button label="SLURL másolása vágólapra" name="copy_slurl" tool_tip="Jelenlegi helyszín SLURL-ként történő másolása honlapra történő beillesztéshez."/>
+	<button label="IZURL másolása vágólapra" name="copy_izurl" tool_tip="Jelenlegi helyszín IZURL-ként történő másolása honlapra történő beillesztéshez."/>
 	<slider label="Nagyít" name="zoom slider"/>
 </floater>

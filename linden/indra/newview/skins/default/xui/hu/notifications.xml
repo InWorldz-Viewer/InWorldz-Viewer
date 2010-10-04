@@ -1888,9 +1888,9 @@ Elfoglalt állapot megszüntetése a tranzakció befejezése előtt?
 	<notification name="ConfirmEmptyLostAndFound">
 		Biztos, hogy véglegesen eltávolítod a Lost And Found (Talált és visszaküldött tárgyak) könyvtárból a tartalmakat?
 	</notification>
-	<notification name="CopySLURL">
-		A következő SLURL a vágólapra másolásra került:
- [SLURL]
+	<notification name="CopyIZURL">
+		A következő IZURL a vágólapra másolásra került:
+ [IZURL]
 
 A cím megadásával lehetőség nyílik, hogy mások is könnyedén megtalálják az adott helyszínt.
 	</notification>

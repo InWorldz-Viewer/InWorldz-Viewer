@@ -33,7 +33,7 @@
 #ifndef LL_LLWORLDMAPMESSAGE_H
 #define LL_LLWORLDMAPMESSAGE_H
 
-// Handling of messages (send and process) as well as SLURL callback if necessary
+// Handling of messages (send and process) as well as IZURL callback if necessary
 class LLMessageSystem;
 
 class LLWorldMapMessage : public LLSingleton<LLWorldMapMessage>
@@ -70,13 +70,13 @@ public:
 	void sendItemRequest(U32 type, U64 handle = 0);
 
 private:
-	// Search for region (by name or handle) for SLURL processing and teleport
+	// Search for region (by name or handle) for IZURL processing and teleport
 	// None of this relies explicitly on the LLWorldMap instance so better handle it here
-	std::string		mSLURLRegionName;
-	U64				mSLURLRegionHandle;
-	std::string		mSLURL;
-	url_callback_t	mSLURLCallback;
-	bool			mSLURLTeleport;
+	std::string		mIZURLRegionName;
+	U64				mIZURLRegionHandle;
+	std::string		mIZURL;
+	url_callback_t	mIZURLCallback;
+	bool			mIZURLTeleport;
 };
 
 #endif // LL_LLWORLDMAPMESSAGE_H

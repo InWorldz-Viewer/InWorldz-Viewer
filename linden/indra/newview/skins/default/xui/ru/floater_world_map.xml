@@ -52,6 +52,6 @@
 	<button label="Показать место" label_selected="Показать место" name="Show Destination" tool_tip="Центрировать карту на выбранное место"/>
 	<button label="Очистить" label_selected="Очистить" name="Clear" tool_tip="Остановить поиск"/>
 	<button label="Мое располож." label_selected="Мое располож." name="Show My Location" tool_tip="Центрировать карту на позицию аватара"/>
-	<button label="Копировать SLURL в буфер" name="copy_slurl" tool_tip="Копировать текущую локацию как SLURL для использования в Интернет"/>
+	<button label="Копировать IZURL в буфер" name="copy_izurl" tool_tip="Копировать текущую локацию как IZURL для использования в Интернет"/>
 	<slider label="Масштаб" name="zoom slider"/>
 </floater>

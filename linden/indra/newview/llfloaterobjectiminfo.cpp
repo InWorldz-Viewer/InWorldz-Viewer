@@ -57,7 +57,7 @@ public:
 
 	BOOL postBuild(void);
 
-	void update(const LLUUID& id, const std::string& name, const std::string& slurl, const LLUUID& owner, bool owner_is_group);
+	void update(const LLUUID& id, const std::string& name, const std::string& izurl, const LLUUID& owner, bool owner_is_group);
 
 	// UI Handlers
 	static void onClickMap(void* data);
@@ -69,14 +69,14 @@ public:
 private:
 	LLUUID mObjectID;
 	std::string mObjectName;
-	std::string mSlurl;
+	std::string mIzurl;
 	LLUUID mOwnerID;
 	std::string mOwnerName;
 	bool mOwnerIsGroup;
 };
 
 LLFloaterObjectIMInfo::LLFloaterObjectIMInfo(const LLSD& seed)
-: mObjectID(), mObjectName(), mSlurl(), mOwnerID(), mOwnerName(), mOwnerIsGroup(false)
+: mObjectID(), mObjectName(), mIzurl(), mOwnerID(), mOwnerName(), mOwnerIsGroup(false)
 {
 	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_object_im_info.xml");
 	
@@ -91,21 +91,21 @@ BOOL LLFloaterObjectIMInfo::postBuild(void)
 {
 	childSetAction("Mute",onClickMute,this);
 	childSetActionTextbox("OwnerName",onClickOwner, this);
-	childSetActionTextbox("Slurl",onClickMap, this);
+	childSetActionTextbox("Izurl",onClickMap, this);
 
 	return true;
 }
 
-void LLFloaterObjectIMInfo::update(const LLUUID& object_id, const std::string& name, const std::string& slurl, const LLUUID& owner_id, bool owner_is_group)
+void LLFloaterObjectIMInfo::update(const LLUUID& object_id, const std::string& name, const std::string& izurl, const LLUUID& owner_id, bool owner_is_group)
 {
-	// When talking to an old region we won't have a slurl.
+	// When talking to an old region we won't have a izurl.
 	// The object id isn't really the object id either but we don't use it so who cares.
-	bool have_slurl = !slurl.empty();
-	childSetVisible("Unknown_Slurl",!have_slurl);
-	childSetVisible("Slurl",have_slurl);
+	bool have_izurl = !izurl.empty();
+	childSetVisible("Unknown_Izurl",!have_izurl);
+	childSetVisible("Izurl",have_izurl);
 
 	childSetText("ObjectName",name);
-	childSetText("Slurl",slurl);
+	childSetText("Izurl",izurl);
 	childSetText("OwnerName",std::string(""));
 
 	bool my_object = (owner_id == gAgentID);
@@ -113,7 +113,7 @@ void LLFloaterObjectIMInfo::update(const LLUUID& object_id, const std::string& n
 	
 	mObjectID = object_id;
 	mObjectName = name;
-	mSlurl = slurl;
+	mIzurl = izurl;
 	mOwnerID = owner_id;
 	mOwnerIsGroup = owner_is_group;
 
@@ -126,7 +126,7 @@ void LLFloaterObjectIMInfo::onClickMap(void* data)
 	LLFloaterObjectIMInfo* self = (LLFloaterObjectIMInfo*)data;
 
 	std::ostringstream link;
-	link << "secondlife://" << self->mSlurl;
+	link << "secondlife://" << self->mIzurl;
 	class LLMediaCtrl* web = NULL;
 	LLURLDispatcher::dispatch(link.str(), web, true);
 }
@@ -192,16 +192,16 @@ public:
 // Creating the object registers with the dispatcher.
 LLObjectIMInfoHandler gObjectIMHandler;
 
-// ex. secondlife:///app/objectim/9426adfc-9c17-8765-5f09-fdf19957d003?owner=a112d245-9095-4e9c-ace4-ffa31717f934&groupowned=true&slurl=ahern/123/123/123&name=Object
+// ex. secondlife:///app/objectim/9426adfc-9c17-8765-5f09-fdf19957d003?owner=a112d245-9095-4e9c-ace4-ffa31717f934&groupowned=true&izurl=ahern/123/123/123&name=Object
 bool LLObjectIMInfoHandler::handle(const LLSD &tokens, const LLSD &query_map, LLMediaCtrl* web)
 {
 	LLUUID task_id = tokens[0].asUUID();
 	std::string name = query_map["name"].asString();
-	std::string slurl = query_map["slurl"].asString();
+	std::string izurl = query_map["izurl"].asString();
 	LLUUID owner = query_map["owner"].asUUID();
 	bool group_owned = query_map.has("groupowned");
 	
-	LLObjectIMInfo::show(task_id,name,slurl,owner,group_owned);
+	LLObjectIMInfo::show(task_id,name,izurl,owner,group_owned);
 
 	return true;
 }

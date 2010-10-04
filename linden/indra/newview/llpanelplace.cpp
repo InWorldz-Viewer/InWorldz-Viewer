@@ -135,7 +135,7 @@ void LLPanelPlace::displayItemInfo(const LLInventoryItem* pItem)
 // Use this for search directory clicks, because we are totally
 // recycling the panel and don't need to use what's there.
 //
-// For SLURL clicks, don't call this, because we need to cache
+// For IZURL clicks, don't call this, because we need to cache
 // the location info from the user.
 void LLPanelPlace::resetLocation()
 {
@@ -154,7 +154,7 @@ void LLPanelPlace::resetLocation()
 }
 
 
-// Set the name and clear other bits of info.  Used for SLURL clicks
+// Set the name and clear other bits of info.  Used for IZURL clicks
 void LLPanelPlace::resetName(const std::string& name)
 {
 	setName(name);

@@ -7402,7 +7402,7 @@ void handle_load_from_xml(void*)
 
 void handle_web_browser_test(void*)
 {
-	LLWeb::loadURL("http://secondlife.com/app/search/slurls.html");
+	LLWeb::loadURL("http://secondlife.com/app/search/izurls.html");
 }
 
 void handle_buy_currency_test(void*)
@@ -7437,7 +7437,7 @@ void handle_buy_currency_test(void*)
 	llinfos << "buy currency url " << url << llendl;
 
 	LLFloaterHtmlCurrency* floater = LLFloaterHtmlCurrency::showInstance(url);
-	// Needed so we can use secondlife:///app/floater/self/close SLURLs
+	// Needed so we can use secondlife:///app/floater/self/close IZURLs
 	floater->setTrusted(true);
 	floater->center();
 }

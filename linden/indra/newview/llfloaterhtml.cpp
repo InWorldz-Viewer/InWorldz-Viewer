@@ -114,7 +114,7 @@ void LLFloaterHtml::draw()
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-void LLFloaterHtml::show( std::string content_id, bool open_link_external, bool open_app_slurls )
+void LLFloaterHtml::show( std::string content_id, bool open_link_external, bool open_app_izurls )
 {
 	// calculate the XML labels we'll need (if only XML folders worked)
 	std::string title_str = content_id + "_title";
@@ -123,7 +123,7 @@ void LLFloaterHtml::show( std::string content_id, bool open_link_external, bool 
 	std::string title = getString( title_str );
 	std::string url = getString( url_str );
 
-	show( url, title, open_link_external, open_app_slurls );
+	show( url, title, open_link_external, open_app_izurls );
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -130,7 +130,7 @@ private:
 	static void		onClickTeleportBtn(void*);
 	static void		onShowTargetBtn(void*);
 	static void		onShowAgentBtn(void*);
-	static void		onCopySLURL(void*);
+	static void		onCopyIZURL(void*);
 
 	static void		onCheckEvents(LLUICtrl* ctrl, void*);
 
@@ -187,7 +187,7 @@ private:
 	LLTracker::ETrackingStatus mTrackedStatus;
 	std::string				mTrackedSimName;
 	std::string				mTrackedAvatarName;
-	std::string				mSLURL;
+	std::string				mIZURL;
 };
 
 extern LLFloaterWorldMap* gFloaterWorldMap;

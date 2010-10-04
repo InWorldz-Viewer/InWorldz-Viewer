@@ -38,6 +38,12 @@ class LLMediaCtrl;
 class LLURLDispatcher
 {
 public:
+	static bool isIZURL(const std::string& url);
+		// Is this any sort of inworldz:// or iz:// URL?
+
+	static bool isIZURLCommand(const std::string& url);
+		// Is this a special inworldz://app/ URL?
+
 	static bool isSLURL(const std::string& url);
 		// Is this any sort of secondlife:// or sl:// URL?
 
@@ -64,8 +70,8 @@ public:
 
 	static bool dispatchFromTextEditor(const std::string& url);
 
-	static std::string buildSLURL(const std::string& regionname, S32 x, S32 y, S32 z);
-		//   builds: http://slurl.com/secondlife/RegionName/x/y/z/
+	static std::string buildIZURL(const std::string& regionname, S32 x, S32 y, S32 z);
+		//   builds: http://places.inworldz.com/RegionName/x/y/z/
 };
 
 #endif

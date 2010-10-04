@@ -4563,16 +4563,16 @@ Are you sure you want to permanently remove the contents of your Lost And Found 
 
 <notification
  icon="alertmodal.tga"
- name="CopySLURL"
+ name="CopyIZURL"
  type="alertmodal">
-The following SLURL has been copied to your clipboard:
+The following IZURL has been copied to your clipboard:
 
-[SLURL]
+[IZURL]
 
 Put it in a web page to give others easy access to this location or try it out yourself by pasting it into the address bar of your web browser.
   <form name="form">
     <ignore name="ignore"
-     text="When copying a SLURL to your clipboard"/>
+     text="When copying a IZURL to your clipboard"/>
   </form>
 </notification>
 

@@ -2138,13 +2138,13 @@ Linden Lab
 		¿Está seguro de que quiere eliminar permanentemente el contenido de su carpeta Objetos Perdidos?
 		<usetemplate ignoretext="Cuando se vacíe la carpeta del inventario Objetos Perdidos" name="okcancelignore" notext="No" yestext="Sí"/>
 	</notification>
-	<notification name="CopySLURL">
-		Se ha copiado a su portapapeles la siguiente SLurl:
- [SLURL]
+	<notification name="CopyIZURL">
+		Se ha copiado a su portapapeles la siguiente IZurl:
+ [IZURL]
 
 Publíquela en una página web para que otros puedan acceder fácilmente a esta posición, o pruébela usted mismo pegándola en la barra de direcciones de su navegador.
 		<form name="form">
-			<ignore name="ignore" text="Cuando se copie una SLurl al portapapeles"/>
+			<ignore name="ignore" text="Cuando se copie una IZurl al portapapeles"/>
 		</form>
 	</notification>
 	<notification name="GraphicsPreferencesHelp">

@@ -2087,13 +2087,13 @@ Chcesz wyłączyć Tryb Pracy przed zakończeniem tej tranzakcji?
 		Na pewno chcesz permanentnie usunąć zawartość Twojego foldera Zgubione i Znalezione?
 		<usetemplate ignoretext="Usuwając szafę z Twojego foldera Zgubione i Znalezione" name="okcancelignore" notext="Nie" yestext="Tak"/>
 	</notification>
-	<notification name="CopySLURL">
-		Następujący link SLURL został skopiowany do pamięci podręcznej:
- [SLURL]
+	<notification name="CopyIZURL">
+		Następujący link IZURL został skopiowany do pamięci podręcznej:
+ [IZURL]
 
 Zamieść go na stronie Internetowej żeby umożliwić innym łatwy dostęp do tego miejsca, albo wklej go do panela adresu Twojej przeglądarki żeby go wypróbować.
 		<form name="form">
-			<ignore name="ignore" text="Kopiując SLURL do pamięci podręcznej"/>
+			<ignore name="ignore" text="Kopiując IZURL do pamięci podręcznej"/>
 		</form>
 	</notification>
 	<notification name="GraphicsPreferencesHelp">

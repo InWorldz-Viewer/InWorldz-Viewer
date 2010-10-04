@@ -1275,9 +1275,13 @@ void inventory_offer_handler(LLOfferInfo* info, BOOL from_task)
 		return;
 	}
 
-	// Strip any SLURL from the message display. (DEV-2754)
+	// Strip any IZURL or SLURL from the message display. (DEV-2754)
 	std::string msg = info->mDesc;
-	int indx = msg.find(" ( http://slurl.com/secondlife/");
+	int indx = msg.find(" ( http://places.inworldz.com/");
+	if(indx == std::string::npos)
+	{
+		msg.find(" ( http://slurl.com/secondlife/");
+	}
 	if(indx == std::string::npos)
 	{
 		// try to find new slurl host
@@ -1932,7 +1936,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			
 			LLSD query_string;
 			query_string["owner"] = from_id;
-			query_string["slurl"] = location.c_str();
+			query_string["izurl"] = location.c_str();
 			query_string["name"] = name;
 			if (from_group)
 			{
@@ -1945,7 +1949,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			}
 			else
 			{
-				// This message originated on a region without the updated code for task id and slurl information.
+				// This message originated on a region without the updated code for task id and izurl information.
 				// We just need a unique ID for this object that isn't the owner ID.
 				// If it is the owner ID it will overwrite the style that contains the link to that owner's profile.
 				// This isn't ideal - it will make 1 style for all objects owned by the the same person/group.
@@ -2925,8 +2929,8 @@ void process_agent_movement_complete(LLMessageSystem* msg, void**)
 
 		if (avatarp)
 		{
-			// Chat the "back" SLURL. (DEV-4907)
-			LLChat chat("Teleport completed from " + gAgent.getTeleportSourceSLURL());
+			// Chat the "back" IZURL. (DEV-4907)
+			LLChat chat("Teleport completed from " + gAgent.getTeleportSourceIZURL());
 			chat.mSourceType = CHAT_SOURCE_SYSTEM;
  			LLFloaterChat::addChatHistory(chat);
 
@@ -5601,7 +5605,7 @@ void process_script_teleport_request(LLMessageSystem* msg, void**)
 
 	// remove above two lines and replace with below line
 	// to re-enable parcel browser for llMapDestination()
-	// LLURLDispatcher::dispatch(LLURLDispatcher::buildSLURL(sim_name, (S32)pos.mV[VX], (S32)pos.mV[VY], (S32)pos.mV[VZ]), FALSE);
+	// LLURLDispatcher::dispatch(LLURLDispatcher::buildIZURL(sim_name, (S32)pos.mV[VX], (S32)pos.mV[VY], (S32)pos.mV[VZ]), FALSE);
 	
 }
 

@@ -46,7 +46,7 @@ public:
 	// Start browser navigation to a URL
 	void navigateTo(const std::string& url);
 
-	// Allow "trusted page only" app SLURLs to be processed
+	// Allow "trusted page only" app IZURLs to be processed
 	void setTrusted(bool trusted);
 
 protected:

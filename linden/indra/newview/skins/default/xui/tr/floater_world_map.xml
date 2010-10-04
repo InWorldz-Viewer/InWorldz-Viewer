@@ -54,6 +54,6 @@
 	<button font="SansSerifSmall" label="Hedefi göster" label_selected="Hedefi göster" name="Show Destination" tool_tip="Seçilen lokasyondaki harita merkezi"/>
 	<button label="Temizle" label_selected="Temizle" name="Clear" tool_tip="İzlemeyi durdur"/>
 	<button font="SansSerifSmall" label="Lokasyonumu göster" label_selected="Lokasyonumu göster" name="Show My Location" tool_tip="Karakterinizin lokasyonundaki harita merkezi"/>
-	<button label="SLURL&apos;yi panoya yapıştır" name="copy_slurl" tool_tip="Mevcut lokasyonu web&apos;de kullanılmak üzere SLURL olarak kopyalar."/>
+	<button label="IZURL&apos;yi panoya yapıştır" name="copy_izurl" tool_tip="Mevcut lokasyonu web&apos;de kullanılmak üzere IZURL olarak kopyalar."/>
 	<slider label="Zum" name="zoom slider"/>
 </floater>

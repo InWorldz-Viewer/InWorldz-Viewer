@@ -2294,15 +2294,15 @@ http://secondlife.com/community/support.php
 		你确定要永久性删除失物招领文件夹里的内容吗？
 		<usetemplate ignoretext="清空库存失物招领文件夹时" name="okcancelignore" notext="No" yestext="Yes"/>
 	</notification>
-	<notification name="CopySLURL">
+	<notification name="CopyIZURL">
 		以下链接已经被复制到你的剪贴板中：
 
-    [SLURL]
+    [IZURL]
 
   把它加入到网页里，让别人更容易的访问这个地点，
   或者直接粘贴到浏览器的地址栏中自己尝试一下。
 		<form name="form">
-			<ignore name="ignore" text="当拷贝一个SLURL到剪切板"/>
+			<ignore name="ignore" text="当拷贝一个IZURL到剪切板"/>
 		</form>
 	</notification>
 	<notification name="GraphicsPreferencesHelp">

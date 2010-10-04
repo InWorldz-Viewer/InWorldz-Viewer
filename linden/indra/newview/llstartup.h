@@ -110,10 +110,10 @@ public:
 	static void deletePasswordFromDisk();
 	
 	static bool dispatchURL();
-		// if we have a SLURL or sim string ("Ahern/123/45") that started
+		// if we have a IZURL or sim string ("Ahern/123/45") that started
 		// the viewer, dispatch it
 
-	static std::string sSLURLCommand;
+	static std::string sIZURLCommand;
 		// *HACK: On startup, if we were passed a secondlife://app/do/foo
 		// command URL, store it for later processing.
 

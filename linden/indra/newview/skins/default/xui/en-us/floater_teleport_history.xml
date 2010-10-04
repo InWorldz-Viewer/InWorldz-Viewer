@@ -10,7 +10,7 @@
 		<column name="position" label="Position" width="90" />
 		<column name="visited" label="Visited" width="110" />
 		<!--Hidden fields, used as storage for prebuilt strings, please keep at width 0-->
-		<column name="slurl" label="" width="0" />
+		<column name="izurl" label="" width="0" />
 		<column name="simstring" label="" width="0" />
 	</scroll_list>
 	<button name="teleport" label="Teleport" tool_tip="Teleport to selected location"
@@ -21,7 +21,7 @@
 		enabled="false" mouse_opaque="true" font="SansSerif" halign="center"
 		height="20" width="125" bottom_delta="0" left_delta="100" follows="left|bottom"
 	/>
-	<button name="copy_slurl" label="Copy SLURL to clipboard" tool_tip="Copy selected location as SLURL."
+	<button name="copy_izurl" label="Copy IZURL to clipboard" tool_tip="Copy selected location as IZURL."
 		enabled="false" mouse_opaque="true" font="SansSerif" halign="center"
 		height="20" width="180" bottom_delta="0" left_delta="135" follows="left|bottom"
 	/>

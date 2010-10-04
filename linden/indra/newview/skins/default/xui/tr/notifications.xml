@@ -1397,13 +1397,13 @@ Bu işlemi tamamlamadan önce meşgul durumdan çıkmak ister misiniz?
 		Kayıp ve bulunan klasörünüzdeki içerikleri kalıcı olarak silmek istediğinizden emin misiniz?
 		<usetemplate ignoretext="Kayıp ve bulunan klasörünüz boşaltılırken" name="okcancelignore" notext="Hayır" yestext="Evet"/>
 	</notification>
-	<notification name="CopySLURL">
-		Aşağıdaki SLURL panonuza kopyalandı:
- [SLURL]
+	<notification name="CopyIZURL">
+		Aşağıdaki IZURL panonuza kopyalandı:
+ [IZURL]
 
 Başkalarının bu lokasyona kolay girebilmeleri için bunu bir web sayfası içine koyunuz veya web tarayıcınızın adres çubuğuna yapıştırarak kendiniz deneyiniz.
 		<form name="form">
-			<ignore name="ignore" text="Panonuza SLURL kopyalanırken"/>
+			<ignore name="ignore" text="Panonuza IZURL kopyalanırken"/>
 		</form>
 	</notification>
 	<notification name="GraphicsPreferencesHelp">

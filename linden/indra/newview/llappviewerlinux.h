@@ -58,7 +58,7 @@ public:
 	//
 	virtual bool init();			// Override to do application initialization
 	std::string generateSerialNumber();
-	bool setupSLURLHandler();
+	bool setupIZURLHandler();
 
 protected:
 	virtual bool beingDebugged();
@@ -70,7 +70,7 @@ protected:
 	virtual bool initLogging();
 	virtual bool initParseCommandLine(LLCommandLineParser& clp);
 
-	virtual bool initSLURLHandler();
+	virtual bool initIZURLHandler();
 	virtual bool sendURLToOtherInstance(const std::string& url);
 };
 
@@ -82,7 +82,7 @@ typedef struct
 } ViewerAppAPI;
 
 extern "C" {
-	gboolean viewer_app_api_GoSLURL(ViewerAppAPI *obj, gchar *slurl, gboolean **success_rtn, GError **error);
+	gboolean viewer_app_api_GoIZURL(ViewerAppAPI *obj, gchar *izurl, gboolean **success_rtn, GError **error);
 }
 
 #define VIEWERAPI_SERVICE "com.secondlife.ViewerAppAPIService"

@@ -164,7 +164,7 @@ protected:
 	virtual bool initLogging(); // Initialize log files, logging system, return false on failure.
 	virtual void initConsole() {}; // Initialize OS level debugging console.
 	virtual bool initHardwareTest() { return true; } // A false result indicates the app should quit.
-	virtual bool initSLURLHandler();
+	virtual bool initIZURLHandler();
 	virtual bool sendURLToOtherInstance(const std::string& url);
 
 	virtual bool initParseCommandLine(LLCommandLineParser& clp) 

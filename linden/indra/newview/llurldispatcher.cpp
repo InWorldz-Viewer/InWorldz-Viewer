@@ -55,11 +55,20 @@ const std::string SLURL_SECONDLIFE_PREFIX	= "secondlife://";
 const std::string SLURL_SLURL_PREFIX		= "http://slurl.com/secondlife/";
 const std::string SLURL_SLURL_ALT_PREFIX	= "http://maps.secondlife.com/secondlife/";
 
-const std::string SLURL_APP_TOKEN = "app/";
+const std::string IZURL_IZ_HELP_PREFIX		= "inworldz://app.";
+const std::string IZURL_IZ_PREFIX			= "iz://";
+const std::string IZURL_INWORLDZ_PREFIX		= "inworldz://";
+const std::string IZURL_IZURL_PREFIX		= "http://places.inworldz.com/";
+
+const std::string IZURL_APP_TOKEN = "app/";
 
 class LLURLDispatcherImpl
 {
 public:
+	static bool isIZURL(const std::string& url);
+
+	static bool isIZURLCommand(const std::string& url);
+
 	static bool isSLURL(const std::string& url);
 
 	static bool isSLURLCommand(const std::string& url);
@@ -106,10 +115,33 @@ private:
 
 	static bool matchPrefix(const std::string& url, const std::string& prefix);
 	
+	// strips izurls (default) and slurls
 	static std::string stripProtocol(const std::string& url);
 
 	friend class LLTeleportHandler;
 };
+
+// static
+bool LLURLDispatcherImpl::isIZURL(const std::string& url)
+{
+	if (matchPrefix(url, IZURL_IZ_HELP_PREFIX)) return true;
+	if (matchPrefix(url, IZURL_IZ_PREFIX)) return true;
+	if (matchPrefix(url, IZURL_INWORLDZ_PREFIX)) return true;
+	if (matchPrefix(url, IZURL_IZURL_PREFIX)) return true;
+	return false;
+}
+
+// static
+bool LLURLDispatcherImpl::isIZURLCommand(const std::string& url)
+{ 
+	if (matchPrefix(url, IZURL_IZ_PREFIX + IZURL_APP_TOKEN)
+		|| matchPrefix(url, IZURL_INWORLDZ_PREFIX + "/" + IZURL_APP_TOKEN)
+		|| matchPrefix(url, IZURL_IZURL_PREFIX + IZURL_APP_TOKEN))
+	{
+		return true;
+	}
+	return false;
+}
 
 // static
 bool LLURLDispatcherImpl::isSLURL(const std::string& url)
@@ -125,10 +157,10 @@ bool LLURLDispatcherImpl::isSLURL(const std::string& url)
 // static
 bool LLURLDispatcherImpl::isSLURLCommand(const std::string& url)
 { 
-	if (matchPrefix(url, SLURL_SL_PREFIX + SLURL_APP_TOKEN)
-		|| matchPrefix(url, SLURL_SECONDLIFE_PREFIX + "/" + SLURL_APP_TOKEN)
-		|| matchPrefix(url, SLURL_SLURL_PREFIX + SLURL_APP_TOKEN)
-		|| matchPrefix(url, SLURL_SLURL_ALT_PREFIX + SLURL_APP_TOKEN))
+	if (matchPrefix(url, SLURL_SL_PREFIX + IZURL_APP_TOKEN)
+		|| matchPrefix(url, SLURL_SECONDLIFE_PREFIX + "/" + IZURL_APP_TOKEN)
+		|| matchPrefix(url, SLURL_SLURL_PREFIX + IZURL_APP_TOKEN)
+		|| matchPrefix(url, SLURL_SLURL_ALT_PREFIX + IZURL_APP_TOKEN))
 	{
 		return true;
 	}
@@ -149,7 +181,7 @@ bool LLURLDispatcherImpl::dispatchCore(const std::string& url,
 	/*
 	// Inform the user we can't handle this
 	std::map<std::string, std::string> args;
-	args["SLURL"] = url;
+	args["IZURL"] = url;
 	r;
 	*/
 	
@@ -180,7 +212,7 @@ bool LLURLDispatcherImpl::dispatchRightClick(const std::string& url)
 bool LLURLDispatcherImpl::dispatchHelp(const std::string& url, bool right_mouse)
 {
 #if LL_LIBXUL_ENABLED
-	if (matchPrefix(url, SLURL_SL_HELP_PREFIX))
+	if (matchPrefix(url, IZURL_IZ_HELP_PREFIX))
 	{
 		gViewerHtmlHelp.show();
 		return true;
@@ -195,7 +227,7 @@ bool LLURLDispatcherImpl::dispatchApp(const std::string& url,
 									  LLMediaCtrl* web,
 									  bool trusted_browser)
 {
-	if (!isSLURL(url))
+	if (!isIZURL(url))
 	{
 		return false;
 	}
@@ -213,7 +245,7 @@ bool LLURLDispatcherImpl::dispatchApp(const std::string& url,
 // static
 bool LLURLDispatcherImpl::dispatchRegion(const std::string& url, bool right_mouse)
 {
-	if (!isSLURL(url))
+	if (!isIZURL(url))
 	{
 		return false;
 	}
@@ -351,25 +383,47 @@ bool LLURLDispatcherImpl::matchPrefix(const std::string& url, const std::string&
 std::string LLURLDispatcherImpl::stripProtocol(const std::string& url)
 {
 	std::string stripped = url;
-	if (matchPrefix(stripped, SLURL_SL_HELP_PREFIX))
+	if (isIZURL(url))
 	{
-		stripped.erase(0, SLURL_SL_HELP_PREFIX.length());
+		if (matchPrefix(stripped, IZURL_IZ_HELP_PREFIX))
+		{
+			stripped.erase(0, IZURL_IZ_HELP_PREFIX.length());
+		}
+		else if (matchPrefix(stripped, IZURL_IZ_PREFIX))
+		{
+			stripped.erase(0, IZURL_IZ_PREFIX.length());
+		}
+		else if (matchPrefix(stripped, IZURL_INWORLDZ_PREFIX))
+		{
+			stripped.erase(0, IZURL_INWORLDZ_PREFIX.length());
+		}
+		else if (matchPrefix(stripped, IZURL_IZURL_PREFIX))
+		{
+			stripped.erase(0, IZURL_IZURL_PREFIX.length());
+		}
 	}
-	else if (matchPrefix(stripped, SLURL_SL_PREFIX))
+	else if (isSLURL(url))
 	{
-		stripped.erase(0, SLURL_SL_PREFIX.length());
-	}
-	else if (matchPrefix(stripped, SLURL_SECONDLIFE_PREFIX))
-	{
-		stripped.erase(0, SLURL_SECONDLIFE_PREFIX.length());
-	}
-	else if (matchPrefix(stripped, SLURL_SLURL_PREFIX))
-	{
-		stripped.erase(0, SLURL_SLURL_PREFIX.length());
-	}
-	else if (matchPrefix(stripped, SLURL_SLURL_ALT_PREFIX))
-	{
-		stripped.erase(0, SLURL_SLURL_ALT_PREFIX.length());
+		if (matchPrefix(stripped, SLURL_SL_HELP_PREFIX))
+		{
+			stripped.erase(0, SLURL_SL_HELP_PREFIX.length());
+		}
+		else if (matchPrefix(stripped, SLURL_SL_PREFIX))
+		{
+			stripped.erase(0, SLURL_SL_PREFIX.length());
+		}
+		else if (matchPrefix(stripped, SLURL_SECONDLIFE_PREFIX))
+		{
+			stripped.erase(0, SLURL_SECONDLIFE_PREFIX.length());
+		}
+		else if (matchPrefix(stripped, SLURL_SLURL_PREFIX))
+		{
+			stripped.erase(0, SLURL_SLURL_PREFIX.length());
+		}
+		else if (matchPrefix(stripped, SLURL_SLURL_ALT_PREFIX))
+		{
+			stripped.erase(0, SLURL_SLURL_ALT_PREFIX.length());
+		}
 	}
 	return stripped;
 }
@@ -388,7 +442,7 @@ public:
 	bool handle(const LLSD& tokens, const LLSD& query_map,
 				LLMediaCtrl* web)
 	{
-		// construct a "normal" SLURL, resolve the region to
+		// construct a "normal" IZURL, resolve the region to
 		// a global position, and teleport to it
 		if (tokens.size() < 1) return false;
 
@@ -396,7 +450,7 @@ public:
 		std::string region_name = LLURLSimString::unescapeRegionName(tokens[0]);
 
 		// build secondlife://De%20Haro/123/45/67 for use in callback
-		std::string url = SLURL_SECONDLIFE_PREFIX;
+		std::string url = IZURL_INWORLDZ_PREFIX;
 		for (int i = 0; i < tokens.size(); ++i)
 		{
 			url += tokens[i].asString() + "/";
@@ -411,6 +465,18 @@ public:
 LLTeleportHandler gTeleportHandler;
 
 //---------------------------------------------------------------------------
+
+// static
+bool LLURLDispatcher::isIZURL(const std::string& url)
+{
+	return LLURLDispatcherImpl::isIZURL(url);
+}
+
+// static
+bool LLURLDispatcher::isIZURLCommand(const std::string& url)
+{
+	return LLURLDispatcherImpl::isIZURLCommand(url);
+}
 
 // static
 bool LLURLDispatcher::isSLURL(const std::string& url)
@@ -444,7 +510,7 @@ bool LLURLDispatcher::dispatchFromTextEditor(const std::string& url)
 	// *NOTE: Text editors are considered sources of trusted URLs
 	// in order to make objectim and avatar profile links in chat
 	// history work.  While a malicious resident could chat an app
-	// SLURL, the receiving resident will see it and must affirmatively
+	// IZURL, the receiving resident will see it and must affirmatively
 	// click on it.
 	// *TODO: Make this trust model more refined.  JC
 	const bool trusted_browser = true;
@@ -453,10 +519,10 @@ bool LLURLDispatcher::dispatchFromTextEditor(const std::string& url)
 }
 
 // static
-std::string LLURLDispatcher::buildSLURL(const std::string& regionname,
+std::string LLURLDispatcher::buildIZURL(const std::string& regionname,
 										S32 x, S32 y, S32 z)
 {
-	std::string slurl = SLURL_SLURL_PREFIX + regionname + llformat("/%d/%d/%d",x,y,z); 
-	slurl = LLWeb::escapeURL( slurl );
-	return slurl;
+	std::string izurl = IZURL_IZURL_PREFIX + regionname + llformat("/%d/%d/%d",x,y,z); 
+	izurl = LLWeb::escapeURL( izurl );
+	return izurl;
 }

@@ -4207,15 +4207,15 @@ http://secondlife.com/community/support.php
 
   <notification
    
-   name="CopySLURL"
+   name="CopyIZURL"
    >
-클립보드에 다음과 같은 SLURL이 복사되었습니다.
- [SLURL]
+클립보드에 다음과 같은 IZURL이 복사되었습니다.
+ [IZURL]
 
 웹 페이지에 올려서 타인들이 이 위치에 쉽게 접근하도록 하거나
 웹 브라우저의 주소창에 붙여넣기를 해서 직접 시험해보십시오.
     <form name="form">
-      <ignore name="ignore" text="SLURL을 클릭보드로 복사할 때"/>
+      <ignore name="ignore" text="IZURL을 클릭보드로 복사할 때"/>
     </form>
   </notification>
 

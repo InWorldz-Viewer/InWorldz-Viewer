@@ -80,7 +80,7 @@
 	<button label="내 위치 표시하기" label_selected="내 위치 표시하기"
 	     name="Show My Location"
 	     tool_tip="아바타의 위치에 지도의 중심을 위치시킵니다." />
-	<button label="클립보드로 SLURL 복사하기" name="copy_slurl"
-	     tool_tip="현재 위치를 웹에서 사용할 수 있도록 SLURL로 복사합니다." />
+	<button label="클립보드로 IZURL 복사하기" name="copy_izurl"
+	     tool_tip="현재 위치를 웹에서 사용할 수 있도록 IZURL로 복사합니다." />
 	<slider label="확대/축소" name="zoom slider" />
 </floater>

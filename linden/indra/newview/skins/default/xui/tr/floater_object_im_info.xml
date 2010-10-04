@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		Obje:
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		Lokasyon:
 	</text>
-	<text name="Unknown_Slurl">
+	<text name="Unknown_Izurl">
 		(Lokasyon bilgisi mevcut değil)
 	</text>
 	<text name="LabelOwnerNameTitle">

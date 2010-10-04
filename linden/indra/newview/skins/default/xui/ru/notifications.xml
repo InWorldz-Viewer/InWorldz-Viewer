@@ -2132,13 +2132,13 @@ Linden Lab
 (эту операцию нельзя будет отменить)?
 		<usetemplate ignoretext="Очистка папки инвентаря &apos;&apos;Lost And Found&apos;&apos;" name="okcancelignore" notext="Нет" yestext="Да"/>
 	</notification>
-	<notification name="CopySLURL">
-		Данный SLURL был скопирован в Ваш буфер обмена.
- [SLURL]
+	<notification name="CopyIZURL">
+		Данный IZURL был скопирован в Ваш буфер обмена.
+ [IZURL]
 
 Поместите это на вебстраницу, чтобы легко было сюда попасть, или поместите это в строку адреса Вашего веб-браузера.
 		<form name="form">
-			<ignore name="ignore" text="При копировании SLURL в буфер обмена"/>
+			<ignore name="ignore" text="При копировании IZURL в буфер обмена"/>
 		</form>
 	</notification>
 	<notification name="GraphicsPreferencesHelp">

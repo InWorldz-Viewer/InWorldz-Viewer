@@ -29,7 +29,7 @@
 #ifndef LLFLOATERHANDLER_H
 #define LLFLOATERHANDLER_H
 
-// Support for SLURL control of floaters, such as
+// Support for IZURL control of floaters, such as
 //   secondlife:///app/floater/self/close
 
 #include "llcommandhandler.h"

@@ -131,7 +131,7 @@ LLFloaterReporter::LLFloaterReporter(
 		LLUICtrlFactory::getInstance()->buildFloater(this, "floater_report_abuse.xml");
 	}
 
-	childSetText("abuse_location_edit", gAgent.getSLURL() );
+	childSetText("abuse_location_edit", gAgent.getIZURL() );
 
 	LLButton* pick_btn = getChild<LLButton>("pick_btn");
 	if (pick_btn)

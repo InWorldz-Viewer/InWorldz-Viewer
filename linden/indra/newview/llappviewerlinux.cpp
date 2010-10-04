@@ -37,7 +37,7 @@
 #include "llcommandlineparser.h"
 
 #include "llmemtype.h"
-#include "llurldispatcher.h"		// SLURL from other app instance
+#include "llurldispatcher.h"		// IZURL from other app instance
 #include "llviewernetwork.h"
 #include "llviewercontrol.h"
 #include "llwindowsdl.h"
@@ -444,13 +444,13 @@ void viewerappapi_init(ViewerAppAPI *server)
 	}
 }
 
-gboolean viewer_app_api_GoSLURL(ViewerAppAPI *obj, gchar *slurl, gboolean **success_rtn, GError **error)
+gboolean viewer_app_api_GoIZURL(ViewerAppAPI *obj, gchar *izurl, gboolean **success_rtn, GError **error)
 {
 	bool success = false;
 
-	llinfos << "Was asked to go to slurl: " << slurl << llendl;
+	llinfos << "Was asked to go to izurl: " << izurl << llendl;
 
-	std::string url = slurl;
+	std::string url = izurl;
 	LLMediaCtrl* web = NULL;
 	const bool trusted_browser = false;
 	if (LLURLDispatcher::dispatch(url, web, trusted_browser))
@@ -470,7 +470,7 @@ gboolean viewer_app_api_GoSLURL(ViewerAppAPI *obj, gchar *slurl, gboolean **succ
 ///
 
 //virtual
-bool LLAppViewerLinux::initSLURLHandler()
+bool LLAppViewerLinux::initIZURLHandler()
 {
 	if (!grab_dbus_syms(DBUSGLIB_DYLIB_DEFAULT_NAME))
 	{
@@ -506,7 +506,7 @@ bool LLAppViewerLinux::sendURLToOtherInstance(const std::string& url)
 		DBusGProxy *remote_object =
 			lldbus_g_proxy_new_for_name(bus, VIEWERAPI_SERVICE, VIEWERAPI_PATH, VIEWERAPI_INTERFACE);
 
-		if (lldbus_g_proxy_call(remote_object, "GoSLURL", &error,
+		if (lldbus_g_proxy_call(remote_object, "GoIZURL", &error,
 					G_TYPE_STRING, url.c_str(), G_TYPE_INVALID,
 				       G_TYPE_BOOLEAN, &rtn, G_TYPE_INVALID))
 		{
@@ -531,7 +531,7 @@ bool LLAppViewerLinux::sendURLToOtherInstance(const std::string& url)
 }
 
 #else // LL_DBUS_ENABLED
-bool LLAppViewerLinux::initSLURLHandler()
+bool LLAppViewerLinux::initIZURLHandler()
 {
 	return false; // not implemented without dbus
 }

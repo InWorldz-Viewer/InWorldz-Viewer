@@ -489,7 +489,7 @@ void LLAppViewer::initGridChoice()
 }
 
 //virtual
-bool LLAppViewer::initSLURLHandler()
+bool LLAppViewer::initIZURLHandler()
 {
 	// does nothing unless subclassed
 	return false;
@@ -678,8 +678,8 @@ bool LLAppViewer::init()
 	// Find partition serial number (Windows) or hardware serial (Mac)
 	mSerialNumber = generateSerialNumber();
 
-	// do any necessary set-up for accepting incoming SLURLs from apps
-	initSLURLHandler();
+	// do any necessary set-up for accepting incoming IZURLs from apps
+	initIZURLHandler();
 
 	if(false == initHardwareTest())
 	{
@@ -1878,11 +1878,11 @@ bool LLAppViewer::initConfiguration()
 		gCrashOnStartup = TRUE;
 	}
 
-	// Handle slurl use. NOTE: Don't let SL-55321 reappear.
+	// Handle izurl use. NOTE: Don't let SL-55321 reappear.
 
     // *FIX: This init code should be made more robust to prevent 
     // the issue SL-55321 from returning. One thought is to allow 
-    // only select options to be set from command line when a slurl 
+    // only select options to be set from command line when a izurl 
     // is specified. More work on the settings system is needed to 
     // achieve this. For now...
 
@@ -1897,28 +1897,43 @@ bool LLAppViewer::initConfiguration()
     // injection and steal passwords. Phoenix. SL-55321
     if(clp.hasOption("url"))
     {
-        std::string slurl = clp.getOption("url")[0];
-        if (LLURLDispatcher::isSLURLCommand(slurl))
+        std::string izurl = clp.getOption("url")[0];
+        if (LLURLDispatcher::isIZURLCommand(izurl))
         {
-	        LLStartUp::sSLURLCommand = slurl;
+	        LLStartUp::sIZURLCommand = izurl;
         }
         else
         {
-	        LLURLSimString::setString(slurl);
+	        LLURLSimString::setString(izurl);
         }
     }
-    else if(clp.hasOption("slurl"))
+    else if(clp.hasOption("izurl"))
     {
-        std::string slurl = clp.getOption("slurl")[0];
-        if(LLURLDispatcher::isSLURL(slurl))
+        std::string izurl = clp.getOption("izurl")[0];
+        if(LLURLDispatcher::isIZURL(izurl))
         {
-            if (LLURLDispatcher::isSLURLCommand(slurl))
+            if (LLURLDispatcher::isIZURLCommand(izurl))
             {
-	            LLStartUp::sSLURLCommand = slurl;
+	            LLStartUp::sIZURLCommand = izurl;
             }
             else
             {
-	            LLURLSimString::setString(slurl);
+	            LLURLSimString::setString(izurl);
+            }
+        }
+    }
+	else if(clp.hasOption("slurl"))
+    {
+        std::string izurl = clp.getOption("slurl")[0];
+        if(LLURLDispatcher::isSLURL(izurl))
+        {
+            if (LLURLDispatcher::isSLURLCommand(izurl))
+            {
+	            LLStartUp::sIZURLCommand = izurl;
+            }
+            else
+            {
+	            LLURLSimString::setString(izurl);
             }
         }
     }
@@ -2001,18 +2016,18 @@ bool LLAppViewer::initConfiguration()
 	// don't call anotherInstanceRunning() when doing URL handoff, as
 	// it relies on checking a marker file which will not work when running
 	// out of different directories
-	std::string slurl;
-	if (!LLStartUp::sSLURLCommand.empty())
+	std::string izurl;
+	if (!LLStartUp::sIZURLCommand.empty())
 	{
-		slurl = LLStartUp::sSLURLCommand;
+		izurl = LLStartUp::sIZURLCommand;
 	}
 	else if (LLURLSimString::parse())
 	{
-		slurl = LLURLSimString::getURL();
+		izurl = LLURLSimString::getURL();
 	}
-	if (!slurl.empty())
+	if (!izurl.empty())
 	{
-		if (sendURLToOtherInstance(slurl))
+		if (sendURLToOtherInstance(izurl))
 		{
 			// successfully handed off URL to existing instance, exit
 			return false;

@@ -576,11 +576,11 @@ LLViewerTextEditor::LLViewerTextEditor(const std::string& name,
 	mEmbeddedItemList = new LLEmbeddedItems(this);
 	mInventoryCallback->setEditor(this);
 
-	// *TODO: Add right click menus for SLURLs
+	// *TODO: Add right click menus for IZURLs
 	// Build the right click menu
 	// make the popup menu available
 
-	//LLMenuGL* menu = LLUICtrlFactory::getInstance()->buildMenu("menu_slurl.xml", this);
+	//LLMenuGL* menu = LLUICtrlFactory::getInstance()->buildMenu("menu_izurl.xml", this);
 	//if (!menu)
 	//{
 	//	menu = new LLMenuGL(LLStringUtil::null);
@@ -936,7 +936,7 @@ BOOL LLViewerTextEditor::handleRightMouseDown(S32 x, S32 y, MASK mask)
 {
 	BOOL handled = childrenHandleRightMouseDown(x, y, mask) != NULL;
 
-	// *TODO: Add right click menus for SLURLs
+	// *TODO: Add right click menus for IZURLs
 // 	if(! handled)
 // 	{
 // 		const LLTextSegment* cur_segment = getSegmentAtLocalPos( x, y );

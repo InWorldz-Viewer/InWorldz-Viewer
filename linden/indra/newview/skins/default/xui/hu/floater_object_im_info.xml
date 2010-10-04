@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		Tárgy:
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		Hely:
 	</text>
-	<text name="Unknown_Slurl">
+	<text name="Unknown_Izurl">
 		(Hely információ nem elérhető)
 	</text>
 	<text name="LabelOwnerNameTitle">

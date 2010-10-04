@@ -2071,13 +2071,13 @@ Möchten Sie den Bechäftigt-Modus verlassen, bevor Sie diese Transaktion abschl
 		Möchten Sie den Inhalt Ihres Fundstücke-Ordners wirklich permanent löschen?
 		<usetemplate ignoretext="Beim Leeren von Inventar und Fundstückeordner-" name="okcancelignore" notext="Nein" yestext="Ja"/>
 	</notification>
-	<notification name="CopySLURL">
-		Die folgende SLURL wurde in die Zwischenablage kopiert:
- [SLURL]
+	<notification name="CopyIZURL">
+		Die folgende IZURL wurde in die Zwischenablage kopiert:
+ [IZURL]
 
 Veröffentlichen Sie sie auf einer Website, um anderen den Zugang zu diesem Ort zu erleichtern, oder testen Sie sie, indem Sie sie in die Adressleiste Ihres Browsers kopieren.
 		<form name="form">
-			<ignore name="ignore" text="Beim Kopieren einer SLURL in die Zwischenablage"/>
+			<ignore name="ignore" text="Beim Kopieren einer IZURL in die Zwischenablage"/>
 		</form>
 	</notification>
 	<notification name="GraphicsPreferencesHelp">

@@ -4,11 +4,11 @@
 		Objekt:
 	</text>
 	<text left="86" name="ObjectName" />
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		Position:
 	</text>
-	<text left="86" name="Slurl" />
-	<text name="Unknown_Slurl" width="300" font="SansSerifSmall">
+	<text left="86" name="Izurl" />
+	<text name="Unknown_Izurl" width="300" font="SansSerifSmall">
 		(Information zu Position nicht verfügbar)
 	</text>
 	<text name="LabelOwnerNameTitle">

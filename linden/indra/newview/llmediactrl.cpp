@@ -900,7 +900,7 @@ void LLMediaCtrl::onClickLinkHref( LLPluginClassMedia* self )
 void LLMediaCtrl::onClickLinkNoFollow( LLPluginClassMedia* self )
 {
 	std::string url = self->getClickURL();
-	if (LLURLDispatcher::isSLURLCommand(url)
+	if (LLURLDispatcher::isIZURLCommand(url)
 		&& !mTrusted)
 	{
 		// block handling of this secondlife:///app/ URL

@@ -262,10 +262,10 @@
       <!-- Special case. Not mapped to a setting. -->
     </map>
 
-    <key>slurl</key>
+    <key>izurl</key>
     <map>
       <key>desc</key>
-      <string>Startup SLurl</string>
+      <string>Startup IZurl</string>
       <key>count</key>
       <integer>1</integer>
       <key>positional</key>
@@ -273,6 +273,19 @@
       <key>last_option</key>
       <boolean>true</boolean>
       <!-- Special case. Not mapped to a setting. -->
+    </map>
+
+    <key>slurl</key>
+    <map>
+	  <key>desc</key>
+	  <string>Startup SLurl (legacy compatibility)</string>
+	  <key>count</key>
+	  <integer>1</integer>
+	  <key>positional</key>
+	  <boolean>true</boolean>
+	  <key>last_option</key>
+	  <boolean>true</boolean>
+	  <!-- Special case. Not mapped to a setting. -->
     </map>
 
     <key>regionuri</key>

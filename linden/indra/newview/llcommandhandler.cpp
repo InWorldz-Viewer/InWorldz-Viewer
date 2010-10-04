@@ -94,7 +94,7 @@ bool LLCommandHandlerRegistry::dispatch(const std::string& cmd,
 	{
 		// block request from external browser, but report as
 		// "handled" because it was well formatted.
-		LL_WARNS_ONCE("SLURL") << "Blocked SLURL command from untrusted browser" << LL_ENDL;
+		LL_WARNS_ONCE("IZURL") << "Blocked IZURL command from untrusted browser" << LL_ENDL;
 		return true;
 	}
 	if (!info.mHandler) return false;

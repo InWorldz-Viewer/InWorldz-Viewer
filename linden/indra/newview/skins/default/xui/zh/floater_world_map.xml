@@ -52,6 +52,6 @@
 	<button label="显示目的地" label_selected="显示目的地" name="Show Destination" tool_tip="居中显示指定地点"/>
 	<button label="清除" label_selected="清除" name="Clear" tool_tip="停止追踪/跟踪"/>
 	<button label="显示我的位置" label_selected="显示我的位置" name="Show My Location" tool_tip="居中显示你的化身的位置"/>
-	<button label="复制 SLURL 到剪贴板" name="copy_slurl" tool_tip="将当前位置复制为 SLURL 以供网上使用"/>
+	<button label="复制 IZURL 到剪贴板" name="copy_izurl" tool_tip="将当前位置复制为 IZURL 以供网上使用"/>
 	<slider label="缩放" name="zoom slider"/>
 </floater>

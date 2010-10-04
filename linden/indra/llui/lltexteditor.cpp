@@ -4088,7 +4088,7 @@ BOOL LLTextEditor::handleMouseUpOverSegment(S32 x, S32 y, MASK mask)
 		// and launch it if we did.
 		if (mParseHTML && mHTML.length() > 0)
 		{
-				//Special handling for slurls
+				//Special handling for izurls
 			if ( (mSecondlifeURLcallback!=NULL) && !(*mSecondlifeURLcallback)(mHTML) )
 			{
 				if (mURLcallback!=NULL) (*mURLcallback)(mHTML);
@@ -4531,30 +4531,49 @@ BOOL LLTextEditor::findHTML(const std::string &line, S32 *begin, S32 *end) const
 		S32 strpos, strpos2;
 
 		std::string url     = line.substr(*begin,*end - *begin);
-		std::string slurlID = "slurl.com/secondlife/";
-		strpos = url.find(slurlID);
 		
+		// see if it's an izurl
+		std::string izurlID = "places.inworldz.com/";
+		strpos = url.find(izurlID);
 		if (strpos < 0)
 		{
-			slurlID="maps.secondlife.com/secondlife/";
-			strpos = url.find(slurlID);
+			izurlID="inworldz://";
+			strpos = url.find(izurlID);
+		}
+		if (strpos < 0)
+		{
+			izurlID="iz://";
+			strpos = url.find(izurlID);
+		}
+	
+		// see if it's an slurl
+		if (strpos < 0)
+		{
+			izurlID="slurl.com/secondlife/";
+			strpos = url.find(izurlID);
+		}
+
+		if (strpos < 0)
+		{
+			izurlID="maps.secondlife.com/secondlife/";
+			strpos = url.find(izurlID);
 		}
 	
 		if (strpos < 0)
 		{
-			slurlID="secondlife://";
-			strpos = url.find(slurlID);
+			izurlID="secondlife://";
+			strpos = url.find(izurlID);
 		}
 	
 		if (strpos < 0)
 		{
-			slurlID="sl://";
-			strpos = url.find(slurlID);
+			izurlID="sl://";
+			strpos = url.find(izurlID);
 		}
 	
 		if (strpos >= 0) 
 		{
-			strpos+=slurlID.length();
+			strpos+=izurlID.length();
 			
 			while ( ( strpos2=url.find("/",strpos) ) == -1 ) 
 			{

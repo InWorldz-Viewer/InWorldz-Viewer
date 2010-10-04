@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		Obiekt:
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		Miejsce:
 	</text>
-	<text name="Unknown_Slurl">
+	<text name="Unknown_Izurl">
 		(Informacje o Miejscu Niedostępne)
 	</text>
 	<text name="LabelOwnerNameTitle">

@@ -3,10 +3,10 @@
 	<text name="LabelItemNameTitle">
 		Objekt:
 	</text>
-	<text name="LabelSlurlTitle">
+	<text name="LabelIzurlTitle">
 		Sted:
 	</text>
-	<text name="Unknown_Slurl" width="300">
+	<text name="Unknown_Izurl" width="300">
 		(Information om sted ikke tilgængelig)
 	</text>
 	<text name="LabelOwnerNameTitle">

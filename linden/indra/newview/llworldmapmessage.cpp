@@ -45,11 +45,11 @@ const U32 LAYER_FLAG = 2;
 //---------------------------------------------------------------------------
 
 LLWorldMapMessage::LLWorldMapMessage() :
-	mSLURLRegionName(),
-	mSLURLRegionHandle(0),
-	mSLURL(),
-	mSLURLCallback(0),
-	mSLURLTeleport(false)
+	mIZURLRegionName(),
+	mIZURLRegionHandle(0),
+	mIZURL(),
+	mIZURLCallback(0),
+	mIZURLTeleport(false)
 {
 }
 
@@ -101,11 +101,11 @@ void LLWorldMapMessage::sendNamedRegionRequest(std::string region_name,
 		bool teleport)	// immediately teleport when result returned
 {
 	//LL_INFOS("World Map") << "LLWorldMap::sendNamedRegionRequest()" << LL_ENDL;
-	mSLURLRegionName = region_name;
-	mSLURLRegionHandle = 0;
-	mSLURL = callback_url;
-	mSLURLCallback = callback;
-	mSLURLTeleport = teleport;
+	mIZURLRegionName = region_name;
+	mIZURLRegionHandle = 0;
+	mIZURL = callback_url;
+	mIZURLCallback = callback;
+	mIZURLTeleport = teleport;
 
 	sendNamedRegionRequest(region_name);
 }
@@ -116,11 +116,11 @@ void LLWorldMapMessage::sendHandleRegionRequest(U64 region_handle,
 		bool teleport)	// immediately teleport when result returned
 {
 	//LL_INFOS("World Map") << "LLWorldMap::sendHandleRegionRequest()" << LL_ENDL;
-	mSLURLRegionName.clear();
-	mSLURLRegionHandle = region_handle;
-	mSLURL = callback_url;
-	mSLURLCallback = callback;
-	mSLURLTeleport = teleport;
+	mIZURLRegionName.clear();
+	mIZURLRegionHandle = region_handle;
+	mIZURL = callback_url;
+	mIZURLCallback = callback;
+	mIZURLTeleport = teleport;
 
 	U32 global_x;
 	U32 global_y;
@@ -211,21 +211,21 @@ void LLWorldMapMessage::processMapBlockReply(LLMessageSystem* msg, void**)
 			gFloaterWorldMap->trackLocation(pos_global);
 		}
 
-		// Handle the SLURL callback if any
-		if(LLWorldMapMessage::getInstance()->mSLURLCallback != NULL)
+		// Handle the IZURL callback if any
+		if(LLWorldMapMessage::getInstance()->mIZURLCallback != NULL)
 		{
 			U64 handle = to_region_handle(x_world, y_world);
 			// Check if we reached the requested region
-			if ((LLStringUtil::compareInsensitive(LLWorldMapMessage::getInstance()->mSLURLRegionName, name)==0)
-				|| (LLWorldMapMessage::getInstance()->mSLURLRegionHandle == handle))
+			if ((LLStringUtil::compareInsensitive(LLWorldMapMessage::getInstance()->mIZURLRegionName, name)==0)
+				|| (LLWorldMapMessage::getInstance()->mIZURLRegionHandle == handle))
 			{
-				url_callback_t callback = LLWorldMapMessage::getInstance()->mSLURLCallback;
+				url_callback_t callback = LLWorldMapMessage::getInstance()->mIZURLCallback;
 
-				LLWorldMapMessage::getInstance()->mSLURLCallback = NULL;
-				LLWorldMapMessage::getInstance()->mSLURLRegionName.clear();
-				LLWorldMapMessage::getInstance()->mSLURLRegionHandle = 0;
+				LLWorldMapMessage::getInstance()->mIZURLCallback = NULL;
+				LLWorldMapMessage::getInstance()->mIZURLRegionName.clear();
+				LLWorldMapMessage::getInstance()->mIZURLRegionHandle = 0;
 
-				callback(handle, LLWorldMapMessage::getInstance()->mSLURL, image_id, LLWorldMapMessage::getInstance()->mSLURLTeleport);
+				callback(handle, LLWorldMapMessage::getInstance()->mIZURL, image_id, LLWorldMapMessage::getInstance()->mIZURLTeleport);
 			}
 		}
 	}

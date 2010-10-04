@@ -303,7 +303,7 @@ bool LLCommandLineParser::parseAndStoreResults(po::command_line_parser& clp)
     catch(LLCLPLastOption&) 
     {
 		// This exception means a token was read after an option 
-		// that must be the last option was reached (see url and slurl options)
+		// that must be the last option was reached (see url and izurl options)
 
         // boost::po will have stored a malformed option. 
         // All such options will be removed below.

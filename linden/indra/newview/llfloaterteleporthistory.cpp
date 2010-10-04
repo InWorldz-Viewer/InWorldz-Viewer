@@ -96,7 +96,7 @@ BOOL LLFloaterTeleportHistory::postBuild()
 	childSetCommitCallback("places_list", onPlacesSelected, this);
 	childSetAction("teleport", onTeleport, this);
 	childSetAction("show_on_map", onShowOnMap, this);
-	childSetAction("copy_slurl", onCopySLURL, this);
+	childSetAction("copy_izurl", onCopyIZURL, this);
 
 	return TRUE;
 }
@@ -138,8 +138,8 @@ void LLFloaterTeleportHistory::addPendingEntry(std::string regionName, S16 x, S1
 	mPendingSimString = regionName + llformat("/%d/%d/%d", x, y, z);
 	mPendingSimString = LLWeb::escapeURL(mPendingSimString);
 
-	// Prepare the SLURL
-	mPendingSLURL = LLURLDispatcher::buildSLURL(regionName, x, y, z);
+	// Prepare the IZURL
+	mPendingIZURL = LLURLDispatcher::buildIZURL(regionName, x, y, z);
 }
 
 void LLFloaterTeleportHistory::addEntry(std::string parcelName)
@@ -164,9 +164,9 @@ void LLFloaterTeleportHistory::addEntry(std::string parcelName)
 		value["columns"][LIST_VISITED]["column"] = "visited";
 		value["columns"][LIST_VISITED]["value"] = mPendingTimeString;
 
-		// these columns are hidden and serve as data storage for simstring and SLURL
-		value["columns"][LIST_SLURL]["column"] = "slurl";
-		value["columns"][LIST_SLURL]["value"] = mPendingSLURL;
+		// these columns are hidden and serve as data storage for simstring and IZURL
+		value["columns"][LIST_IZURL]["column"] = "izurl";
+		value["columns"][LIST_IZURL]["value"] = mPendingIZURL;
 		value["columns"][LIST_SIMSTRING]["column"] = "simstring";
 		value["columns"][LIST_SIMSTRING]["value"] = mPendingSimString;
 
@@ -189,7 +189,7 @@ void LLFloaterTeleportHistory::setButtonsEnabled(BOOL on)
 	// enable or disable buttons
 	childSetEnabled("teleport", on);
 	childSetEnabled("show_on_map", on);
-	childSetEnabled("copy_slurl", on);
+	childSetEnabled("copy_izurl", on);
 }
 
 // virtual
@@ -253,11 +253,11 @@ void LLFloaterTeleportHistory::onShowOnMap(void* data)
 }
 
 // static
-void LLFloaterTeleportHistory::onCopySLURL(void* data)
+void LLFloaterTeleportHistory::onCopyIZURL(void* data)
 {
 	LLFloaterTeleportHistory* self = (LLFloaterTeleportHistory*) data;
 
-	// get SLURL of the selected entry and copy it to the clipboard
-	std::string SLURL = self->mPlacesList->getFirstSelected()->getColumn(LIST_SLURL)->getValue().asString();
-	gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(SLURL));
+	// get IZURL of the selected entry and copy it to the clipboard
+	std::string IZURL = self->mPlacesList->getFirstSelected()->getColumn(LIST_IZURL)->getValue().asString();
+	gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(IZURL));
 }
