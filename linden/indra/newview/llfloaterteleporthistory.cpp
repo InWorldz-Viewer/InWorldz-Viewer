@@ -227,7 +227,7 @@ void LLFloaterTeleportHistory::onTeleport(void* data)
 {
 	LLFloaterTeleportHistory* self = (LLFloaterTeleportHistory*) data;
 
-	// build secondlife::/app link from simstring for instant teleport to destination
+	// build inworldz:///app link from simstring for instant teleport to destination
 	std::string slapp = "inworldz:///app/teleport/" + self->mPlacesList->getFirstSelected()->getColumn(LIST_SIMSTRING)->getValue().asString();
 	LLMediaCtrl* web = NULL;
 	LLURLDispatcher::dispatch(slapp, web, TRUE);

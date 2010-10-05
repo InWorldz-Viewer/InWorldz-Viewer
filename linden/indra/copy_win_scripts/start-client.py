@@ -11,7 +11,7 @@ def usage():
     --region <starting region name>
     """
 
-def start_client(grid, slurl, build_config, my_args):
+def start_client(grid, izurl, build_config, my_args):
     login_url = "https://login.%s.lindenlab.com/cgi-bin/login.cgi" % (grid)
 
     viewer_args = { "--grid" : grid,
@@ -19,11 +19,11 @@ def start_client(grid, slurl, build_config, my_args):
     viewer_args.update(my_args)
     # *sigh*  We must put --url at the end of the argument list.
     if viewer_args.has_key("--url"):
-        slurl = viewer_args["--url"]
+        izurl = viewer_args["--url"]
         del(viewer_args["--url"])
     viewer_args = llstart.get_args_from_dict(viewer_args)
-    if slurl is not None:
-        viewer_args += " --url %s" % slurl
+    if izurl is not None:
+        viewer_args += " --url %s" % izurl
 
     # Figure out path stuff.
     # The client should run from indra/newview
@@ -55,14 +55,15 @@ if __name__ == "__main__":
         if o in ("-h", "--help"):
             usage()
             sys.exit(0)
-            
-    slurl = llstart.get_config("slurl")            
-    if slurl == None:
-        if region is None:
-            region = llstart.get_user_name()
-        slurl = "//%s/128/128/" % (region)
-    # Ensure the slurl has quotes around it.
-    if slurl is not None:
-        slurl = '"%s"' % (slurl.strip('"\''))
+    izurl = llstart.get_config("izurl")
+        if izurl == None:   
+            izurl = llstart.get_config("slurl")            
+            if izurl == None:
+                if region is None:
+                    region = llstart.get_user_name()
+                izurl = "//%s/128/128/" % (region)
+    # Ensure the izurl has quotes around it.
+    if izurl is not None:
+        izurl = '"%s"' % (izurl.strip('"\''))
     
-    start_client(grid, slurl, build_config, my_args)
+    start_client(grid, izurl, build_config, my_args)

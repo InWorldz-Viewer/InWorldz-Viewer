@@ -4474,7 +4474,7 @@ S32 LLTextEditor::findHTMLToken(const std::string &line, S32 pos, BOOL reverse) 
 BOOL LLTextEditor::findHTML(const std::string &line, S32 *begin, S32 *end) const
 {
 	  
-	S32 m1,m2,m3;
+	S32 m1,m2,m3,m4;
 	BOOL matched = FALSE;
 	
 	m1=line.find("://",*end);
@@ -4487,10 +4487,11 @@ BOOL LLTextEditor::findHTML(const std::string &line, S32 *begin, S32 *end) const
 		//Load_url only handles http and https so don't hilite ftp, smb, etc.
 		m2 = line.substr(*begin,(m1 - *begin)).find("http");
 		m3 = line.substr(*begin,(m1 - *begin)).find("secondlife");
+		m4 = line.substr(*begin,(m1 - *begin)).find("inworldz");
 	
 		std::string badneighbors=".,<>?';\"][}{=-+_)(*&^%$#@!~`\t\r\n\\";
 	
-		if (m2 >= 0 || m3>=0)
+		if (m2 >= 0 || m3>=0 || m4>=0)
 		{
 			S32 bn = badneighbors.find(line.substr(m1+3,1));
 			
