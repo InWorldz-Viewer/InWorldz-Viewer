@@ -31,6 +31,8 @@
  * $/LicenseInfo$
  */
 
+// We no longer use this test due to conflicts between the http/udp map changes -- MC
+/*
 // Precompiled header: almost always required for newview cpp files
 #include "../llviewerprecompiledheaders.h"
 // Class to test
@@ -534,4 +536,4 @@ namespace tut
 		mWorld->cancelTracking();
 		ensure("LLWorldMap::cancelTracking() at end test failed", mWorld->isTracking() == false);
 	}
-}
+}*/

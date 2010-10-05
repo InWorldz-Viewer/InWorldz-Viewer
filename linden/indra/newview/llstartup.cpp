@@ -174,7 +174,7 @@
 #include "llvoclouds.h"
 #include "llweb.h"
 #include "llworld.h"
-#include "llworldmapmessage.h"
+#include "llworldmap.h"
 #include "llxfermanager.h"
 #include "pipeline.h"
 #include "llappviewer.h"
@@ -2119,6 +2119,8 @@ bool idle_startup()
 			if(!map_server_url.empty())
 			{
 				gSavedSettings.setString("MapServerURL", map_server_url);
+				LLWorldMap::gotMapServerURL(true);
+				llinfos << "Got Map server URL: " << map_server_url << llendl;
 			}
 		}
 
@@ -2385,6 +2387,8 @@ bool idle_startup()
 			if(!map_server_url.empty())
 			{
 				gSavedSettings.setString("MapServerURL", map_server_url);
+				LLWorldMap::gotMapServerURL(true);
+				llinfos << "Got Map server URL: " << map_server_url << llendl;
 			}
 		}
 
@@ -4084,8 +4088,9 @@ void register_viewer_callbacks(LLMessageSystem* msg)
 
 	msg->setHandlerFunc("AvatarPickerReply", LLFloaterAvatarPicker::processAvatarPickerReply);
 
-	msg->setHandlerFunc("MapBlockReply", LLWorldMapMessage::processMapBlockReply);
-	msg->setHandlerFunc("MapItemReply", LLWorldMapMessage::processMapItemReply);
+	msg->setHandlerFunc("MapLayerReply", LLWorldMap::processMapLayerReply);
+	msg->setHandlerFunc("MapBlockReply", LLWorldMap::processMapBlockReply);
+	msg->setHandlerFunc("MapItemReply", LLWorldMap::processMapItemReply);
 
 	msg->setHandlerFunc("EventInfoReply", LLPanelEvent::processEventInfoReply);
 	msg->setHandlerFunc("PickInfoReply", LLPanelPick::processPickInfoReply);
