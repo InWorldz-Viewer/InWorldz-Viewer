@@ -458,7 +458,7 @@ void LLMediaCtrl::navigateTo( std::string url_in, std::string mime_type)
 	if ((LLStringUtil::compareInsensitive(url_in.substr(0, protocol1.length()), protocol1) == 0) ||
 	    (LLStringUtil::compareInsensitive(url_in.substr(0, protocol2.length()), protocol2) == 0) ||
 		(LLStringUtil::compareInsensitive(url_in.substr(0, protocol1.length()), protocol3) == 0) ||
-		(LLStringUtil::compareInsensitive(url_in.substr(0, protocol1.length()), protocol4) == 0) ||
+		(LLStringUtil::compareInsensitive(url_in.substr(0, protocol1.length()), protocol4) == 0)
 		)
 	{
 		// TODO: Print out/log this attempt?
