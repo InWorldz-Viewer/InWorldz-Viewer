@@ -387,6 +387,8 @@ class WindowsManifest(ViewerManifest):
             !define INSTNAME   "InWorldz%(channel_oneword)s"
             !define SHORTCUT   "%(channel)s"
             !define URLNAME   "inworldz"
+            !define INSTALL_ICON "install_icon.ico"
+            !define UNINSTALL_ICON "uninstall_icon.ico"
             !define UNINSTALL_SETTINGS 1
             Caption "%(channel)s ${VERSION}"
             """
