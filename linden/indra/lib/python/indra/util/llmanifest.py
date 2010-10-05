@@ -98,7 +98,6 @@ def get_channel(srctree):
     
 
 DEFAULT_SRCTREE = os.path.dirname(sys.argv[0])
-DEFAULT_CHANNEL = 'InWorldz Release'
 
 ARGUMENTS=[
     dict(name='actions',
@@ -280,11 +279,11 @@ class LLManifest(object):
     def default_grid(self):
         return self.args.get('grid', None) == ''
     def default_channel(self):
-        return self.args.get('channel', None) == DEFAULT_CHANNEL
+        return self.args.get('channel', None) == 'InWorldz Release'
     
     def default_channel_for_brand(self):
         if self.viewer_branding_id()=='inworldz':
-            return self.args.get('channel', None) == DEFAULT_CHANNEL
+            return self.args.get('channel', None) == 'InWorldz Release'
         raise ValueError, "Invalid branding id: " + self.viewer_branding_id()
 
     def construct(self):

@@ -593,9 +593,9 @@ class DarwinManifest(ViewerManifest):
         # one for release candidate and one for first look. Any other channels
         # will use the release .DS_Store, and will look broken.
         # - Ambroff 2008-08-20
-		# Added a .DS_Store for snowglobe - Merov 2009-06-17
-		
-		# We have a single branded installer for all snowglobe channels so snowglobe logic is a bit different
+        # Added a .DS_Store for snowglobe - Merov 2009-06-17
+        
+        # We have a single branded installer for all snowglobe channels so snowglobe logic is a bit different
         if (self.app_name()=="InWorldz"):
         #    dmg_template = os.path.join ('installers', 'darwin', 'snowglobe-dmg')
         #else:
