@@ -45,7 +45,7 @@ LLURLSimString LLURLSimString::sInstance;
 std::string LLURLSimString::sLocationStringHome("My Home");
 std::string LLURLSimString::sLocationStringLast("My Last Location");
 
-// "secondlife://simname/x/y/z" -> "simname/x/y/z"
+// "inworldz://simname/x/y/z" -> "simname/x/y/z"
 // (actually .*//foo -> foo)
 // static
 void LLURLSimString::setString(const std::string& sim_string)
@@ -161,7 +161,7 @@ std::string LLURLSimString::getURL()
 	std::string url;
 	if (sInstance.mParseState == PARSE_OK)
 	{
-		url = llformat("secondlife://%s/%d/%d/%d/",
+		url = llformat("inworldz://%s/%d/%d/%d/",
 					sInstance.mSimName.c_str(),
 					sInstance.mX,
 					sInstance.mY,

@@ -114,7 +114,7 @@ public:
 		// the viewer, dispatch it
 
 	static std::string sIZURLCommand;
-		// *HACK: On startup, if we were passed a secondlife://app/do/foo
+		// *HACK: On startup, if we were passed a inworldz://app/do/foo
 		// command URL, store it for later processing.
 
 	static bool handleSocksProxy(bool reportOK = true);

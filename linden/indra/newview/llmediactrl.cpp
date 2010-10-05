@@ -450,11 +450,16 @@ void LLMediaCtrl::clr404RedirectUrl()
 //
 void LLMediaCtrl::navigateTo( std::string url_in, std::string mime_type)
 {
-	// don't browse to anything that starts with secondlife:// or sl://
+	// don't browse to anything that starts with inworldz:// or iz:// or secondlife:// or sl://
 	const std::string protocol1 = "secondlife://";
 	const std::string protocol2 = "sl://";
+	const std::string protocol3 = "inworldz://";
+	const std::string protocol4 = "iz://";
 	if ((LLStringUtil::compareInsensitive(url_in.substr(0, protocol1.length()), protocol1) == 0) ||
-	    (LLStringUtil::compareInsensitive(url_in.substr(0, protocol2.length()), protocol2) == 0))
+	    (LLStringUtil::compareInsensitive(url_in.substr(0, protocol2.length()), protocol2) == 0) ||
+		(LLStringUtil::compareInsensitive(url_in.substr(0, protocol1.length()), protocol3) == 0) ||
+		(LLStringUtil::compareInsensitive(url_in.substr(0, protocol1.length()), protocol4) == 0) ||
+		)
 	{
 		// TODO: Print out/log this attempt?
 		// llinfos << "Rejecting attempt to load restricted website :" << urlIn << llendl;

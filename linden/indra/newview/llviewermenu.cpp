@@ -7437,7 +7437,7 @@ void handle_buy_currency_test(void*)
 	llinfos << "buy currency url " << url << llendl;
 
 	LLFloaterHtmlCurrency* floater = LLFloaterHtmlCurrency::showInstance(url);
-	// Needed so we can use secondlife:///app/floater/self/close IZURLs
+	// Needed so we can use inworldz:///app/floater/self/close IZURLs
 	floater->setTrusted(true);
 	floater->center();
 }

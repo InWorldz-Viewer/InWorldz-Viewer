@@ -126,7 +126,7 @@ void LLFloaterObjectIMInfo::onClickMap(void* data)
 	LLFloaterObjectIMInfo* self = (LLFloaterObjectIMInfo*)data;
 
 	std::ostringstream link;
-	link << "secondlife://" << self->mIzurl;
+	link << "inworldz://" << self->mIzurl;
 	class LLMediaCtrl* web = NULL;
 	LLURLDispatcher::dispatch(link.str(), web, true);
 }
@@ -192,7 +192,7 @@ public:
 // Creating the object registers with the dispatcher.
 LLObjectIMInfoHandler gObjectIMHandler;
 
-// ex. secondlife:///app/objectim/9426adfc-9c17-8765-5f09-fdf19957d003?owner=a112d245-9095-4e9c-ace4-ffa31717f934&groupowned=true&izurl=ahern/123/123/123&name=Object
+// ex. inworldz:///app/objectim/9426adfc-9c17-8765-5f09-fdf19957d003?owner=a112d245-9095-4e9c-ace4-ffa31717f934&groupowned=true&izurl=ahern/123/123/123&name=Object
 bool LLObjectIMInfoHandler::handle(const LLSD &tokens, const LLSD &query_map, LLMediaCtrl* web)
 {
 	LLUUID task_id = tokens[0].asUUID();

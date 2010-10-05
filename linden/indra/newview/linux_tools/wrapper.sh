@@ -53,7 +53,7 @@ RUN_PATH=$(dirname "${SCRIPTSRC}" || echo .)
 BINARY_TYPE=$(expr match "$(file -b ${RUN_PATH}/bin/SLPlugin)" '\(.*executable\)')
 if [ "`uname -m`" == "x86_64" -a "${BINARY_TYPE}" == "ELF 32-bit LSB executable" ]; then
     export LL_DISABLE_GSTREAMER=x
-    echo '64-bit Linux detected: Disabling GStreamer (streaming video and music) by default; edit ./snowglobe to re-enable.'
+    echo '64-bit Linux detected: Disabling GStreamer (streaming video and music) by default; edit ./inworldz to re-enable.'
 fi
 
 ## Everything below this line is just for advanced troubleshooters.
@@ -65,7 +65,7 @@ fi
 ##   in the bin directory will be stripped: you should replace it with
 ##   an unstripped binary before you run.
 #export LL_WRAPPER='gdb --args'
-#export LL_WRAPPER='valgrind --smc-check=all --error-limit=no --log-file=secondlife.vg --leak-check=full --suppressions=/usr/lib/valgrind/glibc-2.5.supp --suppressions=secondlife-i686.supp'
+#export LL_WRAPPER='valgrind --smc-check=all --error-limit=no --log-file=inworldz.vg --leak-check=full --suppressions=/usr/lib/valgrind/glibc-2.5.supp --suppressions=inworldz-i686.supp'
 
 ## - Avoids an often-buggy X feature that doesn't really benefit us anyway.
 export SDL_VIDEO_X11_DGAMOUSE=0
@@ -93,7 +93,8 @@ RUN_PATH=`dirname "${SCRIPTSRC}" || echo .`
 echo "Running from ${RUN_PATH}"
 cd "${RUN_PATH}"
 
-# Re-register the secondlife:// protocol handler every launch, for now.
+# Re-register the secondlife:// protocol handlers every launch, for now.
+# TODO: register inworldz:// protocol handler as well
 ./register_secondlifeprotocol.sh
 ## Before we mess with LD_LIBRARY_PATH, save the old one to restore for
 ##  subprocesses that care.
@@ -117,7 +118,7 @@ if [ -n "$LL_TCMALLOC" ]; then
     fi
 fi
 
-export VIEWER_BINARY='snowglobe-do-not-run-directly'
+export VIEWER_BINARY='inworldz-do-not-run-directly'
 export SL_ENV='LD_LIBRARY_PATH="`pwd`"/lib:"`pwd`"/app_settings/mozilla-runtime-linux-i686:"${LD_LIBRARY_PATH}"'
 export SL_CMD='$LL_WRAPPER bin/$VIEWER_BINARY'
 export SL_OPT="`cat gridargs.dat` $@"
@@ -134,7 +135,7 @@ if [ -n "$LL_RUN_ERR" ]; then
 		if [ "`uname -m`" = "x86_64" ]; then
 			echo
 			cat << EOFMARKER
-You are running the Second Life Viewer on a x86_64 platform.  The
+You are running the InWorldz Viewer on a x86_64 platform.  The
 most common problems when launching the Viewer (particularly
 'bin/$VIEWER_BINARY: not found' and 'error while
 loading shared libraries') may be solved by installing your Linux
@@ -149,7 +150,7 @@ fi
 
 echo
 echo '*******************************************************'
-echo 'This is a BETA release of the Second Life linux client.'
+echo 'This is a BETA release of the InWorldz linux client.'
 echo 'Thank you for testing!'
 echo 'Please see README-linux.txt before reporting problems.'
 echo

@@ -95,12 +95,12 @@ private:
 							bool right_mouse,
 							LLMediaCtrl* web,
 							bool trusted_browser);
-		// Handles secondlife:///app/agent/<agent_id>/about and similar
+		// Handles inworldz:///app/agent/<agent_id>/about and similar
 		// by showing panel in Search floater.
 		// Returns true if handled or explicitly blocked.
 
 	static bool dispatchRegion(const std::string& url, bool right_mouse);
-		// handles secondlife://Ahern/123/45/67/
+		// handles inworldz://Ahern/123/45/67/
 		// Returns true if handled.
 
 	static void regionHandleCallback(U64 handle, const std::string& url,
@@ -449,7 +449,7 @@ public:
 		// Region names may be %20 escaped.
 		std::string region_name = LLURLSimString::unescapeRegionName(tokens[0]);
 
-		// build secondlife://De%20Haro/123/45/67 for use in callback
+		// build inworldz://De%20Haro/123/45/67 for use in callback
 		std::string url = IZURL_INWORLDZ_PREFIX;
 		for (int i = 0; i < tokens.size(); ++i)
 		{

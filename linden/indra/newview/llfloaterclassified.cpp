@@ -1,7 +1,7 @@
 /** 
  * @file llfloaterclassified.cpp
  * @brief Classified information as shown in a floating window from 
- * secondlife:// command handler.  
+ * inworldz:// command handler.  
  *
  * $LicenseInfo:firstyear=2002&license=viewergpl$
  * 

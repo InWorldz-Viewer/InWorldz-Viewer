@@ -45,7 +45,7 @@
 
 #include "llbutton.h"
 #include "llcheckboxctrl.h"
-#include "llcommandhandler.h"		// for secondlife:///app/login/
+#include "llcommandhandler.h"		// for inworldz:///app/login/
 #include "llcombobox.h"
 #include "llcurl.h"
 #include "llviewercontrol.h"
@@ -319,7 +319,7 @@ LLPanelLogin::LLPanelLogin(const LLRect &rect,
 	LLMediaCtrl* web_browser = getChild<LLMediaCtrl>("login_html");
 	web_browser->addObserver(this);
 
-	// Need to handle login secondlife:///app/ URLs
+	// Need to handle login inworldz:///app/ URLs
 	web_browser->setTrusted( true );
 
 	// don't make it a tab stop until SL-27594 is fixed

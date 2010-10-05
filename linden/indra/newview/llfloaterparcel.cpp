@@ -1,7 +1,7 @@
 /** 
  * @file llfloaterparcel.cpp
  * @brief LLFloaterParcel class implementation
- * Parcel information as shown in a floating window from secondlife:// command
+ * Parcel information as shown in a floating window from inworldz:// command
  * handler.  
  *
  * $LicenseInfo:firstyear=2007&license=viewergpl$

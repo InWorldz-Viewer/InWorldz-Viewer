@@ -464,15 +464,15 @@ OSErr AEGURLHandler(const AppleEvent *messagein, AppleEvent *reply, long refIn)
 	{
 		std::string url = buffer;
 		
-		// Safari 3.2 silently mangles secondlife:///app/ URLs into
-		// secondlife:/app/ (only one leading slash).
+		// Safari 3.2 silently mangles inworldz:///app/ URLs into
+		// inworldz:/app/ (only one leading slash).
 		// Fix them up to meet the URL specification. JC
-		const std::string prefix = "secondlife:/app/";
+		const std::string prefix = "inworldz:/app/";
 		std::string test_prefix = url.substr(0, prefix.length());
 		LLStringUtil::toLower(test_prefix);
 		if (test_prefix == prefix)
 		{
-			url.replace(0, prefix.length(), "secondlife:///app/");
+			url.replace(0, prefix.length(), "inworldz:///app/");
 		}
 		
 		LLMediaCtrl* web = NULL;
@@ -537,7 +537,7 @@ void init_apple_menu(const char* product)
 		}
 	}
 	
-	// Install a handler for 'gurl' AppleEvents.  This is how secondlife:// URLs get passed to the viewer.
+	// Install a handler for 'gurl' AppleEvents.  This is how inworldz:// URLs get passed to the viewer.
 	
 	if(AEInstallEventHandler('GURL', 'GURL', NewAEEventHandlerUPP(AEGURLHandler),0, false) != noErr)
 	{

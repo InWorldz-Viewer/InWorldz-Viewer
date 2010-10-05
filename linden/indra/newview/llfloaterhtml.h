@@ -53,7 +53,7 @@ class LLFloaterHtml :
 		void show( std::string content_id, bool open_link_external, bool trusted_browser );
 
 		// Pass raw URL and window title
-		// Can be set to handle secondlife:///app/ URLs, but this should
+		// Can be set to handle inworldz:///app/ URLs, but this should
 		// usually be false.
 		void show( std::string start_url, std::string title, bool open_link_external, bool trusted_browser );
 

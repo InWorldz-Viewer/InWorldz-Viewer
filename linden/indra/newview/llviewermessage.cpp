@@ -1958,7 +1958,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			}
 
 			std::ostringstream link;
-			link << "secondlife:///app/objectim/" << session_id
+			link << "inworldz:///app/objectim/" << session_id
 					<< LLURI::mapToQueryString(query_string);
 
 			chat.mURL = link.str();

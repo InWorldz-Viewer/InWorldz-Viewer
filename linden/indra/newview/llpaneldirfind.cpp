@@ -148,7 +148,7 @@ BOOL LLPanelDirFind::postBuild()
 		mWebBrowser->setOpenInInternalBrowser( false );
 		mWebBrowser->setOpenInExternalBrowser( false );	
 
-		// need to handle secondlife:///app/ URLs for direct teleports
+		// need to handle inworldz:///app/ URLs for direct teleports
 		mWebBrowser->setTrusted( true );
 
 		// redirect 404 pages from S3 somewhere else

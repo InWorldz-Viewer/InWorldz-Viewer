@@ -1,7 +1,7 @@
 /** 
  * @file llfloaterevent.cpp
  * @brief Event information as shown in a floating window from 
- * secondlife:// command handler.
+ * inworldz:// command handler.
  *
  * $LicenseInfo:firstyear=2007&license=viewergpl$
  * 

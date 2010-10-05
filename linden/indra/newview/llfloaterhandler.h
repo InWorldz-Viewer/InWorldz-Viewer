@@ -30,7 +30,7 @@
 #define LLFLOATERHANDLER_H
 
 // Support for IZURL control of floaters, such as
-//   secondlife:///app/floater/self/close
+//   inworldz:///app/floater/self/close
 
 #include "llcommandhandler.h"
 

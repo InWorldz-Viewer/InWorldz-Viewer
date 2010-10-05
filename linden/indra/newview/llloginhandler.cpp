@@ -1,7 +1,7 @@
 /** 
  * @file llloginhandler.cpp
  * @brief Handles filling in the login panel information from a IZURL
- * such as secondlife:///app/login?first=Bob&last=Dobbs
+ * such as inworldz:///app/login?first=Bob&last=Dobbs
  *
  * $LicenseInfo:firstyear=2008&license=viewergpl$
  * 

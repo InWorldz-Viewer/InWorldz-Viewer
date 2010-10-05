@@ -929,7 +929,7 @@ BOOL can_afford_transaction(S32 cost)
 }
 
 
-// Implements secondlife:///app/balance/request to request a I'z$ balance
+// Implements inworldz:///app/balance/request to request a I'z$ balance
 // update via UDP message system. JC
 class LLBalanceHandler : public LLCommandHandler
 {

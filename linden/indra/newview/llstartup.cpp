@@ -1084,7 +1084,7 @@ bool idle_startup()
 		//
 		if (!LLStartUp::sIZURLCommand.empty())
 		{
-			// this might be a secondlife:///app/login URL
+			// this might be an inworldz:///app/login (or secondlife:///app/login) URL
 			gLoginHandler.parseDirectLogin(LLStartUp::sIZURLCommand);
 		}
 		if (!gLoginHandler.getFirstName().empty()

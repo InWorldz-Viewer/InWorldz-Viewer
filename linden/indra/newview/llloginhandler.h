@@ -1,7 +1,7 @@
 /** 
  * @file llloginhandler.h
  * @brief Handles filling in the login panel information from a IZURL
- * such as secondlife:///app/login?first=Bob&last=Dobbs
+ * such as inworldz:///app/login?first=Bob&last=Dobbs
  *
  * $LicenseInfo:firstyear=2008&license=viewergpl$
  * 
@@ -43,7 +43,7 @@ class LLLoginHandler : public LLCommandHandler
 	/*virtual*/ bool handle(const LLSD& tokens, const LLSD& query_map, LLMediaCtrl* web);
 
 	// Fill in our internal fields from a IZURL like
-	// secondlife:///app/login?first=Bob&last=Dobbs
+	// inworldz:///app/login?first=Bob&last=Dobbs
 	bool parseDirectLogin(std::string url);
 
 	std::string getFirstName() const { return mFirstName; }

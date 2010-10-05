@@ -42,8 +42,8 @@ public:
 
 	static void setString(const std::string& url);
 		// Accepts all sorts of fragments:
-		//   secondlife://RegionName/1/2/
-		//   sl://RegionName/1/2/3/
+		//   inworldz://RegionName/1/2/
+		//   iz://RegionName/1/2/3/
 		//   //Ahern/123/45/
 		//   Ahern
 
@@ -57,7 +57,7 @@ public:
 		// doesn't affect static instance.
 
 	static std::string getURL();
-		// Get the canonical URL secondlife://RegionName/123/45/6/
+		// Get the canonical URL inworldz://RegionName/123/45/6/
 	
 	static std::string unescapeRegionName(std::string region_name);
 		// Does URL unescaping, in particular %20 -> space
