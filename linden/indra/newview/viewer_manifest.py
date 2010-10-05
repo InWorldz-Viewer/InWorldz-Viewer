@@ -188,8 +188,10 @@ class WindowsManifest(ViewerManifest):
         self.path("dbghelp.dll")
 
         # For using sound.
-        ###self.path("openal.dll")
-        ###self.path("alut.dll")
+        if self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):
+            self.path("openal32.dll")
+            self.path("alut.dll")
+            self.end_prefix()
 
         # Get llcommon and deps.
         if self.prefix(src=self.args['configuration'], dst=""):
