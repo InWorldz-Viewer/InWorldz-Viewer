@@ -427,20 +427,21 @@
 		</menu_item_check>
 		<menu_item_separator bottom="-449" enabled="true" height="8" label="-----------" left="0"
 		     mouse_opaque="true" name="separator5" width="211" />
-		<menu_item_call bottom="-468" enabled="true" height="19" label="Zoom In" left="0"
-		     mouse_opaque="true" name="Zoom In" shortcut="control|0" width="211">
-			<on_click function="View.ZoomIn" userdata="" />
-		</menu_item_call>
-		<menu_item_call bottom="-487" enabled="true" height="19" label="Zoom Default" left="0"
-		     mouse_opaque="true" name="Zoom Default" shortcut="control|9" width="211">
-			<on_click function="View.ZoomDefault" userdata="" />
-		</menu_item_call>
-		<menu_item_call bottom="-506" enabled="true" height="19" label="Zoom Out" left="0"
-		     mouse_opaque="true" name="Zoom Out" shortcut="control|8" width="211">
-			<on_click function="View.ZoomOut" userdata="" />
-		</menu_item_call>
-		<menu_item_separator bottom="-514" enabled="true" height="8" label="-----------" left="0"
-		     mouse_opaque="true" name="separator6" width="211" />
+    <menu name="Zoom Level" create_jump_keys="true"
+            label="Zoom Level" opaque="true" tear_off="true">
+      <menu_item_call bottom="-468" enabled="true" height="19" label="Zoom In" left="0"
+           mouse_opaque="true" name="Zoom In" shortcut="control|0" width="211">
+        <on_click function="View.ZoomIn" userdata="" />
+      </menu_item_call>
+      <menu_item_call bottom="-487" enabled="true" height="19" label="Zoom Default" left="0"
+           mouse_opaque="true" name="Zoom Default" shortcut="control|9" width="211">
+        <on_click function="View.ZoomDefault" userdata="" />
+      </menu_item_call>
+      <menu_item_call bottom="-506" enabled="true" height="19" label="Zoom Out" left="0"
+           mouse_opaque="true" name="Zoom Out" shortcut="control|8" width="211">
+        <on_click function="View.ZoomOut" userdata="" />
+      </menu_item_call>
+    </menu>
 		<menu_item_call bottom="-19" enabled="true" height="19" label="Toggle Fullscreen" left="0"
 		     mouse_opaque="true" name="Toggle Fullscreen" shortcut="alt|Enter"
 		     width="188">
