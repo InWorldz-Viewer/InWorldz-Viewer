@@ -54,13 +54,16 @@
 #include "llstatusbar.h"		// for getBalance()
 #include "lllineeditor.h"
 #include "llradiogroup.h"
+#include "llchat.h"
 #include "llcombobox.h"
 #include "llfloateravatarinfo.h"
+#include "llfloaterchat.h"
 #include "lluiconstants.h"
 #include "lldbstrings.h"
 #include "llfloatergroupinfo.h"
 #include "llfloatergroups.h"
 #include "llnamebox.h"
+#include "lltrans.h"
 #include "llviewercontrol.h"
 #include "lluictrlfactory.h"
 #include "roles_constants.h"
@@ -83,15 +86,18 @@ BOOL LLPanelPermissions::postBuild()
 	this->childSetCommitCallback("Object Description",LLPanelPermissions::onCommitDesc,this);
 	this->childSetPrevalidate("Object Description",LLLineEditor::prevalidatePrintableNotPipe);
 
-	
-	this->childSetAction("button owner profile",LLPanelPermissions::onClickOwner,this);
-	this->childSetAction("button creator profile",LLPanelPermissions::onClickCreator,this);
+	this->getChild<LLTextBox>("Creator Name")->setClickedCallback(onClickCreator, this);
+	this->getChild<LLTextBox>("Owner Name")->setClickedCallback(onClickOwner, this);
+	this->getChild<LLTextBox>("Last Owner Name")->setClickedCallback(onClickLastOwner, this);
+	this->getChild<LLTextBox>("Group Name Proxy")->setClickedCallback(onClickGroupName, this);
 
 	this->childSetAction("button set group",LLPanelPermissions::onClickGroup,this);
 
 	this->childSetCommitCallback("checkbox share with group",LLPanelPermissions::onCommitGroupShare,this);
 
 	this->childSetAction("button deed",LLPanelPermissions::onClickDeedToGroup,this);
+
+	this->childSetAction("button copy key",LLPanelPermissions::onClickCopyObjKey,this);
 
 	this->childSetCommitCallback("checkbox allow everyone move",LLPanelPermissions::onCommitEveryoneMove,this);
 
@@ -113,8 +119,13 @@ BOOL LLPanelPermissions::postBuild()
 	LLTextBox* group_rect_proxy = getChild<LLTextBox>("Group Name Proxy");
 	if(group_rect_proxy )
 	{
+		// God I hate leaving this hardcoded styling here, ick ick ick -- MC
 		mLabelGroupName = new LLNameBox("Group Name", group_rect_proxy->getRect());
 		addChild(mLabelGroupName);
+		mLabelGroupName->setClickedCallback(onClickGroupName, this);
+		mLabelGroupName->setHoverActive(TRUE);
+		mLabelGroupName->setHoverColor(LLColor4(50, 115, 185));
+		mLabelGroupName->setFontStyle(LLFontGL::UNDERLINE);
 	}
 	else
 	{
@@ -171,12 +182,14 @@ void LLPanelPermissions::refresh()
 		childSetEnabled("Creator:",false);
 		childSetText("Creator Name",LLStringUtil::null);
 		childSetEnabled("Creator Name",false);
-		childSetEnabled("button creator profile",false);
 
 		childSetEnabled("Owner:",false);
 		childSetText("Owner Name",LLStringUtil::null);
 		childSetEnabled("Owner Name",false);
-		childSetEnabled("button owner profile",false);
+
+		childSetEnabled("Last Owner:",false);
+		childSetText("Last Owner Name",LLStringUtil::null);
+		childSetEnabled("Last Owner Name",false);
 
 		childSetEnabled("Group:",false);
 		childSetText("Group Name",LLStringUtil::null);
@@ -204,6 +217,7 @@ void LLPanelPermissions::refresh()
 		childSetEnabled("checkbox allow everyone copy",false);
 
 		//Next owner can:
+		childSetEnabled("Anyone can:",false);
 		childSetEnabled("Next owner can:",false);
 		childSetValue("checkbox next owner can modify",FALSE);
 		childSetEnabled("checkbox next owner can modify",false);
@@ -246,6 +260,8 @@ void LLPanelPermissions::refresh()
 		childSetVisible("N:",false);
 		childSetVisible("F:",false);
 
+		childSetEnabled("button copy key",false);
+
 		return;
 	}
 
@@ -286,8 +302,7 @@ void LLPanelPermissions::refresh()
 													  creator_name);
 
 	childSetText("Creator Name",creator_name);
-	childSetEnabled("Creator Name",TRUE);
-	childSetEnabled("button creator profile", creators_identical && mCreatorID.notNull() );
+	childSetEnabled("Creator Name",creators_identical && mCreatorID.notNull());
 
 	// Update owner text field
 	childSetEnabled("Owner:",true);
@@ -297,6 +312,8 @@ void LLPanelPermissions::refresh()
 	owners_identical = LLSelectMgr::getInstance()->selectGetOwner(mOwnerID, owner_name);
 
 //	llinfos << "owners_identical " << (owners_identical ? "TRUE": "FALSE") << llendl;
+	std::string last_owner_name;
+	LLSelectMgr::getInstance()->selectGetLastOwner(mLastOwnerID, last_owner_name);
 
 	if (mOwnerID.isNull())
 	{
@@ -307,8 +324,8 @@ void LLPanelPermissions::refresh()
 		else
 		{
 			// Display last owner if public
-			std::string last_owner_name;
-			LLSelectMgr::getInstance()->selectGetLastOwner(mLastOwnerID, last_owner_name);
+			//std::string last_owner_name;
+			//LLSelectMgr::getInstance()->selectGetLastOwner(mLastOwnerID, last_owner_name);
 
 			// It should never happen that the last owner is null and the owner
 			// is null, but it seems to be a bug in the simulator right now. JC
@@ -322,7 +339,19 @@ void LLPanelPermissions::refresh()
 
 	childSetText("Owner Name",owner_name);
 	childSetEnabled("Owner Name",TRUE);
-	childSetEnabled("button owner profile",owners_identical && (mOwnerID.notNull() || LLSelectMgr::getInstance()->selectIsGroupOwned()));
+
+	if (owner_name != last_owner_name)
+	{
+		childSetEnabled("Last Owner:", TRUE);
+		childSetText("Last Owner Name", last_owner_name);
+		childSetEnabled("Last Owner Name", TRUE);
+	}
+	else
+	{
+		childSetEnabled("Last Owner:", FALSE);
+		childSetText("Last Owner Name", LLStringUtil::null);
+		childSetEnabled("Last Owner Name", FALSE);
+	}
 
 	// update group text field
 	childSetEnabled("Group:",true);
@@ -601,12 +630,14 @@ void LLPanelPermissions::refresh()
 
 	if (has_change_perm_ability)
 	{
+		childSetEnabled("Anyone can:", TRUE);
 		childSetEnabled("checkbox share with group",true);
 		childSetEnabled("checkbox allow everyone move",owner_mask_on & PERM_MOVE);
 		childSetEnabled("checkbox allow everyone copy",owner_mask_on & PERM_COPY && owner_mask_on & PERM_TRANSFER);
 	}
 	else
 	{
+		childSetEnabled("Anyone can:", FALSE);
 		childSetEnabled("checkbox share with group", FALSE);
 		childSetEnabled("checkbox allow everyone move", FALSE);
 		childSetEnabled("checkbox allow everyone copy", FALSE);
@@ -801,6 +832,8 @@ void LLPanelPermissions::refresh()
 	}
 	childSetEnabled("label click action",is_perm_modify && all_volume);
 	childSetEnabled("clickaction",is_perm_modify && all_volume);
+
+	childSetEnabled("button copy key",true);
 }
 
 
@@ -823,7 +856,10 @@ void LLPanelPermissions::onClickCreator(void *data)
 {
 	LLPanelPermissions *self = (LLPanelPermissions *)data;
 
-	LLFloaterAvatarInfo::showFromObject(self->mCreatorID);
+	if (self->mCreatorID.notNull())
+	{
+		LLFloaterAvatarInfo::showFromObject(self->mCreatorID);
+	}
 }
 
 // static
@@ -837,9 +873,28 @@ void LLPanelPermissions::onClickOwner(void *data)
 		LLSelectMgr::getInstance()->selectGetGroup(group_id);
 		LLFloaterGroupInfo::showFromUUID(group_id);
 	}
-	else
+	else if (self->mOwnerID.notNull())
 	{
 		LLFloaterAvatarInfo::showFromObject(self->mOwnerID);
+	}
+}
+
+void LLPanelPermissions::onClickLastOwner(void *data)
+{
+	LLPanelPermissions *self = (LLPanelPermissions *)data;
+
+	if ( self->mLastOwnerID.notNull() )
+	{
+		LLFloaterAvatarInfo::showFromObject(self->mLastOwnerID);
+	}
+}
+
+void LLPanelPermissions::onClickGroupName(void *data)
+{
+	LLUUID group_id;
+	if (LLSelectMgr::getInstance()->selectGetGroup(group_id))
+	{
+		LLFloaterGroupInfo::showFromUUID(group_id);
 	}
 }
 
@@ -896,6 +951,49 @@ bool callback_deed_to_group(const LLSD& notification, const LLSD& response)
 void LLPanelPermissions::onClickDeedToGroup(void* data)
 {
 	LLNotifications::instance().add( "DeedObjectToGroup", LLSD(), LLSD(), callback_deed_to_group);
+}
+
+void LLPanelPermissions::onClickCopyObjKey(void* data)
+{
+	std::string output;
+	std::string keys;
+	const std::string separator = ", ";
+	LLChat chat;
+	chat.mSourceType = CHAT_SOURCE_SYSTEM;
+
+	for (LLObjectSelection::root_iterator iter = LLSelectMgr::getInstance()->getSelection()->root_begin();
+		iter != LLSelectMgr::getInstance()->getSelection()->root_end(); iter++)
+	{
+		LLSelectNode* selectNode = *iter;
+		LLViewerObject* object = selectNode->getObject();
+		if (object)
+		{
+			if (!output.empty()) 
+			{
+				output.append(separator);
+			}
+			output.append(selectNode->mName);
+			output.append(": ");
+			output.append(object->getID().asString());
+
+			if (!keys.empty())
+			{
+				keys.append(separator);
+			}
+			keys.append(object->getID().asString());
+		}
+	}
+
+	if (!output.empty()) 
+	{
+		chat.mText = LLTrans::getString("copy_obj_key_info") + "\n" + output;
+		LLFloaterChat::addChat(chat);
+	}
+
+	if (!keys.empty())
+	{
+		gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(keys));
+	}
 }
 
 ///----------------------------------------------------------------------------

@@ -6705,10 +6705,6 @@ Export successful
 For instructions, make a new template in the AO. Use the toolbar to toggle the AO on/off.
 </notification>
   
-  <!--End InWorldz notifications-->
-
-<!--Begin Imprudence notifications-->
-
 <notification
  icon="alert.tga"
  name="ClickBuildConstants"
@@ -6794,18 +6790,6 @@ For information about this feature, click "More Info".
 </notification>
 
 <notification
- icon="alertmodal.tga"
- name="ConfirmAutoPilot"
- type="alertmodal">
-Are you sure you want to move here?
-  <usetemplate
-   ignoretext="When using auto-pilot"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="Move"/>
-</notification>
-
-<notification
  icon="alert.tga"
  name="ConfirmDerender"
  type="alert">
@@ -6878,7 +6862,23 @@ Are you sure you want to take off all clothes?
    yestext="Take Off"/>
 </notification>
 
+  <!--End InWorldz notifications-->
+
+  <!--Begin Imprudence notifications-->
+
 <notification
+ icon="alertmodal.tga"
+ name="ConfirmAutoPilot"
+ type="alertmodal">
+Are you sure you want to move here?
+  <usetemplate
+   ignoretext="When using auto-pilot"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Move"/>
+</notification>
+
+  <notification
  icon="alert.tga"
  name="ConfirmResetAllPreferences"
  type="alert">

@@ -4,6 +4,12 @@
      For example, the strings used in avatar chat bubbles, and strings 
      that are returned from one component and may appear in many places-->
 <strings>
+
+  <!-- InWorldz-specific strings -->
+  <string name="copy_obj_key_info">
+    Copied key(s) for:
+  </string>
+
 	
 	<!-- Login -->
 	<string name="LoginInProgress">Logging in. [APP_NAME] may appear frozen.  Please wait.</string>

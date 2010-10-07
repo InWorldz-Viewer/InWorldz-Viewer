@@ -47,6 +47,7 @@
 // project includes
 #include "llagent.h"
 #include "llbutton.h"
+#include "llcalc.h"
 #include "llcheckboxctrl.h"
 #include "llcolorswatch.h"
 #include "llcombobox.h"
@@ -99,6 +100,10 @@ enum {
 	MI_HOLE_COUNT
 };
 
+LLVector3 LLPanelObject::mClipboardPos;
+LLVector3 LLPanelObject::mClipboardSize;
+LLVector3 LLPanelObject::mClipboardRot;
+
 //*TODO:translate (depricated, so very low priority)
 static const std::string LEGACY_FULLBRIGHT_DESC("Fullbright (Legacy)");
 
@@ -110,6 +115,9 @@ BOOL	LLPanelObject::postBuild()
 	// Top
 	//--------------------------------------------------------
 	
+	// Build constant tipsheet
+	childSetAction("build_math_constants",onClickBuildConstants,this);
+
 	// Lock checkbox
 	mCheckLock = getChild<LLCheckBoxCtrl>("checkbox locked");
 	childSetCommitCallback("checkbox locked",onCommitLock,this);
@@ -156,6 +164,27 @@ BOOL	LLPanelObject::postBuild()
 	childSetCommitCallback("Rot Y",onCommitRotation,this);
 	mCtrlRotZ = getChild<LLSpinCtrl>("Rot Z");
 	childSetCommitCallback("Rot Z",onCommitRotation,this);
+
+	mBtnCopyPos = getChild<LLButton>("copypos");
+	childSetAction("copypos",onCopyPos, this);
+	mBtnPastePos = getChild<LLButton>("pastepos");
+	childSetAction("pastepos",onPastePos, this);
+	mBtnPastePosClip = getChild<LLButton>("pasteposclip");
+	childSetAction("pasteposclip",onPastePosClip, this);
+
+	mBtnCopySize = getChild<LLButton>("copysize");
+	childSetAction("copysize",onCopySize, this);
+	mBtnPasteSize = getChild<LLButton>("pastesize");
+	childSetAction("pastesize",onPasteSize, this);
+	mBtnPasteSizeClip = getChild<LLButton>("pastesizeclip");
+	childSetAction("pastesizeclip",onPasteSizeClip, this);
+
+	mBtnCopyRot = getChild<LLButton>("copyrot");
+	childSetAction("copyrot",onCopyRot, this);
+	mBtnPasteRot = getChild<LLButton>("pasterot");
+	childSetAction("pasterot",onPasteRot, this);
+	mBtnPasteRotClip = getChild<LLButton>("pasterotclip");
+	childSetAction("pasterotclip",onPasteRotClip, this);
 
 	//--------------------------------------------------------
 		
@@ -342,6 +371,8 @@ void LLPanelObject::getState( )
 		}
 	}
 
+	LLCalc* calcp = LLCalc::getInstance();
+	
 	LLVOVolume *volobjp = NULL;
 	if ( objectp && (objectp->getPCode() == LL_PCODE_VOLUME))
 	{
@@ -358,6 +389,7 @@ void LLPanelObject::getState( )
 
 		// Disable all text input fields
 		clearCtrls();
+		calcp->clearAllVariables();
 		return;
 	}
 
@@ -365,6 +397,8 @@ void LLPanelObject::getState( )
 	BOOL enable_move	= objectp->permMove() && !objectp->isAttachment() && (objectp->permModify() || !gSavedSettings.getBOOL("EditLinkedParts"));
 	BOOL enable_scale	= objectp->permMove() && objectp->permModify();
 	BOOL enable_rotate	= objectp->permMove() && ( (objectp->permModify() && !objectp->isAttachment()) || !gSavedSettings.getBOOL("EditLinkedParts"));
+
+	childSetEnabled("build_math_constants",true);
 
 	S32 selected_count = LLSelectMgr::getInstance()->getSelection()->getObjectCount();
 	BOOL single_volume = (LLSelectMgr::getInstance()->selectionAllPCode( LL_PCODE_VOLUME ))
@@ -384,12 +418,18 @@ void LLPanelObject::getState( )
 		mCtrlPosX->set( vec.mV[VX] );
 		mCtrlPosY->set( vec.mV[VY] );
 		mCtrlPosZ->set( vec.mV[VZ] );
+		calcp->setVar(LLCalc::X_POS, vec.mV[VX]);
+		calcp->setVar(LLCalc::Y_POS, vec.mV[VY]);
+		calcp->setVar(LLCalc::Z_POS, vec.mV[VZ]);
 	}
 	else
 	{
 		mCtrlPosX->clear();
 		mCtrlPosY->clear();
 		mCtrlPosZ->clear();
+		calcp->clearVar(LLCalc::X_POS);
+		calcp->clearVar(LLCalc::Y_POS);
+		calcp->clearVar(LLCalc::Z_POS);
 	}
 
 
@@ -397,6 +437,9 @@ void LLPanelObject::getState( )
 	mCtrlPosX->setEnabled(enable_move);
 	mCtrlPosY->setEnabled(enable_move);
 	mCtrlPosZ->setEnabled(enable_move);
+	mBtnCopyPos->setEnabled(enable_move);
+	mBtnPastePos->setEnabled(enable_move);
+	mBtnPastePosClip->setEnabled(enable_move);
 
 	if (enable_scale)
 	{
@@ -404,18 +447,27 @@ void LLPanelObject::getState( )
 		mCtrlScaleX->set( vec.mV[VX] );
 		mCtrlScaleY->set( vec.mV[VY] );
 		mCtrlScaleZ->set( vec.mV[VZ] );
+		calcp->setVar(LLCalc::X_SCALE, vec.mV[VX]);
+		calcp->setVar(LLCalc::Y_SCALE, vec.mV[VY]);
+		calcp->setVar(LLCalc::Z_SCALE, vec.mV[VZ]);
 	}
 	else
 	{
 		mCtrlScaleX->clear();
 		mCtrlScaleY->clear();
 		mCtrlScaleZ->clear();
+		calcp->setVar(LLCalc::X_SCALE, 0.f);
+		calcp->setVar(LLCalc::Y_SCALE, 0.f);
+		calcp->setVar(LLCalc::Z_SCALE, 0.f);
 	}
 
 	mLabelSize->setEnabled( enable_scale );
 	mCtrlScaleX->setEnabled( enable_scale );
 	mCtrlScaleY->setEnabled( enable_scale );
 	mCtrlScaleZ->setEnabled( enable_scale );
+	mBtnCopySize->setEnabled( enable_scale );
+	mBtnPasteSize->setEnabled( enable_scale );
+	mBtnPasteSizeClip->setEnabled( enable_scale );
 
 	LLQuaternion object_rot = objectp->getRotationEdit();
 	object_rot.getEulerAngles(&(mCurEulerDegrees.mV[VX]), &(mCurEulerDegrees.mV[VY]), &(mCurEulerDegrees.mV[VZ]));
@@ -429,18 +481,27 @@ void LLPanelObject::getState( )
 		mCtrlRotX->set( mCurEulerDegrees.mV[VX] );
 		mCtrlRotY->set( mCurEulerDegrees.mV[VY] );
 		mCtrlRotZ->set( mCurEulerDegrees.mV[VZ] );
+		calcp->setVar(LLCalc::X_ROT, mCurEulerDegrees.mV[VX]);
+		calcp->setVar(LLCalc::Y_ROT, mCurEulerDegrees.mV[VY]);
+		calcp->setVar(LLCalc::Z_ROT, mCurEulerDegrees.mV[VZ]);
 	}
 	else
 	{
 		mCtrlRotX->clear();
 		mCtrlRotY->clear();
 		mCtrlRotZ->clear();
+		calcp->clearVar(LLCalc::X_ROT);
+		calcp->clearVar(LLCalc::Y_ROT);
+		calcp->clearVar(LLCalc::Z_ROT);
 	}
 
 	mLabelRotation->setEnabled( enable_rotate );
 	mCtrlRotX->setEnabled( enable_rotate );
 	mCtrlRotY->setEnabled( enable_rotate );
 	mCtrlRotZ->setEnabled( enable_rotate );
+	mBtnCopyRot->setEnabled( enable_rotate );
+	mBtnPasteRot->setEnabled( enable_rotate );
+	mBtnPasteRotClip->setEnabled( enable_rotate );
 
 	BOOL owners_identical;
 	LLUUID owner_id;
@@ -687,8 +748,9 @@ void LLPanelObject::getState( )
 		F32 end_t	= volume_params.getEndT();
 
 		// Hollowness
-		F32 hollow = volume_params.getHollow();
-		mSpinHollow->set( 100.f * hollow );
+		F32 hollow = 100.f * volume_params.getHollow();
+		mSpinHollow->set( hollow );
+		calcp->setVar(LLCalc::HOLLOW, hollow);
 
 		// All hollow objects allow a shape to be selected.
 		if (hollow > 0.f)
@@ -741,6 +803,10 @@ void LLPanelObject::getState( )
 		mSpinCutEnd		->set( cut_end );
 		mCtrlPathBegin	->set( adv_cut_begin );
 		mCtrlPathEnd	->set( adv_cut_end );
+		calcp->setVar(LLCalc::CUT_BEGIN, cut_begin);
+		calcp->setVar(LLCalc::CUT_END, cut_end);
+		calcp->setVar(LLCalc::PATH_BEGIN, adv_cut_begin);
+		calcp->setVar(LLCalc::PATH_END, adv_cut_end);
 
 		// Twist
 		F32 twist		= volume_params.getTwist();
@@ -759,18 +825,24 @@ void LLPanelObject::getState( )
 
 		mSpinTwist		->set( twist );
 		mSpinTwistBegin	->set( twist_begin );
+		calcp->setVar(LLCalc::TWIST_END, twist);
+		calcp->setVar(LLCalc::TWIST_BEGIN, twist_begin);
 
 		// Shear
 		F32 shear_x = volume_params.getShearX();
 		F32 shear_y = volume_params.getShearY();
 		mSpinShearX->set( shear_x );
 		mSpinShearY->set( shear_y );
+		calcp->setVar(LLCalc::X_SHEAR, shear_x);
+		calcp->setVar(LLCalc::Y_SHEAR, shear_y);
 
 		// Taper
 		F32 taper_x	= volume_params.getTaperX();
 		F32 taper_y = volume_params.getTaperY();
 		mSpinTaperX->set( taper_x );
 		mSpinTaperY->set( taper_y );
+		calcp->setVar(LLCalc::X_TAPER, taper_x);
+		calcp->setVar(LLCalc::Y_TAPER, taper_y);
 
 		// Radius offset.
 		F32 radius_offset = volume_params.getRadiusOffset();
@@ -800,10 +872,12 @@ void LLPanelObject::getState( )
 			}
 		}
 		mSpinRadiusOffset->set( radius_offset);
+		calcp->setVar(LLCalc::RADIUS_OFFSET, radius_offset);
 
 		// Revolutions
 		F32 revolutions = volume_params.getRevolutions();
 		mSpinRevolutions->set( revolutions );
+		calcp->setVar(LLCalc::REVOLUTIONS, revolutions);
 		
 		// Skew
 		F32 skew	= volume_params.getSkew();
@@ -828,6 +902,7 @@ void LLPanelObject::getState( )
 			}
 		}
 		mSpinSkew->set( skew );
+		calcp->setVar(LLCalc::SKEW, skew);
 	}
 
 	// Compute control visibility, label names, and twist range.
@@ -931,6 +1006,8 @@ void LLPanelObject::getState( )
 	case MI_RING:
 		mSpinScaleX->set( scale_x );
 		mSpinScaleY->set( scale_y );
+		calcp->setVar(LLCalc::X_HOLE, scale_x);
+		calcp->setVar(LLCalc::Y_HOLE, scale_y);
 		mSpinScaleX->setMinValue(OBJECT_MIN_HOLE_SIZE);
 		mSpinScaleX->setMaxValue(OBJECT_MAX_HOLE_SIZE_X);
 		mSpinScaleY->setMinValue(OBJECT_MIN_HOLE_SIZE);
@@ -945,6 +1022,14 @@ void LLPanelObject::getState( )
 			mSpinScaleX->setMaxValue(1.f);
 			mSpinScaleY->setMinValue(-1.f);
 			mSpinScaleY->setMaxValue(1.f);
+
+			// Torus' Hole Size is Box/Cyl/Prism's Taper
+			calcp->setVar(LLCalc::X_TAPER, 1.f - scale_x);
+			calcp->setVar(LLCalc::Y_TAPER, 1.f - scale_y);
+
+			// Box/Cyl/Prism have no hole size
+			calcp->setVar(LLCalc::X_HOLE, 0.f);
+			calcp->setVar(LLCalc::Y_HOLE, 0.f);
 		}
 		break;
 	}
@@ -961,7 +1046,7 @@ void LLPanelObject::getState( )
 	else 
 	{
 		mSpinHollow->setMinValue(0.f);
-		mSpinHollow->setMaxValue(95.f);
+		mSpinHollow->setMaxValue(99.f);
 	}
 
 	// Update field enablement
@@ -1610,7 +1695,7 @@ void LLPanelObject::sendRotation(BOOL btn_down)
 	// Note: must compare before conversion to radians
 	LLVector3 delta = new_rot - mCurEulerDegrees;
 
-	if (delta.magVec() >= 0.0005f)
+	if (delta.magVec() >= 0.00001f)
 	{
 		mCurEulerDegrees = new_rot;
 		new_rot *= DEG_TO_RAD;
@@ -1656,7 +1741,7 @@ void LLPanelObject::sendScale(BOOL btn_down)
 	LLVector3 newscale(mCtrlScaleX->get(), mCtrlScaleY->get(), mCtrlScaleZ->get());
 
 	LLVector3 delta = newscale - mObject->getScale();
-	if (delta.magVec() >= 0.0005f)
+	if (delta.magVec() >= 0.00001f)
 	{
 		// scale changed by more than 1/2 millimeter
 
@@ -1727,7 +1812,7 @@ void LLPanelObject::sendPosition(BOOL btn_down)
 		LLVector3d old_pos_global = mObject->getPositionGlobal();
 		LLVector3d delta = new_pos_global - old_pos_global;
 		// moved more than 1/2 millimeter
-		if (delta.magVec() >= 0.0005f)
+		if (delta.magVec() >= 0.00001f)
 		{			
 			if (mRootObject != mObject)
 			{
@@ -1920,6 +2005,8 @@ void LLPanelObject::clearCtrls()
 	childSetEnabled("advanced_cut", FALSE);
 	childSetEnabled("advanced_dimple", FALSE);
 	childSetVisible("advanced_slice", FALSE);
+
+	childSetEnabled("build_math_constants",false);
 }
 
 //
@@ -1961,6 +2048,9 @@ void LLPanelObject::onCommitRotation( LLUICtrl* ctrl, void* userdata )
 	LLPanelObject* self = (LLPanelObject*) userdata;
 	BOOL btn_down = ((LLSpinCtrl*)ctrl)->isMouseHeldDown() ;
 	self->sendRotation(btn_down);
+
+	// Needed to ensure all rotations are shown consistently in range
+	self->refresh();
 }
 
 // static
@@ -2055,3 +2145,212 @@ void LLPanelObject::onCommitSculptType(LLUICtrl *ctrl, void* userdata)
 
 	self->sendSculpt();
 }
+
+// static
+void LLPanelObject::onClickBuildConstants(void *)
+{
+	LLNotifications::instance().add("ClickBuildConstants");
+}
+
+std::string shortfloat(F32 in)
+{
+	std::string out = llformat("%f", in);
+	int i = out.size();
+	while(out[--i] == '0') out.erase(i, 1);
+	return out;
+}
+
+void LLPanelObject::onCopyPos(void* user_data)
+{
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLVector3 newpos(self->mCtrlPosX->get(), self->mCtrlPosY->get(), self->mCtrlPosZ->get());
+	self->mClipboardPos = newpos;
+
+	std::string stringVec = "<";
+	stringVec.append(shortfloat(newpos.mV[VX]));
+	stringVec.append(", ");
+	stringVec.append(shortfloat(newpos.mV[VY]));
+	stringVec.append(", ");
+	stringVec.append(shortfloat(newpos.mV[VZ]));
+	stringVec.append(">");
+
+	gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(stringVec));
+}
+
+void LLPanelObject::onCopySize(void* user_data)
+{
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLVector3 newpos(self->mCtrlScaleX->get(), self->mCtrlScaleY->get(), self->mCtrlScaleZ->get());
+	self->mClipboardSize = newpos;
+
+	std::string stringVec = "<";
+	stringVec.append(shortfloat(newpos.mV[VX]));
+	stringVec.append(", ");
+	stringVec.append(shortfloat(newpos.mV[VY]));
+	stringVec.append(", ");
+	stringVec.append(shortfloat(newpos.mV[VZ]));
+	stringVec.append(">");
+
+	gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(stringVec));
+}
+
+void LLPanelObject::onCopyRot(void* user_data)
+{
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLVector3 newpos(self->mCtrlRotX->get(), self->mCtrlRotY->get(), self->mCtrlRotZ->get());
+	self->mClipboardRot = newpos;
+
+	std::string stringVec = "<";
+	stringVec.append(shortfloat(newpos.mV[VX]));
+	stringVec.append(", ");
+	stringVec.append(shortfloat(newpos.mV[VY]));
+	stringVec.append(", ");
+	stringVec.append(shortfloat(newpos.mV[VZ]));
+	stringVec.append(">");
+
+	gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(stringVec));
+}
+
+
+
+void LLPanelObject::onPastePos(void* user_data)
+{
+	if(mClipboardPos.isNull()) return;
+
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLCalc* calcp = LLCalc::getInstance();
+	mClipboardPos.mV[VX] = llclamp( mClipboardPos.mV[VX], 0.f, 256.f);
+	mClipboardPos.mV[VY] = llclamp( mClipboardPos.mV[VY], 0.f, 256.f);
+	mClipboardPos.mV[VZ] = llclamp( mClipboardPos.mV[VZ], 0.f, 10000.f);
+
+	self->mCtrlPosX->set( mClipboardPos.mV[VX] );
+	self->mCtrlPosY->set( mClipboardPos.mV[VY] );
+	self->mCtrlPosZ->set( mClipboardPos.mV[VZ] );
+
+	calcp->setVar(LLCalc::X_POS, mClipboardPos.mV[VX]);
+	calcp->setVar(LLCalc::Y_POS, mClipboardPos.mV[VY]);
+	calcp->setVar(LLCalc::Z_POS, mClipboardPos.mV[VZ]);
+	self->sendPosition(FALSE);
+}
+
+void LLPanelObject::onPasteSize(void* user_data)
+{
+	if(mClipboardSize.isNull()) return;
+
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLCalc* calcp = LLCalc::getInstance();
+	mClipboardSize.mV[VX] = llclamp(mClipboardSize.mV[VX], 0.001f, 128.f);
+	mClipboardSize.mV[VY] = llclamp(mClipboardSize.mV[VY], 0.001f, 128.f);
+	mClipboardSize.mV[VZ] = llclamp(mClipboardSize.mV[VZ], 0.001f, 128.f);
+
+	self->mCtrlScaleX->set( mClipboardSize.mV[VX] );
+	self->mCtrlScaleY->set( mClipboardSize.mV[VY] );
+	self->mCtrlScaleZ->set( mClipboardSize.mV[VZ] );
+
+	calcp->setVar(LLCalc::X_SCALE, mClipboardSize.mV[VX]);
+	calcp->setVar(LLCalc::Y_SCALE, mClipboardSize.mV[VY]);
+	calcp->setVar(LLCalc::Z_SCALE, mClipboardSize.mV[VZ]);
+	self->sendScale(FALSE);
+}
+
+void LLPanelObject::onPasteRot(void* user_data)
+{
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLCalc* calcp = LLCalc::getInstance();
+
+	self->mCtrlRotX->set( mClipboardRot.mV[VX] );
+	self->mCtrlRotY->set( mClipboardRot.mV[VY] );
+	self->mCtrlRotZ->set( mClipboardRot.mV[VZ] );
+
+	calcp->setVar(LLCalc::X_ROT, mClipboardRot.mV[VX]);
+	calcp->setVar(LLCalc::Y_ROT, mClipboardRot.mV[VY]);
+	calcp->setVar(LLCalc::Z_ROT, mClipboardRot.mV[VZ]);
+	self->sendRotation(FALSE);
+}
+
+BOOL getvectorfromclip(const std::string& buf, LLVector3* value)
+{
+	if( buf.empty() || value == NULL)
+	{
+		return FALSE;
+	}
+
+	LLVector3 v;
+	S32 count = sscanf( buf.c_str(), "<%f, %f, %f>", v.mV + 0, v.mV + 1, v.mV + 2 );
+	if( 3 == count )
+	{
+		value->setVec( v );
+		return TRUE;
+	}
+
+	return FALSE;
+}
+
+
+void LLPanelObject::onPastePosClip(void* user_data)
+{
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLCalc* calcp = LLCalc::getInstance();
+
+	LLWString temp_string;
+	LLView::getWindow()->pasteTextFromClipboard(temp_string);
+
+	std::string stringVec = wstring_to_utf8str(temp_string);
+	if(!getvectorfromclip(stringVec, &mClipboardPos)) return;
+
+	mClipboardPos.mV[VX] = llclamp(mClipboardPos.mV[VX], 0.f, 256.f);
+	mClipboardPos.mV[VY] = llclamp(mClipboardPos.mV[VY], 0.f, 256.f);
+	mClipboardPos.mV[VZ] = llclamp(mClipboardPos.mV[VZ], 0.f, 10000.f);
+
+	self->mCtrlPosX->set( mClipboardPos.mV[VX] );
+	self->mCtrlPosY->set( mClipboardPos.mV[VY] );
+	self->mCtrlPosZ->set( mClipboardPos.mV[VZ] );
+	calcp->setVar(LLCalc::X_POS, mClipboardPos.mV[VX]);
+	calcp->setVar(LLCalc::Y_POS, mClipboardPos.mV[VY]);
+	calcp->setVar(LLCalc::Z_POS, mClipboardPos.mV[VZ]);
+	self->sendPosition(FALSE);
+}
+
+void LLPanelObject::onPasteSizeClip(void* user_data)
+{
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLCalc* calcp = LLCalc::getInstance();
+
+	LLWString temp_string;
+	LLView::getWindow()->pasteTextFromClipboard(temp_string);
+
+	std::string stringVec = wstring_to_utf8str(temp_string);
+	if(!getvectorfromclip(stringVec, &mClipboardSize)) return;
+
+	mClipboardSize.mV[VX] = llclamp(mClipboardSize.mV[VX], 0.001f, 128.f);
+	mClipboardSize.mV[VY] = llclamp(mClipboardSize.mV[VY], 0.001f, 128.f);
+	mClipboardSize.mV[VZ] = llclamp(mClipboardSize.mV[VZ], 0.001f, 128.f);
+
+	self->mCtrlScaleX->set( mClipboardSize.mV[VX] );
+	self->mCtrlScaleY->set( mClipboardSize.mV[VY] );
+	self->mCtrlScaleZ->set( mClipboardSize.mV[VZ] );
+	calcp->setVar(LLCalc::X_SCALE, mClipboardSize.mV[VX]);
+	calcp->setVar(LLCalc::Y_SCALE, mClipboardSize.mV[VY]);
+	calcp->setVar(LLCalc::Z_SCALE, mClipboardSize.mV[VZ]);
+	self->sendScale(FALSE);
+}
+
+void LLPanelObject::onPasteRotClip(void* user_data)
+{
+	LLPanelObject* self = (LLPanelObject*) user_data;
+	LLCalc* calcp = LLCalc::getInstance();
+
+	LLWString temp_string;
+	LLView::getWindow()->pasteTextFromClipboard(temp_string);
+
+	std::string stringVec = wstring_to_utf8str(temp_string);
+	if(!getvectorfromclip(stringVec, &mClipboardRot)) return;
+
+	self->mCtrlRotX->set( mClipboardRot.mV[VX] );
+	self->mCtrlRotY->set( mClipboardRot.mV[VY] );
+	self->mCtrlRotZ->set( mClipboardRot.mV[VZ] );
+	calcp->setVar(LLCalc::X_ROT, mClipboardRot.mV[VX]);
+	calcp->setVar(LLCalc::Y_ROT, mClipboardRot.mV[VY]);
+	calcp->setVar(LLCalc::Z_ROT, mClipboardRot.mV[VZ]);
+	self->sendRotation(FALSE);
+ }
