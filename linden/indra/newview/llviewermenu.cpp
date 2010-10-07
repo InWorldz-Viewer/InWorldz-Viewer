@@ -4969,6 +4969,25 @@ void print_agent_nvpairs(void*)
 	llinfos << "Camera at " << gAgent.getCameraPositionGlobal() << llendl;
 }
 
+class LLViewToggleAdvanced : public view_listener_t
+{
+	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+	{
+		toggle_debug_menus(NULL);
+		return true;
+	}
+};
+
+class LLViewCheckAdvanced : public view_listener_t
+{
+	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+	{
+		BOOL new_value = gSavedSettings.getBOOL("UseDebugMenus");
+		gMenuHolder->findControl(userdata["control"].asString())->setValue(new_value);
+		return true;
+	}
+};
+
 void show_debug_menus()
 {
 	// this can get called at login screen where there is no menu so only toggle it if one exists
@@ -8004,6 +8023,7 @@ void initialize_menus()
 	addMenu(new LLViewFullscreen(), "View.Fullscreen");
 	addMenu(new LLViewDefaultUISize(), "View.DefaultUISize");
 	addMenu(new LLViewToggleAO(), "View.ToggleAO");
+	addMenu(new LLViewToggleAdvanced(), "View.ToggleAdvanced");
 
 	addMenu(new LLViewEnableMouselook(), "View.EnableMouselook");
 	addMenu(new LLViewEnableJoystickFlycam(), "View.EnableJoystickFlycam");
@@ -8017,6 +8037,7 @@ void initialize_menus()
 	addMenu(new LLViewCheckRenderType(), "View.CheckRenderType");
 	addMenu(new LLViewCheckHUDAttachments(), "View.CheckHUDAttachments");
 	addMenu(new LLViewCheckAO(), "View.CheckAO");
+	addMenu(new LLViewCheckAdvanced(), "View.CheckAdvanced");
 
 	// World menu
 	addMenu(new LLWorldChat(), "World.Chat");
