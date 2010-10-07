@@ -96,6 +96,7 @@ public:
 	struct GrassSpeciesData
 	{
 		LLUUID	mTextureID;
+		std::string mTextureName;
 		
 		F32		mBladeSizeX;
 		F32		mBladeSizeY;
@@ -116,6 +117,9 @@ public:
 	LLVector3		          mWind;
 	F32				          mBladeWindAngle;
 	F32				          mBWAOverlap;
+
+	typedef std::map<std::string, S32> SpeciesNames;
+	static SpeciesNames sSpeciesNames;
 
 protected:
 	~LLVOGrass();

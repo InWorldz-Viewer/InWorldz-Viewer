@@ -65,6 +65,7 @@ include_directories(
 set(viewer_SOURCE_FILES
 	aoremotectrl.cpp
     floaterao.cpp
+    floaterbusy.cpp
     jcfloaterareasearch.cpp
     hbfloatergrouptitles.cpp
     llagent.cpp
@@ -486,6 +487,7 @@ set(viewer_HEADER_FILES
     ViewerInstall.cmake
     aoremotectrl.h
     floaterao.h
+    floaterbusy.h
     jcfloaterareasearch.h
     hbfloatergrouptitles.h
     llagent.h

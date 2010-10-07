@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater bottom="-359" can_close="true" can_drag_on_left="false" can_minimize="true"
-     can_resize="false" follows="left|top" height="550" 
+<floater bottom="-374" can_close="true" can_drag_on_left="false" can_minimize="true"
+     can_resize="false" follows="left|top" height="565" 
      left="308" min_height="100" min_width="100" mouse_opaque="true"
      name="toolbox floater" rect_control="ToolboxRect" sound_flags="0" title=""
      short_title="Build" width="272">
@@ -41,7 +41,7 @@
 <!-- Focus panel -->
 
 	<check_box bottom="-70" follows="left|top" font="SansSerifSmall" height="16"
-	     initial_value="false" label="Zoom" left="4" mouse_opaque="true"
+	     initial_value="false" label="Zoom:" left="4" mouse_opaque="true"
 	     name="radio zoom" radio_style="true" width="114" />
 	<volume_slider bottom="-69" follows="left|top" height="14" increment="0.01"
 	     initial_val="0.125" left="114" max_val="0.5" min_val="0"
@@ -66,6 +66,7 @@
 	     mouse_opaque="true" name="radio spin" radio_style="true" width="114" />
 
 <!-- Edit panel -->
+
 	<check_box bottom="-70" follows="left|top" font="SansSerifSmall" height="16"
 	     initial_value="false" label="Position" left="4" mouse_opaque="true"
 	     name="radio position" radio_style="true" width="114" />
@@ -76,14 +77,20 @@
 	     initial_value="false" label="Stretch (Ctrl-Shift)" left="4"
 	     mouse_opaque="true" name="radio stretch" radio_style="true" width="123" />
 	<check_box bottom_delta="-15" follows="left|top" font="SansSerifSmall" height="16"
-	     initial_value="false" label="Select Texture" left="4" mouse_opaque="true"
+	     initial_value="false" label="Select faces to texture" left="4" mouse_opaque="true"
 	     name="radio select face" radio_style="true" width="114" />
 	<check_box bottom_delta="-19" control_name="EditLinkedParts" follows="left|top"
 	     font="SansSerifSmall" height="16" initial_value="false"
 	     label="Edit linked parts" left="4" mouse_opaque="true"
 	     name="checkbox edit linked parts" width="114" />
-	<text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
-	     bottom_delta="-20" drop_shadow_visible="true" follows="left|top"
+  <button bottom_delta="-19" follows="left|top" font="SansSerifSmall"
+          halign="center" height="18" label="Link" label_selected="Link"
+          left="10" mouse_opaque="true" name="link_btn" width="68" />
+  <button bottom_delta="0" follows="left|top" font="SansSerifSmall"
+          halign="center" height="18" label="Unlink" label_selected="Unlink"
+          left_delta="75" mouse_opaque="true" name="unlink_btn" width="68" />
+  <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
+	     bottom_delta="-18" drop_shadow_visible="true" follows="left|top"
 	     font="SansSerifSmall" h_pad="0" halign="left" height="14" left="6"
 	     mouse_opaque="true" name="text ruler mode" v_pad="0" width="68">
 		Ruler:
@@ -103,19 +110,20 @@
 	</combo_box>
 	<check_box bottom="-70" control_name="ScaleUniform" follows="left|top"
 	     font="SansSerifSmall" height="16" initial_value="false"
-	     label="Stretch Both Sides" left="143" mouse_opaque="true"
+	     label="Stretch both sides" left="143" mouse_opaque="true"
 	     name="checkbox uniform" width="134" />
-	<check_box bottom_delta="-17" control_name="ScaleStretchTextures" follows="left|top"
+  <check_box bottom_delta="-15" control_name="ScaleStretchTextures" follows="left|top"
 	     font="SansSerifSmall" height="16" initial_value="true"
-	     label="Stretch Textures" left_delta="0" mouse_opaque="true"
+	     label="Stretch textures" left_delta="0" mouse_opaque="true"
 	     name="checkbox stretch textures" width="134" />
-	<check_box bottom_delta="-17" control_name="SnapEnabled" follows="left|top"
-	     font="SansSerifSmall" height="16" initial_value="true" label="Use Grid"
+  <check_box bottom_delta="-19" control_name="SnapEnabled" follows="left|top"
+	     font="SansSerifSmall" height="16" initial_value="true" label="Use grid"
 	     left_delta="0" mouse_opaque="true" name="checkbox snap to grid" width="134" />
-	<button bottom_delta="-19" follows="left|top" font="SansSerifSmall"
+	<button bottom_delta="-30" follows="left|top" font="SansSerifSmall"
        halign="center" valign="center"
-	     height="20" label="Options..." label_selected="Options..." left_delta="20"
-	     mouse_opaque="true" name="Options..." scale_image="TRUE" width="80" />
+	     height="20" label="Build Options" left_delta="20"
+	     mouse_opaque="true" name="Options..." scale_image="TRUE" width="100" />
+
 
 <!-- Help text -->
 
@@ -123,7 +131,7 @@
 	     bottom="-52" drop_shadow_visible="true" follows="left|top"
 	     font="SansSerifSmall" h_pad="0" halign="left" height="16" left="4"
 	     mouse_opaque="true" name="text status" v_pad="0" width="264">
-		Drag to move, shift-drag to copy
+		Drag to Move, Shift-Drag to Copy
 	</text>
 
 <!-- Create panel -->
@@ -147,7 +155,7 @@
 	     image_selected="object_pyramid_active.tga"
 	     image_unselected="object_pyramid.tga" label="" label_selected=""
 	     left_delta="23" mouse_opaque="true" name="ToolPyramid" scale_image="TRUE"
- tool_tip="Pyramid" width="24" />
+       tool_tip="Pyramid" width="24" />
 	<button bottom_delta="0" follows="left|top" font="SansSerif" halign="center"
 	     height="24" image_disabled="object_tetrahedron.tga"
 	     image_disabled_selected="object_tetrahedron_active.tga"
@@ -227,6 +235,13 @@
 	     image_unselected="object_grass.tga" label="" label_selected=""
 	     left_delta="23" mouse_opaque="true" name="ToolGrass" scale_image="TRUE"
 	     tool_tip="Grass" width="24" />
+  <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
+	     bottom="-104" drop_shadow_visible="true" follows="left|top"
+	     font="SansSerifSmall" h_pad="0" halign="left" height="16" right="-5"
+	     mouse_opaque="true" name="tree_grass_label" v_pad="0" width="135" />
+  <combo_box max_chars="20" enabled="false" allow_text_entry="false" name="trees_grass"
+       height="18" width="135" right="-5" bottom="-122"
+       follows="left|top" mouse_opaque="true" />
 	<check_box bottom="-117" control_name="CreateToolKeepSelected" follows="left|top"
 	     font="SansSerifSmall" height="16" initial_value="false"
 	     label="Keep selected" left="4" mouse_opaque="true"
@@ -246,7 +261,7 @@
 <!-- Land panel -->
 
 	<check_box bottom="-69" follows="left|top" font="SansSerifSmall" height="16"
-	     initial_value="false" label="Select Land" left="4" mouse_opaque="true"
+	     initial_value="false" label="Select land" left="4" mouse_opaque="true"
 	     name="radio select land" radio_style="true" width="114" />
 	<check_box bottom_delta="-15" follows="left|top" font="SansSerifSmall" height="16"
 	     initial_value="false" label="Flatten" left="4" mouse_opaque="true"
@@ -269,7 +284,7 @@
 	<button bottom="-72" follows="left|top" font="SansSerifSmall" halign="center"
 	     height="20" label="Apply" label_selected="Apply"
 	     left="116" mouse_opaque="true" name="button apply to selection"
-	     scale_image="TRUE" tool_tip="Modify Selected Land" width="78" />
+	     scale_image="TRUE" tool_tip="Modify selected land" width="78" />
 	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false"
 	     border_visible="false" bottom_delta="-16" drop_shadow_visible="true" enabled="true"
 	     follows="left|top" font="SansSerifSmall" h_pad="0" halign="left" height="12" left="118"
@@ -280,7 +295,7 @@
 	     border_visible="false" bottom_delta="-18" drop_shadow_visible="true" enabled="true"
 	     follows="left|top" font="SansSerifSmall" h_pad="0" halign="left" height="12" left="132"
 	     hidden="false" mouse_opaque="true" name="Dozer Size:" v_pad="0" width="100">
-	          Size
+	          Size:
 	</text>
 	<volume_slider bottom_delta="-4" follows="left|top" height="16" hidden="false"
          increment="0.1" initial_val="2.0" left="178" max_val="11.0" min_val="1.0"
@@ -289,27 +304,27 @@
 	     border_visible="false" bottom_delta="-18" drop_shadow_visible="true" enabled="true"
 	     follows="left|top" font="SansSerifSmall" h_pad="0" halign="left" height="12" left="132"
 	      hidden="false" mouse_opaque="true" name="Strength:" v_pad="0" width="100">
-	          Strength
+	          Strength:
 	</text>
 	<volume_slider bottom_delta="-4" follows="left|top" height="16" hidden="false"
 	     increment="0.1" initial_val="0.00" left="178" max_val="2.0" min_val="-1.0"
 	     mouse_opaque="true" name="slider force" width="80" />
   <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
-         bottom="-151" left="118" drop_shadow_visible="true" follows="left|top"
+         bottom="-168" left="118" drop_shadow_visible="true" follows="left|top"
          font="SansSerifSmall" h_pad="0" halign="right" height="16"
          mouse_opaque="true" name="obj_count" v_pad="0" width="143">
     Selected objects: [COUNT]
   </text>
   <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
-       bottom="-163" left="118" drop_shadow_visible="true" follows="left|top"
+       bottom="-181" left="118" drop_shadow_visible="true" follows="left|top"
        font="SansSerifSmall" h_pad="0" halign="right" height="16"
        mouse_opaque="true" name="prim_count" v_pad="0" width="143">
-    primitives: [COUNT]
+    Primitives: [COUNT]
   </text>
 
 <!-- Sub-tabs -->
 
-	<tab_container bottom="-550" follows="left|top" height="384" left="0" mouse_opaque="false"
+	<tab_container bottom="-565" follows="left|top" height="384" left="0" mouse_opaque="false"
 	     name="Object Info Tabs" tab_max_width="52" tab_min_width="40"
 	     tab_position="top" width="272">
 		<panel border="true" bottom="-383" follows="left|top|right|bottom" height="367"

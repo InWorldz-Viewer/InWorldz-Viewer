@@ -65,6 +65,11 @@
 #include "llviewercamera.h"
 #include "llviewerstats.h"
 
+#include "llparcel.h" // RezWithLandGroup
+#include "llviewerparcelmgr.h" // RezWithLandGroup
+#include "roles_constants.h" // Ele: Land Group Override
+
+
 const LLVector3 DEFAULT_OBJECT_SCALE(0.5f, 0.5f, 0.5f);
 
 //static 
@@ -157,6 +162,20 @@ BOOL LLToolPlacer::raycastForNewObjPos( S32 x, S32 y, LLViewerObject** hit_obj, 
 }
 
 
+static S32 getTreeGrassSpecies(std::map<std::string, S32> &table, const char *control, S32 max)
+{
+	const std::string &species = gSavedSettings.getString(control);
+	std::map<std::string, S32>::iterator it;
+	it = table.find(species);
+	if (it != table.end()) {
+		return it->second;
+	} else {
+		// if saved species not found, default to "Random"
+		return (rand() % max);
+	}
+}
+
+
 BOOL LLToolPlacer::addObject( LLPCode pcode, S32 x, S32 y, U8 use_physics )
 {
 	LLVector3 ray_start_region;
@@ -191,7 +210,11 @@ BOOL LLToolPlacer::addObject( LLPCode pcode, S32 x, S32 y, U8 use_physics )
 
 	// Set params for new object based on its PCode.
 	LLQuaternion	rotation;
-	LLVector3		scale = DEFAULT_OBJECT_SCALE;
+	LLVector3		scale = LLVector3(
+		gSavedPerAccountSettings.getF32("BuildPrefs_Xsize"),
+		gSavedPerAccountSettings.getF32("BuildPrefs_Ysize"),
+		gSavedPerAccountSettings.getF32("BuildPrefs_Zsize"));
+	
 	U8				material = LL_MCODE_WOOD;
 	BOOL			create_selected = FALSE;
 	LLVolumeParams	volume_params;
@@ -201,13 +224,13 @@ BOOL LLToolPlacer::addObject( LLPCode pcode, S32 x, S32 y, U8 use_physics )
 	case LL_PCODE_LEGACY_GRASS:
 		//  Randomize size of grass patch 
 		scale.setVec(10.f + ll_frand(20.f), 10.f + ll_frand(20.f),  1.f + ll_frand(2.f));
-		state = rand() % LLVOGrass::sMaxGrassSpecies;
+		state = getTreeGrassSpecies(LLVOGrass::sSpeciesNames, "LastGrass", LLVOGrass::sMaxGrassSpecies);
 		break;
 
 
 	case LL_PCODE_LEGACY_TREE:
 	case LL_PCODE_TREE_NEW:
-		state = rand() % LLVOTree::sMaxTreeSpecies;
+		state = getTreeGrassSpecies(LLVOTree::sSpeciesNames, "LastTree", LLVOTree::sMaxTreeSpecies);
 		break;
 
 	case LL_PCODE_SPHERE:
@@ -233,7 +256,34 @@ BOOL LLToolPlacer::addObject( LLPCode pcode, S32 x, S32 y, U8 use_physics )
 	gMessageSystem->nextBlockFast(_PREHASH_AgentData);
 	gMessageSystem->addUUIDFast(_PREHASH_AgentID, gAgent.getID());
 	gMessageSystem->addUUIDFast(_PREHASH_SessionID, gAgent.getSessionID());
-	gMessageSystem->addUUIDFast(_PREHASH_GroupID, gAgent.getGroupID());
+	// RezWithLandGroup 2009-05, If avatar is in land group/land owner group,
+	// it rezzes it with it to prevent autoreturn/whatever
+
+	// Ele: if agent is in land group and has create powers but the tag is not active, force it to enable build seamlessly
+	LLParcel *parcel = LLViewerParcelMgr::getInstance()->getAgentParcel();
+	if ( gSavedSettings.getBOOL("RezWithLandGroup"))
+	{
+		if ( gAgent.isInGroup(parcel->getGroupID()) )
+		{
+			gMessageSystem->addUUIDFast(_PREHASH_GroupID, parcel->getGroupID());
+		}
+		else if ( gAgent.isInGroup(parcel->getOwnerID()) )
+		{
+			gMessageSystem->addUUIDFast(_PREHASH_GroupID, parcel->getOwnerID());
+		}
+		else 
+		{
+			gMessageSystem->addUUIDFast(_PREHASH_GroupID, gAgent.getGroupID());
+		}
+	}
+	else if (gAgent.hasPowerInGroup(parcel->getGroupID(), GP_LAND_ALLOW_CREATE) && !parcel->getIsGroupOwned())
+	{
+		gMessageSystem->addUUIDFast(_PREHASH_GroupID, parcel->getGroupID());
+	}
+	else
+	{
+		gMessageSystem->addUUIDFast(_PREHASH_GroupID, gAgent.getGroupID());
+	}
 	gMessageSystem->nextBlockFast(_PREHASH_ObjectData);
 	gMessageSystem->addU8Fast(_PREHASH_Material,	material);
 

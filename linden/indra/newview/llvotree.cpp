@@ -78,6 +78,9 @@ F32 LLVOTree::sTreeFactor = 1.f;
 LLVOTree::SpeciesMap LLVOTree::sSpeciesTable;
 S32 LLVOTree::sMaxTreeSpecies = 0;
 
+LLVOTree::SpeciesNames LLVOTree::sSpeciesNames;
+
+
 // Tree variables and functions
 
 LLVOTree::LLVOTree(const LLUUID &id, const LLPCode pcode, LLViewerRegion *regionp):
@@ -155,6 +158,11 @@ void LLVOTree::initClass()
 			static LLStdStringHandle texture_id_string = LLXmlTree::addAttributeString("texture_id");
 			success &= tree_def->getFastAttributeUUID(texture_id_string, id);
 			newTree->mTextureID = id;
+
+			std::string texname;
+			static LLStdStringHandle texture_name = LLXmlTree::addAttributeString("texture_name");
+			success &= tree_def->getFastAttributeString(texture_name, texname);
+			newTree->mTextureName = texname;
 			
 			static LLStdStringHandle droop_string = LLXmlTree::addAttributeString("droop");
 			success &= tree_def->getFastAttributeF32(droop_string, F32_val);
@@ -232,11 +240,16 @@ void LLVOTree::initClass()
 
 			if (species >= sMaxTreeSpecies) sMaxTreeSpecies = species + 1;
 
+			std::string name;
+			static LLStdStringHandle name_string = LLXmlTree::addAttributeString("name");
+			success &= tree_def->getFastAttributeString(name_string, name);
+			sSpeciesNames[name] = species;
+
 			if (!success)
 			{
-				std::string name;
-				static LLStdStringHandle name_string = LLXmlTree::addAttributeString("name");
-				tree_def->getFastAttributeString(name_string, name);
+				//std::string name;
+				//static LLStdStringHandle name_string = LLXmlTree::addAttributeString("name");
+				//tree_def->getFastAttributeString(name_string, name);
 				llwarns << "Incomplete definition of tree " << name << llendl;
 			}
 		}

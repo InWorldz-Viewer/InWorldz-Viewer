@@ -4,6 +4,18 @@
 
   <!-- begin InWorldz-specific settings -->	
 
+  <key>DecimalsForTools</key>
+  <map>
+    <key>Comment</key>
+    <string>Number of decimals for the edit tool position, size and rotation settings (0 to 5)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>3</integer>
+  </map>
+
   <key>FloaterGroupTitlesRect</key>
     <map>
       <key>Comment</key>
@@ -35,6 +47,17 @@
   <map>
     <key>Comment</key>
     <string>Gesture sound effects, play at 0 volume</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>RezWithLandGroup</key>
+  <map>
+    <key>Comment</key>
+    <string>Attempts to rez objects in the lands group if you're apart of it</string>
     <key>Persist</key>
     <integer>1</integer>
     <key>Type</key>

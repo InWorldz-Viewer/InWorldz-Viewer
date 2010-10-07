@@ -79,6 +79,8 @@ public:
 	// button highlights, etc.
 	void updatePopup(LLCoordGL center, MASK mask);
 
+	void updateToolsPrecision();
+
 	// When the floater is going away, reset any options that need to be 
 	// cleared.
 	void resetToolState();
@@ -108,6 +110,9 @@ private:
 	void refresh();
 
 	static void onClickGridOptions(void* data);
+
+	static void onClickLink(void* data);
+	static void onClickUnlink(void* data);
 
 public:
 
@@ -152,7 +157,11 @@ public:
 	LLButton	*mBtnDuplicate;
 	LLButton	*mBtnDuplicateInPlace;
 
+	LLButton	*mBtnLink;
+	LLButton	*mBtnUnlink;
+
 	// Create buttons
+	LLComboBox		*mComboTreesGrass;
 	LLCheckBoxCtrl	*mCheckSticky;
 	LLCheckBoxCtrl	*mCheckCopySelection;
 	LLCheckBoxCtrl	*mCheckCopyCenters;
@@ -190,8 +199,12 @@ public:
 
 private:
 	BOOL					mDirty;
+	U32						mPrecision;
 
 	std::map<std::string, std::string> mStatusText;
+
+	void updateTreeGrassCombo(bool visible);
+	static void onSelectTreesGrass(LLUICtrl*, void*);
 };
 
 extern LLFloaterTools *gFloaterTools;

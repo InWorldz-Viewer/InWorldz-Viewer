@@ -129,6 +129,7 @@ public:
 	struct TreeSpeciesData
 	{
 		LLUUID mTextureID;
+		std::string mTextureName;
 		
 		F32				mBranchLength;	// Scale (length) of tree branches
 		F32				mDroop;			// Droop from vertical (degrees) at each branch recursion
@@ -152,6 +153,9 @@ public:
 	};
 
 	static F32 sTreeFactor;			// Tree level of detail factor
+
+	typedef std::map<std::string, S32> SpeciesNames;
+	static SpeciesNames sSpeciesNames;
 
 	friend class LLDrawPoolTree;
 protected:
