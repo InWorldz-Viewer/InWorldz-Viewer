@@ -115,6 +115,7 @@
 #include "llpostprocess.h"
 #include "llwlparammanager.h"
 #include "llwaterparammanager.h"
+#include "llcalc.h"
 
 #include "lldebugview.h"
 #include "llconsole.h"
@@ -1172,7 +1173,10 @@ bool LLAppViewer::cleanup()
 	// Note: this is where gLocalSpeakerMgr and gActiveSpeakerMgr used to be deleted.
 
 	LLWorldMap::getInstance()->reset(); // release any images
-	
+
+	LLCalc::cleanUp();
+
+
 	llinfos << "Global stuff deleted" << llendflush;
 
 	if (gAudiop)
