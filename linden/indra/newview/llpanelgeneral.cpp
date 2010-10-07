@@ -76,6 +76,7 @@ BOOL LLPanelGeneral::postBuild()
 	
 	childSetValue("language_combobox", 	gSavedSettings.getString("Language"));
 
+	childSetAction("reset_ui_size", onClickResetUISize, this);
 	
 	// if we have no agent, we can't let them choose anything
 	// if we have an agent, then we only let them choose if they have a choice
@@ -155,5 +156,14 @@ void LLPanelGeneral::apply()
 
 void LLPanelGeneral::cancel()
 {
+}
+
+// static
+void LLPanelGeneral::onClickResetUISize(void* user_data)
+{
+	LLPanelGeneral* self = (LLPanelGeneral*)user_data;
+	F32 def = gSavedSettings.getControl("UIScaleFactor")->getDefault().asReal();
+	self->childSetValue("ui_scale_slider", def);
+	gSavedSettings.setBOOL("UIAutoScale", FALSE);
 }
 
