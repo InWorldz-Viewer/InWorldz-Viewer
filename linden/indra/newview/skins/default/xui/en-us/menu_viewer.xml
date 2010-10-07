@@ -674,13 +674,11 @@
 			<on_click function="Tools.UseSelectionForGrid" userdata="" />
 			<on_enable function="SomethingSelected" />
 		</menu_item_call>
-		<menu_item_call bottom="-235" enabled="false" height="19" label="Grid Options..." left="0"
-		     mouse_opaque="true" name="Grid Options..." shortcut="control|shift|B"
-		     width="250">
-			<on_click function="ShowFloater" userdata="grid options" />
-			<on_enable function="Tools.EnableToolNotPie" />
-		</menu_item_call>
-		<menu_item_separator bottom="-243" enabled="true" height="8" label="-----------" left="0"
+    <menu_item_call name="Advanced Build Options..." enabled="false"
+                    label="Advanced Build Options..." shortcut="control|shift|B">
+      <on_click function="ShowFloater" userdata="grid options" />
+    </menu_item_call>
+    <menu_item_separator bottom="-243" enabled="true" height="8" label="-----------" left="0"
 		     mouse_opaque="true" name="separator3" width="250" />
 		<menu_item_check bottom="" enabled="false" height="" label="Edit Linked Parts" left=""
 		     mouse_opaque="true" name="Edit Linked Parts" shortcut="" width="">
