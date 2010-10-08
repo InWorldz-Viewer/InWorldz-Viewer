@@ -43,6 +43,7 @@
 #include "llviewercontrol.h"
 
 #include "llagent.h"
+#include "llappviewer.h"
 #include "llviewerregion.h"
 
 LLPanelGeneral::LLPanelGeneral()
@@ -64,6 +65,7 @@ BOOL LLPanelGeneral::postBuild()
 	childSetValue("small_avatar_names_checkbox", gSavedSettings.getBOOL("SmallAvatarNames"));
 	childSetValue("show_my_title_checkbox", gSavedSettings.getBOOL("RenderHideGroupTitle"));
 	childSetValue("afk_timeout_spinner", gSavedSettings.getF32("AFKTimeout"));
+	childSetValue("afk_timeout_checkbox", gSavedSettings.getBOOL("AllowIdleAFK"));
 	childSetValue("notify_money_change_checkbox", gSavedSettings.getBOOL("NotifyMoneyChange"));
 
 	getChild<LLColorSwatchCtrl>("effect_color_swatch")->set(gSavedSettings.getColor4("EffectColor"));
@@ -126,6 +128,7 @@ void LLPanelGeneral::apply()
 	gSavedSettings.setBOOL("SmallAvatarNames", childGetValue("small_avatar_names_checkbox"));
 	gSavedSettings.setBOOL("RenderHideGroupTitle", childGetValue("show_my_title_checkbox"));
 	gSavedSettings.setF32("AFKTimeout", childGetValue("afk_timeout_spinner").asReal());
+	gSavedSettings.setBOOL("AllowIdleAFK", childGetValue("afk_timeout_checkbox"));
 	gSavedSettings.setBOOL("NotifyMoneyChange", childGetValue("notify_money_change_checkbox"));
 	gSavedSettings.setColor4("EffectColor", childGetValue("effect_color_swatch"));
 	gSavedSettings.setF32("UIScaleFactor", childGetValue("ui_scale_slider").asReal());
@@ -151,6 +154,12 @@ void LLPanelGeneral::apply()
 			gSavedSettings.setU32("PreferredMaturity", preferred_maturity);
 			gAgent.sendMaturityPreferenceToServer(preferred_maturity);
 		}
+	}
+
+	// Keep gAllowIdleAFK around for performance reasons -- MC
+	if (gAllowIdleAFK != (BOOL)childGetValue("afk_timeout_checkbox"))
+	{
+		gAllowIdleAFK = childGetValue("afk_timeout_checkbox");
 	}
 }
 
