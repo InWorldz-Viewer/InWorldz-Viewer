@@ -152,39 +152,6 @@
           </map>
         </map>
       </map>
-      <key>artwork-common</key>
-      <map>
-        <key>copyright</key>
-        <string>(C) 2008 Linden Research, Inc.</string>
-        <key>description</key>
-        <string>Second Life(TM) Viewer Artwork</string>
-        <key>license</key>
-        <string>artwork</string>
-        <key>packages</key>
-        <map>
-          <key>darwin</key>
-          <map>
-            <key>md5sum</key>
-            <string>5e047437d73d1017bf270a6c6e936f23</string>
-            <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/artwork-common-20090415.tar.bz2</uri>
-          </map>
-          <key>linux</key>
-          <map>
-            <key>md5sum</key>
-            <string>5e047437d73d1017bf270a6c6e936f23</string>
-            <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/artwork-common-20090415.tar.bz2</uri>
-          </map>
-          <key>windows</key>
-          <map>
-            <key>md5sum</key>
-            <string>5e047437d73d1017bf270a6c6e936f23</string>
-            <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/artwork-common-20090415.tar.bz2</uri>
-          </map>
-        </map>
-      </map>
       <key>berkeley</key>
       <map>
         <key>copyright</key>
