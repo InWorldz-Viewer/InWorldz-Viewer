@@ -84,7 +84,7 @@
 #include "llvograss.h"
 #include "llvotree.h"
 #include "lluictrlfactory.h"
-
+#include "qtoolalign.h"
 // Globals
 LLFloaterTools *gFloaterTools = NULL;
 
@@ -247,6 +247,8 @@ BOOL	LLFloaterTools::postBuild()
 	childSetCommitCallback("radio stretch",commit_select_tool,LLToolCompScale::getInstance());
 	mRadioSelectFace = getChild<LLCheckBoxCtrl>("radio select face");
 	childSetCommitCallback("radio select face",commit_select_tool,LLToolFace::getInstance());
+	mRadioAlign = getChild<LLCheckBoxCtrl>("radio align");
+	childSetCommitCallback("radio align",commit_select_tool,QToolAlign::getInstance());
 	mCheckSelectIndividual = getChild<LLCheckBoxCtrl>("checkbox edit linked parts");
 	childSetValue("checkbox edit linked parts",(BOOL)gSavedSettings.getBOOL("EditLinkedParts"));
 	childSetCommitCallback("checkbox edit linked parts",commit_select_component,this);
@@ -629,6 +631,7 @@ void LLFloaterTools::updatePopup(LLCoordGL center, MASK mask)
 						tool == LLToolCompScale::getInstance() ||
 						tool == LLToolFace::getInstance() ||
 						tool == LLToolIndividual::getInstance() ||
+						tool == QToolAlign::getInstance() ||
 						tool == LLToolPipette::getInstance();
 
 	mBtnEdit	->setToggleState( edit_visible );
@@ -651,6 +654,7 @@ void LLFloaterTools::updatePopup(LLCoordGL center, MASK mask)
 	mRadioPosition	->set( tool == LLToolCompTranslate::getInstance() );
 	mRadioRotate	->set( tool == LLToolCompRotate::getInstance() );
 	mRadioStretch	->set( tool == LLToolCompScale::getInstance() );
+	mRadioAlign->set( tool == QToolAlign::getInstance() );
 
 	if (mComboGridMode) 
 	{

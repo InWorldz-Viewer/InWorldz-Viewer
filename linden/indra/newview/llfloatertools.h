@@ -139,6 +139,7 @@ public:
 	LLCheckBoxCtrl	*mRadioRotate;
 	LLCheckBoxCtrl	*mRadioStretch;
 	LLCheckBoxCtrl	*mRadioSelectFace;
+	LLCheckBoxCtrl	*mRadioAlign;
 
 	LLCheckBoxCtrl	*mCheckSelectIndividual;
 

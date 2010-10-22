@@ -463,6 +463,7 @@ set(viewer_SOURCE_FILES
     llxmlrpctransaction.cpp
     noise.cpp
     pipeline.cpp
+	qtoolalign.cpp
     )
 
 # This gets renamed in the packaging step
@@ -892,6 +893,7 @@ set(viewer_HEADER_FILES
     macmain.h
     noise.h
     pipeline.h
+    qtoolalign.h
     randgauss.h
     VertexCache.h
     VorbisFramework.h
