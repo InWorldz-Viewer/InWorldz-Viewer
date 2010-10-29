@@ -511,7 +511,7 @@ When viewing your own profile, you can enter any URL as your web profile and cli
  icon="alertmodal.tga"
  name="JoinGroupCanAfford"
  type="alertmodal">
-Joining this group costs [CURRENCY][COST].
+Joining this group costs I'z$[COST].
 
 Do you wish to proceed?
   <usetemplate
@@ -524,16 +524,16 @@ Do you wish to proceed?
  icon="alertmodal.tga"
  name="JoinGroupCannotAfford"
  type="alertmodal">
-Joining this group costs [CURRENCY][COST].
+Joining this group costs I'z$[COST].
 
-You do not have enough [CURRENCY] to join this group.
+You do not have enough I'z$ to join this group.
 </notification>
 
 <notification
  icon="alertmodal.tga"
  name="LandBuyPass"
  type="alertmodal">
-For [CURRENCY][COST] you can enter this land (&apos;[PARCEL_NAME]&apos;) for [TIME] hours.  Buy a pass?
+For I'z$[COST] you can enter this land (&apos;[PARCEL_NAME]&apos;) for [TIME] hours.  Buy a pass?
   <usetemplate
    name="okcancelbuttons"
    notext="Cancel"
@@ -544,9 +544,9 @@ For [CURRENCY][COST] you can enter this land (&apos;[PARCEL_NAME]&apos;) for [TI
  icon="alertmodal.tga"
  name="SalePriceRestriction"
  type="alertmodal">
-Sale price must be set to more than [CURRENCY]0 if selling to anyone.
+Sale price must be set to more than I'z$0 if selling to anyone.
 
-Please select an individual to sell to if selling for [CURRENCY]0.
+Please select an individual to sell to if selling for I'z$0.
 </notification>
 
 <notification
@@ -556,7 +556,7 @@ Please select an individual to sell to if selling for [CURRENCY]0.
  type="alertmodal">
 The selected [LAND_SIZE] m² land is being set for sale.
 
-Your selling price will be [CURRENCY][SALE_PRICE] and will be authorized for sale to [NAME].
+Your selling price will be I'z$[SALE_PRICE] and will be authorized for sale to [NAME].
   <usetemplate
    name="okcancelbuttons"
    notext="Cancel"
@@ -571,7 +571,7 @@ ATTENTION: Clicking &apos;sell to anyone&apos; makes your land available to the 
 
 The selected [LAND_SIZE] m² land is being set for sale.
 
-Your selling price will be [CURRENCY][SALE_PRICE] and will be authorized for sale to [NAME].
+Your selling price will be I'z$[SALE_PRICE] and will be authorized for sale to [NAME].
   <usetemplate
    name="okcancelbuttons"
    notext="Cancel"
@@ -1932,7 +1932,7 @@ Select an entire parcel, or divide your parcel first.
  type="alertmodal">
 You are about to release [AREA] m² of land.
 
-Releasing this parcel will remove it from your land holdings, but will not grant any [CURRENCY].
+Releasing this parcel will remove it from your land holdings, but will not grant any I'z$.
 
 Release this land?
   <usetemplate
@@ -2251,7 +2251,7 @@ You must specify a name for your classified.
  icon="alertmodal.tga"
  name="MinClassifiedPrice"
  type="alertmodal">
-Price to pay for listing must be at least [CURRENCY][MIN_PRICE].
+Price to pay for listing must be at least I'z$[MIN_PRICE].
 
 Please enter a higher price.
 </notification>
@@ -2533,7 +2533,7 @@ Please choose the male or female avatar. You can change your mind later.
  icon="alertmodal.tga"
  name="NotEnoughCurrency"
  type="alertmodal">
-[NAME] [CURRENCY] [PRICE] You don&apos;t have enough [CURRENCY] to do that.
+[NAME] I'z$ [PRICE] You don&apos;t have enough I'z$ to do that.
 </notification>
 
 <notification
@@ -2828,7 +2828,7 @@ Download to your Applications folder?
  name="DeedObjectToGroup"
  type="alertmodal">
 Deeding this object will cause the group to:
-* Receive [CURRENCY] paid into the object
+* Receive I'z$ paid into the object
   <usetemplate
    ignoretext="When deeding objects to groups"
    name="okcancelignore"
@@ -3214,7 +3214,7 @@ Proceed?
  type="alert">
 You are about to change the access list for a Linden owned estate (mainland, teen grid, orientation, etc.).
 
-This is DANGEROUS and should only be done to invoke the hack allowing objects/[CURRENCY] to be transfered in/out of a grid.
+This is DANGEROUS and should only be done to invoke the hack allowing objects/I'z$ to be transfered in/out of a grid.
 
 It will change thousands of regions and make the spaceserver hiccup.
   <usetemplate
@@ -3577,7 +3577,7 @@ Asset ID for notecard is missing from database.
  type="alert">
 Remember: Classified ad fees are non-refundable.
 
-Publish this classified now for [CURRENCY][AMOUNT]?
+Publish this classified now for I'z$[AMOUNT]?
   <usetemplate
    name="okcancelbuttons"
    notext="Cancel"
@@ -4085,7 +4085,7 @@ Please select only one object and try again.
  icon="alertmodal.tga"
  name="BuyOriginal"
  type="alertmodal">
-Buy original object from [OWNER] for [CURRENCY][PRICE]?
+Buy original object from [OWNER] for I'z$[PRICE]?
 
 You will become the owner of this object.
 
@@ -4103,7 +4103,7 @@ You will be able to:
  icon="alertmodal.tga"
  name="BuyOriginalNoOwner"
  type="alertmodal">
-Buy original object for [CURRENCY][PRICE]?
+Buy original object for I'z$[PRICE]?
 
 You will become the owner of this object.
 
@@ -4121,7 +4121,7 @@ You will be able to:
  icon="alertmodal.tga"
  name="BuyCopy"
  type="alertmodal">
-Buy a copy from [OWNER] for [CURRENCY][PRICE]?
+Buy a copy from [OWNER] for I'z$[PRICE]?
 
 The object will be copied to your inventory.
 
@@ -4139,7 +4139,7 @@ You will be able to:
  icon="alertmodal.tga"
  name="BuyCopyNoOwner"
  type="alertmodal">
-Buy a copy for [CURRENCY][PRICE]?
+Buy a copy for I'z$[PRICE]?
 
 The object will be copied to your inventory.
 
@@ -4157,7 +4157,7 @@ You will be able to:
  icon="alertmodal.tga"
  name="BuyContents"
  type="alertmodal">
-Buy contents from [OWNER] for [CURRENCY][PRICE]?
+Buy contents from [OWNER] for I'z$[PRICE]?
 
 They will be copied to your inventory.
   <usetemplate
@@ -4170,7 +4170,7 @@ They will be copied to your inventory.
  icon="alertmodal.tga"
  name="BuyContentsNoOwner"
  type="alertmodal">
-Buy contents for [CURRENCY][PRICE]?
+Buy contents for I'z$[PRICE]?
 
 They will be copied to your inventory.
   <usetemplate
@@ -5058,7 +5058,7 @@ Items may not be purchased while they are part of an attachment.
  label="About Requests for the Debit Permission"
  name="DebitPermissionDetails"
  type="alertmodal">
-Granting this request gives a script ongoing permission to take [CURRENCY] from your account. To revoke this permission, the object owner must delete the object or reset the scripts in the object.
+Granting this request gives a script ongoing permission to take I'z$ from your account. To revoke this permission, the object owner must delete the object or reset the scripts in the object.
   <usetemplate
    name="okbutton"
    yestext="OK"/>
@@ -5199,7 +5199,7 @@ Uploading in-world and web site snapshots...
  icon="notify.tga"
  name="UploadPayment"
  type="notify">
-You paid [CURRENCY][AMOUNT] to upload.
+You paid I'z$[AMOUNT] to upload.
 </notification>
 
 <notification
@@ -6232,9 +6232,9 @@ Grant this request?
  icon="notify.tga"
  name="FirstBalanceIncrease"
  type="notify">
-You just received [CURRENCY][AMOUNT].
+You just received I'z$[AMOUNT].
 
-Objects and other users may give you [CURRENCY].
+Objects and other users may give you I'z$.
 
 Your balance is shown in the upper-right corner of the screen.
 </notification>
@@ -6243,7 +6243,7 @@ Your balance is shown in the upper-right corner of the screen.
  icon="notify.tga"
  name="FirstBalanceDecrease"
  type="notify">
-You just paid [CURRENCY][AMOUNT].
+You just paid I'z$[AMOUNT].
 
 Your balance is shown in the upper-right corner of the screen.
 </notification>
@@ -6649,25 +6649,6 @@ The region you have entered is running a different simulator version. Click this
 </notification>
 
 <notification
- icon="notify.tga"
- name="QueryClientTags"
- type="notify">
-Would you like to have the client tag database automatically updated from imprudenceviewer.org?
-
-This ensures that you have the latest information available regarding other clients.
-  <form name="form">
-	  <button
-		 index="0"
-		 name="Yes"
-		 text="Yes"/>
-	  <button
-		 index="1"
-		 name="No"
-		 text="No"/>
-  </form>
-</notification>
-
-<notification
  icon="notifytip.tga"
  name="UnableToOpenCommandURL"
  priority="high"
@@ -6862,47 +6843,41 @@ Are you sure you want to take off all clothes?
    yestext="Take Off"/>
 </notification>
 
-  <!--End InWorldz notifications-->
-
-  <!--Begin Imprudence notifications-->
-
 <notification
  icon="alertmodal.tga"
- name="ConfirmAutoPilot"
+ name="ConfirmTeleportHome"
  type="alertmodal">
-Are you sure you want to move here?
+\Are you sure you want to teleport home?
   <usetemplate
-   ignoretext="When using auto-pilot"
+   ignoretext="When teleporting home"
    name="okcancelignore"
    notext="Cancel"
-   yestext="Move"/>
+   yestext="Teleport"/>
 </notification>
 
   <notification
- icon="alert.tga"
- name="ConfirmResetAllPreferences"
- type="alert">
-Are you sure you want to reset ALL preferences?
+   icon="alertmodal.tga"
+   name="ConfirmAutoPilot"
+   type="alertmodal">
+Are you sure you want to move here?
+    <usetemplate
+     ignoretext="When using auto-pilot"
+     name="okcancelignore"
+     notext="Cancel"
+     yestext="Move"/>
+  </notification>
 
-Preferences will be reset when you restart [VIEWER_NAME].
-  <usetemplate
-   ignoretext="When resetting preferences"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="Reset"/>
-</notification>
-
-<notification
- icon="alert.tga"
- name="ConfirmRestoreToWorld"
- type="alert">
+  <notification
+   icon="alert.tga"
+   name="ConfirmRestoreToWorld"
+   type="alert">
 Are you sure you want to restore the object to its last position?
 
 WARNING: Don't restore if you aren't sure where the object will go!
 
 For information about this feature, click "More Info".
-  <url option="1" name="url">
-    http://imprudenceviewer.org/wiki/Restore_to_Last_Position
+<url option="1" name="url">
+http://imprudenceviewer.org/wiki/Restore_to_Last_Position
   </url>
   <usetemplate
    name="okcancelhelpignore"
@@ -6912,110 +6887,8 @@ For information about this feature, click "More Info".
    ignoretext="When restoring objects to their last positions" />
 </notification>
 
-<notification
- icon="alertmodal.tga"
- name="ConfirmTeleportHome"
- type="alertmodal">
-Are you sure you want to teleport home?
-  <usetemplate
-   ignoretext="When teleporting home"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="Teleport"/>
-</notification>
 
-<notification
- icon="alertmodal.tga"
- name="ConnectingToRegionError"
- type="alertmodal">
-Unable to connect to the current region. Try logging into a different region instead. 
-
-The default login location can be set in the General tab in Preferences.
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="DisconnectedFromRegion"
- type="alertmodal">
-You have been disconnected from the region you were in. Unable to continue.
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="GridsNoNick"
- type="alertmodal">
-Cannot save new grid information.
-
-You need to specify a unique grid nickname.
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="GridsNoLoginUri"
- type="alertmodal">
-Cannot save new grid '[NAME]'.
-
-You need to specify a login URI.
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="GridExists"
- type="alertmodal">
-Cannot save new grid '[NAME]'.
-
-A grid with the same nickname already exists.
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="GridInfoNoLoginUri"
- type="alertmodal">
-A login URI is required to retrieve the grid info.
-</notification>
-
-<notification
- icon="alertmodal.tga"
- name="GridInfoError"
- type="alertmodal">
-Cannot retrieve grid info from server.
-</notification>
-  
-<notification
- icon="alert.tga"
- name="IMLogNotFound"
- type="alert">
-IM history could not be found for [NAME].
-  <usetemplate
-   name="okbutton"
-   yestext="OK"/>
-</notification>
-
-<notification
- icon="alert.tga"
- name="ShowLookAtInfo"
- type="alert">
-Show Look At is a debug setting that displays where an avatar's head is looking. Be aware: this will *NOT* show where an avatar's camera is actually pointed. This setting should not be relied on for any form of privacy!
-  <usetemplate
-   name="okignore"
-   yestext="OK"/>
-</notification>
-
-<notification
- icon="alert.tga"
- name="WebLaunchAutoscript"
- type="alert">
-Launch autoscript generator (by 3greeneggs.com)?
-  <usetemplate
-   ignoretext="When launching autoscript generator"
-   name="okcancelignore"
-   notext="Cancel"
-   yestext="OK"/>
-</notification>
-
-
-
-<!--End Imprudence notifications-->
+  <!--End InWorldz notifications-->
 
 
 <global name="UnsupportedCPU">
