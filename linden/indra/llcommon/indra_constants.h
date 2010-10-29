@@ -253,7 +253,7 @@ const U8 SIM_ACCESS_DOWN	= 254;
 const U8 SIM_ACCESS_MAX 	= SIM_ACCESS_ADULT;
 
 // group constants
-const S32 MAX_AGENT_GROUPS = 25;
+const S32 MAX_AGENT_GROUPS = 50;
 
 // god levels
 const U8 GOD_MAINTENANCE = 250;
