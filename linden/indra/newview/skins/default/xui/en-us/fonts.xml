@@ -21,13 +21,13 @@
   </font>
 
   <font name="SansSerif" comment="Name of san-serif font (Truetype file name)">
-    <file>DroidSans.ttf</file>
+    <file>Delicious-Roman.otf</file>
   </font>
 
   <font name="SansSerifBold" 
 	comment="Name of bold sans-serif font" 
 	font_style="Bold">
-    <file>DroidSans-Bold.ttf</file>
+    <file>Delicious-Bold.otf</file>
   </font>
 
   <font name="Monospace"
@@ -100,11 +100,11 @@
 	     />
   <font_size name="Medium"
 	     comment="Size of medium font (points, or 1/72 of an inch)"
-	     size="10"
+	     size="11"
 	     />
   <font_size name="Small"
 	     comment="Size of small font (points, or 1/72 of an inch)"
-	     size="8"
+	     size="10"
 	     />
 </fonts>
 
