@@ -1,33 +1,29 @@
-/** 
+/**
  * @file media_plugin_quicktime.cpp
  * @brief QuickTime plugin for LLMedia API plugin system
  *
- * $LicenseInfo:firstyear=2008&license=viewergpl$
- * 
- * Copyright (c) 2008-2009, Linden Research, Inc.
- * 
+ * @cond
+ * $LicenseInfo:firstyear=2008&license=viewerlgpl$
  * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlifegrid.net/programs/open_source/licensing/gplv2
+ * Copyright (C) 2010, Linden Research, Inc.
  * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlifegrid.net/programs/open_source/licensing/flossexception
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
  * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
+ * @endcond
  */
 
 #include "linden_common.h"
@@ -856,36 +852,6 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 				plugin_version += codec.str();
 				message.setValue("plugin_version", plugin_version);
 				sendMessage(message);
-
-				// Plugin gets to decide the texture parameters to use.
-				message.setMessage(LLPLUGIN_MESSAGE_CLASS_MEDIA, "texture_params");
-				#if defined(LL_WINDOWS)
-					// Values for Windows
-					mDepth = 3;	
-					message.setValueU32("format", GL_RGB);
-					message.setValueU32("type", GL_UNSIGNED_BYTE);
-
-					// We really want to pad the texture width to a multiple of 32 bytes, but since we're using 3-byte pixels, it doesn't come out even.
-					// Padding to a multiple of 3*32 guarantees it'll divide out properly.
-					message.setValueU32("padding", 32 * 3);
-				#else
-					// Values for Mac
-					mDepth = 4;	
-					message.setValueU32("format", GL_BGRA_EXT);
-					#ifdef __BIG_ENDIAN__
-						message.setValueU32("type", GL_UNSIGNED_INT_8_8_8_8_REV );
-					#else
-						message.setValueU32("type", GL_UNSIGNED_INT_8_8_8_8);
-					#endif
-
-					// Pad texture width to a multiple of 32 bytes, to line up with cache lines.
-					message.setValueU32("padding", 32);
-				#endif
-				message.setValueS32("depth", mDepth);
-				message.setValueU32("internalformat", GL_RGB);
-				message.setValueBoolean("coords_opengl", true);	// true == use OpenGL-style coordinates, false == (0,0) is upper left.
-				message.setValueBoolean("allow_downsample", true);
-				sendMessage(message);
 			}
 			else if(message_name == "idle")
 			{
@@ -952,7 +918,41 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 		}
 		else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA)
 		{
-			if(message_name == "size_change")
+			if(message_name == "init")
+			{
+				// This is the media init message -- all necessary data for initialization should have been received.
+
+				// Plugin gets to decide the texture parameters to use.
+				LLPluginMessage message(LLPLUGIN_MESSAGE_CLASS_MEDIA, "texture_params");
+				#if defined(LL_WINDOWS)
+					// Values for Windows
+					mDepth = 3;
+					message.setValueU32("format", GL_RGB);
+					message.setValueU32("type", GL_UNSIGNED_BYTE);
+
+					// We really want to pad the texture width to a multiple of 32 bytes, but since we're using 3-byte pixels, it doesn't come out even.
+					// Padding to a multiple of 3*32 guarantees it'll divide out properly.
+					message.setValueU32("padding", 32 * 3);
+				#else
+					// Values for Mac
+					mDepth = 4;
+					message.setValueU32("format", GL_BGRA_EXT);
+					#ifdef __BIG_ENDIAN__
+						message.setValueU32("type", GL_UNSIGNED_INT_8_8_8_8_REV );
+					#else
+						message.setValueU32("type", GL_UNSIGNED_INT_8_8_8_8);
+					#endif
+
+					// Pad texture width to a multiple of 32 bytes, to line up with cache lines.
+					message.setValueU32("padding", 32);
+				#endif
+				message.setValueS32("depth", mDepth);
+				message.setValueU32("internalformat", GL_RGB);
+				message.setValueBoolean("coords_opengl", true);	// true == use OpenGL-style coordinates, false == (0,0) is upper left.
+				message.setValueBoolean("allow_downsample", true);
+				sendMessage(message);
+			}
+			else if(message_name == "size_change")
 			{
 				std::string name = message_in.getValue("name");
 				S32 width = message_in.getValueS32("width");
