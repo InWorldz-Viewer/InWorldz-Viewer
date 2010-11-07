@@ -206,6 +206,18 @@
 				<on_click function="Edit.TakeOff" userdata="skirt" />
 				<on_enable function="Edit.EnableTakeOff" userdata="skirt" />
 			</menu_item_call>
+      <menu_item_call enabled="false" label="Tattoo" name="Tattoo">
+        <on_click function="Edit.TakeOff" 
+                  userdata="tattoo" />
+        <on_enable function="Edit.EnableTakeOff" 
+                   userdata="tattoo" />
+      </menu_item_call>
+      <menu_item_call enabled="false" label="Alpha" name="Alpha">
+        <on_click function="Edit.TakeOff" 
+                  userdata="alpha" />
+        <on_enable function="Edit.EnableTakeOff" 
+                   userdata="alpha" />
+      </menu_item_call>
 			<menu_item_call bottom="-200" enabled="true" height="19" label="All Clothes" left="0"
 			     mouse_opaque="true" name="All Clothes" width="118">
 				<on_click function="Edit.TakeOff" userdata="all" />
@@ -248,8 +260,6 @@
 	<menu bottom="-1" create_jump_keys="true" drop_shadow="true" enabled="true"
 	     height="537" label="View" left="80" mouse_opaque="false" name="View"
 	     opaque="true" tear_off="true" width="211">
-		<tearoff_menu bottom="-10" enabled="true" height="10" label="~~~~~~~~~~~" left="0"
-		     mouse_opaque="true" name="~~~~~~~~~~~" width="211" />
 		<menu_item_call bottom="-29" enabled="true" height="19" label="Mouselook" left="0"
 		     mouse_opaque="true" name="Mouselook" shortcut="M" width="211">
 			<on_click function="View.Mouselook" userdata="" />
