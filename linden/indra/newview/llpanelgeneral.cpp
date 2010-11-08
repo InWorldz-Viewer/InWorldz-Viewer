@@ -44,6 +44,7 @@
 
 #include "llagent.h"
 #include "llappviewer.h"
+#include "llpanellogin.h"
 #include "llviewerregion.h"
 
 LLPanelGeneral::LLPanelGeneral()
@@ -56,7 +57,34 @@ BOOL LLPanelGeneral::postBuild()
 	LLComboBox* fade_out_combobox = getChild<LLComboBox>("fade_out_combobox");
 	fade_out_combobox->setCurrentByIndex(gSavedSettings.getS32("RenderName"));
 
-	childSetValue("default_start_location", gSavedSettings.getBOOL("LoginLastLocation") ? "MyLastLocation" : "MyHome");
+	LLComboBox* combo = getChild<LLComboBox>("default_location_combo");
+	childSetCommitCallback("default_location_combo", onLocationChanged, this);
+	combo->setAllowTextEntry(TRUE, 128, FALSE);
+
+	// The XML file loads the combo with the following labels:
+	// 0 - "My Home"
+	// 1 - "My Last Location"
+	// 2 - "<Type region name>"
+
+	BOOL login_last = gSavedSettings.getBOOL("LoginLastLocation");
+	std::string sim_string = LLURLSimString::sInstance.mSimString;
+	if (!sim_string.empty())
+	{
+		// Replace "<Type region name>" with this region name
+		combo->remove(2);
+		combo->add( sim_string );
+		combo->setTextEntry(sim_string);
+		combo->setCurrentByIndex( 2 );
+	}
+	else if (login_last)
+	{
+		combo->setCurrentByIndex( 1 );
+	}
+	else
+	{
+		combo->setCurrentByIndex( 0 );
+	}
+
 	childSetValue("show_location_checkbox", gSavedSettings.getBOOL("ShowStartLocation"));
 	childSetValue("show_all_title_checkbox", gSavedSettings.getBOOL("RenderHideGroupTitleAll"));
 	childSetValue("language_is_public", gSavedSettings.getBOOL("LanguageIsPublic"));
@@ -120,7 +148,15 @@ void LLPanelGeneral::apply()
 	LLComboBox* fade_out_combobox = getChild<LLComboBox>("fade_out_combobox");
 	gSavedSettings.setS32("RenderName", fade_out_combobox->getCurrentIndex());
 	
-	gSavedSettings.setBOOL("LoginLastLocation", childGetValue("default_start_location").asString() == "MyLastLocation");
+	LLComboBox* loc_combo = getChild<LLComboBox>("default_location_combo");
+	gSavedSettings.setBOOL("LoginLastLocation", loc_combo->getCurrentIndex() == 1);
+	if (!loc_combo->getValue().asString().empty() && 
+		loc_combo->getSelectedItemLabel() != "<Type region name>")
+	{
+		LLURLSimString::setString(loc_combo->getValue().asString());
+	}
+	LLPanelLogin::refreshLocation(false);
+
 	gSavedSettings.setBOOL("ShowStartLocation", childGetValue("show_location_checkbox"));
 	gSavedSettings.setBOOL("RenderHideGroupTitleAll", childGetValue("show_all_title_checkbox"));
 	gSavedSettings.setBOOL("LanguageIsPublic", childGetValue("language_is_public"));
@@ -135,7 +171,6 @@ void LLPanelGeneral::apply()
 	gSavedSettings.setBOOL("UIAutoScale", childGetValue("ui_auto_scale"));
 	gSavedSettings.setString("Language", childGetValue("language_combobox"));
 
-	LLURLSimString::setString(childGetValue("location_combobox"));
 
 	LLComboBox* crash_behavior_combobox = getChild<LLComboBox>("crash_behavior_combobox");
 	gCrashSettings.setS32(CRASH_BEHAVIOR_SETTING, crash_behavior_combobox->getCurrentIndex());
@@ -176,3 +211,12 @@ void LLPanelGeneral::onClickResetUISize(void* user_data)
 	gSavedSettings.setBOOL("UIAutoScale", FALSE);
 }
 
+// static
+void LLPanelGeneral::onLocationChanged(LLUICtrl* ctrl, void* data)
+{
+	LLPanelGeneral* self = (LLPanelGeneral*)data;
+	if (self->getChild<LLComboBox>("default_location_combo")->getCurrentIndex() == 2)
+	{
+		self->getChild<LLComboBox>("default_location_combo")->setTextEntry(LLURLSimString::sInstance.mSimString);
+	}
+}
