@@ -233,6 +233,7 @@ public:
 
 	/*virtual*/ void draw();
 	/*virtual*/ BOOL handleDoubleClick(S32 x, S32 y, MASK mask);
+	/*virtual*/ BOOL handleRightMouseDown(S32 x, S32 y, MASK mask);
 
 	/*virtual*/ void showList();
 	/*virtual*/ LLView*	findSnapEdge(S32& new_edge_val, const LLCoordGL& mouse_dir, ESnapEdge snap_edge, ESnapType snap_type, S32 threshold, S32 padding);
@@ -427,6 +428,7 @@ public:
 
 	void			highlightNthItem( S32 index );
 	void			setDoubleClickCallback( void (*cb)(void*) ) { mOnDoubleClickCallback = cb; }
+	void			setRightMouseDownCallback( void (*cb)(S32 x, S32 y, void*) ) { mOnRightMouseDownCallback = cb; }
 	void			setMaximumSelectCallback( void (*cb)(void*) ) { mOnMaximumSelectCallback = cb; }
 	void			setSortChangedCallback( void (*cb)(void*) ) { mOnSortChangedCallback = cb; }
 
@@ -510,6 +512,7 @@ public:
 	/*virtual*/ BOOL	handleMouseDown(S32 x, S32 y, MASK mask);
 	/*virtual*/ BOOL	handleMouseUp(S32 x, S32 y, MASK mask);
 	/*virtual*/ BOOL	handleDoubleClick(S32 x, S32 y, MASK mask);
+	/*virtual*/ BOOL	handleRightMouseDown(S32 x, S32 y, MASK mask);
 	/*virtual*/ BOOL	handleHover(S32 x, S32 y, MASK mask);
 	/*virtual*/ BOOL	handleKeyHere(KEY key, MASK mask);
 	/*virtual*/ BOOL	handleUnicodeCharHere(llwchar uni_char);
@@ -653,6 +656,7 @@ private:
 
 	S32				mBorderThickness;
 	void			(*mOnDoubleClickCallback)(void* userdata);
+	void			(*mOnRightMouseDownCallback)(S32 x, S32 y, void* userdata);
 	void			(*mOnMaximumSelectCallback)(void* userdata );
 	void			(*mOnSortChangedCallback)(void* userdata);
 
