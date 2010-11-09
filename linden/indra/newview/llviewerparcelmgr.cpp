@@ -1719,6 +1719,19 @@ void optionally_start_music(const std::string& music_url)
 	}
 }
 
+
+void callback_start_music(S32 option, void* data)
+{
+	if (option == 0)
+	{
+		// Before the callback, we verified the url was good.
+		// We fetch again to avoid lag while loading.
+		LLParcel* parcel = LLViewerParcelMgr::getInstance()->getAgentParcel();		
+		gAudiop->startInternetStream(parcel->getMusicURL());
+	}
+	gSavedSettings.setWarning("FirstStreamingMusic", FALSE);
+}
+
 // static
 void LLViewerParcelMgr::processParcelAccessListReply(LLMessageSystem *msg, void **user)
 {
