@@ -159,14 +159,9 @@ class ViewerManifest(LLManifest):
         return " ".join((channel_flags, setting_flags)).strip()
 
 class WindowsManifest(ViewerManifest):
+    # we always want these to be named inworldz.exe to avoid settings conflicts
     def final_exe(self):
-        if self.default_channel() and self.viewer_branding_id()=="inworldz":
-            if self.default_grid():
-                return "InWorldz.exe"
-            else:
-                return "InWorldzDevelopment.exe"
-        else:
-            return ''.join(self.channel().split()) + '.exe'
+        return "inworldz.exe"
 
 
     def construct(self):
