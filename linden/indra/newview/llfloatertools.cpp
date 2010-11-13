@@ -399,6 +399,7 @@ LLFloaterTools::LLFloaterTools()
 	mRadioRotate(NULL),
 	mRadioStretch(NULL),
 	mRadioSelectFace(NULL),
+	mRadioAlign(NULL),
 	mCheckSelectIndividual(NULL),
 
 	mCheckSnapToGrid(NULL),
@@ -639,6 +640,7 @@ void LLFloaterTools::updatePopup(LLCoordGL center, MASK mask)
 	mRadioPosition	->setVisible( edit_visible );
 	mRadioRotate	->setVisible( edit_visible );
 	mRadioStretch	->setVisible( edit_visible );
+	mRadioAlign		->setVisible( edit_visible );
 	if (mRadioSelectFace)
 	{
 		mRadioSelectFace->setVisible( edit_visible );
