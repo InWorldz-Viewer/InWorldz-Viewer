@@ -62,6 +62,7 @@
 #include "lluictrlfactory.h"
 #include "llfloaterdirectory.h"
 #include "llpaneldirbrowser.h"
+#include "llpluginclassmedia.h"
 
 #if LL_MSVC
 // disable boost::lexical_cast warning
@@ -191,10 +192,17 @@ void LLPanelDirFind::draw()
 // virtual
 void LLPanelDirFind::onVisibilityChange(BOOL new_visibility)
 {
+	LLPluginClassMedia::EPriority new_priority;
 	if (new_visibility)
 	{
 		mFloaterDirectory->hideAllDetailPanels();
+		new_priority = LLPluginClassMedia::PRIORITY_NORMAL;
 	}
+	else
+		new_priority = LLPluginClassMedia::PRIORITY_HIDDEN;
+
+	mWebBrowser->getMediaPlugin()->setPriority(new_priority);
+
 	LLPanel::onVisibilityChange(new_visibility);
 }
 

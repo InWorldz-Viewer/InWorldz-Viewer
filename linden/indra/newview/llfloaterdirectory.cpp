@@ -479,7 +479,9 @@ void LLFloaterDirectory::setVisible(BOOL visible)
 
 void LLFloaterDirectory::onClose(bool app_quitting)
 {
-	setVisible(FALSE);
+	LLFloater::onClose(app_quitting);
+
+	//setVisible(FALSE); //meaning you hide 3 web browsers - one SLPlugin each
 }
 
 // static
