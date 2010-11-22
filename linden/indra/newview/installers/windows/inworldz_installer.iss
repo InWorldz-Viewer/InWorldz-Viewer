@@ -65,15 +65,13 @@ Source: ..\..\..\build-vc80\newview\release\packaged\licenses.txt; DestDir: {app
 Source: ..\..\..\build-vc80\newview\release\packaged\llcommon.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\featuretable.txt; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\gpu_table.txt; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\build-vc80\newview\release\packaged\inworldz.exe.config; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\llkdu.dll.2.config; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\build-vc80\newview\release\packaged\Microsoft.VC80.CRT.manifest; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\build-vc80\newview\release\packaged\msvcp80.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\build-vc80\newview\release\packaged\msvcr80.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\openal32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\OpenJPEG.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\build-vc80\newview\release\packaged\SLPlugin.exe.config; DestDir: {app}; Flags: ignoreversion
+
+; VC++ 2005 x86 redist
+Source: ..\..\..\newview\vcredist_x86.exe; DestDir: {tmp}; DestName: vcredist_x86.exe
 
 ; Old files we don't use anymore:
 ; Source: ..\..\..\build-vc80\newview\release\packaged\dronesettings.xml; DestDir: {app}; Flags: ignoreversion
@@ -102,6 +100,7 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\InWorldz; Filename:
 Name: {group}\InWorldz; Filename: {app}\inworldz.exe; WorkingDir: {app}; Comment: inworldz; IconIndex: 0;
 
 [Run]
+Filename: {tmp}\vcredist_x86.exe; Parameters: "/q:a /c:""VCREDI~1.EXE /q:a /c:""""msiexec /i vcredist.msi /qn"""" """; Flags: runhidden
 Filename: {app}\inworldz.exe; WorkingDir: {app}; Flags: nowait postinstall
 
 [UninstallDelete]
@@ -132,6 +131,7 @@ Name: {app}\freebl3.dll; Type: files; Tasks: ; Languages:
 Name: {app}\glew32.dll; Type: files; Tasks: ; Languages:
 Name: {app}\iconv.dll; Type: files; Tasks: ; Languages:
 Name: {app}\intl.dll; Type: files; Tasks: ; Languages:
+Name: {app}\InWorldzViewer.exe; Type: files; Tasks: ; Languages:
 Name: {app}\js3250.dll; Type: files; Tasks: ; Languages:
 Name: {app}\libcairo-2.dll; Type: files; Tasks: ; Languages:
 Name: {app}\libfaad-2.dll; Type: files; Tasks: ; Languages:
@@ -189,3 +189,10 @@ Name: {app}\xpcom.dll; Type: files; Tasks: ; Languages:
 Name: {app}\xul.dll; Type: files; Tasks: ; Languages:
 Name: {app}\xvidcore.dll; Type: files; Tasks: ; Languages:
 Name: {app}\zlib1.dll; Type: files; Tasks: ; Languages:
+
+; We don't distribute the CRT like this anymore; kill old files
+Name: {app}\SLPlugin.exe.config; Type: files; Tasks: ; Languages:
+Name: {app}\Microsoft.VC80.CRT.manifest; Type: files; Tasks: ; Languages:
+Name: {app}\msvcp80.dll; Type: files; Tasks: ; Languages:
+Name: {app}\msvcr80.dll; Type: files; Tasks: ; Languages:
+Name: {app}\imprudence.exe.config; Type: files; Tasks: ; Languages:
