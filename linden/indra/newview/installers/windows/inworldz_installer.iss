@@ -71,7 +71,7 @@ Source: ..\..\..\build-vc80\newview\release\packaged\OpenJPEG.dll; DestDir: {app
 Source: ..\..\..\build-vc80\newview\release\packaged\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
 
 ; VC++ 2005 x86 redist
-Source: ..\..\..\newview\vcredist_x86.exe; DestDir: {tmp}; DestName: vcredist_x86.exe
+Source: ..\windows\vcredist_x86.exe; DestDir: {tmp}; DestName: vcredist_x86.exe
 
 ; Old files we don't use anymore:
 ; Source: ..\..\..\build-vc80\newview\release\packaged\dronesettings.xml; DestDir: {app}; Flags: ignoreversion
