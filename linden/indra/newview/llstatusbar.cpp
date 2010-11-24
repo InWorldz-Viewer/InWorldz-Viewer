@@ -41,7 +41,6 @@
 #include "llviewercontrol.h"
 //#include "llfloaterbuycurrency.h"
 #include "llfloaterchat.h"
-#include "llfloaterdirectory.h"		// to spawn search
 #include "llfloaterlagmeter.h"
 #include "llfloaterland.h"
 #include "llfloaterregioninfo.h"
@@ -165,13 +164,6 @@ mSquareMetersCommitted(0)
 	childSetAction("no_scripts", onClickScripts, this );
 	childSetAction("restrictpush", onClickPush, this );
 	childSetAction("status_no_voice", onClickVoice, this );
-
-	childSetCommitCallback("search_editor", onCommitSearch, this);
-	childSetAction("search_btn", onClickSearch, this);
-
-	childSetVisible("search_editor", gSavedSettings.getBOOL("ShowSearchBar"));
-	childSetVisible("search_btn", gSavedSettings.getBOOL("ShowSearchBar"));
-	childSetVisible("menubar_search_bevel_bg", gSavedSettings.getBOOL("ShowSearchBar"));
 
 	childSetActionTextbox("ParcelNameText", onClickParcelInfo );
 	childSetActionTextbox("BalanceText", onClickBalance );
@@ -305,8 +297,6 @@ void LLStatusBar::refresh()
 	const S32 MENU_RIGHT = gMenuBarView->getRightmostMenuEdge();
 	S32 x = MENU_RIGHT + MENU_PARCEL_SPACING;
 	S32 y = 0;
-
-	bool search_visible = gSavedSettings.getBOOL("ShowSearchBar");
 
 	// reshape menu bar to its content's width
 	if (MENU_RIGHT != gMenuBarView->getRect().getWidth())
@@ -578,30 +568,15 @@ void LLStatusBar::refresh()
 
 
 	// x = right edge
-	// loop through: stat graphs, search btn, search text editor, money, buy money, clock
+	// loop through: stat graphs, money, buy money, clock
 	// adjust rect
 	// finally adjust parcel name rect
 
 	S32 new_right = getRect().getWidth();
-	if (search_visible)
-	{
-		childGetRect("search_btn", r);
-		//r.translate( new_right - r.mRight, 0);
-		//childSetRect("search_btn", r);
-		new_right -= r.getWidth();
-
-		childGetRect("search_editor", r);
-		//r.translate( new_right - r.mRight, 0);
-		//childSetRect("search_editor", r);
-		new_right -= r.getWidth() + 6;
-	}
-	else
-	{
-		childGetRect("stat_btn", r);
-		r.translate( new_right - r.mRight, 0);
-		childSetRect("stat_btn", r);
-		new_right -= r.getWidth() + 6;
-	}
+	childGetRect("stat_btn", r);
+	r.translate( new_right - r.mRight, 0);
+	childSetRect("stat_btn", r);
+	new_right -= r.getWidth() + 6;
 
 	// Set rects of money, buy money, time
 	childGetRect("BalanceText", r);
@@ -627,14 +602,6 @@ void LLStatusBar::refresh()
 	const S32 PARCEL_RIGHT =  llmin(mTextTime->getRect().mLeft, mTextParcelName->getTextPixelWidth() + x + 5);
 	r.set(x+4, getRect().getHeight() - 2, PARCEL_RIGHT, 0);
 	mTextParcelName->setRect(r);
-
-	// Set search bar visibility
-	childSetVisible("search_editor", search_visible);
-	childSetVisible("search_btn", search_visible);
-	childSetVisible("menubar_search_bevel_bg", search_visible);
-	mSGBandwidth->setVisible(! search_visible);
-	mSGPacketLoss->setVisible(! search_visible);
-	childSetEnabled("stat_btn", ! search_visible);
 }
 
 void LLStatusBar::setVisibleForMouselook(bool visible)
@@ -642,8 +609,6 @@ void LLStatusBar::setVisibleForMouselook(bool visible)
 	mTextBalance->setVisible(visible);
 	mTextTime->setVisible(visible);
 	//childSetVisible("buycurrency", visible);
-	childSetVisible("search_editor", visible);
-	childSetVisible("search_btn", visible);
 	mSGBandwidth->setVisible(visible);
 	mSGPacketLoss->setVisible(visible);
 	setBackgroundVisible(visible);
@@ -900,21 +865,6 @@ void LLStatusBar::setupDate()
 	{
 		sMonths.resize(12);
 	}
-}
-
-// static
-void LLStatusBar::onCommitSearch(LLUICtrl*, void* data)
-{
-	// committing is the same as clicking "search"
-	onClickSearch(data);
-}
-
-// static
-void LLStatusBar::onClickSearch(void* data)
-{
-	LLStatusBar* self = (LLStatusBar*)data;
-	std::string search_text = self->childGetText("search_editor");
-	LLFloaterDirectory::showFindAll(search_text);
 }
 
 // static

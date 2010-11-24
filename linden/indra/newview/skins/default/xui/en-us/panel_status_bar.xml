@@ -86,28 +86,6 @@
 	     image_unselected="status_buy_land.tga" label="" label_selected=""
 	     left="576" mouse_opaque="true" name="buyland" scale_image="true"
 	     tool_tip="Buy this parcel" visible="false" width="16" />
-
-  <!-- Totally unsexy button hack to get a sexy bevel for sexy search bevel -brent -->
-  <button bottom="-17" height="16" left="-95" width="94" 
-          image_unselected="sm_rounded_corners_simple.tga"
-          image_selected="sm_rounded_corners_simple.tga"
-          image_hover_selected="sm_rounded_corners_simple.tga"
-          image_hover_unselected="sm_rounded_corners_simple.tga"
-          image_disabled_selected="sm_rounded_corners_simple.tga"
-          image_disabled="sm_rounded_corners_simple.tga"
-          label="" scale_image="true" enabled="true" mouse_opaque="false" name="menubar_search_bevel_bg"/>
-
-  <line_editor bevel_style="none" border_style="line" border_thickness="0" border_drop_shadow_visible="false" bottom="-16"
-	     commit_on_focus_lost="false" enabled="true" follows="right|bottom"
-	     font="SansSerifSmall" handle_edit_keys_directly="false" height="11"
-	     label="Search" left="-94" max_length="254" mouse_opaque="true"
-	     name="search_editor" select_all_on_focus_received="false"
-	     select_on_focus="false" tab_group="1" tool_tip="Search InWorldz"
-	     width="78"/>
-	<button bottom="-17" enabled="true" follows="right|bottom" font="SansSerifSmall"
-	     halign="center" height="16" image_unselected="status_search_btn.png" image_selected="status_search_btn_pressed.png" image_disabled_selected="status_search_btn_pressed.png" image_disabled="status_search_btn.png"
-	     label="" label_selected="" left="-16" mouse_opaque="true" name="search_btn"
-	     tool_tip="Search InWorldz" width="16" scale_image="false"/>
 	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 	     bottom="-16" enabled="false" follows="right|bottom" font="SansSerifSmall"
 	     halign="center" height="12" left="-20" mouse_opaque="true"

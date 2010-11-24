@@ -122,8 +122,6 @@ private:
 	// simple method to setup the part that holds the date
 	void setupDate();
 
-	static void onCommitSearch(LLUICtrl*, void* data);
-	static void onClickSearch(void* data);
 	static void onClickStatGraph(void* data);
 
 private:
