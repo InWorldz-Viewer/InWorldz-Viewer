@@ -9,8 +9,8 @@
 		http://inworldz.com/loginscreen.php
 	</string>
 	<string name="forgot_password_url">
-		http://inworldz.com/accset.php
-	</string>
+    http://inworldz.com/loginerror.php?error=2
+  </string>
 	<text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 	     bottom="54" drop_shadow_visible="true" follows="left|bottom"
 	     font="SansSerif" h_pad="0" halign="left" height="16"
