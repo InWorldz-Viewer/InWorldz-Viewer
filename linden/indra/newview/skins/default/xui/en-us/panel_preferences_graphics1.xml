@@ -10,7 +10,7 @@
 	     name="windowed mode" radio_style="false" width="100" />
 	<text_editor type="string" length="1" allow_html="false" bg_readonly_color="0 0 0 0" bottom="-43"
 	     embedded_items="false" enabled="false" follows="left|top"
-	     font="SansSerifSmall" height="20" hide_border="true"
+	     font="SansSerifSmall" height="25" hide_border="true"
 	     hide_scrollbar="true" left="10" max_length="65535" mouse_opaque="true"
 	     name="FullScreenInfo" tab_stop="false" width="350" word_wrap="true">
 		If unchecked, viewer will display full-screen when logged in.
