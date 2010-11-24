@@ -119,7 +119,7 @@ Name: C:\Documents and Settings\{username}\.gstreamer-0.10; Type: filesandordirs
 ; Name: {app}\*.dll; Type: files; Tasks: ; Languages:
 Name: {app}\lib\gstreamer-plugins\*; Type: filesandordirs; Tasks: ; Languages: 
 ; Name: {app}\skins\default\xui\*; Type: filesandordirs; Tasks: ; Languages:
-; Name: {app}\skins\silver\xui\*; Type: filesandordirs; Tasks: ; Languages:
+Name: {app}\skins\silver\xui\*; Type: filesandordirs; Tasks: ; Languages:
 Name: C:\Documents and Settings\{username}\.gstreamer-0.10\*; Type: filesandordirs
 Name: C:\Users\{username}\.gstreamer-0.10\*; Type: filesandordirs
 ; Breaks the browser if installing on top of 1.1:
