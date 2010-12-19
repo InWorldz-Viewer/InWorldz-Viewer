@@ -190,6 +190,9 @@ class WindowsManifest(ViewerManifest):
 
         # For use in crash reporting (generates minidumps)
         self.path("dbghelp.dll")
+        
+        # Copy the kdu DSO .config
+        self.path("kdu_v64R.dll.config.dll")
 
         # For using sound.
         if self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):
