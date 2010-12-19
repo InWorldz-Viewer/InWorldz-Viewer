@@ -633,7 +633,7 @@
           </map>
         </map>
       </map>
-      <key>kdu-binaries</key>
+      <key>kdu</key>
       <map>
         <key>copyright</key>
         <string>see kdu</string>
@@ -660,9 +660,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>c4cf53deda9148549e6534a98b56e866</string>
+            <string>6955af0eea09cc95cd1e35145fa6c257</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/kdu-binaries-4.2-windows-20080723.tar.bz2</uri>
+            <uri>file:///c:/kdu-inworldz-v64-windows-20101219.tar.bz2</uri>
           </map>
         </map>
       </map>
