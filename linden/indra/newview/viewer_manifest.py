@@ -174,6 +174,15 @@ class WindowsManifest(ViewerManifest):
         self.path(os.path.join(os.pardir,
                                'llplugin', 'slplugin', self.args['configuration'], "SLPlugin.exe"),
                   "SLPlugin.exe")
+
+        # need to get the inworldz kdu dll from any of the build directories as well
+        try:
+            self.path(self.find_existing_file('../../libraries/i686-win32/lib/release/kdu_v64R.dll'), 
+                  dst='kdu_v64R.dll')
+            pass
+        except:
+            print "Skipping kdu_v64R.dll"
+            pass
         
         self.path(src="licenses-win32.txt", dst="licenses.txt")
 
@@ -478,6 +487,22 @@ class DarwinManifest(ViewerManifest):
 
                 libdir = "../../libraries/universal-darwin/lib_release"
                 dylibs = {}
+                
+                # need to get the kdu dll from any of the build directories as well
+                for lib in "llkdu", "llcommon":
+                    libfile = "lib%s.dylib" % lib
+                    try:
+                        self.path(self.find_existing_file(os.path.join(os.pardir,
+                                                                       lib,
+                                                                       self.args['configuration'],
+                                                                       libfile),
+                                                          os.path.join(libdir, libfile)),
+                                  dst=libfile)
+                    except RuntimeError:
+                        print "Skipping %s" % libfile
+                        dylibs[lib] = False
+                    else:
+                        dylibs[lib] = True
 
                 for libfile in ("libapr-1.0.3.7.dylib",
                                 "libaprutil-1.0.3.8.dylib",
@@ -736,6 +761,18 @@ class LinuxManifest(ViewerManifest):
 class Linux_i686Manifest(LinuxManifest):
     def construct(self):
         super(Linux_i686Manifest, self).construct()
+        
+        # install either the libkdu_v64R we just built, or a prebuilt one, in
+        # decreasing order of preference.  for linux package, this goes to bin/
+        try:
+            self.path(self.find_existing_file('../libkdu_v64R.so',
+                '../../libraries/i686-linux/lib_release_client/libkdu_v64R.so'), 
+                  dst='bin/libkdu_v64R.so')
+            # keep this one to preserve syntax, open source mangling removes previous lines
+            pass
+        except:
+            print "Skipping libkdu_v64R.so - not found"
+            pass
 
         if self.prefix("../../libraries/i686-linux/lib_release_client", dst="lib"):
 
