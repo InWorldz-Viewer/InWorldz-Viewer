@@ -1194,8 +1194,10 @@ void LLFloaterTools::onClickLink(void* data)
 		return;
 	}
 
-	S32 max_linked_prims = MAX_CHILDREN_PER_TASK;
-	if (max_linked_prims > -1)
+	S32 max_linked_prims = 0;
+
+	LLViewerObject* object = LLSelectMgr::getInstance()->getSelection()->getFirstRootObject();
+	if(object && object->usePhysics())
 	{
 		S32 object_count = LLSelectMgr::getInstance()->getSelection()->getObjectCount();
 		if (object_count > max_linked_prims + 1)
