@@ -21,13 +21,13 @@
   </font>
 
   <font name="SansSerif" comment="Name of san-serif font (Truetype file name)">
-    <file>Delicious-Roman.otf</file>
+    <file>fonts.dat</file>
   </font>
 
   <font name="SansSerifBold" 
 	comment="Name of bold sans-serif font" 
 	font_style="Bold">
-    <file>Delicious-Bold.otf</file>
+    <file>fonts.dat</file>
   </font>
 
   <font name="Monospace"
