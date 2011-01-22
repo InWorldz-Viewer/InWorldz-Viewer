@@ -987,7 +987,6 @@ if (WINDOWS)
         ${ARTWORK_DIR}/res/arrowcopmulti.cur
         ${ARTWORK_DIR}/res/arrowdrag.cur
         ${ARTWORK_DIR}/res/circleandline.cur
-        ${ARTWORK_DIR}/res/icon1.ico
         ${ARTWORK_DIR}/res/llarrow.cur
         ${ARTWORK_DIR}/res/llarrowdrag.cur
         ${ARTWORK_DIR}/res/llarrowdragmulti.cur
