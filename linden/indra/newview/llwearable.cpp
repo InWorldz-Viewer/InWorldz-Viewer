@@ -494,7 +494,7 @@ BOOL LLWearable::isOldVersion()
 		param;
 		param = (LLViewerVisualParam*) avatar->getNextVisualParam() )
 	{
-		if( (param->getWearableType() == mType) && (param->getGroup() == VISUAL_PARAM_GROUP_TWEAKABLE ) )
+		if (param->getWearableType() == mType && param->isTweakable())
 		{
 			param_count++;
 			if( !is_in_map(mVisualParamMap, param->getID() ) )
@@ -550,7 +550,7 @@ BOOL LLWearable::isDirty()
 		param;
 		param = (LLViewerVisualParam*) avatar->getNextVisualParam() )
 	{
-		if( (param->getWearableType() == mType) && (param->getGroup() == VISUAL_PARAM_GROUP_TWEAKABLE ) )
+		if (param->getWearableType() == mType && param->isTweakable())
 		{
 			F32 weight = get_if_there(mVisualParamMap, param->getID(), param->getDefaultWeight());
 			weight = llclamp( weight, param->getMinWeight(), param->getMaxWeight() );
@@ -606,7 +606,7 @@ void LLWearable::setParamsToDefaults()
 	mVisualParamMap.clear();
 	for( LLVisualParam* param = avatar->getFirstVisualParam(); param; param = avatar->getNextVisualParam() )
 	{
-		if( (((LLViewerVisualParam*)param)->getWearableType() == mType ) && (param->getGroup() == VISUAL_PARAM_GROUP_TWEAKABLE ) )
+		if (((LLViewerVisualParam*)param)->getWearableType() == mType && param->isTweakable())
 		{
 			mVisualParamMap[param->getID()] = param->getDefaultWeight();
 		}
@@ -640,7 +640,7 @@ void LLWearable::writeToAvatar( BOOL set_by_user )
 	// Pull params
 	for( LLVisualParam* param = avatar->getFirstVisualParam(); param; param = avatar->getNextVisualParam() )
 	{
-		if( (((LLViewerVisualParam*)param)->getWearableType() == mType) && (param->getGroup() == VISUAL_PARAM_GROUP_TWEAKABLE ) )
+		if (((LLViewerVisualParam*)param)->getWearableType() == mType && param->isTweakable())
 		{
 			S32 param_id = param->getID();
 			F32 weight = get_if_there(mVisualParamMap, param_id, param->getDefaultWeight());
@@ -731,7 +731,7 @@ void LLWearable::removeFromAvatar( EWearableType type, BOOL set_by_user )
 	// Pull params
 	for( LLVisualParam* param = avatar->getFirstVisualParam(); param; param = avatar->getNextVisualParam() )
 	{
-		if( (((LLViewerVisualParam*)param)->getWearableType() == type) && (param->getGroup() == VISUAL_PARAM_GROUP_TWEAKABLE ) )
+		if (((LLViewerVisualParam*)param)->getWearableType() == type && param->isTweakable())
 		{
 			S32 param_id = param->getID();
 			avatar->setVisualParamWeight( param_id, param->getDefaultWeight(), set_by_user );
@@ -779,7 +779,7 @@ void LLWearable::readFromAvatar()
 	mVisualParamMap.clear();
 	for( LLVisualParam* param = avatar->getFirstVisualParam(); param; param = avatar->getNextVisualParam() )
 	{
-		if( (((LLViewerVisualParam*)param)->getWearableType() == mType) && (param->getGroup() == VISUAL_PARAM_GROUP_TWEAKABLE ) )
+		if (((LLViewerVisualParam*)param)->getWearableType() == mType && param->isTweakable())
 		{
 			mVisualParamMap[param->getID()] = param->getWeight();
 		}
@@ -828,7 +828,7 @@ void LLWearable::copyDataFrom( LLWearable* src )
 		param;
 		param = (LLViewerVisualParam*) avatar->getNextVisualParam() )
 	{
-		if( (param->getWearableType() == mType) && (param->getGroup() == VISUAL_PARAM_GROUP_TWEAKABLE ) )
+		if (param->getWearableType() == mType && param->isTweakable())
 		{
 			S32 id = param->getID();
 			F32 weight = get_if_there(src->mVisualParamMap, id, param->getDefaultWeight() );
