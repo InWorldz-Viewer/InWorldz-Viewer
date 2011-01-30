@@ -186,7 +186,7 @@ void LLTexLayerSetBuffer::popProjection()
 BOOL LLTexLayerSetBuffer::needsRender()
 {
 	LLVOAvatar* avatar = mTexLayerSet->getAvatar();
-	BOOL upload_now = mNeedsUpload && mTexLayerSet->isLocalTextureDataFinal() && gAgent.mNumPendingQueries == 0;
+	BOOL upload_now = needsUploadNow();
 	BOOL needs_update = (mNeedsUpdate || upload_now) && !avatar->mAppearanceAnimating;
 
 	if (needs_update)
@@ -254,14 +254,16 @@ BOOL LLTexLayerSetBuffer::render()
 			}
 			else
 			{
-				mUploadPending = FALSE;
-				mNeedsUpload = FALSE;
+				//mUploadPending = FALSE;//see...
+				//mNeedsUpload = FALSE;//     ...below...
 				LLVOAvatar*	avatar = mTexLayerSet->getAvatar();
 				if (avatar)
 				{
 					avatar->setNewBakedTexture(avatar->getBakedTE(mTexLayerSet), IMG_INVISIBLE);
 					llinfos << "Invisible baked texture set for " << mTexLayerSet->getBodyRegion() << llendl;
 				}
+				readBackAndUpload();   //... here: Opensim is not happy if we don't
+				//TODO: find out if SL is happy if we do
 			}
 		}
 	}
@@ -433,7 +435,7 @@ void LLTexLayerSetBuffer::onTextureUploadComplete(const LLUUID& uuid, void* user
 
 	LLVOAvatar* avatar = gAgent.getAvatarObject();
 
-	if (0 == result && avatar && !avatar->isDead() &&
+	if (avatar && !avatar->isDead() &&
 		baked_upload_data &&
 		baked_upload_data->mAvatar == avatar && // Sanity check: only the user's avatar should be uploading textures.
 		baked_upload_data->mLayerSet->hasComposite())
@@ -466,10 +468,21 @@ void LLTexLayerSetBuffer::onTextureUploadComplete(const LLUUID& uuid, void* user
 			}
 			else
 			{
-				// Avatar appearance is changing, ignore the upload results
-				llinfos << "Baked upload failed. Reason: " << result << llendl;
-				// *FIX: retry upload after n seconds, asset server could be busy
- 			}
+				++failures;
+				llinfos << "Baked upload failed (attempt " << failures << "/" << MAX_BAKE_UPLOAD_ATTEMPTS << "), ";
+				if (failures >= MAX_BAKE_UPLOAD_ATTEMPTS)
+				{
+					llcont << "giving up.";
+				}
+				else
+				{
+					const F32 delay = 5.f;
+					llcont << llformat("retrying in %.2f seconds.", delay);
+					layerset_buffer->mUploadFailCount = failures;
+					layerset_buffer->requestDelayedUpload((U64)(delay * 1000000));
+				}
+				llcont << llendl;
+			}
 		}
 		else
 		{
