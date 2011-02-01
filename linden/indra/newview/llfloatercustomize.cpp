@@ -427,9 +427,7 @@ LLPanelEditWearable::LLPanelEditWearable( EWearableType type )
 BOOL LLPanelEditWearable::postBuild()
 {
 	LLAssetType::EType asset_type = LLWearable::typeToAssetType( mType );
-	std::string icon_name = (asset_type == LLAssetType::AT_CLOTHING ?
-										 "inv_item_clothing.tga" :
-										 "inv_item_skin.tga" );
+	std::string icon_name = get_item_icon_name(asset_type, LLInventoryType::IT_WEARABLE, mType, FALSE);
 	childSetValue("icon", icon_name);
 
 	childSetAction("Create New", LLPanelEditWearable::onBtnCreateNew, this );
@@ -522,7 +520,7 @@ void LLPanelEditWearable::setSubpart( ESubpart subpart )
 			param = (LLViewerVisualParam *)avatar->getNextVisualParam())
 		{
 			if (param->getID() == -1
-				|| param->getGroup() != VISUAL_PARAM_GROUP_TWEAKABLE 
+				|| !param->isTweakable()
 				|| param->getEditGroup() != part->mEditGroup 
 				|| !(param->getSex() & avatar_sex))
 			{
@@ -2178,6 +2176,7 @@ void LLFloaterCustomize::initWearablePanels()
 		panel->addTextureDropTarget(TEX_HEAD_TATTOO, "Head Tattoo",
 									LLUUID::null,
 									TRUE);
+		panel->addColorSwatch(TEX_LOWER_TATTOO, "Color/Tint");
 	}
 }
 

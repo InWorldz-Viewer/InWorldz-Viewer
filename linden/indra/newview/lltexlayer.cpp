@@ -188,6 +188,7 @@ BOOL LLTexLayerSetBuffer::needsRender()
 	LLVOAvatar* avatar = mTexLayerSet->getAvatar();
 	BOOL upload_now = mNeedsUpload && mTexLayerSet->isLocalTextureDataFinal() && gAgent.mNumPendingQueries == 0;
 	BOOL needs_update = (mNeedsUpdate || upload_now) && !avatar->mAppearanceAnimating;
+
 	if (needs_update)
 	{
 		BOOL invalid_skirt = avatar->getBakedTE(mTexLayerSet) == TEX_SKIRT_BAKED && !avatar->isWearingWearableType(WT_SKIRT);
@@ -326,12 +327,11 @@ void LLTexLayerSetBuffer::readBackAndUpload()
 	// writes into baked_color_data
 	const char* comment_text = NULL;
 
-	S32 baked_image_components = 5; // red green blue bump clothing
+	S32 baked_image_components =  5; // red green blue bump clothing
 	LLPointer<LLImageRaw> baked_image = new LLImageRaw( mWidth, mHeight, baked_image_components );
 	U8* baked_image_data = baked_image->getData();
 	
 	comment_text = LINDEN_J2C_COMMENT_PREFIX "RGBHM"; // 5 channels: rgb, heightfield/alpha, mask
-
 	S32 i = 0;
 	for (S32 u = 0; u < mWidth; u++)
 	{
@@ -433,8 +433,8 @@ void LLTexLayerSetBuffer::onTextureUploadComplete(const LLUUID& uuid, void* user
 
 	LLVOAvatar* avatar = gAgent.getAvatarObject();
 
-	if (0 == result &&
-		avatar && !avatar->isDead() &&
+	if (0 == result && avatar && !avatar->isDead() &&
+		baked_upload_data &&
 		baked_upload_data->mAvatar == avatar && // Sanity check: only the user's avatar should be uploading textures.
 		baked_upload_data->mLayerSet->hasComposite())
 	{
@@ -469,7 +469,7 @@ void LLTexLayerSetBuffer::onTextureUploadComplete(const LLUUID& uuid, void* user
 				// Avatar appearance is changing, ignore the upload results
 				llinfos << "Baked upload failed. Reason: " << result << llendl;
 				// *FIX: retry upload after n seconds, asset server could be busy
-			}
+ 			}
 		}
 		else
 		{
