@@ -530,7 +530,7 @@ public:
 			if (widget)
 			{
 				// need non-const to update private dummy widget cache
-				llwarns << "Making dummy " << xml_tag << " named " << name << " in " << getName() << llendl;
+				//llwarns << "Making dummy " << xml_tag << " named " << name << " in " << getName() << llendl;
 				mDummyWidgets.insert(std::make_pair(name, widget));
 			}
 			else
