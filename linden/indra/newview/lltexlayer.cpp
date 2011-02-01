@@ -61,6 +61,8 @@
 
 using namespace LLVOAvatarDefines;
 
+const S32 MAX_BAKE_UPLOAD_ATTEMPTS = 4;
+
 // static
 S32 LLTexLayerSetBuffer::sGLByteCount = 0;
 
@@ -98,6 +100,8 @@ LLTexLayerSetBuffer::LLTexLayerSetBuffer(LLTexLayerSet* owner, S32 width, S32 he
 	mNeedsUpdate( TRUE ),
 	mNeedsUpload( FALSE ),
 	mUploadPending( FALSE ), // Not used for any logic here, just to sync sending of updates
+	mUploadFailCount( 0 ),
+	mUploadAfter( 0 ),
 	mTexLayerSet( owner )	
 {
 	LLTexLayerSetBuffer::sGLByteCount += getSize();
@@ -150,6 +154,18 @@ void LLTexLayerSetBuffer::requestUpload()
 	{
 		mNeedsUpload = TRUE;
 		mUploadPending = TRUE;
+		mUploadAfter = 0;
+	}
+}
+
+// request an upload to start delay_usec microseconds from now
+void LLTexLayerSetBuffer::requestDelayedUpload(U64 delay_usec)
+{
+	if (!mNeedsUpload)
+	{
+		mNeedsUpload = TRUE;
+		mUploadPending = TRUE;
+		mUploadAfter = LLFrameTimer::getTotalTime() + delay_usec;
 	}
 }
 
@@ -160,7 +176,9 @@ void LLTexLayerSetBuffer::cancelUpload()
 		mNeedsUpload = FALSE;
 	}
 	mUploadPending = FALSE;
+	mUploadAfter = 0;
 }
+
 
 void LLTexLayerSetBuffer::pushProjection()
 {
@@ -186,7 +204,7 @@ void LLTexLayerSetBuffer::popProjection()
 BOOL LLTexLayerSetBuffer::needsRender()
 {
 	LLVOAvatar* avatar = mTexLayerSet->getAvatar();
-	BOOL upload_now = needsUploadNow();
+	BOOL upload_now = mNeedsUpload && mTexLayerSet->isLocalTextureDataFinal() && gAgent.mNumPendingQueries == 0;
 	BOOL needs_update = (mNeedsUpdate || upload_now) && !avatar->mAppearanceAnimating;
 
 	if (needs_update)
@@ -441,6 +459,7 @@ void LLTexLayerSetBuffer::onTextureUploadComplete(const LLUUID& uuid, void* user
 		baked_upload_data->mLayerSet->hasComposite())
 	{
 		LLTexLayerSetBuffer* layerset_buffer = baked_upload_data->mLayerSet->getComposite();
+		S32 failures = layerset_buffer->mUploadFailCount;
 
 		if (layerset_buffer->mUploadID.isNull())
 		{
@@ -488,6 +507,7 @@ void LLTexLayerSetBuffer::onTextureUploadComplete(const LLUUID& uuid, void* user
 		{
 			llinfos << "Received baked texture out of date, ignored." << llendl;
 		}
+		layerset_buffer->mUploadFailCount = 0;
 
 		avatar->dirtyMesh();
 	}
