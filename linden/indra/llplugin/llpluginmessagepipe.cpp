@@ -79,10 +79,10 @@ bool LLPluginMessagePipeOwner::writeMessageRaw(const std::string &message)
 	}
 	else
 	{
-		LL_WARNS("Plugin") << "dropping message: " << message << LL_ENDL;
+		LL_WARNS("PluginPipe") << "dropping message: " << message << LL_ENDL;
 		result = false;
 	}
-	
+
 	return result;
 }
 
@@ -159,18 +159,18 @@ bool LLPluginMessagePipe::pump(F64 timeout)
 		{
 			// write any outgoing messages
 			size = (apr_size_t)mOutput.size();
-			
+
 			setSocketTimeout(0);
-			
-//			LL_INFOS("Plugin") << "before apr_socket_send, size = " << size << LL_ENDL;
+
+//			LL_INFOS("PluginPipe") << "before apr_socket_send, size = " << size << LL_ENDL;
 
 			status = apr_socket_send(
 					mSocket->getSocket(),
 					(const char*)mOutput.data(),
 					&size);
 
-//			LL_INFOS("Plugin") << "after apr_socket_send, size = " << size << LL_ENDL;
-			
+//			LL_INFOS("PluginPipe") << "after apr_socket_send, size = " << size << LL_ENDL;
+
 			if(status == APR_SUCCESS)
 			{
 				// success
@@ -225,15 +225,15 @@ bool LLPluginMessagePipe::pump(F64 timeout)
 			{
 				size = request_size;
 
-//				LL_INFOS("Plugin") << "before apr_socket_recv, size = " << size << LL_ENDL;
+//				LL_INFOS("PluginPipe") << "before apr_socket_recv, size = " << size << LL_ENDL;
 
 				status = apr_socket_recv(
-						mSocket->getSocket(), 
-						input_buf, 
+						mSocket->getSocket(),
+						input_buf,
 						&size);
 
-//				LL_INFOS("Plugin") << "after apr_socket_recv, size = " << size << LL_ENDL;
-				
+//				LL_INFOS("PluginPipe") << "after apr_socket_recv, size = " << size << LL_ENDL;
+
 				if(size > 0)
 					mInput.append(input_buf, size);
 
@@ -309,7 +309,7 @@ void LLPluginMessagePipe::processInput(void)
 		}
 		else
 		{
-			LL_WARNS("Plugin") << "!mOwner" << LL_ENDL;
+			LL_WARNS("PluginPipe") << "!mOwner" << LL_ENDL;
 		}
 		start = delim + 1;
 	}
