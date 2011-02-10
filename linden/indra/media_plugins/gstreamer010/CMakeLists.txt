@@ -37,11 +37,17 @@ set(media_plugin_gstreamer010_SOURCE_FILES
     )
 
 set(media_plugin_gstreamer010_HEADER_FILES
+    llmediaimplgstreamer.h
     llmediaimplgstreamervidplug.h
     llmediaimplgstreamer_syms.h
     llmediaimplgstreamertriviallogging.h
     )
-    
+	
+set_source_files_properties(${media_plugin_gstreamer010_HEADER_FILES}
+							PROPERTIES HEADER_FILE_ONLY TRUE)
+
+list(APPEND media_plugin_gstreamer010_SOURCE_FILES ${media_plugin_gstreamer010_HEADER_FILES})
+
 add_library(media_plugin_gstreamer010
     SHARED
     ${media_plugin_gstreamer010_SOURCE_FILES}
