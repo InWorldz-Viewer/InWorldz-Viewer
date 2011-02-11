@@ -33,7 +33,7 @@
 #ifndef __GST_SLVIDEO_H__
 #define __GST_SLVIDEO_H__
 
-#if LL_GSTREAMER010_ENABLED
+//#if LL_GSTREAMER010_ENABLED
 
 extern "C" {
 #include <gst/gst.h>
@@ -104,6 +104,6 @@ void gst_slvideo_init_class (void);
 
 G_END_DECLS
 
-#endif // LL_GSTREAMER010_ENABLED
+//#endif // LL_GSTREAMER010_ENABLED
 
 #endif /* __GST_SLVIDEO_H__ */

@@ -35,7 +35,7 @@
 #ifndef llmediaimplgstreamer_h
 #define llmediaimplgstreamer_h
 
-#if LL_GSTREAMER010_ENABLED
+//#if LL_GSTREAMER010_ENABLED
 
 extern "C" {
 #include <stdio.h>
@@ -52,6 +52,6 @@ gboolean llmediaimplgstreamer_bus_callback (GstBus     *bus,
 					    gpointer    data);
 }
 
-#endif // LL_GSTREAMER010_ENABLED
+//#endif // LL_GSTREAMER010_ENABLED
 
 #endif // llmediaimplgstreamer_h

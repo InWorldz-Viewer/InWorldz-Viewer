@@ -30,7 +30,7 @@
  * $/LicenseInfo$
  */
 
-#if LL_GSTREAMER010_ENABLED
+//#if LL_GSTREAMER010_ENABLED
 
 #include <string>
 
@@ -168,4 +168,4 @@ void ungrab_gst_syms()
 }
 
 
-#endif // LL_GSTREAMER010_ENABLED
+//#endif // LL_GSTREAMER010_ENABLED

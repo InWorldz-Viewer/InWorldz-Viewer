@@ -30,7 +30,7 @@
  * $/LicenseInfo$
  */
 
-#if LL_GSTREAMER010_ENABLED
+//#if LL_GSTREAMER010_ENABLED
 
 #include "linden_common.h"
 
@@ -528,4 +528,4 @@ void gst_slvideo_init_class (void)
 	DEBUGMSG("CLASS INIT");
 }
 
-#endif // LL_GSTREAMER010_ENABLED
+//#endif // LL_GSTREAMER010_ENABLED

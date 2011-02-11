@@ -39,7 +39,7 @@
 #include "llpluginmessageclasses.h"
 #include "media_plugin_base.h"
 
-#if LL_GSTREAMER010_ENABLED
+//#if LL_GSTREAMER010_ENABLED
 
 extern "C" {
 #include <gst/gst.h>
@@ -1211,4 +1211,4 @@ int init_media_plugin(LLPluginInstance::sendMessageFunction host_send_func, void
     return -1;
 }
 
-#endif // LL_GSTREAMER010_ENABLED
+//#endif // LL_GSTREAMER010_ENABLED
