@@ -786,6 +786,13 @@ anguage Infrstructure (CLI) international standard</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/libxml-2.6.24-linux64-20080909.tar.bz2</uri>
           </map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>d96f950a877836b644f5bd047eb52151</string>
+            <key>url</key>
+            <uri>http://imprudence.s3.amazonaws.com/extras/libxml2-2.7.2-windows-01262009.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>llqtwebkit</key>
