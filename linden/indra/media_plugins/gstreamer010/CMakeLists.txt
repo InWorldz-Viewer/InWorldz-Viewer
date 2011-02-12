@@ -32,14 +32,12 @@ include_directories(
 
 set(media_plugin_gstreamer010_SOURCE_FILES
     media_plugin_gstreamer010.cpp
-    llmediaimplgstreamer_syms.cpp
     llmediaimplgstreamervidplug.cpp
     )
 
 set(media_plugin_gstreamer010_HEADER_FILES
     llmediaimplgstreamer.h
     llmediaimplgstreamervidplug.h
-    llmediaimplgstreamer_syms.h
     llmediaimplgstreamertriviallogging.h
     )
 	
