@@ -9,9 +9,10 @@ if (STANDALONE)
 
 else (STANDALONE)
 
-  use_prebuilt_binary(gstreamer)
-  # possible libxml should have its own .cmake file instead
+  # Possibly libxml and glib should have their own .cmake file instead...
+  use_prebuilt_binary(glib)			# gstreamer needs glib
   use_prebuilt_binary(libxml)
+  use_prebuilt_binary(gstreamer)
   set(GSTREAMER010_FOUND ON FORCE BOOL)
   set(GSTREAMER010_PLUGINS_BASE_FOUND ON FORCE BOOL)
   if (WINDOWS)
