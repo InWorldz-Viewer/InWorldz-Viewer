@@ -1373,40 +1373,40 @@ int init_media_plugin(LLPluginInstance::sendMessageFunction host_send_func, void
 	}
 }
 
-#else // LL_GSTREAMER010_ENABLED
-
-// Stubbed-out class with constructor/destructor (necessary or windows linker
-// will just think its dead code and optimize it all out)
-class MediaPluginGStreamer010 : public MediaPluginBase
-{
-public:
-	MediaPluginGStreamer010(LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data);
-	~MediaPluginGStreamer010();
-	/* virtual */ void receiveMessage(const char *message_string);
-};
-
-MediaPluginGStreamer010::MediaPluginGStreamer010(
-	LLPluginInstance::sendMessageFunction host_send_func,
-	void *host_user_data ) :
-	MediaPluginBase(host_send_func, host_user_data)
-{
-    // no-op
-}
-
-MediaPluginGStreamer010::~MediaPluginGStreamer010()
-{
-    // no-op
-}
-
-void MediaPluginGStreamer010::receiveMessage(const char *message_string)
-{
-    // no-op 
-}
-
-// We're building without GStreamer enabled.  Just refuse to initialize.
-int init_media_plugin(LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data, LLPluginInstance::sendMessageFunction *plugin_send_func, void **plugin_user_data)
-{
-    return -1;
-}
+//#else // LL_GSTREAMER010_ENABLED
+//
+//// Stubbed-out class with constructor/destructor (necessary or windows linker
+//// will just think its dead code and optimize it all out)
+//class MediaPluginGStreamer010 : public MediaPluginBase
+//{
+//public:
+//	MediaPluginGStreamer010(LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data);
+//	~MediaPluginGStreamer010();
+//	/* virtual */ void receiveMessage(const char *message_string);
+//};
+//
+//MediaPluginGStreamer010::MediaPluginGStreamer010(
+//	LLPluginInstance::sendMessageFunction host_send_func,
+//	void *host_user_data ) :
+//	MediaPluginBase(host_send_func, host_user_data)
+//{
+//    // no-op
+//}
+//
+//MediaPluginGStreamer010::~MediaPluginGStreamer010()
+//{
+//    // no-op
+//}
+//
+//void MediaPluginGStreamer010::receiveMessage(const char *message_string)
+//{
+//    // no-op 
+//}
+//
+//// We're building without GStreamer enabled.  Just refuse to initialize.
+//int init_media_plugin(LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data, LLPluginInstance::sendMessageFunction *plugin_send_func, void **plugin_user_data)
+//{
+//    return -1;
+//}
 
 //#endif // LL_GSTREAMER010_ENABLED
