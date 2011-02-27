@@ -38,10 +38,13 @@
 #include "stdtypes.h" // from llcommon
 
 #include "llstreamingaudio.h"
+#include "llpluginclassmediaowner.h"
 
 class LLPluginClassMedia;
 
-class LLStreamingAudio_MediaPlugins : public LLStreamingAudioInterface
+class LLStreamingAudio_MediaPlugins :
+	public LLStreamingAudioInterface,
+	public LLPluginClassMediaOwner
 {
  public:
 	LLStreamingAudio_MediaPlugins();
@@ -55,6 +58,10 @@ class LLStreamingAudio_MediaPlugins : public LLStreamingAudioInterface
 	/*virtual*/ void setGain(F32 vol);
 	/*virtual*/ F32 getGain();
 	/*virtual*/ std::string getURL();
+	/*virtual*/ std::string getVersion();
+
+	// inherited from LLPluginClassMediaOwner
+	/*virtual*/ void handleMediaEvent(LLPluginClassMedia* self, EMediaEvent event);
 
 private:
 	LLPluginClassMedia* initializeMedia(const std::string& media_type);
@@ -63,7 +70,9 @@ private:
 
 	std::string mURL;
 	F32 mGain;
+	std::string mVersion;
 };
+
 
 
 #endif //LL_VIEWERMEDIA_STREAMINGAUDIO_H
