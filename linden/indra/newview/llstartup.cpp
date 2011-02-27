@@ -3501,8 +3501,8 @@ bool login_show(LLSavedLogins const& saved_logins)
 		}
 	}
 
-	// Finally show the other (mostly LL internal) Linden servers.
-	for(int grid_index = GRID_INFO_INWORLDZ_BETA; grid_index < GRID_INFO_OTHER; ++grid_index)
+	// Finally show the possible InWorldz servers.
+	for(int grid_index = GRID_INFO_INWORLDZ; grid_index < GRID_INFO_OTHER; ++grid_index)
 	{
 		if (listed.find((EGridInfo)grid_index) == listed.end())
 		{

@@ -47,11 +47,11 @@ struct LLGridData
 static LLGridData gGridInfo[GRID_INFO_COUNT] = 
 {
 	{ "None", "", "", ""},
-	{ "Inworldz", 
+	{ "InWorldz", 
 	  "http://inworldz.com:8002/", 
 	  "http://inworldz.com:8002/",
 	  "http://inworldz.com/" },
-  	{ "InworldzBeta",
+  	{ "InWorldzBeta",
 	  "http://betagrid.inworldz.com:8002/", 
 	  "http://betagrid.inworldz.com:8002/", 
 	  "http://betagrid.inworldz.com:8002/" },
