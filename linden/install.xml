@@ -459,13 +459,6 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/glib-2.0-linux-20080817.tar.bz2</uri>
           </map>
-          <key>windows</key>
-          <map>
-            <key>md5sum</key>
-            <string>3d5e29d444dde4815b36082eedfc775a</string>
-            <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/glib-2.0-windows-20080817.tar.bz2</uri>
-          </map>
         </map>
       </map>
       <key>glui</key>
@@ -524,6 +517,35 @@
             <string>befc7520fe01250f39458f65c29bc584</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/gstreamer-linux64-20080909.tar.bz2</uri>
+          </map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>bd07378834cd1a4ecf7de55d4e2a7da2</string>
+            <key>url</key>
+            <uri>file:///c:/gstreamer-glib-iconv-libxml-windows-0.10.32-20110503.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
+      <key>gstreamer-plugins</key>
+      <map>
+        <key>license</key>
+        <string>lgpl</string>
+        <key>packages</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>md5sum</key>
+            <string>27a111bd9b12f413b577ae239c10aa7c</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/gstreamer-plugins-darwin-20100826.tar.bz2</uri>
+          </map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>76ad5a08f8f07f99c9e1545c2a0adc27</string>
+            <key>url</key>
+            <uri>file:///c:/gstreamer-plugins-windows-0.10.32-20110503.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -786,13 +808,6 @@ anguage Infrstructure (CLI) international standard</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/libxml-2.6.24-linux64-20080909.tar.bz2</uri>
           </map>
-          <key>windows</key>
-          <map>
-            <key>md5sum</key>
-            <string>d96f950a877836b644f5bd047eb52151</string>
-            <key>url</key>
-            <uri>http://imprudence.s3.amazonaws.com/extras/libxml2-2.7.2-windows-01262009.tar.bz2</uri>
-          </map>
         </map>
       </map>
       <key>llqtwebkit</key>
@@ -1000,9 +1015,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>3d1ea89c764e3d0d246010c43236b06f</string>
+            <string>79bb92dcc79e310ff9aebf7fbe6b10e5</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/openal-1.1-windows-20100923.tar.bz2</uri>
+            <uri>http://imprudenceviewer.org/download/libs/openal-soft-1.12.854-windows-20100822.tar.bz2</uri>
           </map>
         </map>
       </map>
