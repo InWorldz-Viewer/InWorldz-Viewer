@@ -3,11 +3,37 @@
      can_resize="false" height="440" min_height="100" min_width="100"
      name="floater_about" rect_control="FloaterAboutRect"
      title="About InWorldz" width="470">
-	<text_editor bottom="-434" embedded_items="false"
-	     follows="left|top|right|bottom" font="SansSerifSmall" height="168" left="6"
-  max_length="65536" mouse_opaque="true" name="credits_editor" width="458"
-  word_wrap="true">
-
+  <tab_container
+		 follows="all"
+		 bottom="10"
+		 left="10"
+		 height="405"
+		 width="450"
+		 name="about_tab"
+		 tab_position="top">
+    <panel
+      border="true"
+      height="386"
+      label="Version"
+      help_topic="about_support_tab"
+      name="support_panel">
+      <text_editor bottom="28" embedded_items="false"
+         follows="left|top|right|bottom" font="SansSerif" height="352" left="6"
+         max_length="65536" mouse_opaque="true" name="support_editor" width="423"
+         word_wrap="true" />
+      <button follows="left|top" label="Copy to Clipboard" name="copy_btn"
+         left="5" bottom="0" top_pad="5" height="20" width="180" />
+    </panel>
+    <panel
+        border="true"
+        label="Credits"
+        height="386"
+        help_topic="about_credits_tab"
+        name="credits_panel">
+      <text_editor bottom="6" embedded_items="false"
+           follows="left|top|right|bottom" font="SansSerifSmall" height="374" left="6"
+           max_length="65536" mouse_opaque="true" name="credits_editor" width="423"
+           word_wrap="true">
     InWorldz Viewer is brought to you by McCabe Maxsted and InWorldz, LLC, based on the Snowglobe Viewer.
 
     Thanks go to the Snowglobe contributors as well as those who've contributed to the opensource Second Life viewer.
@@ -32,19 +58,13 @@
     xmlrpc-epi Copyright (C) 2000 Epinions, Inc.
     zlib Copyright (C) 1995-2002 Jean-loup Gailly and Mark Adler.
     google-perftools Copyright (c) 2005, Google Inc.
+    Code from FAAD2 is copyright (c) Nero AG, www.nero.com
 
     All rights reserved.  See licenses.txt for details.
-
-    Voice chat Audio coding: Polycom(R) Siren14(TM) (ITU-T Rec. G.722.1 Annex C)
-
-
-  </text_editor>
-
-	<text_editor bottom_delta="174" embedded_items="false"
-	     follows="left|top|right|bottom" font="SansSerif" height="238" left="6"
-	     max_length="65536" mouse_opaque="true" name="support_editor" width="458"
-	     word_wrap="true" />
-	<string name="you_are_at">
+      </text_editor>
+    </panel>
+  </tab_container>
+  <string name="you_are_at">
 		You are at [POSITION]
 	</string>
 </floater>
