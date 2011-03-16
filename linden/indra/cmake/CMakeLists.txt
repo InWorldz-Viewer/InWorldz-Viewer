@@ -72,6 +72,7 @@ set(cmake_SOURCE_FILES
     PNG.cmake
     Python.cmake
     Prebuilt.cmake
+    QuickTimePlugin.cmake
     RunBuildTest.cmake
     TemplateCheck.cmake
     Tut.cmake
