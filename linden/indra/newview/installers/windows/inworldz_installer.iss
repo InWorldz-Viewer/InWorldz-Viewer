@@ -8,15 +8,15 @@
 
 ; These will change
 AppId={{DC6CCE02-BC61-43B1-B4CA-292C6BCCCB34}
-AppName=InWorldz
-AppVerName=InWorldz 1.2.0
+AppName=InWorldz Viewer
+AppVerName=InWorldz Viewer 1.2.5.0
 DefaultDirName={pf}\InWorldz
 DefaultGroupName=InWorldz
 VersionInfoProductName=InWorldz Viewer Release
-OutputBaseFilename=InWorldz-1.2.0-Setup
-VersionInfoVersion=1.2.0
-VersionInfoTextVersion=1.2.0
-VersionInfoProductVersion=1.2.0
+OutputBaseFilename=InWorldz-1.2.5.0-Setup
+VersionInfoVersion=1.2.5.0
+VersionInfoTextVersion=1.2.5.0
+VersionInfoProductVersion=1.2.5.0
 VersionInfoCopyright=2010
 AppCopyright=2010
 
