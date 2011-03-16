@@ -1,4 +1,5 @@
 ; InWorldz inno setup installer script by McCabe Maxsted
+; This script only works with VS2005, currently
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -54,7 +55,6 @@ Source: ..\..\..\build-vc80\newview\release\packaged\character\*; DestDir: {app}
 Source: ..\..\..\build-vc80\newview\release\packaged\fonts\*; DestDir: {app}\fonts; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ..\..\..\build-vc80\newview\release\packaged\app_settings\*; DestDir: {app}\app_settings; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ..\..\..\build-vc80\newview\release\packaged\skins\*; DestDir: {app}\skins; Flags: ignoreversion recursesubdirs createallsubdirs
-;Source: ..\..\..\build-vc80\newview\release\packaged\doc\*; DestDir: {app}\doc; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ..\..\..\build-vc80\newview\release\packaged\llplugin\*; DestDir: {app}\llplugin; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ..\..\..\build-vc80\newview\release\packaged\alut.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\dbghelp.dll; DestDir: {app}; Flags: ignoreversion
@@ -65,13 +65,76 @@ Source: ..\..\..\build-vc80\newview\release\packaged\licenses.txt; DestDir: {app
 Source: ..\..\..\build-vc80\newview\release\packaged\llcommon.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\featuretable.txt; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\gpu_table.txt; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\build-vc80\newview\release\packaged\llkdu.dll.2.config; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\kdu_v64R.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\kdu_v64R.dll.config; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\openal32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\OpenJPEG.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
 
+; Gstreamer-specific files below
+Source: ..\..\..\build-vc80\newview\release\packaged\lib\*; DestDir: {app}\lib; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ..\..\..\build-vc80\newview\release\packaged\avcodec-gpl-52.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\avdevice-gpl-52.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\avfilter-gpl-1.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\avformat-gpl-52.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\avutil-gpl-50.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\iconv.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\liba52-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libbz2.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libcelt-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libdca-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libexpat-1.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libfaad-2.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libFLAC-8.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgcrypt-11.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgio-2.0-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libglib-2.0-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgmodule-2.0-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgnutls-26.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgobject-2.0-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgpg-error-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstapp-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstaudio-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstbase-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstcontroller-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstdataprotocol-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstfft-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstinterfaces-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstnet-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstnetbuffer-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstpbutils-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstphotography-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstreamer-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstriff-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstrtp-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstrtsp-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstsdp-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstsignalprocessor-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgsttag-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgstvideo-0.10.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libgthread-2.0-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libmms-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libmpeg2-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libneon-27.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libogg-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\liboil-0.3-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libsoup-2.4-1.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libtasn1-3.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libtheora-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libtheoradec-1.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libvorbis-0.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libvorbisenc-2.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libvorbisfile-3.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libwavpack-1.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libx264-67.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libxml2-2.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\libxml2.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\SDL.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\xvidcore.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\z.dll; DestDir: {app}; Flags: ignoreversion
+
 ; VC++ 2005 x86 redist
-Source: ..\windows\vcredist_x86.exe; DestDir: {tmp}; DestName: vcredist_x86.exe
+Source: ..\windows\vcredist_x86_VS2005.exe; DestDir: {tmp}; DestName: vcredist_x86_VS2005.exe
 
 ; Old files we don't use anymore:
 ; Source: ..\..\..\build-vc80\newview\release\packaged\dronesettings.xml; DestDir: {app}; Flags: ignoreversion
@@ -100,7 +163,7 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\InWorldz; Filename:
 Name: {group}\InWorldz; Filename: {app}\inworldz.exe; WorkingDir: {app}; Comment: inworldz; IconIndex: 0;
 
 [Run]
-Filename: {tmp}\vcredist_x86.exe; Parameters: "/q:a /c:""VCREDI~1.EXE /q:a /c:""""msiexec /i vcredist.msi /qn"""" """; Flags: runhidden
+Filename: {tmp}\vcredist_x86_VS2005.exe; Parameters: "/q:a /c:""VCREDI~1.EXE /q:a /c:""""msiexec /i vcredist.msi /qn"""" """; Flags: runhidden
 Filename: {app}\inworldz.exe; WorkingDir: {app}; Flags: nowait postinstall
 
 [UninstallDelete]
@@ -117,6 +180,7 @@ Name: C:\Documents and Settings\{username}\.gstreamer-0.10; Type: filesandordirs
 
 [InstallDelete]
 ; Name: {app}\*.dll; Type: files; Tasks: ; Languages:
+; ALWAYS delete the plugins! Beware if you don't
 Name: {app}\lib\gstreamer-plugins\*; Type: filesandordirs; Tasks: ; Languages: 
 ; Name: {app}\skins\default\xui\*; Type: filesandordirs; Tasks: ; Languages:
 Name: {app}\skins\silver\xui\*; Type: filesandordirs; Tasks: ; Languages:
@@ -125,7 +189,7 @@ Name: C:\Users\{username}\.gstreamer-0.10\*; Type: filesandordirs
 ; Breaks the browser if installing on top of 1.1:
 Name: {app}\gksvggdiplus.dll; Type: files; Tasks: ; Languages:
 
-; Pre-plugin files:
+; Old plugin files we want to kill:
 Name: {app}\charset.dll; Type: files; Tasks: ; Languages:
 Name: {app}\freebl3.dll; Type: files; Tasks: ; Languages:
 Name: {app}\glew32.dll; Type: files; Tasks: ; Languages:
@@ -190,9 +254,9 @@ Name: {app}\xul.dll; Type: files; Tasks: ; Languages:
 Name: {app}\xvidcore.dll; Type: files; Tasks: ; Languages:
 Name: {app}\zlib1.dll; Type: files; Tasks: ; Languages:
 
-; We don't distribute the CRT like this anymore; kill old files
+; We don't distribute the CRT like this anymore; murder death kill
 Name: {app}\SLPlugin.exe.config; Type: files; Tasks: ; Languages:
 Name: {app}\Microsoft.VC80.CRT.manifest; Type: files; Tasks: ; Languages:
 Name: {app}\msvcp80.dll; Type: files; Tasks: ; Languages:
 Name: {app}\msvcr80.dll; Type: files; Tasks: ; Languages:
-Name: {app}\imprudence.exe.config; Type: files; Tasks: ; Languages:
+Name: {app}\inworldz.exe.config; Type: files; Tasks: ; Languages:
