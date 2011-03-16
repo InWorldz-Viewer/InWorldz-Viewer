@@ -17,7 +17,9 @@ linden/LICENSES/
 linden/LICENSE-libraries-*.txt
 linden/libraries/
 linden/indra/newview/dbghelp.dll
+linden/indra/newview/media_plugin_gstreamer010.log
 linden/indra/newview/*.lproj/
+linden/indra/newview/lib/*
 linden/indra/test_apps/
 
 
