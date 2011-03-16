@@ -133,6 +133,7 @@ public:
 
 	// IM received that you haven't seen yet
 	BOOL getIMReceived() const;
+	int getIMUnreadCount();
 
 	void		setFloaterOpen(BOOL open);		/*Flawfinder: ignore*/
 	BOOL		getFloaterOpen();
@@ -173,7 +174,7 @@ public:
 
 	void loadIgnoreGroup();
 	void saveIgnoreGroup();
-	void updateIgnoreGroup(const LLUUID& group_id, const bool& ignore);
+	void updateIgnoreGroup(const LLUUID& group_id, bool ignore);
 	// Returns true if group chat is ignored for the UUID, false if not
 	bool getIgnoreGroup(const LLUUID& group_id);
 
@@ -211,12 +212,17 @@ private:
 	LLFriendObserver* mFriendObserver;
 
 	// An IM has been received that you haven't seen yet.
-	BOOL mIMReceived;
+	BOOL	mIMReceived;
+	int		mIMUnreadCount;
 
 	LLSD	mPendingInvitations;
 	LLSD	mPendingAgentListUpdates;
 
 	std::list<LLUUID> mIgnoreGroupList;
+
+public:
+		
+	S32 getIgnoreGroupListCount() { return mIgnoreGroupList.size(); }
 };
 
 

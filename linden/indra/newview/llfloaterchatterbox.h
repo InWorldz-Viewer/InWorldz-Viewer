@@ -91,6 +91,8 @@ public:
 		VisibilityPolicy<LLFloater>::hide(instance, key);
 	}
 
+	static void markAsUnread(bool unread);
+
 private:
 	LLFloater* getFloater(const LLSD& key)
 	{

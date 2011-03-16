@@ -97,6 +97,7 @@ protected:
 	LLVoiceRemoteCtrl*	mVoiceRemote;
 	AORemoteCtrl*			mAORemote;
 	bool mBuilt;	// dialog constructed yet?
+	std::string			mOriginalIMLabel;
 	enum { STOPPED=0, PLAYING=1, PAUSED=2 };
 	S32 mMusicState;
 };
