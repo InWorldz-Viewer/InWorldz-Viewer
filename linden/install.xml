@@ -523,7 +523,7 @@
             <key>md5sum</key>
             <string>bd07378834cd1a4ecf7de55d4e2a7da2</string>
             <key>url</key>
-            <uri>file:///c:/gstreamer-glib-iconv-libxml-windows-0.10.32-20110503.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/gstreamer-glib-iconv-libxml-windows-0.10.32-20110503.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -545,7 +545,7 @@
             <key>md5sum</key>
             <string>76ad5a08f8f07f99c9e1545c2a0adc27</string>
             <key>url</key>
-            <uri>file:///c:/gstreamer-plugins-windows-0.10.32-20110503.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/gstreamer-plugins-windows-0.10.32-20110503.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -684,7 +684,7 @@
             <key>md5sum</key>
             <string>6955af0eea09cc95cd1e35145fa6c257</string>
             <key>url</key>
-            <uri>file:///c:/kdu-inworldz-v64-windows-20101219.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/kdu-inworldz-v64-windows-20101219.tar.bz2</uri>
           </map>
         </map>
       </map>
