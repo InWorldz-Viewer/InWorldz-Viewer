@@ -280,7 +280,7 @@ class WindowsManifest(ViewerManifest):
             self.end_prefix()
 
         # Gstreamer libs
-        if (not self.standalone()) and self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):
+        if self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):
             self.path("avcodec-gpl-52.dll")
             self.path("avdevice-gpl-52.dll")
             self.path("avfilter-gpl-1.dll")
