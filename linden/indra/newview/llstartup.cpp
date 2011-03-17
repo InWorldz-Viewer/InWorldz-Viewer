@@ -725,7 +725,7 @@ bool idle_startup()
 	LLMemType mt1(LLMemType::MTYPE_STARTUP);
 	
 	const F32 PRECACHING_DELAY = gSavedSettings.getF32("PrecachingDelay");
-	const F32 TIMEOUT_SECONDS = 5.f;
+	const F32 TIMEOUT_SECONDS = 10.f; // changed from 5 to 10 seconds for OpenSim lag -- MC
 	const S32 MAX_TIMEOUT_COUNT = 3;
 	static LLTimer timeout;
 	static S32 timeout_count = 0;
@@ -890,7 +890,10 @@ bool idle_startup()
 
 			// TODO parameterize 
 			const F32 circuit_heartbeat_interval = 5;
-			const F32 circuit_timeout = 100;
+			const F32 circuit_timeout = 180; //seconds until llcircuit decides
+							 //it isn't alive.
+							 //Since we are on OpenSim we need to
+							 //relax about 'bad' ping. Was for SL: 100;
 
 			const LLUseCircuitCodeResponder* responder = NULL;
 			bool failure_is_fatal = true;
