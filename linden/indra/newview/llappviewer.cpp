@@ -3775,6 +3775,9 @@ static F32 CheckMessagesMaxTime = CHECK_MESSAGES_DEFAULT_MAX_TIME;
 
 void LLAppViewer::idleNetwork()
 {
+	if (gDisconnected)
+		return;
+
 	pingMainloopTimeout("idleNetwork");
 	LLError::LLCallStacks::clear() ;
 	llpushcallstacks ;
@@ -3863,6 +3866,9 @@ void LLAppViewer::idleNetwork()
 	llpushcallstacks ;
 	gObjectList.mNumNewObjectsStat.addValue(gObjectList.mNumNewObjects);
 
+	if (gDisconnected)
+		return;
+
 	// Retransmit unacknowledged packets.
 	gXferManager->retransmitUnackedPackets();
 	gAssetStorage->checkForTimeouts();
@@ -3894,6 +3900,9 @@ void LLAppViewer::disconnectViewer()
 	{
 		return;
 	}
+	
+	//set this true now, to prevent things from trying to access the network we are destroying
+	gDisconnected = TRUE;
 	//
 	// Cleanup after quitting.
 	//	
@@ -3915,9 +3924,8 @@ void LLAppViewer::disconnectViewer()
 			gFloaterView->restoreAll();
 		}
 
-
 		std::list<LLFloater*> floaters_to_close;
-		for(LLView::child_list_const_iter_t it = gFloaterView->getChildList()->begin();
+		for (LLView::child_list_const_iter_t it = gFloaterView->getChildList()->begin();
 			it != gFloaterView->getChildList()->end();
 			++it)
 		{
@@ -3927,7 +3935,7 @@ void LLAppViewer::disconnectViewer()
 			// floater_animation_preview.xml
 			// files.
 			LLFloater* fl = static_cast<LLFloater*>(*it);
-			if(fl 
+			if (fl 
 				&& (fl->getName() == "Image Preview"
 				|| fl->getName() == "Sound Preview"
 				|| fl->getName() == "Animation Preview"
@@ -3975,8 +3983,8 @@ void LLAppViewer::disconnectViewer()
 	// call all self-registered classes
 	LLDestroyClassList::instance().fireCallbacks();
 
-	cleanup_xfer_manager();
-	gDisconnected = TRUE;
+	if (mQuitRequested)
+		cleanup_xfer_manager();
 }
 
 void LLAppViewer::forceErrorLLError()
