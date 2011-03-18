@@ -3089,10 +3089,11 @@ bool finish_forced_disconnect(const LLSD& notification, const LLSD& response)
 
 void LLAppViewer::forceDisconnect(const std::string& mesg)
 {
-	if (gDoDisconnect)
+	if (gDoDisconnect || mQuitRequested)
     {
 		// Already popped up one of these dialogs, don't
 		// do this again.
+		// Also don't do this if we're already quitting -- MC
 		return;
     }
 	
