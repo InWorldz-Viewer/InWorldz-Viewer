@@ -6821,6 +6821,20 @@ Are you sure you want to mute [NAME] (object)?
 </notification>
 
 <notification
+ icon="alert.tga"
+ name="ConfirmResetAllPreferences"
+ type="alert">
+Are you sure you want to reset ALL preferences?
+
+Preferences will be reset when you restart [VIEWER_NAME].
+  <usetemplate
+   ignoretext="When resetting preferences"
+   name="okcancelignore"
+   notext="Cancel"
+   yestext="Reset"/>
+</notification>
+
+<notification
  icon="alertmodal.tga"
  name="ConfirmToggleFullscreen"
  type="alertmodal">

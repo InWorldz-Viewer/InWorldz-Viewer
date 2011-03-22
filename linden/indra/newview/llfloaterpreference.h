@@ -117,15 +117,16 @@ protected:
 
 	/*virtual*/ void		onClose(bool app_quitting);
 
-	LLButton*	mAboutBtn;
 	LLButton	*mOKBtn;
 	LLButton	*mCancelBtn;
 	LLButton	*mApplyBtn;
 
-	static void		onClickAbout(void*);
 	static void		onBtnOK(void*);
 	static void		onBtnCancel(void*);
 	static void		onBtnApply(void*);
+
+	static void onClickResetPrefs(void* user_data);
+	static bool	callbackReset(const LLSD& notification, const LLSD& response, LLFloaterPreference* self);
 
 	static LLFloaterPreference* sInstance;
 };

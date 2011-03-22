@@ -1324,14 +1324,29 @@ bool LLAppViewer::cleanup()
 	// Store the time of our current logoff
 	gSavedPerAccountSettings.setU32("LastLogoff", time_corrected());
 
+	// Get filenames of settings files to reset if we do -- MC
+	std::string per_account_settings_filename = gSavedSettings.getString("PerAccountSettingsFile");
+	std::string settings_filename = gSavedSettings.getString("ClientSettingsFile");
+
+	// Reset all preferences to default settings before we save everything -- MC
+	if (gSavedSettings.getBOOL("ResetAllPreferences"))
+	{
+		llinfos << "Resetting all viewer preferences" << llendflush;
+		gSavedSettings.resetToDefaults();
+		gSavedPerAccountSettings.resetToDefaults();
+	}
+
 	// Must do this after all panels have been deleted because panels that have persistent rects
 	// save their rects on delete.
-	gSavedSettings.saveToFile(gSavedSettings.getString("ClientSettingsFile"), TRUE);	
+	gSavedSettings.saveToFile(settings_filename, TRUE);	
 
 	// PerAccountSettingsFile should be empty if no use has been logged on.
 	// *FIX:Mani This should get really saved in a "logoff" mode. 
-	gSavedPerAccountSettings.saveToFile(gSavedSettings.getString("PerAccountSettingsFile"), TRUE);
-	llinfos << "Saved settings" << llendflush;
+	if (!per_account_settings_filename.empty())
+	{
+		gSavedPerAccountSettings.saveToFile(per_account_settings_filename, TRUE);
+		llinfos << "Saved settings" << llendflush;
+	}
 
 	std::string crash_settings_filename = gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, CRASH_SETTINGS_FILE);
 	// save all settings, even if equals defaults

@@ -15,13 +15,13 @@
 	     left_delta="93" mouse_opaque="true" name="Apply" scale_image="true"
 	     width="90" />
 	<button bottom="-505" enabled="true" follows="left|bottom" font="SansSerif"
-	     halign="center" height="20" label="About" label_selected="About" left="9"
-	     mouse_opaque="true" name="About..." scale_image="true" width="90" />
-	<button bottom="-505" enabled="true" follows="left|bottom" font="SansSerif"
 	     halign="center" height="20"
 	     help_url="http://inworldz.com/support.php"
-	     label="Help" label_selected="Help" left_delta="93" mouse_opaque="true"
-	     name="Help" scale_image="true" width="90" />
+	     label="Support" label_selected="Support" left="9" mouse_opaque="true"
+       name="Help" scale_image="true" width="90" />
+  <button bottom_delta="0" follows="left|bottom" font="SansSerif" height="20" width="160"
+       label="Reset All To Default" name="reset_btn" left_delta="95"
+       tool_tip="Reset all preferences to their default values (requires a restart)" />
 	<tab_container bottom="-466" enabled="true" follows="left|top|right|bottom" height="445"
 	     left="0" mouse_opaque="false" name="pref core" tab_group="1"
 	     tab_position="left" tab_width="120" width="620" />

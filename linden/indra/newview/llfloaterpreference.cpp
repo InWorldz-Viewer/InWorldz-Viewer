@@ -49,7 +49,6 @@
 #include "message.h"
 
 #include "llcommandhandler.h"
-#include "llfloaterabout.h"
 #include "llfloaterpreference.h"
 #include "llpanelnetwork.h"
 #include "llpanelaudioprefs.h"
@@ -340,7 +339,6 @@ LLFloaterPreference::LLFloaterPreference()
 
 BOOL LLFloaterPreference::postBuild()
 {
-	requires<LLButton>("About...");
 	requires<LLButton>("OK");
 	requires<LLButton>("Cancel");
 	requires<LLButton>("Apply");
@@ -351,8 +349,7 @@ BOOL LLFloaterPreference::postBuild()
 		return FALSE;
 	}
 
-	mAboutBtn = getChild<LLButton>("About...");
-	mAboutBtn->setClickedCallback(onClickAbout, this);
+	childSetAction("reset_btn", onClickResetPrefs, this);
 	
 	mApplyBtn = getChild<LLButton>("Apply");
 	mApplyBtn->setClickedCallback(onBtnApply, this);
@@ -418,9 +415,21 @@ void LLFloaterPreference::show(void*)
 
 
 // static
-void LLFloaterPreference::onClickAbout(void*)
+void LLFloaterPreference::onClickResetPrefs(void* user_data)
 {
-	LLFloaterAbout::show(NULL);
+	LLFloaterPreference* self = (LLFloaterPreference*)user_data;
+	LLNotifications::instance().add("ConfirmResetAllPreferences", LLSD(), LLSD(), boost::bind(callbackReset, _1, _2, self));
+}
+
+// static
+bool LLFloaterPreference::callbackReset(const LLSD& notification, const LLSD& response, LLFloaterPreference *self)
+{
+	S32 option = LLNotification::getSelectedOption(notification, response);
+	if ( option == 0 )
+	{
+		gSavedSettings.setBOOL("ResetAllPreferences", TRUE);
+	}
+	return false;
 }
 
 
