@@ -58,7 +58,6 @@
 #include "lltextbox.h"
 #include "llui.h"
 #include "lluiconstants.h"
-#include "llurlhistory.h" // OGPX : regionuri text box has a history of region uris (if FN/LN are loaded at startup)
 #include "llurlsimstring.h"
 #include "llviewerbuild.h"
 #include "llviewerimagelist.h"
@@ -226,36 +225,6 @@ LLPanelLogin::LLPanelLogin(const LLRect &rect,
 
 	LLLineEditor* edit = getChild<LLLineEditor>("password_edit");
 	if (edit) edit->setDrawAsterixes(TRUE);
-
-	//OGPX : This keeps the uris in a history file 
-	//OGPX TODO: should this be inside an OGP only check?
-	LLComboBox* regioncombo = getChild<LLComboBox>("regionuri_edit"); 
-	regioncombo->setAllowTextEntry(TRUE, 256, FALSE);
-	std::string  current_regionuri = gSavedSettings.getString("CmdLineRegionURI");
-
-	// iterate on uri list adding to combobox (couldn't figure out how to add them all in one call)
-	// ... and also append the command line value we might have gotten to the URLHistory
-	LLSD regionuri_history = LLURLHistory::getURLHistory("regionuri");
-	LLSD::array_iterator iter_history = regionuri_history.beginArray();
-	LLSD::array_iterator iter_end = regionuri_history.endArray();
-	for (; iter_history != iter_end; ++iter_history)
-	{
-		regioncombo->addSimpleElement((*iter_history).asString());
-	}
-
-	if ( LLURLHistory::appendToURLCollection("regionuri",current_regionuri)) 
-	{
-		// since we are in login, another read of urlhistory file is going to happen 
-		// so we need to persist the new value we just added (or maybe we should do it in startup.cpp?)
-
-		// since URL history only populated on create of sInstance, add to combo list directly
-		regioncombo->addSimpleElement(current_regionuri);
-	}
-	
-	// select which is displayed if we have a current URL.
-	regioncombo->setSelectedByValue(LLSD(current_regionuri),TRUE);
-
-	//llinfos << " url history: " << LLSDOStreamer<LLSDXMLFormatter>(LLURLHistory::getURLHistory("regionuri")) << llendl;
 
 	LLComboBox* combo = getChild<LLComboBox>("start_location_combo");
 	combo->setAllowTextEntry(TRUE, 128, FALSE);
@@ -629,14 +598,6 @@ void LLPanelLogin::setFields(const std::string& firstname,
 	login_combo->setLabel(firstname);
 
 
-	// OGPX : Are we guaranteed that LLAppViewer::instance exists already?
-	if (gSavedSettings.getBOOL("OpenGridProtocol"))
-	{
-		LLComboBox* regioncombo = sInstance->getChild<LLComboBox>("regionuri_edit");
-		
-		// select which is displayed if we have a current URL.
-		regioncombo->setSelectedByValue(LLSD(gSavedSettings.getString("CmdLineRegionURI")),TRUE);
-	}
 
 	// Max "actual" password length is 16 characters.
 	// Hex digests are always 32 characters.
@@ -757,21 +718,6 @@ void LLPanelLogin::getFields(std::string *firstname,
 
 	*lastname = sInstance->childGetText("last_name_edit");
 	LLStringUtil::trim(*lastname);
-    // OGPX : Nice up the uri string and save it.
-	if (gSavedSettings.getBOOL("OpenGridProtocol"))
-	{
-		std::string regionuri = sInstance->childGetValue("regionuri_edit").asString();
-		LLStringUtil::trim(regionuri);
-		if (regionuri.find("://",0) == std::string::npos)
-		{
-			// if there wasn't a URI designation, assume http
-			regionuri = "http://"+regionuri;
-			llinfos << "Region URI was prepended, now " << regionuri << llendl;
-		}
-		gSavedSettings.setString("CmdLineRegionURI",regionuri);
-		// add new uri to url history (don't need to add to combo box since it is recreated each login)
-		LLURLHistory::appendToURLCollection("regionuri", regionuri);
-	}
 
 	*password = sInstance->mMungedPassword;
 }
@@ -831,23 +777,9 @@ void LLPanelLogin::refreshLocation( bool force_visible )
 	if ( ! force_visible )
 		show_start = gSavedSettings.getBOOL("ShowStartLocation");
 
-	// OGPX : if --ogp on the command line (or --set OpenGridProtocol TRUE), then
-	// the start location is hidden, and regionuri shows in its place. 
-	// "Home", and "Last" have no meaning in OGPX, so it's OK to not have the start_location combo
-	// box unavailable on the menu panel. 
-	if (gSavedSettings.getBOOL("OpenGridProtocol"))
-	{
-		sInstance->childSetVisible("start_location_combo", FALSE); // hide legacy box
-		sInstance->childSetVisible("start_location_text", TRUE);   // when OGPX always show location
-		sInstance->childSetVisible("regionuri_edit",TRUE);         // show regionuri box if OGPX
 
-	}
-	else
-	{
-		sInstance->childSetVisible("start_location_combo", show_start); // maintain ShowStartLocation if legacy
-		sInstance->childSetVisible("start_location_text", show_start);
-		sInstance->childSetVisible("regionuri_edit",FALSE); // Do Not show regionuri box if legacy
-	}
+	sInstance->childSetVisible("start_location_combo", show_start);
+	sInstance->childSetVisible("start_location_text", show_start);
 
 	BOOL show_server = sInstance->mShowServerCombo || gSavedSettings.getBOOL("ForceShowGrid");
 	sInstance->childSetVisible("server_combo", show_server);
@@ -969,14 +901,14 @@ void LLPanelLogin::loadLoginPage()
 	
 	std::string firstname, lastname;
 
-    if(gSavedSettings.getLLSD("UserLoginInfo").size() == 3)
-    {
-        LLSD cmd_line_login = gSavedSettings.getLLSD("UserLoginInfo");
+	if(gSavedSettings.getLLSD("UserLoginInfo").size() == 3)
+	{
+		LLSD cmd_line_login = gSavedSettings.getLLSD("UserLoginInfo");
 		firstname = cmd_line_login[0].asString();
 		lastname = cmd_line_login[1].asString();
-        password = cmd_line_login[2].asString();
-    }
-    	
+		password = cmd_line_login[2].asString();
+	}
+
 	if (firstname.empty())
 	{
 		firstname = gSavedSettings.getString("FirstName");

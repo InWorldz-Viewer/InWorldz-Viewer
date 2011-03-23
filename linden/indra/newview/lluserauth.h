@@ -127,11 +127,6 @@ public:
 		const std::string& hashed_volume_serial);
 
 	UserAuthcode authResponse();
-	// mResult contains the responses we get through the login process
-	//
-	LLSD mResult; // OGPX : *way* different access of auth result in OGP.
-	UserAuthcode mAuthResponse; // OGPX TODO: proper access functions
-	 
 
 	// clears out internal data cache.
 	void reset();
@@ -148,7 +143,7 @@ public:
 private:
 	LLXMLRPCTransaction* mTransaction;
 
-
+	UserAuthcode mAuthResponse;
 	std::string mErrorMessage;
 	
 	// dealing with the XML

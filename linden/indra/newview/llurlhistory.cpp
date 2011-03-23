@@ -77,7 +77,8 @@ bool LLURLHistory::saveFile(const std::string& filename)
 	std::string temp_str = gDirUtilp->getLindenUserDir();
 	if( temp_str.empty() )
 	{
-		llwarns << "Can't save. No user directory set." << llendl;
+		llwarns << "Can't save " << filename 
+		        << ": No user directory set." << llendl;
 		return false;
 	}
 
@@ -106,8 +107,8 @@ LLSD LLURLHistory::getURLHistory(const std::string& collection)
 	return LLSD();
 }
 
-// OGPX : static function that appends unique values to existing collection. 
-//  returns true if appended, else false.
+// static function that appends unique values to existing collection. 
+// returns true if appended, else false.
 BOOL LLURLHistory::appendToURLCollection(const std::string& collection, const std::string& url)
 {
 	if (!url.empty())

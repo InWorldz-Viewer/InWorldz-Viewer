@@ -387,8 +387,6 @@ LLAgent::LLAgent() :
 	mAutoPilotFinishedCallback(NULL),
 	mAutoPilotCallbackData(NULL),
 	
-	mCapabilities(),
-
 	mEffectColor(0.f, 1.f, 1.f, 1.f),
 
 	mHaveHomePosition(FALSE),
@@ -6341,8 +6339,8 @@ void LLAgent::setTeleportState(ETeleportState state)
 	{
 		mbTeleportKeepsLookAt = false;
 	}
-	// OGPX : Only compute a 'izurl' in non-OGP mode. In OGP, set it to regionuri in floaterteleport.
-	if ((mTeleportState == TELEPORT_MOVING)&& (!gSavedSettings.getBOOL("OpenGridProtocol")))
+
+	if (mTeleportState == TELEPORT_MOVING)
 	{
 		// We're outa here. Save "back" izurl.
 		mTeleportSourceIZURL = getIZURL();
@@ -6936,16 +6934,6 @@ void LLAgent::processAgentInitialWearablesUpdate( LLMessageSystem* mesgsys, void
 			// before we had wearables, or that the database has gotten messed up.
 			return;
 		}
-		//else
-		//{
-		//	 // OGPX HACK: OGP authentication does not pass back login-flags, 
-		//   // thus doesn't check for "gendered" flag
-		//	 // so this isn't an ideal place for this because the check in idle_startup in STATE_WEARABLES_WAIT
-		//	 // is happening *before* this call. That causes the welcomechoosesex dialog to be displayed
-		//	 // but I'm torn on removing this commented out code because I'm unsure how the initial wearables 
-		//   // code will work out. 
-		//	 gAgent.setGenderChosen(TRUE);
-		//}
 
 		//lldebugs << "processAgentInitialWearablesUpdate()" << llendl;
 		// Add wearables
@@ -8001,41 +7989,5 @@ void LLAgent::parseTeleportMessages(const std::string& xml_filename)
 	}//end for (all message sets in xml file)
 }
 
-// OGPX - This code will change when capabilities get refactored.
-// Right now this is used for capabilities that we get from OGP agent domain
-void LLAgent::setCapability(const std::string& name, const std::string& url)
-{
-#if 0 // OGPX : I think (hope?) we don't need this
-	  //    but I'm leaving it here commented out because I'm not quite
-	  //    sure why the region capabilities code had it wedged in setCap call
-	  //    Maybe the agent domain capabilities will need something like this as well
-
-	if (name == "EventQueueGet")
-	{
-		delete mEventPoll;
-		mEventPoll = NULL;
-		mEventPoll = new LLEventPoll(url, getHost());
-	}
-	else if (name == "UntrustedSimulatorMessage")
-	{
-		LLHTTPSender::setSender(mHost, new LLCapHTTPSender(url));
-	}
-	else
-#endif
-	{
-		mCapabilities[name] = url;
-	}
-}
-
-//OGPX : Agent Domain capabilities...  this needs to be refactored
-std::string LLAgent::getCapability(const std::string& name) const
-{
-	CapabilityMap::const_iterator iter = mCapabilities.find(name);
-	if (iter == mCapabilities.end())
-	{
-		return "";
-	}
-	return iter->second;
-}
 // EOF
 

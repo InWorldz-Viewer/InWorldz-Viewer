@@ -1766,17 +1766,6 @@
       <key>Value</key>
       <integer>0</integer>
     </map>
-    <key>CmdLineAgentURI</key>
-    <map>
-      <key>Comment</key>
-      <string>URL of agent host to connect to in Agent Domain.</string>
-      <key>Persist</key>
-      <integer>0</integer>
-      <key>Type</key>
-      <string>String</string>
-      <key>Value</key>
-      <string />
-    </map> 
     <key>CmdLineGridChoice</key>
     <map>
       <key>Comment</key>
@@ -1811,17 +1800,6 @@
       <array>
         <string />
       </array>
-    </map>
-    <key>CmdLineRegionURI</key>
-    <map>
-      <key>Comment</key>
-      <string>URL of region to connect to through Agent Domain.</string>
-      <key>Persist</key>
-      <integer>0</integer>
-      <key>Type</key>
-      <string>String</string>
-      <key>Value</key>
-      <string />
     </map>
     <key>ColorPaletteEntry01</key>
     <map>
@@ -6756,17 +6734,6 @@
          <real>0.699999988079</real>
          <real>1</real>
       </array>
-    </map>
-    <key>OpenGridProtocol</key>
-    <map>
-      <key>Comment</key>
-      <string>Enable OGPX standard protocol</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
     </map>
     <key>OpenDebugStatAdvanced</key>
     <map>

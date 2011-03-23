@@ -257,7 +257,7 @@ void LLViewerInventoryItem::setTransactionID(const LLTransactionID& transaction_
 // virtual
 void LLViewerInventoryItem::packMessage(LLMessageSystem* msg) const
 {
-	LL_INFOS("Inventory") << " UDP Rez/UpdateObject of UUID " << mUUID << " parent = " << mParentUUID << " type= " << mType << " transaction= "<< mTransactionID << LL_ENDL; // OGPX
+	LL_DEBUGS("Inventory") << " UDP Rez/UpdateObject of UUID " << mUUID << " parent = " << mParentUUID << " type= " << mType << " transaction= "<< mTransactionID << LL_ENDL;
 	msg->addUUIDFast(_PREHASH_ItemID, mUUID);
 	msg->addUUIDFast(_PREHASH_FolderID, mParentUUID);
 	mPermissions.packMessage(msg);
@@ -462,19 +462,16 @@ bool LLViewerInventoryCategory::fetchDescendents()
 		// This comes from LLInventoryFilter from llfolderview.h
 		U32 sort_order = gSavedSettings.getU32("InventorySortOrder") & 0x1;
 
-		std::string url = gAgent.getCapability("agent/inventory"); // OGPX : was WebFetchInventoryDescendents
-		if (url.empty()) //OGPX : agent/inventory Capability not found on agent domain.  See if the region has one.
-		{
-			llinfos << " agent/inventory not on AD, checking fallback to region " << llendl; //OGPX
-			url = gAgent.getRegion()->getCapability("WebFetchInventoryDescendents");
-		}
+		std::string url = gAgent.getRegion()->getCapability("WebFetchInventoryDescendents");
+   
 		if (!url.empty()) //Capability found.  Build up LLSD and use it.
 		{
 			LLInventoryModel::startBackgroundFetch(mUUID);			
 		}
 		else
 		{	//Deprecated, but if we don't have a capability, use the old system.
-			llinfos << "WebFetchInventoryDescendents or agent/inventory capability not found.  Using deprecated UDP message." << llendl;
+			// Yeah, but let's not flood the log with it.
+			// llinfos << "WebFetchInventoryDescendents capability not found.  Using deprecated UDP message." << llendl;
 			LLMessageSystem* msg = gMessageSystem;
 			msg->newMessage("FetchInventoryDescendents");
 			msg->nextBlock("AgentData");

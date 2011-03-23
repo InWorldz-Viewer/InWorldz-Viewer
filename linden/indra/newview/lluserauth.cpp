@@ -71,8 +71,7 @@ static const char* PLATFORM_STRING = "Sol";
 
 LLUserAuth::LLUserAuth() :
 	mTransaction(NULL),
-	mLastTransferRateBPS(0),
-	mResult(LLSD())
+	mLastTransferRateBPS(0)
 {
 	mAuthResponse = E_NO_RESPONSE_YET;
 }
@@ -88,7 +87,6 @@ void LLUserAuth::reset()
 	mTransaction = NULL;
 	mResponses.clear();
 	mOptions.clear();
-	mResult.clear();
 }
 
 
