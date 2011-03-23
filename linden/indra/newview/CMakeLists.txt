@@ -1047,7 +1047,6 @@ if (WINDOWS)
         comdlg32
         ${DINPUT_LIBRARY}
         ${DXGUID_LIBRARY}
-        fmodvc
         gdi32
         kernel32
         odbc32
