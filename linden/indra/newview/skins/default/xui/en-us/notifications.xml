@@ -6861,7 +6861,7 @@ Are you sure you want to take off all clothes?
  icon="alertmodal.tga"
  name="ConfirmTeleportHome"
  type="alertmodal">
-\Are you sure you want to teleport home?
+Are you sure you want to teleport home?
   <usetemplate
    ignoretext="When teleporting home"
    name="okcancelignore"
