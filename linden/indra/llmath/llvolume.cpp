@@ -56,7 +56,7 @@ const F32 CUT_MAX = 1.f;
 const F32 MIN_CUT_DELTA = 0.02f;
 
 const F32 HOLLOW_MIN = 0.f;
-const F32 HOLLOW_MAX = 0.95f;
+const F32 HOLLOW_MAX = 0.99f;
 const F32 HOLLOW_MAX_SQUARE	= 0.7f;
 
 const F32 TWIST_MIN = -1.f;
