@@ -239,15 +239,6 @@ LLFloaterAvatarList::~LLFloaterAvatarList()
 //static
 void LLFloaterAvatarList::toggle(void*)
 {
-#ifdef LL_RRINTERFACE_H //MK
-	if (gRRenabled && gAgent.mRRInterface.mContainsShownames)
-	{
-		if (sInstance && sInstance->getVisible())
-		{
-			sInstance->close(false);
-		}
-	}
-#endif //mk
 	if (sInstance)
 	{
 		if (sInstance->getVisible())
@@ -268,12 +259,6 @@ void LLFloaterAvatarList::toggle(void*)
 //static
 void LLFloaterAvatarList::showInstance()
 {
-#ifdef LL_RRINTERFACE_H //MK
-	if (gRRenabled && gAgent.mRRInterface.mContainsShownames)
-	{
-		return;
-	}
-#endif //mk
 	if (sInstance)
 	{
 		if (!sInstance->getVisible())
@@ -450,12 +435,6 @@ void LLFloaterAvatarList::updateAvatarList()
 						continue;
 					}
 				}
-#ifdef LL_RRINTERFACE_H //MK
-				if (gRRenabled && gAgent.mRRInterface.mContainsShownames)
-				{
-					name = gAgent.mRRInterface.getDummyName(name);
-				}
-#endif //mk
 
 				if (avid.isNull())
 				{
@@ -496,12 +475,6 @@ void LLFloaterAvatarList::updateAvatarList()
 					//name = gCacheName->getDefaultName();
 					continue; //prevent (Loading...)
 				}
-#ifdef LL_RRINTERFACE_H //MK
-				if (gRRenabled && gAgent.mRRInterface.mContainsShownames)
-				{
-					name = gAgent.mRRInterface.getDummyName(name);
-				}
-#endif //mk
 
 				if (mAvatars.count(avid) > 0)
 				{

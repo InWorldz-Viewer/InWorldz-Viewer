@@ -103,13 +103,6 @@ BOOL LLFloaterTeleportHistory::postBuild()
 
 void LLFloaterTeleportHistory::addPendingEntry(std::string regionName, S16 x, S16 y, S16 z)
 {
-#ifdef LL_RRINTERFACE_H //MK
-	if (gRRenabled && gAgent.mRRInterface.mContainsShowloc)
-	{
-		return;
-	}
-#endif //mk
-
 	// Set pending entry timestamp
 	U32 utc_time;
 	utc_time = time_corrected();

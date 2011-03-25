@@ -3322,12 +3322,6 @@ void LLObjectBridge::openItem()
 	}
 	if (avatar->isWearingAttachment(mUUID))
 	{
-#ifdef LL_RRINTERFACE_H //MK
-		if (gRRenabled && !gAgent.mRRInterface.canDetach(avatar->getWornAttachment(mUUID)))
-		{
-			return;
-		}
-#endif //mk
 		performAction(NULL, NULL, "detach");
 	}
 	else
