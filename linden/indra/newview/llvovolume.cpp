@@ -2037,7 +2037,7 @@ BOOL LLVOVolume::lineSegmentIntersect(const LLVector3& start, const LLVector3& e
 			{
 				LLFace* face = mDrawable->getFace(face_hit);				
 
-				if (pick_transparent || !face->getTexture() || face->getTexture()->getMask(face->surfaceToTexture(tc, p, n)))
+				if (pick_transparent || !face->getTexture() || !face->getTexture()->getHasGLTexture() || face->getTexture()->getMask(face->surfaceToTexture(tc, p, n)))
 				{
 					v_end = p;
 					if (face_hitp != NULL)
@@ -2287,7 +2287,7 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 			drawablep->updateFaceSize(i);
 			LLFace* facep = drawablep->getFace(i);
 
-			if (cur_total > max_total)
+			if (cur_total > max_total || facep->getIndicesCount() <= 0 || facep->getGeomCount() <= 0)
 			{
 				facep->mVertexBuffer = NULL;
 				facep->mLastVertexBuffer = NULL;
