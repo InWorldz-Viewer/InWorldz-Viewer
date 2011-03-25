@@ -5603,6 +5603,33 @@ void process_script_dialog(LLMessageSystem* msg, void**)
 	msg->getString("Data", "Message", message);
 	msg->getS32("Data", "ChatChannel", chat_channel);
 
+	// Don't show lldialog boxes from muted avs -- McCabe
+	std::string agent_name = first_name + " " + last_name;
+	if (!last_name.empty())
+	{
+		std::vector<LLMute> mutes = LLMuteList::getInstance()->getMutes();
+		for (U32 i = 0; i < mutes.size(); i++)
+		{	
+			//this is almost like saying (mutes[i].mType != LLMute::Object), but more verbose ... -Kaku
+			if (
+				((mutes[i].mType == LLMute::AGENT)
+					&& (mutes[i].mName == agent_name))
+				|| ((mutes[i].mType == LLMute::GROUP)
+					&& (mutes[i].mName == last_name))
+				|| ((mutes[i].mType == LLMute::BY_NAME)
+					//don't mute groups by name in case a group has a last name as a group name.
+					&& ((mutes[i].mName == agent_name)))
+			)
+			{
+				return;
+			}
+		}
+	}
+	// or Scriptdialog boxes from muted objects -- Kakurady
+	if (LLMuteList::getInstance()->isMuted(object_id, title)){
+		return;
+	}
+
 		// unused for now
 	LLUUID image_id;
 	msg->getUUID("Data", "ImageID", image_id);
