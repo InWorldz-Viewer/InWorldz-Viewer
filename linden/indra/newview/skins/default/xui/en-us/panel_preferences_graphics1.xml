@@ -12,7 +12,7 @@
 	     embedded_items="false" enabled="false" follows="left|top"
 	     font="SansSerifSmall" height="25" hide_border="true"
 	     hide_scrollbar="true" left="10" max_length="65535" mouse_opaque="true"
-	     name="FullScreenInfo" tab_stop="false" width="350" word_wrap="true">
+	     name="FullScreenInfo" tab_stop="false" width="400" word_wrap="true">
 		If unchecked, viewer will display full-screen when logged in.
 	</text_editor>
 	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
