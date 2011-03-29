@@ -3273,7 +3273,7 @@ void LLVOAvatar::idleUpdateNameTag(const LLVector3& root_pos_last)
 				}
 				else
 				{
-					mNameText->setFont(LLFontGL::getFontSansSerifBig());
+					mNameText->setFont(LLFontGL::getFontSansSerifLarge());
 				}
 				mNameText->setTextAlignment(LLHUDText::ALIGN_TEXT_CENTER);
 				mNameText->setFadeDistance(CHAT_NORMAL_RADIUS, 5.f);
