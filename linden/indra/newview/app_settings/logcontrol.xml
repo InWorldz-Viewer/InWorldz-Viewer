@@ -80,7 +80,8 @@
 							<!--<string>RLV</string>-->
 							<!--<string>VOAvatar</string>-->
 
-							<!--<string>ViewerImages</string>-->
+              <!--<string>http-texture</string>-->
+              <!--<string>ViewerImages</string>-->
 							<!--<string>Throttle</string>-->
 							<!--<string>Voice</string>-->
 							<!--<string>VivoxProtocolParser</string>-->
