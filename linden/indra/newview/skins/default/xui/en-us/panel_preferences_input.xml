@@ -109,11 +109,7 @@
 	     mouse_opaque="true" name="text2" v_pad="0" width="128">
 		Joystick:
 	</text>
-	<check_box bottom_delta="-4" enabled="true"
-	     follows="left|top" font="SansSerifSmall" height="16" initial_value="false"
-	     label="Show Avatar in Mouselook" left="148" mouse_opaque="true" name="first_person_avatar_visible"
-	     radio_style="false" width="256" />
-	<button bottom_delta="-30" follows="left|top" font="SansSerif" height="20"
-	     label="Joystick Setup" left_delta="0" mouse_opaque="true"
+	<button bottom_delta="-8" follows="left|top" font="SansSerif" height="22"
+	     label="Joystick Setup" left="148" mouse_opaque="true"
 	     name="joystick_setup_button" width="155" />
 </panel>
