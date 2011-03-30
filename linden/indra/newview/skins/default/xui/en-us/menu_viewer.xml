@@ -309,11 +309,11 @@
 			<on_click function="ShowFloater" userdata="inventory" />
             <on_check function="FloaterVisible" userdata="inventory" />
         </menu_item_check>
-		<menu_item_check bottom="-189" enabled="true" height="19" label="Active Speakers" left="0"
+		<!--<menu_item_check bottom="-189" enabled="true" height="19" label="Active Speakers" left="0"
 		     mouse_opaque="true" name="Active Speakers" width="211">
 			<on_click function="ShowFloater" userdata="active speakers" />
 			<on_check function="FloaterVisible" userdata="active speakers" />
-		</menu_item_check>
+		</menu_item_check>-->
 		<menu_item_check bottom="-189" enabled="true" height="19" label="Mute List" left="0"
 		     mouse_opaque="true" name="Mute List" width="211">
 			<on_click function="ShowFloater" userdata="mute list" />

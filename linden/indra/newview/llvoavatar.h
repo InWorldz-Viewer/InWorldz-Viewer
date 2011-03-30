@@ -62,7 +62,8 @@ extern const LLUUID ANIM_AGENT_TARGET;
 extern const LLUUID ANIM_AGENT_WALK_ADJUST;
 
 class LLTexLayerSet;
-class LLVoiceVisualizer;
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//class LLVoiceVisualizer;
 class LLHUDText;
 class LLHUDEffectSpiral;
 class LLTexGlobalColor;
@@ -101,10 +102,10 @@ public:
 									 const EObjectUpdateType update_type,
 									 LLDataPacker *dp);
 	/*virtual*/ BOOL idleUpdate(LLAgent &agent, LLWorld &world, const F64 &time);
-	void idleUpdateVoiceVisualizer(bool voice_enabled);
+	//void idleUpdateVoiceVisualizer(bool voice_enabled); -- MC
 	void idleUpdateMisc(bool detailed_update);
 	void idleUpdateAppearanceAnimation();
-	void idleUpdateLipSync(bool voice_enabled);
+	//void idleUpdateLipSync(bool voice_enabled); -- MC
 	void idleUpdateLoadingEffect();
 	void idleUpdateWindEffect();
 	void idleUpdateNameTag(const LLVector3& root_pos_last);
@@ -562,10 +563,11 @@ private:
 	BOOL			mVisible;
 	LLFrameTimer	mMeshInvisibleTime;
 
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
 	// Lip synch morph stuff
-	bool mLipSyncActive; // we're morphing for lip sync
-	LLVisualParam* mOohMorph; // cached pointers morphs for lip sync
-	LLVisualParam* mAahMorph; // cached pointers morphs for lip sync
+	//bool mLipSyncActive; // we're morphing for lip sync
+	//LLVisualParam* mOohMorph; // cached pointers morphs for lip sync
+	//LLVisualParam* mAahMorph; // cached pointers morphs for lip sync
 
 	// Skeleton for skinned avatar
 	S32				mNumJoints;
@@ -587,8 +589,9 @@ private:
 
 	// Voice Visualizer is responsible for detecting the user's voice signal, and when the
 	// user speaks, it puts a voice symbol over the avatar's head, and triggering gesticulations
-	LLVoiceVisualizer*  mVoiceVisualizer;
-	int					mCurrentGesticulationLevel;
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	/*LLVoiceVisualizer*  mVoiceVisualizer;
+	int					mCurrentGesticulationLevel;*/
 	
 	// Animation timer
 	LLTimer		mAnimTimer;

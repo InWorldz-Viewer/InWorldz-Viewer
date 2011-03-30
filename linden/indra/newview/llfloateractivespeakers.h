@@ -42,9 +42,10 @@
 
 class LLScrollListCtrl;
 class LLButton;
-class LLPanelActiveSpeakers;
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//class LLPanelActiveSpeakers;
 class LLSpeakerMgr;
-class LLVoiceChannel;
+//class LLVoiceChannel;
 
 
 // data for a given participant in a voice channel
@@ -77,9 +78,9 @@ public:
 
 	ESpeakerStatus	mStatus;			// current activity status in speech group
 	F32				mLastSpokeTime;		// timestamp when this speaker last spoke
-	F32				mSpeechVolume;		// current speech amplitude (timea average rms amplitude?)
+	//F32				mSpeechVolume;		// current speech amplitude (timea average rms amplitude?) -- MC
 	std::string		mDisplayName;		// cache user name for this speaker
-	LLFrameTimer	mActivityTimer;	// time out speakers when they are not part of current voice channel
+	//LLFrameTimer	mActivityTimer;	// time out speakers when they are not part of current voice channel -- MC
 	BOOL			mHasSpoken;			// has this speaker said anything this session?
 	LLColor4		mDotColor;
 	LLUUID			mID;
@@ -87,7 +88,7 @@ public:
 	S32				mSortIndex;
 	ESpeakerType	mType;
 	BOOL			mIsModerator;
-	BOOL			mModeratorMutedVoice;
+	//BOOL			mModeratorMutedVoice; -- MC
 	BOOL			mModeratorMutedText;
 };
 
@@ -98,13 +99,13 @@ public:
 	/*virtual*/ LLSD getValue();
 };
 
-class LLSpeakerVoiceModerationEvent : public LLEvent
-{
-public:
-	LLSpeakerVoiceModerationEvent(LLSpeaker* source);
-	/*virtual*/ LLSD getValue();
-};
-
+//class LLSpeakerVoiceModerationEvent : public LLEvent
+//{
+//public:
+//	LLSpeakerVoiceModerationEvent(LLSpeaker* source);
+//	/*virtual*/ LLSD getValue();
+//};
+//
 class LLSpeakerListChangeEvent : public LLEvent
 {
 public:
@@ -118,7 +119,7 @@ private:
 class LLSpeakerMgr : public LLObservable
 {
 public:
-	LLSpeakerMgr(LLVoiceChannel* channelp);
+	LLSpeakerMgr(/*LLVoiceChannel* channelp*/); // -- MC
 	virtual ~LLSpeakerMgr();
 
 	const LLPointer<LLSpeaker> findSpeaker(const LLUUID& avatar_id);
@@ -130,11 +131,11 @@ public:
 					LLSpeaker::ESpeakerStatus status = LLSpeaker::STATUS_TEXT_ONLY, 
 					LLSpeaker::ESpeakerType = LLSpeaker::SPEAKER_AGENT);
 
-	BOOL isVoiceActive();
+	//BOOL isVoiceActive(); -- MC
 
 	typedef std::vector<LLPointer<LLSpeaker> > speaker_list_t;
 	void getSpeakerList(speaker_list_t* speaker_list, BOOL include_text);
-	const LLUUID getSessionID();
+	//const LLUUID getSessionID(); -- MC
 
 protected:
 	virtual void updateSpeakerList();
@@ -144,13 +145,13 @@ protected:
 
 	speaker_list_t		mSpeakersSorted;
 	LLFrameTimer		mSpeechTimer;
-	LLVoiceChannel*		mVoiceChannel;
+	//LLVoiceChannel*		mVoiceChannel; -- MC
 };
 
 class LLIMSpeakerMgr : public LLSpeakerMgr
 {
 public:
-	LLIMSpeakerMgr(LLVoiceChannel* channel);
+	LLIMSpeakerMgr(/*LLVoiceChannel* channel*/); // -- MC
 	
 	void updateSpeakers(const LLSD& update);
 	void setSpeakers(const LLSD& speakers);
@@ -158,13 +159,13 @@ protected:
 	virtual void updateSpeakerList();
 };
 
-class LLActiveSpeakerMgr : public LLSpeakerMgr, public LLSingleton<LLActiveSpeakerMgr>
-{
-public:
-	LLActiveSpeakerMgr();
-protected:
-	virtual void updateSpeakerList();
-};
+//class LLActiveSpeakerMgr : public LLSpeakerMgr, public LLSingleton<LLActiveSpeakerMgr>
+//{
+//public:
+//	LLActiveSpeakerMgr();
+//protected:
+//	virtual void updateSpeakerList();
+//};
 
 class LLLocalSpeakerMgr : public LLSpeakerMgr, public LLSingleton<LLLocalSpeakerMgr>
 {
@@ -176,31 +177,31 @@ protected:
 };
 
 
-class LLFloaterActiveSpeakers : 
-	public LLFloaterSingleton<LLFloaterActiveSpeakers>, 
-	public LLFloater, 
-	public LLVoiceClientParticipantObserver
-{
-	// friend of singleton class to allow construction inside getInstance() since constructor is protected
-	// to enforce singleton constraint
-	friend class LLUISingleton<LLFloaterActiveSpeakers, VisibilityPolicy<LLFloater> >;
-public:
-	virtual ~LLFloaterActiveSpeakers();
-
-	/*virtual*/ BOOL postBuild();
-	/*virtual*/ void onOpen();
-	/*virtual*/ void onClose(bool app_quitting);
-	/*virtual*/ void draw();
-
-	/*virtual*/ void onChange();
-
-	static void* createSpeakersPanel(void* data);
-
-protected:
-	LLFloaterActiveSpeakers(const LLSD& seed);
-
-	LLPanelActiveSpeakers*	mPanel;
-};
+//class LLFloaterActiveSpeakers : 
+//	public LLFloaterSingleton<LLFloaterActiveSpeakers>, 
+//	public LLFloater, 
+//	public LLVoiceClientParticipantObserver
+//{
+//	// friend of singleton class to allow construction inside getInstance() since constructor is protected
+//	// to enforce singleton constraint
+//	friend class LLUISingleton<LLFloaterActiveSpeakers, VisibilityPolicy<LLFloater> >;
+//public:
+//	virtual ~LLFloaterActiveSpeakers();
+//
+//	/*virtual*/ BOOL postBuild();
+//	/*virtual*/ void onOpen();
+//	/*virtual*/ void onClose(bool app_quitting);
+//	/*virtual*/ void draw();
+//
+//	/*virtual*/ void onChange();
+//
+//	static void* createSpeakersPanel(void* data);
+//
+//protected:
+//	LLFloaterActiveSpeakers(const LLSD& seed);
+//
+//	LLPanelActiveSpeakers*	mPanel;
+//};
 
 class LLPanelActiveSpeakers : public LLPanel
 {
@@ -217,19 +218,19 @@ public:
 					LLSpeaker::ESpeakerStatus status = LLSpeaker::STATUS_TEXT_ONLY, 
 					LLSpeaker::ESpeakerType = LLSpeaker::SPEAKER_AGENT);
 
-	void setVoiceModerationCtrlMode(const BOOL& moderated_voice);
+	//void setVoiceModerationCtrlMode(const BOOL& moderated_voice); -- MC
 	
-	static void onClickMuteVoice(void* user_data);
-	static void onClickMuteVoiceCommit(LLUICtrl* ctrl, void* user_data);
+	//static void onClickMuteVoice(void* user_data); -- MC
+	//static void onClickMuteVoiceCommit(LLUICtrl* ctrl, void* user_data); -- MC
 	static void onClickMuteTextCommit(LLUICtrl* ctrl, void* user_data);
-	static void onVolumeChange(LLUICtrl* source, void* user_data);
+	//static void onVolumeChange(LLUICtrl* source, void* user_data); -- MC
 	static void onClickProfile(void* user_data);
 	static void onDoubleClickSpeaker(void* user_data);
 	static void onSelectSpeaker(LLUICtrl* source, void* user_data);
 	static void onSortChanged(void* user_data);
-	static void	onModeratorMuteVoice(LLUICtrl* ctrl, void* user_data);
+	//static void	onModeratorMuteVoice(LLUICtrl* ctrl, void* user_data); -- MC
 	static void	onModeratorMuteText(LLUICtrl* ctrl, void* user_data);
-	static void	onChangeModerationMode(LLUICtrl* ctrl, void* user_data);
+	//static void	onChangeModerationMode(LLUICtrl* ctrl, void* user_data); -- MC
 
 protected:
 	class SpeakerMuteListener : public LLSimpleListener
@@ -281,7 +282,7 @@ protected:
 
 
 	LLScrollListCtrl*	mSpeakerList;
-	LLUICtrl*			mMuteVoiceCtrl;
+	//LLUICtrl*			mMuteVoiceCtrl;
 	LLUICtrl*			mMuteTextCtrl;
 	LLTextBox*			mNameText;
 	LLButton*			mProfileBtn;

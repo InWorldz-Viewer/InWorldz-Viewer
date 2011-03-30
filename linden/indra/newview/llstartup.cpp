@@ -179,7 +179,7 @@
 #include "llfasttimerview.h"
 #include "llfloatermap.h"
 #include "llweb.h"
-#include "llvoiceclient.h"
+//#include "llvoiceclient.h" -- MC
 #include "llnamelistctrl.h"
 #include "llnamebox.h"
 #include "llnameeditor.h"
@@ -1698,7 +1698,7 @@ bool idle_startup()
 			}
 			
 			// Pass the user information to the voice chat server interface.
-			gVoiceClient->userAuthorized(firstname, lastname, gAgentID);
+			//gVoiceClient->userAuthorized(firstname, lastname, gAgentID); -- MC
 		}
 		else // if(successful_login)
 		{
@@ -1845,10 +1845,11 @@ bool idle_startup()
 			LLFloaterMove::showInstance();
 		}
 
-		if (gSavedSettings.getBOOL("ShowActiveSpeakers"))
+		// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+		/*if (gSavedSettings.getBOOL("ShowActiveSpeakers"))
 		{
 			LLFloaterActiveSpeakers::showInstance();
-		}
+		}*/
 
 		if (gSavedSettings.getBOOL("BeaconAlwaysOn"))
 		{

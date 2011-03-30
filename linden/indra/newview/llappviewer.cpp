@@ -106,6 +106,7 @@
 #include "llaudioengine.h"
 #include "llstreamingaudio.h"
 #include "llviewermenu.h"
+#include "llviewerregion.h"
 #include "llselectmgr.h"
 #include "lltrans.h"
 #include "lluitrans.h"
@@ -855,8 +856,8 @@ bool LLAppViewer::mainLoop()
 	
 	// Note: this is where gLocalSpeakerMgr and gActiveSpeakerMgr used to be instantiated.
 
-	LLVoiceChannel::initClass();
-	LLVoiceClient::init(gServicePump);
+	//LLVoiceChannel::initClass(); -- MC
+	//LLVoiceClient::init(gServicePump); -- MC
 				
 	LLMemType mt1(LLMemType::MTYPE_MAIN);
 	LLTimer frameTimer,idleTimer;
@@ -1122,9 +1123,9 @@ bool LLAppViewer::cleanup()
 	// to ensure shutdown order
 	LLMortician::setZealous(TRUE);
 
-	{
-		LLVoiceClient::terminate();
-	}
+	/*{
+		LLVoiceClient::terminate(); -- MC
+	}*/
 	
 	disconnectViewer();
 
@@ -1770,7 +1771,7 @@ bool LLAppViewer::initConfiguration()
 	LLFirstUse::addConfigVariable("FirstStreamingMusic");
 	LLFirstUse::addConfigVariable("FirstStreamingVideo");
 	LLFirstUse::addConfigVariable("FirstSculptedPrim");
-	LLFirstUse::addConfigVariable("FirstVoice");
+	//LLFirstUse::addConfigVariable("FirstVoice"); -- MC
 	LLFirstUse::addConfigVariable("FirstMedia");
 		
 	// - read command line settings.
@@ -3694,7 +3695,7 @@ void LLAppViewer::sendLogoutRequest()
 		gLogoutMaxTime = LOGOUT_REQUEST_TIME;
 		mLogoutRequestSent = TRUE;
 		
-		gVoiceClient->leaveChannel();
+		//gVoiceClient->leaveChannel(); -- MC
 
 		//Set internal status variables and marker files
 		gLogoutInProgress = TRUE;

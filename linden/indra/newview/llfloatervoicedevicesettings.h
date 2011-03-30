@@ -31,53 +31,54 @@
  * $/LicenseInfo$
  */
 
-#ifndef LL_LLFLOATERVOICEDEVICESETTINGS_H
-#define LL_LLFLOATERVOICEDEVICESETTINGS_H
-
-#include "llfloater.h"
-
-class LLPrefsVoiceLogic;
-
-class LLPanelVoiceDeviceSettings : public LLPanel
-{
-public:
-	LLPanelVoiceDeviceSettings();
-	~LLPanelVoiceDeviceSettings();
-
-	/*virtual*/ void draw();
-	/*virtual*/ BOOL postBuild();
-	void apply();
-	void cancel();
-	void refresh();
-	void onOpen();
-	void onClose(bool app_quitting);
-
-protected:
-	static void onCommitInputDevice(LLUICtrl* ctrl, void* user_data);
-	static void onCommitOutputDevice(LLUICtrl* ctrl, void* user_data);
-
-	F32 mMicVolume;
-	std::string mInputDevice;
-	std::string mOutputDevice;
-	class LLComboBox		*mCtrlInputDevices;
-	class LLComboBox		*mCtrlOutputDevices;
-	BOOL mDevicesUpdated;
-};
-
-class LLFloaterVoiceDeviceSettings : public LLFloater, public LLFloaterSingleton<LLFloaterVoiceDeviceSettings>
-{
-public:
-	LLFloaterVoiceDeviceSettings(const LLSD& seed);
-	/*virtual*/ void onOpen();
-	/*virtual*/ void onClose(bool app_quitting);
-	/*virtual*/ void draw();
-	void apply();
-	void cancel();
-
-protected:
-	static void* createPanelVoiceDeviceSettings(void* user_data);
-
-	LLPanelVoiceDeviceSettings* mDevicePanel;
-};
-
-#endif // LL_LLFLOATERVOICEDEVICESETTINGS_H
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//#ifndef LL_LLFLOATERVOICEDEVICESETTINGS_H
+//#define LL_LLFLOATERVOICEDEVICESETTINGS_H
+//
+//#include "llfloater.h"
+//
+//class LLPrefsVoiceLogic;
+//
+//class LLPanelVoiceDeviceSettings : public LLPanel
+//{
+//public:
+//	LLPanelVoiceDeviceSettings();
+//	~LLPanelVoiceDeviceSettings();
+//
+//	/*virtual*/ void draw();
+//	/*virtual*/ BOOL postBuild();
+//	void apply();
+//	void cancel();
+//	void refresh();
+//	void onOpen();
+//	void onClose(bool app_quitting);
+//
+//protected:
+//	static void onCommitInputDevice(LLUICtrl* ctrl, void* user_data);
+//	static void onCommitOutputDevice(LLUICtrl* ctrl, void* user_data);
+//
+//	F32 mMicVolume;
+//	std::string mInputDevice;
+//	std::string mOutputDevice;
+//	class LLComboBox		*mCtrlInputDevices;
+//	class LLComboBox		*mCtrlOutputDevices;
+//	BOOL mDevicesUpdated;
+//};
+//
+//class LLFloaterVoiceDeviceSettings : public LLFloater, public LLFloaterSingleton<LLFloaterVoiceDeviceSettings>
+//{
+//public:
+//	LLFloaterVoiceDeviceSettings(const LLSD& seed);
+//	/*virtual*/ void onOpen();
+//	/*virtual*/ void onClose(bool app_quitting);
+//	/*virtual*/ void draw();
+//	void apply();
+//	void cancel();
+//
+//protected:
+//	static void* createPanelVoiceDeviceSettings(void* user_data);
+//
+//	LLPanelVoiceDeviceSettings* mDevicePanel;
+//};
+//
+//#endif // LL_LLFLOATERVOICEDEVICESETTINGS_H

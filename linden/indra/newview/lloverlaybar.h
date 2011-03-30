@@ -49,7 +49,8 @@ class LLUUID;
 class LLFrameTimer;
 class LLStatGraph;
 class LLSlider;
-class LLVoiceRemoteCtrl;
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//class LLVoiceRemoteCtrl;
 class AORemoteCtrl;
 
 class LLOverlayBar
@@ -86,7 +87,7 @@ public:
 
 protected:	
 	static void* createMediaRemote(void* userdata);
-	static void* createVoiceRemote(void* userdata);
+	//static void* createVoiceRemote(void* userdata); -- MC
 	static void* createAORemote(void* userdata);
 	static void* createChatBar(void* userdata);
 
@@ -94,7 +95,7 @@ protected:
 
 protected:
 	LLMediaRemoteCtrl*	mMediaRemote;
-	LLVoiceRemoteCtrl*	mVoiceRemote;
+	//LLVoiceRemoteCtrl*	mVoiceRemote; -- MC
 	AORemoteCtrl*			mAORemote;
 	bool mBuilt;	// dialog constructed yet?
 	std::string			mOriginalIMLabel;

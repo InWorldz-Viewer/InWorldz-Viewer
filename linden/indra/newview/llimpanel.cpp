@@ -65,6 +65,7 @@
 #include "lltabcontainer.h"
 #include "llviewertexteditor.h"
 #include "llviewermessage.h"
+#include "llviewerregion.h"
 #include "llviewerstats.h"
 #include "llviewercontrol.h"
 #include "lluictrlfactory.h"
@@ -91,12 +92,13 @@ static std::string sTitleString = "Instant Message with [NAME]";
 static std::string sTypingStartString = "[NAME]: ...";
 static std::string sSessionStartString = "Starting session with [NAME] please wait.";
 
-LLVoiceChannel::voice_channel_map_t LLVoiceChannel::sVoiceChannelMap;
-LLVoiceChannel::voice_channel_map_uri_t LLVoiceChannel::sVoiceChannelURIMap;
-LLVoiceChannel* LLVoiceChannel::sCurrentVoiceChannel = NULL;
-LLVoiceChannel* LLVoiceChannel::sSuspendedVoiceChannel = NULL;
-
-BOOL LLVoiceChannel::sSuspended = FALSE;
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//LLVoiceChannel::voice_channel_map_t LLVoiceChannel::sVoiceChannelMap;
+//LLVoiceChannel::voice_channel_map_uri_t LLVoiceChannel::sVoiceChannelURIMap;
+//LLVoiceChannel* LLVoiceChannel::sCurrentVoiceChannel = NULL;
+//LLVoiceChannel* LLVoiceChannel::sSuspendedVoiceChannel = NULL;
+//
+//BOOL LLVoiceChannel::sSuspended = FALSE;
 
 void session_starter_helper(
 	const LLUUID& temp_session_id,
@@ -283,7 +285,8 @@ bool send_start_session_messages(
 	return false;
 }
 
-class LLVoiceCallCapResponder : public LLHTTPClient::Responder
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+/*class LLVoiceCallCapResponder : public LLHTTPClient::Responder
 {
 public:
 	LLVoiceCallCapResponder(const LLUUID& session_id) : mSessionID(session_id) {};
@@ -1065,7 +1068,7 @@ void LLVoiceChannelP2P::setState(EState state)
 		return;
 	}
 	LLVoiceChannel::setState(state);
-}
+}*/ // -- MC
 
 
 //
@@ -1080,7 +1083,7 @@ LLFloaterIMPanel::LLFloaterIMPanel(
 	mInputEditor(NULL),
 	mHistoryEditor(NULL),
 	mSessionUUID(session_id),
-	mVoiceChannel(NULL),
+	//mVoiceChannel(NULL), -- MC
 	mSessionInitialized(FALSE),
 	mSessionStartMsgPos(0),
 	mOtherParticipantUUID(other_participant_id),
@@ -1113,7 +1116,7 @@ LLFloaterIMPanel::LLFloaterIMPanel(
 	mInputEditor(NULL),
 	mHistoryEditor(NULL),
 	mSessionUUID(session_id),
-	mVoiceChannel(NULL),
+	//mVoiceChannel(NULL), -- MC
 	mSessionInitialized(FALSE),
 	mSessionStartMsgPos(0),
 	mOtherParticipantUUID(other_participant_id),
@@ -1147,7 +1150,7 @@ void LLFloaterIMPanel::init(const std::string& session_label)
 	case IM_SESSION_GROUP_START:
 		mFactoryMap["active_speakers_panel"] = LLCallbackMap(createSpeakersPanel, this);
 		xml_filename = "floater_instant_message_group.xml";
-		mVoiceChannel = new LLVoiceChannelGroup(mSessionUUID, mSessionLabel);
+		//mVoiceChannel = new LLVoiceChannelGroup(mSessionUUID, mSessionLabel); -- MC
 		break;
 	case IM_SESSION_INVITE:
 		mFactoryMap["active_speakers_panel"] = LLCallbackMap(createSpeakersPanel, this);
@@ -1159,27 +1162,27 @@ void LLFloaterIMPanel::init(const std::string& session_label)
 		{
 			xml_filename = "floater_instant_message_ad_hoc.xml";
 		}
-		mVoiceChannel = new LLVoiceChannelGroup(mSessionUUID, mSessionLabel);
+		//mVoiceChannel = new LLVoiceChannelGroup(mSessionUUID, mSessionLabel); -- MC
 		break;
 	case IM_SESSION_P2P_INVITE:
 		xml_filename = "floater_instant_message.xml";
-		mVoiceChannel = new LLVoiceChannelP2P(mSessionUUID, mSessionLabel, mOtherParticipantUUID);
+		//mVoiceChannel = new LLVoiceChannelP2P(mSessionUUID, mSessionLabel, mOtherParticipantUUID); -- MC
 		break;
 	case IM_SESSION_CONFERENCE_START:
 		mFactoryMap["active_speakers_panel"] = LLCallbackMap(createSpeakersPanel, this);
 		xml_filename = "floater_instant_message_ad_hoc.xml";
-		mVoiceChannel = new LLVoiceChannelGroup(mSessionUUID, mSessionLabel);
+		//mVoiceChannel = new LLVoiceChannelGroup(mSessionUUID, mSessionLabel); -- MC
 		break;
 	// just received text from another user
 	case IM_NOTHING_SPECIAL:
 
 		xml_filename = "floater_instant_message.xml";
 		
-		mTextIMPossible = LLVoiceClient::getInstance()->isSessionTextIMPossible(mSessionUUID);
-		mProfileButtonEnabled = LLVoiceClient::getInstance()->isParticipantAvatar(mSessionUUID);
-		mCallBackEnabled = LLVoiceClient::getInstance()->isSessionCallBackPossible(mSessionUUID);
+		//mTextIMPossible = LLVoiceClient::getInstance()->isSessionTextIMPossible(mSessionUUID); -- MC
+		//mProfileButtonEnabled = LLVoiceClient::getInstance()->isParticipantAvatar(mSessionUUID); -- MC
+		//mCallBackEnabled = LLVoiceClient::getInstance()->isSessionCallBackPossible(mSessionUUID); -- MC
 		
-		mVoiceChannel = new LLVoiceChannelP2P(mSessionUUID, mSessionLabel, mOtherParticipantUUID);
+		//mVoiceChannel = new LLVoiceChannelP2P(mSessionUUID, mSessionLabel, mOtherParticipantUUID); -- MC
 		break;
 	default:
 		llwarns << "Unknown session type" << llendl;
@@ -1187,7 +1190,7 @@ void LLFloaterIMPanel::init(const std::string& session_label)
 		break;
 	}
 
-	mSpeakers = new LLIMSpeakerMgr(mVoiceChannel);
+	mSpeakers = new LLIMSpeakerMgr(/*mVoiceChannel*/); // -- MC
 
 	LLUICtrlFactory::getInstance()->buildFloater(this,
 								xml_filename,
@@ -1243,28 +1246,30 @@ LLFloaterIMPanel::~LLFloaterIMPanel()
 	mSpeakers = NULL;
 	
 	// End the text IM session if necessary
-	if(gVoiceClient && mOtherParticipantUUID.notNull())
-	{
-		switch(mDialog)
-		{
-			case IM_NOTHING_SPECIAL:
-			case IM_SESSION_P2P_INVITE:
-				gVoiceClient->endUserIMSession(mOtherParticipantUUID);
-			break;
-			
-			default:
-				// Appease the compiler
-			break;
-		}
-	}
+	// -- MC
+	//if(gVoiceClient && mOtherParticipantUUID.notNull())
+	//{
+	//	switch(mDialog)
+	//	{
+	//		case IM_NOTHING_SPECIAL:
+	//		case IM_SESSION_P2P_INVITE:
+	//			gVoiceClient->endUserIMSession(mOtherParticipantUUID);
+	//		break;
+	//		
+	//		default:
+	//			// Appease the compiler
+	//		break;
+	//	}
+	//}
 	
 	//kicks you out of the voice channel if it is currently active
 
 	// HAVE to do this here -- if it happens in the LLVoiceChannel destructor it will call the wrong version (since the object's partially deconstructed at that point).
-	mVoiceChannel->deactivate();
+	// if we were using voice, at least -- MC
+	/*mVoiceChannel->deactivate();
 	
 	delete mVoiceChannel;
-	mVoiceChannel = NULL;
+	mVoiceChannel = NULL;*/
 
 	//delete focus lost callback
 	if(mInputEditor)
@@ -1293,8 +1298,9 @@ BOOL LLFloaterIMPanel::postBuild()
 		childSetAction("profile_callee_btn", onClickProfile, this);
 		childSetAction("group_info_btn", onClickGroupInfo, this);
 
-		childSetAction("start_call_btn", onClickStartCall, this);
-		childSetAction("end_call_btn", onClickEndCall, this);
+		// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+		//childSetAction("start_call_btn", onClickStartCall, this);
+		//childSetAction("end_call_btn", onClickEndCall, this);
 		childSetAction("send_btn", onClickSend, this);
 		childSetAction("toggle_active_speakers_btn", onClickToggleActiveSpeakers, this);
 
@@ -1325,11 +1331,12 @@ BOOL LLFloaterIMPanel::postBuild()
 			mSpeakerPanel->refreshSpeakers();
 		}
 
-		if (mDialog == IM_NOTHING_SPECIAL)
+		// -- MC
+		/*if (mDialog == IM_NOTHING_SPECIAL)
 		{
 			childSetAction("mute_btn", onClickMuteVoice, this);
 			childSetCommitCallback("speaker_volume", onVolumeChange, this);
-		}
+		}*/
 
 		setDefaultBtn("send_btn");
 		return TRUE;
@@ -1345,51 +1352,55 @@ void* LLFloaterIMPanel::createSpeakersPanel(void* data)
 	return floaterp->mSpeakerPanel;
 }
 
-//static 
-void LLFloaterIMPanel::onClickMuteVoice(void* user_data)
-{
-	LLFloaterIMPanel* floaterp = (LLFloaterIMPanel*)user_data;
-	if (floaterp)
-	{
-		BOOL is_muted = LLMuteList::getInstance()->isMuted(floaterp->mOtherParticipantUUID, LLMute::flagVoiceChat);
-
-		LLMute mute(floaterp->mOtherParticipantUUID, floaterp->getTitle(), LLMute::AGENT);
-		if (!is_muted)
-		{
-			LLMuteList::getInstance()->add(mute, LLMute::flagVoiceChat);
-		}
-		else
-		{
-			LLMuteList::getInstance()->remove(mute, LLMute::flagVoiceChat);
-		}
-	}
-}
-
-//static 
-void LLFloaterIMPanel::onVolumeChange(LLUICtrl* source, void* user_data)
-{
-	LLFloaterIMPanel* floaterp = (LLFloaterIMPanel*)user_data;
-	if (floaterp)
-	{
-		gVoiceClient->setUserVolume(floaterp->mOtherParticipantUUID, (F32)source->getValue().asReal());
-	}
-}
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+////static 
+//void LLFloaterIMPanel::onClickMuteVoice(void* user_data)
+//{
+//	LLFloaterIMPanel* floaterp = (LLFloaterIMPanel*)user_data;
+//	if (floaterp)
+//	{
+//		BOOL is_muted = LLMuteList::getInstance()->isMuted(floaterp->mOtherParticipantUUID, LLMute::flagVoiceChat);
+//
+//		LLMute mute(floaterp->mOtherParticipantUUID, floaterp->getTitle(), LLMute::AGENT);
+//		if (!is_muted)
+//		{
+//			LLMuteList::getInstance()->add(mute, LLMute::flagVoiceChat);
+//		}
+//		else
+//		{
+//			LLMuteList::getInstance()->remove(mute, LLMute::flagVoiceChat);
+//		}
+//	}
+//}
+//
+////static 
+//void LLFloaterIMPanel::onVolumeChange(LLUICtrl* source, void* user_data)
+//{
+//	LLFloaterIMPanel* floaterp = (LLFloaterIMPanel*)user_data;
+//	if (floaterp)
+//	{
+//		gVoiceClient->setUserVolume(floaterp->mOtherParticipantUUID, (F32)source->getValue().asReal());
+//	}
+//}
 
 
 // virtual
 void LLFloaterIMPanel::draw()
 {	
-	LLViewerRegion* region = gAgent.getRegion();
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	/*LLViewerRegion* region = gAgent.getRegion();
+	
 	
 	BOOL enable_connect = (region && region->getCapability("ChatSessionRequest") != "")
 					  && mSessionInitialized
 					  && LLVoiceClient::voiceEnabled()
-					  && mCallBackEnabled;
+					  && mCallBackEnabled;*/
 
 	// hide/show start call and end call buttons
-	childSetVisible("end_call_btn", LLVoiceClient::voiceEnabled() && mVoiceChannel->getState() >= LLVoiceChannel::STATE_CALL_STARTED);
-	childSetVisible("start_call_btn", LLVoiceClient::voiceEnabled() && mVoiceChannel->getState() < LLVoiceChannel::STATE_CALL_STARTED);
-	childSetEnabled("start_call_btn", enable_connect);
+	// do this in case a skin has them included and overwrites default -- MC
+	childSetVisible("end_call_btn", FALSE);/*LLVoiceClient::voiceEnabled() && mVoiceChannel->getState() >= LLVoiceChannel::STATE_CALL_STARTED);*/
+	childSetVisible("start_call_btn", FALSE);/*LLVoiceClient::voiceEnabled() && mVoiceChannel->getState() < LLVoiceChannel::STATE_CALL_STARTED);*/
+	/*childSetEnabled("start_call_btn", enable_connect);*/
 	childSetEnabled("send_btn", !childGetValue("chat_editor").asString().empty());
 	
 	LLPointer<LLSpeaker> self_speaker = mSpeakers->findSpeaker(gAgent.getID());
@@ -1409,18 +1420,20 @@ void LLFloaterIMPanel::draw()
 		mInputEditor->setLabel(getString("default_text_label"));
 	}
 
-	if (mAutoConnect && enable_connect)
+	if (mAutoConnect /*&& enable_connect*/) // -- MC
 	{
-		onClickStartCall(this);
+		//onClickStartCall(this); -- MC
 		mAutoConnect = FALSE;
 	}
 
-	// show speakers window when voice first connects
+	// -- MC
+	/*// show speakers window when voice first connects
 	if (mShowSpeakersOnConnect && mVoiceChannel->isActive())
 	{
 		childSetVisible("active_speakers_panel", TRUE);
 		mShowSpeakersOnConnect = FALSE;
-	}
+	}*/
+
 	childSetValue("toggle_active_speakers_btn", childIsVisible("active_speakers_panel"));
 
 	if (mTyping)
@@ -1449,15 +1462,16 @@ void LLFloaterIMPanel::draw()
 			mSpeakerPanel->refreshSpeakers();
 		}
 	}
-	else
-	{
-		// refresh volume and mute checkbox
-		childSetVisible("speaker_volume", LLVoiceClient::voiceEnabled() && mVoiceChannel->isActive());
-		childSetValue("speaker_volume", gVoiceClient->getUserVolume(mOtherParticipantUUID));
+	// -- MC
+	//else
+	//{
+	//	// refresh volume and mute checkbox
+	//	childSetVisible("speaker_volume", LLVoiceClient::voiceEnabled() && mVoiceChannel->isActive());
+	//	childSetValue("speaker_volume", gVoiceClient->getUserVolume(mOtherParticipantUUID));
 
-		childSetValue("mute_btn", LLMuteList::getInstance()->isMuted(mOtherParticipantUUID, LLMute::flagVoiceChat));
-		childSetVisible("mute_btn", LLVoiceClient::voiceEnabled() && mVoiceChannel->isActive());
-	}
+	//	childSetValue("mute_btn", LLMuteList::getInstance()->isMuted(mOtherParticipantUUID, LLMute::flagVoiceChat));
+	//	childSetVisible("mute_btn", LLVoiceClient::voiceEnabled() && mVoiceChannel->isActive());
+	//}
 	LLFloater::draw();
 }
 
@@ -1814,21 +1828,22 @@ void LLFloaterIMPanel::onClickClose( void* userdata )
 	}
 }
 
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
 // static
-void LLFloaterIMPanel::onClickStartCall(void* userdata)
-{
-	LLFloaterIMPanel* self = (LLFloaterIMPanel*) userdata;
-
-	self->mVoiceChannel->activate();
-}
-
-// static
-void LLFloaterIMPanel::onClickEndCall(void* userdata)
-{
-	LLFloaterIMPanel* self = (LLFloaterIMPanel*) userdata;
-
-	self->getVoiceChannel()->deactivate();
-}
+//void LLFloaterIMPanel::onClickStartCall(void* userdata)
+//{
+//	LLFloaterIMPanel* self = (LLFloaterIMPanel*) userdata;
+//
+//	self->mVoiceChannel->activate();
+//}
+//
+//// static
+//void LLFloaterIMPanel::onClickEndCall(void* userdata)
+//{
+//	LLFloaterIMPanel* self = (LLFloaterIMPanel*) userdata;
+//
+//	self->getVoiceChannel()->deactivate();
+//}
 
 // static
 void LLFloaterIMPanel::onClickSend(void* userdata)
@@ -1930,11 +1945,12 @@ void deliver_message(const std::string& utf8_text,
 	
 	U8 offline = (!info || info->isOnline()) ? IM_ONLINE : IM_OFFLINE;
 	
-	if((offline == IM_OFFLINE) && (LLVoiceClient::getInstance()->isOnlineSIP(other_participant_id)))
-	{
-		// User is online through the OOW connector, but not with a regular viewer.  Try to send the message via SLVoice.
-		sent = gVoiceClient->sendTextMessage(other_participant_id, utf8_text);
-	}
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	//if((offline == IM_OFFLINE) && (LLVoiceClient::getInstance()->isOnlineSIP(other_participant_id)))
+	//{
+	//	// User is online through the OOW connector, but not with a regular viewer.  Try to send the message via SLVoice.
+	//	sent = gVoiceClient->sendTextMessage(other_participant_id, utf8_text);
+	//}
 	
 	if(!sent)
 	{
@@ -2087,7 +2103,8 @@ void LLFloaterIMPanel::processSessionUpdate(const LLSD& session_update)
 
 
 		//update the speakers dropdown too
-		mSpeakerPanel->setVoiceModerationCtrlMode(voice_moderated);
+		// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+		//mSpeakerPanel->setVoiceModerationCtrlMode(voice_moderated);
 	}
 }
 
@@ -2099,7 +2116,7 @@ void LLFloaterIMPanel::setSpeakers(const LLSD& speaker_list)
 void LLFloaterIMPanel::sessionInitReplyReceived(const LLUUID& session_id)
 {
 	mSessionUUID = session_id;
-	mVoiceChannel->updateSessionID(session_id);
+	//mVoiceChannel->updateSessionID(session_id); -- MC
 	mSessionInitialized = TRUE;
 
 	//we assume the history editor hasn't moved at all since

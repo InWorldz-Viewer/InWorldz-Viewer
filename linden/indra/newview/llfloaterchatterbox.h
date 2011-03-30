@@ -59,7 +59,7 @@ public:
 								BOOL select_added_floater, 
 								LLTabContainer::eInsertionPoint insertion_point = LLTabContainer::END);
 
-	static LLFloater* getCurrentVoiceFloater();
+	//static LLFloater* getCurrentVoiceFloater(); -- MC
 	
 	// visibility policy for LLUISingleton
 	static bool visible(LLFloater* instance, const LLSD& key)
@@ -106,16 +106,17 @@ private:
 		}
 
 		// if TRUE, show tab for active voice channel, otherwise, just show last tab
-		if (key.asBoolean())
+		// only if we were using voice -- MC
+		/*if (key.asBoolean())
 		{
 			floater = getCurrentVoiceFloater();
-		}
+		}*/
 
 		return floater;
 	}
 
-protected:
-	LLFloater* mActiveVoiceFloater;
+//protected:
+//	LLFloater* mActiveVoiceFloater; -- MC
 };
 
 

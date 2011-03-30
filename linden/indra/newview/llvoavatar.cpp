@@ -80,9 +80,11 @@
 #include "llviewershadermgr.h"
 #include "llsky.h"
 #include "llanimstatelabels.h"
-#include "llgesturemgr.h" //needed to trigger the voice gesticulations
-#include "llvoiceclient.h"
-#include "llvoicevisualizer.h" // Ventrella
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//#include "llgesturemgr.h" //needed to trigger the voice gesticulations
+//#include "llvoiceclient.h"
+//#include "llvoicevisualizer.h" // Ventrella
+#include "llviewerregion.h"
 
 #if LL_MSVC
 // disable boost::lexical_cast warning
@@ -754,9 +756,10 @@ LLVOAvatar::LLVOAvatar(const LLUUID& id,
 	LLMemType mt(LLMemType::MTYPE_AVATAR);
 	//VTResume();  // VTune
 	
-	// mVoiceVisualizer is created by the hud effects manager and uses the HUD Effects pipeline
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	/* mVoiceVisualizer is created by the hud effects manager and uses the HUD Effects pipeline
 	const bool needsSendToSim = false; // currently, this HUD effect doesn't need to pack and unpack data to do its job
-	mVoiceVisualizer = ( LLVoiceVisualizer *)LLHUDManager::getInstance()->createViewerEffect( LLHUDObject::LL_HUD_EFFECT_VOICE_VISUALIZER, needsSendToSim );
+	mVoiceVisualizer = ( LLVoiceVisualizer *)LLHUDManager::getInstance()->createViewerEffect( LLHUDObject::LL_HUD_EFFECT_VOICE_VISUALIZER, needsSendToSim );*/
 
 	lldebugs << "LLVOAvatar Constructor (0x" << this << ") id:" << mID << llendl;
 
@@ -840,9 +843,10 @@ LLVOAvatar::LLVOAvatar(const LLUUID& id,
 	mStepOnLand = TRUE;
 	mStepMaterial = 0;
 
-	mLipSyncActive = false;
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	/*mLipSyncActive = false;
 	mOohMorph      = NULL;
-	mAahMorph      = NULL;
+	mAahMorph      = NULL;*/
 
 	//-------------------------------------------------------------------------
 	// initialize joint, mesh and shape members
@@ -982,8 +986,9 @@ LLVOAvatar::LLVOAvatar(const LLUUID& id,
 
 	//VTPause();  // VTune
 	
-	mVoiceVisualizer->setVoiceEnabled( gVoiceClient->getVoiceEnabled( mID ) );
-	mCurrentGesticulationLevel = 0;		
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	/*mVoiceVisualizer->setVoiceEnabled( gVoiceClient->getVoiceEnabled( mID ) );
+	mCurrentGesticulationLevel = 0;*/
 }
 
 //------------------------------------------------------------------------
@@ -1060,7 +1065,8 @@ void LLVOAvatar::markDead()
 		sNumVisibleChatBubbles--;
 	}
 
-	mVoiceVisualizer->markDead();
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	//mVoiceVisualizer->markDead();
 
 	mBeam = NULL;
 	LLViewerObject::markDead();
@@ -1960,25 +1966,26 @@ void LLVOAvatar::buildCharacter()
 	//-------------------------------------------------------------------------
 	updateHeadOffset();
 
-	//-------------------------------------------------------------------------
-	// initialize lip sync morph pointers
-	//-------------------------------------------------------------------------
-	mOohMorph     = getVisualParam( "Lipsync_Ooh" );
-	mAahMorph     = getVisualParam( "Lipsync_Aah" );
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	////-------------------------------------------------------------------------
+	//// initialize lip sync morph pointers
+	////-------------------------------------------------------------------------
+	//mOohMorph     = getVisualParam( "Lipsync_Ooh" );
+	//mAahMorph     = getVisualParam( "Lipsync_Aah" );
 
-	// If we don't have the Ooh morph, use the Kiss morph
-	if (!mOohMorph)
-	{
-		llwarns << "Missing 'Ooh' morph for lipsync, using fallback." << llendl;
-		mOohMorph = getVisualParam( "Express_Kiss" );
-	}
+	//// If we don't have the Ooh morph, use the Kiss morph
+	//if (!mOohMorph)
+	//{
+	//	llwarns << "Missing 'Ooh' morph for lipsync, using fallback." << llendl;
+	//	mOohMorph = getVisualParam( "Express_Kiss" );
+	//}
 
-	// If we don't have the Aah morph, use the Open Mouth morph
-	if (!mAahMorph)
-	{
-		llwarns << "Missing 'Aah' morph for lipsync, using fallback." << llendl;
-		mAahMorph = getVisualParam( "Express_Open_Mouth" );
-	}
+	//// If we don't have the Aah morph, use the Open Mouth morph
+	//if (!mAahMorph)
+	//{
+	//	llwarns << "Missing 'Aah' morph for lipsync, using fallback." << llendl;
+	//	mAahMorph = getVisualParam( "Express_Open_Mouth" );
+	//}
 
 	startDefaultMotions();
 
@@ -2566,17 +2573,18 @@ BOOL LLVOAvatar::idleUpdate(LLAgent &agent, LLWorld &world, const F64 &time)
 	// store off last frame's root position to be consistent with camera position
 	LLVector3 root_pos_last = mRoot.getWorldPosition();
 	bool detailed_update = updateCharacter(agent);
-	bool voice_enabled = gVoiceClient->getVoiceEnabled( mID ) && gVoiceClient->inProximalChannel();
+	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+	//bool voice_enabled = gVoiceClient->getVoiceEnabled( mID ) && gVoiceClient->inProximalChannel();
 
 	if (gNoRender)
 	{
 		return TRUE;
 	}
 
-	idleUpdateVoiceVisualizer( voice_enabled );
+	//idleUpdateVoiceVisualizer( voice_enabled ); -- MC
 	idleUpdateMisc( detailed_update );
 	idleUpdateAppearanceAnimation();
-	idleUpdateLipSync( voice_enabled );
+	//idleUpdateLipSync( voice_enabled ); -- MC
 	idleUpdateLoadingEffect();
 	idleUpdateBelowWater();	// wind effect uses this
 	idleUpdateWindEffect();
@@ -2586,93 +2594,94 @@ BOOL LLVOAvatar::idleUpdate(LLAgent &agent, LLWorld &world, const F64 &time)
 	return TRUE;
 }
 
-void LLVOAvatar::idleUpdateVoiceVisualizer(bool voice_enabled)
-{
-	// disable voice visualizer when in mouselook
-	mVoiceVisualizer->setVoiceEnabled( voice_enabled && !(mIsSelf && gAgent.cameraMouselook()) );
-	if ( voice_enabled )
-	{		
-		//----------------------------------------------------------------
-		// Only do gesture triggering for your own avatar, and only when you're in a proximal channel.
-		//----------------------------------------------------------------
-		if( mIsSelf )
-		{
-			//----------------------------------------------------------------------------------------
-			// The following takes the voice signal and uses that to trigger gesticulations. 
-			//----------------------------------------------------------------------------------------
-			int lastGesticulationLevel = mCurrentGesticulationLevel;
-			mCurrentGesticulationLevel = mVoiceVisualizer->getCurrentGesticulationLevel();
-			
-			//---------------------------------------------------------------------------------------------------
-			// If "current gesticulation level" changes, we catch this, and trigger the new gesture
-			//---------------------------------------------------------------------------------------------------
-			if ( lastGesticulationLevel != mCurrentGesticulationLevel )
-			{
-				if ( mCurrentGesticulationLevel != VOICE_GESTICULATION_LEVEL_OFF )
-				{
-					std::string gestureString = "unInitialized";
-					if ( mCurrentGesticulationLevel == 0 )	{ gestureString = "/voicelevel1";	}
-					else	if ( mCurrentGesticulationLevel == 1 )	{ gestureString = "/voicelevel2";	}
-					else	if ( mCurrentGesticulationLevel == 2 )	{ gestureString = "/voicelevel3";	}
-					else	{ llinfos << "oops - CurrentGesticulationLevel can be only 0, 1, or 2"  << llendl; }
-					
-					// this is the call that Karl S. created for triggering gestures from within the code.
-					gGestureManager.triggerAndReviseString( gestureString );
-				}
-			}
-			
-		} //if( mIsSelf )
-		
-		//-----------------------------------------------------------------------------------------------------------------
-		// If the avatar is speaking, then the voice amplitude signal is passed to the voice visualizer.
-		// Also, here we trigger voice visualizer start and stop speaking, so it can animate the voice symbol.
-		//
-		// Notice the calls to "gAwayTimer.reset()". This resets the timer that determines how long the avatar has been
-		// "away", so that the avatar doesn't lapse into away-mode (and slump over) while the user is still talking. 
-		//-----------------------------------------------------------------------------------------------------------------
-		if ( gVoiceClient->getIsSpeaking( mID ) )
-		{		
-			if ( ! mVoiceVisualizer->getCurrentlySpeaking() )
-			{
-				mVoiceVisualizer->setStartSpeaking();
-				
-				//printf( "gAwayTimer.reset();\n" );
-			}
-			
-			mVoiceVisualizer->setSpeakingAmplitude( gVoiceClient->getCurrentPower( mID ) );
-			
-			if( mIsSelf )
-			{
-				gAgent.clearAFK();
-			}
-		}
-		else
-		{
-			if ( mVoiceVisualizer->getCurrentlySpeaking() )
-			{
-				mVoiceVisualizer->setStopSpeaking();
-				
-				if ( mLipSyncActive )
-				{
-					if( mOohMorph ) mOohMorph->setWeight(mOohMorph->getMinWeight(), FALSE);
-					if( mAahMorph ) mAahMorph->setWeight(mAahMorph->getMinWeight(), FALSE);
-					
-					mLipSyncActive = false;
-					LLCharacter::updateVisualParams();
-					dirtyMesh();
-				}
-			}
-		}
-		
-		//--------------------------------------------------------------------------------------------
-		// here we get the approximate head position and set as sound source for the voice symbol
-		// (the following version uses a tweak of "mHeadOffset" which handle sitting vs. standing)
-		//--------------------------------------------------------------------------------------------
-		LLVector3 headOffset = LLVector3( 0.0f, 0.0f, mHeadOffset.mV[2] );
-		mVoiceVisualizer->setVoiceSourceWorldPosition( mRoot.getWorldPosition() + headOffset );
-		
-	}//if ( voiceEnabled )
-}		
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//void LLVOAvatar::idleUpdateVoiceVisualizer(bool voice_enabled)
+//{
+//	// disable voice visualizer when in mouselook
+//	mVoiceVisualizer->setVoiceEnabled( voice_enabled && !(mIsSelf && gAgent.cameraMouselook()) );
+//	if ( voice_enabled )
+//	{		
+//		//----------------------------------------------------------------
+//		// Only do gesture triggering for your own avatar, and only when you're in a proximal channel.
+//		//----------------------------------------------------------------
+//		if( mIsSelf )
+//		{
+//			//----------------------------------------------------------------------------------------
+//			// The following takes the voice signal and uses that to trigger gesticulations. 
+//			//----------------------------------------------------------------------------------------
+//			int lastGesticulationLevel = mCurrentGesticulationLevel;
+//			mCurrentGesticulationLevel = mVoiceVisualizer->getCurrentGesticulationLevel();
+//			
+//			//---------------------------------------------------------------------------------------------------
+//			// If "current gesticulation level" changes, we catch this, and trigger the new gesture
+//			//---------------------------------------------------------------------------------------------------
+//			if ( lastGesticulationLevel != mCurrentGesticulationLevel )
+//			{
+//				if ( mCurrentGesticulationLevel != VOICE_GESTICULATION_LEVEL_OFF )
+//				{
+//					std::string gestureString = "unInitialized";
+//					if ( mCurrentGesticulationLevel == 0 )	{ gestureString = "/voicelevel1";	}
+//					else	if ( mCurrentGesticulationLevel == 1 )	{ gestureString = "/voicelevel2";	}
+//					else	if ( mCurrentGesticulationLevel == 2 )	{ gestureString = "/voicelevel3";	}
+//					else	{ llinfos << "oops - CurrentGesticulationLevel can be only 0, 1, or 2"  << llendl; }
+//					
+//					// this is the call that Karl S. created for triggering gestures from within the code.
+//					gGestureManager.triggerAndReviseString( gestureString );
+//				}
+//			}
+//			
+//		} //if( mIsSelf )
+//		
+//		//-----------------------------------------------------------------------------------------------------------------
+//		// If the avatar is speaking, then the voice amplitude signal is passed to the voice visualizer.
+//		// Also, here we trigger voice visualizer start and stop speaking, so it can animate the voice symbol.
+//		//
+//		// Notice the calls to "gAwayTimer.reset()". This resets the timer that determines how long the avatar has been
+//		// "away", so that the avatar doesn't lapse into away-mode (and slump over) while the user is still talking. 
+//		//-----------------------------------------------------------------------------------------------------------------
+//		if ( gVoiceClient->getIsSpeaking( mID ) )
+//		{		
+//			if ( ! mVoiceVisualizer->getCurrentlySpeaking() )
+//			{
+//				mVoiceVisualizer->setStartSpeaking();
+//				
+//				//printf( "gAwayTimer.reset();\n" );
+//			}
+//			
+//			mVoiceVisualizer->setSpeakingAmplitude( gVoiceClient->getCurrentPower( mID ) );
+//			
+//			if( mIsSelf )
+//			{
+//				gAgent.clearAFK();
+//			}
+//		}
+//		else
+//		{
+//			if ( mVoiceVisualizer->getCurrentlySpeaking() )
+//			{
+//				mVoiceVisualizer->setStopSpeaking();
+//				
+//				if ( mLipSyncActive )
+//				{
+//					if( mOohMorph ) mOohMorph->setWeight(mOohMorph->getMinWeight(), FALSE);
+//					if( mAahMorph ) mAahMorph->setWeight(mAahMorph->getMinWeight(), FALSE);
+//					
+//					mLipSyncActive = false;
+//					LLCharacter::updateVisualParams();
+//					dirtyMesh();
+//				}
+//			}
+//		}
+//		
+//		//--------------------------------------------------------------------------------------------
+//		// here we get the approximate head position and set as sound source for the voice symbol
+//		// (the following version uses a tweak of "mHeadOffset" which handle sitting vs. standing)
+//		//--------------------------------------------------------------------------------------------
+//		LLVector3 headOffset = LLVector3( 0.0f, 0.0f, mHeadOffset.mV[2] );
+//		mVoiceVisualizer->setVoiceSourceWorldPosition( mRoot.getWorldPosition() + headOffset );
+//		
+//	}//if ( voiceEnabled )
+//}		
 
 void LLVOAvatar::idleUpdateMisc(bool detailed_update)
 {
@@ -2847,37 +2856,38 @@ void LLVOAvatar::idleUpdateAppearanceAnimation()
 	}
 }
 
-void LLVOAvatar::idleUpdateLipSync(bool voice_enabled)
-{
-	// Use the Lipsync_Ooh and Lipsync_Aah morphs for lip sync
-	if ( voice_enabled && (gVoiceClient->lipSyncEnabled()) && gVoiceClient->getIsSpeaking( mID ) )
-	{
-		F32 ooh_morph_amount = 0.0f;
-		F32 aah_morph_amount = 0.0f;
-
-		mVoiceVisualizer->lipSyncOohAah( ooh_morph_amount, aah_morph_amount );
-
-		if( mOohMorph )
-		{
-			F32 ooh_weight = mOohMorph->getMinWeight()
-				+ ooh_morph_amount * (mOohMorph->getMaxWeight() - mOohMorph->getMinWeight());
-
-			mOohMorph->setWeight( ooh_weight, FALSE );
-		}
-
-		if( mAahMorph )
-		{
-			F32 aah_weight = mAahMorph->getMinWeight()
-				+ aah_morph_amount * (mAahMorph->getMaxWeight() - mAahMorph->getMinWeight());
-
-			mAahMorph->setWeight( aah_weight, FALSE );
-		}
-
-		mLipSyncActive = true;
-		LLCharacter::updateVisualParams();
-		dirtyMesh();
-	}
-}
+// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
+//void LLVOAvatar::idleUpdateLipSync(bool voice_enabled)
+//{
+//	// Use the Lipsync_Ooh and Lipsync_Aah morphs for lip sync
+//	if ( voice_enabled && (gVoiceClient->lipSyncEnabled()) && gVoiceClient->getIsSpeaking( mID ) )
+//	{
+//		F32 ooh_morph_amount = 0.0f;
+//		F32 aah_morph_amount = 0.0f;
+//
+//		mVoiceVisualizer->lipSyncOohAah( ooh_morph_amount, aah_morph_amount );
+//
+//		if( mOohMorph )
+//		{
+//			F32 ooh_weight = mOohMorph->getMinWeight()
+//				+ ooh_morph_amount * (mOohMorph->getMaxWeight() - mOohMorph->getMinWeight());
+//
+//			mOohMorph->setWeight( ooh_weight, FALSE );
+//		}
+//
+//		if( mAahMorph )
+//		{
+//			F32 aah_weight = mAahMorph->getMinWeight()
+//				+ aah_morph_amount * (mAahMorph->getMaxWeight() - mAahMorph->getMinWeight());
+//
+//			mAahMorph->setWeight( aah_weight, FALSE );
+//		}
+//
+//		mLipSyncActive = true;
+//		LLCharacter::updateVisualParams();
+//		dirtyMesh();
+//	}
+//}
 
 void LLVOAvatar::idleUpdateLoadingEffect()
 {
