@@ -347,6 +347,7 @@ void LLViewerImage::init(bool firstinit)
 	mForceToSaveRawImage  = FALSE ;
 	mSavedRawDiscardLevel = -1 ;
 	mDesiredSavedRawDiscardLevel = -1 ;
+	mCanUseHTTP = true; //default on if cap/settings allows us
 	
 	mNumFaces = 0 ;
 	mNumVolumes = 0;
@@ -1197,7 +1198,7 @@ bool LLViewerImage::updateFetch()
 		// bypass texturefetch directly by pulling from LLTextureCache
 		bool fetch_request_created = false;
 		fetch_request_created = LLAppViewer::getTextureFetch()->createRequest(mUrl, getID(),getTargetHost(), decode_priority,
-																			  w, h, c, desired_discard, needsAux());
+																			  w, h, c, desired_discard, needsAux(), mCanUseHTTP);
 
 		if (fetch_request_created)
 		{				
@@ -1276,7 +1277,7 @@ BOOL LLViewerImage::forceFetch()
 		c = getComponents();
 	}
 	fetch_request_created = LLAppViewer::getTextureFetch()->createRequest(mUrl, getID(),getTargetHost(), maxDecodePriority(),
-																		  w, h, c, desired_discard, needsAux());
+																		  w, h, c, desired_discard, needsAux(), mCanUseHTTP);
 
 	if (fetch_request_created)
 	{

@@ -327,6 +327,8 @@ public:
 	const ll_volume_list_t* getVolumeList() const { return &mVolumeList; }
 	void reorganizeVolumeList() ;
 
+	void        setCanUseHTTP(bool can_use_http) { mCanUseHTTP = can_use_http; }
+
 private:
 	/*virtual*/ void cleanup(); // Cleanup the LLViewerImage (so we can reinitialize it)
 
@@ -433,6 +435,8 @@ private:
 	ll_volume_list_t  mVolumeList;
 	U32				  mNumVolumes;
 	LLFrameTimer	  mLastVolumeListUpdateTimer;
+
+	bool mCanUseHTTP; // can this image be fetched by http
 
 public:
 	static const U32 sCurrentFileVersion;
