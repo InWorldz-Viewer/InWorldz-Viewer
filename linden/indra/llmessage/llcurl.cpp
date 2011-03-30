@@ -781,6 +781,7 @@ bool LLCurlRequest::getByteRange(const std::string& url,
 	if (length > 0)
 	{
 		std::string range = llformat("Range: bytes=%d-%d", offset,offset+length-1);
+		//llinfos << "http url: " << url << " " << range << llendl;
 		easy->slist_append(range.c_str());
 	}
 	easy->setHeaders();

@@ -934,9 +934,20 @@ bool LLTextureFetchWorker::doWork(S32 param)
 					const S32 HTTP_MAX_RETRY_COUNT = 3;
 					max_attempts = HTTP_MAX_RETRY_COUNT + 1;
 					++mHTTPFailCount;
-					llinfos << "HTTP GET failed for: " << mUrl
-							<< " Status: " << mGetStatus << " Reason: '" << mGetReason << "'"
-							<< " Attempt:" << mHTTPFailCount+1 << "/" << max_attempts << llendl;
+					if (mGetStatus == 416) 
+					{
+						llwarns << "Requested range unsatisfiable (416): " << mUrl 
+								<< " Requested size: " << mRequestedSize 
+								<< " Attempt:" << mHTTPFailCount << "/" << max_attempts 
+								<< llendl;
+
+					}
+					else
+					{
+						llinfos << "HTTP GET failed for: " << mUrl
+								<< " Status: " << mGetStatus << " Reason: '" << mGetReason << "'"
+								<< " Attempt:" << mHTTPFailCount << "/" << max_attempts << llendl;
+					}
 				}
 
 				if (mHTTPFailCount >= max_attempts)
