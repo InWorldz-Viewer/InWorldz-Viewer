@@ -2140,8 +2140,8 @@ bool LLAppViewer::initConfiguration()
 
 void LLAppViewer::checkForCrash(void)
 {
-    
-#if LL_SEND_CRASH_REPORTS
+// Disable crash report sending until we have someplace to send 'em -- MC
+#if 0//LL_SEND_CRASH_REPORTS
 	//*NOTE:Mani The current state of the crash handler has the MacOSX
 	// sending all crash reports as freezes, in order to let 
 	// the MacOSX CrashRepoter generate stacks before spawning the 
