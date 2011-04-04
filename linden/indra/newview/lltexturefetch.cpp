@@ -408,7 +408,7 @@ LLTextureFetchWorker::LLTextureFetchWorker(LLTextureFetch* fetcher,
 	  mBuffer(NULL),
 	  mBufferSize(0),
 	  mRequestedSize(0),
-	  mDesiredSize(FIRST_PACKET_SIZE),
+	  mDesiredSize(TEXTURE_CACHE_ENTRY_SIZE),
 	  mFileSize(0),
 	  mCachedSize(0),
 	  mLoaded(FALSE),
@@ -453,11 +453,11 @@ LLTextureFetchWorker::~LLTextureFetchWorker()
 // 			<< " Desired=" << mDesiredDiscard << llendl;
 	llassert_always(!haveWork());
 	lockWorkMutex();
-	if (mCacheReadHandle != LLTextureCache::nullHandle())
+	if (mCacheReadHandle != LLTextureCache::nullHandle() && mFetcher->mTextureCache)
 	{
 		mFetcher->mTextureCache->readComplete(mCacheReadHandle, true);
 	}
-	if (mCacheWriteHandle != LLTextureCache::nullHandle())
+	if (mCacheWriteHandle != LLTextureCache::nullHandle() && mFetcher->mTextureCache)
 	{
 		mFetcher->mTextureCache->writeComplete(mCacheWriteHandle, true);
 	}
@@ -542,6 +542,7 @@ void LLTextureFetchWorker::setDesiredDiscard(S32 discard, S32 size)
 		mDesiredSize = size;
 		prioritize = true;
 	}
+	mDesiredSize = llmax(mDesiredSize, TEXTURE_CACHE_ENTRY_SIZE);
 	if ((prioritize && mState == INIT) || mState == DONE)
 	{
 		mState = INIT;
@@ -624,6 +625,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 
 	if (mState == INIT)
 	{
+		mRawImage = NULL ;
 		mRequestedDiscard = -1;
 		mLoadedDiscard = -1;
 		mDecodedDiscard = -1;
@@ -642,6 +644,9 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		mCacheReadHandle = LLTextureCache::nullHandle();
 		mCacheWriteHandle = LLTextureCache::nullHandle();
 		mState = LOAD_FROM_TEXTURE_CACHE;
+		mDesiredSize = llmax(mDesiredSize, TEXTURE_CACHE_ENTRY_SIZE); // min desired size is TEXTURE_CACHE_ENTRY_SIZE
+		LL_DEBUGS("Texture") << mID << ": Priority: " << llformat("%8.0f",mImagePriority)
+							 << " Desired Discard: " << mDesiredDiscard << " Desired Size: " << mDesiredSize << LL_ENDL;
 		// fall through
 	}
 
@@ -713,7 +718,6 @@ bool LLTextureFetchWorker::doWork(S32 param)
 
 	if (mState == CACHE_POST)
 	{
-		mDesiredSize = llmax(mDesiredSize, FIRST_PACKET_SIZE);
 		mCachedSize = mFormattedImage.notNull() ? mFormattedImage->getDataSize() : 0;
 		// Successfully loaded
 		if ((mCachedSize >= mDesiredSize) || mHaveAllData)
@@ -817,6 +821,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		}
 		if (processSimulatorPackets())
 		{
+			LL_DEBUGS("Texture") << mID << ": Loaded from Sim. Bytes: " << mFormattedImage->getDataSize() << LL_ENDL;
 			mFetcher->removeFromNetworkQueue(this, false);
 			if (mFormattedImage.isNull() || !mFormattedImage->getDataSize())
 			{
@@ -1045,7 +1050,14 @@ bool LLTextureFetchWorker::doWork(S32 param)
 	
 	if (mState == DECODE_IMAGE)
 	{
-		llassert_always(mFormattedImage->getDataSize() > 0);
+		if (mDesiredDiscard < 0 || mFormattedImage->getDataSize() <= 0 || mLoadedDiscard < 0)
+		{
+			// We aborted, or decode entered with invalid mFormattedImage,
+			// or decode entered with invalid mLoadedDiscard: don't decode.
+			mState = DONE;
+			setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority);
+			return true;
+		}
 		setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority); // Set priority first since Responder may change it
 		mRawImage = NULL;
 		mAuxImage = NULL;
@@ -1054,6 +1066,8 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		U32 image_priority = LLWorkerThread::PRIORITY_NORMAL | mWorkPriority;
 		mDecoded  = FALSE;
 		mState = DECODE_IMAGE_UPDATE;
+		LL_DEBUGS("Texture") << mID << ": Decoding. Bytes: " << mFormattedImage->getDataSize() << " Discard: " << discard
+				<< " All Data: " << mHaveAllData << LL_ENDL;
 		mDecodeHandle = mFetcher->mImageDecodeThread->decodeImage(mFormattedImage, image_priority, discard, mNeedsAux,
 																  new DecodeResponder(mFetcher, mID, this));
 		// fall though
@@ -1065,6 +1079,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		{
 			if (mDecodedDiscard < 0)
 			{
+				LL_DEBUGS("Texture") << mID << ": Failed to Decode." << LL_ENDL;
 				if (mCachedSize > 0 && !mInLocalCache && mRetryAttempt == 0)
 				{
 					// Cache file should be deleted, try again
@@ -1084,6 +1099,9 @@ bool LLTextureFetchWorker::doWork(S32 param)
 			}
 			else
 			{
+				llassert_always(mRawImage.notNull());
+				LL_DEBUGS("Texture") << mID << ": Decoded. Discard: " << mDecodedDiscard
+						<< " Raw Image: " << llformat("%dx%d",mRawImage->getWidth(),mRawImage->getHeight()) << LL_ENDL;
 				setPriority(LLWorkerThread::PRIORITY_HIGH | mWorkPriority);
 				mState = WRITE_TO_CACHE;
 			}
@@ -1447,17 +1465,18 @@ void LLTextureFetchWorker::callbackDecoded(bool success, LLImageRaw* raw, LLImag
 		mRawImage = raw;
 		mAuxImage = aux;
 		mDecodedDiscard = mFormattedImage->getDiscardLevel();
-// 		llinfos << mID << " : DECODE FINISHED. DISCARD: " << mDecodedDiscard << llendl;
+ 		LL_DEBUGS("Texture") << mID << ": Decode Finished. Discard: " << mDecodedDiscard
+							 << " Raw Image: " << llformat("%dx%d",mRawImage->getWidth(),mRawImage->getHeight()) << LL_ENDL;
 	}
 	else
 	{
 		if (mFormattedImage.notNull())
 		{
-			LL_WARNS("http-texture") << "DECODE FAILED: id = " << mID << ", Discard = " << (S32)mFormattedImage->getDiscardLevel() << LL_ENDL;
+			LL_WARNS("Texture") << "DECODE FAILED: id = " << mID << ", Discard = " << (S32)mFormattedImage->getDiscardLevel() << LL_ENDL;
 		}
 		else
 		{
-			LL_WARNS("http-texture") << "DECODE FAILED: id = " << mID << ", mFormattedImage is Null!" << LL_ENDL;
+			LL_WARNS("Texture") << "DECODE FAILED: id = " << mID << ", mFormattedImage is Null!" << LL_ENDL;
 		}
 		removeFromCache();
 		mDecodedDiscard = -1; // Redundant, here for clarity and paranoia
@@ -1570,7 +1589,7 @@ bool LLTextureFetch::createRequest(const std::string& url, const LLUUID& id, con
 	}
 	else
 	{
-		desired_size = FIRST_PACKET_SIZE;
+		desired_size = TEXTURE_CACHE_ENTRY_SIZE;
 		desired_discard = MAX_DISCARD_LEVEL;
 	}
 
@@ -1704,6 +1723,7 @@ bool LLTextureFetch::getRequestFinished(const LLUUID& id, S32& discard_level,
 			raw = worker->mRawImage; worker->mRawImage = NULL;
 			aux = worker->mAuxImage; worker->mAuxImage = NULL;
 			res = true;
+			LL_DEBUGS("Texture") << id << ": Request Finished. State: " << worker->mState << " Discard: " << discard_level << LL_ENDL;
 		}
 		else
 		{
