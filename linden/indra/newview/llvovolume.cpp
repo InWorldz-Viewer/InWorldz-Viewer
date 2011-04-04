@@ -774,6 +774,9 @@ void LLVOVolume::sculpt()
 					   
 			sculpt_data = raw_image->getData();
 		}
+
+		//llinfos << "Sculpt Width: " << sculpt_width << " Height: " << sculpt_height << " Components: " << (S32)sculpt_components << " Current Discard Level: " << current_discard << llendl;
+
 		getVolume()->sculpt(sculpt_width, sculpt_height, sculpt_components, sculpt_data, discard_level);
 
 		//notify rebuild any other VOVolumes that reference this sculpty volume
