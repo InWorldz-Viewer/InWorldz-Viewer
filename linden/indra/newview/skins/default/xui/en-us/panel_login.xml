@@ -98,14 +98,14 @@
   <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
        bottom="44" drop_shadow_visible="true" follows="right|bottom"
        font="SansSerifSmall" font-style="UNDERLINE" h_pad="0" halign="right" height="16"
-       left="-210" mouse_opaque="true" name="create_new_account_text" v_pad="0" width="200"
+       left="-170" mouse_opaque="true" name="create_new_account_text" v_pad="0" width="160"
        hover="true" hover_color="50 115 185">
     Create new account?
   </text>
   <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
        bottom_delta="-20" drop_shadow_visible="true" follows="right|bottom"
        font="SansSerifSmall" font-style="UNDERLINE" h_pad="0" halign="right" height="16"
-       left_delta="0" mouse_opaque="true" name="forgot_password_text" v_pad="0" width="200"
+       left_delta="0" mouse_opaque="true" name="forgot_password_text" v_pad="0" width="160"
        hover="true" hover_color="50 115 185">
     Forgot name or password?
   </text>
