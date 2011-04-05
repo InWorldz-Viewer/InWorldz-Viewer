@@ -1237,13 +1237,19 @@ bool LLAppViewer::cleanup()
 	llinfos << "Settings patched up" << llendflush;
 
 	// delete some of the files left around in the cache.
+	if (!gSavedSettings.getBOOL("KeepUnpackedCacheFiles"))
+	{
+		LL_INFOS("AppCache") << "Purging unpacked files..." << llendl;
+		removeCacheFiles("*.wav");
+		removeCacheFiles("*.lso");
+		removeCacheFiles("*.dsf");
+		removeCacheFiles("*.bodypart");
+		removeCacheFiles("*.clothing");
+	}
 	removeCacheFiles("*.tmp");
 	removeCacheFiles("*.out");
-	removeCacheFiles("*.bodypart");
-	removeCacheFiles("*.clothing");
 
-	llinfos << "Cache files removed" << llendflush;
-
+	llinfos << "Temporary cache files removed" << llendflush;
 
 	cleanup_menus();
 
@@ -3084,10 +3090,6 @@ void LLAppViewer::purgeCache()
 	LLAppViewer::getTextureCache()->purgeCache(LL_PATH_CACHE);
 	std::string mask = gDirUtilp->getDirDelimiter() + "*.*";
 	gDirUtilp->deleteFilesInDir(gDirUtilp->getExpandedFilename(LL_PATH_CACHE,""),mask);
-	LL_INFOS("AppCache") << "Purging cached sounds..." << llendl;
-	removeCacheFiles("*.wav");
-	removeCacheFiles("*.lso");
-	removeCacheFiles("*.dsf");
 }
 
 const std::string& LLAppViewer::getSecondLifeTitle() const
