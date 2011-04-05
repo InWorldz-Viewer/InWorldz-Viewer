@@ -772,14 +772,14 @@ void LLPanelLogin::refreshLocation( bool force_visible )
 		combo->setCurrentByIndex( login_last ? 1 : 0 );
 	}
 
-	BOOL show_start = TRUE;
+	BOOL hide_start = TRUE;
 
 	if ( ! force_visible )
-		show_start = gSavedSettings.getBOOL("ShowStartLocation");
+		hide_start = gSavedSettings.getBOOL("HideStartLocation");
 
 
-	sInstance->childSetVisible("start_location_combo", show_start);
-	sInstance->childSetVisible("start_location_text", show_start);
+	sInstance->childSetVisible("start_location_combo", !hide_start);
+	sInstance->childSetVisible("start_location_text", !hide_start);
 
 	BOOL show_server = sInstance->mShowServerCombo || gSavedSettings.getBOOL("ForceShowGrid");
 	sInstance->childSetVisible("server_combo", show_server);

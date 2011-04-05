@@ -85,7 +85,7 @@ BOOL LLPanelGeneral::postBuild()
 		combo->setCurrentByIndex( 0 );
 	}
 
-	childSetValue("show_location_checkbox", gSavedSettings.getBOOL("ShowStartLocation"));
+	childSetValue("hide_location_checkbox", gSavedSettings.getBOOL("HideStartLocation"));
 	childSetValue("show_all_title_checkbox", gSavedSettings.getBOOL("RenderHideGroupTitleAll"));
 	childSetValue("language_is_public", gSavedSettings.getBOOL("LanguageIsPublic"));
 
@@ -157,7 +157,7 @@ void LLPanelGeneral::apply()
 	}
 	LLPanelLogin::refreshLocation(false);
 
-	gSavedSettings.setBOOL("ShowStartLocation", childGetValue("show_location_checkbox"));
+	gSavedSettings.setBOOL("HideStartLocation", childGetValue("hide_location_checkbox"));
 	gSavedSettings.setBOOL("RenderHideGroupTitleAll", childGetValue("show_all_title_checkbox"));
 	gSavedSettings.setBOOL("LanguageIsPublic", childGetValue("language_is_public"));
 	gSavedSettings.setBOOL("RenderNameHideSelf", childGetValue("show_my_name_checkbox"));

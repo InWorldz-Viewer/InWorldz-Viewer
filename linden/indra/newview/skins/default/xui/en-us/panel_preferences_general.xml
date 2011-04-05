@@ -18,8 +18,8 @@
   </combo_box>
   <check_box bottom="-44" enabled="true" follows="left|top"
        font="SansSerifSmall" height="16" initial_value="true"
-       label="Show Start Location on Login Screen" left="151" mouse_opaque="true"
-       name="show_location_checkbox" radio_style="false" width="256" />
+       label="Hide Start Location on Login Screen" left="151" mouse_opaque="true"
+       name="hide_location_checkbox" radio_style="false" width="256" />
 	<combo_box bottom_delta="-25" follows="left|top" height="18" left="155"
 	     mouse_opaque="true" name="fade_out_combobox" width="146">
 		<combo_item name="Never" value="Never">
