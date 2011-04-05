@@ -2875,9 +2875,10 @@ bool LLAppViewer::initCache()
 		if(!read_only)
 		{
 			gSavedSettings.setS32("LocalCacheVersion", cache_version);
+			// Purge cache if it belongs to an old version
+			mPurgeCache = true;
 		}
 	}
-
 
 	if(!read_only)
 	{
