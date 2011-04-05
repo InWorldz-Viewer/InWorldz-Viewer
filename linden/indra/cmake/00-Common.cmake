@@ -30,9 +30,15 @@ if (WINDOWS)
   set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
       "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Od /Zi /MD"
       CACHE STRING "C++ compiler release-with-debug options" FORCE)
-  set(CMAKE_CXX_FLAGS_RELEASE
+  if (MSVC80)
+      set(CMAKE_CXX_FLAGS_RELEASE
+      "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ob2 /Oi /Ot /GT /Zi /MD"
+      CACHE STRING "C++ compiler release options" FORCE)
+  else (MSVC80)
+      set(CMAKE_CXX_FLAGS_RELEASE
       "${CMAKE_CXX_FLAGS_RELEASE} ${LL_CXX_FLAGS} /O2 /Zi /MD"
       CACHE STRING "C++ compiler release options" FORCE)
+  endif (MSVC80)
 
   set(CMAKE_CXX_STANDARD_LIBRARIES "")
   set(CMAKE_C_STANDARD_LIBRARIES "")
@@ -48,6 +54,7 @@ if (WINDOWS)
       /Zc:forScope
       /nologo
       /Oy-
+      /MP
       )
      
   if(MSVC80 OR MSVC90)
