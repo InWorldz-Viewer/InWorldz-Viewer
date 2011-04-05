@@ -5961,12 +5961,13 @@ void LLVOAvatar::requestLayerSetUpdate(ETextureIndex index )
 	}
 }
 
-void LLVOAvatar::setParent(LLViewerObject* parent)
+BOOL LLVOAvatar::setParent(LLViewerObject* parent)
 {
+	BOOL ret ;
 	if (parent == NULL)
 	{
 		getOffObject();
-		LLViewerObject::setParent(parent);
+		ret = LLViewerObject::setParent(parent);
 		if (isSelf())
 		{
 			gAgent.resetCamera();
@@ -5974,9 +5975,13 @@ void LLVOAvatar::setParent(LLViewerObject* parent)
 	}
 	else
 	{
-		LLViewerObject::setParent(parent);
-		sitOnObject(parent);
+		ret = LLViewerObject::setParent(parent);
+		if (ret)
+		{
+			sitOnObject(parent);
+		}
 	}
+	return ret ;
 }
 
 void LLVOAvatar::addChild(LLViewerObject *childp)
