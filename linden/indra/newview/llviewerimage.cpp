@@ -1060,7 +1060,7 @@ bool LLViewerImage::updateFetch()
 		else
 		{
 			mFetchState = LLAppViewer::getTextureFetch()->getFetchState(mID, mDownloadProgress, mRequestedDownloadPriority,
-																		mFetchPriority, mFetchDeltaTime, mRequestDeltaTime);
+																		mFetchPriority, mFetchDeltaTime, mRequestDeltaTime, mCanUseHTTP);
 		}
 		
 		// We may have data ready regardless of whether or not we are finished (e.g. waiting on write)
@@ -1207,7 +1207,7 @@ bool LLViewerImage::updateFetch()
 			mRequestedDiscardLevel = desired_discard;
 
 			mFetchState = LLAppViewer::getTextureFetch()->getFetchState(mID, mDownloadProgress, mRequestedDownloadPriority,
-																		mFetchPriority, mFetchDeltaTime, mRequestDeltaTime);
+																		mFetchPriority, mFetchDeltaTime, mRequestDeltaTime, mCanUseHTTP);
 		}	
 
 		// if createRequest() failed, we're finishing up a request for this UUID,
@@ -1289,7 +1289,7 @@ BOOL LLViewerImage::forceFetch()
 		mRequestedDiscardLevel = desired_discard ;
 
 		mFetchState = LLAppViewer::getTextureFetch()->getFetchState(mID, mDownloadProgress, mRequestedDownloadPriority,
-																	mFetchPriority, mFetchDeltaTime, mRequestDeltaTime);
+																	mFetchPriority, mFetchDeltaTime, mRequestDeltaTime, mCanUseHTTP);
 	}	
 
 	return mIsFetching ? true : false;
@@ -1297,6 +1297,8 @@ BOOL LLViewerImage::forceFetch()
 
 void LLViewerImage::setIsMissingAsset()
 {
+	//spammy while IMG_DEFAULT is missing... GG LL
+	/*
 	if (mUrl.empty())
 	{
 		llwarns << mID << ": Marking image as missing" << llendl;
@@ -1305,6 +1307,7 @@ void LLViewerImage::setIsMissingAsset()
 	{
 		llwarns << mUrl << ": Marking image as missing" << llendl;
 	}
+	*/
 	if (mHasFetcher)
 	{
 		LLAppViewer::getTextureFetch()->deleteRequest(getID(), true);
@@ -1667,6 +1670,12 @@ void LLViewerImage::saveRawImage()
 	}
 
 	mSavedRawDiscardLevel = mRawDiscardLevel ;
+
+	if (!mRawImage->getData()) //KC: sanity check
+	{
+		return ;
+	}
+
 	mSavedRawImage = new LLImageRaw(mRawImage->getData(), mRawImage->getWidth(), mRawImage->getHeight(), mRawImage->getComponents()) ;
 
 	if(mSavedRawDiscardLevel <= mDesiredSavedRawDiscardLevel)
@@ -1692,15 +1701,17 @@ void LLViewerImage::destroySavedRawImage()
 
 void LLViewerImage::destroyRawImage()
 {
-	if (mRawImage.notNull()) sRawCount--;
 	if (mAuxRawImage.notNull()) sAuxCount--;
 
-	if(mForceToSaveRawImage)
+	if (mRawImage.notNull())
 	{
-		saveRawImage() ;
+		sRawCount--;
+		if(mForceToSaveRawImage)
+		{
+			saveRawImage() ;
+		}
+		setCachedRawImage() ;
 	}
-	
-	setCachedRawImage() ;
 
 	mRawImage = NULL;
 	mAuxRawImage = NULL;
@@ -1770,7 +1781,7 @@ void LLViewerImage::checkCachedRawSculptImage()
 {
 	if(mCachedRawImageReady && mCachedRawDiscardLevel > 0)
 	{
-		if(getDiscardLevel() != 0)
+		if(mCachedRawImage->getWidth() * mCachedRawImage->getHeight() < MAX_CACHED_RAW_SCULPT_IMAGE_AREA)
 		{
 			mCachedRawImageReady = FALSE ;
 		}

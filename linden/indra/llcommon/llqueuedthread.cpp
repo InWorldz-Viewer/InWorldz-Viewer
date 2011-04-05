@@ -118,7 +118,10 @@ S32 LLQueuedThread::updateQueue(U32 max_time_ms)
 	if (mThreaded)
 	{
 		pending = getPending();
-		unpause();
+		if(pending > 0)
+		{
+			unpause();
+		}
 	}
 	else
 	{
