@@ -203,7 +203,8 @@ LLViewerObject::LLViewerObject(const LLUUID &id, const LLPCode pcode, LLViewerRe
 	mJointInfo(NULL),
 	mState(0),
 	mMedia(NULL),
-	mClickAction(0)
+	mClickAction(0),
+	mSculptSurfaceArea(0.0)
 {
 	if(!is_global)
 	{
@@ -3995,7 +3996,7 @@ LLBBox LLViewerObject::getBoundingBoxAgent() const
 	LLQuaternion rot;
 	LLViewerObject* root_edit = (LLViewerObject*)getRootEdit();
 	LLViewerObject* avatar_parent = (LLViewerObject*)root_edit->getParent();
-	if (avatar_parent && avatar_parent->isAvatar() && root_edit->mDrawable.notNull())
+	if (avatar_parent && avatar_parent->isAvatar() && root_edit && root_edit->mDrawable.notNull())
 	{
 		LLXform* parent_xform = root_edit->mDrawable->getXform()->getParent();
 		position_agent = (getPositionEdit() * parent_xform->getWorldRotation()) + parent_xform->getWorldPosition();
@@ -4092,6 +4093,14 @@ void LLViewerObject::setDebugText(const std::string &utf8text)
 	mText->setZCompare(FALSE);
 	mText->setDoFade(FALSE);
 	updateText();
+}
+std::string LLViewerObject::getDebugText()
+{
+	if(mText)
+	{
+		return mText->getStringUTF8();
+	}
+	return "";
 }
 
 void LLViewerObject::setIcon(LLViewerImage* icon_image)
