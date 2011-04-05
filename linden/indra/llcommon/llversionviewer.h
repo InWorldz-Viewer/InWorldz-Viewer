@@ -35,8 +35,8 @@
 
 const S32 LL_VERSION_MAJOR = 1;
 const S32 LL_VERSION_MINOR = 2;
-const S32 LL_VERSION_PATCH = 5;
-const S32 LL_VERSION_BUILD = 2;
+const S32 LL_VERSION_PATCH = 6;
+const S32 LL_VERSION_BUILD = 1;
 
 const char * const LL_CHANNEL = "InWorldz Release";
 
