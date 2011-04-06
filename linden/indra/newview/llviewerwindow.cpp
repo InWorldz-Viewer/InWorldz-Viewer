@@ -2440,19 +2440,7 @@ BOOL LLViewerWindow::handleKey(KEY key, MASK mask)
 		}
 	}
 
-		// Explicit hack for debug menu.
-	if ((mask == (MASK_SHIFT | MASK_CONTROL)) &&
-		('G' == key || 'g' == key))
-	{
-		if  (LLStartUp::getStartupState() < STATE_LOGIN_CLEANUP)  //on splash page
-		{
-			BOOL visible = ! gSavedSettings.getBOOL("ForceShowGrid");
-			gSavedSettings.setBOOL("ForceShowGrid", visible);
-
-			// Initialize visibility (and don't force visibility - use prefs)
-			LLPanelLogin::refreshLocation( false );
-		}
-	}
+	// The old ctrl-shift-g login screen show grid hack was here -- MC
 
 	// Debugging view for unified notifications: CTRL-SHIFT-5
 	// *FIXME: Having this special-cased right here (just so this can be invoked from the login screen) sucks.

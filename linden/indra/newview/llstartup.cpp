@@ -2699,22 +2699,10 @@ bool login_show(LLSavedLogins const& saved_logins)
 {
 	LL_INFOS("AppInit") << "Initializing Login Screen" << LL_ENDL;
 
-	// Show server combo if there is a grid in saved_logins that isn't inworldz.
-	BOOL show_server = FALSE;
-	LLSavedLoginsList const& saved_login_entries = saved_logins.getEntries();
-	for (std::list<LLSavedLoginEntry>::const_iterator iter = saved_login_entries.begin();
-		iter != saved_login_entries.end(); ++iter)
-	{
-		if (iter->getGrid() != GRID_INFO_INWORLDZ)
-		{
-			show_server = TRUE;
-			break;
-		}
-	}
-	
 	// This creates the LLPanelLogin instance.
+	// Show server combo always -- MC
 	LLPanelLogin::show(	gViewerWindow->getVirtualWindowRect(),
-						show_server,
+						TRUE,
 						login_callback, NULL );
 
 	// Now that the LLPanelLogin instance is created,
@@ -2728,6 +2716,8 @@ bool login_show(LLSavedLogins const& saved_logins)
 	// Remember which servers are already listed.
 	std::set<EGridInfo> listed;
 	std::set<std::string> listed_name;	// Only the 'other' grids.
+
+	LLSavedLoginsList const& saved_login_entries = saved_logins.getEntries();
 
 	// Add the commandline -loginuri's to the list at the top.
 	bool have_loginuri = false;
