@@ -227,59 +227,59 @@ bool LLURLDispatcherImpl::dispatchApp(const std::string& url,
 									  LLMediaCtrl* web,
 									  bool trusted_browser)
 {
-	if (!isIZURL(url))
+	// we support legacy secondlife:///app links as well as inworldz:/// *only* in the text editor -- MC
+	if (isIZURL(url) || isSLURL(url))
 	{
-		return false;
+		LLURI uri(url);
+		LLSD pathArray = uri.pathArray();
+		pathArray.erase(0); // erase "app"
+		std::string cmd = pathArray.get(0);
+		pathArray.erase(0); // erase "cmd"
+		bool handled = LLCommandDispatcher::dispatch(
+				cmd, pathArray, uri.queryMap(), web, trusted_browser);
+		return handled;
 	}
-
-	LLURI uri(url);
-	LLSD pathArray = uri.pathArray();
-	pathArray.erase(0); // erase "app"
-	std::string cmd = pathArray.get(0);
-	pathArray.erase(0); // erase "cmd"
-	bool handled = LLCommandDispatcher::dispatch(
-			cmd, pathArray, uri.queryMap(), web, trusted_browser);
-	return handled;
+	return false;
 }
 
 // static
 bool LLURLDispatcherImpl::dispatchRegion(const std::string& url, bool right_mouse)
 {
-	if (!isIZURL(url))
+	// we support legacy SLURLs as well as IZURLs *only* in the text editor -- MC
+	if (isIZURL(url) || isSLURL(url))
 	{
-		return false;
-	}
+		// Before we're logged in, need to update the startup screen
+		// to tell the user where they are going.
+		if (LLStartUp::getStartupState() < STATE_LOGIN_CLEANUP)
+		{
+			// Parse it and stash in globals, it will be dispatched in
+			// STATE_CLEANUP.
+			LLURLSimString::setString(url);
+			// We're at the login screen, so make sure user can see
+			// the login location box to know where they are going.
+			
+			LLPanelLogin::refreshLocation( true );
+			return true;
+		}
 
-	// Before we're logged in, need to update the startup screen
-	// to tell the user where they are going.
-	if (LLStartUp::getStartupState() < STATE_LOGIN_CLEANUP)
-	{
-		// Parse it and stash in globals, it will be dispatched in
-		// STATE_CLEANUP.
-		LLURLSimString::setString(url);
-		// We're at the login screen, so make sure user can see
-		// the login location box to know where they are going.
-		
-		LLPanelLogin::refreshLocation( true );
+		std::string sim_string = stripProtocol(url);
+		std::string region_name;
+		S32 x = 128;
+		S32 y = 128;
+		S32 z = 0;
+		LLURLSimString::parse(sim_string, &region_name, &x, &y, &z);
+
+		LLFloaterURLDisplay* url_displayp = LLFloaterURLDisplay::getInstance(LLSD());
+		url_displayp->setName(region_name);
+
+		// Request a region handle by name
+		LLWorldMap::getInstance()->sendNamedRegionRequest(region_name,
+										  LLURLDispatcherImpl::regionNameCallback,
+										  url,
+										  false);	// don't teleport
 		return true;
 	}
-
-	std::string sim_string = stripProtocol(url);
-	std::string region_name;
-	S32 x = 128;
-	S32 y = 128;
-	S32 z = 0;
-	LLURLSimString::parse(sim_string, &region_name, &x, &y, &z);
-
-	LLFloaterURLDisplay* url_displayp = LLFloaterURLDisplay::getInstance(LLSD());
-	url_displayp->setName(region_name);
-
-	// Request a region handle by name
-	LLWorldMap::getInstance()->sendNamedRegionRequest(region_name,
-									  LLURLDispatcherImpl::regionNameCallback,
-									  url,
-									  false);	// don't teleport
-	return true;
+	return false;
 }
 
 /*static*/
