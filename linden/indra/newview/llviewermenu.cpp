@@ -946,6 +946,15 @@ void init_client_menu(LLMenuGL* menu)
 		menu->appendMenu( sub );
 		sub->createJumpKeys();
 	}
+	{
+		LLMenuGL* sub = NULL;
+		sub = new LLMenuGL("Admin Options");
+		sub->append(new LLMenuItemCheckGL("View Admin Options", &handle_admin_override_toggle, NULL, &check_admin_override, NULL, 'V', MASK_CONTROL | MASK_ALT));
+		sub->append(new LLMenuItemCallGL("Request Admin Status", &handle_god_mode, NULL, NULL, 'G', MASK_ALT | MASK_CONTROL));
+		sub->append(new LLMenuItemCallGL("Leave Admin Status", &handle_leave_god_mode, NULL, NULL, 'G', MASK_ALT | MASK_SHIFT | MASK_CONTROL));
+		menu->appendMenu( sub );
+		sub->createJumpKeys();
+	}
 
 	menu->appendSeparator();
 
@@ -1006,13 +1015,6 @@ void init_client_menu(LLMenuGL* menu)
 										(void*)"SaveMinidump"));
 
 	menu->append(new LLMenuItemCallGL("Debug Settings...", LLFloaterSettingsDebug::show, NULL, NULL));
-	menu->append(new LLMenuItemCheckGL("View Admin Options", &handle_admin_override_toggle, NULL, &check_admin_override, NULL, 'V', MASK_CONTROL | MASK_ALT));
-
-	menu->append(new LLMenuItemCallGL("Request Admin Status", 
-		&handle_god_mode, NULL, NULL, 'G', MASK_ALT | MASK_CONTROL));
-
-	menu->append(new LLMenuItemCallGL("Leave Admin Status", 
-		&handle_leave_god_mode, NULL, NULL, 'G', MASK_ALT | MASK_SHIFT | MASK_CONTROL));
 
 	menu->createJumpKeys();
 }
