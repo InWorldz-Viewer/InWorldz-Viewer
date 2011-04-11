@@ -146,8 +146,8 @@ extern LLPieMenu	*gPieSelf;
 extern LLPieMenu	*gPieAvatar;
 extern LLPieMenu	*gPieObject;
 extern LLPieMenu	*gPieAttachment;
+extern LLPieMenu	*gPieHUD;
 extern LLPieMenu	*gPieLand;
-extern LLPieMenu*	gPieRate;
 
 // Pie menus
 extern LLPieMenu	*gPieSelfSimple;

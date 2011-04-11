@@ -268,6 +268,7 @@ LLPieMenu	*gPieSelf	= NULL;
 LLPieMenu	*gPieAvatar = NULL;
 LLPieMenu	*gPieObject = NULL;
 LLPieMenu	*gPieAttachment = NULL;
+LLPieMenu	*gPieHUD = NULL;
 LLPieMenu	*gPieLand	= NULL;
 
 // local constants
@@ -280,7 +281,6 @@ const std::string SAVE_INTO_TASK_INVENTORY("Save Object Back to Object Contents"
 LLMenuGL* gAttachSubMenu = NULL;
 LLMenuGL* gDetachSubMenu = NULL;
 LLMenuGL* gTakeOffClothes = NULL;
-LLPieMenu* gPieRate = NULL;
 LLPieMenu* gAttachScreenPieMenu = NULL;
 LLPieMenu* gAttachPieMenu = NULL;
 LLPieMenu* gAttachBodyPartPieMenus[8];
@@ -622,11 +622,12 @@ void init_menus()
 
 	gAttachScreenPieMenu = gMenuHolder->getChild<LLPieMenu>("Object Attach HUD");
 	gAttachPieMenu = gMenuHolder->getChild<LLPieMenu>("Object Attach");
-	gPieRate = gMenuHolder->getChild<LLPieMenu>("Rate Menu");
 
 	gPieAttachment = LLUICtrlFactory::getInstance()->buildPieMenu("menu_pie_attachment.xml", gMenuHolder);
 
 	gPieLand = LLUICtrlFactory::getInstance()->buildPieMenu("menu_pie_land.xml", gMenuHolder);
+
+	gPieHUD = LLUICtrlFactory::getInstance()->buildPieMenu("menu_pie_hud.xml", gMenuHolder);
 
 	///
 	/// set up the colors
@@ -638,6 +639,7 @@ void init_menus()
 	gPieAvatar->setBackgroundColor( pie_color );
 	gPieObject->setBackgroundColor( pie_color );
 	gPieAttachment->setBackgroundColor( pie_color );
+	gPieHUD->setBackgroundColor( pie_color );
 	gPieLand->setBackgroundColor( pie_color );
 
 	color = gColors.getColor( "MenuPopupBgColor" );
@@ -1544,6 +1546,9 @@ void cleanup_menus()
 
 	delete gPieAttachment;
 	gPieAttachment = NULL;
+
+	delete gPieHUD;
+	gPieHUD = NULL;
 
 	delete gPieLand;
 	gPieLand = NULL;
