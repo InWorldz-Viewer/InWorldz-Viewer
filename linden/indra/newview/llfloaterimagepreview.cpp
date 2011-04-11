@@ -60,7 +60,7 @@
 #include "llstring.h"
 
 //static
-S32 LLFloaterImagePreview::sUploadAmount = 10;
+S32 LLFloaterImagePreview::sUploadAmount = 0;
 
 const S32 PREVIEW_BORDER_WIDTH = 2;
 const S32 PREVIEW_RESIZE_HANDLE_SIZE = S32(RESIZE_HANDLE_WIDTH * OO_SQRT2) + PREVIEW_BORDER_WIDTH;
