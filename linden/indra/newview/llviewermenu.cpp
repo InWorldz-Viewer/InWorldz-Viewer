@@ -445,6 +445,7 @@ void dump_inventory(void*);
 void edit_ui(void*);
 void toggle_visibility(void*);
 BOOL get_visibility(void*);
+void reload_linden_balance(void*);
 
 // Avatar Pie menu
 void request_friendship(const LLUUID& agent_id);
@@ -1073,6 +1074,7 @@ void init_debug_ui_menu(LLMenuGL* menu)
 {
 	menu->append(new LLMenuItemCheckGL("Rotate Mini-Map", menu_toggle_control, NULL, menu_check_control, (void*)"MiniMapRotate"));
 	menu->append(new LLMenuItemCheckGL("Use default system color picker", menu_toggle_control, NULL, menu_check_control, (void*)"UseDefaultColorPicker"));
+	menu->append(new LLMenuItemCallGL("Reload I'z$ balance", &reload_linden_balance, NULL, NULL, 'B', MASK_CONTROL | MASK_ALT));
 	menu->appendSeparator();
 
 	// commented out until work is complete: DEV-32268
@@ -5422,6 +5424,11 @@ class LLObjectEnableSitOrStand : public view_listener_t
 		return true;
 	}
 };
+
+void reload_linden_balance(void*)
+{
+	LLStatusBar::sendMoneyBalanceRequest();
+}
 
 void edit_ui(void*)
 {
