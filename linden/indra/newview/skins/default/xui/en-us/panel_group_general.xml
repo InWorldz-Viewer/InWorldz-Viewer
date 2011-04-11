@@ -93,11 +93,11 @@ Hover your mouse over the options for more help.
 		     max_length="5" mouse_opaque="true" name="check_enrollment_fee"
 		     radio_style="false" 
 		     tool_tip="Sets whether to require an enrollment fee to join the group."
-		     width="95" />
+		     width="110" />
 		<spinner bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 		     bottom_delta="2" decimal_digits="0" drop_shadow_visible="true"
 		     follows="left|top" font="SansSerif" h_pad="0" halign="left" height="16"
-		     increment="1" label_width="10" left_delta="116" max_val="99999" min_val="0"
+		     increment="1" label_width="10" left_delta="130" max_val="99999" min_val="0"
 		     mouse_opaque="true" name="spin_enrollment_fee" right_delta="170"
 		     tool_tip="New members must pay this fee to join the group when   Enrollment Fee is checked."
 		     v_pad="0" width="65" />
