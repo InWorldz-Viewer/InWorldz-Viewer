@@ -175,6 +175,7 @@ public:
 
 	//========================================================================
 	
+	void			getAllData(std::vector<LLScrollListItem*>& item_list) const;
 	void*			getCurrentUserdata();
 
 	void			setPrearrangeCallback( void (*cb)(LLUICtrl*,void*) ) { mPrearrangeCallback = cb; }
