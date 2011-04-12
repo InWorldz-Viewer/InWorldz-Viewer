@@ -1759,11 +1759,6 @@ bool LLAppViewer::initConfiguration()
 
 	gSavedSettings.setString("VersionChannelName", LL_CHANNEL);
 
-#ifndef	LL_RELEASE_FOR_DOWNLOAD
-        gSavedSettings.setBOOL("ShowConsoleWindow", TRUE);
-        gSavedSettings.setBOOL("AllowMultipleViewers", TRUE);
-#endif
-
 	//*FIX:Mani - Set default to disabling watchdog mainloop 
 	// timeout for mac and linux. There is no call stack info 
 	// on these platform to help debug.
