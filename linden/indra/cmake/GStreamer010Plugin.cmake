@@ -11,10 +11,10 @@ else (STANDALONE)
 
   # Possibly libxml and glib should have their own .cmake file instead...
   use_prebuilt_binary(gstreamer)	# includes glib, libxml, and iconv on Windows
-  use_prebuilt_binary(gstreamer-plugins)
   set(GSTREAMER010_FOUND ON FORCE BOOL)
   set(GSTREAMER010_PLUGINS_BASE_FOUND ON FORCE BOOL)
   if (WINDOWS)
+	use_prebuilt_binary(gstreamer-plugins) # needed for macs as well, though!
     set(GSTREAMER010_INCLUDE_DIRS
 		${LIBS_PREBUILT_DIR}/include/gstreamer-0.10
 		${LIBS_PREBUILT_DIR}/include/glib
