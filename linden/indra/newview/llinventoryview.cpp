@@ -619,7 +619,7 @@ LLInventoryView::~LLInventoryView( void )
 
 void LLInventoryView::draw()
 {
- 	if (LLInventoryModel::isEverythingFetched())
+ 	if (!LLInventoryModel::backgroundFetchActive())
 	{
 		LLLocale locale(LLLocale::USER_LOCALE);
 		std::ostringstream title;
