@@ -98,10 +98,12 @@ private:
 	LLPanelDirEvents* mEventsPanel;
 	LLPanelDirLand* mLandPanel;
 
+	/* We won't be using these in IW at this time -- MC
 	static void* createFindAll(void* userdata);
+	static void* createShowcase(void* userdata);*/
+
 	static void* createClassified(void* userdata);
 	static void* createEvents(void* userdata);
-	static void* createShowcase(void* userdata);
 	static void* createPlaces(void* userdata);
 	static void* createLand(void* userdata);
 	static void* createPeople(void* userdata);

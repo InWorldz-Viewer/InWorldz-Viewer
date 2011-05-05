@@ -157,13 +157,14 @@ LLFloaterDirectory::~LLFloaterDirectory()
 	gSavedSettings.setBOOL("ShowDirectory", FALSE);
 }
 
+/* We won't be using these in IW at this time -- MC
 // static
 void *LLFloaterDirectory::createFindAll(void* userdata)
 {
 	LLFloaterDirectory *self = (LLFloaterDirectory*)userdata;
 	self->mFindAllPanel = LLPanelDirFindAllInterface::create(self);
 	return self->mFindAllPanel;
-}
+}*/
 
 // static
 void* LLFloaterDirectory::createClassified(void* userdata)
@@ -181,12 +182,13 @@ void* LLFloaterDirectory::createEvents(void* userdata)
 	return self->mEventsPanel;
 }
 
+/* We won't be using these in IW at this time -- MC
 // static
 void* LLFloaterDirectory::createShowcase(void* userdata)
 {
 	LLFloaterDirectory *self = (LLFloaterDirectory*)userdata;
 	return new LLPanelDirPopular("showcase_panel", self);
-}
+}*/
 
 // static
 void* LLFloaterDirectory::createPlaces(void* userdata)
@@ -428,7 +430,8 @@ void LLFloaterDirectory::toggleFind(void*)
 	}
 	else
 	{
-		sInstance->close();
+		// don't close() that way we save search results -- MC
+		sInstance->setVisible(FALSE);
 	}
 }
 
@@ -452,7 +455,8 @@ void LLFloaterDirectory::toggleEvents(void*)
 		LLPanel *current_panel = sInstance->childGetVisibleTab("Directory Tabs");
 		if (current_panel == sInstance->mEventsPanel)
 		{
-			sInstance->close();
+			// don't close() that way we save search results -- MC
+			sInstance->setVisible(FALSE);
 		}
 		else
 		{
@@ -466,7 +470,8 @@ void LLFloaterDirectory::hide(void*)
 {
 	if (sInstance)
 	{
-		sInstance->close();
+		// don't close() that way we save search results -- MC
+		sInstance->setVisible(FALSE);
 	}
 }
 
@@ -479,9 +484,9 @@ void LLFloaterDirectory::setVisible(BOOL visible)
 
 void LLFloaterDirectory::onClose(bool app_quitting)
 {
-	LLFloater::onClose(app_quitting);
+	//LLFloater::onClose(app_quitting);
 
-	//setVisible(FALSE); //meaning you hide 3 web browsers - one SLPlugin each
+	setVisible(FALSE); //meaning you hide 3 web browsers - one SLPlugin each (if we ever use the browser here) -- MC
 }
 
 // static
