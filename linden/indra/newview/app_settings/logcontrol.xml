@@ -52,7 +52,7 @@
 							<!--<string>APR</string>-->
 							<!--<string>AudioEngine</string>-->
               <!--<string>InitInfo</string>-->
-              <!--<string>Inventory</string>-->
+              <string>Inventory</string>
               <!--<string>isOwnedSelf</string>-->
               <!--<string>MarkerFile</string>-->
 							<!--<string>MediaImpl</string>-->
