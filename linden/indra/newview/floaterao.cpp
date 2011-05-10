@@ -81,6 +81,11 @@ public:
 						text->insertText(line);
 					}
 					file.close();
+
+					if (line.empty())
+					{
+						llwarns << "Can't open ao_template.ini at << " << mFileName << llendl;
+					}
 			
 					nc->saveIfNeeded();
 				}
