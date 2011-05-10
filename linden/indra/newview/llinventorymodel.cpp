@@ -2007,8 +2007,6 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 		std::string inventory_filename;
 		inventory_filename = llformat(CACHE_FORMAT_STRING, path.c_str());
 
-		const S32 NO_VERSION = LLViewerInventoryCategory::VERSION_UNKNOWN;
-
 		std::string gzip_filename(inventory_filename);
 		gzip_filename.append(".gz");
 		LLFILE* fp = LLFile::fopen(gzip_filename, "rb");
@@ -2066,7 +2064,7 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 					// if the cached version does not match the server version,
 					// throw away the version we have so we can fetch the
 					// correct contents the next time the viewer opens the folder.
-					tcat->setVersion(NO_VERSION);
+					tcat->setVersion(LLViewerInventoryCategory::VERSION_UNKNOWN);
 				}
 				else
 				{
@@ -2085,7 +2083,7 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 					// mark new folders in the skeleton (and not in cache)
 					// as being cached.
 					LLViewerInventoryCategory *llvic = (*it);
-					llvic->setVersion(NO_VERSION);
+					llvic->setVersion(LLViewerInventoryCategory::VERSION_UNKNOWN);
 				}
 				addCategory(*it);
 				++child_counts[(*it)->getParentUUID()];
@@ -2102,7 +2100,7 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 				if (cit != unparented)
 				{
 					LLViewerInventoryCategory* cat = cit->second;
-					if (cat->getVersion() != NO_VERSION)
+					if (cat->getVersion() != LLViewerInventoryCategory::VERSION_UNKNOWN)
 					{
 						addItem(items[i]);
 						cached_item_count += 1;
@@ -2118,7 +2116,7 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 			for (cat_set_t::iterator it = temp_cats.begin(); it != temp_cats.end(); ++it)
 			{
 				LLViewerInventoryCategory *llvic = (*it);
-				llvic->setVersion(NO_VERSION);
+				llvic->setVersion(LLViewerInventoryCategory::VERSION_UNKNOWN);
 				addCategory(*it);
 			}
 		}
@@ -2131,7 +2129,7 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 		for (cat_set_t::iterator it = temp_cats.begin(); it != temp_cats.end(); ++it)
 		{
 			LLViewerInventoryCategory* cat = (*it);
-			if (cat->getVersion() != NO_VERSION)
+			if (cat->getVersion() != LLViewerInventoryCategory::VERSION_UNKNOWN)
 			{
 				the_count = child_counts.find(cat->getUUID());
 				if (the_count != no_child_counts)
