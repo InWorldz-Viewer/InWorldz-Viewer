@@ -1639,31 +1639,37 @@ void LLInventoryModel::backgroundFetch(void*)
 	}
 }
 
-void LLInventoryModel::cache(
-	const LLUUID& parent_folder_id,
-	const LLUUID& agent_id)
+void LLInventoryModel::cache(const LLUUID& parent_folder_id,
+							 const LLUUID& agent_id)
 {
 	LL_DEBUGS("Inventory") << "Caching " << parent_folder_id << " for " << agent_id
 						   << LL_ENDL;
+
 	LLViewerInventoryCategory* root_cat = getCategory(parent_folder_id);
-	if(!root_cat) return;
+	if (!root_cat)
+	{
+		return;
+	}
+
 	cat_array_t categories;
 	categories.put(root_cat);
 	item_array_t items;
 
 	LLCanCache can_cache(this);
 	can_cache(root_cat, NULL);
+
 	collectDescendentsIf(
 		parent_folder_id,
 		categories,
 		items,
 		INCLUDE_TRASH,
 		can_cache);
+
 	std::string agent_id_str;
-	std::string inventory_filename;
 	agent_id.toString(agent_id_str);
 	std::string path(gDirUtilp->getExpandedFilename(LL_PATH_CACHE, agent_id_str));
-	inventory_filename = llformat(CACHE_FORMAT_STRING, path.c_str());
+	std::string inventory_filename = llformat(CACHE_FORMAT_STRING, path.c_str());
+
 	saveToFile(inventory_filename, categories, items);
 	std::string gzip_filename(inventory_filename);
 	gzip_filename.append(".gz");
@@ -2674,44 +2680,73 @@ bool LLInventoryModel::saveToFile(const std::string& filename,
 								  const cat_array_t& categories,
 								  const item_array_t& items)
 {
-	if(filename.empty())
+	if (filename.empty())
 	{
-		llerrs << "Filename is Null!" << llendl;
+		llwarns << "Cache filename is NULL! Can't save!" << llendl;
 		return false;
 	}
+
 	llinfos << "LLInventoryModel::saveToFile(" << filename << ")" << llendl;
+
 	LLFILE* file = LLFile::fopen(filename, "wb");		/*Flawfinder: ignore*/
-	if(!file)
+	if (!file)
 	{
 		llwarns << "unable to save inventory to: " << filename << llendl;
+		return false;
+	}
+
+	S32 count = categories.count();
+	if (count <= 0)
+	{
+		LL_WARNS("Inventory") << "No categories to cache! Skipping cache" << LL_ENDL;
 		return false;
 	}
 
 	static S32 count_total = 0;
 	static S32 category_total = 0;
 
-	S32 count = categories.count();
-	S32 i;
-	for(i = 0; i < count; ++i)
+	for (S32 i = 0; i < count; ++i)
 	{
 		LLViewerInventoryCategory* cat = categories[i];
-		if(cat->getVersion() != LLViewerInventoryCategory::VERSION_UNKNOWN)
+		if (!cat)
 		{
-			cat->exportFileLocal(file);
-			category_total++;
+			LL_WARNS("Inventory") << "Trying to cache invalid inventory category!" << LL_ENDL;
+		}
+		else
+		{
+			if (cat->getVersion() != LLViewerInventoryCategory::VERSION_UNKNOWN)
+			{
+				cat->exportFileLocal(file);
+				category_total++;
+			}
+			else
+			{
+				LL_DEBUGS("Inventory") << "Unknown inventory category version for " 
+									<< cat->getName() << " ("
+									<< cat->getUUID() << "). Skipping caching it" << LL_ENDL;
+			}
 		}
 	}
 
 	count = items.count();
-	for(i = 0; i < count; ++i)
+	for (S32 i = 0; i < count; ++i)
 	{
-		items[i]->exportFile(file);
-		count_total++;
+		LLViewerInventoryItem* item = items[i];
+		if (item)
+		{
+			items[i]->exportFile(file);
+			count_total++;
+		}
+		else
+		{
+			LL_WARNS("Inventory") << "Trying to cache invalid inventory item!" << LL_ENDL;
+		}
 	}
 
 	LL_DEBUGS("Inventory") << "Cached " << category_total << " categories and " << count_total << " inventory items" << LL_ENDL;
 
 	fclose(file);
+
 	return true;
 }
 
