@@ -182,7 +182,15 @@ LLInventoryModel gInventory;
 // Default constructor
 LLInventoryModel::LLInventoryModel() :
 	mModifyMask(LLInventoryObserver::ALL),
+	mChangedItemIDs(),
+	mCategoryMap(),
+	mItemMap(),
+	mCategoryLock(),
+	mItemLock(),
 	mLastItem(NULL),
+	mParentChildCategoryTree(),
+	mParentChildItemTree(),
+	mObservers(),
 	mIsAgentInvUsable(false)
 {
 }
