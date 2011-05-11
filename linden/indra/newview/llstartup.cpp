@@ -2613,12 +2613,6 @@ bool idle_startup()
 	{
 		set_startup_status(1.0, "", "");
 
-		// Start the AO now that settings have loaded and login successful -- MC
-		if (!gAOInvTimer)
-		{
-			gAOInvTimer = new AOInvTimer();
-		}
-
 		// Let the map know about the inventory.
 		if(gFloaterWorldMap)
 		{
@@ -2673,6 +2667,12 @@ bool idle_startup()
 			LLInventoryView::showAgentInventory();
 			llinfos << "Inventory Views Created" << llendl;
 			//LLInventoryView::toggleVisibility(NULL);
+		}
+
+		// Init the AO now that settings have loaded and login successful -- MC
+		if (!gAOInvTimer)
+		{
+			gAOInvTimer = new AOInvTimer();
 		}
 
 		LLStartUp::setStartupState( STATE_STARTED );
