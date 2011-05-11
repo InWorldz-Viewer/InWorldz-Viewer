@@ -6163,7 +6163,7 @@
       <key>Type</key>
       <string>F32</string>
       <key>Value</key>
-      <real>64.0</real>
+      <real>192.0</real>
     </map>
     <key>MeanCollisionBump</key>
     <map>
