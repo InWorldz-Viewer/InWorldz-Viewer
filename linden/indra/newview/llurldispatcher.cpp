@@ -428,6 +428,18 @@ std::string LLURLDispatcherImpl::stripProtocol(const std::string& url)
 	return stripped;
 }
 
+// static
+std::string LLURLDispatcher::createGroupJoinLink(const LLUUID& group_id)
+{
+	std::string izurl = "";
+	if (group_id.notNull())
+	{
+		//inworldz:///app/group/uuid/about
+		izurl = IZURL_INWORLDZ_PREFIX + "/" + IZURL_APP_TOKEN + "group/" + group_id.asString() + "/about";
+	}
+	return izurl;
+}
+
 //---------------------------------------------------------------------------
 // Teleportation links are handled here because they are tightly coupled
 // to URL parsing and sim-fragment parsing
