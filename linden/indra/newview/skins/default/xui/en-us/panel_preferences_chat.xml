@@ -163,7 +163,7 @@
 	</text>
 	<check_box bottom="-417" control_name="TranslateChat" enabled="true" follows="left|top"
 	     font="SansSerifSmall" height="16" initial_value="false"
-	     label="Use machine translation while chatting (powered by Google)" left="148" mouse_opaque="true"
+	     label="Translate chat automatically (powered by Google)" left="148" mouse_opaque="true"
 	     name="translate_chat" radio_style="false" width="237" />
 	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 	     bottom="-432" drop_shadow_visible="true" enabled="true" follows="left|top"
