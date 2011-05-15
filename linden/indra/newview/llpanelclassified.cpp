@@ -655,6 +655,7 @@ void LLPanelClassified::processClassifiedInfoReply(LLMessageSystem *msg, void **
 
 		// Update UI controls
         self->mNameEditor->setText(name);
+		self->mDescEditor->clear();
 		if (self->mCreatorID == gAgent.getID())
 		{
 			self->mDescEditor->setText(desc);
