@@ -3251,6 +3251,12 @@ void LLTextEditor::onTabInto()
 // virtual
 void LLTextEditor::clear()
 {
+	// Also clear any styling we might have added -- MC
+	mParseHTML = FALSE;
+	mParseHighlights = FALSE;
+
+	mSegments.clear();
+
 	setText(LLStringUtil::null);
 }
 
