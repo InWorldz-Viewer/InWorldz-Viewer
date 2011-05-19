@@ -188,6 +188,8 @@ Name: C:\Documents and Settings\{username}\.gstreamer-0.10\*; Type: filesandordi
 Name: C:\Users\{username}\.gstreamer-0.10\*; Type: filesandordirs
 ; Breaks the browser if installing on top of 1.1:
 Name: {app}\gksvggdiplus.dll; Type: files; Tasks: ; Languages:
+; Breaks inworld audio if it's from an old version with a different GUID
+Name: {app}\alut.dll; Type: files; Tasks: ; Languages:
 
 ; Old plugin files we want to kill:
 Name: {app}\charset.dll; Type: files; Tasks: ; Languages:
