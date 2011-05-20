@@ -266,9 +266,9 @@
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>eb25444142d4102b0ce1b7ffaadb071e</string>
+            <string>5bbf7e33dadc7d046dcf44883a9ec3d0</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/dbusglib-linux-20080707.tar.bz2</uri>
+            <uri>http://imprudenceviewer.org/download/libs/dbusglib-linux-20101031.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -336,9 +336,9 @@
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>9af6a1ed39fa540bfcaa402b0ea22f78</string>
+            <string>7f15334750d440084782aecaf41de583</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/fontconfig-2.2.3-linux-20080613.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/fontconfig-2.7.3-linux-20091104.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -563,7 +563,7 @@
           </map>
         </map>
       </map>
-      <key>gtk-atk-pango-glib</key>
+      <key>gtk-etc</key>
       <map>
         <key>copyright</key>
         <string>Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald</string>
@@ -576,9 +576,9 @@
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>21c16a74f8fc9a62e3ab944a6eb7403d</string>
+            <string>349ee367e0ac1e878b24b66e449c6ff8</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/gtk-atk-pango-glib-linux-20080616.tar.bz</uri>
+            <uri>http://imprudenceviewer.org/download/libs/gtk-etc-linux-20101106.1.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -811,9 +811,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>4b5d2dcfe8a49b73fb69f10aab441092</string>
+            <string>922f4bc6a8091d07a988b983cafe7a5a</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/libxml-2.6.24-linux-20080613.tar.bz2</uri>
+            <uri>libxml2-2.7.4-r1-linux-20091115.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
@@ -1015,9 +1015,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>9dfdc055297355d04e04b905f92fbfad</string>
+            <string>44f9bacc69a3d29ae0b46ed69ad7c2ce</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/openal-linux32-20100426.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/openal-linux32-20110304.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
@@ -1088,9 +1088,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>common</key>
           <map>
             <key>md5sum</key>
-            <string>a1b8a118ba9df1f2a73f6aafa7980e83</string>
+            <string>2a249557183338c68ed11cd61d69d1b6</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/tut-2008-11-30-common-20081208.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/tut-2008-11-30-common-20100923.tar.bz2</uri>
           </map>
         </map>
       </map>

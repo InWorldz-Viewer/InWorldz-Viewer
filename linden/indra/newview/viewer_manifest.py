@@ -749,7 +749,7 @@ class LinuxManifest(ViewerManifest):
         # Create an appropriate gridargs.dat for this package, denoting required grid.
         self.put_in_file(self.flags_list(), 'gridargs.dat')
 
-        if self.buildtype().lower()=='release':
+        if self.buildtype().lower()!='debug':
             self.path("inworldz-stripped","bin/"+self.binary_name())
             self.path("../linux_crash_logger/linux-crash-logger-stripped","linux-crash-logger.bin")
         else:
@@ -837,13 +837,14 @@ class Linux_i686Manifest(LinuxManifest):
         # install either the libkdu_v64R we just built, or a prebuilt one, in
         # decreasing order of preference.  for linux package, this goes to bin/
         try:
-            self.path(self.find_existing_file('../libkdu_v64R.so',
-                '../../libraries/i686-linux/lib_release_client/libkdu_v64R.so'), 
-                  dst='bin/libkdu_v64R.so')
+            self.path(self.find_existing_file('../libkdu_v63R.so',
+                '../../libraries/i686-linux/lib_release_client/libkdu_v63R.so',
+                '../../../../../Linux-x86-32/Linux-x86-32/libkdu_v63R.so'), 
+                  dst='bin/libkdu_v63R.so')
             # keep this one to preserve syntax, open source mangling removes previous lines
             pass
         except:
-            print "Skipping libkdu_v64R.so - not found"
+            print "Skipping libkdu_v63R.so - not found"
             pass
 
         if self.prefix("../../libraries/i686-linux/lib_release_client", dst="lib"):
@@ -857,9 +858,11 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libuuid.so.1")
             self.path("libSDL-1.2.so.0")
             self.path("libELFIO.so")
-            self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
-            self.path("libalut.so")
-            self.path("libopenal.so", "libopenal.so.1")
+           ## self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
+            self.path("libopenjpeg.so.2")
+            self.path("libalut.so.0")
+            self.path("libopenal.so.1")
+           ## self.path("libkdu_v42R.so")
             self.end_prefix("lib")
 
             # Vivox runtimes

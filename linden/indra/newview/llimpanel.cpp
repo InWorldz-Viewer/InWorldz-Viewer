@@ -329,7 +329,7 @@ void LLVoiceCallCapResponder::result(const LLSD& content)
 	LLVoiceChannel* channelp = LLVoiceChannel::getChannelByID(mSessionID);
 	if (channelp)
 	{
-		//*TODO: DEBUG SPAM
+		// TODO: DEBUG SPAM
 		LLSD::map_const_iterator iter;
 		for(iter = content.beginMap(); iter != content.endMap(); ++iter)
 		{
@@ -739,7 +739,7 @@ void LLVoiceChannelGroup::setChannelInfo(
 		}
 		else
 		{
-			//*TODO: notify user
+			// TODO: notify user
 			llwarns << "Received invalid credentials for channel " << mSessionName << llendl;
 			deactivate();
 		}

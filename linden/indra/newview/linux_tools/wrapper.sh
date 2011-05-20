@@ -95,7 +95,7 @@ cd "${RUN_PATH}"
 
 # Re-register the secondlife:// protocol handlers every launch, for now.
 # TODO: register inworldz:// protocol handler as well
-./register_secondlifeprotocol.sh
+./register_inworldzprotocol.sh
 ## Before we mess with LD_LIBRARY_PATH, save the old one to restore for
 ##  subprocesses that care.
 export SAVED_LD_LIBRARY_PATH="${LD_LIBRARY_PATH}"
@@ -118,7 +118,7 @@ if [ -n "$LL_TCMALLOC" ]; then
     fi
 fi
 
-export VIEWER_BINARY='inworldz-do-not-run-directly'
+export VIEWER_BINARY='do-not-directly-run-inworldz-bin'
 export SL_ENV='LD_LIBRARY_PATH="`pwd`"/lib:"`pwd`"/app_settings/mozilla-runtime-linux-i686:"${LD_LIBRARY_PATH}"'
 export SL_CMD='$LL_WRAPPER bin/$VIEWER_BINARY'
 export SL_OPT="`cat gridargs.dat` $@"

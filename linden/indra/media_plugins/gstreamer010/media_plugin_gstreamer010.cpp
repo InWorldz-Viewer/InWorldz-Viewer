@@ -81,7 +81,7 @@ public:
 				  GstMessage *message);
 
 	// basic log file writing
-	static bool writeToLog(char* str, ...);
+	static bool writeToLog(const char* str, ...);
 
 private:
 	std::string getVersion();
@@ -199,7 +199,7 @@ static char* get_gst_state_name(GstState state)
 #endif // LL_GST_REPORT_STATE_CHANGES
 
 // static
-bool MediaPluginGStreamer010::writeToLog(char* str, ...)
+bool MediaPluginGStreamer010::writeToLog(const char* str, ...)
 {
 	LLFILE* fp = LLFile::fopen("media_plugin_gstreamer010.log", "a");
 
