@@ -33,7 +33,7 @@ if (STANDALONE)
 else (STANDALONE)
   if (NOT DARWIN)
     use_prebuilt_binary(glib)		# gtk-etc needs glib
-    use_prebuilt_binary(gtk-etc)
+    use_prebuilt_binary(gtk-atk-pango-glib)
   endif (NOT DARWIN)
   if (LINUX)
     set(UI_LIBRARIES

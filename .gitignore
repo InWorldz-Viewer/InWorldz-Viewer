@@ -42,3 +42,9 @@ linden/installed.xml
 ChangeLog.txt
 .DS_Store
 *.zip
+
+#LINUX SPECIFIC
+
+#automatic backup files
+*.*~
+

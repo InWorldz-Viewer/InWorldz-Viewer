@@ -563,7 +563,7 @@
           </map>
         </map>
       </map>
-      <key>gtk-etc</key>
+      <key>gtk-atk-pango-glib</key>
       <map>
         <key>copyright</key>
         <string>Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald</string>
