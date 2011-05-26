@@ -21,3 +21,11 @@ for example, after your own copyright notice acknowledging your use of
 the Second Life viewer artwork, in a text file distributed with your
 program, in your application's About window, or on a credits page for
 your work.
+
+The following files included with the viewer artwork are licensed 
+under the MIT license http://www.opensource.org/licenses/mit-license.php:
+
+go-previous-4.png
+go-next-4.png
+view-refresh-5.png
+go-home-4.png
