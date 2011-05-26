@@ -268,7 +268,7 @@
             <key>md5sum</key>
             <string>5bbf7e33dadc7d046dcf44883a9ec3d0</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/dbusglib-linux-20101031.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/dbusglib-linux-20101031.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -338,7 +338,7 @@
             <key>md5sum</key>
             <string>7f15334750d440084782aecaf41de583</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/fontconfig-2.7.3-linux-20091104.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/fontconfig-2.7.3-linux-20091104.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -516,7 +516,7 @@
             <key>md5sum</key>
             <string>a0e055b52ac5c4dfecb3546f742fda42</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/gstreamer-0.10.22-darwin-20091107.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/gstreamer-0.10.22-darwin-20091107.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -552,7 +552,7 @@
             <key>md5sum</key>
             <string>27a111bd9b12f413b577ae239c10aa7c</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/gstreamer-plugins-darwin-20100826.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/gstreamer-plugins-darwin-20100826.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -578,7 +578,7 @@
             <key>md5sum</key>
             <string>349ee367e0ac1e878b24b66e449c6ff8</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/gtk-etc-linux-20101106.1.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/gtk-etc-linux-20101106.1.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -1017,7 +1017,7 @@ anguage Infrstructure (CLI) international standard</string>
             <key>md5sum</key>
             <string>44f9bacc69a3d29ae0b46ed69ad7c2ce</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/openal-linux32-20110304.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/openal-linux32-20110304.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
@@ -1031,7 +1031,7 @@ anguage Infrstructure (CLI) international standard</string>
             <key>md5sum</key>
             <string>79bb92dcc79e310ff9aebf7fbe6b10e5</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/openal-soft-1.12.854-windows-20100822.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/openal-soft-1.12.854-windows-20100822.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -1090,7 +1090,7 @@ anguage Infrstructure (CLI) international standard</string>
             <key>md5sum</key>
             <string>2a249557183338c68ed11cd61d69d1b6</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/tut-2008-11-30-common-20100923.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/tut-2008-11-30-common-20100923.tar.bz2</uri>
           </map>
         </map>
       </map>
