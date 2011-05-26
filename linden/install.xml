@@ -813,7 +813,7 @@ anguage Infrstructure (CLI) international standard</string>
             <key>md5sum</key>
             <string>922f4bc6a8091d07a988b983cafe7a5a</string>
             <key>url</key>
-            <uri>libxml2-2.7.4-r1-linux-20091115.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/libxml2-2.7.4-r1-linux-20091115.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
