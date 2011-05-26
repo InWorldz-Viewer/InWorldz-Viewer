@@ -5649,6 +5649,17 @@ class LLShowFloater : public view_listener_t
 		{
 			LLFloaterBeacons::toggleInstance(LLSD());
 		}
+		else if (floater_name == "inworld browser")
+		{
+			if (LLFloaterMediaBrowser::instanceVisible())
+			{
+				LLFloaterMediaBrowser::getInstance()->close();
+			}
+			else
+			{
+				LLWeb::loadURLInternal(gSavedSettings.getString("BrowserHome"));
+			}
+		}
 		else if (floater_name == "perm prefs")
 		{
 			LLFloaterPerms::toggleInstance(LLSD());
@@ -5717,6 +5728,10 @@ class LLFloaterVisible : public view_listener_t
 		{
 			LLInventoryView* iv = LLInventoryView::getActiveInventory(); 
 			new_value = (NULL != iv && TRUE == iv->getVisible());
+		}
+		else if (floater_name == "inworld browser")
+		{
+			new_value = LLFloaterMediaBrowser::instanceVisible();
 		}
 		else if (floater_name == "areasearch")
 		{

@@ -2,8 +2,19 @@
 <llsd>
 <map>
 
-  <!-- begin InWorldz-specific settings -->	
+  <!-- begin InWorldz-specific settings -->
 
+  <key>BrowserHome</key>
+  <map>
+    <key>Comment</key>
+    <string>Home page of the internal browser</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>http://inworldz.com</string>
+  </map>
   <key>DecimalsForTools</key>
   <map>
     <key>Comment</key>
@@ -27,19 +38,19 @@
     <integer>0</integer>
   </map>
   <key>FloaterGroupTitlesRect</key>
-    <map>
-      <key>Comment</key>
-      <string>Rectangle for group titles window</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Rect</string>
-      <key>Value</key>
-      <array>
-        <integer>0</integer>
-        <integer>400</integer>
-        <integer>500</integer>
-        <integer>0</integer>
+  <map>
+    <key>Comment</key>
+    <string>Rectangle for group titles window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Rect</string>
+    <key>Value</key>
+    <array>
+      <integer>0</integer>
+      <integer>400</integer>
+      <integer>500</integer>
+      <integer>0</integer>
     </array>
   </map>
   <key>IgnoreSimulatorCameraConstraints</key>
@@ -239,323 +250,323 @@
   </map>
 
   <key>AFKTimeout</key>
-    <map>
-      <key>Comment</key>
-      <string>Time before automatically setting AFK (away from keyboard) mode (seconds)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>300.0</real>
-    </map>
-    <key>AdvanceSnapshot</key>
-    <map>
-      <key>Comment</key>
-      <string>Display advanced parameter settings in snaphot interface</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>UserChatColor</key>
-        <map>
-        <key>Comment</key>
-            <string>Color of your chat messages</string>
-        <key>Persist</key>
-            <integer>1</integer>
-        <key>Type</key>
-            <string>Color4</string>
-        <key>Value</key>
-            <array>
-                <real>1.0</real>
-                <real>1.0</real>
-                <real>1.0</real>
-                <real>1.0</real>
-            </array>
-        </map>
-    <key>AgentChatColor</key>
-    <map>
-      <key>Comment</key>
-      <string>Color of chat messages from other residents</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Color4</string>
-      <key>Value</key>
-      <array>
-        <real>1.0</real>
-        <real>1.0</real>
-        <real>1.0</real>
-        <real>1.0</real>
-      </array>
-    </map>
-    <key>AlertedUnsupportedHardware</key>
-    <map>
-      <key>Comment</key>
-      <string>Set if there's unsupported hardware and we've already done a notification.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AllowIdleAFK</key>
-    <map>
-      <key>Comment</key>
-      <string>Automatically set AFK (away from keyboard) mode when idle</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AllowMultipleViewers</key>
-    <map>
-      <key>Comment</key>
-      <string>Allow multiple viewers.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AllowTapTapHoldRun</key>
-    <map>
-      <key>Comment</key>
-      <string>Tapping a direction key twice and holding it down makes avatar run</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AnimateTextures</key>
-    <map>
-      <key>Comment</key>
-      <string>Enable texture animation (debug)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AnimationDebug</key>
-    <map>
-      <key>Comment</key>
-      <string>Show active animations in a bubble above avatars head</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AppearanceCameraMovement</key>
-    <map>
-      <key>Comment</key>
-      <string>When entering appearance editing mode, camera zooms in on currently selected portion of avatar</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>ApplyColorImmediately</key>
-    <map>
-      <key>Comment</key>
-      <string>Preview selections in color picker immediately</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>ApplyTextureImmediately</key>
-    <map>
-      <key>Comment</key>
-      <string>Preview selections in texture picker immediately</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>ArrowKeysMoveAvatar</key>
-    <map>
-      <key>Comment</key>
-      <string>While cursor is in chat entry box, arrow keys still control your avatar</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AskedAboutCrashReports</key>
-    <map>
-      <key>Comment</key>
-      <string>Turns off dialog asking if you want to enable crash reporting</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AuctionShowFence</key>
-    <map>
-      <key>Comment</key>
-      <string>When auctioning land, include parcel boundary marker in snapshot</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AudioLevelAmbient</key>
-    <map>
-      <key>Comment</key>
-      <string>Audio level of environment sounds</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.5</real>
-    </map>
-    <key>AudioLevelDoppler</key>
-    <map>
-      <key>Comment</key>
-      <string>Scale of doppler effect on moving audio sources (1.0 = normal, &lt;1.0 = diminished doppler effect, &gt;1.0 = enhanced doppler effect)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
+  <map>
+    <key>Comment</key>
+    <string>Time before automatically setting AFK (away from keyboard) mode (seconds)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>300.0</real>
+  </map>
+  <key>AdvanceSnapshot</key>
+  <map>
+    <key>Comment</key>
+    <string>Display advanced parameter settings in snaphot interface</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>UserChatColor</key>
+  <map>
+    <key>Comment</key>
+    <string>Color of your chat messages</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Color4</string>
+    <key>Value</key>
+    <array>
       <real>1.0</real>
-    </map>
-    <key>AudioLevelMaster</key>
-    <map>
-      <key>Comment</key>
-      <string>Master audio level, or overall volume</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
       <real>1.0</real>
-    </map>
-    <key>AudioLevelMedia</key>
-    <map>
-      <key>Comment</key>
-      <string>Audio level of Quicktime movies</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
       <real>1.0</real>
-    </map>
-    <key>AudioLevelMic</key>
-    <map>
-      <key>Comment</key>
-      <string>Audio level of microphone input</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
       <real>1.0</real>
-    </map>
-    <key>AudioLevelMusic</key>
-    <map>
-      <key>Comment</key>
-      <string>Audio level of streaming music</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
+    </array>
+  </map>
+  <key>AgentChatColor</key>
+  <map>
+    <key>Comment</key>
+    <string>Color of chat messages from other residents</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Color4</string>
+    <key>Value</key>
+    <array>
       <real>1.0</real>
-    </map>
-    <key>AudioLevelRolloff</key>
-    <map>
-      <key>Comment</key>
-      <string>Controls the distance-based dropoff of audio volume (fraction or multiple of default audio rolloff)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
       <real>1.0</real>
-    </map>
-    <key>AudioLevelSFX</key>
-    <map>
-      <key>Comment</key>
-      <string>Audio level of in-world sound effects</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
       <real>1.0</real>
-    </map>
-    <key>AudioLevelUI</key>
-    <map>
-      <key>Comment</key>
-      <string>Audio level of UI sound effects</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.5</real>
-    </map>
-    <key>AudioLevelVoice</key>
-    <map>
-      <key>Comment</key>
-      <string>Audio level of voice chat</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.5</real>
-    </map>
-    <key>AudioStreamingMusic</key>
-    <map>
-      <key>Comment</key>
-      <string>Enable streaming audio</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AudioStreamingVideo</key>
-    <map>
-      <key>Comment</key>
-      <string>Enable streaming video</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
+      <real>1.0</real>
+    </array>
+  </map>
+  <key>AlertedUnsupportedHardware</key>
+  <map>
+    <key>Comment</key>
+    <string>Set if there's unsupported hardware and we've already done a notification.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AllowIdleAFK</key>
+  <map>
+    <key>Comment</key>
+    <string>Automatically set AFK (away from keyboard) mode when idle</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AllowMultipleViewers</key>
+  <map>
+    <key>Comment</key>
+    <string>Allow multiple viewers.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AllowTapTapHoldRun</key>
+  <map>
+    <key>Comment</key>
+    <string>Tapping a direction key twice and holding it down makes avatar run</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AnimateTextures</key>
+  <map>
+    <key>Comment</key>
+    <string>Enable texture animation (debug)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AnimationDebug</key>
+  <map>
+    <key>Comment</key>
+    <string>Show active animations in a bubble above avatars head</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AppearanceCameraMovement</key>
+  <map>
+    <key>Comment</key>
+    <string>When entering appearance editing mode, camera zooms in on currently selected portion of avatar</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>ApplyColorImmediately</key>
+  <map>
+    <key>Comment</key>
+    <string>Preview selections in color picker immediately</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>ApplyTextureImmediately</key>
+  <map>
+    <key>Comment</key>
+    <string>Preview selections in texture picker immediately</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>ArrowKeysMoveAvatar</key>
+  <map>
+    <key>Comment</key>
+    <string>While cursor is in chat entry box, arrow keys still control your avatar</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AskedAboutCrashReports</key>
+  <map>
+    <key>Comment</key>
+    <string>Turns off dialog asking if you want to enable crash reporting</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AuctionShowFence</key>
+  <map>
+    <key>Comment</key>
+    <string>When auctioning land, include parcel boundary marker in snapshot</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AudioLevelAmbient</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of environment sounds</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.5</real>
+  </map>
+  <key>AudioLevelDoppler</key>
+  <map>
+    <key>Comment</key>
+    <string>Scale of doppler effect on moving audio sources (1.0 = normal, &lt;1.0 = diminished doppler effect, &gt;1.0 = enhanced doppler effect)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AudioLevelMaster</key>
+  <map>
+    <key>Comment</key>
+    <string>Master audio level, or overall volume</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AudioLevelMedia</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of Quicktime movies</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AudioLevelMic</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of microphone input</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AudioLevelMusic</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of streaming music</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AudioLevelRolloff</key>
+  <map>
+    <key>Comment</key>
+    <string>Controls the distance-based dropoff of audio volume (fraction or multiple of default audio rolloff)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AudioLevelSFX</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of in-world sound effects</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AudioLevelUI</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of UI sound effects</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.5</real>
+  </map>
+  <key>AudioLevelVoice</key>
+  <map>
+    <key>Comment</key>
+    <string>Audio level of voice chat</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.5</real>
+  </map>
+  <key>AudioStreamingMusic</key>
+  <map>
+    <key>Comment</key>
+    <string>Enable streaming audio</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AudioStreamingVideo</key>
+  <map>
+    <key>Comment</key>
+    <string>Enable streaming video</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
   <key>AuditTexture</key>
   <map>
     <key>Comment</key>
@@ -568,328 +579,328 @@
     <integer>0</integer>
   </map>
   <key>AutoAcceptNewInventory</key>
-    <map>
-      <key>Comment</key>
-      <string>Automatically accept new notecards/textures/landmarks</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AutoLeveling</key>
-    <map>
-      <key>Comment</key>
-      <string>Keep Flycam level.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AutoLoadWebProfiles</key>
-    <map>
-      <key>Comment</key>
-      <string>Automatically load ALL profile webpages without asking first.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AutoLogin</key>
-    <map>
-      <key>Comment</key>
-      <string>Login automatically using last username/password combination</string>
-      <key>Persist</key>
-      <integer>0</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AutoMimeDiscovery</key>
-    <map>
-      <key>Comment</key>
-      <string>Enable viewer mime type discovery of media URLs</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AutoPilotLocksCamera</key>
-    <map>
-      <key>Comment</key>
-      <string>Keep camera position locked when avatar walks to selected position</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AutoSnapshot</key>
-    <map>
-      <key>Comment</key>
-      <string>Update snapshot when camera stops moving, or any parameter changes</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>0</integer>
-    </map>
-    <key>AutomaticFly</key>
-    <map>
-      <key>Comment</key>
-      <string>Fly by holding jump key or using "Fly" command (FALSE = fly by using "Fly" command only)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AvatarAxisDeadZone0</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 0 dead zone.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.1</real>
-    </map>
-    <key>AvatarAxisDeadZone1</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 1 dead zone.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.1</real>
-    </map>
-    <key>AvatarAxisDeadZone2</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 2 dead zone.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.1</real>
-    </map>
-    <key>AvatarAxisDeadZone3</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 3 dead zone.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.1</real>
-    </map>
-    <key>AvatarAxisDeadZone4</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 4 dead zone.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.1</real>
-    </map>
-    <key>AvatarAxisDeadZone5</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 5 dead zone.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>0.1</real>
-    </map>
-    <key>AvatarAxisScale0</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 0 scaler.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
+  <map>
+    <key>Comment</key>
+    <string>Automatically accept new notecards/textures/landmarks</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AutoLeveling</key>
+  <map>
+    <key>Comment</key>
+    <string>Keep Flycam level.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AutoLoadWebProfiles</key>
+  <map>
+    <key>Comment</key>
+    <string>Automatically load ALL profile webpages without asking first.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AutoLogin</key>
+  <map>
+    <key>Comment</key>
+    <string>Login automatically using last username/password combination</string>
+    <key>Persist</key>
+    <integer>0</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AutoMimeDiscovery</key>
+  <map>
+    <key>Comment</key>
+    <string>Enable viewer mime type discovery of media URLs</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AutoPilotLocksCamera</key>
+  <map>
+    <key>Comment</key>
+    <string>Keep camera position locked when avatar walks to selected position</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AutoSnapshot</key>
+  <map>
+    <key>Comment</key>
+    <string>Update snapshot when camera stops moving, or any parameter changes</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>AutomaticFly</key>
+  <map>
+    <key>Comment</key>
+    <string>Fly by holding jump key or using "Fly" command (FALSE = fly by using "Fly" command only)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AvatarAxisDeadZone0</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 0 dead zone.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.1</real>
+  </map>
+  <key>AvatarAxisDeadZone1</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 1 dead zone.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.1</real>
+  </map>
+  <key>AvatarAxisDeadZone2</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 2 dead zone.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.1</real>
+  </map>
+  <key>AvatarAxisDeadZone3</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 3 dead zone.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.1</real>
+  </map>
+  <key>AvatarAxisDeadZone4</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 4 dead zone.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.1</real>
+  </map>
+  <key>AvatarAxisDeadZone5</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 5 dead zone.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>0.1</real>
+  </map>
+  <key>AvatarAxisScale0</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 0 scaler.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AvatarAxisScale1</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 1 scaler.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AvatarAxisScale2</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 2 scaler.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AvatarAxisScale3</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 3 scaler.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AvatarAxisScale4</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 4 scaler.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AvatarAxisScale5</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar axis 5 scaler.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>1.0</real>
+  </map>
+  <key>AvatarBacklight</key>
+  <map>
+    <key>Comment</key>
+    <string>Add rim lighting to avatar rendering to approximate shininess of skin</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>AvatarFeathering</key>
+  <map>
+    <key>Comment</key>
+    <string>Avatar feathering (less is softer)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>16.0</real>
+  </map>
+  <key>AvatarPickerSortOrder</key>
+  <map>
+    <key>Comment</key>
+    <string>Specifies sort key for textures in avatar picker (+0 = name, +1 = date, +2 = folders always by name, +4 = system folders to top)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>2</integer>
+  </map>
+  <key>AvatarSex</key>
+  <map>
+    <key>Comment</key>
+    <string />
+    <key>Persist</key>
+    <integer>0</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>BackgroundChatColor</key>
+  <map>
+    <key>Comment</key>
+    <string>Color of chat bubble background</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Color4</string>
+    <key>Value</key>
+    <array>
+      <real>0.0</real>
+      <real>0.0</real>
+      <real>0.0</real>
       <real>1.0</real>
-    </map>
-    <key>AvatarAxisScale1</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 1 scaler.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>1.0</real>
-    </map>
-    <key>AvatarAxisScale2</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 2 scaler.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>1.0</real>
-    </map>
-    <key>AvatarAxisScale3</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 3 scaler.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>1.0</real>
-    </map>
-    <key>AvatarAxisScale4</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 4 scaler.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>1.0</real>
-    </map>
-    <key>AvatarAxisScale5</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar axis 5 scaler.</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>1.0</real>
-    </map>
-    <key>AvatarBacklight</key>
-    <map>
-      <key>Comment</key>
-      <string>Add rim lighting to avatar rendering to approximate shininess of skin</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <integer>1</integer>
-    </map>
-    <key>AvatarFeathering</key>
-    <map>
-      <key>Comment</key>
-      <string>Avatar feathering (less is softer)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>F32</string>
-      <key>Value</key>
-      <real>16.0</real>
-    </map>
-    <key>AvatarPickerSortOrder</key>
-    <map>
-      <key>Comment</key>
-      <string>Specifies sort key for textures in avatar picker (+0 = name, +1 = date, +2 = folders always by name, +4 = system folders to top)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>U32</string>
-      <key>Value</key>
-      <integer>2</integer>
-    </map>
-    <key>AvatarSex</key>
-    <map>
-      <key>Comment</key>
-      <string />
-      <key>Persist</key>
+    </array>
+  </map>
+  <key>BackgroundYieldTime</key>
+  <map>
+    <key>Comment</key>
+    <string>Amount of time to yield every frame to other applications when SL is not the foreground window (milliseconds)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>S32</string>
+    <key>Value</key>
+    <integer>40</integer>
+  </map>
+  <key>BackwardBtnRect</key>
+  <map>
+    <key>Comment</key>
+    <string />
+    <key>Persist</key>
+    <integer>0</integer>
+    <key>Type</key>
+    <string>Rect</string>
+    <key>Value</key>
+    <array>
+      <integer>45</integer>
+      <integer>29</integer>
+      <integer>66</integer>
+      <integer>4</integer>
+    </array>
+  </map>
+  <key>BasicHelpRect</key>
+  <map>
+    <key>Comment</key>
+    <string>Rectangle for help window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Rect</string>
+    <key>Value</key>
+    <array>
       <integer>0</integer>
-      <key>Type</key>
-      <string>U32</string>
-      <key>Value</key>
+      <integer>404</integer>
+      <integer>467</integer>
       <integer>0</integer>
-    </map>
-    <key>BackgroundChatColor</key>
-    <map>
-      <key>Comment</key>
-      <string>Color of chat bubble background</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Color4</string>
-      <key>Value</key>
-      <array>
-        <real>0.0</real>
-        <real>0.0</real>
-        <real>0.0</real>
-        <real>1.0</real>
-      </array>
-    </map>
-    <key>BackgroundYieldTime</key>
-    <map>
-      <key>Comment</key>
-      <string>Amount of time to yield every frame to other applications when SL is not the foreground window (milliseconds)</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>S32</string>
-      <key>Value</key>
-      <integer>40</integer>
-    </map>
-    <key>BackwardBtnRect</key>
-    <map>
-      <key>Comment</key>
-      <string />
-      <key>Persist</key>
-      <integer>0</integer>
-      <key>Type</key>
-      <string>Rect</string>
-      <key>Value</key>
-      <array>
-        <integer>45</integer>
-        <integer>29</integer>
-        <integer>66</integer>
-        <integer>4</integer>
-      </array>
-    </map>
-    <key>BasicHelpRect</key>
-    <map>
-      <key>Comment</key>
-      <string>Rectangle for help window</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Rect</string>
-      <key>Value</key>
-      <array>
-        <integer>0</integer>
-        <integer>404</integer>
-        <integer>467</integer>
-        <integer>0</integer>
-      </array>
-    </map>
+    </array>
+  </map>
     <key>BeaconAlwaysOn</key>
     <map>
       <key>Comment</key>
@@ -900,17 +911,6 @@
       <string>Boolean</string>
       <key>Value</key>
       <integer>0</integer>
-    </map>
-    <key>BrowserHomePage</key>
-    <map>
-      <key>Comment</key>
-      <string>[NOT USED]</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>String</string>
-      <key>Value</key>
-      <string>http://www.secondlife.com</string>
     </map>
     <key>BlockAvatarAppearanceMessages</key>
         <map>

@@ -6,6 +6,7 @@
 <strings>
 
   <!-- InWorldz-specific strings -->
+  <string name="new_home_page">Your new Home Page is</string>
   <string name="copy_obj_key_info">
     Copied key(s) for:
   </string>
