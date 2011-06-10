@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <multi_floater can_close="true" can_drag_on_left="false" can_minimize="true" can_resize="true"
-     height="390" name="floater_chatterbox"
+     height="390" name="floater_chatterbox" min_height="320"
      rect_control="ChatterboxRect" title="Communicate" width="392">
 <icon enabled="false" image_name="tabarea.tga"
 	     bg_alpha_color="blue" color="DefaultShadowLight" border="false"
