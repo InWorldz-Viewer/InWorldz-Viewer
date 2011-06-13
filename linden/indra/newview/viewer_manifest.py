@@ -869,8 +869,10 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libELFIO.so")
            ## self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
             self.path("libopenjpeg.so.2")
-            self.path("libalut.so.0")
-            self.path("libopenal.so.1")
+            self.path("libopenal.so.1.12.854","libopenal.so.1")
+            self.path("libopenal.so.1.12.854","libopenal.so")
+            self.path("libalut.so.0.1.0","libalut.so.0")
+            self.path("libalut.so.0.1.0","libalut.so")
            ## self.path("libkdu_v42R.so")
             self.end_prefix("lib")
 
