@@ -5892,7 +5892,7 @@ void process_covenant_reply(LLMessageSystem* msg, void**)
 		}
 		else
 		{
-			covenant_text = "There is no Covenant provided for this Estate. The land on this estate is being sold by the Estate owner, not Linden Lab.  Please contact the Estate Owner for sales details.";
+			covenant_text = "There is no Covenant provided for this Estate. The land on this estate is being sold by the Estate owner, not InWorldz.  Please contact the Estate Owner for sales details.";
 		}
 		LLPanelEstateCovenant::updateCovenantText(covenant_text, covenant_id);
 		LLPanelLandCovenant::updateCovenantText(covenant_text);
