@@ -6909,6 +6909,34 @@ http://imprudenceviewer.org/wiki/Restore_to_Last_Position
 The item you are accessing is not yet locally available. Please try again in a minute.
 </notification>
 
+<notification
+  icon="alertmodal.tga"
+  name="InsufficientFunds"
+  type="alertmodal">
+You currently need I'z$[CURRENCY_NEEDED] to complete this transaction.
+
+Would you like to buy more I'z$ now?
+  <usetemplate
+   name="okcancelignore"
+   yestext="Yes"
+   notext="No"
+   ignoretext="When asking to buy more I'z$" />
+</notification>
+
+<notification
+  icon="alertmodal.tga"
+  name="InsufficientFundsNoMsg"
+  type="alertmodal">
+You currently need more I'z$ to complete this transaction.
+
+Would you like to buy more I'z$ now?
+  <usetemplate
+   name="okcancelignore"
+   yestext="Yes"
+   notext="No"
+   ignoretext="When asking to buy more I'z$" />
+</notification>
+
   <!--End InWorldz notifications-->
 
 

@@ -788,6 +788,14 @@ void init_client_menu(LLMenuGL* menu)
 
 		sub->appendSeparator();
 
+		sub->append(new LLMenuItemCheckGL("Dump All Received Messages to Log",
+										&menu_toggle_control,
+										NULL,
+										&menu_check_control,
+										(void*)"ReceivedMessageLog"));
+
+		sub->appendSeparator();
+
 		sub->append(new LLMenuItemCallGL("Region Info to Debug Console", 
 			&handle_region_dump_settings, NULL));
 		sub->append(new LLMenuItemCallGL("Group Info to Debug Console",
@@ -4214,7 +4222,7 @@ bool callback_show_buy_currency(const LLSD& notification, const LLSD& response)
 	if (0 == option)
 	{
 		llinfos << "Loading page " << BUY_CURRENCY_URL << llendl;
-		LLWeb::loadURL(BUY_CURRENCY_URL);
+		LLWeb::loadURLInternal(BUY_CURRENCY_URL);
 	}
 	return false;
 }

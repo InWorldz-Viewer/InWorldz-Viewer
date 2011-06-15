@@ -45,6 +45,9 @@
 #include "llweb.h"
 #include "llwindow.h"
 #include "llappviewer.h"
+#include "llnotifications.h" // MC
+#include "llviewermenu.h" // MC
+#include "llsecondlifeurls.h" // MC
 
 static const S32 STANDARD_BUY_AMOUNT = 2000;
 static const S32 MINIMUM_BALANCE_AMOUNT = 0;
@@ -359,18 +362,34 @@ void LLFloaterBuyCurrencyUI::onClickErrorWeb(void* data)
 // static
 void LLFloaterBuyCurrency::buyCurrency()
 {
-	LLFloaterBuyCurrencyUI* ui = LLFloaterBuyCurrencyUI::soleInstance(true);
+	/*LLFloaterBuyCurrencyUI* ui = LLFloaterBuyCurrencyUI::soleInstance(true);
 	ui->noTarget();
 	ui->updateUI();
-	ui->open();
+	ui->open();*/
+
+	// We are sent here whenever we have insufficient funds to buy/pay
+	// in the UI. Currently, we only open the buy currency site without
+	// sending it any data. Would be nice if this were improved -- MC
+	LLNotifications::instance().add("InsufficientFundsNoMsg", LLSD(), LLSD(), callback_show_buy_currency);
 }
 
 void LLFloaterBuyCurrency::buyCurrency(const std::string& name, S32 price)
 {
-	LLFloaterBuyCurrencyUI* ui = LLFloaterBuyCurrencyUI::soleInstance(true);
+	/*LLFloaterBuyCurrencyUI* ui = LLFloaterBuyCurrencyUI::soleInstance(true);
 	ui->target(name, price);
 	ui->updateUI();
-	ui->open();
+	ui->open();*/
+
+	LLSD args;
+	args["NAME"] = name;
+	args["PRICE"] = price;
+	S32 balance = gStatusBar->getBalance();
+	S32 need = price - balance;
+	if (need < 0)
+	{
+		need = 0;
+	}
+	args["CURRENCY_NEEDED"] = need;
+
+	LLNotifications::instance().add("InsufficientFunds", args, LLSD(), callback_show_buy_currency);
 }
-
-

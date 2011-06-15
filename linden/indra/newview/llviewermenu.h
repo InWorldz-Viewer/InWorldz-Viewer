@@ -108,6 +108,8 @@ bool handle_give_money_dialog();
 bool handle_object_open();
 bool handle_go_to();
 
+bool callback_show_buy_currency(const LLSD& notification, const LLSD& response);
+
 // Export to XML or Collada
 void handle_export_selected( void * );
 
