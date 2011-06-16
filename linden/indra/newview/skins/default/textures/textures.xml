@@ -1,4 +1,4 @@
-<textures version="101">
+<textures version="102">
 
   <texture name="icn_scrollbar_thumb.tga" preload="true" scale_top="7" scale_left="4" scale_bottom="8" scale_right="4" />
   <texture name="icn_scrollbar_bg.tga" preload="true" scale_top="7" scale_left="4" scale_bottom="8" scale_right="4" />
@@ -305,10 +305,10 @@
   <texture name="UIImgBtnScrollRightOutUUID" file_name="scrollbutton_right_out_blue.tga"/>
   <texture name="UIImgBtnScrollRightInUUID" file_name="scrollbutton_right_in_blue.tga"/>
 
-  <texture name="UIImgBtnJumpLeftOutUUID" file_name="3c18c87e-5f50-14e2-e744-f44734aa365f.tga"/>
-  <texture name="UIImgBtnJumpLeftInUUID" file_name="9cad3e6d-2d6d-107d-f8ab-5ba272b5bfe1.tga"/>
-  <texture name="UIImgBtnJumpRightOutUUID" file_name="ff9a71eb-7414-4cf8-866e-a701deb7c3cf.tga"/>
-  <texture name="UIImgBtnJumpRightInUUID" file_name="7dabc040-ec13-2309-ddf7-4f161f6de2f4.tga"/>
+  <texture name="UIImgBtnJumpLeftOutUUID" file_name="jump_left_out.tga"/>
+  <texture name="UIImgBtnJumpLeftInUUID" file_name="jump_left_in.tga"/>
+  <texture name="UIImgBtnJumpRightOutUUID" file_name="jump_right_out.tga"/>
+  <texture name="UIImgBtnJumpRightInUUID" file_name="jump_right_in.tga"/>
 
   <texture name="UIImgBtnSpinUpOutUUID"	file_name="spin_up_out_blue.tga"/>
   <texture name="UIImgBtnSpinUpInUUID"	file_name="spin_up_in_blue.tga"/>
@@ -330,16 +330,14 @@
   <texture name="UIImgBtnTabBottomOutUUID" file_name="tab_bottom_blue.tga"/>
   <texture name="UIImgBtnTabBottomInUUID"	file_name="tab_bottom_selected_blue.tga"/>
 
-  <texture name="UIImgGrabUUID"	file_name="c63f124c-6340-4fbf-b59e-0869a44adb64.tga"/>
-  <texture name="UIImgGrabSelectedUUID"	file_name="c1e21504-f136-451d-b8e9-929037812f1d.tga"/>
+  <texture name="UIImgGrabUUID"	file_name="tool_grab.tga"/>
+  <texture name="UIImgGrabSelectedUUID"	file_name="tool_grab_active.tga"/>
 
-  <!--<texture name="UIImgScaleUUID" 			file_name="88a90fef-b448-4883-9344-ecf378a60433.tga"/>-->
+  <texture name="UIImgFaceUUID"	file_name="tool_face.tga"/>
+  <texture name="UIImgFaceSelectedUUID"	file_name="tool_face_active.tga"/>
 
-  <texture name="UIImgFaceUUID"	file_name="ce15fd63-b0b6-463c-a37d-ea6393208b3e.tga"/>
-  <texture name="UIImgFaceSelectedUUID"	file_name="b4870163-6208-42a9-9801-93133bf9a6cd.tga"/>
-
-  <texture name="UIImgCreateUUID"	file_name="7a0b1bdb-b5d9-4df5-bac2-ba230da93b5b.tga"/>
-  <texture name="UIImgCreateSelectedUUID"	file_name="0098b015-3daf-4cfe-a72f-915369ea97c2.tga"/>
+  <texture name="UIImgCreateUUID"	file_name="tool_create.tga"/>
+  <texture name="UIImgCreateSelectedUUID"	file_name="tool_create_active.tga"/>
 
   <texture name="UIImgBtnCloseInactiveUUID" file_name="close_inactive_blue.tga"/>
   <texture name="UIImgBtnCloseActiveUUID"	file_name="closebox.tga"/>
