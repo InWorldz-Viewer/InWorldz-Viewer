@@ -10315,17 +10315,6 @@
       <key>Value</key>
       <string>e5821134-23c0-4bd0-af06-7fa95b9fb01a</string>
     </map>
-    <key>UIImgBtnPanDownOutUUID</key>
-    <map>
-      <key>Comment</key>
-      <string />
-      <key>Persist</key>
-      <integer>0</integer>
-      <key>Type</key>
-      <string>String</string>
-      <key>Value</key>
-      <string>47a8c844-cd2a-4b1a-be01-df8b1612fe5d</string>
-    </map>
     <key>UIImgBtnPanLeftInUUID</key>
     <map>
       <key>Comment</key>

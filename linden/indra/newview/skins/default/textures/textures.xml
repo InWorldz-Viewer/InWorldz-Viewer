@@ -347,7 +347,6 @@
   <texture name="up_arrow.tga" file_name="up_arrow.png"/>
   <texture name="down_arrow.tga" file_name="down_arrow.png"/>
 
-
   <texture name="UIImgBtnMinimizeInactiveUUID" file_name="minimize_inactive.tga"/>
   <texture name="UIImgBtnMinimizeActiveUUID" file_name="minimize.tga"/>
   <texture name="UIImgBtnMinimizePressedUUID" file_name="minimize_pressed.tga"/>
