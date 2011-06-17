@@ -94,7 +94,7 @@ LLVisualParamHint::LLVisualParamHint(
 	mLastParamWeight(0.f)
 {
 	LLVisualParamHint::sInstances.insert( this );
-	mBackgroundp = LLUI::getUIImage("avatar_thumb_bkgrnd.j2c");
+	mBackgroundp = LLUI::getUIImage("avatar_thumb_bkgrnd.png");
 
 
 	llassert(width != 0);
