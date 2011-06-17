@@ -1,396 +1,678 @@
-<textures version="103">
+<textures version="104">
 
-  <texture name="startup_logo.png" preload="true"/>
+<!--
+This file contains metadata about how to load, display, and scale textures for rendering in the UI.
+Images do *NOT* have to appear in this file in order to use them as textures in the UI...simply refer
+to them by filename (relative to textures directory).
+NOTE: if you want to reuse an image file with different metadata, simply create a new texture entry
+with the same filename but different name
+
+<texture
+  name="MyTexture" (mandatory)
+    - this is the name you reference the texture by in XUI.  For example, <button image_unselected="MyTexture"/>
+  file_name="images/my_texture.png" (optional)
+    - this is the path to the actual file asset, relative to the current skins "textures" directory.
+      If not supplied, the filename will be taken from the texture name itself, "MyTexture" in this case.
+      NOTE: you need to provide an extension on the filename (".png", ".tga", ".jpg") for us to decode the image properly
+  preload="true" (optional, false by default)
+    - If true, we will attempt to load the image before displaying any UI.
+      If false, we will load in the background after initializing the UI.
+  use_mips="true" (currently unused)
+  scale_left="1"
+  scale_bottom="1"
+  scale_top="15"
+  scale_right="31"
+    - Specifies the segmentation for 9-slice image scaling.  Specifically, the pixel offsets from the LOWER LEFT corner
+      that define the region of the image that is stretched to make the whole image fit in the required space.
+      In this example, if the source image is 32x16 pixels, we have defined a center region that starts one pixel up
+      and to the right from the bottom left corner and extends to 31 pixels right and 15 pixels up from the bottom left
+      corner.  The end result is that the image will keep a 1 pixel border all around while stretching to fit the required
+      region.
+-->
+
+
+
+<!-- STARTUP -->
+
+	<texture name="startup_logo.png"					file_name="interface/startup_logo.png"						preload="true"/>
+
+
+
+<!-- GENERIC BUTTONS -->
+
+	<texture name="button_disabled_32x128.tga"			file_name="interface/button_disabled_32x128.tga"			preload="true" 
+			 scale_left="16" 
+			 scale_top="16" 
+			 scale_right="112" 
+			 scale_bottom="16" />
+	<texture name="button_enabled_32x128.tga"			file_name="interface/button_enabled_32x128.tga"				preload="true"
+			 scale_left="16" 
+			 scale_top="16" 
+			 scale_right="112" 
+			 scale_bottom="16" />
+	<texture name="toolbar_btn_enabled.tga"				file_name="interface/toolbar_btn_enabled.tga"	
+			 scale_left="7" 
+			 scale_top="32" 
+			 scale_right="121" 
+			 scale_bottom="0" /> 
+	<texture name="toolbar_btn_disabled.tga"			file_name="interface/toolbar_btn_disabled.tga"	
+			 scale_left="7" 
+			 scale_top="32" 
+			 scale_right="121" 
+			 scale_bottom="0" /> 
+	<texture name="toolbar_btn_selected.tga"			file_name="interface/toolbar_btn_selected.tga"	
+			 scale_left="7" 
+			 scale_top="32" 
+			 scale_right="121" 
+			 scale_bottom="0" /> 
+	<texture name="button_enabled_selected_32x128.tga"	file_name="interface/button_enabled_selected_32x128.tga"	preload="true" 
+			 scale_left="16" 
+			 scale_top="16" 
+			 scale_right="112" 
+			 scale_bottom="16" />
+			 
+	<texture name="square_btn_32x128.tga"				file_name="interface/square_btn_32x128.tga"					preload="true" 
+			 scale_left="8" 
+			 scale_top="10" 
+			 scale_right="120" 
+			 scale_bottom="10" />
+	<texture name="square_btn_selected_32x128.tga"		file_name="interface/square_btn_selected_32x128.tga"		preload="true" 
+			 scale_left="2" 
+			 scale_top="10" 
+			 scale_right="126" 
+			 scale_bottom="10" />
+			 
+	<texture name="rounded_square.tga"					file_name="interface/rounded_square.j2c" 					preload="true" 
+			 scale_left="16" 
+			 scale_top="16" 
+			 scale_right="112" 
+			 scale_bottom="16" />
+	<texture name="rounded_square_soft.tga"				file_name="interface/rounded_square_soft.j2c" 				preload="true" 
+			 scale_left="16" 
+			 scale_top="16" 
+			 scale_right="112" 
+			 scale_bottom="16" />
+			 
+	<texture name="flyout_btn_right_selected.tga" 		file_name="interface/flyout_btn_right_selected.tga" 
+			 scale_left="0" 
+			 scale_top="30" 
+			 scale_right="32" 
+			 scale_bottom="0"/>
+	<texture name="flyout_btn_right.tga" 				file_name="interface/flyout_btn_right.tga" 
+			 scale_left="0" 
+			 scale_top="30" 
+			 scale_right="32" 
+			 scale_bottom="0"/>
+	<texture name="flyout_btn_right_disabled.tga" 		file_name="interface/flyout_btn_right_disabled.tga" 
+			 scale_left="0" 
+			 scale_top="30" 
+			 scale_right="32" 
+			 scale_bottom="0"/>
+	<texture name="flyout_btn_left_selected.tga" 		file_name="interface/flyout_btn_left_selected.tga" 
+			 scale_left="16" 
+			 scale_top="15" 
+			 scale_right="112" 
+			 scale_bottom="15"/>
+	<texture name="flyout_btn_left.tga" 				file_name="interface/flyout_btn_left.tga" 
+			 scale_left="16" 
+			 scale_top="15" 
+			 scale_right="112" 
+			 scale_bottom="15"/>
+	<texture name="flyout_btn_left_disabled.tga" 		file_name="interface/flyout_btn_left_disabled.tga"
+		     scale_left="16" 
+			 scale_top="15" 
+			 scale_right="112" 
+			 scale_bottom="15"/>
+
+
+
+<!-- CHECKBOXES -->
+
+	<texture name="checkbox_disabled_false.tga"			file_name="interface/checkbox_disabled_false.tga"		preload="true"/>
+	<texture name="checkbox_disabled_true.tga"			file_name="interface/checkbox_disabled_true.tga"		preload="true"/>
+	<texture name="checkbox_enabled_false.tga"			file_name="interface/checkbox_enabled_false.tga"		preload="true"/>
+	<texture name="checkbox_enabled_true.tga"			file_name="interface/checkbox_enabled_true.tga"			preload="true"/>
+	<texture name="UIImgCheckboxActiveUUID"				file_name="interface/checkbox_enabled_false.tga"/>
+	<texture name="UIImgCheckboxActiveSelectedUUID" 	file_name="interface/checkbox_enabled_true.tga"/>
+	<texture name="UIImgCheckboxInactiveUUID" 			file_name="interface/checkbox_disabled_false.tga"/>
+	<texture name="UIImgCheckboxInactiveSelectedUUID" 	file_name="interface/checkbox_disabled_true.tga"/>
+
+
+
+<!-- RADIO BUTTONS -->
+
+	<texture name="radio_active_false.tga"			file_name="interface/radio_active_false.tga"		preload="true"/>
+	<texture name="radio_active_true.tga"			file_name="interface/radio_active_true.tga"			preload="true"/>
+	<texture name="radio_inactive_false.tga"		file_name="interface/radio_inactive_false.tga"		preload="true"/>
+	<texture name="radio_inactive_true.tga"			file_name="interface/radio_inactive_true.tga"		preload="true"/>
+	<texture name="UIImgRadioActiveUUID"			file_name="interface/radio_active_false.tga"/>
+	<texture name="UIImgRadioActiveSelectedUUID" 	file_name="interface/radio_active_true.tga"/>
+	<texture name="UIImgRadioInactiveUUID"			file_name="interface/radio_inactive_false.tga"/>
+	<texture name="UIImgRadioInactiveSelectedUUID" 	file_name="interface/radio_inactive_true.tga"/>
+
+
+
+<!-- SPINNERS -->
+
+	<texture name="spin_down_in_blue.tga"			file_name="interface/spin_down_in_blue.tga"			preload="true"/>
+	<texture name="spin_down_out_blue.tga"			file_name="interface/spin_down_out_blue.tga"		preload="true"/>
+	<texture name="spin_up_in_blue.tga"				file_name="interface/spin_up_in_blue.tga"			preload="true"/>
+	<texture name="spin_up_out_blue.tga"			file_name="interface/spin_up_out_blue.tga"			preload="true"/>
+	<texture name="UIImgBtnSpinUpOutUUID"			file_name="interface/spin_up_out_blue.tga"/>
+	<texture name="UIImgBtnSpinUpInUUID"			file_name="interface/spin_up_in_blue.tga"/>
+	<texture name="UIImgBtnSpinDownOutUUID"			file_name="interface/spin_down_out_blue.tga"/>
+	<texture name="UIImgBtnSpinDownInUUID"			file_name="interface/spin_down_in_blue.tga"/>
+
+
+
+<!-- COMBOBOXES -->
+
+	<texture name="combobox_arrow.tga"				file_name="interface/combobox_arrow.tga"			preload="true"/>
+
+
+
+<!-- TEXT FIELDS -->
+
+	<texture name="sm_rounded_corners_simple.tga"		file_name="interface/sm_rounded_corners_simple.tga"	
+			 scale_left="4" 
+			 scale_top="4" 
+			 scale_bottom="4" 
+			 scale_right="4"/>
+	<texture name="icn_textfield_enabled.tga"			file_name="interface/icn_textfield_enabled.tga"	
+			 scale_left="5" 
+			 scale_top="5" 
+			 scale_bottom="5" 
+			 scale_right="5"/>
+	<texture name="icn_rounded-text-field.tga"			file_name="interface/icn_rounded-text-field.tga" />
+	<texture name="icn_clear_lineeditor.tga"			file_name="interface/icn_clear_lineeditor.tga" />
+
+
+
+<!-- WINDOW CONTROLS -->
+
+	<texture name="close_in_blue.tga"					file_name="interface/close_in_blue.tga"							preload="true"/>
+	<texture name="minimize.tga"						file_name="interface/minimize.tga"								preload="true"/>
+	<texture name="minimize_pressed.tga"				file_name="interface/minimize_pressed.tga"						preload="true"/>
+	<texture name="resize_handle_bottom_right_blue.tga"	file_name="interface/resize_handle_bottom_right_blue.tga"		preload="true"/>
+	<texture name="UIImgResizeBottomRightUUID" 			file_name="interface/resize_handle_bottom_right_blue.tga"/>
+	<texture name="UIImgBtnCloseInactiveUUID" 			file_name="interface/close_inactive_blue.tga"/>
+	<texture name="UIImgBtnCloseActiveUUID"				file_name="interface/closebox.tga"/>
+	<texture name="UIImgBtnClosePressedUUID" 			file_name="interface/close_in_blue.tga"/>
+	<texture name="UIImgBtnMinimizeInactiveUUID" 		file_name="interface/minimize_inactive.tga"/>
+	<texture name="UIImgBtnMinimizeActiveUUID" 			file_name="interface/minimize.tga"/>
+	<texture name="UIImgBtnMinimizePressedUUID" 		file_name="interface/minimize_pressed.tga"/>
+	<texture name="UIImgBtnRestoreInactiveUUID" 		file_name="interface/restore_inactive.tga"/>
+	<texture name="UIImgBtnRestoreActiveUUID" 			file_name="interface/restore.tga"/>
+	<texture name="UIImgBtnRestorePressedUUID" 			file_name="interface/restore_pressed.tga"/>
+	<texture name="UIImgBtnTearOffInactiveUUID" 		file_name="interface/tearoffbox.tga"/>
+	<texture name="UIImgBtnTearOffActiveUUID" 			file_name="interface/tearoffbox.tga"/>
+	<texture name="UIImgBtnTearOffPressedUUID" 			file_name="interface/tearoff_pressed.tga"/>
+
+
+
+<!-- SCROLLBARS -->
+
+	<texture name="icn_scrollbar_thumb.tga"			file_name="interface/icn_scrollbar_thumb.tga"	 		preload="true" 
+			 scale_top="7" 
+			 scale_left="4" 
+			 scale_bottom="8" 
+			 scale_right="4" />
+	<texture name="icn_scrollbar_bg.tga"			file_name="interface/icn_scrollbar_bg.tga"				preload="true" 
+			 scale_top="7" 
+			 scale_left="4" 
+			 scale_bottom="8" 
+			 scale_right="4" />
+	<texture name="scrollbutton_down_in_blue.tga"	file_name="interface/scrollbutton_down_in_blue.tga"		preload="true"/>
+	<texture name="scrollbutton_down_out_blue.tga"	file_name="interface/scrollbutton_down_out_blue.tga"	preload="true"/>
+	<texture name="scrollbutton_left_in_blue.tga"	file_name="interface/scrollbutton_left_in_blue.tga"		preload="true"/>
+	<texture name="scrollbutton_left_out_blue.tga"	file_name="interface/scrollbutton_left_out_blue.tga"	preload="true"/>
+	<texture name="scrollbutton_right_in_blue.tga"	file_name="interface/scrollbutton_right_in_blue.tga"	preload="true"/>
+	<texture name="scrollbutton_right_out_blue.tga"	file_name="interface/scrollbutton_right_out_blue.tga"	preload="true"/>
+	<texture name="scrollbutton_up_in_blue.tga"		file_name="interface/scrollbutton_up_in_blue.tga"		preload="true"/>
+	<texture name="scrollbutton_up_out_blue.tga"	file_name="interface/scrollbutton_up_out_blue.tga"		preload="true"/>
+	<texture name="UIImgBtnScrollUpOutUUID" 		file_name="interface/scrollbutton_up_out_blue.tga"/>
+	<texture name="UIImgBtnScrollUpInUUID" 			file_name="interface/scrollbutton_up_in_blue.tga"/>
+	<texture name="UIImgBtnScrollDownOutUUID" 		file_name="interface/scrollbutton_down_out_blue.tga"/>
+	<texture name="UIImgBtnScrollDownInUUID" 		file_name="interface/scrollbutton_down_in_blue.tga"/>
+	<texture name="UIImgBtnScrollLeftOutUUID" 		file_name="interface/scrollbutton_left_out_blue.tga"/>
+	<texture name="UIImgBtnScrollLeftInUUID" 		file_name="interface/scrollbutton_left_in_blue.tga"/>
+	<texture name="UIImgBtnScrollRightOutUUID" 		file_name="interface/scrollbutton_right_out_blue.tga"/>
+	<texture name="UIImgBtnScrollRightInUUID" 		file_name="interface/scrollbutton_right_in_blue.tga"/>
+
+
+
+<!-- SLIDERS --> 
+
+	<texture name="icn_slide-groove_dark.tga" 		file_name="interface/icn_slide-groove_dark.tga" 
+			 scale_left="2" 
+			 scale_top="5" 
+			 scale_right="29" 
+			 scale_bottom="4"/>
+	<texture name="icn_slide-highlight.tga" 		file_name="interface/icn_slide-highlight.tga" 
+			 scale_left="2" 
+			 scale_top="5" 
+			 scale_right="29" 
+			 scale_bottom="4"/>
+	<texture name="icn_slide-thumb_dark.tga" 		file_name="interface/icn_slide-thumb_dark.tga" 
+			 scale_left="2" 
+			 scale_top="5" 
+			 scale_right="29" 
+			 scale_bottom="4"/>
+
+
+
+<!-- PROGRESS BAR -->
+
+	<texture name="progressbar_fill.tga"			file_name="interface/progressbar_fill.tga"				preload="true" 
+			 scale_left="10" 
+			 scale_top="7" 
+			 scale_right="65" 
+			 scale_bottom="7"/>
+	<texture name="progressbar_track.tga"			file_name="interface/progressbar_track.tga"				preload="true" 
+			 scale_left="10" 
+			 scale_top="7" 
+			 scale_right="80" 
+			 scale_bottom="7"/>
+
+
+
+<!-- TAB CONTROLS -->
+
+	<texture name="tab_bottom_blue.tga"				file_name="interface/tab_bottom_blue.tga"				preload="true" 
+			 scale_left="8" 
+			 scale_top="8" 
+			 scale_right="120" 
+			 scale_bottom="9"/>
+	<texture name="tab_bottom_selected_blue.tga"	file_name="interface/tab_bottom_selected_blue.tga"		preload="true" 
+			 scale_left="8" 
+			 scale_top="8" 
+			 scale_right="96" 
+			 scale_bottom="9"/>
+	<texture name="tab_left.tga"					file_name="interface/tab_left.tga"						preload="true" 
+			 scale_left="8" 
+			 scale_top="8" 
+			 scale_right="120" 
+			 scale_bottom="9"/>
+	<texture name="tab_left_selected.tga"			file_name="interface/tab_left_selected.tga"				preload="true" 
+			 scale_left="8" 
+			 scale_top="8" 
+			 scale_right="96" 
+			 scale_bottom="9"/>
+	<texture name="tab_top_blue.tga"				file_name="interface/tab_top_blue.tga"					preload="true" 
+			 scale_left="8" 
+			 scale_top="8" 
+			 scale_right="120" 
+			 scale_bottom="9"/>
+	<texture name="tab_top_selected_blue.tga"		file_name="interface/tab_top_selected_blue.tga"			preload="true" 
+			 scale_left="8" 
+			 scale_top="8" 
+			 scale_right="96" 
+			 scale_bottom="9"/>
+	<texture name="UIImgBtnTabTopOutUUID"			file_name="interface/tab_top_blue.tga"/>
+	<texture name="UIImgBtnTabTopInUUID"			file_name="interface/tab_top_selected_blue.tga"/>
+	<texture name="UIImgBtnTabBottomOutUUID" 		file_name="interface/tab_bottom_blue.tga"/>
+	<texture name="UIImgBtnTabBottomInUUID"			file_name="interface/tab_bottom_selected_blue.tga"/>
+	<texture name="UIImgBtnJumpLeftOutUUID" 		file_name="interface/jump_left_out.tga"/>
+	<texture name="UIImgBtnJumpLeftInUUID" 			file_name="interface/jump_left_in.tga"/>
+	<texture name="UIImgBtnJumpRightOutUUID" 		file_name="interface/jump_right_out.tga"/>
+	<texture name="UIImgBtnJumpRightInUUID" 		file_name="interface/jump_right_in.tga"/>
+
+
+
+<!-- INVENTORY FOLDER ICONS -->
+
+	<texture name="inv_folder_animation.tga"		file_name="interface/inv_folder_animation.tga"	/>
+	<texture name="inv_folder_bodypart.tga"			file_name="interface/inv_folder_bodypart.tga"	/>
+	<texture name="inv_folder_callingcard.tga"		file_name="interface/inv_folder_callingcard.tga"	/>
+	<texture name="inv_folder_clothing.tga"			file_name="interface/inv_folder_clothing.tga"	/>
+	<texture name="inv_folder_gesture.tga"			file_name="interface/inv_folder_gesture.tga"	/>
+	<texture name="inv_folder_landmark.tga"			file_name="interface/inv_folder_landmark.tga"	/>
+	<texture name="inv_folder_lostandfound.tga"		file_name="interface/inv_folder_lostandfound.tga"	/>
+	<texture name="inv_folder_notecard.tga"			file_name="interface/inv_folder_notecard.tga"	/>
+	<texture name="inv_folder_object.tga"			file_name="interface/inv_folder_object.tga"	/>
+	<texture name="inv_folder_plain_closed.tga"		file_name="interface/inv_folder_plain_closed.tga"	/>
+	<texture name="inv_folder_script.tga"			file_name="interface/inv_folder_script.tga"	/>
+	<texture name="inv_folder_snapshot.tga"			file_name="interface/inv_folder_snapshot.tga"	/>
+	<texture name="inv_folder_sound.tga"			file_name="interface/inv_folder_sound.tga"	/>
+	<texture name="inv_folder_texture.tga"			file_name="interface/inv_folder_texture.tga"	/>
+	<texture name="inv_folder_trash.tga"			file_name="interface/inv_folder_trash.tga"	/>
+
+
+
+<!-- INVENTORY ITEM ICONS -->
+
+	<texture name="inv_item_animation.tga"			file_name="interface/inv_item_animation.tga"	/>
+	<texture name="inv_item_skin.tga"				file_name="interface/inv_item_skin.tga"	/>
+	<texture name="inv_item_callingcard_offline.tga"file_name="interface/inv_item_callingcard_offline.tga"	/>
+	<texture name="inv_item_callingcard_online.tga"	file_name="interface/inv_item_callingcard_online.tga"	/>
+	<texture name="inv_item_eyes.tga"				file_name="interface/inv_item_eyes.tga"	/>
+	<texture name="inv_item_gesture.tga"			file_name="interface/inv_item_gesture.tga"	/>
+	<texture name="inv_item_gloves.tga"				file_name="interface/inv_item_gloves.tga"	/>
+	<texture name="inv_item_hair.tga"				file_name="interface/inv_item_hair.tga"	/>
+	<texture name="inv_item_jacket.tga"				file_name="interface/inv_item_jacket.tga"	/>
+	<texture name="inv_item_landmark.tga"			file_name="interface/inv_item_landmark.tga"	/>
+	<texture name="inv_item_landmark_visited.tga"	file_name="interface/inv_item_landmark_visited.tga"	/>
+	<texture name="inv_item_notecard.tga"			file_name="interface/inv_item_notecard.tga"	/>
+	<texture name="inv_item_object.tga"				file_name="interface/inv_item_object.tga"	/>
+	<texture name="inv_item_object_multi.tga"		file_name="interface/inv_item_object_multi.tga"	/>
+	<texture name="inv_item_pants.tga"				file_name="interface/inv_item_pants.tga"	/>
+	<texture name="inv_item_script.tga"				file_name="interface/inv_item_script.tga"	/>
+	<texture name="inv_item_shape.tga"				file_name="interface/inv_item_shape.tga"	/>
+	<texture name="inv_item_shirt.tga"				file_name="interface/inv_item_shirt.tga"	/>
+	<texture name="inv_item_shoes.tga"				file_name="interface/inv_item_shoes.tga"	/>
+	<texture name="inv_item_skirt.tga"				file_name="interface/inv_item_skirt.tga"	/>
+	<texture name="inv_item_snapshot.tga"			file_name="interface/inv_item_snapshot.tga"	/>
+	<texture name="inv_item_socks.tga"				file_name="interface/inv_item_socks.tga"	/>
+	<texture name="inv_item_sound.tga"				file_name="interface/inv_item_sound.tga"	/>
+	<texture name="inv_item_texture.tga"			file_name="interface/inv_item_texture.tga"	/>
+	<texture name="inv_item_underpants.tga"			file_name="interface/inv_item_underpants.tga"	/>
+	<texture name="inv_item_undershirt.tga"			file_name="interface/inv_item_undershirt.tga"	/>
+
+
+
+<!-- SEARCH AND MAP ICONS -->
+
+	<texture name="icon_auction.tga"				file_name="interface/icon_auction.tga"	/>
+	<texture name="icon_event.tga"					file_name="interface/icon_event.tga"	/>
+	<texture name="icon_event_mature.tga"			file_name="interface/icon_event_mature.tga"	/>
+	<texture name="icon_for_sale.tga"				file_name="interface/icon_for_sale.tga"	/>
+	<texture name="icon_place.tga"					file_name="interface/icon_place.tga"	/>
+	<texture name="icon_popular.tga"				file_name="interface/icon_popular.tga"	/>
+	<texture name="icon_top_pick.tga"				file_name="interface/icon_top_pick.tga"	/>
+	<texture name="map_avatar_16.tga" 				file_name="interface/map_avatar_16.tga" />
+	<texture name="map_avatar_8.tga" 				file_name="interface/map_avatar_8.tga" />
+	<texture name="map_event.tga" 					file_name="interface/map_event.tga" />
+	<texture name="map_event_mature.tga" 			file_name="interface/map_event_mature.tga" />
+	<texture name="map_home.tga" 					file_name="interface/map_home.tga" />
+	<texture name="map_infohub.tga" 				file_name="interface/map_infohub.tga" />
+	<texture name="map_telehub.tga" 				file_name="interface/map_telehub.tga" />
+	<texture name="map_track_16.tga" 				file_name="interface/map_track_16.tga" />
+
+
+
+<!-- AVATAR ICONS --> 
+
+	<texture name="icon_avatar_offline.tga"			file_name="interface/icon_avatar_offline.tga"	/>
+	<texture name="icon_avatar_online.tga"			file_name="interface/icon_avatar_online.tga"	/>
+
+
+
+<!-- GROUP ICONS -->
+
+	<texture name="icon_group.tga"					file_name="interface/icon_group.tga"	/>
+	<texture name="icon_groupnotice.tga"			file_name="interface/icon_groupnotice.tga"	/>
+	<texture name="icon_groupnoticeinventory.tga"	file_name="interface/icon_groupnoticeinventory.tga"	/>
+
+
+
+<!-- NOTIFICATION ICONS -->	 
+
+	<texture name="notify_tip_icon.tga" 			file_name="interface/notify_tip_icon.tga" />
+	<texture name="notify_caution_icon.tga" 		file_name="interface/notify_caution_icon.tga" />
+	<texture name="notify_next.png" 				file_name="interface/notify_next.png" 					preload="true"/>
+	<texture name="notify_box_icon.tga" 			file_name="interface/notify_box_icon.tga" />
+
+
+
+<!-- STATUSBAR ICONS --> 
+
+	<texture name="status_no_build.tga" 			file_name="interface/status_no_build.tga" />
+	<texture name="status_buy_currency.tga" 		file_name="interface/status_buy_currency.tga" />
+	<texture name="status_buy_currency_pressed.tga" file_name="interface/status_buy_currency_pressed.tga" />
+	<texture name="status_buy_land.tga" 			file_name="interface/status_buy_land.tga" />
+	<texture name="status_buy_land_pressed.tga" 	file_name="interface/status_buy_land_pressed.tga" />
+	<texture name="status_no_fly.tga" 				file_name="interface/status_no_fly.tga" />
+	<texture name="status_health.tga" 				file_name="interface/status_health.tga" />
+	<texture name="status_no_push.tga" 				file_name="interface/status_no_push.tga" />
+	<texture name="status_no_scripts.tga" 			file_name="interface/status_no_scripts.tga" />
+
+
+
+<!-- TOOLS ICONS - SELECT TOOL -->
+
+	<texture name="tool_dozer.tga" 					file_name="interface/tool_dozer.tga" />
+	<texture name="tool_dozer_active.tga" 			file_name="interface/tool_dozer_active.tga" />
+	<texture name="tool_zoom.tga" 					file_name="interface/tool_zoom.tga" />
+	<texture name="tool_zoom_active.tga" 			file_name="interface/tool_zoom_active.tga" />
+	<texture name="UIImgGrabUUID"					file_name="interface/tool_grab.tga"/>
+	<texture name="UIImgGrabSelectedUUID"			file_name="interface/tool_grab_active.tga"/>
+	<texture name="UIImgFaceUUID"					file_name="interface/tool_face.tga"/>
+	<texture name="UIImgFaceSelectedUUID"			file_name="interface/tool_face_active.tga"/>
+	<texture name="UIImgCreateUUID"					file_name="interface/tool_create.tga"/>
+	<texture name="UIImgCreateSelectedUUID"			file_name="interface/tool_create_active.tga"/>
+
+
+
+<!-- TOOLS ICONS - CREATE -->  
+
+	<texture name="object_cone.tga" 				file_name="interface/object_cone.tga" />
+	<texture name="object_cone_active.tga" 			file_name="interface/object_cone_active.tga" />
+	<texture name="object_cube.tga" 				file_name="interface/object_cube.tga" />
+	<texture name="object_cube_active.tga" 			file_name="interface/object_cube_active.tga" />
+	<texture name="object_cylinder.tga" 			file_name="interface/object_cylinder.tga" />
+	<texture name="object_cylinder_active.tga" 		file_name="interface/object_cylinder_active.tga" />
+	<texture name="object_grass.tga" 				file_name="interface/object_grass.tga" />
+	<texture name="object_grass_active.tga" 		file_name="interface/object_grass_active.tga" />
+	<texture name="object_hemi_cone.tga" 			file_name="interface/object_hemi_cone.tga" />
+	<texture name="object_hemi_cone_active.tga" 	file_name="interface/object_hemi_cone_active.tga" />
+	<texture name="object_hemi_cylinder.tga" 		file_name="interface/object_hemi_cylinder.tga" />
+	<texture name="object_hemi_cylinder_active.tga" file_name="interface/object_hemi_cylinder_active.tga" />
+	<texture name="object_hemi_sphere.tga" 			file_name="interface/object_hemi_sphere.tga" />
+	<texture name="object_hemi_sphere_active.tga" 	file_name="interface/object_hemi_sphere_active.tga" />
+	<texture name="object_prism.tga" 				file_name="interface/object_prism.tga" />
+	<texture name="object_prism_active.tga" 		file_name="interface/object_prism_active.tga" />
+	<texture name="object_pyramid.tga" 				file_name="interface/object_pyramid.tga" />
+	<texture name="object_pyramid_active.tga" 		file_name="interface/object_pyramid_active.tga" />
+	<texture name="object_ring.tga" 				file_name="interface/object_ring.tga" />
+	<texture name="object_ring_active.tga" 			file_name="interface/object_ring_active.tga" />
+	<texture name="object_sphere.tga" 				file_name="interface/object_sphere.tga" />
+	<texture name="object_sphere_active.tga" 		file_name="interface/object_sphere_active.tga" />
+	<texture name="object_tetrahedron.tga" 			file_name="interface/object_tetrahedron.tga" />
+	<texture name="object_tetrahedron_active.tga" 	file_name="interface/object_tetrahedron_active.tga" />
+	<texture name="object_torus.tga" 				file_name="interface/object_torus.tga" />
+	<texture name="object_torus_active.tga" 		file_name="interface/object_torus_active.tga" />
+	<texture name="object_tree.tga" 				file_name="interface/object_tree.tga" />
+	<texture name="object_tree_active.tga" 			file_name="interface/object_tree_active.tga" />
+	<texture name="object_tube.tga" 				file_name="interface/object_tube.tga" />
+	<texture name="object_tube_active.tga" 			file_name="interface/object_tube_active.tga" />
+
+
+
+<!-- BROWSER ICONS -->  
+
+	<texture name="go-previous-4.png" 				file_name="interface/go-previous-4.png" />
+	<texture name="go-next-4.png" 					file_name="interface/go-next-4.png" />
+	<texture name="view-refresh-5.png" 				file_name="interface/view-refresh-5.png" /> 
+	<texture name="go-home-4.png" 					file_name="interface/go-home-4.png" />
+	<texture name="media_btn_back.png" 				file_name="interface/media_btn_back.png" />
+	<texture name="media_btn_done.png" 				file_name="interface/media_btn_done.png" />
+	<texture name="media_btn_forward.png" 			file_name="interface/media_btn_forward.png" />
+	<texture name="media_btn_home.png" 				file_name="interface/media_btn_home.png" />
+	<texture name="media_btn_newwindow.png" 		file_name="interface/media_btn_newwindow.png" />
+	<texture name="media_btn_optimalzoom.png" 		file_name="interface/media_btn_optimalzoom.png" />
+	<texture name="media_btn_reload.png" 			file_name="interface/media_btn_reload.png" />
+	<texture name="media_btn_scrolldown.png" 		file_name="interface/media_btn_scrolldown.png" />
+	<texture name="media_btn_scrollleft.png" 		file_name="interface/media_btn_scrollleft.png" />
+	<texture name="media_btn_scrollright.png" 		file_name="interface/media_btn_scrollright.png" />
+	<texture name="media_btn_scrollup.png" 			file_name="interface/media_btn_scrollup.png" />
+	<texture name="media_btn_stoploading.png" 		file_name="interface/media_btn_stoploading.png" />
+	<texture name="media_panel_divider.png" 		file_name="interface/media_panel_divider.png" />
+
+
+
+<!-- MUSIC AND MEDIA ICONS -->
+
+	<texture name="media_icon.tga" 					file_name="interface/icn_label_media.tga" />
+	<texture name="music_icon.tga" 					file_name="interface/icn_label_music.tga" />
+	<texture name="icn_media-pause.tga" 			file_name="interface/icn_media-pause.tga" />
+	<texture name="icn_media-play.tga" 				file_name="interface/icn_media-play.tga" />
+	<texture name="icn_music-play.tga" 				file_name="interface/icn_music-play.tga" />
+	<texture name="icn_music-pause.tga" 			file_name="interface/icn_music-pause.tga" />
+	<texture name="icn_media_web.tga" 				file_name="interface/icn_media_web.tga" 				preload="true"/>
+	<texture name="icn_media_movie.tga" 			file_name="interface/icn_media_movie.tga" 				preload="true"/>
+	<texture name="icn_label_music.tga" 			file_name="interface/icn_label_music.tga" />
+	<texture name="icn_label_media.tga" 			file_name="interface/icn_label_media.tga"/>
+
+
+
+<!-- MEDIA PANEL (UNUSED) -->
+
+	<texture name="media_panel_bg.png"				file_name="interface/media_panel_bg.png"				preload="true" 
+			 scale_left="9" 
+			 scale_top="9" 
+			 scale_right="9" 
+			 scale_bottom="9" />
+	<texture name="media_panel_hoverrectangle.png"	file_name="interface/media_panel_hoverrectangle.png"	preload="true" 
+			 scale_left="9" 
+			 scale_top="9" 
+			 scale_right="9" 
+			 scale_bottom="9" />
 	
-  <texture name="icn_scrollbar_thumb.tga" preload="true" scale_top="7" scale_left="4" scale_bottom="8" scale_right="4" />
-  <texture name="icn_scrollbar_bg.tga" preload="true" scale_top="7" scale_left="4" scale_bottom="8" scale_right="4" />
-  <texture name="sm_rounded_corners_simple.tga" scale_left="4" scale_top="4" scale_bottom="4" scale_right="4"/>
-  <texture name="icn_textfield_enabled.tga" scale_left="5" scale_top="5" scale_bottom="5" scale_right="5"/>
-  
-  <texture name="button_disabled_32x128.tga" preload="true" scale_left="16" scale_top="16" scale_right="112" scale_bottom="16" />
-  
-  <texture name="button_enabled_32x128.tga" preload="true" scale_left="16" scale_top="16" scale_right="112" scale_bottom="16" />
-  
-  <texture name="toolbar_btn_enabled.tga" scale_left="7" scale_top="32" scale_right="121" scale_bottom="0" /> 
 
-  <texture name="toolbar_btn_disabled.tga" scale_left="7" scale_top="32" scale_right="121" scale_bottom="0" /> 
-  
-  <texture name="toolbar_btn_selected.tga" scale_left="7" scale_top="32" scale_right="121" scale_bottom="0" /> 
-  
-  <texture name="button_enabled_selected_32x128.tga" preload="true" scale_left="16" scale_top="16" scale_right="112" scale_bottom="16" />
 
-  <texture name="media_panel_bg.png" preload="true" scale_left="9" scale_top="9" scale_right="9" scale_bottom="9" />
-  <texture name="media_panel_hoverrectangle.png" preload="true" scale_left="9" scale_top="9" scale_right="9" scale_bottom="9" />
-  <texture name="checkbox_disabled_false.tga"	preload="true"/>
-  <texture name="checkbox_disabled_true.tga"	preload="true"/>
-  <texture name="checkbox_enabled_false.tga"	preload="true"/>
-  <texture name="checkbox_enabled_true.tga"	preload="true"/>
-  
-  <texture name="close_in_blue.tga"	preload="true"/>
- 
-  <texture name="minimize.tga"	preload="true"/>
-  <texture name="minimize_pressed.tga"	preload="true"/>
-  
-  <texture name="radio_active_false.tga"	preload="true"/>
-  <texture name="radio_active_true.tga"	preload="true"/>
-  <texture name="radio_inactive_false.tga"	preload="true"/>
-  <texture name="radio_inactive_true.tga"	preload="true"/>
-  
-  <texture name="combobox_arrow.tga"	preload="true"/>
-  
-  <texture name="resize_handle_bottom_right_blue.tga" preload="true"/>
-  
-  <texture name="rounded_square.tga"	file_name="rounded_square.j2c" preload="true" scale_left="16" scale_top="16" scale_right="112" scale_bottom="16"/>
-  
-  <texture name="rounded_square_soft.tga"	file_name="rounded_square_soft.j2c" preload="true" scale_left="16" scale_top="16" scale_right="112" scale_bottom="16"/>
-  
-  <texture name="toolbar_tab.tga"	preload="true" scale_left="6" scale_top="42" scale_right="104" scale_bottom="8"/>
-  <texture name="toolbar_bg.tga"	preload="true" scale_left="6" scale_top="42" scale_right="96" scale_bottom="16"/>
-  
-  <texture name="progressbar_fill.tga"	preload="true" scale_left="10" scale_top="7" scale_right="65" scale_bottom="7"/>
-  <texture name="progressbar_track.tga"	preload="true" scale_left="10" scale_top="7" scale_right="80" scale_bottom="7"/>
-  
-  <texture name="scrollbutton_down_in_blue.tga"	preload="true"/>
-  <texture name="scrollbutton_down_out_blue.tga"	preload="true"/>
-  <texture name="scrollbutton_left_in_blue.tga"	preload="true"/>
-  <texture name="scrollbutton_left_out_blue.tga"	preload="true"/>
-  <texture name="scrollbutton_right_in_blue.tga"	preload="true"/>
-  <texture name="scrollbutton_right_out_blue.tga"	preload="true"/>
-  <texture name="scrollbutton_up_in_blue.tga"	preload="true"/>
-  <texture name="scrollbutton_up_out_blue.tga"	preload="true"/>
-  <texture name="spin_down_in_blue.tga"	preload="true"/>
-  <texture name="spin_down_out_blue.tga"	preload="true"/>
-  <texture name="spin_up_in_blue.tga"	preload="true"/>
-  <texture name="spin_up_out_blue.tga"	preload="true"/>
-  
-  <texture name="square_btn_32x128.tga"	preload="true" scale_left="8" scale_top="10" scale_right="120" scale_bottom="10"/>
-  <texture name="square_btn_selected_32x128.tga"	preload="true" scale_left="2" scale_top="10" scale_right="126" scale_bottom="10"/>
-  
-  <texture name="tab_bottom_blue.tga"	preload="true" scale_left="8" scale_top="8" scale_right="120" scale_bottom="9"/>
-  <texture name="tab_bottom_selected_blue.tga"	preload="true" scale_left="8" scale_top="8" scale_right="96" scale_bottom="9"/>
-  <texture name="tab_left.tga"	preload="true" scale_left="8" scale_top="8" scale_right="120" scale_bottom="9"/>
-  <texture name="tab_left_selected.tga"	preload="true" scale_left="8" scale_top="8" scale_right="96" scale_bottom="9"/>
-  <texture name="tab_top_blue.tga"	preload="true" scale_left="8" scale_top="8" scale_right="120" scale_bottom="9"/>
-  <texture name="tab_top_selected_blue.tga" preload="true" scale_left="8" scale_top="8" scale_right="96" scale_bottom="9"/>
-  
-  <texture name="color_swatch_alpha.tga" preload="true"/>
+<!-- TOOLBARS --> 
 
-  <texture name="active_voice_tab.tga"/>
-  <texture name="button_anim_pause.tga"/>
-  <texture name="button_anim_pause_selected.tga"/>
-  <texture name="button_anim_play.tga"/>
-  <texture name="button_anim_play_selected.tga"/>
-  <texture name="button_anim_stop.tga"/>
-  <texture name="button_anim_stop_selected.tga"/>
-  <texture name="crosshairs.tga"/>
-  <texture name="direction_arrow.tga"/>
-  <texture name="foot_shadow.j2c" use_mips="true"/>
+	<texture name="toolbar_tab.tga"					file_name="interface/toolbar_tab.tga"					preload="true" 
+			 scale_left="6" 
+			 scale_top="42" 
+			 scale_right="104" 
+			 scale_bottom="8"/>
+	<texture name="toolbar_bg.tga"					file_name="interface/toolbar_bg.tga"					preload="true" 
+			 scale_left="6" 
+			 scale_top="42" 
+			 scale_right="96" 
+			 scale_bottom="16"/>
 
-  <texture name="icon_auction.tga"/>
-  <texture name="icon_avatar_offline.tga"/>
-  <texture name="icon_avatar_online.tga"/>
-  <texture name="icon_day_cycle.tga"/>
-  <texture name="icon_diurnal.tga"/>
-  <texture name="icon_event.tga"/>
-  <texture name="icon_event_mature.tga"/>
-  <texture name="icon_for_sale.tga"/>
-  <texture name="icon_group.tga"/>
-  <texture name="icon_groupnotice.tga"/>
-  <texture name="icon_groupnoticeinventory.tga"/>
-  <texture name="icon_lock.tga"/>
-  <texture name="icon_place.tga"/>
-  <texture name="icon_popular.tga"/>
-  <texture name="icon_top_pick.tga"/>
 
-  <texture name="inv_folder_animation.tga"/>
-  <texture name="inv_folder_bodypart.tga"/>
-  <texture name="inv_folder_callingcard.tga"/>
-  <texture name="inv_folder_clothing.tga"/>
-  <texture name="inv_folder_gesture.tga"/>
-  <texture name="inv_folder_landmark.tga"/>
-  <texture name="inv_folder_lostandfound.tga"/>
-  <texture name="inv_folder_notecard.tga"/>
-  <texture name="inv_folder_object.tga"/>
-  <texture name="inv_folder_plain_closed.tga"/>
-  <texture name="inv_folder_script.tga"/>
-  <texture name="inv_folder_snapshot.tga"/>
-  <texture name="inv_folder_sound.tga"/>
-  <texture name="inv_folder_texture.tga"/>
-  <texture name="inv_folder_trash.tga"/>
-  
-  <texture name="inv_item_animation.tga"/>
-  <texture name="inv_item_skin.tga"/>
-  <texture name="inv_item_callingcard_offline.tga"/>
-  <texture name="inv_item_callingcard_online.tga"/>
-  <texture name="inv_item_eyes.tga"/>
-  <texture name="inv_item_gesture.tga"/>
-  <texture name="inv_item_gloves.tga"/>
-  <texture name="inv_item_hair.tga"/>
-  <texture name="inv_item_jacket.tga"/>
-  <texture name="inv_item_landmark.tga"/>
-  <texture name="inv_item_landmark_visited.tga"/>
-  <texture name="inv_item_notecard.tga"/>
-  <texture name="inv_item_object.tga"/>
-  <texture name="inv_item_object_multi.tga"/>
-  <texture name="inv_item_pants.tga"/>
-  <texture name="inv_item_script.tga"/>
-  <texture name="inv_item_shape.tga"/>
-  <texture name="inv_item_shirt.tga"/>
-  <texture name="inv_item_shoes.tga"/>
-  <texture name="inv_item_skirt.tga"/>
-  <texture name="inv_item_snapshot.tga"/>
-  <texture name="inv_item_socks.tga"/>
-  <texture name="inv_item_sound.tga"/>
-  <texture name="inv_item_texture.tga"/>
-  <texture name="inv_item_underpants.tga"/>
-  <texture name="inv_item_undershirt.tga"/>
-  
-  <texture name="lag_status_critical.tga"/>
-  <texture name="lag_status_good.tga"/>
-  <texture name="lag_status_warning.tga"/>
-  
-  <texture name="legend.tga"/>
-  
-  <texture name="map_avatar_16.tga"/>
-  <texture name="map_avatar_8.tga"/>
-  <texture name="map_event.tga"/>
-  <texture name="map_event_mature.tga"/>
-  <texture name="map_home.tga"/>
-  <texture name="map_infohub.tga"/>
-  <texture name="map_telehub.tga"/>
-  <texture name="map_track_16.tga"/>
-  
-  <texture name="media_icon.tga" file_name="icn_label_media.tga" />
-  <texture name="music_icon.tga" file_name="icn_label_music.tga" />
-  <texture name="noentrylines.j2c" use_mips="true"/>
-  <texture name="noentrypasslines.j2c" use_mips="true"/>
-  
-  <texture name="notify_tip_icon.tga"/>
-  <texture name="notify_caution_icon.tga"/>
-  <texture name="notify_next.png" preload="true"/>
-  <texture name="notify_box_icon.tga"/>
-  
-  <texture name="object_cone.tga"/>
-  <texture name="object_cone_active.tga"/>
-  <texture name="object_cube.tga"/>
-  <texture name="object_cube_active.tga"/>
-  <texture name="object_cylinder.tga"/>
-  <texture name="object_cylinder_active.tga"/>
-  <texture name="object_grass.tga"/>
-  <texture name="object_grass_active.tga"/>
-  <texture name="object_hemi_cone.tga"/>
-  <texture name="object_hemi_cone_active.tga"/>
-  <texture name="object_hemi_cylinder.tga"/>
-  <texture name="object_hemi_cylinder_active.tga"/>
-  <texture name="object_hemi_sphere.tga"/>
-  <texture name="object_hemi_sphere_active.tga"/>
-  <texture name="object_prism.tga"/>
-  <texture name="object_prism_active.tga"/>
-  <texture name="object_pyramid.tga"/>
-  <texture name="object_pyramid_active.tga"/>
-  <texture name="object_ring.tga"/>
-  <texture name="object_ring_active.tga"/>
-  <texture name="object_sphere.tga"/>
-  <texture name="object_sphere_active.tga"/>
-  <texture name="object_tetrahedron.tga"/>
-  <texture name="object_tetrahedron_active.tga"/>
-  <texture name="object_torus.tga"/>
-  <texture name="object_torus_active.tga"/>
-  <texture name="object_tree.tga"/>
-  <texture name="object_tree_active.tga"/>
-  <texture name="object_tube.tga"/>
-  <texture name="object_tube_active.tga"/>
-  
-  <texture name="pixiesmall.j2c" use_mips="true"/>
-  <texture name="script_error.png" use_mips="true"/>
-  <texture name="silhouette.j2c" use_mips="true"/>
-  
-  <texture name="status_no_build.tga"/>
-  <texture name="status_voice.tga"/>
-  <texture name="status_buy_currency.tga"/>
-  <texture name="status_buy_currency_pressed.tga"/>
-  <texture name="status_buy_land.tga"/>
-  <texture name="status_buy_land_pressed.tga"/>
-  <texture name="status_no_fly.tga"/>
-  <texture name="status_health.tga"/>
-  <texture name="status_no_push.tga"/>
-  <texture name="status_no_scripts.tga"/>
-  
-  <texture name="tool_dozer.tga"/>
-  <texture name="tool_dozer_active.tga"/>
-  <texture name="tool_zoom.tga"/>
-  <texture name="tool_zoom_active.tga"/>
 
-  <texture name="icn_active-speakers-dot-lvl0.tga"/>
-  <texture name="icn_active-speakers-dot-lvl1.tga"/>
-  <texture name="icn_active-speakers-dot-lvl2.tga"/>
-  <texture name="icn_active-speakers-typing1.tga"/>
-  <texture name="icn_active-speakers-typing2.tga"/>
-  <texture name="icn_active-speakers-typing3.tga"/>
-  
-  <texture name="icn_voice_ptt-off.tga"/>
-  <texture name="icn_voice_ptt-on.tga"/>
-  <texture name="icn_voice_ptt-on-lvl1.tga"/>
-  <texture name="icn_voice_ptt-on-lvl2.tga"/>
-  <texture name="icn_voice_ptt-on-lvl3.tga"/>
-  <texture name="icn_voice-call-end.tga"/>
-  <texture name="icn_voice-call-start.tga"/>
-  
-  <texture name="mute_icon.tga"/>
-  
-  <texture name="icn_slide-groove_dark.tga" scale_left="2" scale_top="5" scale_right="29" scale_bottom="4"/>
-  <texture name="icn_slide-highlight.tga" scale_left="2" scale_top="5" scale_right="29" scale_bottom="4"/>
-  <texture name="icn_slide-thumb_dark.tga" scale_left="2" scale_top="5" scale_right="29" scale_bottom="4"/>
-  
-  <texture name="icn_speaker-muted_dark.tga"/>
-  <texture name="icn_speaker_dark.tga"/>
+<!-- CHATBAR -->
 
-  <texture name="icn_voice-localchat.tga"/>
-  <texture name="icn_voice-groupfocus.tga"/>
-  <texture name="icn_voice-pvtfocus.tga"/>
-  
-  <texture name="icn_media-pause.tga"/>
-  <texture name="icn_media-play.tga"/>
-  <texture name="icn_music-play.tga"/>
-  <texture name="icn_music-pause.tga"/>
-  <texture name="icn_media_web.tga" preload="true"/>
-  <texture name="icn_media_movie.tga" preload="true"/>
-  
-  <texture name="icn_chatbar.tga"/>
-  <texture name="btn_chatbar.tga" scale_left="20" scale_top="24" scale_right="44" scale_bottom="0"/>
-  <texture name="btn_chatbar_selected.tga" scale_left="20" scale_top="24" scale_right="44" scale_bottom="0"/>
-  
-  <texture name="icn_rounded-text-field.tga"/>
+	<texture name="icn_chatbar.tga" 				file_name="interface/icn_chatbar.tga" />
+	<texture name="btn_chatbar.tga" 				file_name="interface/btn_chatbar.tga" 
+			 scale_left="20" 
+			 scale_top="24" 
+			 scale_right="44" 
+			 scale_bottom="0"/>
+	<texture name="btn_chatbar_selected.tga" 		file_name="interface/btn_chatbar_selected.tga" 
+			 scale_left="20" 
+			 scale_top="24" 
+			 scale_right="44" 
+			 scale_bottom="0"/>
 
-  <texture name="flyout_btn_right_selected.tga" scale_left="0" scale_top="30" scale_right="32" scale_bottom="0"/>
-  
-  <texture name="flyout_btn_right.tga" scale_left="0" scale_top="30" scale_right="32" scale_bottom="0"/>
-  
-  <texture name="flyout_btn_right_disabled.tga" scale_left="0" scale_top="30" scale_right="32" scale_bottom="0"/>
-  
-  <texture name="flyout_btn_left_selected.tga" scale_left="16" scale_top="15" scale_right="112" scale_bottom="15"/>
-  
-  <texture name="flyout_btn_left.tga" scale_left="16" scale_top="15" scale_right="112" scale_bottom="15"/>
-  
-  <texture name="flyout_btn_left_disabled.tga" scale_left="16" scale_top="15" scale_right="112" scale_bottom="15"/>
 
-  <texture name="UIImgResizeBottomRightUUID" file_name="resize_handle_bottom_right_blue.tga"/>
 
-  <texture name="UIImgBtnForwardOutUUID" file_name="move_forward_out.tga" preload="true"/>
-  <texture name="UIImgBtnForwardInUUID" file_name="move_forward_in.tga" preload="true"/>
-  <texture name="UIImgBtnSlideLeftOutUUID" file_name="move_left_out.tga" preload="true"/>
-  <texture name="UIImgBtnSlideLeftInUUID" file_name="move_left_in.tga" preload="true"/>
-  <texture name="UIImgBtnLeftOutUUID"	file_name="move_turn_left_out.tga" preload="true"/>
-  <texture name="UIImgBtnLeftInUUID"	file_name="move_turn_left_in.tga" preload="true"/>
-  <texture name="UIImgBtnRightOutUUID" file_name="move_turn_right_out.tga" preload="true"/>
-  <texture name="UIImgBtnRightInUUID"	file_name="move_turn_right_in.tga" preload="true"/>
-  <texture name="UIImgBtnSlideRightOutUUID" file_name="move_right_out.tga" preload="true"/>
-  <texture name="UIImgBtnSlideRightInUUID" file_name="move_right_in.tga" preload="true"/>
-  <texture name="UIImgBtnMoveUpInUUID" file_name="move_up_in.tga" preload="true"/>
-  <texture name="UIImgBtnMoveUpOutUUID" file_name="move_up_out.tga" preload="true"/>
-  <texture name="UIImgBtnMoveDownInUUID" file_name="move_down_in.tga" preload="true"/>
-  <texture name="UIImgBtnMoveDownOutUUID" file_name="move_down_out.tga" preload="true"/>
-  
-  <texture name="cam_rotate_out.tga" preload="true"/>
-  <texture name="cam_rotate_in.tga" preload="true"/>
-  <texture name="cam_zoom_out.tga" preload="true"/>
-  <texture name="cam_zoom_plus_in.tga" preload="true"/>
-  <texture name="cam_zoom_minus_in.tga" preload="true"/>
+<!-- SKIN THUMBNAILS --> 
 
-  <texture name="UIImgBtnScrollUpOutUUID" file_name="scrollbutton_up_out_blue.tga"/>
-  <texture name="UIImgBtnScrollUpInUUID" file_name="scrollbutton_up_in_blue.tga"/>
-  <texture name="UIImgBtnScrollDownOutUUID" file_name="scrollbutton_down_out_blue.tga"/>
-  <texture name="UIImgBtnScrollDownInUUID" file_name="scrollbutton_down_in_blue.tga"/>
-  <texture name="UIImgBtnScrollLeftOutUUID" file_name="scrollbutton_left_out_blue.tga"/>
-  <texture name="UIImgBtnScrollLeftInUUID" file_name="scrollbutton_left_in_blue.tga"/>
-  <texture name="UIImgBtnScrollRightOutUUID" file_name="scrollbutton_right_out_blue.tga"/>
-  <texture name="UIImgBtnScrollRightInUUID" file_name="scrollbutton_right_in_blue.tga"/>
+	<texture name="skin_thumbnail_default.png" 		file_name="interface/skin_thumbnail_default.png" 		preload="true" />
+	<texture name="skin_thumbnail_silver.png" 		file_name="interface/skin_thumbnail_silver.png" 		preload="true" />
 
-  <texture name="UIImgBtnJumpLeftOutUUID" file_name="jump_left_out.tga"/>
-  <texture name="UIImgBtnJumpLeftInUUID" file_name="jump_left_in.tga"/>
-  <texture name="UIImgBtnJumpRightOutUUID" file_name="jump_right_out.tga"/>
-  <texture name="UIImgBtnJumpRightInUUID" file_name="jump_right_in.tga"/>
 
-  <texture name="UIImgBtnSpinUpOutUUID"	file_name="spin_up_out_blue.tga"/>
-  <texture name="UIImgBtnSpinUpInUUID"	file_name="spin_up_in_blue.tga"/>
-  <texture name="UIImgBtnSpinDownOutUUID"	file_name="spin_down_out_blue.tga"/>
-  <texture name="UIImgBtnSpinDownInUUID"	file_name="spin_down_in_blue.tga"/>
 
-  <texture name="UIImgRadioActiveUUID"	file_name="radio_active_false.tga"/>
-  <texture name="UIImgRadioActiveSelectedUUID" file_name="radio_active_true.tga"/>
-  <texture name="UIImgRadioInactiveUUID"	file_name="radio_inactive_false.tga"/>
-  <texture name="UIImgRadioInactiveSelectedUUID" file_name="radio_inactive_true.tga"/>
+<!-- ANIMATION BUTTONS -->
 
-  <texture name="UIImgCheckboxActiveUUID"	file_name="checkbox_enabled_false.tga"/>
-  <texture name="UIImgCheckboxActiveSelectedUUID" file_name="checkbox_enabled_true.tga"/>
-  <texture name="UIImgCheckboxInactiveUUID" file_name="checkbox_disabled_false.tga"/>
-  <texture name="UIImgCheckboxInactiveSelectedUUID" file_name="checkbox_disabled_true.tga"/>
+	<texture name="button_anim_pause.tga"			file_name="interface/button_anim_pause.tga"	/>
+	<texture name="button_anim_pause_selected.tga"	file_name="interface/button_anim_pause_selected.tga"	/>
+	<texture name="button_anim_play.tga"			file_name="interface/button_anim_play.tga"	/>
+	<texture name="button_anim_play_selected.tga"	file_name="interface/button_anim_play_selected.tga"	/>
+	<texture name="button_anim_stop.tga"			file_name="interface/button_anim_stop.tga"	/>
+	<texture name="button_anim_stop_selected.tga"	file_name="interface/button_anim_stop_selected.tga"	/>
 
-  <texture name="UIImgBtnTabTopOutUUID"	file_name="tab_top_blue.tga"/>
-  <texture name="UIImgBtnTabTopInUUID"	file_name="tab_top_selected_blue.tga"/>
-  <texture name="UIImgBtnTabBottomOutUUID" file_name="tab_bottom_blue.tga"/>
-  <texture name="UIImgBtnTabBottomInUUID"	file_name="tab_bottom_selected_blue.tga"/>
 
-  <texture name="UIImgGrabUUID"	file_name="tool_grab.tga"/>
-  <texture name="UIImgGrabSelectedUUID"	file_name="tool_grab_active.tga"/>
 
-  <texture name="UIImgFaceUUID"	file_name="tool_face.tga"/>
-  <texture name="UIImgFaceSelectedUUID"	file_name="tool_face_active.tga"/>
+<!-- LAG MONITOR -->  
 
-  <texture name="UIImgCreateUUID"	file_name="tool_create.tga"/>
-  <texture name="UIImgCreateSelectedUUID"	file_name="tool_create_active.tga"/>
+	<texture name="lag_status_critical.tga" 		file_name="interface/lag_status_critical.tga" />
+	<texture name="lag_status_good.tga" 			file_name="interface/lag_status_good.tga" />
+	<texture name="lag_status_warning.tga" 			file_name="interface/lag_status_warning.tga" />
 
-  <texture name="UIImgBtnCloseInactiveUUID" file_name="close_inactive_blue.tga"/>
-  <texture name="UIImgBtnCloseActiveUUID"	file_name="closebox.tga"/>
-  <texture name="UIImgBtnClosePressedUUID" file_name="close_in_blue.tga"/>
-  <texture name="icn_clear_lineeditor.tga" />
-  
-  <texture name="up_arrow.tga" file_name="up_arrow.png"/>
-  <texture name="down_arrow.tga" file_name="down_arrow.png"/>
 
-  <texture name="UIImgBtnMinimizeInactiveUUID" file_name="minimize_inactive.tga"/>
-  <texture name="UIImgBtnMinimizeActiveUUID" file_name="minimize.tga"/>
-  <texture name="UIImgBtnMinimizePressedUUID" file_name="minimize_pressed.tga"/>
 
-  <texture name="UIImgBtnRestoreInactiveUUID" file_name="restore_inactive.tga"/>
-  <texture name="UIImgBtnRestoreActiveUUID" file_name="restore.tga"/>
-  <texture name="UIImgBtnRestorePressedUUID" file_name="restore_pressed.tga"/>
+<!-- MOVEMENT CONTROLS --> 
 
-  <texture name="UIImgBtnTearOffInactiveUUID" file_name="tearoffbox.tga"/>
-  <texture name="UIImgBtnTearOffActiveUUID" file_name="tearoffbox.tga"/>
-  <texture name="UIImgBtnTearOffPressedUUID" file_name="tearoff_pressed.tga"/>
+	<texture name="UIImgBtnForwardOutUUID" 			file_name="interface/move_forward_out.tga" 				preload="true"/>
+	<texture name="UIImgBtnForwardInUUID" 			file_name="interface/move_forward_in.tga" 				preload="true"/>
+	<texture name="UIImgBtnSlideLeftOutUUID" 		file_name="interface/move_left_out.tga" 				preload="true"/>
+	<texture name="UIImgBtnSlideLeftInUUID" 		file_name="interface/move_left_in.tga" 					preload="true"/>
+	<texture name="UIImgBtnLeftOutUUID"				file_name="interface/move_turn_left_out.tga" 			preload="true"/>
+	<texture name="UIImgBtnLeftInUUID"				file_name="interface/move_turn_left_in.tga" 			preload="true"/>
+	<texture name="UIImgBtnRightOutUUID" 			file_name="interface/move_turn_right_out.tga" 			preload="true"/>
+	<texture name="UIImgBtnRightInUUID"				file_name="interface/move_turn_right_in.tga" 			preload="true"/>
+	<texture name="UIImgBtnSlideRightOutUUID" 		file_name="interface/move_right_out.tga" 				preload="true"/>
+	<texture name="UIImgBtnSlideRightInUUID" 		file_name="interface/move_right_in.tga" 				preload="true"/>
+	<texture name="UIImgBtnMoveUpInUUID" 			file_name="interface/move_up_in.tga" 					preload="true"/>
+	<texture name="UIImgBtnMoveUpOutUUID" 			file_name="interface/move_up_out.tga" 					preload="true"/>
+	<texture name="UIImgBtnMoveDownInUUID" 			file_name="interface/move_down_in.tga" 					preload="true"/>
+	<texture name="UIImgBtnMoveDownOutUUID" 		file_name="interface/move_down_out.tga" 				preload="true"/>
 
-  <texture name="UIImgCrosshairsUUID" file_name="crosshairs.tga"/>
-  <texture name="icn_label_music.tga"/>
-  <texture name="icn_label_media.tga"/>
-  <texture name="arrow_down.tga"/>
-  <texture name="cloud-particle.j2c" use_mips="true"/>
-  
-  <texture name="skin_thumbnail_default.png" preload="true" />
-  <texture name="skin_thumbnail_silver.png" preload="true" />
 
-  <texture name="default_land_picture.png"/>
-  <texture name="default_profile_picture.png"/>
-  <texture name="locked_image.png"/>
-  <texture name="avatar_thumb_bkgrnd.png"/>
 
-  <texture name="media_btn_back.png"/>
-  <texture name="media_btn_done.png"/>
-  <texture name="media_btn_forward.png"/>
-  <texture name="media_btn_home.png"/>
-  <texture name="media_btn_newwindow.png"/>
-  <texture name="media_btn_optimalzoom.png"/>
-  <texture name="media_btn_reload.png"/>
-  <texture name="media_btn_scrolldown.png"/>
-  <texture name="media_btn_scrollleft.png"/>
-  <texture name="media_btn_scrollright.png"/>
-  <texture name="media_btn_scrollup.png"/>
-  <texture name="media_btn_stoploading.png"/>
-  <texture name="media_panel_divider.png"/>
-  
-  <texture name="go-previous-4.png"/>
-  <texture name="go-next-4.png"/>
-  <texture name="view-refresh-5.png"/> 
-  <texture name="go-home-4.png"/>
+<!-- CAMERA CONTROLS --> 
+
+	<texture name="cam_rotate_out.tga" 				file_name="interface/cam_rotate_out.tga" 				preload="true"/>
+	<texture name="cam_rotate_in.tga" 				file_name="interface/cam_rotate_in.tga" 				preload="true"/>
+	<texture name="cam_zoom_out.tga" 				file_name="interface/cam_zoom_out.tga" 					preload="true"/>
+	<texture name="cam_zoom_plus_in.tga" 			file_name="interface/cam_zoom_plus_in.tga" 				preload="true"/>
+	<texture name="cam_zoom_minus_in.tga" 			file_name="interface/cam_zoom_minus_in.tga" 			preload="true"/>
+
+
+
+<!-- MISC -->
+
+	<texture name="icon_day_cycle.tga"				file_name="interface/icon_day_cycle.tga"	/>
+	<texture name="icon_diurnal.tga"				file_name="interface/icon_diurnal.tga"	/>
+	<texture name="icon_lock.tga"					file_name="interface/icon_lock.tga"	/>
+	<texture name="folder_arrow.tga" 				file_name="interface/folder_arrow.png"/>
+	<texture name="up_arrow.tga" 					file_name="interface/up_arrow.png"/>
+	<texture name="down_arrow.tga" 					file_name="interface/down_arrow.png"/>
+	<texture name="arrow_down.tga" 					file_name="interface/arrow_down.tga"/>
+	<texture name="color_swatch_alpha.tga"			file_name="interface/color_swatch_alpha.tga"			preload="true"/>
+	<texture name="crosshairs.tga"					file_name="interface/crosshairs.tga"	/>
+	<texture name="UIImgCrosshairsUUID" 			file_name="interface/crosshairs.tga"/>
+	<texture name="direction_arrow.tga"				file_name="interface/direction_arrow.tga"	/>
+	<texture name="legend.tga" 						file_name="interface/legend.tga" />
+	<texture name="script_error.png" 				file_name="interface/script_error.png" 					use_mips="true" />
+	<texture name="mute_icon.tga" 					file_name="interface/mute_icon.tga" />
+	<texture name="default_land_picture.png" 		file_name="interface/default_land_picture.png" />
+	<texture name="default_profile_picture.png" 	file_name="interface/default_profile_picture.png" />
+	<texture name="locked_image.png" 				file_name="interface/locked_image.png" />
+	<texture name="avatar_thumb_bkgrnd.png" 		file_name="interface/avatar_thumb_bkgrnd.png" />
+
+
+
+<!-- INWORLD TEXTURES --> 
+
+	<texture name="foot_shadow.j2c" 				use_mips="true"/>
+	<texture name="noentrylines.j2c" 				use_mips="true"/>
+	<texture name="noentrypasslines.j2c"			use_mips="true"/>
+	<texture name="pixiesmall.j2c" 					use_mips="true" />
+	<texture name="silhouette.j2c" 					use_mips="true" />
+	<texture name="cloud-particle.j2c" 				use_mips="true" />
+
+
+
+<!-- VOICE ARTWORK (UNUSED) -->  
+
+	<texture name="icn_speaker-muted_dark.tga" 		file_name="interface/icn_speaker-muted_dark.tga" />
+	<texture name="icn_speaker_dark.tga" 			file_name="interface/icn_speaker_dark.tga" />
+	<texture name="status_voice.tga" 				file_name="interface/status_voice.tga" />
+	<texture name="active_voice_tab.tga"			file_name="interface/active_voice_tab.tga"	/>
+	<texture name="icn_voice-localchat.tga" 		file_name="interface/icn_voice-localchat.tga" />
+	<texture name="icn_voice-groupfocus.tga" 		file_name="interface/icn_voice-groupfocus.tga" />
+	<texture name="icn_voice-pvtfocus.tga" 			file_name="interface/icn_voice-pvtfocus.tga" />
+
+	<texture name="icn_active-speakers-dot-lvl0.tga" file_name="interface/icn_active-speakers-dot-lvl0.tga" />
+	<texture name="icn_active-speakers-dot-lvl1.tga" file_name="interface/icn_active-speakers-dot-lvl1.tga" />
+	<texture name="icn_active-speakers-dot-lvl2.tga" file_name="interface/icn_active-speakers-dot-lvl2.tga" />
+	<texture name="icn_active-speakers-typing1.tga" file_name="interface/icn_active-speakers-typing1.tga" />
+	<texture name="icn_active-speakers-typing2.tga" file_name="interface/icn_active-speakers-typing2.tga" />
+	<texture name="icn_active-speakers-typing3.tga" file_name="interface/icn_active-speakers-typing3.tga" />
+
+	<texture name="icn_voice_ptt-off.tga" 			file_name="interface/icn_voice_ptt-off.tga" />
+	<texture name="icn_voice_ptt-on.tga" 			file_name="interface/icn_voice_ptt-on.tga" />
+	<texture name="icn_voice_ptt-on-lvl1.tga" 		file_name="interface/icn_voice_ptt-on-lvl1.tga" />
+	<texture name="icn_voice_ptt-on-lvl2.tga" 		file_name="interface/icn_voice_ptt-on-lvl2.tga" />
+	<texture name="icn_voice_ptt-on-lvl3.tga" 		file_name="interface/icn_voice_ptt-on-lvl3.tga" />
+	<texture name="icn_voice-call-end.tga" 			file_name="interface/icn_voice-call-end.tga" />
+	<texture name="icn_voice-call-start.tga" 		file_name="interface/icn_voice-call-start.tga" />
 
 </textures>

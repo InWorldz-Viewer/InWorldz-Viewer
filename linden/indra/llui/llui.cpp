@@ -1767,10 +1767,16 @@ void LLUI::glRectToScreen(const LLRect& gl, LLRect *screen)
 //static 
 LLUIImage* LLUI::getUIImage(const std::string& name)
 {
-	if (!name.empty())
+	if (!name.empty() && sImageProvider)
+	{
 		return sImageProvider->getUIImage(name);
+	}
 	else
+	{
+		// This should never happen. New images are created in llviewerimagelist during lookup
+		// Don't ask me why -- MC
 		return NULL;
+	}
 }
 
 // static 

@@ -824,9 +824,8 @@ void LLButton::setImageUnselected(LLPointer<LLUIImage> image)
 
 void LLButton::setImages( const std::string &image_name, const std::string &selected_name )
 {
-	setImageUnselected(image_name);
-	setImageSelected(selected_name);
-
+	setImageUnselected(LLUI::getUIImage(image_name));
+	setImageSelected(LLUI::getUIImage(selected_name));
 }
 
 void LLButton::setImageSelected(LLPointer<LLUIImage> image)
