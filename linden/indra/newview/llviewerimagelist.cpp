@@ -328,8 +328,13 @@ LLViewerImage* LLViewerImageList::getImageFromFile(const std::string& filename,
 	std::string full_path = gDirUtilp->findSkinnedFilename("textures", filename);
 	if (full_path.empty())
 	{
-		llwarns << "Failed to find local image file: " << filename << llendl;
-		return getImage(IMG_DEFAULT, TRUE, TRUE);
+		// try the "interface" folder then -- MC
+		full_path = gDirUtilp->findSkinnedFilename("textures", "interface", filename);
+		if (full_path.empty())
+		{
+			llwarns << "Failed to find local image file: " << filename << llendl;
+			return getImage(IMG_DEFAULT, TRUE, TRUE);
+		}
 	}
 
 	std::string url = "file://" + full_path;
