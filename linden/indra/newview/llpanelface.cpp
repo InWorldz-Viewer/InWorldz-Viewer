@@ -929,7 +929,7 @@ void LLPanelFace::getState()
 		if(texture_ctrl)
 		{
 			texture_ctrl->setImageAssetID( LLUUID::null );
-			texture_ctrl->setFallbackImageName( "locked_image.j2c" );
+			texture_ctrl->setFallbackImageName( "locked_image.png" );
 			texture_ctrl->setEnabled( FALSE );  // this is a LLUICtrl, but we don't want it to have keyboard focus so we add it as a child, not a ctrl.
 // 			texture_ctrl->setValid(FALSE);
 		}
@@ -937,7 +937,7 @@ void LLPanelFace::getState()
 		if(mColorSwatch)
 		{
 			mColorSwatch->setEnabled( FALSE );			
-			mColorSwatch->setFallbackImageName("locked_image.j2c" );
+			mColorSwatch->setFallbackImageName("locked_image.png" );
 			mColorSwatch->setValid(FALSE);
 		}
 		childSetEnabled("color trans",FALSE);

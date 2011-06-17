@@ -376,7 +376,7 @@ BOOL LLPanelAvatarSecondLife::postBuild(void)
 
 	childSetDoubleClickCallback("groups", onDoubleClickGroup, this );
 
-	getChild<LLTextureCtrl>("img")->setFallbackImageName("default_profile_picture.j2c");
+	getChild<LLTextureCtrl>("img")->setFallbackImageName("default_profile_picture.png");
 
 	return TRUE;
 }
@@ -386,7 +386,7 @@ BOOL LLPanelAvatarFirstLife::postBuild(void)
 	BOOL own_avatar = (getPanelAvatar()->getAvatarID() == gAgent.getID() );
 	enableControls(own_avatar);
 
-	getChild<LLTextureCtrl>("img")->setFallbackImageName("default_profile_picture.j2c");
+	getChild<LLTextureCtrl>("img")->setFallbackImageName("default_profile_picture.png");
 
 	return TRUE;
 }

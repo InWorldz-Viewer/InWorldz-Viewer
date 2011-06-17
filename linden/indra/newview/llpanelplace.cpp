@@ -397,7 +397,7 @@ void LLPanelPlace::displayParcelInfo(const LLVector3& pos_region,
 		mDescEditor->setText(getString("server_update_text"));
 	}
 	mSnapshotCtrl->setImageAssetID(LLUUID::null);
-	mSnapshotCtrl->setFallbackImageName("default_land_picture.j2c");
+	mSnapshotCtrl->setFallbackImageName("default_land_picture.png");
 }
 
 

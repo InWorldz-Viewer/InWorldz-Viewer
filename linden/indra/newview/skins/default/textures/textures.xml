@@ -1,5 +1,7 @@
-<textures version="102">
+<textures version="103">
 
+  <texture name="startup_logo.png" preload="true"/>
+	
   <texture name="icn_scrollbar_thumb.tga" preload="true" scale_top="7" scale_left="4" scale_bottom="8" scale_right="4" />
   <texture name="icn_scrollbar_bg.tga" preload="true" scale_top="7" scale_left="4" scale_bottom="8" scale_right="4" />
   <texture name="sm_rounded_corners_simple.tga" scale_left="4" scale_top="4" scale_bottom="4" scale_right="4"/>
@@ -71,7 +73,6 @@
   <texture name="tab_top_blue.tga"	preload="true" scale_left="8" scale_top="8" scale_right="120" scale_bottom="9"/>
   <texture name="tab_top_selected_blue.tga" preload="true" scale_left="8" scale_top="8" scale_right="96" scale_bottom="9"/>
   
-  <texture name="startup_logo.j2c" preload="true"/>
   <texture name="color_swatch_alpha.tga" preload="true"/>
 
   <texture name="active_voice_tab.tga"/>
@@ -201,7 +202,7 @@
   <texture name="object_tube_active.tga"/>
   
   <texture name="pixiesmall.j2c" use_mips="true"/>
-  <texture name="script_error.j2c" use_mips="true"/>
+  <texture name="script_error.png" use_mips="true"/>
   <texture name="silhouette.j2c" use_mips="true"/>
   
   <texture name="status_no_build.tga"/>
@@ -368,9 +369,10 @@
   <texture name="skin_thumbnail_default.png" preload="true" />
   <texture name="skin_thumbnail_silver.png" preload="true" />
 
-  <texture name="default_land_picture.j2c"/>
-  <texture name="default_profile_picture.j2c"/>
-  <texture name="locked_image.j2c"/>
+  <texture name="default_land_picture.png"/>
+  <texture name="default_profile_picture.png"/>
+  <texture name="locked_image.png"/>
+  <texture name="avatar_thumb_bkgrnd.png"/>
 
   <texture name="media_btn_back.png"/>
   <texture name="media_btn_done.png"/>
