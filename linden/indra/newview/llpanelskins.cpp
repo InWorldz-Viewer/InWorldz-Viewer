@@ -98,7 +98,7 @@ BOOL LLPanelSkins::postBuild()
 
 void LLPanelSkins::refresh()
 {
-	if (mSkinsList->isEmpty())
+	if (mSkinsList->getChildCount() <= 0)
 	{
 		return;
 	}
@@ -209,7 +209,7 @@ void LLPanelSkins::populateSkins()
 	}
 
 	mSkinsList->sortItems();
-	mSkinsList->setSelectedByValue(skin_selection, TRUE);
+	mSkinsList->setSelectedByValue(LLSD(skin_selection), TRUE);
 	//mSkinsList->setScrollPos(scroll_pos);
 
 	refresh();
@@ -251,7 +251,7 @@ bool LLPanelSkins::newSkinCallback(const LLSD& notification, const LLSD& respons
 		if (skin_name.empty() || 
 			LLStringUtil::containsNonprintable(skin_name) || 
 			(skin_name.length() != trimmed_skin_name.length()) ||
-			(self->mSkinsList->getItem(skin_name) != NULL))
+			(self->mSkinsList->getItem(LLSD(skin_name)) != NULL))
 		{
 			LLNotifications::instance().add("InvalidSkinName", LLSD(), LLSD());
 		}
@@ -293,7 +293,7 @@ bool LLPanelSkins::newSkinCallback(const LLSD& notification, const LLSD& respons
 			}
 
 			self->populateSkins();
-			self->mSkinsList->setSelectedByValue(skin_name, TRUE);
+			self->mSkinsList->setSelectedByValue(LLSD(skin_name), TRUE);
 		}
 	}
 	return false;
