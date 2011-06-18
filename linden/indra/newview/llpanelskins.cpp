@@ -49,6 +49,29 @@
 #include "llviewercontrol.h"
 #include "llviewerwindow.h"
 
+
+void copyTemplateToSkin(const boost::filesystem::path& template_path, const boost::filesystem::path& new_path)
+{
+	bool f_exists = false;
+	try
+	{
+		f_exists = boost::filesystem::exists(status(template_path));
+	}
+	catch (boost::filesystem::basic_filesystem_error<boost::filesystem::path> e)
+	{
+		f_exists = false;
+	}
+	if (f_exists)
+	{
+		boost::filesystem::copy_file(template_path, new_path);
+	}
+	else
+	{
+		llinfos << template_path << " not found!" << llendl;
+	}
+}
+
+
 LLPanelSkins::LLPanelSkins()
 {
 	LLUICtrlFactory::getInstance()->buildPanel(this, "panel_preferences_skins.xml");
@@ -114,8 +137,13 @@ void LLPanelSkins::populateSkins()
 	std::string skin_dir = gDirUtilp->getSkinBaseDir();
 	boost::filesystem::path path_skins(skin_dir);
 
-	if (!boost::filesystem::exists(path_skins))
+	try
 	{
+		boost::filesystem::exists(path_skins);
+	}
+	catch (boost::filesystem::basic_filesystem_error<boost::filesystem::path> e)
+	{
+		llinfos << path_skins << " could not be found. HOW CAN THIS BE?!?!" << llendl;
 		return;
 	}
 
@@ -222,14 +250,17 @@ bool LLPanelSkins::newSkinCallback(const LLSD& notification, const LLSD& respons
 			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "xui");
 			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "xui" + gDirUtilp->getDirDelimiter() + "en-us");
 
-			LLFILE* fp = LLFile::fopen(filename + gDirUtilp->getDirDelimiter() + "colors.xml" ,"wb");
-			if (fp) fclose(fp);
-		
-			fp = LLFile::fopen(filename + gDirUtilp->getDirDelimiter() + "colors_base.xml" ,"wb");
-			if (fp) fclose(fp);
+			boost::filesystem::path colors_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "colors_template.xml");
+			boost::filesystem::path colors_temp_to(filename + gDirUtilp->getDirDelimiter() + "colors.xml");
+			copyTemplateToSkin(colors_temp_from, colors_temp_to);
 
-			fp = LLFile::fopen(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "textures.xml" ,"wb");
-			if (fp) fclose(fp);
+			boost::filesystem::path base_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "colors_base_template.xml");
+			boost::filesystem::path base_temp_to(filename + gDirUtilp->getDirDelimiter() + "colors_base.xml");
+			copyTemplateToSkin(base_temp_from, base_temp_to);
+
+			boost::filesystem::path textures_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "textures_template.xml");
+			boost::filesystem::path textures_temp_to(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "textures.xml");
+			copyTemplateToSkin(textures_temp_from, textures_temp_to);
 
 			LLSD element;
 			element["id"] = skin_name;
