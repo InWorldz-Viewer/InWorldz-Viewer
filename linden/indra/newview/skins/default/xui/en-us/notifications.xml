@@ -6937,6 +6937,37 @@ Would you like to buy more I'z$ now?
    ignoretext="When asking to buy more I'z$" />
 </notification>
 
+<notification
+  icon="alertmodal.tga"
+  name="InvalidSkinName"
+  type="alertmodal">
+Sorry, that's an invalid skin name. Please try again.
+  <usertemplate
+    name="okbutton"
+    yestext="OK"/>
+</notification>
+
+  <notification
+  icon="alertmodal.tga"
+  label="New Skin Name"
+  name="NewSkinName"
+  type="alertmodal">
+What would you like to name your new skin?
+    <form name="form">
+    <input name="message" type="text">
+    </input>
+    <button
+     default="true"
+     index="0"
+     name="Create"
+     text="OK"/>
+    <button
+     index="1"
+     name="Cancel"
+     text="Cancel"/>
+  </form>
+</notification>
+
   <!--End InWorldz notifications-->
 
 

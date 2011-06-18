@@ -32,7 +32,7 @@
 
 #include "llviewerprecompiledheaders.h"
 
-#include "boost/filesystem.hpp"
+#include <boost/filesystem.hpp>
 
 #include "llpanelskins.h"
 
@@ -42,6 +42,7 @@
 #include "llscrolllistctrl.h"
 #include "lliconctrl.h"
 #include "lluictrlfactory.h"
+#include "llnotifications.h"
 
 // project includes
 #include "llviewercontrol.h"
@@ -62,6 +63,8 @@ BOOL LLPanelSkins::postBuild()
 	mSkinsList = getChild<LLScrollListCtrl>("SkinsList");
 	mSkinsList->setCommitCallback(onSelectSkin);
  	mSkinsList->setCallbackUserData(this);
+
+	childSetAction("btn_create_new", onClickNewSkin, this);
 
 	getChild<LLIconCtrl>("preview_image")->setImage("default_no_skin_preview.png");
 
@@ -128,32 +131,39 @@ void LLPanelSkins::populateSkins()
 	for (S32 i = 0; i < (S32)skin_names.size(); ++i)
 	{
 		// only bother with folders that actually change things
-		std::string texture_path = gDirUtilp->getSkinBaseDir() + skin_names[i] +
-									gDirUtilp->getDirDelimiter() + "xui" + 
-									gDirUtilp->getDirDelimiter() + "colors_base.xml";
+		bool valid_skin = false;
 
-		S32 stat_result = LLFile::stat(texture_path, &s);
-		if (!stat_result)
+		std::string texture_path = gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() +
+									skin_names[i] + gDirUtilp->getDirDelimiter() + "colors_base.xml";
+		
+		if (!(S32)LLFile::stat(texture_path, &s))
 		{
-			texture_path = gDirUtilp->getSkinBaseDir() + skin_names[i] +
+			valid_skin = true;
+		}
+		else
+		{
+			texture_path = gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + skin_names[i] +
 							gDirUtilp->getDirDelimiter() + "textures" + 
 							gDirUtilp->getDirDelimiter() + "textures.xml";
-			stat_result = LLFile::stat(texture_path, &s);
-			if (!stat_result)
+
+			if (!(S32)LLFile::stat(texture_path, &s))
 			{
-				continue;
+				valid_skin = true;
 			}
 		}
 
-		llinfos << "Found skin: " << skin_names[i] << llendl;
+		if (valid_skin)
+		{
+			llinfos << "Found skin: " << skin_names[i] << llendl;
 
-		// add names to ui list
-		LLSD element;
-		element["id"] = skin_names[i];
-		element["columns"][0]["column"] = "skin_name";
-		element["columns"][0]["type"] = "text";
-		element["columns"][0]["value"] = skin_names[i];
-		mSkinsList->addElement(element, ADD_BOTTOM);
+			// add names to ui list
+			LLSD element;
+			element["id"] = skin_names[i];
+			element["columns"][0]["column"] = "skin_name";
+			element["columns"][0]["type"] = "text";
+			element["columns"][0]["value"] = skin_names[i];
+			mSkinsList->addElement(element, ADD_BOTTOM);
+		}
 	}
 
 	mSkinsList->setSelectedByValue(gSavedSettings.getString("SkinCurrent"), TRUE);
@@ -168,4 +178,67 @@ void LLPanelSkins::onSelectSkin(LLUICtrl* ctrl, void* data)
 	{
 		self->refresh();
 	}
+}
+
+//static 
+void LLPanelSkins::onClickNewSkin(void* data)
+{
+	LLPanelSkins* self = (LLPanelSkins*)data;
+	if (self)
+	{
+		LLNotifications::instance().add("NewSkinName", 
+		LLSD(), 
+		LLSD(), 
+		boost::bind(&newSkinCallback, _1, _2, self));
+	}
+}
+
+// static
+bool LLPanelSkins::newSkinCallback(const LLSD& notification, const LLSD& response, LLPanelSkins* self)
+{
+	S32 option = LLNotification::getSelectedOption(notification, response);
+	if (option == 0)
+	{
+		std::string skin_name = response["message"].asString();
+		std::string trimmed_skin_name(skin_name);
+		LLStringUtil::trim(trimmed_skin_name);
+
+		if (skin_name.empty() || 
+			LLStringUtil::containsNonprintable(skin_name) || 
+			(skin_name.length() != trimmed_skin_name.length()) )
+		{
+			LLNotifications::instance().add("InvalidSkinName", LLSD(), LLSD());
+		}
+		else
+		{
+			llinfos << "Creating files and folders for new skin: " << skin_name << llendl;
+			std::string filename = gDirUtilp->getExpandedFilename(LL_PATH_SKINS, skin_name);
+			LLFile::mkdir(filename);
+			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "textures");
+			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "interface");
+			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "xui");
+			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "xui" + gDirUtilp->getDirDelimiter() + "en-us");
+
+			LLFILE* fp = LLFile::fopen(filename + gDirUtilp->getDirDelimiter() + "colors.xml" ,"wb");
+			if (fp) fclose(fp);
+		
+			fp = LLFile::fopen(filename + gDirUtilp->getDirDelimiter() + "colors_base.xml" ,"wb");
+			if (fp) fclose(fp);
+
+			fp = LLFile::fopen(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "textures.xml" ,"wb");
+			if (fp) fclose(fp);
+
+			LLSD element;
+			element["id"] = skin_name;
+			element["columns"][0]["column"] = "skin_name";
+			element["columns"][0]["type"] = "text";
+			element["columns"][0]["value"] = skin_name;
+			self->mSkinsList->addElement(element, ADD_BOTTOM);
+			self->mSkinsList->sortItems();
+			self->mSkinsList->setSelectedByValue(LLSD(skin_name), TRUE);
+
+			self->refresh();
+		}
+	}
+	return false;
 }

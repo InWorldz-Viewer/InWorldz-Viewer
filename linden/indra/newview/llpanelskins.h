@@ -53,6 +53,8 @@ private:
 	void populateSkins();
 
 	static void onSelectSkin(LLUICtrl* ctrl, void* data);
+	static void onClickNewSkin(void* data);
+	static bool newSkinCallback(const LLSD& notification, const LLSD& response, LLPanelSkins *self);
 
 	std::string        mCurrentSkin;
 	LLScrollListCtrl*  mSkinsList;
