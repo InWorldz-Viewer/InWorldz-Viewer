@@ -5,7 +5,7 @@ This file contains metadata about how to load, display, and scale textures for r
 Images do *NOT* have to appear in this file in order to use them as textures in the UI...simply refer
 to them by filename (relative to textures directory).
 NOTE: if you want to reuse an image file with different metadata, simply create a new texture entry
-with the same filename but different name
+with the same filename but different name.
 
 <texture
   name="MyTexture" (mandatory)
@@ -28,6 +28,8 @@ with the same filename but different name
       and to the right from the bottom left corner and extends to 31 pixels right and 15 pixels up from the bottom left
       corner.  The end result is that the image will keep a 1 pixel border all around while stretching to fit the required
       region.
+	  
+NOTE: If an image can't be found at "file_name" it'll be loaded as IMG_DEFAULT (solid gray) instead
 -->
 
 
@@ -341,32 +343,32 @@ with the same filename but different name
 
 <!-- INVENTORY ITEM ICONS -->
 
-	<texture name="inv_item_animation.tga"			file_name="interface/inv_item_animation.tga"	/>
-	<texture name="inv_item_skin.tga"				file_name="interface/inv_item_skin.tga"	/>
-	<texture name="inv_item_callingcard_offline.tga"file_name="interface/inv_item_callingcard_offline.tga"	/>
-	<texture name="inv_item_callingcard_online.tga"	file_name="interface/inv_item_callingcard_online.tga"	/>
-	<texture name="inv_item_eyes.tga"				file_name="interface/inv_item_eyes.tga"	/>
-	<texture name="inv_item_gesture.tga"			file_name="interface/inv_item_gesture.tga"	/>
-	<texture name="inv_item_gloves.tga"				file_name="interface/inv_item_gloves.tga"	/>
-	<texture name="inv_item_hair.tga"				file_name="interface/inv_item_hair.tga"	/>
-	<texture name="inv_item_jacket.tga"				file_name="interface/inv_item_jacket.tga"	/>
-	<texture name="inv_item_landmark.tga"			file_name="interface/inv_item_landmark.tga"	/>
-	<texture name="inv_item_landmark_visited.tga"	file_name="interface/inv_item_landmark_visited.tga"	/>
-	<texture name="inv_item_notecard.tga"			file_name="interface/inv_item_notecard.tga"	/>
-	<texture name="inv_item_object.tga"				file_name="interface/inv_item_object.tga"	/>
-	<texture name="inv_item_object_multi.tga"		file_name="interface/inv_item_object_multi.tga"	/>
-	<texture name="inv_item_pants.tga"				file_name="interface/inv_item_pants.tga"	/>
-	<texture name="inv_item_script.tga"				file_name="interface/inv_item_script.tga"	/>
-	<texture name="inv_item_shape.tga"				file_name="interface/inv_item_shape.tga"	/>
-	<texture name="inv_item_shirt.tga"				file_name="interface/inv_item_shirt.tga"	/>
-	<texture name="inv_item_shoes.tga"				file_name="interface/inv_item_shoes.tga"	/>
-	<texture name="inv_item_skirt.tga"				file_name="interface/inv_item_skirt.tga"	/>
-	<texture name="inv_item_snapshot.tga"			file_name="interface/inv_item_snapshot.tga"	/>
-	<texture name="inv_item_socks.tga"				file_name="interface/inv_item_socks.tga"	/>
-	<texture name="inv_item_sound.tga"				file_name="interface/inv_item_sound.tga"	/>
-	<texture name="inv_item_texture.tga"			file_name="interface/inv_item_texture.tga"	/>
-	<texture name="inv_item_underpants.tga"			file_name="interface/inv_item_underpants.tga"	/>
-	<texture name="inv_item_undershirt.tga"			file_name="interface/inv_item_undershirt.tga"	/>
+	<texture name="inv_item_animation.tga"				file_name="interface/inv_item_animation.tga" />
+	<texture name="inv_item_skin.tga"					file_name="interface/inv_item_skin.tga" />
+	<texture name="inv_item_callingcard_offline.tga"	file_name="interface/inv_item_callingcard_offline.tga" />
+	<texture name="inv_item_callingcard_online.tga"		file_name="interface/inv_item_callingcard_online.tga" />
+	<texture name="inv_item_eyes.tga"					file_name="interface/inv_item_eyes.tga" />
+	<texture name="inv_item_gesture.tga"				file_name="interface/inv_item_gesture.tga" />
+	<texture name="inv_item_gloves.tga"					file_name="interface/inv_item_gloves.tga" />
+	<texture name="inv_item_hair.tga"					file_name="interface/inv_item_hair.tga" />
+	<texture name="inv_item_jacket.tga"					file_name="interface/inv_item_jacket.tga" />
+	<texture name="inv_item_landmark.tga"				file_name="interface/inv_item_landmark.tga" />
+	<texture name="inv_item_landmark_visited.tga"		file_name="interface/inv_item_landmark_visited.tga" />
+	<texture name="inv_item_notecard.tga"				file_name="interface/inv_item_notecard.tga"	/>
+	<texture name="inv_item_object.tga"					file_name="interface/inv_item_object.tga" />
+	<texture name="inv_item_object_multi.tga"			file_name="interface/inv_item_object_multi.tga" />
+	<texture name="inv_item_pants.tga"					file_name="interface/inv_item_pants.tga"	/>
+	<texture name="inv_item_script.tga"					file_name="interface/inv_item_script.tga"	/>
+	<texture name="inv_item_shape.tga"					file_name="interface/inv_item_shape.tga"	/>
+	<texture name="inv_item_shirt.tga"					file_name="interface/inv_item_shirt.tga"	/>
+	<texture name="inv_item_shoes.tga"					file_name="interface/inv_item_shoes.tga"	/>
+	<texture name="inv_item_skirt.tga"					file_name="interface/inv_item_skirt.tga"	/>
+	<texture name="inv_item_snapshot.tga"				file_name="interface/inv_item_snapshot.tga"	/>
+	<texture name="inv_item_socks.tga"					file_name="interface/inv_item_socks.tga"	/>
+	<texture name="inv_item_sound.tga"					file_name="interface/inv_item_sound.tga"	/>
+	<texture name="inv_item_texture.tga"				file_name="interface/inv_item_texture.tga"	/>
+	<texture name="inv_item_underpants.tga"				file_name="interface/inv_item_underpants.tga"	/>
+	<texture name="inv_item_undershirt.tga"				file_name="interface/inv_item_undershirt.tga"	/>
 
 
 
@@ -417,8 +419,8 @@ with the same filename but different name
 <!-- STATUSBAR ICONS --> 
 
 	<texture name="status_no_build.tga" 			file_name="interface/status_no_build.tga" />
-	<texture name="status_buy_currency.tga" 		file_name="interface/status_buy_currency.tga" />
-	<texture name="status_buy_currency_pressed.tga" file_name="interface/status_buy_currency_pressed.tga" />
+	<!--<texture name="status_buy_currency.tga" 		file_name="interface/status_buy_currency.tga" />
+	<texture name="status_buy_currency_pressed.tga" file_name="interface/status_buy_currency_pressed.tga" />-->
 	<texture name="status_buy_land.tga" 			file_name="interface/status_buy_land.tga" />
 	<texture name="status_buy_land_pressed.tga" 	file_name="interface/status_buy_land_pressed.tga" />
 	<texture name="status_no_fly.tga" 				file_name="interface/status_no_fly.tga" />

@@ -1502,6 +1502,14 @@ bool LLUIImageList::initFromFile()
 			gImageList.decodeAllImages(10.f); // decode preloaded images
 		}
 	}
+
+	// Dump the contents -- MC
+	for (uuid_ui_image_map_t::iterator found_it = mUIImages.begin(); 
+		found_it != mUIImages.end(); ++found_it)
+	{
+		LL_DEBUGS("ViewerImages") << "Image loaded from textures.xml: " << found_it->first << LL_ENDL;
+	}
+
 	return true;
 }
 
