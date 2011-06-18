@@ -8,15 +8,13 @@
 	     mouse_opaque="true" name="muting_text" v_pad="0" width="400">
 		Select a skin (requires restart):
 	</text>
-  <radio_group bottom="0" draw_border="false" follows="top|left" height="380" left="12"
-	     name="skin_selection" width="480">
-    <radio_item bottom="-20" height="20" left="0" name="default" width="480">
-      Default
-    </radio_item>
-    <radio_item bottom="-180" height="20" left="0" name="silver" width="480">
-      Silver
-    </radio_item>
-  </radio_group>
-  <button left="130" bottom="-160" width="298" height="130" name="classic_preview" label="" scale_image="true" image_selected="skin_thumbnail_default.png" image_unselected="skin_thumbnail_default.png" image_hover_selected="skin_thumbnail_default.png" image_hover_unselected="skin_thumbnail_default.png"/>
-  <button left="130" bottom="-320" width="298" height="130" name="silver_preview" label="" scale_image="true" image_selected="skin_thumbnail_silver.png" image_hover_selected="skin_thumbnail_silver.png" image_unselected="skin_thumbnail_silver.png" image_hover_unselected="skin_thumbnail_silver.png"/>
+  <scroll_list name="SkinsList" bottom="-400" left="10" height="370" width="150"
+      follows="left|top" draw_border="true" draw_heading="true"
+      draw_stripes="true" background_visible="true" column_padding="5"
+      sort_column="0" multi_select="false" mouse_opaque="true">
+    <column name="skin_name" label="Skins" dynamicwidth="true" />
+  </scroll_list>
+  <icon bottom="-180" color="1 1 1 1" enabled="true" follows="left|top" height="150"
+     left_delta="160" mouse_opaque="true" image_name="default_no_skin_preview.png"
+     name="preview_image" width="318" />
 </panel>
