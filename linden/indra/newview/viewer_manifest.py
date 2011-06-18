@@ -74,7 +74,7 @@ class ViewerManifest(LLManifest):
         # skins
         if self.prefix(src="skins"):
                 self.path("paths.xml")
-                # include the entire textures directory recursively
+                # include the entire textures directory
                 if self.prefix(src="*/textures"):
                         self.path("*.tga")
                         self.path("*.j2c")
@@ -82,9 +82,18 @@ class ViewerManifest(LLManifest):
                         self.path("*.png")
                         self.path("textures.xml")
                         self.end_prefix("*/textures")
+                if self.prefix(src="*/textures/interface"):
+                        self.path("*.tga")
+                        self.path("*.j2c")
+                        self.path("*.jpg")
+                        self.path("*.png")
+                        self.end_prefix("*/textures/interface")
                 self.exclude("default/xui/en_us/mime_types_windows.xml")
                 self.exclude("default/xui/en_us/mime_types_mac.xml")
                 self.exclude("default/xui/en_us/mime_types_linux.xml")
+                self.path("colors_template.xml")
+                self.path("colors_base_template.xml")
+                self.path("textures_template.xml")
                 self.path("*/xui/*/*.xml")
                 self.path("*/*.xml")
                 
