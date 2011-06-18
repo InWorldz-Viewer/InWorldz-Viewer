@@ -40,6 +40,7 @@
 #include "llradiogroup.h"
 #include "llbutton.h"
 #include "llscrolllistctrl.h"
+#include "lltextbox.h"
 #include "lliconctrl.h"
 #include "lluictrlfactory.h"
 #include "llnotifications.h"
@@ -81,11 +82,13 @@ void LLPanelSkins::refresh()
 	std::string full_path = gDirUtilp->findSkinnedFilename("textures", "interface", preview_filename);
 	if (full_path.empty())	
 	{
-		getChild<LLIconCtrl>("preview_image")->setImage("default_no_skin_preview.png");	
+		getChild<LLIconCtrl>("preview_image")->setImage("default_no_skin_preview.png");
+		getChild<LLTextBox>("no_preview_text")->setVisible(TRUE);
 	}
 	else
 	{
 		getChild<LLIconCtrl>("preview_image")->setImage(preview_filename);
+		getChild<LLTextBox>("no_preview_text")->setVisible(FALSE);
 	}
 }
 

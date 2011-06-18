@@ -17,7 +17,13 @@
   <icon bottom="-180" color="1 1 1 1" enabled="true" follows="left|top" height="150"
      left_delta="160" mouse_opaque="true" image_name="default_no_skin_preview.png"
      name="preview_image" width="318" />
-  <button bottom_delta="-125" follows="left|top" font="SansSerif" halign="center"
+  <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
+     bottom="-110" drop_shadow_visible="true" enabled="true" follows="left|top" text_color="255 255 255"
+     font="SansSerifSmall" h_pad="0" halign="center" height="12" left_delta="0"
+     mouse_opaque="true" name="no_preview_text" v_pad="0" width="318">
+    No Preview Available
+  </text>
+  <button bottom_delta="-195" follows="left|top" font="SansSerif" halign="center"
      height="22" label="Create New Skin" left_delta="65"
      mouse_opaque="true" name="btn_create_new" scale_image="TRUE" width="180" />
 </panel>

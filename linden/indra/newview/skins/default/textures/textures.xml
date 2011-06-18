@@ -567,6 +567,7 @@ NOTE: If an image can't be found at "file_name" it'll be loaded as IMG_DEFAULT (
 
 	<texture name="skin_thumbnail_default.png" 		file_name="interface/skin_thumbnail_default.png" 		preload="true" />
 	<texture name="skin_thumbnail_silver.png" 		file_name="interface/skin_thumbnail_silver.png" 		preload="true" />
+	<texture name="default_no_skin_preview.png" 	file_name="interface/default_no_skin_preview.png" 		preload="true" />
 
 
 
