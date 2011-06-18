@@ -1,25 +1,151 @@
-<textures version="101">
-  <texture name="button_disabled_32x128.tga" preload="true" scale_left="8" scale_top="16" scale_right="120" scale_bottom="8"/>
-  <texture name="button_enabled_32x128.tga" preload="true" scale_left="8" scale_top="16" scale_right="120" scale_bottom="8"/>
-  <texture name="toolbar_btn_enabled.tga" scale_left="26" scale_top="24" scale_right="102" scale_bottom="0" />
+<textures version="104">
 
-  <texture name="progressbar_fill.tga" preload="true" scale_left="4" scale_top="7" scale_right="71" scale_bottom="7"/>
-  <texture name="progressbar_track.tga" preload="true" scale_left="3" scale_top="7" scale_right="87" scale_bottom="7"/>
+<!--
+This file contains metadata about how to load, display, and scale textures for rendering in the UI.
+Images do *NOT* have to appear in this file in order to use them as textures in the UI...simply refer
+to them by filename (relative to textures directory).
+NOTE: if you want to reuse an image file with different metadata, simply create a new texture entry
+with the same filename but different name.
 
-  <texture name="toolbar_btn_disabled.tga" scale_left="26" scale_top="24" scale_right="102" scale_bottom="0" />
-  <texture name="toolbar_btn_selected.tga" scale_left="26" scale_top="24" scale_right="102" scale_bottom="0" />
-  <texture name="button_enabled_selected_32x128.tga" preload="true" scale_left="12" scale_top="12" scale_right="118" scale_bottom="14"/>
+<texture
+  name="MyTexture" (mandatory)
+    - this is the name you reference the texture by in XUI.  For example, <button image_unselected="MyTexture"/>
+  file_name="images/my_texture.png" (optional)
+    - this is the path to the actual file asset, relative to the current skins "textures" directory.
+      If not supplied, the filename will be taken from the texture name itself, "MyTexture" in this case.
+      NOTE: you need to provide an extension on the filename (".png", ".tga", ".jpg") for us to decode the image properly
+  preload="true" (optional, false by default)
+    - If true, we will attempt to load the image before displaying any UI.
+      If false, we will load in the background after initializing the UI.
+  use_mips="true" (currently unused)
+  scale_left="1"
+  scale_bottom="1"
+  scale_top="15"
+  scale_right="31"
+    - Specifies the segmentation for 9-slice image scaling.  Specifically, the pixel offsets from the LOWER LEFT corner
+      that define the region of the image that is stretched to make the whole image fit in the required space.
+      In this example, if the source image is 32x16 pixels, we have defined a center region that starts one pixel up
+      and to the right from the bottom left corner and extends to 31 pixels right and 15 pixels up from the bottom left
+      corner.  The end result is that the image will keep a 1 pixel border all around while stretching to fit the required
+      region.
+	  
+NOTE: If an image can't be found at "file_name" it'll be loaded as IMG_DEFAULT (solid gray) instead
+-->
 
-  <texture name="rounded_square.tga" file_name="rounded_square.tga" preload="true" scale_left="8" scale_top="16" scale_right="120" scale_bottom="8"/>
-  <texture name="rounded_square_soft.tga" file_name="rounded_square_soft.tga" preload="true" scale_left="8" scale_top="16" scale_right="120" scale_bottom="8"/>
 
-  <texture name="btn_chatbar.tga" scale_left="16" scale_top="24" scale_right="48" scale_bottom="0"/>
-  <texture name="btn_chatbar_selected.tga" scale_left="16" scale_top="24" scale_right="48" scale_bottom="0"/>
 
-  <texture name="flyout_btn_right_selected.tga" scale_left="6" scale_top="12" scale_right="26" scale_bottom="12"/>
-  <texture name="flyout_btn_right.tga" scale_left="6" scale_top="12" scale_right="26" scale_bottom="12"/>
-  <texture name="flyout_btn_right_disabled.tga" scale_left="6" scale_top="12" scale_right="122" scale_bottom="12"/>
-  <texture name="flyout_btn_left_selected.tga" scale_left="6" scale_top="12" scale_right="122" scale_bottom="12"/>
-  <texture name="flyout_btn_left.tga" scale_left="6" scale_top="12" scale_right="122" scale_bottom="12"/>
- <texture name="flyout_btn_left_disabled.tga" scale_left="6" scale_top="12" scale_right="122" scale_bottom="12"/>
+<!-- STARTUP -->
+
+	<texture name="startup_logo.png"					file_name="interface/startup_logo.png"						preload="true" />
+
+
+
+<!-- GENERIC BUTTONS -->
+
+	<texture name="button_disabled_32x128.tga" 			file_name="interface/button_disabled_32x128.tga" 			preload="true" 
+			 scale_left="8" 
+			 scale_top="16" 
+			 scale_right="120" 
+			 scale_bottom="8" />
+	<texture name="button_enabled_32x128.tga" 			file_name="interface/button_enabled_32x128.tga" 			preload="true"
+			 scale_left="8" 
+			 scale_top="16" 
+			 scale_right="120" 
+			 scale_bottom="8" />
+	<texture name="button_enabled_selected_32x128.tga" 	file_name="interface/button_enabled_selected_32x128.tga" 	preload="true" 
+			 scale_left="12" 
+			 scale_top="12" 
+			 scale_right="118" 
+			 scale_bottom="14" />
+	<texture name="rounded_square.tga" 					file_name="interface/rounded_square.tga" 					preload="true" 
+			 scale_left="8" 
+			 scale_top="16" 
+			 scale_right="120" 
+			 scale_bottom="8" />
+	<texture name="rounded_square_soft.tga" 			file_name="interface/rounded_square_soft.tga" 				preload="true" 
+			 scale_left="8" 
+			 scale_top="16" 
+			 scale_right="120" 
+			 scale_bottom="8" />
+	<texture name="flyout_btn_right_selected.tga" 		file_name="interface/flyout_btn_right_selected.tga" 
+			 scale_left="6" 
+			 scale_top="12" 
+			 scale_right="26" 
+			 scale_bottom="12" />
+	<texture name="flyout_btn_right.tga" 				file_name="interface/flyout_btn_right.tga" 
+			 scale_left="6" 
+			 scale_top="12" 
+			 scale_right="26" 
+			 scale_bottom="12" />
+	<texture name="flyout_btn_right_disabled.tga" 		file_name="interface/flyout_btn_right_disabled.tga" 
+			 scale_left="6" 
+			 scale_top="12" 
+			 scale_right="122" 
+			 scale_bottom="12" />
+	<texture name="flyout_btn_left_selected.tga" 		file_name="interface/flyout_btn_left_selected.tga" 
+			 scale_left="6" 
+			 scale_top="12" 
+			 scale_right="122" 
+			 scale_bottom="12" />
+	<texture name="flyout_btn_left.tga" 				file_name="interface/flyout_btn_left.tga" 
+			 scale_left="6" 
+			 scale_top="12" 
+			 scale_right="122" 
+			 scale_bottom="12" />
+	<texture name="flyout_btn_left_disabled.tga" 		file_name="interface/flyout_btn_left_disabled.tga" 
+			 scale_left="6" 
+			 scale_top="12" 
+			 scale_right="122" 
+			 scale_bottom="12" />
+
+	
+	
+<!-- TOOLBAR -->	
+	
+	<texture name="toolbar_btn_enabled.tga" 			file_name="interface/toolbar_btn_enabled.tga" 
+			 scale_left="26" 
+			 scale_top="24" 
+			 scale_right="102" 
+			 scale_bottom="0" />
+	<texture name="toolbar_btn_disabled.tga" 			file_name="interface/toolbar_btn_disabled.tga" 
+			 scale_left="26" 
+			 scale_top="24" 
+			 scale_right="102" 
+			 scale_bottom="0" />
+	<texture name="toolbar_btn_selected.tga" 			file_name="interface/toolbar_btn_selected.tga" 
+			 scale_left="26" 
+			 scale_top="24" 
+			 scale_right="102" 
+			 scale_bottom="0" />
+
+	
+	
+<!-- CHAT BAR -->
+
+	<texture name="btn_chatbar.tga" 					file_name="interface/btn_chatbar.tga" 
+			 scale_left="16" 
+			 scale_top="24" 
+			 scale_right="48" 
+			 scale_bottom="0" />
+	<texture name="btn_chatbar_selected.tga" 			file_name="interface/btn_chatbar_selected.tga" 
+			 scale_left="16" 
+			 scale_top="24" 
+			 scale_right="48" 
+			 scale_bottom="0" />	
+	
+	
+	
+<!-- PROGRESS BAR -->
+
+	<texture name="progressbar_fill.tga" 				file_name="interface/progressbar_fill.tga" 					preload="true"
+			 scale_left="4" 
+			 scale_top="7" 
+			 scale_right="71" 
+			 scale_bottom="7" />
+	<texture name="progressbar_track.tga" 				file_name="interface/progressbar_track.tga" 				preload="true"
+			 scale_left="3" 
+			 scale_top="7" 
+			 scale_right="87" 
+			 scale_bottom="7" />
+
 </textures>
