@@ -75,7 +75,6 @@ void copyTemplateToSkin(const boost::filesystem::path& template_path, const boos
 LLPanelSkins::LLPanelSkins()
 {
 	LLUICtrlFactory::getInstance()->buildPanel(this, "panel_preferences_skins.xml");
-	populateSkins();
 }
 
 LLPanelSkins::~LLPanelSkins()
@@ -92,12 +91,18 @@ BOOL LLPanelSkins::postBuild()
 
 	getChild<LLIconCtrl>("preview_image")->setImage("default_no_skin_preview.png");
 
-	//refresh();
+	populateSkins();
+
 	return TRUE;
 }
 
 void LLPanelSkins::refresh()
 {
+	if (mSkinsList->isEmpty())
+	{
+		return;
+	}
+
 	std::string skin_selection = mSkinsList->getValue().asString();
 	LLStringUtil::toLower(skin_selection);
 	std::string preview_filename = "skin_thumbnail_" + skin_selection + ".png";
@@ -121,7 +126,6 @@ void LLPanelSkins::apply()
 	{
 		LLNotifications::instance().add("ChangeSkin");
 		gSavedSettings.setString("SkinCurrent", mSkinsList->getSelectedValue().asString());
-		//refresh();
 	}
 }
 
@@ -134,6 +138,15 @@ void LLPanelSkins::cancel()
 //static
 void LLPanelSkins::populateSkins()
 {
+	std::string skin_selection = mSkinsList->getValue().asString();
+	if (skin_selection.empty())
+	{
+		skin_selection = gSavedSettings.getString("SkinCurrent");
+	}
+	//S32 scroll_pos = mSkinsList->getScrollPos();
+
+	mSkinsList->clearRows();
+
 	std::string skin_dir = gDirUtilp->getSkinBaseDir();
 	boost::filesystem::path path_skins(skin_dir);
 
@@ -143,7 +156,7 @@ void LLPanelSkins::populateSkins()
 	}
 	catch (boost::filesystem::basic_filesystem_error<boost::filesystem::path> e)
 	{
-		llinfos << path_skins << " could not be found. HOW CAN THIS BE?!?!" << llendl;
+		llwarns << path_skins << " could not be found. HOW CAN THIS BE?!?!" << llendl;
 		return;
 	}
 
@@ -186,8 +199,6 @@ void LLPanelSkins::populateSkins()
 		if (valid_skin)
 		{
 			llinfos << "Found skin: " << skin_names[i] << llendl;
-
-			// add names to ui list
 			LLSD element;
 			element["id"] = skin_names[i];
 			element["columns"][0]["column"] = "skin_name";
@@ -197,7 +208,10 @@ void LLPanelSkins::populateSkins()
 		}
 	}
 
-	mSkinsList->setSelectedByValue(gSavedSettings.getString("SkinCurrent"), TRUE);
+	mSkinsList->sortItems();
+	mSkinsList->setSelectedByValue(skin_selection, TRUE);
+	//mSkinsList->setScrollPos(scroll_pos);
+
 	refresh();
 }
 
@@ -236,7 +250,8 @@ bool LLPanelSkins::newSkinCallback(const LLSD& notification, const LLSD& respons
 
 		if (skin_name.empty() || 
 			LLStringUtil::containsNonprintable(skin_name) || 
-			(skin_name.length() != trimmed_skin_name.length()) )
+			(skin_name.length() != trimmed_skin_name.length()) ||
+			(self->mSkinsList->getItem(skin_name) != NULL))
 		{
 			LLNotifications::instance().add("InvalidSkinName", LLSD(), LLSD());
 		}
@@ -244,34 +259,41 @@ bool LLPanelSkins::newSkinCallback(const LLSD& notification, const LLSD& respons
 		{
 			llinfos << "Creating files and folders for new skin: " << skin_name << llendl;
 			std::string filename = gDirUtilp->getExpandedFilename(LL_PATH_SKINS, skin_name);
-			LLFile::mkdir(filename);
-			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "textures");
-			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "interface");
-			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "xui");
-			LLFile::mkdir(filename + gDirUtilp->getDirDelimiter() + "xui" + gDirUtilp->getDirDelimiter() + "en-us");
+			boost::filesystem::path new_skin(filename);
 
-			boost::filesystem::path colors_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "colors_template.xml");
-			boost::filesystem::path colors_temp_to(filename + gDirUtilp->getDirDelimiter() + "colors.xml");
-			copyTemplateToSkin(colors_temp_from, colors_temp_to);
+			bool dir_created = false;
+			try
+			{
+				dir_created = boost::filesystem::create_directory(new_skin);
+			}
+			catch (boost::filesystem::basic_filesystem_error<boost::filesystem::path> e)
+			{
+				dir_created = false;
+				llwarns << "Couldn't create new skin directory: " << new_skin.filename() << llendl;
+			}
 
-			boost::filesystem::path base_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "colors_base_template.xml");
-			boost::filesystem::path base_temp_to(filename + gDirUtilp->getDirDelimiter() + "colors_base.xml");
-			copyTemplateToSkin(base_temp_from, base_temp_to);
+			if (dir_created)
+			{
+				boost::filesystem::create_directory(boost::filesystem::path(filename + gDirUtilp->getDirDelimiter() + "textures"));
+				boost::filesystem::create_directory(boost::filesystem::path(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "interface"));
+				boost::filesystem::create_directory(boost::filesystem::path(filename + gDirUtilp->getDirDelimiter() + "xui"));
+				boost::filesystem::create_directory(boost::filesystem::path(filename + gDirUtilp->getDirDelimiter() + "xui" + gDirUtilp->getDirDelimiter() + "en-us"));
 
-			boost::filesystem::path textures_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "textures_template.xml");
-			boost::filesystem::path textures_temp_to(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "textures.xml");
-			copyTemplateToSkin(textures_temp_from, textures_temp_to);
+				boost::filesystem::path colors_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "colors_template.xml");
+				boost::filesystem::path colors_temp_to(filename + gDirUtilp->getDirDelimiter() + "colors.xml");
+				copyTemplateToSkin(colors_temp_from, colors_temp_to);
 
-			LLSD element;
-			element["id"] = skin_name;
-			element["columns"][0]["column"] = "skin_name";
-			element["columns"][0]["type"] = "text";
-			element["columns"][0]["value"] = skin_name;
-			self->mSkinsList->addElement(element, ADD_BOTTOM);
-			self->mSkinsList->sortItems();
-			self->mSkinsList->setSelectedByValue(LLSD(skin_name), TRUE);
+				boost::filesystem::path base_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "colors_base_template.xml");
+				boost::filesystem::path base_temp_to(filename + gDirUtilp->getDirDelimiter() + "colors_base.xml");
+				copyTemplateToSkin(base_temp_from, base_temp_to);
 
-			self->refresh();
+				boost::filesystem::path textures_temp_from(gDirUtilp->getSkinBaseDir() + gDirUtilp->getDirDelimiter() + "textures_template.xml");
+				boost::filesystem::path textures_temp_to(filename + gDirUtilp->getDirDelimiter() + "textures" + gDirUtilp->getDirDelimiter() + "textures.xml");
+				copyTemplateToSkin(textures_temp_from, textures_temp_to);
+			}
+
+			self->populateSkins();
+			self->mSkinsList->setSelectedByValue(skin_name, TRUE);
 		}
 	}
 	return false;
