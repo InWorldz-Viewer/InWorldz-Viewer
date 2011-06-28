@@ -62,17 +62,20 @@ class LLAudioEngine_OpenAL : public LLAudioEngine
 		/*virtual*/ void updateWind(LLVector3 direction, F32 camera_altitude);
 
 	private:
-		void * windDSP(void *newbuffer, int length);
-		typedef S16 WIND_SAMPLE_T;
-		LLWindGen<WIND_SAMPLE_T> *mWindGen;
-		S16 *mWindBuf;
-		U32 mWindBufFreq;
-		U32 mWindBufSamples;
-		U32 mWindBufBytes;
-		ALuint mWindSource;
-		int mNumEmptyWindALBuffers;
+		void* windDSP(void *newbuffer, int length);
+        typedef S16 WIND_SAMPLE_T;
+    	LLWindGen<WIND_SAMPLE_T>* mWindGen;
+    	S16 *mWindBuf;
+    	U32 mWindBufFreq;
+    	U32 mWindBufSamples;
+    	U32 mWindBufBytes;
+    	ALuint mWindSource;
+        S32 mNumEmptyWindALBuffers;
 
-		static const int MAX_NUM_WIND_BUFFERS = 80;
+    	static const S32 MAX_NUM_WIND_BUFFERS = 80;
+
+		ALCcontext* mContext;
+		ALCdevice* mDevice;
 };
 
 class LLAudioChannelOpenAL : public LLAudioChannel
@@ -94,7 +97,8 @@ class LLAudioChannelOpenAL : public LLAudioChannel
 	        ALint mLastSamplePos;
 };
 
-class LLAudioBufferOpenAL : public LLAudioBuffer{
+class LLAudioBufferOpenAL : public LLAudioBuffer
+{
 	public:
 		LLAudioBufferOpenAL();
 		virtual ~LLAudioBufferOpenAL();
@@ -105,7 +109,7 @@ class LLAudioBufferOpenAL : public LLAudioBuffer{
 		friend class LLAudioChannelOpenAL;
 	protected:
 		void cleanup();
-		ALuint getBuffer() {return mALBuffer;}
+		ALuint getBuffer() { return mALBuffer; }
 
 		ALuint mALBuffer;
 };
