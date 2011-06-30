@@ -12,20 +12,19 @@ AppName=InWorldz Viewer
 AppVerName=InWorldz Viewer 1.2.7.2
 DefaultDirName={pf}\InWorldz
 DefaultGroupName=InWorldz
-VersionInfoProductName=InWorldz Viewer Release
+VersionInfoProductName=InWorldz Viewer
 OutputBaseFilename=InWorldz-1.2.7.2
 VersionInfoVersion=1.2.7.2
 VersionInfoTextVersion=1.2.7.2
 VersionInfoProductVersion=1.2.7.2
+AppVersion=1.2.7.2
 VersionInfoCopyright=2011
-AppCopyright=2011
 
 ; These won't change
 VersionInfoCompany=InWorldz, LLC
 AppPublisher=InWorldz, LLC
 AppPublisherURL=http://inworldz.com
 AppSupportURL=http://inworldz.com
-AppUpdatesURL=http://inworldz.com
 AllowNoIcons=true
 InfoAfterFile=..\windows\README.txt
 OutputDir=C:\inworldz_installers
@@ -35,9 +34,11 @@ InternalCompressLevel=ultra64
 SolidCompression=true
 ;PrivilegesRequired=poweruser
 AllowRootDirectory=true
-;WizardImageFile=..\windows\installer_icon_left.bmp
-;WizardSmallImageFile=..\windows\installer_icon_right.bmp
+WizardImageFile=..\windows\installer_icon_left.bmp
+WizardSmallImageFile=..\windows\installer_icon_right.bmp
 SetupLogging=true
+RestartIfNeededByRun=false
+AlwaysRestart=false
 
 [Languages]
 Name: english; MessagesFile: compiler:Default.isl
@@ -133,8 +134,10 @@ Source: ..\..\..\build-vc80\newview\release\packaged\SDL.dll; DestDir: {app}; Fl
 Source: ..\..\..\build-vc80\newview\release\packaged\xvidcore.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\z.dll; DestDir: {app}; Flags: ignoreversion
 
-; VC++ 2005 x86 redist
-Source: ..\windows\vcredist_x86_VS2005.exe; DestDir: {tmp}; DestName: vcredist_x86_VS2005.exe
+; VC++ 2005 SP1 x86 and VC++ 2010 SP1 x86 redist
+; TODO: add checking for VS2005. See http://blogs.msdn.com/b/astebner/archive/2007/01/16/mailbag-how-to-detect-the-presence-of-the-vc-8-0-runtime-redistributable-package.aspx
+Source: ..\windows\vcredist_x86_VS2005_SP1.exe; DestDir: {tmp}; DestName: vcredist_x86_VS2005_SP1.exe
+Source: ..\windows\vcredist_x86_VS2010_SP1.exe; DestDir: {tmp}; DestName: vcredist_x86_VS2010_SP1.exe
 
 ; Old files we don't use anymore:
 ; Source: ..\..\..\build-vc80\newview\release\packaged\dronesettings.xml; DestDir: {app}; Flags: ignoreversion
@@ -163,7 +166,8 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\InWorldz; Filename:
 Name: {group}\InWorldz; Filename: {app}\inworldz.exe; WorkingDir: {app}; Comment: inworldz; IconIndex: 0;
 
 [Run]
-Filename: {tmp}\vcredist_x86_VS2005.exe; Parameters: "/q:a /c:""VCREDI~1.EXE /q:a /c:""""msiexec /i vcredist.msi /qn"""" """; Flags: runhidden
+Filename: {tmp}\vcredist_x86_VS2005_SP1.exe; Parameters: "/q:a /c:""VCREDI~1.EXE /q:a /c:""""msiexec /i vcredist.msi /qn"""" """; Flags: runhidden
+Filename: {tmp}\vcredist_x86_VS2010_SP1.exe; Parameters: "/q /norestart"; Check: Needs2010Redist; Flags: runhidden
 Filename: {app}\inworldz.exe; WorkingDir: {app}; Flags: nowait postinstall
 
 [UninstallDelete]
@@ -261,4 +265,36 @@ Name: {app}\SLPlugin.exe.config; Type: files; Tasks: ; Languages:
 Name: {app}\Microsoft.VC80.CRT.manifest; Type: files; Tasks: ; Languages:
 Name: {app}\msvcp80.dll; Type: files; Tasks: ; Languages:
 Name: {app}\msvcr80.dll; Type: files; Tasks: ; Languages:
+Name: {app}\msvcr71.dll; Type: files; Tasks: ; Languages:
 Name: {app}\inworldz.exe.config; Type: files; Tasks: ; Languages:
+
+
+[Code]
+// [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x86] 
+//   Installed = 1 (REG_DWORD)
+function IsVS2010RedistInstalled(): Boolean;
+var
+  V: Cardinal;
+  Success: Boolean;
+begin
+  if IsWin64 then begin
+    Success := RegQueryDWordValue(HKLM64, 'SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x86', 'Installed', V);
+  end else begin
+    Success := RegQueryDWordValue(HKLM, 'SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x86', 'Installed', V);
+  end
+
+  if Success = TRUE then begin
+    if V = 1 then begin
+      Result := TRUE;
+    end else begin
+      Result := FALSE;
+    end
+  end else begin
+    Result := FALSE;
+  end
+end;
+
+function Needs2010Redist(): Boolean;
+begin
+  Result := (IsVS2010RedistInstalled = FALSE);
+end;
