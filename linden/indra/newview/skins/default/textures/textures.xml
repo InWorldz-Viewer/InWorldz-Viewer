@@ -624,7 +624,7 @@ NOTE: If an image can't be found at "file_name" it'll be loaded as IMG_DEFAULT (
 	<texture name="icon_day_cycle.tga"				file_name="interface/icon_day_cycle.tga"	/>
 	<texture name="icon_diurnal.tga"				file_name="interface/icon_diurnal.tga"	/>
 	<texture name="icon_lock.tga"					file_name="interface/icon_lock.tga"	/>
-	<texture name="folder_arrow.tga" 				file_name="interface/folder_arrow.png"/>
+	<texture name="folder_arrow.tga" 				file_name="interface/folder_arrow.tga"/>
 	<texture name="up_arrow.tga" 					file_name="interface/up_arrow.png"/>
 	<texture name="down_arrow.tga" 					file_name="interface/down_arrow.png"/>
 	<texture name="arrow_down.tga" 					file_name="interface/arrow_down.tga"/>
