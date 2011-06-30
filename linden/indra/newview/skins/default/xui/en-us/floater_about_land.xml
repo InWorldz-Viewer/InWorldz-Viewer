@@ -1360,7 +1360,7 @@ Select the thumbnail to choose a different texture.
 				 left_delta="292"
 				 name="?"
 				 width="18" />
-			<text
+			<!--<text
 				 bottom_delta="-65"
 				 follows="left|top"
 				 height="16"
@@ -1426,7 +1426,7 @@ Select the thumbnail to choose a different texture.
 					 width="70">
 					Disabled
 				</radio_item>
-			</radio_group>
+			</radio_group>-->
 		</panel>
 		<panel border="true" bottom="-349" enabled="true" follows="left|top|right|bottom"
 		     height="333" label="Access" left="1" mouse_opaque="true"
