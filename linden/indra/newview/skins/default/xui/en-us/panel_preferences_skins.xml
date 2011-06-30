@@ -23,7 +23,7 @@
      mouse_opaque="true" name="no_preview_text" v_pad="0" width="318">
     No Preview Available
   </text>
-  <button bottom_delta="-195" follows="left|top" font="SansSerif" halign="center"
+  <!--<button bottom_delta="-195" follows="left|top" font="SansSerif" halign="center"
      height="22" label="Create New Skin" left_delta="65"
-     mouse_opaque="true" name="btn_create_new" scale_image="TRUE" width="180" />
+     mouse_opaque="true" name="btn_create_new" scale_image="TRUE" width="180" />-->
 </panel>
