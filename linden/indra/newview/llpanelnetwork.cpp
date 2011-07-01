@@ -37,6 +37,7 @@
 #include "llstartup.h"
 
 // project includes
+#include "floatercache.h"
 #include "llcheckboxctrl.h"
 #include "llradiogroup.h"
 #include "lldirpicker.h"
@@ -138,9 +139,8 @@ void LLPanelNetwork::cancel()
 // static
 void LLPanelNetwork::onClickClearCache(void*)
 {
-	// flag client cache for clearing next time the client runs
-	gSavedSettings.setBOOL("PurgeCacheOnNextStartup", TRUE);
-	LLNotifications::instance().add("CacheWillClear");
+	FloaterCache::getInstance()->open();
+	FloaterCache::getInstance()->center();
 }
 
 // static
