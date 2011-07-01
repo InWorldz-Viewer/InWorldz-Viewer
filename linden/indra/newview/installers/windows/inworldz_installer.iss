@@ -26,7 +26,7 @@ AppPublisher=InWorldz, LLC
 AppPublisherURL=http://inworldz.com
 AppSupportURL=http://inworldz.com
 AllowNoIcons=true
-InfoAfterFile=..\windows\README.txt
+InfoAfterFile=..\..\..\..\..\README.txt
 OutputDir=C:\inworldz_installers
 SetupIconFile=..\windows\install_icon.ico
 Compression=lzma2/ultra64
@@ -57,12 +57,12 @@ Source: ..\..\..\build-vc80\newview\release\packaged\fonts\*; DestDir: {app}\fon
 Source: ..\..\..\build-vc80\newview\release\packaged\app_settings\*; DestDir: {app}\app_settings; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ..\..\..\build-vc80\newview\release\packaged\skins\*; DestDir: {app}\skins; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ..\..\..\build-vc80\newview\release\packaged\llplugin\*; DestDir: {app}\llplugin; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: ..\..\..\build-vc80\newview\release\packaged\doc\*; DestDir: {app}\doc; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ..\..\..\build-vc80\newview\release\packaged\alut.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\dbghelp.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\libapr-1.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\libapriconv-1.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\libaprutil-1.dll; DestDir: {app}; Flags: ignoreversion
-Source: ..\..\..\build-vc80\newview\release\packaged\licenses.txt; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\llcommon.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\featuretable.txt; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\gpu_table.txt; DestDir: {app}; Flags: ignoreversion
@@ -70,6 +70,7 @@ Source: ..\..\..\build-vc80\newview\release\packaged\kdu_v64R.dll; DestDir: {app
 Source: ..\..\..\build-vc80\newview\release\packaged\kdu_v64R.dll.config; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\openal32.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\OpenJPEG.dll; DestDir: {app}; Flags: ignoreversion
+Source: ..\..\..\build-vc80\newview\release\packaged\README.txt; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
 
 ; Gstreamer-specific files below
@@ -184,6 +185,7 @@ Name: C:\Documents and Settings\{username}\.gstreamer-0.10; Type: filesandordirs
 
 [InstallDelete]
 ; Name: {app}\*.dll; Type: files; Tasks: ; Languages:
+Name: {app}\licenses.txt; Type: files; Tasks: ; Languages:
 ; ALWAYS delete the plugins! Beware if you don't
 Name: {app}\lib\gstreamer-plugins\*; Type: filesandordirs; Tasks: ; Languages: 
 ; Name: {app}\skins\default\xui\*; Type: filesandordirs; Tasks: ; Languages:

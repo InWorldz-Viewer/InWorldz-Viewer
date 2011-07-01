@@ -30,6 +30,12 @@
 # WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
 # COMPLETENESS OR PERFORMANCE.
 # $/LicenseInfo$
+
+# DO NOT RUN THIS FILE DIRECTLY
+# Instead, run develop.py with "configure -DPACKAGE:BOOL=ON" e.g.:
+#   develop.py -G vc80 configure -DPACKAGE:BOOL=ON
+# to generate the "package" project in Visual Studio 2005
+
 import sys
 import os.path
 import re
@@ -108,6 +114,28 @@ class ViewerManifest(LLManifest):
         # Files in the newview/ directory
         self.path("gpu_table.txt")
 
+
+    # Gather up the README file, etc.
+    def gather_documents(self):
+        # From the top level directory
+        if self.prefix("../../..", dst=""):
+            self.path("README.txt")
+            self.end_prefix("../../..")
+
+
+        # From the linden/doc directory
+        if self.prefix("../../doc", dst="doc"):
+            self.path("contributions.txt")
+            self.path("GPL-license.txt", "GPL.txt")
+            self.path("FLOSS-exception.txt")
+            self.end_prefix("../../doc")
+
+        # From the linden/LICENSES directory
+        if self.prefix("../../LICENSES", dst="doc/LICENSES"):
+            self.path("*.txt")
+            self.end_prefix("../../LICENSES")
+
+
     def login_channel(self):
         """Channel reported for login and upgrade purposes ONLY;
         used for A/B testing"""
@@ -178,6 +206,8 @@ class WindowsManifest(ViewerManifest):
         # nor do we have a fixed name for the executable
         self.path(self.find_existing_file('debug/inworldz-bin.exe', 'release/inworldz-bin.exe', 'relwithdebinfo/inworldz-bin.exe'), dst=self.final_exe())
 
+        self.gather_documents()
+
         # Plugin host application
         self.path(os.path.join(os.pardir,
                                'llplugin', 'slplugin', self.args['configuration'], "SLPlugin.exe"),
@@ -192,7 +222,8 @@ class WindowsManifest(ViewerManifest):
             print "Skipping kdu_v64R.dll"
             pass
         
-        self.path(src="licenses-win32.txt", dst="licenses.txt")
+        # We use the version in linden/LICENSES instead -- MC
+        # self.path(src="licenses-win32.txt", dst="licenses.txt")
 
         self.path("featuretable.txt")
 
