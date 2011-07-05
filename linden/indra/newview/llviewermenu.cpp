@@ -788,13 +788,6 @@ void init_client_menu(LLMenuGL* menu)
 
 		sub->appendSeparator();
 
-		sub->append(new LLMenuItemCheckGL("Dump All Received Messages to Log",
-										&menu_toggle_control,
-										NULL,
-										&menu_check_control,
-										(void*)"ReceivedMessageLog"));
-
-		sub->appendSeparator();
 
 		sub->append(new LLMenuItemCallGL("Region Info to Debug Console", 
 			&handle_region_dump_settings, NULL));
