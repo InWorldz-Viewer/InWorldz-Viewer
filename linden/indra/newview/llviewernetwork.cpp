@@ -48,9 +48,9 @@ static LLGridData gGridInfo[GRID_INFO_COUNT] =
 {
 	{ "None", "", "", ""},
 	{ "InWorldz", 
-	  "http://inworldz.com:8002/", 
-	  "http://inworldz.com:8002/",
-	  "http://inworldz.com/" },
+	  "http://login.inworldz.com:8002/", 
+	  "http://login.inworldz.com:8002/",
+	  "http://login.inworldz.com:8002/" },
   	{ "InWorldzBeta",
 	  "http://betagrid.inworldz.com:8002/", 
 	  "http://betagrid.inworldz.com:8002/", 
