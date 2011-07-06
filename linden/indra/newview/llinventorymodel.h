@@ -53,7 +53,6 @@
 
 class LLInventoryObserver
 {
-LOG_CLASS(LLInventoryObserver);
 public:
 	// This enumeration is a way to refer to what changed in a more
 	// human readable format. You can mask the value provided by
