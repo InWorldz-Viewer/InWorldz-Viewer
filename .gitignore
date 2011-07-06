@@ -7,15 +7,9 @@
 # files that are created when you compile.
 # 
 
-# ARTWORK
-
-linden/LICENSE-logos.txt
-linden/indra/newview/skins/*
-
 # LIBRARIES
 
 linden/LICENSES/
-linden/LICENSE-libraries-*.txt
 linden/libraries/
 linden/indra/newview/dbghelp.dll
 linden/indra/newview/media_plugin_gstreamer010.log
