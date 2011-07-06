@@ -7,9 +7,9 @@
      font="SansSerifSmall" h_pad="0" halign="left" height="16" left_delta="20"
      mouse_opaque="true" name="cache_label" v_pad="0" width="185">
 Cache Will Be Cleared After
-You Restart Imprudence
+You Restart InWorldz
   </text>
-  <check_box bottom_delta="-37" follows="left|top" font="SansSerifSmall" height="20"
+  <check_box bottom_delta="-42" follows="left|top" font="SansSerifSmall" height="20"
      initial_value="false" label="Clear texture cache" left="10"
      mouse_opaque="true" name="texture_cache" width="185" />
   <check_box bottom_delta="-22" follows="left|top" font="SansSerifSmall" height="20"
@@ -21,7 +21,7 @@ You Restart Imprudence
   <check_box bottom_delta="-22" follows="left|top" font="SansSerifSmall" height="20"
      initial_value="false" label="Clear avatar name cache" left_delta="0"
      mouse_opaque="true" name="name_cache" width="185" />
-  <button bottom_delta="-30" follows="right|top" font="SansSerif" halign="center" height="22"
+  <button bottom_delta="-26" follows="right|top" font="SansSerif" halign="center" height="22"
      label="OK" left="-170" mouse_opaque="true" name="btn_ok" width="80" />
   <button bottom_delta="0" follows="right|top" font="SansSerif" halign="center" height="22"
      label="Cancel" left="-85" mouse_opaque="true" name="btn_cancel" width="80" />

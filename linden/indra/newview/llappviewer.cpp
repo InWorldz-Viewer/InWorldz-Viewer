@@ -3138,7 +3138,6 @@ void LLAppViewer::purgeCache()
 			// ick @ not making these variables -- MC
 			std::vector<std::string> masks;
 			masks.push_back(gDirUtilp->getDirDelimiter() + "name.cache");
-			masks.push_back(gDirUtilp->getDirDelimiter() + "avatar_name_cache.xml");
 			masks.push_back(gDirUtilp->getDirDelimiter() + "*.cached_mute");
 			
 			for (std::vector<std::string>::iterator vIt = masks.begin(); 
