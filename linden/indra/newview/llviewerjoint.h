@@ -49,6 +49,7 @@ class LLViewerJoint :
 	public LLJoint
 {
 public:
+LOG_CLASS(LLViewerJoint);
 	LLViewerJoint();
 	LLViewerJoint(const std::string &name, LLJoint *parent = NULL);
 	virtual ~LLViewerJoint();

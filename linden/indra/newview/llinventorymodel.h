@@ -53,6 +53,7 @@
 
 class LLInventoryObserver
 {
+LOG_CLASS(LLInventoryObserver);
 public:
 	// This enumeration is a way to refer to what changed in a more
 	// human readable format. You can mask the value provided by
@@ -96,6 +97,7 @@ class LLInventoryCollectFunctor;
 
 class LLInventoryModel
 {
+LOG_CLASS(LLInventoryModel);
 public:
 	typedef enum e_has_children
 	{

@@ -147,6 +147,7 @@ private:
 //const U32 STRING_CACHE_SIZE = 10000;
 class LLControlGroup : public LLControlGroupReader
 {
+LOG_CLASS(LLControlGroup);
 protected:
 	typedef std::map<std::string, LLPointer<LLControlVariable> > ctrl_name_table_t;
 	ctrl_name_table_t mNameTable;

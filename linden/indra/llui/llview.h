@@ -212,6 +212,7 @@ class LLView : public LLMouseHandler, public LLMortician, public LLFocusableElem
 {
 
 public:
+LOG_CLASS(LLView);
 #if LL_DEBUG
 	static BOOL sIsDrawing;
 #endif

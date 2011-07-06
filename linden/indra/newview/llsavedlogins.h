@@ -42,6 +42,7 @@ class LLSD;
  */
 class LLSavedLoginEntry
 {
+LOG_CLASS(LLSavedLoginEntry);
 public:
 	/**
 	 * @brief	Constructs a history entry from an appropriate LLSD.
@@ -192,6 +193,7 @@ typedef std::list<LLSavedLoginEntry> LLSavedLoginsList;
  */
 class LLSavedLogins
 {
+LOG_CLASS(LLSavedLogins);
 public:
 	/**
 	 * @brief	Constructs an empty login history.

@@ -70,6 +70,7 @@ private:
 
 class LLFontRegistry
 {
+LOG_CLASS(LLFontRegistry);
 public:
 	LLFontRegistry(const string_vec_t& xui_paths);
 	~LLFontRegistry();

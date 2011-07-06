@@ -39,6 +39,7 @@ class LLSD;
 
 class LLURLHistory
 {
+LOG_CLASS(LLURLHistory);
 public:
 	// Loads an xml file of URLs.  Currently only supports Parcel URL history
 	static bool loadFile(const std::string& filename);

@@ -77,6 +77,7 @@ public:
 
 class LLVFS
 {
+LOG_CLASS(LLVFS);
 public:
 	// Pass 0 to not presize
 	LLVFS(const std::string& index_filename, const std::string& data_filename, const BOOL read_only, const U32 presize, const BOOL remove_after_crash);

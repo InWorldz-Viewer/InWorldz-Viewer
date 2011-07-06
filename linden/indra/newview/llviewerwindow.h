@@ -129,6 +129,7 @@ static const U32 MAX_SNAPSHOT_IMAGE_SIZE = 6 * 1024; // max snapshot image size 
 
 class LLViewerWindow : public LLWindowCallbacks
 {
+LOG_CLASS(LLViewerWindow);
 public:
 	//
 	// CREATORS
