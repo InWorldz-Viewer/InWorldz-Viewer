@@ -28,6 +28,7 @@ set(cmake_SOURCE_FILES
     FindCARes.cmake
     FindELFIO.cmake
     FindGooglePerfTools.cmake
+	FindLLQtWebkit.cmake
     FindMono.cmake
     FindMT.cmake
     FindMySQL.cmake
@@ -70,6 +71,7 @@ set(cmake_SOURCE_FILES
     OpenJPEG.cmake
     OpenSSL.cmake
     PNG.cmake
+	PulseAudio.cmake
     Python.cmake
     Prebuilt.cmake
     QuickTimePlugin.cmake

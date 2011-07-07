@@ -226,6 +226,70 @@ copy_if_different(
     )
 set(all_targets ${all_targets} ${out_targets})
 
+# Debug Qt codecs folder
+set(plugintest_debug_src_dir "${CMAKE_SOURCE_DIR}/../libraries/i686-win32/lib/debug/codecs")
+set(plugintest_debug_files
+    qcncodecsd4.dll
+    qjpcodecsd4.dll
+    qkrcodecsd4.dll
+    qtwcodecsd4.dll
+    )
+copy_if_different(
+    ${plugintest_debug_src_dir}
+    "${CMAKE_CURRENT_BINARY_DIR}/../test_apps/llplugintest/Debug/codecs"
+    out_targets
+    ${plugintest_debug_files}
+    )
+set(all_targets ${all_targets} ${out_targets})
+
+copy_if_different(
+    ${plugintest_debug_src_dir}
+    "${CMAKE_CURRENT_BINARY_DIR}/llplugin/codecs"
+    out_targets
+    ${plugintest_debug_files}
+    )
+set(all_targets ${all_targets} ${out_targets})
+
+# Release & ReleaseDebInfo Qt codecs folder
+set(plugintest_release_src_dir "${CMAKE_SOURCE_DIR}/../libraries/i686-win32/lib/release/codecs")
+set(plugintest_release_files
+    qcncodecs4.dll
+    qjpcodecs4.dll
+    qkrcodecs4.dll
+    qtwcodecs4.dll
+    )
+copy_if_different(
+    ${plugintest_release_src_dir}
+    "${CMAKE_CURRENT_BINARY_DIR}/../test_apps/llplugintest/Release/codecs"
+    out_targets
+    ${plugintest_release_files}
+    )
+set(all_targets ${all_targets} ${out_targets})
+
+copy_if_different(
+    ${plugintest_release_src_dir}
+    "${CMAKE_CURRENT_BINARY_DIR}/../test_apps/llplugintest/RelWithDebInfo/codecs"
+    out_targets
+    ${plugintest_release_files}
+    )
+set(all_targets ${all_targets} ${out_targets})
+
+copy_if_different(
+    ${plugintest_release_src_dir}
+    "${CMAKE_CURRENT_BINARY_DIR}/Release/llplugin/codecs"
+    out_targets
+    ${plugintest_release_files}
+    )
+set(all_targets ${all_targets} ${out_targets})
+
+copy_if_different(
+    ${plugintest_release_src_dir}
+    "${CMAKE_CURRENT_BINARY_DIR}/RelWithDebInfo/llplugin/codecs"
+    out_targets
+    ${plugintest_release_files}
+    )
+set(all_targets ${all_targets} ${out_targets})
+
 # Debug config runtime files required for the plugins
 set(plugins_debug_src_dir "${CMAKE_SOURCE_DIR}/../libraries/i686-win32/lib/debug")
 set(plugins_debug_files
@@ -235,6 +299,7 @@ set(plugins_debug_files
     qtnetworkd4.dll
     qtopengld4.dll
     qtwebkitd4.dll
+    QtXmlPatternsd4.dll
     ssleay32.dll
     )
 copy_if_different(
@@ -254,6 +319,7 @@ set(plugins_release_files
     qtnetwork4.dll
     qtopengl4.dll
     qtwebkit4.dll
+    QtXmlPatterns4.dll
     ssleay32.dll
     )
 copy_if_different(
