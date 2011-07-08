@@ -443,6 +443,19 @@ bool handleTranslateChatPrefsChanged(const LLSD& newvalue)
 }
 
 
+bool handleRenderSculptSAThresholdChanged(const LLSD& newvalue)
+{
+	LLVOVolume::sSculptSAThresh = newvalue.asReal();
+	return true;
+}
+
+bool handleRenderSculptSAMaxChanged(const LLSD& newvalue)
+{
+	LLVOVolume::sSculptSAMax = newvalue.asReal();
+	return true;
+}
+
+
 ////////////////////////////////////////////////////////////////////////////
 
 void settings_setup_listeners()
@@ -574,6 +587,8 @@ void settings_setup_listeners()
 	//gSavedSettings.getControl("AudioLevelMic")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1)); -- MC
 	//gSavedSettings.getControl("LipSyncEnabled")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1)); -- MC
 	gSavedSettings.getControl("TranslateChat")->getSignal()->connect(boost::bind(&handleTranslateChatPrefsChanged, _1));	
+	gSavedSettings.getControl("RenderSculptSAThreshold")->getSignal()->connect(boost::bind(&handleRenderSculptSAThresholdChanged, _1));
+	gSavedSettings.getControl("RenderSculptSAMax")->getSignal()->connect(boost::bind(&handleRenderSculptSAMaxChanged, _1));
 }
 
 template <> eControlType get_control_type<U32>(const U32& in, LLSD& out) 
