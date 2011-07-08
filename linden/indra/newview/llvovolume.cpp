@@ -2264,16 +2264,22 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 
 		LLVOVolume* vobj = drawablep->getVOVolume();
 
-		if (vobj->mSculptSurfaceArea > sSculptSAThresh)
+		llassert_always(vobj);
+
+		if (vobj->isSculpted() && vobj->mSculptSurfaceArea > sSculptSAThresh)
 		{
 		    LLPipeline::sSculptSurfaceAreaFrame += vobj->mSculptSurfaceArea;
-		    if(LLPipeline::sSculptSurfaceAreaFrame > sSculptSAMax)
+		    if (LLPipeline::sSculptSurfaceAreaFrame > sSculptSAMax)
 		    {
-		      continue;
+				LL_DEBUGS("Volume") << "Sculptie (" 
+									<< vobj->getID() << ") above RenderSculptSAMax ("
+									<< sSculptSAMax
+									<< ")! Turning invisible!" 
+									<< LL_ENDL;
+				continue;
 		    }
 		}
 		
-		llassert_always(vobj);
 		vobj->updateTextureVirtualSize();
 		vobj->preRebuild();
 
