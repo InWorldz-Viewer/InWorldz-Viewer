@@ -58,6 +58,7 @@ class LLSD;
 // Manage GL extensions...
 class LLGLManager
 {
+LOG_CLASS(LLGLManager);
 public:
 	LLGLManager();
 
@@ -220,6 +221,7 @@ void clear_glerror();
 */
 class LLGLState
 {
+LOG_CLASS(LLGLState);
 public:
 	static void initClass();
 	static void restoreGL();

@@ -54,6 +54,7 @@
 
 class LLWindowSDL : public LLWindow
 {
+LOG_CLASS(LLWindowSDL);
 public:
 	/*virtual*/ void show();
 	/*virtual*/ void hide();

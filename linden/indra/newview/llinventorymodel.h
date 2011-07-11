@@ -96,6 +96,7 @@ class LLInventoryCollectFunctor;
 
 class LLInventoryModel
 {
+LOG_CLASS(LLInventoryModel);
 public:
 	typedef enum e_has_children
 	{

@@ -124,6 +124,7 @@ struct WLFloatControl {
 /// WindLight parameter manager class - what controls all the wind light shaders
 class LLWLParamManager
 {
+LOG_CLASS(LLWLParamManager);
 public:
 
 	LLWLParamManager();

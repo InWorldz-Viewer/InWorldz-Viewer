@@ -79,6 +79,7 @@ extern std::string gInitialOutfitGender;	// "male" or "female"
 
 class LLStartUp
 {
+LOG_CLASS(LLStartUp);
 public:
 	static bool canGoFullscreen();
 		// returns true if we are far enough along in startup to allow

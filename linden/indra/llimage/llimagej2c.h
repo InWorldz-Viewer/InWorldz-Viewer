@@ -39,6 +39,7 @@
 class LLImageJ2CImpl;
 class LLImageJ2C : public LLImageFormatted
 {
+LOG_CLASS(LLImageJ2CImpl);
 protected:
 	virtual ~LLImageJ2C();
 

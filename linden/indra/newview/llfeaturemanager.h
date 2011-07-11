@@ -66,6 +66,7 @@ public:
 class LLFeatureList
 {
 public:
+LOG_CLASS(LLFeatureList);
 	typedef std::map<std::string, LLFeatureInfo> feature_map_t;
 
 	LLFeatureList(const std::string& name);

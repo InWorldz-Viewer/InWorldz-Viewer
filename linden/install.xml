@@ -336,9 +336,9 @@
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>7f15334750d440084782aecaf41de583</string>
+            <string>9af6a1ed39fa540bfcaa402b0ea22f78</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/fontconfig-2.7.3-linux-20091104.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/fontconfig-2.2.3-linux-20080613.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -553,6 +553,13 @@
             <string>27a111bd9b12f413b577ae239c10aa7c</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/gstreamer-plugins-darwin-20100826.tar.bz2</uri>
+          </map>
+          <key>linux</key>
+          <map>
+            <key>md5sum</key>
+            <string>62b96bb2721798958743d92a403d122a</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/gstreamer-plugins-linux-20091125.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
