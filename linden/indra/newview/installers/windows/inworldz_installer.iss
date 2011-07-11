@@ -32,7 +32,7 @@ SetupIconFile=..\windows\install_icon.ico
 Compression=lzma2/ultra64
 InternalCompressLevel=ultra64
 SolidCompression=true
-;PrivilegesRequired=poweruser
+PrivilegesRequired=poweruser
 AllowRootDirectory=true
 WizardImageFile=..\windows\installer_icon_left.bmp
 WizardSmallImageFile=..\windows\installer_icon_right.bmp
@@ -135,10 +135,10 @@ Source: ..\..\..\build-vc80\newview\release\packaged\SDL.dll; DestDir: {app}; Fl
 Source: ..\..\..\build-vc80\newview\release\packaged\xvidcore.dll; DestDir: {app}; Flags: ignoreversion
 Source: ..\..\..\build-vc80\newview\release\packaged\z.dll; DestDir: {app}; Flags: ignoreversion
 
-; VC++ 2005 SP1 x86 and VC++ 2010 SP1 x86 redist
-; TODO: add checking for VS2005. See http://blogs.msdn.com/b/astebner/archive/2007/01/16/mailbag-how-to-detect-the-presence-of-the-vc-8-0-runtime-redistributable-package.aspx
-Source: ..\windows\vcredist_x86_VS2005_SP1.exe; DestDir: {tmp}; DestName: vcredist_x86_VS2005_SP1.exe
-Source: ..\windows\vcredist_x86_VS2010_SP1.exe; DestDir: {tmp}; DestName: vcredist_x86_VS2010_SP1.exe
+; VC++ 2005 SP1 x86, VC++ 2008 SP1 x86, and VC++ 2010 SP1 x86 redist
+Source: ..\windows\vcredist_x86_VS2005_SP1_MFC_SEC.exe; DestDir: {app}\redist; DestName: vcredist_x86_VS2005_SP1_MFC_SEC.exe
+Source: ..\windows\vcredist_x86_VS2008_SP1_ATL_SEC.exe; DestDir: {app}\redist; DestName: vcredist_x86_VS2008_SP1_ATL_SEC.exe
+Source: ..\windows\vcredist_x86_VS2010_SP1.exe; DestDir: {app}\redist; DestName: vcredist_x86_VS2010_SP1.exe
 
 ; Old files we don't use anymore:
 ; Source: ..\..\..\build-vc80\newview\release\packaged\dronesettings.xml; DestDir: {app}; Flags: ignoreversion
@@ -167,8 +167,16 @@ Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\InWorldz; Filename:
 Name: {group}\InWorldz; Filename: {app}\inworldz.exe; WorkingDir: {app}; Comment: inworldz; IconIndex: 0;
 
 [Run]
-Filename: {tmp}\vcredist_x86_VS2005_SP1.exe; Parameters: "/q:a /c:""VCREDI~1.EXE /q:a /c:""""msiexec /i vcredist.msi /qn"""" """; Flags: runhidden
-Filename: {tmp}\vcredist_x86_VS2010_SP1.exe; Parameters: "/q /norestart"; Check: Needs2010Redist; Flags: runhidden
+; Install redistributables. 
+;
+;     !!!!BEWARE!!!! 
+;
+; Command line parameters and filenames WILL change with each version. Blame Microsoft.
+
+; Always use /q for VS2005 rather than something quieter such as Parameters: "/q:a c:""msiexec /i vcredist.msi /qn"" ". The redist will fail sometimes if you do otherwise.
+Filename: {app}\redist\vcredist_x86_VS2005_SP1_MFC_SEC.exe; Parameters: "/q"; Check: Needs2005Redist; Flags: runhidden
+Filename: {app}\redist\vcredist_x86_VS2008_SP1_ATL_SEC.exe; Parameters: "/q"; Check: Needs2008Redist; Flags: runhidden
+Filename: {app}\redist\vcredist_x86_VS2010_SP1.exe; Parameters: "/q /norestart"; Check: Needs2010Redist; Flags: runhidden
 Filename: {app}\inworldz.exe; WorkingDir: {app}; Flags: nowait postinstall
 
 [UninstallDelete]
@@ -189,7 +197,11 @@ Name: {app}\licenses.txt; Type: files; Tasks: ; Languages:
 ; ALWAYS delete the plugins! Beware if you don't
 Name: {app}\lib\gstreamer-plugins\*; Type: filesandordirs; Tasks: ; Languages: 
 ; Name: {app}\skins\default\xui\*; Type: filesandordirs; Tasks: ; Languages:
-Name: {app}\skins\silver\xui\*; Type: filesandordirs; Tasks: ; Languages:
+; Old xui skin files can cause bugs, always kill them
+Name: {app}\skins\silver\xui\en-us\*; Type: filesandordirs; Tasks: ; Languages:
+Name: {app}\app_settings\mozilla; Type: filesandordirs; Tasks: ; Languages:
+Name: {app}\app_settings\mozilla_debug; Type: filesandordirs; Tasks: ; Languages:
+Name: {app}\app_settings\viewerversion.xml; Type: filesandordirs; Tasks: ; Languages:
 Name: C:\Documents and Settings\{username}\.gstreamer-0.10\*; Type: filesandordirs
 Name: C:\Users\{username}\.gstreamer-0.10\*; Type: filesandordirs
 ; Breaks the browser if installing on top of 1.1:
@@ -299,4 +311,58 @@ end;
 function Needs2010Redist(): Boolean;
 begin
   Result := (IsVS2010RedistInstalled = FALSE);
+  if (Result = TRUE) then begin
+    Log('User system needs VS 2010 SP1 x86 Redistributable, installing.');
+  end else begin
+    Log('User already has VS 2010 SP1 x86 Redistributable installed, skipping.');
+  end
+end;
+
+// VS2008 and 2005 x86 redists. Always look for the latest version we know about. I wish there were a better way to check for these
+const
+  VS2005_X86 =              '{A49F249F-0C91-497F-86DF-B2585E8E76B7}';    // http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE
+  VS2005_SP1_X86 =          '{7299052B-02A4-4627-81F2-1818DA5D550D}';    // 8.0.50727.762: http://www.microsoft.com/downloads/details.aspx?FamilyID=200B2FD9-AE1A-4A14-984D-389C36F85647
+  VS2005_SP1_X86_ATL_SEC =  '{837B34E3-7C30-493C-8F6A-2B0F04E2912C}';    // 8.0.50727.4053: http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=14431
+  VS2005_SP1_X86_MFC_SEC =  '{710f4c1c-cc18-4c49-8cbf-51240c89a1a2}';    // 8.0.50727.6195: http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=26347     
+  
+  VS2008_X86 =              '{FF66E9F6-83E7-3A3E-AF14-8DE9A809A6A4}';    // http://www.microsoft.com/downloads/details.aspx?FamilyID=9b2da534-3e03-4391-8a4d-074b9f2bc1bf
+  VS2008_SP1_X86 =          '{9A25302D-30C0-39D9-BD6F-21E6EC160475}';    // 9.0.30729.17: http://www.microsoft.com/downloads/details.aspx?familyid=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2
+  VS2008_SP1_X86_ATL_SEC =  '{1F1C2DFC-2D24-3E06-BCB8-725134ADF989}';    // 9.0.30729.4148: http://www.microsoft.com/downloads/details.aspx?familyid=2051A0C1-C9B5-4B0A-A8F5-770A549FD78C
+  // These updates currently don't have redist links:
+  // 9.0.30729.5026:
+  // 9.0.30729.5570: 
+  // 9.0.30729.6161: http://support.microsoft.com/kb/2538243
+
+  INSTALLSTATE_INVALIDARG	= -2;	  // An invalid parameter was passed to the function
+  INSTALLSTATE_UNKNOWN	  = -1;   // The product is not advertised or installed
+  INSTALLSTATE_ADVERTISED	= 1;	  // The product is advertised but not installed
+  INSTALLSTATE_ABSENT	    = 2;	  // The product is installed for a different user
+  INSTALLSTATE_DEFAULT	  = 5;    // The product is installed for the current user
+
+function MsiQueryProductState(ProductCode: String): Integer;
+  external 'MsiQueryProductStateA@msi.dll stdcall';
+
+function IsProductCodeInstalled(ProductUUID: String): Boolean;
+begin
+  Result := (MsiQueryProductState(ProductUUID) = INSTALLSTATE_DEFAULT);
+end;
+
+function Needs2005Redist(): Boolean;
+begin
+  Result:= (IsProductCodeInstalled(VS2005_SP1_X86_MFC_SEC) = FALSE);
+  if (Result = TRUE) then begin
+    Log('User system needs VS 2005 SP1 x86 Redistributable, installing.');
+  end else begin
+    Log('User already has VS 2005 SP1 x86 Redistributable installed, skipping.');
+  end
+end;
+
+function Needs2008Redist(): Boolean;
+begin
+  Result := (IsProductCodeInstalled(VS2008_SP1_X86_ATL_SEC) = FALSE);
+  if (Result = TRUE) then begin
+    Log('User system needs VS 2008 SP1 x86 Redistributable, installing.');
+  end else begin
+    Log('User already has VS 2008 SP1 x86 Redistributable installed, skipping.');
+  end
 end;
