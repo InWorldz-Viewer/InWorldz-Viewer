@@ -66,6 +66,7 @@ private:
 
 class LLTemplateParser
 {
+LOG_CLASS(LLTemplateParser);
 public:
 	typedef std::list<LLMessageTemplate *>::const_iterator message_iterator;
 	

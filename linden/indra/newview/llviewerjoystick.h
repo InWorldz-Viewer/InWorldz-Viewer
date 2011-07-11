@@ -51,6 +51,7 @@ typedef enum e_joystick_driver_state
 
 class LLViewerJoystick : public LLSingleton<LLViewerJoystick>
 {
+LOG_CLASS(LLViewerJoystick);
 public:
 	LLViewerJoystick();
 	virtual ~LLViewerJoystick();

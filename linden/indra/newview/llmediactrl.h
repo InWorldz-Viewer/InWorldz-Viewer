@@ -50,6 +50,7 @@ class LLMediaCtrl :
 	public LLViewerMediaObserver,
 	public LLViewerMediaEventEmitter
 {
+	LOG_CLASS(LLMediaCtrl);
 	public:
 		LLMediaCtrl( const std::string& name, const LLRect& rect );
 		virtual ~LLMediaCtrl();
