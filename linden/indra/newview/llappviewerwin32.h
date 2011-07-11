@@ -39,6 +39,7 @@
 
 class LLAppViewerWin32 : public LLAppViewer
 {
+LOG_CLASS(LLAppViewerWin32);
 public:
 	LLAppViewerWin32(const char* cmd_line);
 	virtual ~LLAppViewerWin32();
