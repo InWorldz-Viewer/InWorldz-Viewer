@@ -733,7 +733,7 @@ void LLObjectBackup::exportNextTexture()
 	std::list<LLUUID>::iterator iter;
 	iter = mTexturesList.begin();
 
-	while (1)
+	while (true)
 	{
 		if (iter == mTexturesList.end())
 		{
@@ -742,6 +742,13 @@ void LLObjectBackup::exportNextTexture()
 		}
 
 		id = (*iter);
+		if (id.isNull())
+		{
+			// NULL texture id: just remove and ignore.
+			mTexturesList.remove(id);
+			iter = mTexturesList.begin();
+			continue;
+		}
 
 		LLViewerImage* imagep = gImageList.hasImage(id);
 		if (imagep != NULL)
@@ -762,8 +769,10 @@ void LLObjectBackup::exportNextTexture()
 		}
 		else
 		{
-			llwarns << "We *DON'T* have the texture " << llendl;
+			llwarns << "We *DON'T* have the texture " << id.asString() << llendl;
 			mNonExportedTextures |= TEXTURE_MISSING;
+			mTexturesList.remove(id);
+			return;
 		}
 		iter++;
 	}
@@ -796,9 +805,21 @@ void LLObjectBackup::importObject(bool upload)
 
 	std::string file_name = file_picker.getFirstFile().c_str();
 	mFolder = gDirUtilp->getDirName(file_name);
+
+	LLSD import_llsd;
 	llifstream import_file(file_name);
-	LLSDSerialize::fromXML(mLLSD, import_file);
+	S32 status;
+	status = LLSDSerialize::fromXML(import_llsd, import_file);
 	import_file.close();
+
+	if (LLSDParser::PARSE_FAILURE == status)
+	{
+		llwarns << "invalid xml file." << llendl;
+		return;
+	}
+
+	mLLSD = import_llsd;
+
 	show(false);
 
 	mAgentPos = gAgent.getPositionAgent();
