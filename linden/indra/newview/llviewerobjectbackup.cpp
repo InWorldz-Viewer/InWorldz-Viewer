@@ -364,7 +364,7 @@ void LLObjectBackup::exportObject()
 
 	// Open the file save dialog
 	LLFilePicker& file_picker = LLFilePicker::instance();
-	if (!file_picker.getSaveFile(LLFilePicker::FFSAVE_XML))
+	if (!file_picker.getSaveFile(LLFilePicker::FFSAVE_XML, LLSelectMgr::getInstance()->getSelection()->getFirstRootNode()->mName))
 	{
 		// User canceled save.
 		return;
