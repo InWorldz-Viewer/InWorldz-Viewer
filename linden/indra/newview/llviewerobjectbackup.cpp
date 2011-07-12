@@ -473,6 +473,10 @@ void LLObjectBackup::exportWorker(void *userdata)
 					llwarns << "Incorrect permission to export" << llendl;
 					LLObjectBackup::getInstance()->mExportState = EXPORT_FAILED;
 					LLSelectMgr::getInstance()->getSelection()->unref();
+					gIdleCallbacks.deleteFunction(exportWorker);
+					LLNotifications::instance().add("ExportFailed");
+					LLObjectBackup::getInstance()->close();
+					return;
 				}
 			}
 			break;
@@ -577,10 +581,7 @@ void LLObjectBackup::exportWorker(void *userdata)
 			break;
 
 		case EXPORT_FAILED:
-			gIdleCallbacks.deleteFunction(exportWorker);
 			llwarns << "Export process aborted." << llendl;
-			LLNotifications::instance().add("ExportFailed");
-			LLObjectBackup::getInstance()->close();
 			break;
 	}
 }
@@ -678,6 +679,10 @@ LLSD LLObjectBackup::primsToLLSD(LLViewerObject::child_list_t child_list, bool i
 			{
 				llwarns << "Incorrect permission to export a sculpt texture." << llendl;
 				LLObjectBackup::getInstance()->mExportState = EXPORT_FAILED;
+				gIdleCallbacks.deleteFunction(exportWorker);
+				LLNotifications::instance().add("ExportFailed");
+				LLObjectBackup::getInstance()->close();
+				return LLSD();
 			}
 		}
 
