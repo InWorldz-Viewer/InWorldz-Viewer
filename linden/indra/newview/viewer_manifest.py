@@ -206,14 +206,21 @@ class WindowsManifest(ViewerManifest):
         # nor do we have a fixed name for the executable
         self.path(self.find_existing_file('debug/inworldz-bin.exe', 'release/inworldz-bin.exe', 'relwithdebinfo/inworldz-bin.exe'), dst=self.final_exe())
 
-        # copy over the the pdb file for the regular or SSE2 versions
-        try:
-            symbol_name = 'inworldz-%s.pdb' % ('.'.join(self.args['version']))
-            self.path(self.find_existing_file('release/inworldz-bin.pdb'), dst="../../../../../pdb_files/inworldz-%s.pdb" % (symbol_ver))
-            pass
-        except:
-            print "Skipping saving symbols"
-            pass
+        # copy over the the pdb file for the regular or SSE2 versions if we don't already have one copied
+        symbol_ver = '.'.join(self.args['version'])
+        symbol_arch = '.' + self.args.get('arch')
+        symbol_file = 'inworldz-%s%spdb' % (symbol_ver, symbol_arch)
+        symbol_path = '../../../../pdb_files/%s' % (symbol_file)
+        if os.path.isfile(os.getcwd() + symbol_path):
+            print "%s already exists, skipping" % (symbol_path)
+        else:
+            #print "%s doesn't exist yet" % (os.getcwd() + symbol_path)
+            try:
+                self.path(self.find_existing_file('release/inworldz-bin.pdb'), dst="../%s" % (symbol_path))
+                pass
+            except:
+                print "Can't save symbol file %s, skipping" % (symbol_path)
+                pass
         
         self.gather_documents()
 
