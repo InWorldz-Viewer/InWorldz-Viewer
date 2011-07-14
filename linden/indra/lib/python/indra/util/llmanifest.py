@@ -118,15 +118,16 @@ ARGUMENTS=[
         On Linux this would try to use Linux_i686Manifest.""",
          default=""),
     dict(name='build', description='Build directory.', default=DEFAULT_SRCTREE),
-    dict(name='buildtype', description="""The build type used. ('Debug', 'Release', or 'RelWithDebInfo')
+    dict(name='buildtype', description="""The build type used. ('Debug', 'Release', 'ReleaseSSE2', or 'RelWithDebInfo')
         Default is Release """,
          default="Release"),
     dict(name='branding_id', description="""Identifier for the branding set to 
         use.  Currently, 'inworldz')""", 
          default='inworldz'),
     dict(name='configuration',
-         description="""The build configuration used. Only used on OS X for
-        now, but it could be used for other platforms as well.""",
+         description="""The build configuration used. On OSX this is
+         Universal, etc. On Windows it's the *actual* buildtype for
+         some weird reason.""",
          default="Universal"),
     dict(name='dest', description='Destination directory.', default=DEFAULT_SRCTREE),
     dict(name='grid',
