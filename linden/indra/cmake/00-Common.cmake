@@ -10,13 +10,15 @@ include(Variables)
 set(CMAKE_CXX_FLAGS_DEBUG "-D_DEBUG -DLL_DEBUG=1")
 set(CMAKE_CXX_FLAGS_RELEASE
     "-DLL_RELEASE=1 -DLL_RELEASE_FOR_DOWNLOAD=1 -D_SECURE_SCL=0 -DLL_SEND_CRASH_REPORTS=1 -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASESSE2
+    "-DLL_RELEASE=1 -DLL_RELEASE_FOR_DOWNLOAD=1 -D_SECURE_SCL=0 -DLL_SEND_CRASH_REPORTS=1 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
     "-DLL_RELEASE=1 -D_SECURE_SCL=0 -DLL_SEND_CRASH_REPORTS=0 -DNDEBUG -DLL_RELEASE_WITH_DEBUG_INFO=1")
 
 
 # Don't bother with a MinSizeRel build.
 
-set(CMAKE_CONFIGURATION_TYPES "RelWithDebInfo;Release;Debug" CACHE STRING
+set(CMAKE_CONFIGURATION_TYPES "RelWithDebInfo;Release;ReleaseSSE2;Debug" CACHE STRING
     "Supported build types." FORCE)
 
 # Platform-specific compilation flags.
@@ -32,12 +34,18 @@ if (WINDOWS)
       CACHE STRING "C++ compiler release-with-debug options" FORCE)
   if (MSVC80)
       set(CMAKE_CXX_FLAGS_RELEASE
-      "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ob2 /Oi /Ot /GT /Zi /MD"
-      CACHE STRING "C++ compiler release options" FORCE)
+		"${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ob2 /Oi /Ot /GT /Zi /MD"
+		CACHE STRING "C++ compiler release options" FORCE)
+	  set(CMAKE_CXX_FLAGS_RELEASESSE2
+		"${CMAKE_CXX_FLAGS_RELEASESSE2} /O2 /Ob2 /Oi /Ot /GT /Zi /MD /arch:SSE2"
+		CACHE STRING "C++ compiler release (SSE2 optimized) options" FORCE)
   else (MSVC80)
       set(CMAKE_CXX_FLAGS_RELEASE
-      "${CMAKE_CXX_FLAGS_RELEASE} ${LL_CXX_FLAGS} /O2 /Zi /MD"
-      CACHE STRING "C++ compiler release options" FORCE)
+		"${CMAKE_CXX_FLAGS_RELEASE} ${LL_CXX_FLAGS} /O2 /Zi /MD"
+		CACHE STRING "C++ compiler release options" FORCE)
+	  set(CMAKE_CXX_FLAGS_RELEASESSE2
+		"${CMAKE_CXX_FLAGS_RELEASESSE2} ${LL_CXX_FLAGS} /O2 /Zi /MD /arch:SSE2"
+		CACHE STRING "C++ compiler release (SSE2 optimized) options" FORCE)
   endif (MSVC80)
 
   set(CMAKE_CXX_STANDARD_LIBRARIES "")
@@ -61,6 +69,9 @@ if (WINDOWS)
     set(CMAKE_CXX_FLAGS_RELEASE
       "${CMAKE_CXX_FLAGS_RELEASE} -D_SECURE_STL=0 -D_HAS_ITERATOR_DEBUGGING=0"
       CACHE STRING "C++ compiler release options" FORCE)
+	set(CMAKE_CXX_FLAGS_RELEASESSE2
+	  "${CMAKE_CXX_FLAGS_RELEASESSE2} -D_SECURE_STL=0 -D_HAS_ITERATOR_DEBUGGING=0"
+	  CACHE STRING "C++ compiler release (SSE2 optimized) options" FORCE)
    
     add_definitions(
       /Zc:wchar_t-
@@ -182,10 +193,12 @@ if (LINUX)
       # this stops us requiring a really recent glibc at runtime
       add_definitions(-fno-stack-protector)
     endif (NOT STANDALONE)
+	set(CMAKE_CXX_FLAGS_RELEASESSE2 "${CMAKE_CXX_FLAGS_RELEASESSE2} -mfpmath=sse2 -msse2")
   endif (VIEWER)
 
   set(CMAKE_CXX_FLAGS_DEBUG "-fno-inline ${CMAKE_CXX_FLAGS_DEBUG}")
   set(CMAKE_CXX_FLAGS_RELEASE "-O2 ${CMAKE_CXX_FLAGS_RELEASE}")
+  set(CMAKE_CXX_FLAGS_RELEASESSE2 "-O2 ${CMAKE_CXX_FLAGS_RELEASESSE2}")
 endif (LINUX)
 
 
@@ -199,6 +212,8 @@ if (DARWIN)
   # NOTE: it's critical to have both CXX_FLAGS and C_FLAGS covered.
   set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O0 ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
   set(CMAKE_C_FLAGS_RELWITHDEBINFO "-O0 ${CMAKE_C_FLAGS_RELWITHDEBINFO}")
+  set(CMAKE_CXX_FLAGS_RELEASESSE2 "-msse2 -mfpmath=sse ${CMAKE_CXX_FLAGS_RELEASESSE2}")	
+  set(CMAKE_C_FLAGS_RELEASESSE2 "-msse2 -mfpmath=sse ${CMAKE_C_FLAGS_RELEASESSE2}")
 endif (DARWIN)
 
 
@@ -255,3 +270,17 @@ endif (STANDALONE)
 if(SERVER)
   include_directories(${LIBS_PREBUILT_DIR}/include/havok)
 endif(SERVER)
+
+SET(CMAKE_EXE_LINKER_FLAGS_RELEASESSE2
+    "${CMAKE_EXE_LINKER_FLAGS_RELEASE}" CACHE STRING
+    "Flags used for linking binaries under SSE2 optimized build."
+    FORCE )
+SET(CMAKE_SHARED_LINKER_FLAGS_RELEASESSE2
+    "${CMAKE_SHARED_LINKER_FLAGS_RELEASE}" CACHE STRING
+    "Flags used by the shared libraries linker under SSE2 optimized build."
+    FORCE )
+MARK_AS_ADVANCED(
+    CMAKE_CXX_FLAGS_RELEASESSE2
+    CMAKE_C_FLAGS_RELEASESSE2
+    CMAKE_EXE_LINKER_FLAGS_RELEASESSE2
+    CMAKE_SHARED_LINKER_FLAGS_RELEASESSE2 )
