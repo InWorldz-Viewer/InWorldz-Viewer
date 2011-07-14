@@ -204,13 +204,12 @@ class WindowsManifest(ViewerManifest):
         super(WindowsManifest, self).construct()
         # the final exe is complicated because we're not sure where it's coming from,
         # nor do we have a fixed name for the executable
-        self.path(self.find_existing_file('debug/inworldz-bin.exe', 'release/inworldz-bin.exe', 'relwithdebinfo/inworldz-bin.exe'), dst=self.final_exe())
+        self.path(self.find_existing_file('debug/inworldz-bin.exe', 'release/inworldz-bin.exe', 'releasesse2/inworldz-bin.exe', 'relwithdebinfo/inworldz-bin.exe'), dst=self.final_exe())
 
         # copy over the the pdb file for the regular or SSE2 versions if we don't already have one copied
         symbol_ver = '.'.join(self.args['version'])
-        symbol_arch = '.' + self.args.get('arch')
-        symbol_file = 'inworldz-%s%spdb' % (symbol_ver, symbol_arch)
-        symbol_path = '../../../../pdb_files/%s' % (symbol_file)
+        symbol_file = 'inworldz-%s.%s.pdb' % (symbol_ver, self.args['configuration'])
+        symbol_path = '../../../../../pdb_files/%s' % (symbol_file)
         if os.path.isfile(os.getcwd() + symbol_path):
             print "%s already exists, skipping" % (symbol_path)
         else:
@@ -401,11 +400,13 @@ class WindowsManifest(ViewerManifest):
         #self.path(src=self.find_existing_file( # tag:"crash-logger" here as a cue to the exporter
         #        "../win_crash_logger/debug/windows-crash-logger.exe",
         #        "../win_crash_logger/release/windows-crash-logger.exe",
+        #        "../win_crash_logger/releasesse2/windows-crash-logger.exe"),
         #        "../win_crash_logger/relwithdebinfo/windows-crash-logger.exe"),
         #          dst="win_crash_logger.exe")
         #self.path(src=self.find_existing_file(
         #        "../win_updater/debug/windows-updater.exe",
         #        "../win_updater/release/windows-updater.exe",
+        #        "../win_updater/releasesse2/windows-updater.exe",
         #        "../win_updater/relwithdebinfo/windows-updater.exe"),
         #          dst="updater.exe")
 
