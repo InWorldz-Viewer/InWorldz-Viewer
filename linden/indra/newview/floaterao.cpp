@@ -1,7 +1,29 @@
-/** 
- * @file llfloaterao.cpp
+/**
+ * @file floaterao.cpp
  * @brief clientside animation overrider
- * by Skills Hak
+ *
+ * Copyright (c) 2011, McCabe Maxsted
+ * based on work by Skills Hak
+ *
+ * The source code in this file ("Source Code") is provided to you
+ * under the terms of the GNU General Public License, version 2.0
+ * ("GPL"). Terms of the GPL can be found in doc/GPL-license.txt in
+ * this distribution, or online at
+ * http://www.inworldz.com/izwiki/index.php/Viewers:Licenses#GNU_General_Public_License_v2.0
+ *
+ * There are special exceptions to the terms and conditions of the GPL as
+ * it is applied to this Source Code. View the full text of the exception
+ * in the file doc/FLOSS-exception.txt in this software distribution, or
+ * online at
+ * http://www.inworldz.com/izwiki/index.php/Viewers:Licenses#FLOSS_Exception
+ *
+ * By copying, modifying or distributing this software, you acknowledge
+ * that you have read and understood your obligations described above,
+ * and agree to abide by those obligations.
+ *
+ * ALL SOURCE CODE IS PROVIDED "AS IS." THE AUTHOR MAKES NO
+ * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
+ * COMPLETENESS OR PERFORMANCE.
  */
 
 #include "llviewerprecompiledheaders.h"
@@ -120,11 +142,11 @@ void AOStandTimer::reset()
 }
 BOOL AOStandTimer::tick()
 {
-	LLFloaterAO::stand_iterator++;
+	LLFloaterAO::sStandIterator++;
 //	llinfos << "tick" << llendl;
-	LLFloaterAO::ChangeStand();
+	LLFloaterAO::changeStand();
 	return FALSE;
-//	return LLFloaterAO::ChangeStand(); //timer is always active now ..
+//	return LLFloaterAO::changeStand(); //timer is always active now ..
 }
 
 // -------------------------------------------------------
@@ -265,10 +287,10 @@ AONoteCardDropTarget * LLFloaterAO::sAOItemDropTarget;
 
 // STUFF -------------------------------------------------------
 
-S32 LLFloaterAO::sAnimationState = 0;
-S32 LLFloaterAO::stand_iterator = 0;
+S32 LLFloaterAO::sAnimState = 0;
+S32 LLFloaterAO::sStandIterator = 0;
 
-LLUUID LLFloaterAO::invfolderid = LLUUID::null;
+LLUUID LLFloaterAO::sInvFolderID = LLUUID::null;
 LLUUID LLFloaterAO::sCurrentStandId = LLUUID::null;
 
 LLComboBox*				mComboBox_stands;
@@ -288,6 +310,11 @@ LLComboBox* 			mComboBox_flydowns;
 LLComboBox* 			mComboBox_lands;
 LLComboBox* 			mComboBox_standups;
 LLComboBox* 			mComboBox_prejumps;
+LLComboBox* 			mComboBox_typing;
+LLComboBox* 			mComboBox_floating;
+LLComboBox* 			mComboBox_swimmingforward;
+LLComboBox* 			mComboBox_swimmingup;
+LLComboBox* 			mComboBox_swimmingdown;
 
 struct struct_overrides
 {
@@ -326,24 +353,30 @@ LLFloaterAO::LLFloaterAO()
 
 LLFloaterAO::~LLFloaterAO()
 {
-    sInstance=NULL;
-	mComboBox_stands = 0;
-	mComboBox_walks = 0;
-	mComboBox_runs = 0;
-	mComboBox_jumps = 0;
-	mComboBox_sits = 0;
-	mComboBox_gsits = 0;
-	mComboBox_crouchs = 0;
-	mComboBox_cwalks = 0;
-	mComboBox_falls = 0;
-	mComboBox_hovers = 0;
-	mComboBox_flys = 0;
-	mComboBox_flyslows = 0;
-	mComboBox_flyups = 0;
-	mComboBox_flydowns = 0;
-	mComboBox_lands = 0;
-	mComboBox_standups = 0;
-	mComboBox_prejumps = 0;
+    sInstance = NULL;
+	mComboBox_stands = NULL;
+	mComboBox_walks = NULL;
+	mComboBox_runs = NULL;
+	mComboBox_jumps = NULL;
+	mComboBox_sits = NULL;
+	mComboBox_gsits = NULL;
+	mComboBox_crouchs = NULL;
+	mComboBox_cwalks = NULL;
+	mComboBox_falls = NULL;
+	mComboBox_hovers = NULL;
+	mComboBox_flys = NULL;
+	mComboBox_flyslows = NULL;
+	mComboBox_flyups = NULL;
+	mComboBox_flydowns = NULL;
+	mComboBox_lands = NULL;
+	mComboBox_standups = NULL;
+	mComboBox_prejumps = NULL;
+	mComboBox_typing = NULL;
+	mComboBox_floating = NULL;
+	mComboBox_swimmingforward = NULL;
+	mComboBox_swimmingup = NULL;
+	mComboBox_swimmingdown = NULL;
+
 	delete sAOItemDropTarget;
 	sAOItemDropTarget = NULL;
 //	llinfos << "floater destroyed" << llendl;
@@ -410,6 +443,11 @@ BOOL LLFloaterAO::postBuild()
 	mComboBox_lands = getChild<LLComboBox>("lands");
 	mComboBox_standups = getChild<LLComboBox>("standups");
 	mComboBox_prejumps = getChild<LLComboBox>("prejumps");
+	mComboBox_typing = getChild<LLComboBox>("typing");
+	mComboBox_floating = getChild<LLComboBox>("floating");
+	mComboBox_swimmingforward = getChild<LLComboBox>("swimmingforward");
+	mComboBox_swimmingup = getChild<LLComboBox>("swimmingup");
+	mComboBox_swimmingdown = getChild<LLComboBox>("swimmingdown");
 	getChild<LLComboBox>("stands")->setCommitCallback(onComboBoxCommit);
 	getChild<LLComboBox>("walks")->setCommitCallback(onComboBoxCommit);
 	getChild<LLComboBox>("runs")->setCommitCallback(onComboBoxCommit);
@@ -427,6 +465,11 @@ BOOL LLFloaterAO::postBuild()
 	getChild<LLComboBox>("lands")->setCommitCallback(onComboBoxCommit);
 	getChild<LLComboBox>("standups")->setCommitCallback(onComboBoxCommit);
 	getChild<LLComboBox>("prejumps")->setCommitCallback(onComboBoxCommit);
+	getChild<LLComboBox>("typing")->setCommitCallback(onComboBoxCommit);
+	getChild<LLComboBox>("floating")->setCommitCallback(onComboBoxCommit);
+	getChild<LLComboBox>("swimmingforward")->setCommitCallback(onComboBoxCommit);
+	getChild<LLComboBox>("swimmingup")->setCommitCallback(onComboBoxCommit);
+	getChild<LLComboBox>("swimmingdown")->setCommitCallback(onComboBoxCommit);
 
 	return TRUE;
 }
@@ -490,30 +533,30 @@ void LLFloaterAO::onComboBoxCommit(LLUICtrl* ctrl, void* userdata)
 	{
 		if (box->getName() == "stands")
 		{
-			stand_iterator = box->getCurrentIndex();
-			cmdline_printchat(llformat("Changing stand to %s.",mAOStands[stand_iterator].anim_name.c_str()));
-			ChangeStand();
+			sStandIterator = box->getCurrentIndex();
+			cmdline_printchat(llformat("Changing stand to %s.", mAOStands[sStandIterator].anim_name.c_str()));
+			changeStand();
 		}
 		else
 		{
 			S32 state = STATE_AGENT_IDLE;
 			std::string stranim = box->getValue().asString();
-//			llinfos << "state " << (gAgent.getAvatarObject()->mIsSitting) << " - " << getAnimationState() << llendl;
+//			llinfos << "state " << (gAgent.getAvatarObject()->mIsSitting) << " - " << getAnimState() << llendl;
 			if (box->getName() == "walks")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_WALK), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_WALK), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultWalk",stranim);
 				state = STATE_AGENT_WALK;
 			}
 			else if (box->getName() == "runs")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_RUN), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_RUN), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultRun",stranim);
 				state = STATE_AGENT_RUN;
 			}
 			else if (box->getName() == "jumps")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_JUMP), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_JUMP), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultJump",stranim);
 				state = STATE_AGENT_JUMP;
 			}
@@ -521,10 +564,10 @@ void LLFloaterAO::onComboBoxCommit(LLUICtrl* ctrl, void* userdata)
 			{
 				if (gAgent.getAvatarObject() && (gSavedSettings.getBOOL("AOEnabled")) && (gSavedSettings.getBOOL("AOSitsEnabled")))
 				{
-					if ((gAgent.getAvatarObject()->mIsSitting) && (getAnimationState() == STATE_AGENT_SIT))
+					if ((gAgent.getAvatarObject()->mIsSitting) && (getAnimState() == STATE_AGENT_SIT))
 					{
-//						llinfos << "sitting " << GetAnimID(ANIM_AGENT_SIT) << " " << getAssetIDByName(stranim) << llendl;
-						gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_SIT), ANIM_REQUEST_STOP);
+//						llinfos << "sitting " << getAnimID(ANIM_AGENT_SIT) << " " << getAssetIDByName(stranim) << llendl;
+						gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_SIT), ANIM_REQUEST_STOP);
 						gAgent.sendAnimationRequest(getAssetIDByName(stranim), ANIM_REQUEST_START);
 					}
 				}
@@ -533,13 +576,13 @@ void LLFloaterAO::onComboBoxCommit(LLUICtrl* ctrl, void* userdata)
 			}
 			else if (box->getName() == "gsits")
 			{
-//				llinfos << "gsitting " << GetAnimID(ANIM_AGENT_SIT_GROUND) << " " << getAssetIDByName(stranim) << llendl;
+//				llinfos << "gsitting " << getAnimID(ANIM_AGENT_SIT_GROUND) << " " << getAssetIDByName(stranim) << llendl;
 				if (gAgent.getAvatarObject())
 				{
-					if ((gAgent.getAvatarObject()->mIsSitting) && (getAnimationState() == STATE_AGENT_GROUNDSIT))
+					if ((gAgent.getAvatarObject()->mIsSitting) && (getAnimState() == STATE_AGENT_GROUNDSIT))
 					{
-//						llinfos << "gsitting " << GetAnimID(ANIM_AGENT_SIT_GROUND) << " " << getAssetIDByName(stranim) << llendl;
-						gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_SIT_GROUND), ANIM_REQUEST_STOP);
+//						llinfos << "gsitting " << getAnimID(ANIM_AGENT_SIT_GROUND) << " " << getAssetIDByName(stranim) << llendl;
+						gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_SIT_GROUND), ANIM_REQUEST_STOP);
 						gAgent.sendAnimationRequest(getAssetIDByName(stranim), ANIM_REQUEST_START);
 					}
 				}
@@ -548,70 +591,101 @@ void LLFloaterAO::onComboBoxCommit(LLUICtrl* ctrl, void* userdata)
 			}
 			else if (box->getName() == "crouchs")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_CROUCH), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_CROUCH), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultCrouch",stranim);
 				state = STATE_AGENT_CROUCH;
 			}
 			else if (box->getName() == "cwalks")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_CROUCHWALK), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_CROUCHWALK), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultCrouchWalk",stranim);
 				state = STATE_AGENT_CROUCHWALK;
 			}
 			else if (box->getName() == "falls")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_FALLDOWN), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_FALLDOWN), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultFall",stranim);
 				state = STATE_AGENT_FALLDOWN;
 			}
 			else if (box->getName() == "hovers")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_HOVER), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_HOVER), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultHover",stranim);
 				state = STATE_AGENT_HOVER;
 			}
 			else if (box->getName() == "flys")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_FLY), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_FLY), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultFly",stranim);
 				state = STATE_AGENT_FLY;
 			}
 			else if (box->getName() == "flyslows")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_FLYSLOW), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_FLYSLOW), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultFlySlow",stranim);
 				state = STATE_AGENT_FLYSLOW;
 			}
 			else if (box->getName() == "flyups")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_HOVER_UP), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_HOVER_UP), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultFlyUp",stranim);
 				state = STATE_AGENT_HOVER_UP;
 			}
 			else if (box->getName() == "flydowns")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_HOVER_DOWN), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_HOVER_DOWN), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultFlyDown",stranim);
 				state = STATE_AGENT_HOVER_DOWN;
 			}
 			else if (box->getName() == "lands")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_LAND), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_LAND), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultLand",stranim);
 				state = STATE_AGENT_LAND;
 			}
 			else if (box->getName() == "standups")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_STAND), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_STAND), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultStandUp",stranim);
 				state = STATE_AGENT_STAND;
 			}
 			else if (box->getName() == "prejumps")
 			{
-				gAgent.sendAnimationRequest(GetAnimID(ANIM_AGENT_PRE_JUMP), ANIM_REQUEST_STOP);
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_PRE_JUMP), ANIM_REQUEST_STOP);
 				gSavedPerAccountSettings.setString("AODefaultPreJump",stranim);
 				state = STATE_AGENT_PRE_JUMP;
 			}
+			else if (box->getName() == "typing")
+			{
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_TYPE), ANIM_REQUEST_STOP);
+				gSavedPerAccountSettings.setString("AODefaultTyping",stranim);
+				state = STATE_AGENT_TYPING;
+			}
+			else if (box->getName() == "floating")
+			{
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_HOVER), ANIM_REQUEST_STOP);
+				gSavedPerAccountSettings.setString("AODefaultFloating",stranim);
+				state = STATE_AGENT_FLOATING;
+			}
+			else if (box->getName() == "swimmingforward")
+			{
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_FLY), ANIM_REQUEST_STOP);
+				gSavedPerAccountSettings.setString("AODefaultSwimmingForward",stranim);
+				state = STATE_AGENT_SWIMMINGFORWARD;
+			}
+			else if (box->getName() == "swimmingup")
+			{
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_HOVER_UP), ANIM_REQUEST_STOP);
+				gSavedPerAccountSettings.setString("AODefaultSwimmingUp",stranim);
+				state =  STATE_AGENT_SWIMMINGUP;
+			}
+			else if (box->getName() == "swimmingdown")
+			{
+				gAgent.sendAnimationRequest(getAnimID(ANIM_AGENT_HOVER_DOWN), ANIM_REQUEST_STOP);
+				gSavedPerAccountSettings.setString("AODefaultSwimmingDown",stranim);
+				state = STATE_AGENT_SWIMMINGDOWN;
+			}
+
 			for (std::vector<struct_overrides>::iterator iter = mAOOverrides.begin(); iter != mAOOverrides.end(); ++iter)
 			{
 				if (state == iter->state)
@@ -631,7 +705,7 @@ void LLFloaterAO::updateLayout(LLFloaterAO* floater)
 		BOOL advanced = gSavedSettings.getBOOL( "AOAdvanced");
 		if (advanced)
 		{
-			floater->reshape(610,380); //view->getRect().getWidth(), view->getUIWinHeightLong());
+			floater->reshape(840,380); //view->getRect().getWidth(), view->getUIWinHeightLong());
 		}
 		else
 		{
@@ -640,9 +714,6 @@ void LLFloaterAO::updateLayout(LLFloaterAO* floater)
 		
 		floater->childSetVisible("more_btn", !advanced);
 		floater->childSetVisible("less_btn", advanced);
-
-		floater->childSetVisible("tabcontainer", advanced);
-		floater->childSetVisible("tabdefaultanims", advanced);
 
 		floater->childSetVisible("textdefaultwalk", advanced);
 		floater->childSetVisible("textdefaultrun", advanced);
@@ -660,7 +731,11 @@ void LLFloaterAO::updateLayout(LLFloaterAO* floater)
 		floater->childSetVisible("textdefaultland", advanced);
 		floater->childSetVisible("textdefaultstandup", advanced);
 		floater->childSetVisible("textdefaultprejump", advanced);
-
+		floater->childSetVisible("textdefaulttyping", advanced);
+		floater->childSetVisible("textdefaultfloating", advanced);
+		floater->childSetVisible("textdefaultswimmingforward", advanced);
+		floater->childSetVisible("textdefaultswimmingup", advanced);
+		floater->childSetVisible("textdefaultswimmingdown", advanced);
 
 		floater->childSetVisible("walks", advanced);
 		floater->childSetVisible("runs", advanced);
@@ -668,7 +743,7 @@ void LLFloaterAO::updateLayout(LLFloaterAO* floater)
 		floater->childSetVisible("sits", advanced);
 		floater->childSetVisible("gsits", advanced);
 		floater->childSetVisible("crouchs", advanced);
-		floater->childSetVisible("crouchwalks", advanced);
+		floater->childSetVisible("cwalks", advanced);
 		floater->childSetVisible("falls", advanced);
 		floater->childSetVisible("hovers", advanced);
 		floater->childSetVisible("flys", advanced);
@@ -678,6 +753,11 @@ void LLFloaterAO::updateLayout(LLFloaterAO* floater)
 		floater->childSetVisible("lands", advanced);
 		floater->childSetVisible("standups", advanced);
 		floater->childSetVisible("prejumps", advanced);
+		floater->childSetVisible("typing", advanced);
+		floater->childSetVisible("floating", advanced);
+		floater->childSetVisible("swimmingforward", advanced);
+		floater->childSetVisible("swimmingup", advanced);
+		floater->childSetVisible("swimmingdown", advanced);
 	}
 }
 
@@ -690,30 +770,30 @@ bool LLFloaterAO::init()
 	mAOOverrides.clear();
 
 	struct_tokens tokenloader;
-	tokenloader.token = 
-	tokenloader.token = "[ Sitting On Ground ]";	tokenloader.state = STATE_AGENT_GROUNDSIT; mAOTokens.push_back(tokenloader);    // 0
-	tokenloader.token = "[ Sitting ]";				tokenloader.state = STATE_AGENT_SIT; mAOTokens.push_back(tokenloader);              // 1
-	tokenloader.token = "[ Crouching ]";			tokenloader.state = STATE_AGENT_CROUCH; mAOTokens.push_back(tokenloader);            // 3
-	tokenloader.token = "[ Crouch Walking ]";		tokenloader.state = STATE_AGENT_CROUCHWALK; mAOTokens.push_back(tokenloader);       // 4
-	tokenloader.token = "[ Standing Up ]";			tokenloader.state = STATE_AGENT_STANDUP; mAOTokens.push_back(tokenloader);          // 6
-	tokenloader.token = "[ Falling ]";				tokenloader.state = STATE_AGENT_FALLDOWN; mAOTokens.push_back(tokenloader);              // 7
-	tokenloader.token = "[ Flying Down ]";			tokenloader.state = STATE_AGENT_HOVER_DOWN; mAOTokens.push_back(tokenloader);          // 8
-	tokenloader.token = "[ Flying Up ]";			tokenloader.state = STATE_AGENT_HOVER_UP; mAOTokens.push_back(tokenloader);            // 9
-	tokenloader.token = "[ Flying Slow ]";			tokenloader.state = STATE_AGENT_FLYSLOW; mAOTokens.push_back(tokenloader);          // 10
-	tokenloader.token = "[ Flying ]";				tokenloader.state = STATE_AGENT_FLY; mAOTokens.push_back(tokenloader);               // 11
-	tokenloader.token = "[ Hovering ]";				tokenloader.state = STATE_AGENT_HOVER; mAOTokens.push_back(tokenloader);             // 12
-	tokenloader.token = "[ Jumping ]";				tokenloader.state = STATE_AGENT_JUMP; mAOTokens.push_back(tokenloader);              // 13
-	tokenloader.token = "[ Pre Jumping ]";			tokenloader.state = STATE_AGENT_PRE_JUMP; mAOTokens.push_back(tokenloader);          // 14
-	tokenloader.token = "[ Running ]";				tokenloader.state = STATE_AGENT_RUN; mAOTokens.push_back(tokenloader);              // 15
-	tokenloader.token = "[ Turning Right ]";		tokenloader.state = STATE_AGENT_TURNRIGHT; mAOTokens.push_back(tokenloader);        // 16
-	tokenloader.token = "[ Turning Left ]";			tokenloader.state = STATE_AGENT_TURNLEFT; mAOTokens.push_back(tokenloader);         // 17
-	tokenloader.token = "[ Walking ]";				tokenloader.state = STATE_AGENT_WALK; mAOTokens.push_back(tokenloader);              // 18
-	tokenloader.token = "[ Landing ]";				tokenloader.state = STATE_AGENT_LAND; mAOTokens.push_back(tokenloader);              // 19
-	tokenloader.token = "[ Standing ]";				tokenloader.state = STATE_AGENT_STAND; mAOTokens.push_back(tokenloader);             // 20
-	tokenloader.token = "[ Swimming Down ]";		tokenloader.state = 999; mAOTokens.push_back(tokenloader);        // 21
-	tokenloader.token = "[ Swimming Up ]";			tokenloader.state = 999; mAOTokens.push_back(tokenloader);          // 22
-	tokenloader.token = "[ Swimming Forward ]";		tokenloader.state = 999; mAOTokens.push_back(tokenloader);     // 23
-	tokenloader.token = "[ Floating ]";				tokenloader.state = 999; mAOTokens.push_back(tokenloader);             // 24
+	tokenloader.token = "[ Sitting On Ground ]";	tokenloader.state = STATE_AGENT_GROUNDSIT; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Sitting ]";				tokenloader.state = STATE_AGENT_SIT; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Crouching ]";			tokenloader.state = STATE_AGENT_CROUCH; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Crouch Walking ]";		tokenloader.state = STATE_AGENT_CROUCHWALK; mAOTokens.push_back(tokenloader); 
+	tokenloader.token = "[ Standing Up ]";			tokenloader.state = STATE_AGENT_STANDUP; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Falling ]";				tokenloader.state = STATE_AGENT_FALLDOWN; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Flying Down ]";			tokenloader.state = STATE_AGENT_HOVER_DOWN; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Flying Up ]";			tokenloader.state = STATE_AGENT_HOVER_UP; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Flying Slow ]";			tokenloader.state = STATE_AGENT_FLYSLOW; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Flying ]";				tokenloader.state = STATE_AGENT_FLY; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Hovering ]";				tokenloader.state = STATE_AGENT_HOVER; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Jumping ]";				tokenloader.state = STATE_AGENT_JUMP; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Pre Jumping ]";			tokenloader.state = STATE_AGENT_PRE_JUMP; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Running ]";				tokenloader.state = STATE_AGENT_RUN; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Turning Right ]";		tokenloader.state = STATE_AGENT_TURNRIGHT; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Turning Left ]";			tokenloader.state = STATE_AGENT_TURNLEFT; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Walking ]";				tokenloader.state = STATE_AGENT_WALK; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Landing ]";				tokenloader.state = STATE_AGENT_LAND; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Standing ]";				tokenloader.state = STATE_AGENT_STAND; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Swimming Down ]";		tokenloader.state = STATE_AGENT_SWIMMINGDOWN; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Swimming Up ]";			tokenloader.state = STATE_AGENT_SWIMMINGUP; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Swimming Forward ]";		tokenloader.state = STATE_AGENT_SWIMMINGFORWARD; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Floating ]";				tokenloader.state = STATE_AGENT_FLOATING; mAOTokens.push_back(tokenloader);
+	tokenloader.token = "[ Typing ]";				tokenloader.state = STATE_AGENT_TYPING; mAOTokens.push_back(tokenloader);
 
 	struct_overrides overrideloader;
 	overrideloader.orig_id = ANIM_AGENT_WALK;					overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_WALK;			mAOOverrides.push_back(overrideloader);
@@ -742,6 +822,11 @@ bool LLFloaterAO::init()
 
 	overrideloader.orig_id = ANIM_AGENT_FLY;					overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_FLY;			mAOOverrides.push_back(overrideloader);
 	overrideloader.orig_id = ANIM_AGENT_FLYSLOW;				overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_FLYSLOW;		mAOOverrides.push_back(overrideloader);
+	overrideloader.orig_id = ANIM_AGENT_TYPE;					overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_TYPING;			mAOOverrides.push_back(overrideloader);
+	overrideloader.orig_id = ANIM_AGENT_HOVER;					overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_FLOATING;		mAOOverrides.push_back(overrideloader);
+	overrideloader.orig_id = ANIM_AGENT_FLY;					overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_SWIMMINGFORWARD;		mAOOverrides.push_back(overrideloader);
+	overrideloader.orig_id = ANIM_AGENT_HOVER_UP;				overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_SWIMMINGUP;		mAOOverrides.push_back(overrideloader);
+	overrideloader.orig_id = ANIM_AGENT_HOVER_DOWN;				overrideloader.ao_id = LLUUID::null; overrideloader.state = STATE_AGENT_SWIMMINGDOWN;	mAOOverrides.push_back(overrideloader);
 
 	BOOL success = FALSE;
 
@@ -759,7 +844,7 @@ bool LLFloaterAO::init()
 					{
 						LLUUID* new_uuid = new LLUUID(configncitem);
 						LLHost source_sim = LLHost::invalid;
-						invfolderid = item->getParentUUID();
+						sInvFolderID = item->getParentUUID();
 						gAssetStorage->getInvItemAsset(source_sim,
 														gAgent.getID(),
 														gAgent.getSessionID(),
@@ -786,9 +871,9 @@ bool LLFloaterAO::init()
 		//cmdline_printchat("Config Notecard set to a null UUID!");
 	}
 
-//	sAnimationState = 0;
+//	sAnimState = 0;
 //	sCurrentStandId = LLUUID::null;
-//	setAnimationState(STATE_AGENT_IDLE);
+//	setAnimState(STATE_AGENT_IDLE);
 
 	return success;
 }
@@ -822,8 +907,8 @@ void LLFloaterAO::onClickToggleSits(LLUICtrl *, void*)
 // static
 void LLFloaterAO::run()
 {
-	setAnimationState(STATE_AGENT_IDLE); // reset state
-	S32 state = getAnimationState(); // check if sitting or hovering
+	setAnimState(STATE_AGENT_IDLE); // reset state
+	S32 state = getAnimState(); // check if sitting or hovering
 	if ((state == STATE_AGENT_IDLE) || (state == STATE_AGENT_STAND))
 	{
 		if (gSavedSettings.getBOOL("AOEnabled"))
@@ -831,7 +916,7 @@ void LLFloaterAO::run()
 			if (mAOStandTimer)
 			{
 				mAOStandTimer->reset();
-				ChangeStand();
+				changeStand();
 			}
 			else
 			{
@@ -841,43 +926,51 @@ void LLFloaterAO::run()
 		else
 		{
 			stopMotion(getCurrentStandId(), FALSE, TRUE); //stop stand first then set state
-			setAnimationState(STATE_AGENT_IDLE);
+			setAnimState(STATE_AGENT_IDLE);
 		}
 	}
 	else
 	{
 		if (state == STATE_AGENT_SIT)
 		{
-			gAgent.sendAnimationRequest(GetAnimIDFromState(state), (gSavedSettings.getBOOL("AOEnabled") && gSavedSettings.getBOOL("AOSitsEnabled")) ? ANIM_REQUEST_START : ANIM_REQUEST_STOP);
+			gAgent.sendAnimationRequest(getAnimIDFromState(state), (gSavedSettings.getBOOL("AOEnabled") && gSavedSettings.getBOOL("AOSitsEnabled")) ? ANIM_REQUEST_START : ANIM_REQUEST_STOP);
 		}
 		else
 		{
-			gAgent.sendAnimationRequest(GetAnimIDFromState(state), gSavedSettings.getBOOL("AOEnabled") ? ANIM_REQUEST_START : ANIM_REQUEST_STOP);
+			gAgent.sendAnimationRequest(getAnimIDFromState(state), gSavedSettings.getBOOL("AOEnabled") ? ANIM_REQUEST_START : ANIM_REQUEST_STOP);
 		}
 	}
 }
 
 // static
-S32 LLFloaterAO::getAnimationState()
+S32 LLFloaterAO::getAnimState()
 {
+	// Why do we need to check for anything here? -- MC
 	if (gAgent.getAvatarObject())
 	{
 		if (gAgent.getAvatarObject()->mIsSitting)
 		{
-			setAnimationState(STATE_AGENT_SIT);
+			setAnimState(STATE_AGENT_SIT);
 		}
 		else if (gAgent.getFlying())
 		{
-			setAnimationState(STATE_AGENT_HOVER);
+			if (gAgent.getAvatarObject()->mBelowWater)
+			{
+				setAnimState(STATE_AGENT_FLOATING);
+			}
+			else
+			{
+				setAnimState(STATE_AGENT_HOVER);
+			}
 		}
 	}
-	return sAnimationState;
+	return sAnimState;
 }
 
 // static
-void LLFloaterAO::setAnimationState(const S32 state)
+void LLFloaterAO::setAnimState(const S32 state)
 {
-	sAnimationState = state;
+	sAnimState = state;
 }
 
 // static
@@ -900,12 +993,32 @@ void LLFloaterAO::AOItemDrop(LLViewerInventoryItem* item)
 }
 
 // static
-LLUUID LLFloaterAO::GetAnimID(const LLUUID& id)
+LLUUID LLFloaterAO::getAnimID(const LLUUID& id)
 {
 	for (std::vector<struct_overrides>::iterator iter = mAOOverrides.begin(); iter != mAOOverrides.end(); ++iter)
 	{
 		if (iter->orig_id == id)
 		{
+			// These are special
+			if (gAgent.getAvatarObject() && gAgent.getAvatarObject()->mBelowWater && !(gAgent.getAvatarObject()->mIsSitting))
+			{
+				if (iter->orig_id == ANIM_AGENT_HOVER)
+				{
+					return getAnimIDFromState(STATE_AGENT_FLOATING);
+				}
+				else if (iter->orig_id == ANIM_AGENT_FLY)
+				{
+					return getAnimIDFromState(STATE_AGENT_SWIMMINGFORWARD);
+				}
+				else if (iter->orig_id == ANIM_AGENT_HOVER_UP)
+				{
+					return getAnimIDFromState(STATE_AGENT_SWIMMINGUP);
+				}
+				else if (iter->orig_id == ANIM_AGENT_HOVER_DOWN)
+				{
+					return getAnimIDFromState(STATE_AGENT_SWIMMINGDOWN);
+				}
+			}
 			return iter->ao_id;
 		}
 	}
@@ -913,7 +1026,7 @@ LLUUID LLFloaterAO::GetAnimID(const LLUUID& id)
 }
 
 // static
-S32 LLFloaterAO::GetStateFromAnimID(const LLUUID& id)
+S32 LLFloaterAO::getStateFromAnimID(const LLUUID& id)
 {
 	for (std::vector<struct_overrides>::iterator iter = mAOOverrides.begin(); iter != mAOOverrides.end(); ++iter)
 	{
@@ -926,7 +1039,7 @@ S32 LLFloaterAO::GetStateFromAnimID(const LLUUID& id)
 }
 
 // static
-LLUUID LLFloaterAO::GetAnimIDFromState(const S32 state)
+LLUUID LLFloaterAO::getAnimIDFromState(const S32 state)
 {
 	for (std::vector<struct_overrides>::iterator iter = mAOOverrides.begin(); iter != mAOOverrides.end(); ++iter)
 	{
@@ -939,7 +1052,7 @@ LLUUID LLFloaterAO::GetAnimIDFromState(const S32 state)
 }
 
 // static
-S32 LLFloaterAO::GetStateFromToken(std::string strtoken)
+S32 LLFloaterAO::getStateFromToken(std::string strtoken)
 {
 	for (std::vector<struct_tokens>::iterator iter = mAOTokens.begin(); iter != mAOTokens.end(); ++iter)
 	{
@@ -954,51 +1067,51 @@ S32 LLFloaterAO::GetStateFromToken(std::string strtoken)
 // static
 void LLFloaterAO::onClickPrevStand(void* user_data)
 {
-	if (!(mAOStands.size() > 0))
+	if (mAOStands.empty())
 	{
 		return;
 	}
 	
-	stand_iterator = stand_iterator-1;
+	sStandIterator = sStandIterator-1;
 
-	if (stand_iterator < 0)
+	if (sStandIterator < 0)
 	{
-		stand_iterator = S32( mAOStands.size()-stand_iterator);
+		sStandIterator = S32( mAOStands.size()-sStandIterator);
 	}
-	if (stand_iterator > S32( mAOStands.size()-1))
+	if (sStandIterator > S32( mAOStands.size()-1))
 	{
-		stand_iterator = 0;
+		sStandIterator = 0;
 	}
 
-	cmdline_printchat(llformat("Changing stand to %s.",mAOStands[stand_iterator].anim_name.c_str()));
-	ChangeStand();
+	cmdline_printchat(llformat("Changing stand to %s.",mAOStands[sStandIterator].anim_name.c_str()));
+	changeStand();
 }
 
 // static
 void LLFloaterAO::onClickNextStand(void* user_data)
 {
-	if (!(mAOStands.size() > 0))
+	if (mAOStands.empty())
 	{
 		return;
 	}
 
-	stand_iterator = stand_iterator+1;
+	sStandIterator = sStandIterator+1;
 
-	if (stand_iterator < 0)
+	if (sStandIterator < 0)
 	{
-		stand_iterator = S32( mAOStands.size()-stand_iterator);
+		sStandIterator = S32( mAOStands.size()-sStandIterator);
 	}
-	if (stand_iterator > S32( mAOStands.size()-1))
+	if (sStandIterator > S32( mAOStands.size()-1))
 	{
-		stand_iterator = 0;
+		sStandIterator = 0;
 	}
 
-	cmdline_printchat(llformat("Changing stand to %s.",mAOStands[stand_iterator].anim_name.c_str()));
-	ChangeStand();
+	cmdline_printchat(llformat("Changing stand to %s.",mAOStands[sStandIterator].anim_name.c_str()));
+	changeStand();
 }
 
 // static
-BOOL LLFloaterAO::ChangeStand()
+BOOL LLFloaterAO::changeStand()
 {
 	if (gSavedSettings.getBOOL("AOEnabled"))
 	{
@@ -1009,52 +1122,52 @@ BOOL LLFloaterAO::ChangeStand()
 			if (gAgent.getAvatarObject()->mIsSitting)
 			{
 //				stopMotion(getCurrentStandId(), FALSE, TRUE); //stop stand first then set state
-//				if (getAnimationState() != STATE_AGENT_GROUNDSIT) setAnimationState(STATE_AGENT_SIT);
+//				if (getAnimState() != STATE_AGENT_GROUNDSIT) setAnimState(STATE_AGENT_SIT);
 //				setCurrentStandId(LLUUID::null);
 				return FALSE;
 			}
 		}
-		if ((getAnimationState() == STATE_AGENT_IDLE) || (getAnimationState() == STATE_AGENT_STAND))// stands have lowest priority
+		if ((getAnimState() == STATE_AGENT_IDLE) || (getAnimState() == STATE_AGENT_STAND))// stands have lowest priority
 		{
-			if (!(mAOStands.size() > 0))
+			if (mAOStands.empty())
 			{
 				return TRUE;
 			}
 
 			if (gSavedSettings.getBOOL("AOStandRandomize"))
 			{
-				stand_iterator = ll_rand(mAOStands.size()-1);
+				sStandIterator = ll_rand(mAOStands.size()-1);
 			}
 
-			if (stand_iterator < 0)
+			if (sStandIterator < 0)
 			{
-				stand_iterator = S32( mAOStands.size()-stand_iterator);
+				sStandIterator = S32( mAOStands.size()-sStandIterator);
 			}
 			
-			if (stand_iterator > S32( mAOStands.size()-1))
+			if (sStandIterator > S32( mAOStands.size()-1))
 			{
-				stand_iterator = 0;
+				sStandIterator = 0;
 			}
 
-			S32 stand_iterator_previous = stand_iterator -1;
+			S32 sStandIterator_previous = sStandIterator -1;
 
-			if (stand_iterator_previous < 0)
+			if (sStandIterator_previous < 0)
 			{
-				stand_iterator_previous = S32( mAOStands.size()-1);
+				sStandIterator_previous = S32( mAOStands.size()-1);
 			}
 			
-			if (mAOStands[stand_iterator].ao_id.notNull())
+			if (mAOStands[sStandIterator].ao_id.notNull())
 			{
 				stopMotion(getCurrentStandId(), FALSE, TRUE); //stop stand first then set state
-				startMotion(mAOStands[stand_iterator].ao_id, 0, TRUE);
+				startMotion(mAOStands[sStandIterator].ao_id, TRUE);
 
-				setAnimationState(STATE_AGENT_STAND);
-				setCurrentStandId(mAOStands[stand_iterator].ao_id);
+				setAnimState(STATE_AGENT_STAND);
+				setCurrentStandId(mAOStands[sStandIterator].ao_id);
 				if (sInstance && mComboBox_stands)
 				{
-					mComboBox_stands->selectNthItem(stand_iterator);
+					mComboBox_stands->selectNthItem(sStandIterator);
 				}
-//				llinfos << "changing stand to " << mAOStands[stand_iterator].anim_name << llendl;
+//				llinfos << "changing stand to " << mAOStands[sStandIterator].anim_name << llendl;
 				return FALSE;
 			}
 		}
@@ -1068,63 +1181,61 @@ BOOL LLFloaterAO::ChangeStand()
 }
 
 
-BOOL LLFloaterAO::startMotion(const LLUUID& id, F32 time_offset, BOOL stand)
+// static
+BOOL LLFloaterAO::startMotion(const LLUUID& id, BOOL stand)
 {
 	if (stand)
 	{
-		if (id.notNull())
+		if (getAnimID(id).notNull())
 		{
-			BOOL sitting = FALSE;
-			if (gAgent.getAvatarObject())
-			{
-				sitting = gAgent.getAvatarObject()->mIsSitting;
-			}
-			if (sitting)
+			if (gAgent.getAvatarObject() && gAgent.getAvatarObject()->mIsSitting)
 			{
 				return FALSE;
 			}
+
 			gAgent.sendAnimationRequest(id, ANIM_REQUEST_START);
 			return TRUE;
 		}
 	}
 	else
 	{
-		if (GetAnimID(id).notNull() && gSavedSettings.getBOOL("AOEnabled"))
+		if (getAnimID(id).notNull() && gSavedSettings.getBOOL("AOEnabled"))
 		{
 			stopMotion(getCurrentStandId(), FALSE, TRUE); //stop stand first then set state 
-			setAnimationState(GetStateFromAnimID(id));
+			setAnimState(getStateFromAnimID(id));
 		
-//			llinfos << " state " << getAnimationState() << " start anim " << id << " overriding with " << GetAnimID(id) << llendl;
-			if ((GetStateFromAnimID(id) == STATE_AGENT_SIT) && !(gSavedSettings.getBOOL("AOSitsEnabled"))) 
+//			llinfos << " state " << getAnimState() << " start anim " << id << " overriding with " << getAnimID(id) << llendl;
+			if ((getStateFromAnimID(id) == STATE_AGENT_SIT) && !(gSavedSettings.getBOOL("AOSitsEnabled"))) 
 			{
 				return TRUE;
 			}
-			gAgent.sendAnimationRequest(GetAnimID(id), ANIM_REQUEST_START);
+			gAgent.sendAnimationRequest(getAnimID(id), ANIM_REQUEST_START);
 			return TRUE;
 		}
 	}
 	return FALSE;
 }
 
+// static
 BOOL LLFloaterAO::stopMotion(const LLUUID& id, BOOL stop_immediate, BOOL stand)
 {	
 	if (stand)
 	{
-		setAnimationState(STATE_AGENT_IDLE);
+		setAnimState(STATE_AGENT_IDLE);
 		gAgent.sendAnimationRequest(id, ANIM_REQUEST_STOP);
 		return TRUE;
 	}
 	else
 	{
-		if (GetAnimID(id).notNull() && gSavedSettings.getBOOL("AOEnabled"))
+		if (id.notNull() && gSavedSettings.getBOOL("AOEnabled"))
 		{
-//			llinfos << "  state " << getAnimationState() << "/" << GetStateFromAnimID(id) << "(now 0)  stop anim " << id << " overriding with " << GetAnimID(id) << llendl;
-			if (getAnimationState() == GetStateFromAnimID(id))
+//			llinfos << "  state " << getAnimState() << "/" << getStateFromAnimID(id) << "(now 0)  stop anim " << id << " overriding with " << getAnimID(id) << llendl;
+			if (getAnimState() == getStateFromAnimID(id))
 			{
-				setAnimationState(STATE_AGENT_IDLE);
+				setAnimState(STATE_AGENT_IDLE);
 			}
-			ChangeStand(); // startMotion(getCurrentStandId(), 0, TRUE);
-			gAgent.sendAnimationRequest(GetAnimID(id), ANIM_REQUEST_STOP);
+			changeStand(); // startMotion(getCurrentStandId(), 0, TRUE);
+			gAgent.sendAnimationRequest(getAnimID(id), ANIM_REQUEST_STOP);
 			return TRUE;
 		}
 	}
@@ -1241,6 +1352,17 @@ void LLFloaterAO::onNotecardLoadComplete(LLVFS *vfs,const LLUUID& asset_uuid,LLA
 					mComboBox_standups->clear();
 				if (sInstance && mComboBox_prejumps) 
 					mComboBox_prejumps->clear();
+				if (sInstance && mComboBox_typing)
+					mComboBox_typing->clear();
+				if (sInstance && mComboBox_floating)
+					mComboBox_floating->clear();
+				if (sInstance && mComboBox_swimmingforward)
+					mComboBox_swimmingforward->clear();
+				if (sInstance && mComboBox_swimmingup)
+					mComboBox_swimmingup->clear();
+				if (sInstance && mComboBox_swimmingdown)
+					mComboBox_swimmingdown->clear();
+
 
 
 				struct_stands loader;
@@ -1271,7 +1393,7 @@ void LLFloaterAO::onNotecardLoadComplete(LLVFS *vfs,const LLUUID& asset_uuid,LLA
 							std::string stranim(*anim);
 							LLUUID animid(getAssetIDByName(stranim));
 
-//							llinfos << invfolderid.asString().c_str() << llendl;
+//							llinfos << sInvFolderID.asString().c_str() << llendl;
 //							llinfos << "anim: " << stranim.c_str() << " assetid: " << animid << llendl;
 							if (!(animid.notNull()))
 							{
@@ -1279,7 +1401,7 @@ void LLFloaterAO::onNotecardLoadComplete(LLVFS *vfs,const LLUUID& asset_uuid,LLA
 							}
 							else
 							{
-								switch(GetStateFromToken(strtoken.c_str()))
+								switch(getStateFromToken(strtoken.c_str()))
 								{
 								case STATE_AGENT_STAND:
 										loader.ao_id = animid; loader.anim_name = stranim.c_str(); mAOStands.push_back(loader);
@@ -1465,10 +1587,66 @@ void LLFloaterAO::onNotecardLoadComplete(LLVFS *vfs,const LLUUID& asset_uuid,LLA
 											}
 										 }
 										 break;
+								case STATE_AGENT_TYPING:
+										 {
+											if (sInstance && mComboBox_typing != NULL)
+											{
+												if (!(mComboBox_typing->selectByValue(stranim.c_str())))
+												{
+													mComboBox_typing->add(stranim.c_str(), ADD_BOTTOM, TRUE); //check if exist
+												}
+											}
+										 }
+										 break;
+								case STATE_AGENT_FLOATING:
+										 {
+											if (sInstance && mComboBox_floating != NULL)
+											{
+												if (!(mComboBox_floating->selectByValue(stranim.c_str())))
+												{
+													mComboBox_floating->add(stranim.c_str(), ADD_BOTTOM, TRUE); //check if exist
+												}
+											}
+										 }
+										 break;
+								case STATE_AGENT_SWIMMINGFORWARD:
+										 {
+											if (sInstance && mComboBox_swimmingforward != NULL)
+											{
+												if (!(mComboBox_swimmingforward->selectByValue(stranim.c_str())))
+												{
+													mComboBox_swimmingforward->add(stranim.c_str(), ADD_BOTTOM, TRUE); //check if exist
+												}
+											}
+										 }
+										 break;
+								case STATE_AGENT_SWIMMINGUP:
+										 {
+											if (sInstance && mComboBox_swimmingup != NULL)
+											{
+												if (!(mComboBox_swimmingup->selectByValue(stranim.c_str())))
+												{
+													mComboBox_swimmingup->add(stranim.c_str(), ADD_BOTTOM, TRUE); //check if exist
+												}
+											}
+										 }
+										 break;
+								case STATE_AGENT_SWIMMINGDOWN:
+										 {
+											if (sInstance && mComboBox_swimmingdown != NULL)
+											{
+												if (!(mComboBox_swimmingdown->selectByValue(stranim.c_str())))
+												{
+													mComboBox_swimmingdown->add(stranim.c_str(), ADD_BOTTOM, TRUE); //check if exist
+												}
+											}
+										 }
+										 break;
 								}
+
 								for (std::vector<struct_overrides>::iterator iter = mAOOverrides.begin(); iter != mAOOverrides.end(); ++iter)
 								{
-									if (GetStateFromToken(strtoken.c_str()) == iter->state)
+									if (getStateFromToken(strtoken.c_str()) == iter->state)
 									{
 										iter->ao_id = animid;
 									}
@@ -1644,6 +1822,56 @@ void LLFloaterAO::onNotecardLoadComplete(LLVFS *vfs,const LLUUID& asset_uuid,LLA
 							}
 						}
 						 break;
+					case STATE_AGENT_TYPING:
+						{
+							std::string defaultanim = gSavedPerAccountSettings.getString("AODefaultTyping");
+							setDefault(mComboBox_typing,iter->ao_id,defaultanim);
+							if (getAssetIDByName(defaultanim) != LLUUID::null)
+							{
+								iter->ao_id = getAssetIDByName(defaultanim);
+							}
+						}
+						 break;
+					case STATE_AGENT_FLOATING:
+						{
+							std::string defaultanim = gSavedPerAccountSettings.getString("AODefaultFloating");
+							setDefault(mComboBox_floating,iter->ao_id,defaultanim);
+							if (getAssetIDByName(defaultanim) != LLUUID::null)
+							{
+								iter->ao_id = getAssetIDByName(defaultanim);
+							}
+						}
+						 break;
+					case STATE_AGENT_SWIMMINGFORWARD:
+						{
+							std::string defaultanim = gSavedPerAccountSettings.getString("AODefaultSwimmingForward");
+							setDefault(mComboBox_swimmingforward,iter->ao_id,defaultanim);
+							if (getAssetIDByName(defaultanim) != LLUUID::null)
+							{
+								iter->ao_id = getAssetIDByName(defaultanim);
+							}
+						}
+						 break;
+					case STATE_AGENT_SWIMMINGUP:
+						{
+							std::string defaultanim = gSavedPerAccountSettings.getString("AODefaultSwimmingUp");
+							setDefault(mComboBox_swimmingup,iter->ao_id,defaultanim);
+							if (getAssetIDByName(defaultanim) != LLUUID::null)
+							{
+								iter->ao_id = getAssetIDByName(defaultanim);
+							}
+						}
+						 break;
+					case STATE_AGENT_SWIMMINGDOWN:
+						{
+							std::string defaultanim = gSavedPerAccountSettings.getString("AODefaultSwimmingDown");
+							setDefault(mComboBox_swimmingdown,iter->ao_id,defaultanim);
+							if (getAssetIDByName(defaultanim) != LLUUID::null)
+							{
+								iter->ao_id = getAssetIDByName(defaultanim);
+							}
+						}
+						 break;
 					}
 				}
 				run();
@@ -1692,7 +1920,7 @@ public:
 	{
 		if(item)
 		{
-			if (item->getParentUUID() == LLFloaterAO::invfolderid)
+			if (item->getParentUUID() == LLFloaterAO::sInvFolderID)
 			{
 				return (item->getName() == sName);
 			}

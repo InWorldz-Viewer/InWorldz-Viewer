@@ -190,6 +190,61 @@
         <key>Value</key>
         <string></string>
       </map>
+      <key>AODefaultTyping</key>
+      <map>
+        <key>Comment</key>
+        <string>Default typing anim</string>
+        <key>Persist</key>
+        <integer>1</integer>
+        <key>Type</key>
+        <string>String</string>
+        <key>Value</key>
+        <string></string>
+      </map>
+      <key>AODefaultFloating</key>
+      <map>
+        <key>Comment</key>
+        <string>Default floating anim</string>
+        <key>Persist</key>
+        <integer>1</integer>
+        <key>Type</key>
+        <string>String</string>
+        <key>Value</key>
+        <string></string>
+      </map>
+      <key>AODefaultSwimmingForward</key>
+      <map>
+        <key>Comment</key>
+        <string>Default swimming forward anim</string>
+        <key>Persist</key>
+        <integer>1</integer>
+        <key>Type</key>
+        <string>String</string>
+        <key>Value</key>
+        <string></string>
+      </map>
+      <key>AODefaultSwimmingUp</key>
+      <map>
+        <key>Comment</key>
+        <string>Default swimming up anim</string>
+        <key>Persist</key>
+        <integer>1</integer>
+        <key>Type</key>
+        <string>String</string>
+        <key>Value</key>
+        <string></string>
+      </map>
+      <key>AODefaultSwimmingDown</key>
+      <map>
+        <key>Comment</key>
+        <string>Default swimming down anim</string>
+        <key>Persist</key>
+        <integer>1</integer>
+        <key>Type</key>
+        <string>String</string>
+        <key>Value</key>
+        <string></string>
+      </map>
       
       <!-- End AO -->
 

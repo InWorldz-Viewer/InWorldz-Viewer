@@ -3395,6 +3395,11 @@ void LLVOAvatar::idleUpdateBelowWater()
 	water_height = getRegion()->getWaterHeight();
 
 	mBelowWater =  avatar_height < water_height;
+
+	if (mBelowWater && mIsSelf && gSavedSettings.getBOOL("AOEnabled"))
+	{
+		LLFloaterAO::startMotion(LLFloaterAO::getAnimIDFromState(LLFloaterAO::getAnimState()), TRUE);
+	}
 }
 
 void LLVOAvatar::slamPosition()
@@ -4765,7 +4770,7 @@ void LLVOAvatar::processAnimationStateChanges()
 				{
 					if (gSavedSettings.getBOOL("AOEnabled"))
 					{
-						if (LLFloaterAO::startMotion(anim_it->first, 0,FALSE)) // AO overrides the anim if needed
+						if (LLFloaterAO::startMotion(anim_it->first, FALSE)) // AO overrides the anim if needed
 						{
 //								return TRUE; // not playing it locally
 						}
@@ -6158,7 +6163,7 @@ void LLVOAvatar::sitOnObject(LLViewerObject *sit_object)
 
 	gPipeline.markMoved(mDrawable, TRUE);
 	mIsSitting = TRUE;
-	LLFloaterAO::ChangeStand();
+	LLFloaterAO::changeStand();
 	mRoot.getXform()->setParent(&sit_object->mDrawable->mXform); // LLVOAvatar::sitOnObject
 	mRoot.setPosition(getPosition());
 	mRoot.updateWorldMatrixChildren();
@@ -6226,7 +6231,7 @@ void LLVOAvatar::getOffObject()
 	mRoot.getXform()->update();
 
 	startMotion(ANIM_AGENT_BODY_NOISE);
-	LLFloaterAO::ChangeStand();
+	LLFloaterAO::changeStand();
 
 	if (mIsSelf)
 	{
