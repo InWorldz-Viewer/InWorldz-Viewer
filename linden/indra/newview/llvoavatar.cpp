@@ -40,13 +40,13 @@
 #include "llaudioengine.h"
 #include "noise.h"
 
+#include "aoengine.h"
 #include "llagent.h" //  Get state values from here
 #include "llviewercontrol.h"
 #include "lldrawpoolavatar.h"
 #include "lldriverparam.h"
 #include "lleditingmotion.h"
 #include "llemote.h"
-#include "floaterao.h"
 #include "llfirstuse.h"
 #include "llheadrotmotion.h"
 #include "llhudeffecttrail.h"
@@ -3394,11 +3394,12 @@ void LLVOAvatar::idleUpdateBelowWater()
 	F32 water_height;
 	water_height = getRegion()->getWaterHeight();
 
-	mBelowWater =  avatar_height < water_height;
-
-	if (mBelowWater && mIsSelf && gSavedSettings.getBOOL("AOEnabled"))
+	BOOL water_temp = mBelowWater;
+	mBelowWater = avatar_height < water_height;
+	if (mIsSelf && (water_temp != mBelowWater))
 	{
-		LLFloaterAO::startMotion(LLFloaterAO::getAnimIDFromState(LLFloaterAO::getAnimState()), TRUE);
+		// In case the AO gets stuck thinking it's underwater, usually
+		AOEngine::getInstance()->changedUnderwater();
 	}
 }
 
@@ -4739,13 +4740,13 @@ void LLVOAvatar::processAnimationStateChanges()
 		// playing, but not signaled, so stop
 		if (found_anim == mSignaledAnimations.end())
 		{
-			if (mIsSelf)
-			{
-				if ((gSavedSettings.getBOOL("AOEnabled")) && LLFloaterAO::stopMotion(anim_it->first, FALSE)) // if the AO replaced this anim serverside then stop it serverside
-				{
-//					return TRUE; //no local stop needed
-				}
-			}
+//			if (mIsSelf)
+//			{
+//				if ((gSavedSettings.getBOOL("AOEnabled")) && AOEngine::getInstance()->stopOverride(anim_it->first, FALSE)) // if the AO replaced this anim serverside then stop it serverside
+//				{
+////					return TRUE; //no local stop needed
+//				}
+//			}
 
 			processSingleAnimationStateChange(anim_it->first, FALSE);
 			mPlayingAnimations.erase(anim_it++);
@@ -4765,17 +4766,19 @@ void LLVOAvatar::processAnimationStateChanges()
 		{
 			if (processSingleAnimationStateChange(anim_it->first, TRUE))
 			{
-
-				if (mIsSelf) // AO is only for ME
-				{
-					if (gSavedSettings.getBOOL("AOEnabled"))
-					{
-						if (LLFloaterAO::startMotion(anim_it->first, FALSE)) // AO overrides the anim if needed
-						{
-//								return TRUE; // not playing it locally
-						}
-					}
-				}
+//				if (isSelf()) // AO is only for ME
+//				{
+//					// We need to always start playing user animations after we receive the sim state
+//					// in order to successfully override -- MC
+//
+//					///if (gSavedSettings.getBOOL("AOEnabled"))
+//					{
+//						if (AOEngine::getInstance()->startOverride(anim_it->first, false)) // AO overrides the anim if needed
+//						{
+////								return TRUE; // not playing it locally
+//						}
+//					}
+//				}
 
 
 				mPlayingAnimations[anim_it->first] = anim_it->second;
@@ -4921,6 +4924,12 @@ BOOL LLVOAvatar::startMotion(const LLUUID& id, F32 time_offset)
 		gAgent.setAFK();
 	}
 
+	LLUUID override_id = AOEngine::getInstance()->getOverrideID(id);
+	if (mIsSelf && override_id.notNull())
+	{
+		gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_START);
+	}
+	
 	return LLCharacter::startMotion(id, time_offset);
 }
 
@@ -4941,6 +4950,12 @@ BOOL LLVOAvatar::stopMotion(const LLUUID& id, BOOL stop_immediate)
 	else if (id == ANIM_AGENT_SIT)
 	{
 		LLCharacter::stopMotion(ANIM_AGENT_SIT_FEMALE, stop_immediate);
+	}
+
+	LLUUID override_id = AOEngine::getInstance()->getOverrideID(id);
+	if (mIsSelf && override_id.notNull())
+	{
+		gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_STOP);
 	}
 
 	return LLCharacter::stopMotion(id, stop_immediate);
@@ -6163,7 +6178,7 @@ void LLVOAvatar::sitOnObject(LLViewerObject *sit_object)
 
 	gPipeline.markMoved(mDrawable, TRUE);
 	mIsSitting = TRUE;
-	LLFloaterAO::changeStand();
+	///MC AOEngine::getInstance()->cycleStand();
 	mRoot.getXform()->setParent(&sit_object->mDrawable->mXform); // LLVOAvatar::sitOnObject
 	mRoot.setPosition(getPosition());
 	mRoot.updateWorldMatrixChildren();
@@ -6231,7 +6246,7 @@ void LLVOAvatar::getOffObject()
 	mRoot.getXform()->update();
 
 	startMotion(ANIM_AGENT_BODY_NOISE);
-	LLFloaterAO::changeStand();
+	///MC AOEngine::getInstance()->cycleStand();
 
 	if (mIsSelf)
 	{
