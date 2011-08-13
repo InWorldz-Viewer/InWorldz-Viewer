@@ -694,7 +694,7 @@ BOOL LLVOVolume::setVolume(const LLVolumeParams &volume_params, const S32 detail
 		else
 		{
 			mSculptTexture = NULL;
-			mSculptSurfaceArea = 0.0;
+			mSculptSurfaceArea = 0.f;
 		}
 
 		return TRUE;
@@ -1103,6 +1103,10 @@ BOOL LLVOVolume::updateGeometry(LLDrawable *drawable)
 			LLFastTimer t(LLFastTimer::FTM_GEN_FLEX);
 			res = mVolumeImpl->doUpdateGeometry(drawable);
 		}
+		if (drawable && drawable->getVOVolume()->isSculpted())
+		{
+			mSculptSurfaceArea = getVolume()->sculptGetSurfaceArea();
+		}
 		updateFaceFlags();
 		return res;
 	}
@@ -1182,6 +1186,11 @@ BOOL LLVOVolume::updateGeometry(LLDrawable *drawable)
 		// All it did was move or we changed the texture coordinate offset
 		LLFastTimer t(LLFastTimer::FTM_GEN_TRIANGLES);
 		genBBoxes(FALSE);
+	}
+
+	if (drawable->getVOVolume()->isSculpted())
+	{
+		mSculptSurfaceArea = getVolume()->sculptGetSurfaceArea();
 	}
 
 	// Update face flags
@@ -2265,7 +2274,10 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 
 		llassert_always(vobj);
 
-		if (vobj->isSculpted() && vobj->mSculptSurfaceArea > LLVOVolume::sSculptSAThresh)
+		// This is supposed to address the issue of lagging sculpts crashers
+		// but it might be better to just never fix this if it breaks too much
+		// content -- MC
+		if (vobj->isSculpted() && (vobj->mSculptSurfaceArea > LLVOVolume::sSculptSAThresh))
 		{
 		    LLPipeline::sSculptSurfaceAreaFrame += vobj->mSculptSurfaceArea;
 		    if (LLPipeline::sSculptSurfaceAreaFrame > LLVOVolume::sSculptSAMax)
@@ -2403,6 +2415,8 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 			}		
 		}
 	}
+
+	LLPipeline::sSculptSurfaceAreaFrame = 0.f;
 
 	group->mBufferUsage = useage;
 
