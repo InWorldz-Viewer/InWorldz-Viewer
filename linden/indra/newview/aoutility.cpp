@@ -152,8 +152,15 @@ AONotecardCallback::AONotecardCallback(const std::string& filename)
 
 void AONotecardCallback::fire(const LLUUID &inv_item)
 {
+	LL_DEBUGS("AO") << "Created new ao notecard: " << mFileName << " (" << inv_item << ")" << LL_ENDL;
 	if (!mFileName.empty())
-	{ 
+	{
+		LLViewerInventoryItem* item = gInventory.getItem(inv_item);
+		if (item)
+		{
+			open_notecard(item, item->getName(), LLUUID::null, FALSE, LLUUID::null, TRUE);
+		}
+
 		LLPreviewNotecard* nc = (LLPreviewNotecard*)LLPreview::find(inv_item);
 		if (nc)
 		{
