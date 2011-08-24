@@ -335,7 +335,16 @@ void LLLineEditor::setText(const LLStringExplicit &new_text)
 	setCursor(llmin((S32)mText.length(), getCursor()));
 
 	// Set current history line to end of history.
-	mCurrentHistoryLine = mLineHistory.end() - 1;
+	// RC Fix, its really not safe to just take 1 of the end itterator, if end==begin
+	// that leaves an invalid state upseting the secure STL checks
+	if(mLineHistory.empty())
+	{
+		mCurrentHistoryLine = mLineHistory.begin();
+	}
+	else
+	{
+		mCurrentHistoryLine = mLineHistory.end() - 1;
+	}
 
 	mPrevText = mText;
 }
@@ -350,7 +359,7 @@ void LLLineEditor::setCursorAtLocalPos( S32 local_mouse_x )
 	{
 		for (S32 i = 0; i < mText.length(); i++)
 		{
-			asterix_text += '*';
+			asterix_text += (llwchar) 0x2022L;
 		}
 		wtext = asterix_text.c_str();
 	}
@@ -1025,7 +1034,7 @@ void LLLineEditor::pasteHelper(bool is_primary)
 
 			// Clean up string (replace tabs and returns and remove characters that our fonts don't support.)
 			LLWString clean_string(paste);
-			LLWStringUtil::replaceTabsWithSpaces(clean_string, 1);
+			LLWStringUtil::replaceTabsWithSpaces(clean_string, 4);
 			//clean_string = wstring_detabify(paste, 1);
 			LLWStringUtil::replaceChar(clean_string, '\n', mReplaceNewlinesWithSpaces ? ' ' : 182); // 182 == paragraph character
 
