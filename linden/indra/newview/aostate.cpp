@@ -225,7 +225,7 @@ AOState::AOState()
 	state_list.state = EAO::EDIT_OBJ;
 	state_list.sim_anim = ANIM_AGENT_EDITING;
 	state_list.label = "edit_obj";
-	state_list.token = "[ Editing Object ]";
+	state_list.token = "[ Editing Objects ]";
 	mStates.push_back(state_list);
 
 	// special
