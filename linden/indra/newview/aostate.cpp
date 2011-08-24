@@ -9,177 +9,408 @@ Info for each AO state
 #include "llagent.h"
 #include "llvoavatar.h"
 
-// map of tokens for getting state info from notecards
-static std::map<std::string, EAOState::State> sAONotecardTokens;
-// map of uuids associated with each state
-static std::map<LLUUID, EAOState::State> sAOSimAnimIDs;
+/*
+	This is ugly because the whole process of overriding is ugly.
+	
+	There are:
+	- four stand anims that we want to associate with one state
+	- four states that use the same anim (but change when underwater)
+
+	We rely on our getters to sort the mess out -- MC
+*/
 
 AOState::AOState()
 {
-	// associate each state with the default anim uuid(s) the server knows
-	// EAOState::UNKNOWN is 0 - no state set. No anims are associated with this
-	sAOSimAnimIDs[ANIM_AGENT_WALK]					= EAOState::WALK;
-	sAOSimAnimIDs[ANIM_AGENT_RUN]					= EAOState::RUN;
-	sAOSimAnimIDs[ANIM_AGENT_STAND]					= EAOState::STAND;
-	sAOSimAnimIDs[ANIM_AGENT_STAND_1]				= EAOState::STAND;
-	sAOSimAnimIDs[ANIM_AGENT_STAND_2]				= EAOState::STAND;
-	sAOSimAnimIDs[ANIM_AGENT_STAND_3]				= EAOState::STAND;
-	sAOSimAnimIDs[ANIM_AGENT_STAND_4]				= EAOState::STAND;
-	sAOSimAnimIDs[ANIM_AGENT_PRE_JUMP]				= EAOState::PRE_JUMP;
-	sAOSimAnimIDs[ANIM_AGENT_JUMP]					= EAOState::JUMP;
-	sAOSimAnimIDs[ANIM_AGENT_TURNLEFT]				= EAOState::TURN_LEFT;
-	sAOSimAnimIDs[ANIM_AGENT_TURNRIGHT]				= EAOState::TURN_RIGHT;
-	sAOSimAnimIDs[ANIM_AGENT_SIT]					= EAOState::SIT;
-	sAOSimAnimIDs[ANIM_AGENT_SIT_FEMALE]			= EAOState::SIT;
-	sAOSimAnimIDs[ANIM_AGENT_SIT_GENERIC]			= EAOState::SIT;
-	sAOSimAnimIDs[ANIM_AGENT_SIT_GROUND]			= EAOState::SIT_GROUND;
-	sAOSimAnimIDs[ANIM_AGENT_SIT_GROUND_CONSTRAINED] = EAOState::SIT_GROUND;
-	sAOSimAnimIDs[ANIM_AGENT_HOVER]					= EAOState::HOVER;
-	sAOSimAnimIDs[ANIM_AGENT_HOVER_DOWN]			= EAOState::HOVER_DOWN;
-	sAOSimAnimIDs[ANIM_AGENT_HOVER_UP]				= EAOState::HOVER_UP;
-	sAOSimAnimIDs[ANIM_AGENT_CROUCH]				= EAOState::CROUCH;
-	sAOSimAnimIDs[ANIM_AGENT_CROUCHWALK]			= EAOState::WALK_CROUCH;
-	sAOSimAnimIDs[ANIM_AGENT_FALLDOWN]				= EAOState::FALL;
-	sAOSimAnimIDs[ANIM_AGENT_STANDUP]				= EAOState::STANDUP;
-	sAOSimAnimIDs[ANIM_AGENT_LAND]					= EAOState::LAND;
-	sAOSimAnimIDs[ANIM_AGENT_MEDIUM_LAND]			= EAOState::LAND_MEDIUM;
-	sAOSimAnimIDs[ANIM_AGENT_FLY]					= EAOState::FLY;
-	sAOSimAnimIDs[ANIM_AGENT_FLYSLOW]				= EAOState::FLY_SLOW;
-	sAOSimAnimIDs[ANIM_AGENT_TYPE]					= EAOState::TYPE;
-	sAOSimAnimIDs[ANIM_AGENT_SHOUT]					= EAOState::SHOUT;
-	sAOSimAnimIDs[ANIM_AGENT_CUSTOMIZE]				= EAOState::CUSTOMIZE;
-	sAOSimAnimIDs[ANIM_AGENT_CUSTOMIZE_DONE]		= EAOState::CUSTOMIZE_DONE;
+	AOStateItem state_list;
 
-	// these states are set when flying underwater - see hasOverride and getOverrideState
-	//EAOState::FLOAT (ANIM_AGENT_HOVER)
-	//EAOState::SWIM_FORWARD (ANIM_AGENT_FLY)
-	//EAOState::SWIM_UP (ANIM_AGENT_HOVER_UP)
-	//EAOState::SWIM_DOWN (ANIM_AGENT_HOVER_DOWN)
+	state_list.state = EAO::UNKNOWN;
+	state_list.sim_anim = LLUUID::null;
+	state_list.label = "unknown";
+	state_list.token = "";
+	mStates.push_back(state_list);
 
-	// associate strings with EAOState
-	sAONotecardTokens["[ Walking ]"]			= EAOState::WALK;
-	sAONotecardTokens["[ Running ]"]			= EAOState::RUN;
-	sAONotecardTokens["[ Standing ]"]			= EAOState::STAND;
-	sAONotecardTokens["[ Pre Jumping ]"]		= EAOState::PRE_JUMP;
-	sAONotecardTokens["[ Jumping ]"]			= EAOState::JUMP;
-	sAONotecardTokens["[ Turning Left ]"]		= EAOState::TURN_LEFT;
-	sAONotecardTokens["[ Turning Right ]"]		= EAOState::TURN_RIGHT;
-	sAONotecardTokens["[ Sitting ]"]			= EAOState::SIT;
-	sAONotecardTokens["[ Sitting On Ground ]"]	= EAOState::SIT_GROUND;
-	sAONotecardTokens["[ Hovering ]"]			= EAOState::HOVER;
-	sAONotecardTokens["[ Flying Up ]"]			= EAOState::HOVER_UP;
-	sAONotecardTokens["[ Flying Down ]"]		= EAOState::HOVER_DOWN;
-	sAONotecardTokens["[ Crouch ]"]				= EAOState::CROUCH;
-	sAONotecardTokens["[ Crouch Walking ]"]		= EAOState::WALK_CROUCH;
-	sAONotecardTokens["[ Falling ]"]			= EAOState::FALL;
-	sAONotecardTokens["[ Standing Up ]"]		= EAOState::STANDUP;
-	sAONotecardTokens["[ Landing ]"]			= EAOState::LAND;
-	sAONotecardTokens["[ Soft Landing ]"]		= EAOState::LAND_MEDIUM;
-	sAONotecardTokens["[ Flying ]"]				= EAOState::FLY;
-	sAONotecardTokens["[ Flying Slow ]"]		= EAOState::FLY_SLOW;
-	sAONotecardTokens["[ Typing ]"]				= EAOState::TYPE;
-	sAONotecardTokens["[ Shouting ]"]			= EAOState::SHOUT;
-	sAONotecardTokens["[ Floating ]"]			= EAOState::FLOAT;
-	sAONotecardTokens["[ Swimming Forward ]"]	= EAOState::SWIM_FORWARD;
-	sAONotecardTokens["[ Swimming Up ]"]		= EAOState::SWIM_UP;
-	sAONotecardTokens["[ Swimming Down ]"]		= EAOState::SWIM_DOWN;
-	sAONotecardTokens["[ Edit Appearance Begin ]"] = EAOState::CUSTOMIZE;
-	sAONotecardTokens["[ Edit Appearance End ]"] = EAOState::CUSTOMIZE_DONE;
+	state_list.state = EAO::WALK;
+	state_list.sim_anim = ANIM_AGENT_WALK;
+	state_list.label = "walk";
+	state_list.token = "[ Walking ]";
+	mStates.push_back(state_list);
 
-	// make sure we always account for everything in both lists
-	if (EAOState::COUNT != (sAONotecardTokens.size()+1))
+	state_list.state = EAO::RUN;
+	state_list.sim_anim = ANIM_AGENT_RUN;
+	state_list.label = "run";
+	state_list.token = "[ Running ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::STAND;
+	state_list.sim_anim = ANIM_AGENT_STAND;
+	state_list.label = "stand";
+	state_list.token = "[ Standing ]";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::STAND;
+	state_list.sim_anim = ANIM_AGENT_STAND_1;
+	state_list.label = "";
+	state_list.token = "";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::STAND;
+	state_list.sim_anim = ANIM_AGENT_STAND_2;
+	state_list.label = "";
+	state_list.token = "";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::STAND;	
+	state_list.sim_anim = ANIM_AGENT_STAND_3;
+	state_list.label = "";
+	state_list.token = "";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::STAND;
+	state_list.sim_anim = ANIM_AGENT_STAND_4;
+	state_list.label = "";
+	state_list.token = "";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::PRE_JUMP;
+	state_list.sim_anim = ANIM_AGENT_PRE_JUMP;
+	state_list.label = "pre_jump";
+	state_list.token = "[ Pre Jumping ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::JUMP;
+	state_list.sim_anim = ANIM_AGENT_JUMP;
+	state_list.label = "jump";
+	state_list.token = "[ Jumping ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::TURN_LEFT;
+	state_list.sim_anim = ANIM_AGENT_TURNLEFT;
+	state_list.label = "turn_left";
+	state_list.token = "[ Turning Left ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::TURN_RIGHT;
+	state_list.sim_anim = ANIM_AGENT_TURNRIGHT;
+	state_list.label = "turn_right";
+	state_list.token = "[ Turning Right ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::SIT;
+	state_list.sim_anim = ANIM_AGENT_SIT;
+	state_list.label = "sit";
+	state_list.token = "[ Sitting ]";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::SIT;
+	state_list.sim_anim = ANIM_AGENT_SIT_GENERIC;
+	state_list.label = "";
+	state_list.token = "";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::SIT;
+	state_list.sim_anim = ANIM_AGENT_SIT_FEMALE;
+	state_list.label = "";
+	state_list.token = "";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::SIT_GROUND;
+	state_list.sim_anim = ANIM_AGENT_SIT_GROUND;
+	state_list.label = "sit_ground";
+	state_list.token = "[ Sitting On Ground ]";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::SIT_GROUND;
+	state_list.sim_anim = ANIM_AGENT_SIT_GROUND_CONSTRAINED;
+	state_list.label = "";
+	state_list.token = "";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::HOVER;
+	state_list.sim_anim = ANIM_AGENT_HOVER;
+	state_list.label = "hover";
+	state_list.token = "[ Hovering ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::HOVER_DOWN;
+	state_list.sim_anim = ANIM_AGENT_HOVER_DOWN;
+	state_list.label = "fly_down";
+	state_list.token = "[ Flying Down ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::HOVER_UP;
+	state_list.sim_anim = ANIM_AGENT_HOVER_UP;
+	state_list.label = "fly_up";
+	state_list.token = "[ Flying Up ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::CROUCH;
+	state_list.sim_anim = ANIM_AGENT_CROUCH;
+	state_list.label = "crouch";
+	state_list.token = "[ Crouching ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::WALK_CROUCH;
+	state_list.sim_anim = ANIM_AGENT_CROUCHWALK;
+	state_list.label = "walk_crouch";
+	state_list.token = "[ Crouch Walking ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::FALL;
+	state_list.sim_anim = ANIM_AGENT_FALLDOWN;
+	state_list.label = "fall";
+	state_list.token = "[ Falling ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::STANDUP;
+	state_list.sim_anim = ANIM_AGENT_STANDUP;
+	state_list.label = "standup";
+	state_list.token = "[ Standing Up ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::LAND;
+	state_list.sim_anim = ANIM_AGENT_LAND;
+	state_list.label = "land";
+	state_list.token = "[ Landing ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::LAND_MEDIUM;
+	state_list.sim_anim = ANIM_AGENT_MEDIUM_LAND;
+	state_list.label = "land_medium";
+	state_list.token = "[ Soft Landing ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::FLY;
+	state_list.sim_anim = ANIM_AGENT_FLY;
+	state_list.label = "fly";
+	state_list.token = "[ Flying ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::FLY_SLOW;
+	state_list.sim_anim = ANIM_AGENT_FLYSLOW;
+	state_list.label = "fly_slow";
+	state_list.token = "[ Flying Slow ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::TYPE;
+	state_list.sim_anim = ANIM_AGENT_TYPE;
+	state_list.label = "type";
+	state_list.token = "[ Typing ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::WHISPER;
+	state_list.sim_anim = ANIM_AGENT_WHISPER;
+	state_list.label = "whisper";
+	state_list.token = "[ Whispering ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::TALK;
+	state_list.sim_anim = ANIM_AGENT_TALK;
+	state_list.label = "talk";
+	state_list.token = "[ Talking ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::SHOUT;
+	state_list.sim_anim = ANIM_AGENT_SHOUT;
+	state_list.label = "shout";
+	state_list.token = "[ Shouting ]";
+	mStates.push_back(state_list);
+
+	state_list.state = EAO::EDIT_OBJ;
+	state_list.sim_anim = ANIM_AGENT_EDITING;
+	state_list.label = "edit_obj";
+	state_list.token = "[ Editing Object ]";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::FLOAT;
+	state_list.sim_anim = ANIM_AGENT_HOVER;
+	state_list.label = "float";
+	state_list.token = "[ Floating ]";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::SWIM_FORWARD;
+	state_list.sim_anim = ANIM_AGENT_FLY;
+	state_list.label = "swim_forward";
+	state_list.token = "[ Swimming Forward ]";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::SWIM_UP;
+	state_list.sim_anim = ANIM_AGENT_HOVER_UP;
+	state_list.label = "swim_up";
+	state_list.token = "[ Swimming Up ]";
+	mStates.push_back(state_list);
+
+	// special
+	state_list.state = EAO::SWIM_DOWN;
+	state_list.sim_anim = ANIM_AGENT_HOVER_DOWN;
+	state_list.label = "swim_down";
+	state_list.token = "[ Swimming Down ]";
+	mStates.push_back(state_list);
+
+	// ++ the magic number when adding a duplicated state
+	if (mStates.size() != EAO::COUNT+7)
 	{
-		llerrs << "AO states and tokens aren't synced!" << llendl;
+		llerrs << "AO states (" << EAO::COUNT+7
+			   << ") and items (" << mStates.size()
+			   << ") don't match!" << llendl;
 	}
+
+	std::sort(mStates.begin(), mStates.end());
 }
 
 AOState::~AOState()
 {
 }
 
-EAOState::State AOState::getStateFromSimAnimID(const LLUUID& sim_anim_id)
+// TODO: templatize these
+
+EAO::State AOState::getStateFromSimAnimID(const LLUUID& sim_anim)
 {
-	LL_DEBUGS("AO") << "searching for anim: '" << sim_anim_id << "'" << LL_ENDL;
+	LL_DEBUGS("AO") << "searching for anim: '" << sim_anim << "'" << LL_ENDL;
 
-	EAOState::State state = EAOState::UNKNOWN;
-	if (sAOSimAnimIDs.empty())
+	if (sim_anim.notNull() && !mStates.empty())
 	{
-		return state;
-	}
-
-	if (sim_anim_id.notNull())
-	{
-		std::map<LLUUID, EAOState::State>::iterator mIt = sAOSimAnimIDs.find(sim_anim_id);
-		if (mIt != sAOSimAnimIDs.end())
+		for (std::vector<AOStateItem>::iterator vIt = mStates.begin(); vIt != mStates.end(); ++vIt)
 		{
-			state = (*mIt).second;
-
-			// this is the only way to check for being underwater, really
-			if (gAgent.getAvatarObject() && gAgent.getAvatarObject()->mBelowWater && !(gAgent.getAvatarObject()->mIsSitting))
+			if ((*vIt).sim_anim == sim_anim)
 			{
-				if		(state == EAOState::HOVER)		state = EAOState::FLOAT;
-				else if (state == EAOState::FLY)		state = EAOState::SWIM_FORWARD;
-				else if (state == EAOState::HOVER_UP)	state = EAOState::SWIM_UP;
-				else if (state == EAOState::HOVER_DOWN)	state = EAOState::SWIM_DOWN;
-			}
+				EAO::State state = (*vIt).state;
 
-			return state;
+				// this is the only way to check for swimming, ick
+				if (gAgent.getAvatarObject()->mBelowWater && 
+					!(gAgent.getAvatarObject()->mIsSitting) &&
+					!(gAgent.getRunning()))
+				{
+					if		(state == EAO::HOVER)		state = EAO::FLOAT;
+					else if (state == EAO::FLY)			state = EAO::SWIM_FORWARD;
+					else if (state == EAO::HOVER_UP)	state = EAO::SWIM_UP;
+					else if (state == EAO::HOVER_DOWN)	state = EAO::SWIM_DOWN;
+				}
+				else
+				{
+					if		(state == EAO::FLOAT)			state = EAO::HOVER;
+					else if (state == EAO::SWIM_FORWARD)	state = EAO::FLY;
+					else if (state == EAO::SWIM_UP)			state = EAO::HOVER_UP;
+					else if (state == EAO::SWIM_DOWN)		state = EAO::HOVER_DOWN;
+				}
+				// returns the same EAO state for different anims
+				// we need to stop/start all variants in AOEngine
+				return state;
+			}
 		}
 	}
 	LL_DEBUGS("AO") << "anim's state not found in map!" << LL_ENDL;
-	return state;
+
+	return EAO::UNKNOWN;
 }
 
-const LLUUID& AOState::getSimAnimIDFromState(EAOState::State state)
+const LLUUID& AOState::getSimAnimIDFromState(EAO::State state)
 {
-	for (std::map<LLUUID, EAOState::State>::iterator mIt = sAOSimAnimIDs.begin();
-		mIt != sAOSimAnimIDs.end(); ++mIt)
+	LL_DEBUGS("AO") << "searching for state: " << state << LL_ENDL;
+
+	if (state < EAO::COUNT && !mStates.empty())
 	{
-		if ((*mIt).second == state)
+		for (std::vector<AOStateItem>::iterator vIt = mStates.begin(); vIt != mStates.end(); ++vIt)
 		{
-			return (*mIt).first;
+			if ((*vIt).state == state)
+			{
+				// Whether we're above or below water, we'll get the right anim
+				// Also returns the first anim associated with a state *only*
+				// we need to stop/start all variants in AOEngine
+				return (*vIt).sim_anim;
+			}
 		}
 	}
+	LL_DEBUGS("AO") << "state not found!" << LL_ENDL;
+
 	return LLUUID::null;
 }
 
-EAOState::State AOState::getStateFromToken(const std::string& str_token)
+EAO::State AOState::getStateFromToken(const std::string& str_token)
 {
 	LL_DEBUGS("AO") << "searching for token: '" << str_token << "' length: " << str_token.length() << LL_ENDL;
 
-	EAOState::State state = EAOState::UNKNOWN;
-	if (sAONotecardTokens.empty())
+	if (!str_token.empty() && !mStates.empty())
 	{
-		return state;
-	}
-
-	std::map<std::string, EAOState::State>::iterator mIt = sAONotecardTokens.find(str_token);
-	if (mIt != sAONotecardTokens.end())
-	{
-		return (*mIt).second;
-	}
-	LL_DEBUGS("AO") << "token's state not found in map!" << LL_ENDL;
-	return state;
-}
-
-std::string AOState::getTokenFromState(EAOState::State state)
-{
-	for (std::map<std::string, EAOState::State>::iterator mIt = sAONotecardTokens.begin();
-		mIt != sAONotecardTokens.end(); ++mIt)
-	{
-		if ((*mIt).second == state)
+		for (std::vector<AOStateItem>::iterator vIt = mStates.begin(); vIt != mStates.end(); ++vIt)
 		{
-			return (*mIt).first;
+			if ((*vIt).token == str_token)
+			{
+				// Whether we're above or below water, we'll get the right state
+				return (*vIt).state;
+			}
 		}
 	}
+	LL_DEBUGS("AO") << "token's state not found!" << LL_ENDL;
+
+	return EAO::UNKNOWN;
+}
+
+std::string AOState::getTokenFromState(EAO::State state)
+{
+	LL_DEBUGS("AO") << "searching for state: " << state << LL_ENDL;
+
+	if (state < EAO::COUNT && !mStates.empty())
+	{
+		for (std::vector<AOStateItem>::iterator vIt = mStates.begin(); vIt != mStates.end(); ++vIt)
+		{
+			if ((*vIt).state == state)
+			{
+				// All states should have a token and a label
+				return (*vIt).token;
+			}
+		}
+	}
+	LL_DEBUGS("AO") << "state not found!" << LL_ENDL;
+
 	return "";
 }
 
-bool AOState::hasOverrideState(const LLUUID& sim_anim_id)
+std::string AOState::getLabelFromState(EAO::State state)
 {
-	if (sim_anim_id.notNull())
+	LL_DEBUGS("AO") << "searching for state: " << state << LL_ENDL;
+
+	if (state < EAO::COUNT && !mStates.empty())
 	{
-		return (sAOSimAnimIDs.find(sim_anim_id) != sAOSimAnimIDs.end());
+		for (std::vector<AOStateItem>::iterator vIt = mStates.begin(); vIt != mStates.end(); ++vIt)
+		{
+			if ((*vIt).state == state)
+			{
+				// All states should have a token and a label
+				return (*vIt).label;
+			}
+		}
 	}
-	return false;
+	LL_DEBUGS("AO") << "state not found!" << LL_ENDL;
+
+	return "";
+}
+
+EAO::State AOState::getStateFromLabel(const std::string& label)
+{
+	LL_DEBUGS("AO") << "searching for label: '" << label << "' length: " << label.length() << LL_ENDL;
+
+	if (!label.empty() && !mStates.empty())
+	{
+		for (std::vector<AOStateItem>::iterator vIt = mStates.begin(); vIt != mStates.end(); ++vIt)
+		{
+			if ((*vIt).label == label)
+			{
+				// Whether we're above or below water, we'll get the right state
+				return (*vIt).state;
+			}
+		}
+	}
+	LL_DEBUGS("AO") << "label's state not found!" << LL_ENDL;
+
+	return EAO::UNKNOWN;
 }

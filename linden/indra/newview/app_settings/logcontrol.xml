@@ -83,7 +83,7 @@
 
               <!--<string>http-texture</string>-->
               <!--<string>ViewerImages</string>-->
-							<!--<string>Volume</string>-->
+							<string>Volume</string>
 							<!--<string>Throttle</string>-->
 							<!--<string>Voice</string>-->
 							<!--<string>VivoxProtocolParser</string>-->

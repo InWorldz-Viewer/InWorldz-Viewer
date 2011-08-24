@@ -36,15 +36,15 @@ public:
 	void run();
 	void reset();
 
-	AOOverride* getOverrideFromState(EAOState::State state);
+	AOOverride* getOverrideFromState(EAO::State state);
 
-	void addAnim(EAOState::State state, const LLUUID& anim_id, const std::string& anim_name);
+	void addAnim(EAO::State state, const LLUUID& anim_id, const std::string& anim_name);
 	
 	// Prefer using UUIDs over names where possible
 	bool removeAnim(const LLUUID& anim_id);
 	// Prefer using UUIDs over names where possible
 	bool removeAnim(const std::string& name);
-	bool removeAnims(EAOState::State state);
+	bool removeAnims(EAO::State state);
 	bool removeAnims(const LLUUID& sim_anim_id);
 
 	LLUUID getOverride(const LLUUID& sim_anim_id, bool is_starting);
@@ -52,14 +52,14 @@ public:
 	// returns a user-set override for a sim animation
 	LLUUID getOverrideID(const LLUUID& sim_anim_id);
 	// returns a user-set override for a specific state
-	LLUUID getOverrideID(EAOState::State state);
+	LLUUID getOverrideID(EAO::State state);
 
-	bool hasOverride(EAOState::State state);
+	bool hasOverride(EAO::State state);
 
-	void setRandom(EAOState::State state, bool random);
+	void setRandom(EAO::State state, bool random);
 
-	LLUUID getLastPlayedIDFromState(EAOState::State state);
-	void setLastPlayedIDForState(EAOState::State state, const LLUUID& anim_id);
+	LLUUID getLastPlayedIDFromState(EAO::State state);
+	void setLastPlayedIDForState(EAO::State state, const LLUUID& anim_id);
 
 	// Special function for when our underwater state changes. Do not call outside of LLVOAvatar
 	void changedUnderwater();
@@ -67,9 +67,9 @@ public:
 private:
 
 	// map of animations we can use
-	std::map<EAOState::State, AOOverride*> mAOList;
+	std::map<EAO::State, AOOverride*> mAOList;
 
-	EAOState::State mCurrentState;
+	EAO::State mCurrentState;
 	bool mInitialized;
 	LLUUID mInvFolderID;
 	LLUUID mLastPlayedIDEver;
@@ -81,8 +81,8 @@ private:
 
 public:
 
-	EAOState::State getCurrentState() { return mCurrentState; }
-	void setCurrentState(EAOState::State state) { mCurrentState = state; }
+	EAO::State getCurrentState() { return mCurrentState; }
+	void setCurrentState(EAO::State state) { mCurrentState = state; }
 
 	const LLUUID& getLastPlayedIDEver() const { return mLastPlayedIDEver; }
 	void setLastPlayedIDEver(const LLUUID& anim_id) { mLastPlayedIDEver = anim_id; }

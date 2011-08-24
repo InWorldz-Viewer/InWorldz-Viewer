@@ -21,7 +21,7 @@ public:
 	bool removeOverride(const std::string& anim_name);
 
 	LLUUID getRandomOverrideID();
-	// returns the first ID we know about if there is no default, or a random ID if we're random
+	// returns the selected id (or first ID we know about if there is no default)
 	LLUUID getSelectedOverrideID();
 	std::string getSelectedOverrideName();
 	bool setSelectedOverride(const LLUUID& anim_id);
@@ -39,7 +39,7 @@ protected:
 
 public:
 
-	// making this public defeats the whole point of this class. All this stuff should be deleted and moved into a struct
+	// making this public defeats the whole point of this class, ugh
 	std::map<LLUUID, std::string> mOverrideList;
 
 	bool hasOverrides() { return !(mOverrideList.empty()); }

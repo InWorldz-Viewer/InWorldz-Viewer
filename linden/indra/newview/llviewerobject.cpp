@@ -204,7 +204,7 @@ LLViewerObject::LLViewerObject(const LLUUID &id, const LLPCode pcode, LLViewerRe
 	mState(0),
 	mMedia(NULL),
 	mClickAction(0),
-	mSculptSurfaceArea(0.0)
+	mSculptSurfaceArea(0.f)
 {
 	if(!is_global)
 	{

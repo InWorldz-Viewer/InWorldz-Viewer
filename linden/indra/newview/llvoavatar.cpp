@@ -981,8 +981,8 @@ LLVOAvatar::LLVOAvatar(const LLUUID& id,
 	buildCharacter();
 
 	// preload specific motions here
-	createMotion( ANIM_AGENT_CUSTOMIZE);
-	createMotion( ANIM_AGENT_CUSTOMIZE_DONE);
+	//createMotion( ANIM_AGENT_CUSTOMIZE);
+	//createMotion( ANIM_AGENT_CUSTOMIZE_DONE);
 
 	//VTPause();  // VTune
 	
@@ -4740,14 +4740,6 @@ void LLVOAvatar::processAnimationStateChanges()
 		// playing, but not signaled, so stop
 		if (found_anim == mSignaledAnimations.end())
 		{
-//			if (mIsSelf)
-//			{
-//				if ((gSavedSettings.getBOOL("AOEnabled")) && AOEngine::getInstance()->stopOverride(anim_it->first, FALSE)) // if the AO replaced this anim serverside then stop it serverside
-//				{
-////					return TRUE; //no local stop needed
-//				}
-//			}
-
 			processSingleAnimationStateChange(anim_it->first, FALSE);
 			mPlayingAnimations.erase(anim_it++);
 			continue;
@@ -4766,21 +4758,6 @@ void LLVOAvatar::processAnimationStateChanges()
 		{
 			if (processSingleAnimationStateChange(anim_it->first, TRUE))
 			{
-//				if (isSelf()) // AO is only for ME
-//				{
-//					// We need to always start playing user animations after we receive the sim state
-//					// in order to successfully override -- MC
-//
-//					///if (gSavedSettings.getBOOL("AOEnabled"))
-//					{
-//						if (AOEngine::getInstance()->startOverride(anim_it->first, false)) // AO overrides the anim if needed
-//						{
-////								return TRUE; // not playing it locally
-//						}
-//					}
-//				}
-
-
 				mPlayingAnimations[anim_it->first] = anim_it->second;
 				++anim_it;
 				continue;
@@ -4924,7 +4901,7 @@ BOOL LLVOAvatar::startMotion(const LLUUID& id, F32 time_offset)
 		gAgent.setAFK();
 	}
 
-	LLUUID override_id = AOEngine::getInstance()->getOverrideID(id);
+	LLUUID override_id = AOEngine::getInstance()->getOverride(id, true);
 	if (mIsSelf && override_id.notNull())
 	{
 		gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_START);
@@ -4952,7 +4929,7 @@ BOOL LLVOAvatar::stopMotion(const LLUUID& id, BOOL stop_immediate)
 		LLCharacter::stopMotion(ANIM_AGENT_SIT_FEMALE, stop_immediate);
 	}
 
-	LLUUID override_id = AOEngine::getInstance()->getOverrideID(id);
+	LLUUID override_id = AOEngine::getInstance()->getOverride(id, false);
 	if (mIsSelf && override_id.notNull())
 	{
 		gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_STOP);

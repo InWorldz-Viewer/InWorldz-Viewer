@@ -458,33 +458,86 @@ bool handleRenderSculptSAMaxChanged(const LLSD& newvalue)
 
 bool handleAOChanged(const LLSD& newvalue)
 {
+	// for readability's sake. Never NULL
+	AOEngine* ao_engine = AOEngine::getInstance();
+	EAO::State state = ao_engine->getCurrentState();
+	llinfos << "toggle state: " << state << llendl;
+
 	if (newvalue.asBoolean())
 	{
-		AOEngine::getInstance()->init();
-		//gAgent.getAvatarObject()->stopMotion(AOEngine::getInstance()->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
-		//gAgent.getAvatarObject()->startMotion(AOEngine::getInstance()->getOverride(getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
+		if (EAO::UNKNOWN == state)
+		{
+			ao_engine->init();
+			gAgent.sendAnimationRequest(ANIM_AGENT_STAND, ANIM_REQUEST_START);
+			// This will trigger the AO (and stop all other stands) if we have an override
+			gAgent.getAvatarObject()->startMotion(ANIM_AGENT_STAND);
+		}
+		else
+		{
+			// Have a state, run an override if we have one
+			//gAgent.getAvatarObject()->stopMotion(ao_engine->getLastPlayedIDFromState(state));
+
+			LLUUID override_id = ao_engine->getOverride(ao_engine->getStateList()->getSimAnimIDFromState(state), true);
+			if (override_id.notNull())
+			{
+				gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_START);
+				//gAgent.getAvatarObject()->startMotion(override_id);
+			}
+		}
 	}
 	else
 	{
-		gAgent.getAvatarObject()->stopMotion(AOEngine::getInstance()->getLastPlayedIDFromState(AOEngine::getInstance()->getCurrentState()));
-		gAgent.getAvatarObject()->startMotion(AOEngine::getInstance()->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
+		gAgent.sendAnimationRequest(ao_engine->getLastPlayedIDEver(), ANIM_REQUEST_STOP);
+		gAgent.sendAnimationRequest(ao_engine->getLastPlayedIDFromState(state), ANIM_REQUEST_STOP);
+		gAgent.getAvatarObject()->stopMotion(ao_engine->getLastPlayedIDEver());
+
+		if (state != EAO::UNKNOWN)
+		{
+			gAgent.sendAnimationRequest(ao_engine->getStateList()->getSimAnimIDFromState(state), ANIM_REQUEST_START);
+			gAgent.getAvatarObject()->startMotion(ao_engine->getStateList()->getSimAnimIDFromState(state));
+		}
 	}
 	return true;
 }
 
 bool handleAOSitsChanged(const LLSD& newvalue)
 {
+	// for readability's sake. Never NULL
+	AOEngine* ao_engine = AOEngine::getInstance();
+	EAO::State state = ao_engine->getCurrentState();
+	llinfos << "toggle state: " << state << llendl;
+
 	if (newvalue.asBoolean())
 	{
-		AOEngine::getInstance()->init();
+		if (EAO::UNKNOWN == state) // we might need to re-run the AO if we have an override
+		{
+			ao_engine->init();
+			gAgent.sendAnimationRequest(ANIM_AGENT_SIT, ANIM_REQUEST_START);
+			gAgent.getAvatarObject()->startMotion(ANIM_AGENT_SIT);
+		}
+		else // we ran an override before?
+		{
+			gAgent.getAvatarObject()->stopMotion(ao_engine->getStateList()->getSimAnimIDFromState(EAO::SIT));
+			gAgent.getAvatarObject()->stopMotion(ao_engine->getStateList()->getSimAnimIDFromState(EAO::SIT_GROUND));
+
+			if (EAO::SIT_GROUND == state ||
+				EAO::SIT		== state)
+			{
+				gAgent.getAvatarObject()->startMotion(/*ao_engine->getOverride(*/ao_engine->getStateList()->getSimAnimIDFromState(state)/*, true)*/);
+			}
+		}
 	}
 	else
 	{
-		if (EAOState::SIT == AOEngine::getInstance()->getCurrentState() ||
-			EAOState::SIT_GROUND == AOEngine::getInstance()->getCurrentState() )
+		if (EAO::SIT == state ||
+			EAO::SIT_GROUND == state )
 		{
-			gAgent.getAvatarObject()->stopMotion(AOEngine::getInstance()->getLastPlayedIDFromState(AOEngine::getInstance()->getCurrentState()));
-			gAgent.getAvatarObject()->startMotion(AOEngine::getInstance()->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
+			gAgent.sendAnimationRequest(ao_engine->getLastPlayedIDFromState(state), ANIM_REQUEST_STOP);
+			gAgent.getAvatarObject()->stopMotion(ao_engine->getLastPlayedIDFromState(state));
+
+			// Will sort out gender-sit differences and getOverride will return NULL
+			gAgent.sendAnimationRequest(ao_engine->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()), ANIM_REQUEST_START);
+			gAgent.getAvatarObject()->startMotion(ao_engine->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
 		}
 	}
 	return true;

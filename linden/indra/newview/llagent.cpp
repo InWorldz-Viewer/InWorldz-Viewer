@@ -2932,34 +2932,11 @@ void LLAgent::endAnimationUpdateUI()
 		{
 			if (mCustomAnim)
 			{
-				// Did we have override the starting anim?
-				LLUUID override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_CUSTOMIZE, false);
-				if (override_id.notNull())
-				{
-					sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
-					sendAnimationRequest(override_id, ANIM_REQUEST_STOP);
-
-					// Do we have an override for end anim?
-					override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_CUSTOMIZE_DONE, true);
-					if (override_id.notNull())
-					{
-						sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_STOP);
-						sendAnimationRequest(override_id, ANIM_REQUEST_START);
-					}
-					else
-					{
-						sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_START);
-					}
-				}
-				else
-				{
-					sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
-					sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_START);
-				}
+				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
+				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_START);
 
 				mCustomAnim = FALSE;
 			}
-			
 		}
 		setLookAt(LOOKAT_TARGET_CLEAR);
 	}
@@ -4322,28 +4299,19 @@ void LLAgent::changeCameraToCustomizeAvatar(BOOL avatar_animate, BOOL camera_ani
 			at.normalize();
 			gAgent.resetAxes(at);
 
-			LLUUID override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_CUSTOMIZE, true);
-			if (override_id.notNull())
+			sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_START);
+			mCustomAnim = TRUE ;
+			mAvatarObject->startMotion(ANIM_AGENT_CUSTOMIZE);
+			LLMotion* turn_motion = mAvatarObject->findMotion(ANIM_AGENT_CUSTOMIZE);
+
+			if (turn_motion)
 			{
-				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
-				sendAnimationRequest(override_id, ANIM_REQUEST_START);
-				mAnimationDuration = gSavedSettings.getF32("ZoomTime") + CUSTOMIZE_AVATAR_CAMERA_ANIM_SLOP;
+				mAnimationDuration = turn_motion->getDuration() + CUSTOMIZE_AVATAR_CAMERA_ANIM_SLOP;
 			}
 			else
 			{
-				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_START);
-				mAvatarObject->startMotion(ANIM_AGENT_CUSTOMIZE);
-				LLMotion* turn_motion = mAvatarObject->findMotion(ANIM_AGENT_CUSTOMIZE);
-				if (turn_motion)
-				{
-					mAnimationDuration = turn_motion->getDuration() + CUSTOMIZE_AVATAR_CAMERA_ANIM_SLOP;
-				}
-				else
-				{
-					mAnimationDuration = gSavedSettings.getF32("ZoomTime");
-				}
+				mAnimationDuration = gSavedSettings.getF32("ZoomTime");
 			}
-			mCustomAnim = TRUE;
 		}
 		gAgent.setFocusGlobal(LLVector3d::zero);
 	}

@@ -15,7 +15,6 @@ Anything that handles the actual AO workings that's not UI
 #include "llagent.h"
 #include "llinventory.h"
 #include "llinventoryview.h"
-#include "llpreviewnotecard.h"
 #include "llstartup.h"
 #include "llviewercontrol.h"
 #include "llviewertexteditor.h"
@@ -30,7 +29,8 @@ AOState* AOEngine::sStateList = NULL;
 AOEngine::AOEngine()
 	:
 	mInitialized(false),
-	mInvFolderID(LLUUID::null)
+	mInvFolderID(LLUUID::null),
+	mCurrentState(EAO::UNKNOWN)
 {
 	sStateList = new AOState();
 }
@@ -58,7 +58,7 @@ void AOEngine::cleanupAnims()
 		return;
 	}
 
-	for (std::map<EAOState::State, AOOverride*>::iterator mIt = mAOList.begin(); 
+	for (std::map<EAO::State, AOOverride*>::iterator mIt = mAOList.begin(); 
 		 mIt != mAOList.end(); ++mIt) 
 	{
 		AOOverride* entry = mIt->second;
@@ -157,9 +157,9 @@ void AOEngine::run()
 		return;
 	}
 
-	//setCurrentState(EAOState::UNKNOWN); // reset state
-	EAOState::State state = getCurrentState(); // check if sitting or hovering
-	if ((state == EAOState::UNKNOWN) || (state == EAOState::STAND))
+	//setCurrentState(EAO::UNKNOWN); // reset state
+	EAO::State state = getCurrentState(); // check if sitting or hovering
+	if ((state == EAO::UNKNOWN) || (state == EAO::STAND))
 	{
 		if (gSavedSettings.getBOOL("AOStandRandomize"))
 		{
@@ -168,7 +168,7 @@ void AOEngine::run()
 				mAOStandTimer->reset();
 				//cycleStand();
 				// switch to a new stand
-				LLUUID anim_id = getOverrideID(EAOState::STAND);
+				LLUUID anim_id = getOverrideID(EAO::STAND);
 				gAgent.sendAnimationRequest(anim_id, ANIM_REQUEST_START);
 			}
 			else
@@ -179,14 +179,14 @@ void AOEngine::run()
 		else
 		{
 			// stop stand first then set state
-			LLUUID override_id = getLastPlayedIDFromState(EAOState::STAND);
+			LLUUID override_id = getLastPlayedIDFromState(EAO::STAND);
 			gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_STOP);
-			setCurrentState(EAOState::UNKNOWN);
+			//setCurrentState(EAO::UNKNOWN);
 		}
 	}
 	else
 	{
-		if (EAOState::SIT == state)
+		if (EAO::SIT == state)
 		{
 			gAgent.sendAnimationRequest(getOverrideID(state), (gSavedSettings.getBOOL("AOEnabled") && gSavedSettings.getBOOL("AOSitsEnabled")) ? ANIM_REQUEST_START : ANIM_REQUEST_STOP);
 		}
@@ -254,14 +254,14 @@ void AOEngine::onNotecardLoadComplete(LLVFS *vfs,const LLUUID& asset_uuid, LLAss
 							continue; 
 						}
 
-						EAOState::State state = sStateList->getStateFromToken(str_token);
-						if (EAOState::UNKNOWN != state)
+						EAO::State state = sStateList->getStateFromToken(str_token);
+						if (EAO::UNKNOWN != state)
 						{
 							AOEngine::getInstance()->addAnim(state, anim_id, str_anim_name);
 							// TODO: random prefs for everyone
-							if (EAOState::STAND == state)
+							if (EAO::STAND == state)
 							{
-								AOEngine::getInstance()->setRandom(EAOState::STAND, gSavedSettings.getBOOL("AOStandRandomize"));
+								AOEngine::getInstance()->setRandom(EAO::STAND, gSavedSettings.getBOOL("AOStandRandomize"));
 							}
 						}
 						else
@@ -285,7 +285,7 @@ void AOEngine::reset()
 	init();
 }
 
-void AOEngine::addAnim(EAOState::State state, const LLUUID& anim_id, const std::string& anim_name)
+void AOEngine::addAnim(EAO::State state, const LLUUID& anim_id, const std::string& anim_name)
 {
 	LL_DEBUGS("AO") << "Attempting to add anim " << anim_name << " (" << anim_id 
 					<< ") from token: " << sStateList->getTokenFromState(state) << LL_ENDL;
@@ -300,17 +300,20 @@ void AOEngine::addAnim(EAOState::State state, const LLUUID& anim_id, const std::
 	}
 }
 
-AOOverride* AOEngine::getOverrideFromState(EAOState::State state)
+AOOverride* AOEngine::getOverrideFromState(EAO::State state)
 {
-	std::map<EAOState::State, AOOverride*>::iterator mIt = mAOList.find(state);
-	if (mIt != mAOList.end())
+	if ((state != EAO::UNKNOWN) && (state < EAO::COUNT))
 	{
-		return (*mIt).second;
+		std::map<EAO::State, AOOverride*>::iterator mIt = mAOList.find(state);
+		if (mIt != mAOList.end())
+		{
+			return (*mIt).second;
+		}
 	}
 	return NULL;
 }
 
-void AOEngine::setRandom(EAOState::State state, bool random)
+void AOEngine::setRandom(EAO::State state, bool random)
 {
 	AOOverride* ao_override = AOEngine::getInstance()->getOverrideFromState(state);
 	if (ao_override)
@@ -320,7 +323,7 @@ void AOEngine::setRandom(EAOState::State state, bool random)
 }
 
 // Needed?
-bool AOEngine::hasOverride(EAOState::State state)
+bool AOEngine::hasOverride(EAO::State state)
 {
 	return (mAOList.find(state) != mAOList.end());
 }
@@ -329,8 +332,8 @@ LLUUID AOEngine::getOverrideID(const LLUUID& sim_anim_id)
 {
 	if (sim_anim_id.notNull())
 	{
-		EAOState::State state = sStateList->getStateFromSimAnimID(sim_anim_id);
-		if (EAOState::UNKNOWN != state)
+		EAO::State state = sStateList->getStateFromSimAnimID(sim_anim_id);
+		if (EAO::UNKNOWN != state)
 		{
 			// we know this anim, get an override if we have one!
 			return getOverrideID(state);
@@ -339,9 +342,9 @@ LLUUID AOEngine::getOverrideID(const LLUUID& sim_anim_id)
 	return LLUUID::null;
 }
 
-LLUUID AOEngine::getOverrideID(EAOState::State state)
+LLUUID AOEngine::getOverrideID(EAO::State state)
 {
-	std::map<EAOState::State, AOOverride*>::iterator mIt = mAOList.find(state);
+	std::map<EAO::State, AOOverride*>::iterator mIt = mAOList.find(state);
 	if (mIt != mAOList.end())
 	{
 		if ((*mIt).second->isRandom())
@@ -356,7 +359,7 @@ LLUUID AOEngine::getOverrideID(EAOState::State state)
 	return LLUUID::null;
 }
 
-LLUUID AOEngine::getLastPlayedIDFromState(EAOState::State state)
+LLUUID AOEngine::getLastPlayedIDFromState(EAO::State state)
 { 
 	AOOverride* ao_override = getOverrideFromState(state);
 	if (ao_override)
@@ -366,7 +369,7 @@ LLUUID AOEngine::getLastPlayedIDFromState(EAOState::State state)
 	return LLUUID::null;
 }
 
-void AOEngine::setLastPlayedIDForState(EAOState::State state, const LLUUID& anim_id) 
+void AOEngine::setLastPlayedIDForState(EAO::State state, const LLUUID& anim_id) 
 {
 	AOOverride* ao_override = getOverrideFromState(state);
 	if (ao_override)
@@ -385,28 +388,28 @@ LLUUID AOEngine::getOverride(const LLUUID& sim_anim_id, bool is_starting)
 	if (sim_anim_id.notNull() && gSavedSettings.getBOOL("AOEnabled") && mInitialized && !mAOList.empty())
 	{
 		LLUUID override_id = LLUUID::null;
-		EAOState::State state = sStateList->getStateFromSimAnimID(sim_anim_id);
+		EAO::State state = sStateList->getStateFromSimAnimID(sim_anim_id);
 		if (is_starting)
 		{
 			override_id = getOverrideID(state);
 			if (override_id.notNull())
 			{
-				if ((EAOState::STAND == state) && gSavedSettings.getBOOL("AONoStandsInMouselook") && gAgent.cameraMouselook())
+				if ((EAO::STAND == state) && gSavedSettings.getBOOL("AONoStandsInMouselook") && gAgent.cameraMouselook())
 				{
-					gAgent.sendAnimationRequest(getLastPlayedIDFromState(EAOState::STAND), ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(getLastPlayedIDFromState(EAO::STAND), ANIM_REQUEST_STOP);
 					LL_DEBUGS("AO") << "Trying to change stand while in mouselook with mouselook stands disabled" << LL_ENDL;
 					return LLUUID::null;
 				}
 
-				if (((EAOState::SIT			== state) || 
-					 (EAOState::SIT			== getCurrentState()) ||
-					 (EAOState::SIT_GROUND	== state) || 
-					 (EAOState::SIT_GROUND	== getCurrentState() ) && 
+				if (((EAO::SIT			== state) || 
+					 (EAO::SIT			== getCurrentState()) ||
+					 (EAO::SIT_GROUND	== state) || 
+					 (EAO::SIT_GROUND	== getCurrentState() ) && 
 					  !(gSavedSettings.getBOOL("AOSitsEnabled"))))
 				{
 					// make sure we stop any sits we have enabled
-					gAgent.sendAnimationRequest(getLastPlayedIDFromState(EAOState::SIT), ANIM_REQUEST_STOP);
-					gAgent.sendAnimationRequest(getLastPlayedIDFromState(EAOState::SIT_GROUND), ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(getLastPlayedIDFromState(EAO::SIT), ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(getLastPlayedIDFromState(EAO::SIT_GROUND), ANIM_REQUEST_STOP);
 					LL_DEBUGS("AO") << "Trying to change sit with sits disabled" << LL_ENDL;
 					return LLUUID::null;
 				}
@@ -415,10 +418,24 @@ LLUUID AOEngine::getOverride(const LLUUID& sim_anim_id, bool is_starting)
 				gAgent.sendAnimationRequest(getLastPlayedIDFromState(state), ANIM_REQUEST_STOP);
 				gAgent.sendAnimationRequest(getLastPlayedIDEver(), ANIM_REQUEST_STOP);
 
+				if (EAO::STAND == state) // stop all sim stands
+				{
+					gAgent.sendAnimationRequest(ANIM_AGENT_STAND_1, ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(ANIM_AGENT_STAND_2, ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(ANIM_AGENT_STAND_3, ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(ANIM_AGENT_STAND_4, ANIM_REQUEST_STOP);
+				}
+				else if (EAO::SIT == state) // stop all sits but constrained
+				{
+					gAgent.sendAnimationRequest(ANIM_AGENT_SIT_GENERIC, ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(ANIM_AGENT_SIT_FEMALE, ANIM_REQUEST_STOP);
+					gAgent.sendAnimationRequest(ANIM_AGENT_SIT_GROUND, ANIM_REQUEST_STOP);
+					//gAgent.sendAnimationRequest(ANIM_AGENT_SIT_GROUND_CONSTRAINED, ANIM_REQUEST_STOP);
+				}
+
 				setLastPlayedIDForState(state, override_id);
 
-				if (ANIM_AGENT_CUSTOMIZE		== sim_anim_id ||
-					ANIM_AGENT_CUSTOMIZE_DONE	== sim_anim_id ||
+				if (ANIM_AGENT_EDITING			== sim_anim_id ||
 					ANIM_AGENT_LAND				== sim_anim_id ||
 					ANIM_AGENT_MEDIUM_LAND		== sim_anim_id ||
 					ANIM_AGENT_PRE_JUMP			== sim_anim_id ||
@@ -440,8 +457,7 @@ LLUUID AOEngine::getOverride(const LLUUID& sim_anim_id, bool is_starting)
 		}
 		else // stopping override
 		{
-			if (ANIM_AGENT_CUSTOMIZE		== sim_anim_id ||
-				ANIM_AGENT_CUSTOMIZE_DONE	== sim_anim_id ||
+			if (ANIM_AGENT_EDITING			== sim_anim_id ||
 				ANIM_AGENT_LAND				== sim_anim_id ||
 				ANIM_AGENT_MEDIUM_LAND		== sim_anim_id ||
 				ANIM_AGENT_PRE_JUMP			== sim_anim_id ||
@@ -460,7 +476,17 @@ LLUUID AOEngine::getOverride(const LLUUID& sim_anim_id, bool is_starting)
 
 void AOEngine::changedUnderwater()
 {
-	if (gSavedSettings.getBOOL("AOEnabled"))
+	if (gSavedSettings.getBOOL("AOEnabled") && 
+		(   (getCurrentState() == EAO::HOVER) ||
+			(getCurrentState() == EAO::FLY) ||
+			(getCurrentState() == EAO::HOVER_UP) ||
+			(getCurrentState() == EAO::HOVER_DOWN) ||
+			(getCurrentState() == EAO::FLOAT) ||
+			(getCurrentState() == EAO::SWIM_FORWARD) ||
+			(getCurrentState() == EAO::SWIM_UP) ||
+			(getCurrentState() == EAO::SWIM_DOWN)
+			)
+		)
 	{
 		// surfacing is usually the problem
 		gAgent.sendAnimationRequest(getLastOverriddenID(), ANIM_REQUEST_STOP);
