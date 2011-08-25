@@ -2,6 +2,6 @@
 
 CFBundleName = "InWorldz";
 
-CFBundleShortVersionString = "InWorldz version 1.2.8.8";
-CFBundleGetInfoString = "InWorldz version 1.2.8.0, Copyright 2011 InWorldz, LLC";
+CFBundleShortVersionString = "InWorldz version 1.2.9.0";
+CFBundleGetInfoString = "InWorldz version 1.2.9.0, Copyright 2011 InWorldz, LLC";
 
