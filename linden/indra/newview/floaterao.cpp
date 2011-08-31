@@ -383,7 +383,7 @@ void FloaterAO::onClickPrev(void* userdata)
 			{
 				self->mCombo->selectNthItem(count-1);
 			}
-			cmdline_printchat(llformat("Changing animation to %s", self->mCombo->getSimple()));
+			cmdline_printchat(llformat("Changing animation to %s", self->mCombo->getSimple().c_str()));
 		}
 	}
 }
@@ -407,7 +407,7 @@ void FloaterAO::onClickNext(void* userdata)
 			{
 				self->mCombo->selectNthItem(0);
 			}
-			cmdline_printchat(llformat("Changing animation to %s", self->mCombo->getSimple()));
+			cmdline_printchat(llformat("Changing animation to %s", self->mCombo->getSimple().c_str()));
 		}
 	}
 }
