@@ -43,7 +43,7 @@ bool AOOverride::removeOverride(const std::string& anim_name)
 		if ((*mIt).second == anim_name)
 		{
 //			mIt = mOverrideList.erase(mIt);
-			mOverrideList.erase(mIt);
+			mOverrideList.erase(mIt++);
 			return true;
 		}
 		else
