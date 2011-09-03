@@ -36,6 +36,7 @@ include(UI)
 include(LLKDU)
 include(ViewerMiscLibs)
 include(ViewerArtwork.cmake)
+include(InWorldz)
 
 if (WINDOWS)
     include(CopyWinLibs)
@@ -1349,6 +1350,7 @@ target_link_libraries(${VIEWER_BINARY_NAME}
     ${WINDOWS_LIBRARIES}
     ${XMLRPCEPI_LIBRARIES}
     ${ELFIO_LIBRARIES}
+    ${IW_IMAGEBASE_LIBRARIES}
     )
 
 if (LINUX)

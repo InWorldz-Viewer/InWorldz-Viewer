@@ -9,8 +9,10 @@ include(LLImage)
 include(LLMath)
 include(LLVFS)
 include(ZLIB)
+include(InWorldz)
 
 include_directories(
+    ${IW_IMAGEBASE_INCLUDE_DIRS}
     ${LLCOMMON_INCLUDE_DIRS}
     ${LLMATH_INCLUDE_DIRS}
     ${LLVFS_INCLUDE_DIRS}
@@ -43,6 +45,7 @@ set(llimage_HEADER_FILES
     llimageworker.h
     llmapimagetype.h
     llpngwrapper.h
+    inworldzj2cimpl.h
     )
 
 set_source_files_properties(${llimage_HEADER_FILES}

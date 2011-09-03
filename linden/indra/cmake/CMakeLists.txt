@@ -3,86 +3,16 @@
 include(00-Common)
 
 project(cmake)
-
+    
+file(GLOB cmake_FILE_GLOB_LIST
+     *.cmake)
+     
 set(cmake_SOURCE_FILES
     CMakeLists.txt
-
-    00-Common.cmake
-    APR.cmake
-    Audio.cmake
-    BerkeleyDB.cmake
-    Boost.cmake
-    BuildVersion.cmake
-    CARes.cmake
-    CURL.cmake
-    CMakeCopyIfDifferent.cmake
-    CopyWinLibs.cmake
-    CSharpMacros.cmake
-    DBusGlib.cmake
-    DirectX.cmake
-    DownloadPrebuilt.cmake.in
-    ELFIO.cmake
-    EXPAT.cmake
-    FindAPR.cmake
-    FindBerkeleyDB.cmake
-    FindCARes.cmake
-    FindELFIO.cmake
-    FindGooglePerfTools.cmake
-    FindMono.cmake
-    FindMT.cmake
-    FindMySQL.cmake
-    FindNDOF.cmake
-    FindOpenJPEG.cmake
-    FindXmlRpcEpi.cmake
-    FindZLIB.cmake
-    FMOD.cmake
-    FreeType.cmake
-    GStreamer010Plugin.cmake
-    GooglePerfTools.cmake
-    JPEG.cmake
-    LLAddBuildTest.cmake
-    LLAudio.cmake
-    LLCharacter.cmake
-    LLCommon.cmake
-    LLCrashLogger.cmake
-    LLDatabase.cmake
-    LLImage.cmake
-    LLImageJ2COJ.cmake
-    LLInventory.cmake
-    LLKDU.cmake
-    LLMath.cmake
-    LLMessage.cmake
-    LLPlugin.cmake
-    LLPrimitive.cmake
-    LLRender.cmake
-    LLScene.cmake
-    LLUI.cmake
-    LLVFS.cmake
-    LLWindow.cmake
-    LLXML.cmake
-    LScript.cmake
-    Linking.cmake
-    MonoEmbed.cmake
-    MySQL.cmake
-    NDOF.cmake
-    OPENAL.cmake
-    OpenGL.cmake
-    OpenJPEG.cmake
-    OpenSSL.cmake
-    PNG.cmake
-    Python.cmake
-    Prebuilt.cmake
-    QuickTimePlugin.cmake
-    RunBuildTest.cmake
-    TemplateCheck.cmake
-    Tut.cmake
-    UI.cmake
-    UnixInstall.cmake
-    Variables.cmake
-    Versions.cmake
-    XmlRpcEpi.cmake
-    ZLIB.cmake
     )
+
+list(APPEND cmake_SOURCE_FILES ${cmake_FILE_GLOB_LIST})
+list(SORT cmake_SOURCE_FILES)
 
 source_group("Shared Rules" FILES ${cmake_SOURCE_FILES})
 

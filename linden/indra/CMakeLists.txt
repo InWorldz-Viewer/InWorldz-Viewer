@@ -43,6 +43,7 @@ if(NOT STANDALONE)
 endif(NOT STANDALONE)
 add_custom_target(prepare DEPENDS ${prepare_depends})
 
+# LL cross-platform directories
 add_subdirectory(cmake)
 add_subdirectory(${LIBS_OPEN_PREFIX}llaudio)
 add_subdirectory(${LIBS_OPEN_PREFIX}llcharacter)
@@ -58,6 +59,9 @@ add_subdirectory(${LIBS_OPEN_PREFIX}llvfs)
 add_subdirectory(${LIBS_OPEN_PREFIX}llwindow)
 add_subdirectory(${LIBS_OPEN_PREFIX}llxml)
 add_subdirectory(${LIBS_OPEN_PREFIX}lscript)
+
+# InWorldz cross-platform directories
+add_subdirectory(${LIBS_OPEN_PREFIX}iw_imagebase)
 
 if (WINDOWS AND EXISTS ${LIBS_CLOSED_DIR}copy_win_scripts)
   add_subdirectory(${LIBS_CLOSED_PREFIX}copy_win_scripts)
