@@ -36,18 +36,31 @@
 #include "lldir.h"
 #include "llimagej2c.h"
 #include "llmemtype.h"
+#include "inworldzj2cimpl.h"
 
+// todo: templatize these
+// inworldz kdu support
+typedef InWorldzJ2CImpl* (*CreateInWorldzJ2CImpl)();
+typedef void (*DestroyInWorldzJ2CImpl)(InWorldzJ2CImpl*);
+typedef const char* (*EngineInfoInWorldzJ2CImpl)();
+
+CreateInWorldzJ2CImpl		iw_create_func;
+DestroyInWorldzJ2CImpl		iw_destroy_func;
+EngineInfoInWorldzJ2CImpl	iw_engineinfo_func;
+
+// for openjpeg support
 typedef LLImageJ2CImpl* (*CreateLLImageJ2CFunction)();
 typedef void (*DestroyLLImageJ2CFunction)(LLImageJ2CImpl*);
 typedef const char* (*EngineInfoLLImageJ2CFunction)();
 
 //some "private static" variables so we only attempt to load
 //dynamic libaries once
-CreateLLImageJ2CFunction j2cimpl_create_func;
-DestroyLLImageJ2CFunction j2cimpl_destroy_func;
-EngineInfoLLImageJ2CFunction j2cimpl_engineinfo_func;
-apr_pool_t *j2cimpl_dso_memory_pool;
-apr_dso_handle_t *j2cimpl_dso_handle;
+CreateLLImageJ2CFunction j2cimpl_create_func = NULL;
+DestroyLLImageJ2CFunction j2cimpl_destroy_func = NULL;
+EngineInfoLLImageJ2CFunction j2cimpl_engineinfo_func = NULL;
+
+apr_pool_t*					iw_dso_memory_pool;
+apr_dso_handle_t*			iw_dso_handle;
 
 //Declare the prototype for theses functions here, their functionality
 //will be implemented in other files which define a derived LLImageJ2CImpl
@@ -57,6 +70,8 @@ LLImageJ2CImpl* fallbackCreateLLImageJ2CImpl();
 void fallbackDestroyLLImageJ2CImpl(LLImageJ2CImpl* impl);
 const char* fallbackEngineInfoLLImageJ2CImpl();
 
+bool sInWorldzKDU = false;
+
 //static
 //Loads the required "create", "destroy" and "engineinfo" functions needed
 void LLImageJ2C::openDSO()
@@ -65,11 +80,11 @@ void LLImageJ2C::openDSO()
 	std::string dso_name;
 	std::string dso_path;
 
-	bool all_functions_loaded = false;
+	sInWorldzKDU = false;
 	apr_status_t rv;
 
 #if LL_WINDOWS
-	dso_name = "kdu_v64R.dll";
+	dso_name = "iw_kdu_loader.dll";
 #elif LL_DARWIN
 	dso_name = "libkdu_v64R.dylib";
 #else
@@ -80,55 +95,55 @@ void LLImageJ2C::openDSO()
 				       gDirUtilp->getAppRODataDir(),
 				       gDirUtilp->getExecutableDir());
 
-	j2cimpl_dso_handle      = NULL;
-	j2cimpl_dso_memory_pool = NULL;
+	iw_dso_handle      = NULL;
+	iw_dso_memory_pool = NULL;
 
 	//attempt to load the shared library
-	apr_pool_create(&j2cimpl_dso_memory_pool, NULL);
-	rv = apr_dso_load(&j2cimpl_dso_handle,
+	apr_pool_create(&iw_dso_memory_pool, NULL);
+	rv = apr_dso_load(&iw_dso_handle,
 					  dso_path.c_str(),
-					  j2cimpl_dso_memory_pool);
+					  iw_dso_memory_pool);
 
 	//now, check for success
 	if ( rv == APR_SUCCESS )
 	{
 		//found the dynamic library
 		//now we want to load the functions we're interested in
-		CreateLLImageJ2CFunction  create_func = NULL;
-		DestroyLLImageJ2CFunction dest_func = NULL;
-		EngineInfoLLImageJ2CFunction engineinfo_func = NULL;
+		CreateInWorldzJ2CImpl  create_func = NULL;
+		DestroyInWorldzJ2CImpl dest_func = NULL;
+		EngineInfoInWorldzJ2CImpl engineinfo_func = NULL;
 
 		rv = apr_dso_sym((apr_dso_handle_sym_t*)&create_func,
-						 j2cimpl_dso_handle,
-						 "createLLImageJ2CKDU");
+						 iw_dso_handle,
+						 "createInWorldzJ2C");
 		if ( rv == APR_SUCCESS )
 		{
 			//we've loaded the create function ok
 			//we need to delete via the DSO too
 			//so lets check for a destruction function
 			rv = apr_dso_sym((apr_dso_handle_sym_t*)&dest_func,
-							 j2cimpl_dso_handle,
-						       "destroyLLImageJ2CKDU");
+							 iw_dso_handle,
+						     "destroyInWorldzJ2C");
 			if ( rv == APR_SUCCESS )
 			{
 				//we've loaded the destroy function ok
 				rv = apr_dso_sym((apr_dso_handle_sym_t*)&engineinfo_func,
-						 j2cimpl_dso_handle,
-						 "engineInfoLLImageJ2CKDU");
+						 iw_dso_handle,
+						 "engineInfoInWorldzJ2C");
 				if ( rv == APR_SUCCESS )
 				{
 					//ok, everything is loaded alright
-					j2cimpl_create_func  = create_func;
-					j2cimpl_destroy_func = dest_func;
-					j2cimpl_engineinfo_func = engineinfo_func;
-					all_functions_loaded = true;
+					iw_create_func  = create_func;
+					iw_destroy_func = dest_func;
+					iw_engineinfo_func = engineinfo_func;
+					sInWorldzKDU = true;
 					LL_INFOS("LLKDU") << "Optional J2C renderer " << dso_name << " found at " << dso_path << LL_ENDL;
 				}
 			}
 		}
 	}
 
-	if ( !all_functions_loaded )
+	if ( !sInWorldzKDU )
 	{
 		//something went wrong with the DSO or function loading..
 		//fall back onto our satefy impl creation function
@@ -142,19 +157,19 @@ void LLImageJ2C::openDSO()
 			<< " (" << dso_path << ")" << LL_ENDL;
 		apr_strerror(rv, errbuf, sizeof(errbuf));
 		LL_INFOS("LLKDU") << "error: " << rv << ", " << errbuf << LL_ENDL;
-		apr_dso_error(j2cimpl_dso_handle, errbuf, sizeof(errbuf));
+		apr_dso_error(iw_dso_handle, errbuf, sizeof(errbuf));
 		LL_INFOS("LLKDU") << "dso-error: " << rv << ", " << errbuf << LL_ENDL;
 
-		if ( j2cimpl_dso_handle )
+		if ( iw_dso_handle )
 		{
-			apr_dso_unload(j2cimpl_dso_handle);
-			j2cimpl_dso_handle = NULL;
+			apr_dso_unload(iw_dso_handle);
+			iw_dso_handle = NULL;
 		}
 
-		if ( j2cimpl_dso_memory_pool )
+		if ( iw_dso_memory_pool )
 		{
-			apr_pool_destroy(j2cimpl_dso_memory_pool);
-			j2cimpl_dso_memory_pool = NULL;
+			apr_pool_destroy(iw_dso_memory_pool);
+			iw_dso_memory_pool = NULL;
 		}
 	}
 }
@@ -162,15 +177,22 @@ void LLImageJ2C::openDSO()
 //static
 void LLImageJ2C::closeDSO()
 {
-	if ( j2cimpl_dso_handle ) apr_dso_unload(j2cimpl_dso_handle);
-	if (j2cimpl_dso_memory_pool) apr_pool_destroy(j2cimpl_dso_memory_pool);
+	if ( iw_dso_handle ) apr_dso_unload(iw_dso_handle);
+	if (iw_dso_memory_pool) apr_pool_destroy(iw_dso_memory_pool);
 }
 
 //static
 std::string LLImageJ2C::getEngineInfo()
 {
+	if (sInWorldzKDU && iw_engineinfo_func)
+	{
+		return iw_engineinfo_func();
+	}
+
 	if (!j2cimpl_engineinfo_func)
+	{
 		j2cimpl_engineinfo_func = fallbackEngineInfoLLImageJ2CImpl;
+	}
 
 	return j2cimpl_engineinfo_func();
 }
@@ -180,7 +202,9 @@ LLImageJ2C::LLImageJ2C() : 	LLImageFormatted(IMG_CODEC_J2C),
 							mRawDiscardLevel(-1),
 							mRate(0.0f),
 							mReversible(FALSE),
-							mAreaUsedForDataSizeCalcs(0)
+							mAreaUsedForDataSizeCalcs(0),
+							mImpl(NULL),
+							mImplKDU(NULL)
 {
 	//We assume here that if we wanted to create via
 	//a dynamic library that the approriate open calls were made
@@ -190,12 +214,15 @@ LLImageJ2C::LLImageJ2C() : 	LLImageFormatted(IMG_CODEC_J2C),
 	//we either did not want to create using functions from the dynamic
 	//library or there were issues loading it, either way
 	//use our fall back
-	if ( !j2cimpl_create_func )
+	if (iw_create_func && sInWorldzKDU)
+	{
+		mImplKDU = iw_create_func();
+	}
+	else
 	{
 		j2cimpl_create_func = fallbackCreateLLImageJ2CImpl;
+		mImpl = j2cimpl_create_func();
 	}
-
-	mImpl = j2cimpl_create_func();
 
 	// Clear data size table
 	for( S32 i = 0; i <= MAX_DISCARD_LEVEL; i++)
@@ -215,7 +242,11 @@ LLImageJ2C::~LLImageJ2C()
 	//we either did not want to destroy using functions from the dynamic
 	//library or there were issues loading it, either way
 	//use our fall back
-	if ( !j2cimpl_destroy_func )
+	if (iw_destroy_func && mImplKDU)
+	{
+		iw_destroy_func(mImplKDU);
+	}
+	else
 	{
 		j2cimpl_destroy_func = fallbackDestroyLLImageJ2CImpl;
 	}
@@ -235,6 +266,7 @@ void LLImageJ2C::resetLastError()
 //virtual
 void LLImageJ2C::setLastError(const std::string& message, const std::string& filename)
 {
+	LL_DEBUGS("Rendering") << "LLImageJ2C error: " << message << llendl;
 	mLastError = message;
 	if (!filename.empty())
 		mLastError += std::string(" FILE: ") + filename;
@@ -259,7 +291,52 @@ BOOL LLImageJ2C::updateData()
 	}
 	else 
 	{
-		res = mImpl->getMetadata(*this);
+		if (mImplKDU)
+		{
+			// LGPL plugin
+			ImageBaseForKDU base(this->getData(), this->getDataSize(), this->getWidth(), this->getHeight(), this->getComponents(), this->getRawDiscardLevel(), this->mRate, this->getMaxBytes());
+
+			if (!base.getData())
+			{
+				llwarns << "cannot allocate temporary image info" << llendl;
+				return FALSE;
+			}
+			else
+			{
+				res = mImplKDU->getMetadata(base);
+				
+				// We don't return here if hwc <=0 || !res
+				// so as to set the any possible error message
+				// below
+				if (res &&
+					(base.getData() != this->getData()) &&
+					(base.getHeight() > 0) && 
+					(base.getWidth() > 0) && 
+					(base.getComponents() > 0))
+				{
+					this->setMaxBytes(base.mMaxBytes);
+					this->mRate = base.mRate;
+					this->mRawDiscardLevel = base.mRawDiscardLevel;
+
+					this->setSize(base.getWidth(), base.getHeight(), base.getComponents());
+					this->copyData(base.getData(), base.getDataSize()); // calls updateData();
+				}
+				else
+				{
+					//llinfos << "updateData failed. Either bad data or no data to update!" << llendl;
+				}
+
+				if (!(base.mLastErrorMsg.empty()))
+				{
+					this->setLastError(base.mLastErrorMsg);
+				}
+			}
+		}
+		else
+		{
+			// GPL plugin
+			res = mImpl->getMetadata(*this);
+		}
 	}
 
 	if (res)
@@ -304,7 +381,49 @@ BOOL LLImageJ2C::decodeChannels(LLImageRaw *raw_imagep, F32 decode_time, S32 fir
 		// Update the raw discard level
 		updateRawDiscardLevel();
 		mDecoding = TRUE;
-		res = mImpl->decodeImpl(*this, *raw_imagep, decode_time, first_channel, max_channel_count);
+
+		// Here we make changes to the raw image pointer in our decoder plugin
+		if (mImplKDU) // the version of KDU used with InWorldz
+		{
+			// LGPL plugin
+			ImageBaseForKDU base(this->getData(), this->getDataSize(), this->getWidth(), this->getHeight(), this->getComponents(), this->getRawDiscardLevel(), this->mRate, this->getMaxBytes());
+
+			ImageBaseForKDU raw(raw_imagep->getData(), raw_imagep->getDataSize(), raw_imagep->getWidth(), raw_imagep->getHeight(), raw_imagep->getComponents());
+
+			if (!base.getData() || !raw.getData())
+			{
+				llwarns << "cannot allocate temporary image info" << llendl;
+			}
+			else
+			{
+				res = mImplKDU->decodeImpl(base, raw, decode_time, first_channel, max_channel_count);
+
+				if ((raw.getData() != NULL) &&
+					((raw.getData() != this->getData()) &&
+					//(raw.mRawDiscardLevel > -1) &&
+					(raw.getHeight() > 0) && 
+					(raw.getWidth() > 0) && 
+					(raw.getComponents() > 0)))
+				{
+					// resize checks to make sure we need to, then updates in a sane way
+					raw_imagep->resize(raw.getWidth(), raw.getHeight(), raw.getComponents());
+					memcpy(raw_imagep->getData(), raw.getData(), raw.getDataSize());
+
+					if (!(base.mLastErrorMsg.empty()))
+					{
+						this->setLastError(base.mLastErrorMsg);
+					}
+				}
+				else
+				{
+					mDecoding = FALSE;
+				}
+			}
+		}
+		else // GPL-compatible plugins
+		{
+			res = mImpl->decodeImpl(*this, *raw_imagep, decode_time, first_channel, max_channel_count);
+		}
 	}
 	
 	if (res)
@@ -339,7 +458,52 @@ BOOL LLImageJ2C::encode(const LLImageRaw *raw_imagep, const char* comment_text, 
 {
 	LLMemType mt1((LLMemType::EMemType)mMemType);
 	resetLastError();
-	BOOL res = mImpl->encodeImpl(*this, *raw_imagep, comment_text, encode_time, mReversible);
+	BOOL res = FALSE;
+
+	// we send data through our plugin interface, then update the this pointer's data to "set" it
+	if (mImplKDU)
+	{
+		// LGPL plugin
+		ImageBaseForKDU base(this->getData(), this->getDataSize(), this->getWidth(), this->getHeight(), this->getComponents(), this->getRawDiscardLevel(), this->mRate, this->getMaxBytes());
+
+		// icky const cast
+		ImageBaseForKDU raw(const_cast<U8*>(raw_imagep->getData()), raw_imagep->getDataSize(), raw_imagep->getWidth(), raw_imagep->getHeight(), raw_imagep->getComponents());
+
+		if (!raw.getData())
+		{
+			llwarns << "cannot allocate temporary image info" << llendl;
+			res = FALSE; // just in case we change the default
+		}
+		else
+		{
+			res = mImplKDU->encodeImpl(base, raw, comment_text, encode_time);
+			
+			if ((base.getData() != NULL) &&
+				((base.getData() != this->getData()) &&
+				//(base.mRawDiscardLevel > -1) &&
+				(base.getHeight() > 0) && 
+				(base.getWidth() > 0) && 
+				(base.getComponents() > 0)))
+			{
+				this->setMaxBytes(base.mMaxBytes);
+				this->mRate = base.mRate;
+				this->mRawDiscardLevel = base.mRawDiscardLevel;
+				this->setSize(base.getWidth(), base.getHeight(), base.getComponents());
+				this->copyData(base.getData(), base.getDataSize()); // calls updateData();
+				
+
+				if (!(base.mLastErrorMsg.empty()))
+				{
+					this->setLastError(base.mLastErrorMsg);
+				}
+			}
+		}
+	}
+	else
+	{
+		res = mImpl->encodeImpl(*this, *raw_imagep, comment_text, encode_time, mReversible);
+	}
+
 	if (!mLastError.empty())
 	{
 		LLImage::setLastError(mLastError);
@@ -523,7 +687,18 @@ BOOL LLImageJ2C::validate(U8 *data, U32 file_size)
 		}
 		else
 		{
-			res = mImpl->getMetadata(*this);
+			if (mImplKDU)
+			{
+				// InWorldz' kdu should validate when updateData is called. 
+				// Avoid calling getMetaData a second time, we don't apply
+				// updates that aren't validated
+				return true;
+			}
+			else
+			{
+				// GPL plugin
+				res = mImpl->getMetadata(*this);
+			}
 		}
 	}
 	

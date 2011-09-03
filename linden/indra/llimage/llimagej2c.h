@@ -35,8 +35,11 @@
 
 #include "llimage.h"
 #include "llassettype.h"
+#include "llimagej2c.h"
 
 class LLImageJ2CImpl;
+class InWorldzJ2CImpl;
+
 class LLImageJ2C : public LLImageFormatted
 {
 LOG_CLASS(LLImageJ2CImpl);
@@ -95,11 +98,12 @@ protected:
 	S8  mRawDiscardLevel;
 	F32 mRate;
 	BOOL mReversible;
+	InWorldzJ2CImpl* mImplKDU;
 	LLImageJ2CImpl *mImpl;
 	std::string mLastError;
 };
 
-// Derive from this class to implement JPEG2000 decoding
+// Derive from this class to implement JPEG2000 decoding in GPL plugins
 class LLImageJ2CImpl
 {
 public:
@@ -109,18 +113,26 @@ protected:
 	// Return value:
 	// true: image size and number of channels was determined
 	// false: error on decode
-	virtual BOOL getMetadata(LLImageJ2C &base) = 0;
+	virtual BOOL getMetadata(LLImageJ2C &base) = 0; // GPL-compatible
 	// Decode the raw image optionally aborting (to continue later) after
 	// decode_time seconds.  Decode at most max_channel_count and start
 	// decoding channel first_channel.
 	// Return value:
 	// true: decoding complete (even if it failed)
 	// false: time expired while decoding
-	virtual BOOL decodeImpl(LLImageJ2C &base, LLImageRaw &raw_image, F32 decode_time, S32 first_channel, S32 max_channel_count) = 0;
-	virtual BOOL encodeImpl(LLImageJ2C &base, const LLImageRaw &raw_image, const char* comment_text, F32 encode_time=0.0,
-							BOOL reversible=FALSE) = 0;
+	virtual BOOL decodeImpl(LLImageJ2C &base, 
+							LLImageRaw &raw_image, 
+							F32 decode_time, 
+							S32 first_channel, 
+							S32 max_channel_count) = 0; // GPL-compatible
+	virtual BOOL encodeImpl(LLImageJ2C &base, 
+							const LLImageRaw &raw_image, 
+							const char* comment_text, 
+							F32 encode_time=0.0,							
+							BOOL reversible=FALSE) = 0; // GPL-compatible
 
-	friend class LLImageJ2C;
+
+	friend class LLImageJ2C; // GPL-compatible only class
 };
 
 #define LINDEN_J2C_COMMENT_PREFIX "LL_"

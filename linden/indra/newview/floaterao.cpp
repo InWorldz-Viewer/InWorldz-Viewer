@@ -375,13 +375,13 @@ void FloaterAO::onClickPrev(void* userdata)
 		{
 			S32 index = self->mCombo->getFirstSelectedIndex();
 			index--;
-			if (index < 0)
+			if (index > 0)
 			{
-				self->mCombo->selectNthItem(0);
+				self->mCombo->selectNthItem(index);
 			}
 			else
 			{
-				self->mCombo->selectNthItem(count-1);
+				self->mCombo->selectNthItem(0);
 			}
 			cmdline_printchat(llformat("Changing animation to %s", self->mCombo->getSimple()));
 		}

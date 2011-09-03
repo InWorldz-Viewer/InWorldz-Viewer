@@ -74,7 +74,8 @@
               <!--<string>PluginSpam</string>-->
               <!--<string>PluginParent</string>-->
               <!--<string>PluginViewerMedia</string>-->
-
+              <!--<string>ShaderLoading</string>-->
+              <string>Rendering</string>
 							<!--<string>ShaderLoading</string>-->
 
 							<!--<string>Openjpeg</string>-->
