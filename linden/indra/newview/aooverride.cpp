@@ -104,7 +104,11 @@ bool AOOverride::setSelectedOverride(const std::string& anim_name)
 	for (std::map<LLUUID, std::string>::iterator mIt = mOverrideList.begin();
 		mIt != mOverrideList.end(); ++mIt)
 	{
-		return (anim_name == (*mIt).second);
+		if (anim_name == (*mIt).second)
+		{
+			mSelectedAnimID = (*mIt).first;
+			return true;
+		}
 	}
 	return false;
 }
