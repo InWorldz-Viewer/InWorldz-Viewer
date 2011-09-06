@@ -62,7 +62,7 @@ ImageBaseForKDU::ImageBaseForKDU(U8* data, S32 data_size) :
 		mHeight(0),
 		mComponents(-1),
 		mData(NULL),
-		mDataSize(-1),
+		mDataSize(data_size),
 		mIsAvatarBake(false),
 		mLastErrorMsg(""),
 		mRawDiscardLevel(-1),
@@ -79,7 +79,7 @@ ImageBaseForKDU::ImageBaseForKDU(U8* data, S32 data_size, S16 width, S16 height,
 		mHeight(height),
 		mComponents(components),
 		mData(NULL),
-		mDataSize(-1),
+		mDataSize(data_size),
 		mIsAvatarBake(false),
 		mLastErrorMsg(""),
 		mRawDiscardLevel(-1),
@@ -95,7 +95,7 @@ ImageBaseForKDU::ImageBaseForKDU(U8* data, S32 data_size, S16 width, S16 height,
 		mHeight(height),
 		mComponents(components),
 		mData(NULL),
-		mDataSize(-1),
+		mDataSize(data_size),
 		mIsAvatarBake(false),
 		mLastErrorMsg(""),
 		mRawDiscardLevel(raw_discard_level),
@@ -118,15 +118,23 @@ void ImageBaseForKDU::setSize(S16 width, S16 height, S8 components)
 	mComponents = components;
 }
 
+void ImageBaseForKDU::setSize(S16 width, S16 height)
+{
+	setSize(width, height, mComponents);
+}
+
 bool ImageBaseForKDU::copyData(U8* data, S32 data_size)
 {
 	if (data && ((data != mData) || (data_size != mDataSize)))
 	{
 		deleteData();
-		allocateData(data_size);
-		memcpy(mData, data, data_size);
+		if (allocateData(data_size))
+		{
+			memcpy(mData, data, data_size);
+			return true;
+		}
 	}
-	return true;
+	return false;
 }
 
 void ImageBaseForKDU::deleteData()

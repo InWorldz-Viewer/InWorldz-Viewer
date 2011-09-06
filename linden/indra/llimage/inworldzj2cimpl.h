@@ -48,6 +48,5 @@ public:
 							float encode_time=0.0,							
 							BOOL reversible=FALSE) = 0; // LGPL-compatible
 };
-InWorldzJ2CImpl::~InWorldzJ2CImpl() { assert(0); }
 
 #endif //LL_LLIMAGEJ2CIMPL_H

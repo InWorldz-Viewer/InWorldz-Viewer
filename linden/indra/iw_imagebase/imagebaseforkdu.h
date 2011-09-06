@@ -49,6 +49,9 @@ public:
 
 	// sets the sizes of an image; doesn't modify it's data or data_size
 	void setSize(S16 width, S16 height, S8 components);
+	// sets the width and height of an image while not touching its components
+	// be very careful when calling; prefer setting components together if you can
+	void setSize(S16 width, S16 height);
 
 	// sets the data_size of an image and modifies its data
 	void resize(U16 width, U16 height, S8 components);
@@ -65,8 +68,8 @@ private:
 	U16	mWidth;			// todo: <- move to their own struct
 	U16	mHeight;		// todo: <- move to their own struct
 	S8	mComponents;	// todo: <- move to their own struct
-	U8*	mData; // this NEEDS TO BE FIXED to use std::vector in llimage
-	S32 mDataSize; // convenience variable, not actually w * h * components
+	U8*	mData;			// this NEEDS TO BE FIXED to use std::vector in llimage
+	S32 mDataSize;		// convenience variable, not actually w * h * components
 
 
 	// deletes image data if it exists

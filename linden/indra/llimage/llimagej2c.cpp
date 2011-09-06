@@ -357,7 +357,16 @@ BOOL LLImageJ2C::updateData()
 
 BOOL LLImageJ2C::decode(LLImageRaw *raw_imagep, F32 decode_time)
 {
-	return decodeChannels(raw_imagep, decode_time, 0, 4);
+	if (raw_imagep && !raw_imagep->isBufferInvalid())
+	{
+		return decodeChannels(raw_imagep, decode_time, 0, 4);
+	}
+	else
+	{
+		llwarns << "Trying to decode a null pointer!" << llendl;
+		LLImage::setLastError("trying to decode an image with an invalid buffer, doing nothing with it!");
+		return FALSE;
+	}
 }
 
 
@@ -385,6 +394,12 @@ BOOL LLImageJ2C::decodeChannels(LLImageRaw *raw_imagep, F32 decode_time, S32 fir
 		// Here we make changes to the raw image pointer in our decoder plugin
 		if (mImplKDU) // the version of KDU used with InWorldz
 		{
+			if (raw_imagep->isBufferInvalid())
+			{
+				
+				return TRUE;
+			}
+
 			// LGPL plugin
 			ImageBaseForKDU base(this->getData(), this->getDataSize(), this->getWidth(), this->getHeight(), this->getComponents(), this->getRawDiscardLevel(), this->mRate, this->getMaxBytes());
 
@@ -393,6 +408,10 @@ BOOL LLImageJ2C::decodeChannels(LLImageRaw *raw_imagep, F32 decode_time, S32 fir
 			if (!base.getData() || !raw.getData())
 			{
 				llwarns << "cannot allocate temporary image info" << llendl;
+			}
+			else if (base.getData() == raw.getData())
+			{
+				llwarns << "decode called, but nothing to decode" << llendl;
 			}
 			else
 			{
@@ -407,6 +426,10 @@ BOOL LLImageJ2C::decodeChannels(LLImageRaw *raw_imagep, F32 decode_time, S32 fir
 				{
 					// resize checks to make sure we need to, then updates in a sane way
 					raw_imagep->resize(raw.getWidth(), raw.getHeight(), raw.getComponents());
+					if (!raw_imagep->isBufferInvalid())
+					{
+						memcpy(raw_imagep->getData(), raw.getData(), raw.getDataSize());
+					}
 					memcpy(raw_imagep->getData(), raw.getData(), raw.getDataSize());
 
 					if (!(base.mLastErrorMsg.empty()))
@@ -680,7 +703,7 @@ BOOL LLImageJ2C::validate(U8 *data, U32 file_size)
 	if ( res )
 	{
 		// Check to make sure that this instance has been initialized with data
-		if (!getData() || (0 == getDataSize()))
+		if (!getData() || (getDataSize() < 16))
 		{
 			setLastError("LLImageJ2C uninitialized");
 			res = FALSE;
