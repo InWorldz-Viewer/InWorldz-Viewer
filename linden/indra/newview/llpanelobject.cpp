@@ -1894,82 +1894,161 @@ void LLPanelObject::refresh()
 
 void LLPanelObject::draw()
 {
-	const LLColor4	white(	1.0f,	1.0f,	1.0f,	1);
-	const LLColor4	red(	1.0f,	0.25f,	0.f,	1);
-	const LLColor4	green(	0.f,	1.0f,	0.f,	1);
-	const LLColor4	blue(	0.f,	0.5f,	1.0f,	1);
+	static const LLColor4	white(	1.0f,	1.0f,	1.0f,	1);
+	static const LLColor4	red(	1.0f,	0.25f,	0.f,	1);
+	static const LLColor4	green(	0.f,	1.0f,	0.f,	1);
+	static const LLColor4	blue(	0.f,	0.5f,	1.0f,	1);
+
+	static const LLColor4	white_soft(	1.0f,	1.0f,	1.0f,	0.75f);
+	static const LLColor4	red_soft(	1.0f,	0.25f,	0.f,	0.75f);
+	static const LLColor4	green_soft(	0.f,	1.0f,	0.f,	0.75f);
+	static const LLColor4	blue_soft(	0.f,	0.5f,	1.0f,	0.75f);
 
 	// Tune the colors of the labels
 	LLTool* tool = LLToolMgr::getInstance()->getCurrentTool();
 
-	// These should really be set in the xui but for some reason that doesn't work! -- MC
-	mCtrlPosX	->setLabelColor(red);
-	mCtrlPosY	->setLabelColor(green);
-	mCtrlPosZ	->setLabelColor(blue);
-
-	mCtrlScaleX	->setLabelColor(red);
-	mCtrlScaleY	->setLabelColor(green);
-	mCtrlScaleZ	->setLabelColor(blue);
-
-	mCtrlRotX	->setLabelColor(red);
-	mCtrlRotY	->setLabelColor(green);
-	mCtrlRotZ	->setLabelColor(blue);
+	// These should really be set in the xui but for
+	// some reason that doesn't work right! -- MC
 
 	if (tool == LLToolCompTranslate::getInstance())
 	{
+		mLabelPosition->setFontStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlPosX	->setLabelColor(red);
+		mCtrlPosY	->setLabelColor(green);
+		mCtrlPosZ	->setLabelColor(blue);
 		mCtrlPosX	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 		mCtrlPosY	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 		mCtrlPosZ	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlPosX	->setLabelFont(LLFontGL::getFontSansSerifLarge());
+		mCtrlPosY	->setLabelFont(LLFontGL::getFontSansSerifLarge());
+		mCtrlPosZ	->setLabelFont(LLFontGL::getFontSansSerifLarge());
 		
-		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelSize->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleX	->setLabelColor(red_soft);
+		mCtrlScaleY	->setLabelColor(green_soft);
+		mCtrlScaleZ	->setLabelColor(blue_soft);
+		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlScaleY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlScaleZ	->setLabelFont(LLFontGL::getFontSansSerif());
 
-		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelRotation->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotX	->setLabelColor(red_soft);
+		mCtrlRotY	->setLabelColor(green_soft);
+		mCtrlRotZ	->setLabelColor(blue_soft);
+		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlRotY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlRotZ	->setLabelFont(LLFontGL::getFontSansSerif());
 	}
 	else if ( tool == LLToolCompScale::getInstance() )
 	{
-		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelPosition->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosX	->setLabelColor(red_soft);
+		mCtrlPosY	->setLabelColor(green_soft);
+		mCtrlPosZ	->setLabelColor(blue_soft);
+		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlPosY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlPosZ	->setLabelFont(LLFontGL::getFontSansSerif());
 
+		mLabelSize->setFontStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlScaleX	->setLabelColor(red);
+		mCtrlScaleY	->setLabelColor(green);
+		mCtrlScaleZ	->setLabelColor(blue);
 		mCtrlScaleX	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 		mCtrlScaleY	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 		mCtrlScaleZ	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlScaleX	->setLabelFont(LLFontGL::getFontSansSerifLarge());
+		mCtrlScaleY	->setLabelFont(LLFontGL::getFontSansSerifLarge());
+		mCtrlScaleZ	->setLabelFont(LLFontGL::getFontSansSerifLarge());
 
-		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelRotation->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotX	->setLabelColor(red_soft);
+		mCtrlRotY	->setLabelColor(green_soft);
+		mCtrlRotZ	->setLabelColor(blue_soft);
+		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlRotY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlRotZ	->setLabelFont(LLFontGL::getFontSansSerif());
 	}
 	else if ( tool == LLToolCompRotate::getInstance() )
 	{
-		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelPosition->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosX	->setLabelColor(red_soft);
+		mCtrlPosY	->setLabelColor(green_soft);
+		mCtrlPosZ	->setLabelColor(blue_soft);
+		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlPosY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlPosZ	->setLabelFont(LLFontGL::getFontSansSerif());
 
-		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelSize->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleX	->setLabelColor(red_soft);
+		mCtrlScaleY	->setLabelColor(green_soft);
+		mCtrlScaleZ	->setLabelColor(blue_soft);
+		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlScaleY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlScaleZ	->setLabelFont(LLFontGL::getFontSansSerif());
 
+		mLabelRotation->setFontStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlRotX	->setLabelColor(red);
+		mCtrlRotY	->setLabelColor(green);
+		mCtrlRotZ	->setLabelColor(blue);
 		mCtrlRotX	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 		mCtrlRotY	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 		mCtrlRotZ	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlRotX	->setLabelFont(LLFontGL::getFontSansSerifLarge());
+		mCtrlRotY	->setLabelFont(LLFontGL::getFontSansSerifLarge());
+		mCtrlRotZ	->setLabelFont(LLFontGL::getFontSansSerifLarge());
 	}
 	else
 	{
-		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelPosition->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosX	->setLabelColor(red_soft);
+		mCtrlPosY	->setLabelColor(green_soft);
+		mCtrlPosZ	->setLabelColor(blue_soft);
+		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlPosX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlPosY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlPosZ	->setLabelFont(LLFontGL::getFontSansSerif());
 
-		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelSize->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleX	->setLabelColor(red_soft);
+		mCtrlScaleY	->setLabelColor(green_soft);
+		mCtrlScaleZ	->setLabelColor(blue_soft);
+		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlScaleX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlScaleY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlScaleZ	->setLabelFont(LLFontGL::getFontSansSerif());
 
-		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL);
-		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL);
+		mLabelRotation->setFontStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotX	->setLabelColor(red_soft);
+		mCtrlRotY	->setLabelColor(green_soft);
+		mCtrlRotZ	->setLabelColor(blue_soft);
+		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL|LLFontGL::DROP_SHADOW_SOFT);
+		mCtrlRotX	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlRotY	->setLabelFont(LLFontGL::getFontSansSerif());
+		mCtrlRotZ	->setLabelFont(LLFontGL::getFontSansSerif());
 	}
 
 	LLPanel::draw();
