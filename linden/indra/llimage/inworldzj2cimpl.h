@@ -36,17 +36,18 @@ class InWorldzJ2CImpl
 public:
 	virtual ~InWorldzJ2CImpl() = 0;
 
-	virtual BOOL getMetadata(ImageBaseForKDU& base) = 0; // LGPL-compatible
-	virtual BOOL decodeImpl(ImageBaseForKDU& base,
-							ImageBaseForKDU& raw,
+	virtual BOOL getMetadata(ImageBaseForKDU* base) = 0; // LGPL-compatible
+	virtual BOOL decodeImpl(ImageBaseForKDU* base,
+							ImageBaseForKDU* raw,
 							float decode_time, 
 							int first_channel, 
 							int max_channel_count) = 0; // LGPL-compatible
-	virtual BOOL encodeImpl(ImageBaseForKDU& base, 
-							ImageBaseForKDU& raw, 
+	virtual BOOL encodeImpl(ImageBaseForKDU* base, 
+							ImageBaseForKDU* raw, 
 							const char* comment_text, 
 							float encode_time=0.0,							
 							BOOL reversible=FALSE) = 0; // LGPL-compatible
 };
+InWorldzJ2CImpl::~InWorldzJ2CImpl() { }
 
 #endif //LL_LLIMAGEJ2CIMPL_H

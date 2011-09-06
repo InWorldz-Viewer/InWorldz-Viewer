@@ -303,7 +303,7 @@ BOOL LLImageJ2C::updateData()
 			}
 			else
 			{
-				res = mImplKDU->getMetadata(base);
+				res = mImplKDU->getMetadata(&base);
 				
 				// We don't return here if hwc <=0 || !res
 				// so as to set the any possible error message
@@ -415,7 +415,7 @@ BOOL LLImageJ2C::decodeChannels(LLImageRaw *raw_imagep, F32 decode_time, S32 fir
 			}
 			else
 			{
-				res = mImplKDU->decodeImpl(base, raw, decode_time, first_channel, max_channel_count);
+				res = mImplKDU->decodeImpl(&base, &raw, decode_time, first_channel, max_channel_count);
 
 				if ((raw.getData() != NULL) &&
 					((raw.getData() != this->getData()) &&
@@ -499,7 +499,7 @@ BOOL LLImageJ2C::encode(const LLImageRaw *raw_imagep, const char* comment_text, 
 		}
 		else
 		{
-			res = mImplKDU->encodeImpl(base, raw, comment_text, encode_time);
+			res = mImplKDU->encodeImpl(&base, &raw, comment_text, encode_time);
 			
 			if ((base.getData() != NULL) &&
 				((base.getData() != this->getData()) &&
