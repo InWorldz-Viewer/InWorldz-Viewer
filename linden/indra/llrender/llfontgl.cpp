@@ -1123,8 +1123,7 @@ void LLFontGL::drawGlyph(const LLRectf& screen_rect, const LLRectf& uv_rect, con
 
 	gGL.begin(LLRender::QUADS);
 	{
-		//FIXME: bold and drop shadow are mutually exclusive only for convenience
-		//Allow both when we need them.
+		// Allow bold and drop shadow
 		if (style & BOLD)
 		{
 			gGL.color4fv(color.mV);
@@ -1136,7 +1135,7 @@ void LLFontGL::drawGlyph(const LLRectf& screen_rect, const LLRectf& uv_rect, con
 				renderQuad(screen_rect_offset, uv_rect, slant_offset);
 			}
 		}
-		else if (style & DROP_SHADOW_SOFT)
+		if (style & DROP_SHADOW_SOFT)
 		{
 			LLColor4 shadow_color = LLFontGL::sShadowColor;
 			shadow_color.mV[VALPHA] = color.mV[VALPHA] * drop_shadow_strength * DROP_SHADOW_SOFT_STRENGTH;
@@ -1169,7 +1168,7 @@ void LLFontGL::drawGlyph(const LLRectf& screen_rect, const LLRectf& uv_rect, con
 			gGL.color4fv(color.mV);
 			renderQuad(screen_rect, uv_rect, slant_offset);
 		}
-		else if (style & DROP_SHADOW)
+		if (style & DROP_SHADOW)
 		{
 			LLColor4 shadow_color = LLFontGL::sShadowColor;
 			shadow_color.mV[VALPHA] = color.mV[VALPHA] * drop_shadow_strength;
