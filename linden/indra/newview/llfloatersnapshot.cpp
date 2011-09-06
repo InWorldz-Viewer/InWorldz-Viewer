@@ -250,6 +250,16 @@ LLSnapshotLivePreview::~LLSnapshotLivePreview()
 	mPreviewImageEncoded = NULL;
 	mFormattedImage = NULL;
 
+	// don't give false info
+	mImageScaled[0] = FALSE;
+	mImageScaled[1] = FALSE;
+	mThumbnailImage = NULL;
+	mThumbnailUpToDate = FALSE;
+	mViewerImage[2] = NULL;
+	mViewerImage[1] = NULL;
+	mCurImageIndex = 0;
+	mDataSize = 0;
+
 // 	gIdleCallbacks.deleteFunction( &LLSnapshotLivePreview::onIdle, (void*)this );
 	sList.erase(this);
 }
@@ -759,6 +769,12 @@ BOOL LLSnapshotLivePreview::onIdle( void* snapshot_preview )
 
 		// time to produce a snapshot
 
+		if (previewp->mThumbnailImage)
+		{
+			// invalidate any thumbnail we might have. 
+			previewp->mThumbnailImage = NULL;
+		}
+
 		if (!previewp->mPreviewImage)
 		{
 			previewp->mPreviewImage = new LLImageRaw;
@@ -787,102 +803,119 @@ BOOL LLSnapshotLivePreview::onIdle( void* snapshot_preview )
 								previewp->mSnapshotBufferType,
 								previewp->getMaxImageSize()))
 		{
-			previewp->mPreviewImageEncoded->resize(
-				previewp->mPreviewImage->getWidth(), 
-				previewp->mPreviewImage->getHeight(), 
-				previewp->mPreviewImage->getComponents());
-
-			if(previewp->getSnapshotType() == SNAPSHOT_TEXTURE)
+			if (previewp->mPreviewImageEncoded && 
+				!previewp->mPreviewImageEncoded->isBufferInvalid() &&
+				previewp->mPreviewImage && 
+				!previewp->mPreviewImage->isBufferInvalid())
 			{
-				LLPointer<LLImageJ2C> formatted = new LLImageJ2C;
-				LLPointer<LLImageRaw> scaled = new LLImageRaw(
-					previewp->mPreviewImage->getData(),
-					previewp->mPreviewImage->getWidth(),
-					previewp->mPreviewImage->getHeight(),
+				previewp->mPreviewImageEncoded->resize(
+					previewp->mPreviewImage->getWidth(), 
+					previewp->mPreviewImage->getHeight(), 
 					previewp->mPreviewImage->getComponents());
-			
-				scaled->biasedScaleToPowerOfTwo(512);
-				previewp->mImageScaled[previewp->mCurImageIndex] = TRUE;
-				if (formatted->encode(scaled, 0.f))
+
+				if (previewp->getSnapshotType() == SNAPSHOT_TEXTURE)
 				{
-					previewp->mDataSize = formatted->getDataSize();
-					formatted->decode(previewp->mPreviewImageEncoded, 0);
+					previewp->mFormattedImage = NULL;
+					//LLPointer<LLImageJ2C> formatted = new LLImageJ2C();
+					previewp->mFormattedImage = new LLImageJ2C();
+
+					LLPointer<LLImageRaw> temp_scaled = new LLImageRaw(
+						previewp->mPreviewImage->getData(),
+						previewp->mPreviewImage->getWidth(),
+						previewp->mPreviewImage->getHeight(),
+						previewp->mPreviewImage->getComponents());
+				
+					temp_scaled->biasedScaleToPowerOfTwo(512);
+
+					previewp->mImageScaled[previewp->mCurImageIndex] = TRUE;
+
+					if (previewp->mFormattedImage->encode(temp_scaled, 0.f))
+					{
+						previewp->mDataSize = previewp->mFormattedImage->getDataSize();
+						previewp->mFormattedImage->decode(previewp->mPreviewImageEncoded, 0);
+					}
+
+					temp_scaled = NULL;
+				}
+				else
+				{
+					// delete any existing image
+					previewp->mFormattedImage = NULL;
+
+					// now create the new one of the appropriate format.
+					// note: postcards hardcoded to use jpeg always.
+					LLFloaterSnapshot::ESnapshotFormat format = previewp->getSnapshotType() == SNAPSHOT_POSTCARD
+						? LLFloaterSnapshot::SNAPSHOT_FORMAT_JPEG : previewp->getSnapshotFormat();
+					switch(format)
+					{
+					case LLFloaterSnapshot::SNAPSHOT_FORMAT_PNG:
+						previewp->mFormattedImage = new LLImagePNG(); 
+						break;
+					case LLFloaterSnapshot::SNAPSHOT_FORMAT_JPEG:
+						previewp->mFormattedImage = new LLImageJPEG(previewp->mSnapshotQuality); 
+						break;
+					case LLFloaterSnapshot::SNAPSHOT_FORMAT_BMP:
+						previewp->mFormattedImage = new LLImageBMP(); 
+						break;
+					}
+					if (previewp->mFormattedImage->encode(previewp->mPreviewImage, 0))
+					{
+						previewp->mDataSize = previewp->mFormattedImage->getDataSize();
+						// special case BMP to copy instead of decode otherwise decode will crash.
+						if(format == LLFloaterSnapshot::SNAPSHOT_FORMAT_BMP)
+						{
+							previewp->mPreviewImageEncoded->copy(previewp->mPreviewImage);
+						}
+						else
+						{
+							previewp->mFormattedImage->decode(previewp->mPreviewImageEncoded, 0);
+						}
+					}
 				}
 			}
-			else
+
+			if (previewp->mPreviewImageEncoded && !previewp->mPreviewImageEncoded->isBufferInvalid())
 			{
-				// delete any existing image
-				previewp->mFormattedImage = NULL;
-				// now create the new one of the appropriate format.
-				// note: postcards hardcoded to use jpeg always.
-				LLFloaterSnapshot::ESnapshotFormat format = previewp->getSnapshotType() == SNAPSHOT_POSTCARD
-					? LLFloaterSnapshot::SNAPSHOT_FORMAT_JPEG : previewp->getSnapshotFormat();
-				switch(format)
+				LLPointer<LLImageRaw> scaled = new LLImageRaw(
+					previewp->mPreviewImageEncoded->getData(),
+					previewp->mPreviewImageEncoded->getWidth(),
+					previewp->mPreviewImageEncoded->getHeight(),
+					previewp->mPreviewImageEncoded->getComponents());
+			
+				if(!scaled->isBufferInvalid())
 				{
-				case LLFloaterSnapshot::SNAPSHOT_FORMAT_PNG:
-					previewp->mFormattedImage = new LLImagePNG(); 
-					break;
-				case LLFloaterSnapshot::SNAPSHOT_FORMAT_JPEG:
-					previewp->mFormattedImage = new LLImageJPEG(previewp->mSnapshotQuality); 
-					break;
-				case LLFloaterSnapshot::SNAPSHOT_FORMAT_BMP:
-					previewp->mFormattedImage = new LLImageBMP(); 
-					break;
-				}
-				if (previewp->mFormattedImage->encode(previewp->mPreviewImage, 0))
-				{
-					previewp->mDataSize = previewp->mFormattedImage->getDataSize();
-					// special case BMP to copy instead of decode otherwise decode will crash.
-					if(format == LLFloaterSnapshot::SNAPSHOT_FORMAT_BMP)
+					// leave original image dimensions, just scale up texture buffer
+					if (previewp->mPreviewImageEncoded->getWidth() > 1024 || previewp->mPreviewImageEncoded->getHeight() > 1024)
 					{
-						previewp->mPreviewImageEncoded->copy(previewp->mPreviewImage);
+						// go ahead and shrink image to appropriate power of 2 for display
+						scaled->biasedScaleToPowerOfTwo(1024);
+						previewp->mImageScaled[previewp->mCurImageIndex] = TRUE;
 					}
 					else
 					{
-						previewp->mFormattedImage->decode(previewp->mPreviewImageEncoded, 0);
+						// expand image but keep original image data intact
+						scaled->expandToPowerOfTwo(1024, FALSE);
 					}
-				}
-			}
 
-			LLPointer<LLImageRaw> scaled = new LLImageRaw(
-				previewp->mPreviewImageEncoded->getData(),
-				previewp->mPreviewImageEncoded->getWidth(),
-				previewp->mPreviewImageEncoded->getHeight(),
-				previewp->mPreviewImageEncoded->getComponents());
-			
-			if(!scaled->isBufferInvalid())
-			{
-				// leave original image dimensions, just scale up texture buffer
-				if (previewp->mPreviewImageEncoded->getWidth() > 1024 || previewp->mPreviewImageEncoded->getHeight() > 1024)
-				{
-					// go ahead and shrink image to appropriate power of 2 for display
-					scaled->biasedScaleToPowerOfTwo(1024);
-					previewp->mImageScaled[previewp->mCurImageIndex] = TRUE;
-				}
-				else
-				{
-					// expand image but keep original image data intact
-					scaled->expandToPowerOfTwo(1024, FALSE);
-				}
+					previewp->mViewerImage[previewp->mCurImageIndex] = new LLImageGL(scaled, FALSE);
+					LLPointer<LLImageGL> curr_preview_image = previewp->mViewerImage[previewp->mCurImageIndex];
+					gGL.getTexUnit(0)->bind(curr_preview_image);
+					if (previewp->getSnapshotType() != SNAPSHOT_TEXTURE)
+					{
+						curr_preview_image->setFilteringOption(LLTexUnit::TFO_POINT);
+					}
+					else
+					{
+						curr_preview_image->setFilteringOption(LLTexUnit::TFO_ANISOTROPIC);
+					}
+					curr_preview_image->setAddressMode(LLTexUnit::TAM_CLAMP);
 
-				previewp->mViewerImage[previewp->mCurImageIndex] = new LLImageGL(scaled, FALSE);
-				LLPointer<LLImageGL> curr_preview_image = previewp->mViewerImage[previewp->mCurImageIndex];
-				gGL.getTexUnit(0)->bind(curr_preview_image);
-				if (previewp->getSnapshotType() != SNAPSHOT_TEXTURE)
-				{
-					curr_preview_image->setFilteringOption(LLTexUnit::TFO_POINT);
-				}
-				else
-				{
-					curr_preview_image->setFilteringOption(LLTexUnit::TFO_ANISOTROPIC);
-				}
-				curr_preview_image->setAddressMode(LLTexUnit::TAM_CLAMP);
+					previewp->mSnapshotUpToDate = TRUE;
+					previewp->generateThumbnailImage(TRUE) ;
 
-				previewp->mSnapshotUpToDate = TRUE;
-				previewp->generateThumbnailImage(TRUE) ;
-
-				previewp->mPosTakenGlobal = gAgent.getCameraPositionGlobal();
-				previewp->mShineCountdown = 4; // wait a few frames to avoid animation glitch due to readback this frame
+					previewp->mPosTakenGlobal = gAgent.getCameraPositionGlobal();
+					previewp->mShineCountdown = 4; // wait a few frames to avoid animation glitch due to readback this frame
+				}
 			}
 		}
 		previewp->getWindow()->decBusyCount();
@@ -894,6 +927,7 @@ BOOL LLSnapshotLivePreview::onIdle( void* snapshot_preview )
 		if(!previewp->getThumbnailUpToDate())
 		{
 			previewp->generateThumbnailImage() ;
+			previewp->mSnapshotUpToDate = TRUE;
 		}
 	}
 
@@ -1437,7 +1471,8 @@ void LLFloaterSnapshot::Impl::onClickNewSnapshot(void* data)
 	LLFloaterSnapshot *view = (LLFloaterSnapshot *)data;
 	if (previewp && view)
 	{
-		previewp->updateSnapshot(TRUE);
+		previewp->updateSnapshot(TRUE, TRUE);
+		updateControls(view);
 	}
 }
 
@@ -1501,6 +1536,7 @@ void LLFloaterSnapshot::Impl::onClickUICheck(LLUICtrl *ctrl, void* data)
 	{
 		checkAutoSnapshot(getPreviewView(view), TRUE);
 		updateControls(view);
+		updateLayout(view);
 	}
 }
 
