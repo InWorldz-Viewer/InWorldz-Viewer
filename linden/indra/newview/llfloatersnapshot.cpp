@@ -802,16 +802,15 @@ BOOL LLSnapshotLivePreview::onIdle( void* snapshot_preview )
 								FALSE,
 								previewp->mSnapshotBufferType,
 								previewp->getMaxImageSize()))
-		{
-			if (previewp->mPreviewImageEncoded && 
-				!previewp->mPreviewImageEncoded->isBufferInvalid() &&
-				previewp->mPreviewImage && 
-				!previewp->mPreviewImage->isBufferInvalid())
-			{
-				previewp->mPreviewImageEncoded->resize(
+		{				
+			previewp->mPreviewImageEncoded->resize(
 					previewp->mPreviewImage->getWidth(), 
 					previewp->mPreviewImage->getHeight(), 
 					previewp->mPreviewImage->getComponents());
+
+			if (!previewp->mPreviewImageEncoded->isBufferInvalid() &&
+				!previewp->mPreviewImage->isBufferInvalid())
+			{
 
 				if (previewp->getSnapshotType() == SNAPSHOT_TEXTURE)
 				{
@@ -819,23 +818,13 @@ BOOL LLSnapshotLivePreview::onIdle( void* snapshot_preview )
 					//LLPointer<LLImageJ2C> formatted = new LLImageJ2C();
 					previewp->mFormattedImage = new LLImageJ2C();
 
-					LLPointer<LLImageRaw> temp_scaled = new LLImageRaw(
-						previewp->mPreviewImage->getData(),
-						previewp->mPreviewImage->getWidth(),
-						previewp->mPreviewImage->getHeight(),
-						previewp->mPreviewImage->getComponents());
-				
-					temp_scaled->biasedScaleToPowerOfTwo(512);
-
 					previewp->mImageScaled[previewp->mCurImageIndex] = TRUE;
 
-					if (previewp->mFormattedImage->encode(temp_scaled, 0.f))
+					previewp->mPreviewImage->biasedScaleToPowerOfTwo();
+					if (previewp->mFormattedImage->encode(previewp->mPreviewImage, 0.f))
 					{
 						previewp->mDataSize = previewp->mFormattedImage->getDataSize();
-						previewp->mFormattedImage->decode(previewp->mPreviewImageEncoded, 0);
 					}
-
-					temp_scaled = NULL;
 				}
 				else
 				{
@@ -916,6 +905,7 @@ BOOL LLSnapshotLivePreview::onIdle( void* snapshot_preview )
 					previewp->mPosTakenGlobal = gAgent.getCameraPositionGlobal();
 					previewp->mShineCountdown = 4; // wait a few frames to avoid animation glitch due to readback this frame
 				}
+				scaled = NULL; //clean up
 			}
 		}
 		previewp->getWindow()->decBusyCount();
@@ -1326,9 +1316,6 @@ void LLFloaterSnapshot::Impl::updateControls(LLFloaterSnapshot* floater)
 	{
 		LLResMgr::getInstance()->getIntegerString(bytes_string, (previewp->getDataSize()) >> 10 );
 	}
-	S32 upload_cost = LLGlobalEconomy::Singleton::getInstance()->getPriceUpload();
-	floater->childSetLabelArg("texture", "[AMOUNT]", llformat("%d",upload_cost));
-	floater->childSetLabelArg("upload_btn", "[AMOUNT]", llformat("%d",upload_cost));
 	floater->childSetTextArg("file_size_label", "[SIZE]", got_snap ? bytes_string : floater->getString("unknown"));
 	floater->childSetColor("file_size_label", 
 		shot_type == LLSnapshotLivePreview::SNAPSHOT_POSTCARD 
