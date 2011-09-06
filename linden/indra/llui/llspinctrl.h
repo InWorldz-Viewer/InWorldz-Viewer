@@ -98,6 +98,7 @@ public:
 	// This should be refactored out into easy font styling settings for all ui controls
 	// for example: setBold, setUnstyled, etc., along with support in the xui -- MC
 	void			setLabelStyle(U8 style)						{ mLabelFontStyle = style; }
+	void			setLabelFont(const LLFontGL *font)			{ mFontGL = ( font ? font : LLFontGL::getFontSansSerif()); }
 	void			setAllowEdit(BOOL allow_edit);
 
 	virtual void	onTabInto();
@@ -136,6 +137,7 @@ private:
 	LLColor4		mTextEnabledColor;
 	LLColor4		mTextDisabledColor;
 	U8				mLabelFontStyle;
+	const LLFontGL*	mFontGL;
 
 	class LLButton*		mUpBtn;
 	class LLButton*		mDownBtn;

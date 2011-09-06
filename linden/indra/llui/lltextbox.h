@@ -87,6 +87,7 @@ public:
 	void			setBackgroundVisible(BOOL visible)		{ mBackgroundVisible = visible; }
 	void			setBorderVisible(BOOL visible)			{ mBorderVisible = visible; }
 	void			setFontStyle(U8 style)					{ mFontStyle = style; }
+	void			setFont(const LLFontGL *font)			{ mFontGL = ( font ? font : LLFontGL::getFontSansSerif()); }
 	void			setBorderDropshadowVisible(BOOL visible){ mBorderDropShadowVisible = visible; }
 	void			setHPad(S32 pixels)						{ mHPad = pixels; }
 	void			setVPad(S32 pixels)						{ mVPad = pixels; }

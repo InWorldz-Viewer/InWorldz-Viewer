@@ -79,11 +79,20 @@ LLSpinCtrl::LLSpinCtrl(	const std::string& name, const LLRect& rect, const std::
 	S32 centered_bottom = bottom;
 	S32 btn_left = 0;
 
+	if (font)
+	{
+		mFontGL = font;
+	}
+	else
+	{
+		mFontGL = LLFontGL::getFontSansSerif();
+	}
+
 	// Label
 	if( !label.empty() )
 	{
 		LLRect label_rect( 0, centered_top, label_width, centered_bottom );
-		mLabelBox = new LLTextBox( std::string("SpinCtrl Label"), label_rect, label, font );
+		mLabelBox = new LLTextBox( std::string("SpinCtrl Label"), label_rect, label, mFontGL );
 		addChild(mLabelBox);
 
 		btn_left += label_rect.mRight + SPINCTRL_SPACING;
@@ -121,6 +130,7 @@ LLSpinCtrl::LLSpinCtrl(	const std::string& name, const LLRect& rect, const std::
 	addChild(mDownBtn);
 
 	LLRect editor_rect( btn_right + 1, centered_top, getRect().getWidth(), centered_bottom );
+	// LLLineEditor doesn't support font changing yet! Wow
 	mEditor = new LLLineEditor( std::string("SpinCtrl Editor"), editor_rect, LLStringUtil::null, font,
 								MAX_STRING_LENGTH,
 								&LLSpinCtrl::onEditorCommit, NULL, NULL, this,
@@ -430,6 +440,7 @@ void LLSpinCtrl::draw()
 	{
 		mLabelBox->setColor( getEnabled() ? mTextEnabledColor : mTextDisabledColor );
 		mLabelBox->setFontStyle(mLabelFontStyle);
+		mLabelBox->setFont(mFontGL);
 	}
 	LLUICtrl::draw();
 }
@@ -499,6 +510,8 @@ LLXMLNodePtr LLSpinCtrl::getXML(bool save_children) const
 
 		node->createChild("label_width", TRUE)->setIntValue(mLabelBox->getRect().getWidth());
 	}
+
+	node->createChild("font", TRUE)->setStringValue(LLFontGL::nameFromFont(mFontGL));
 
 	node->createChild("initial_val", TRUE)->setFloatValue(mInitialValue);
 
