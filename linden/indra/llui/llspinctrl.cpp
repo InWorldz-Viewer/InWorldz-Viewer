@@ -71,7 +71,7 @@ LLSpinCtrl::LLSpinCtrl(	const std::string& name, const LLRect& rect, const std::
 	mTextEnabledColor( LLUI::sColorsGroup->getColor( "LabelTextColor" ) ),
 	mTextDisabledColor( LLUI::sColorsGroup->getColor( "LabelDisabledColor" ) ),
 	mbHasBeenSet( FALSE ),
-	mLabelFontStyle(0)
+	mLabelFontStyle(LLFontGL::DROP_SHADOW_SOFT)
 {
 	S32 top = getRect().getHeight();
 	S32 bottom = top - 2 * SPINCTRL_BTN_HEIGHT;
@@ -85,14 +85,14 @@ LLSpinCtrl::LLSpinCtrl(	const std::string& name, const LLRect& rect, const std::
 	}
 	else
 	{
-		mFontGL = LLFontGL::getFontSansSerif();
+		mFontGL = LLFontGL::getFontSansSerifSmall();
 	}
 
 	// Label
 	if( !label.empty() )
 	{
 		LLRect label_rect( 0, centered_top, label_width, centered_bottom );
-		mLabelBox = new LLTextBox( std::string("SpinCtrl Label"), label_rect, label, mFontGL );
+		mLabelBox = new LLTextBox( std::string("SpinCtrl Label"), label_rect, label, font );
 		addChild(mLabelBox);
 
 		btn_left += label_rect.mRight + SPINCTRL_SPACING;
@@ -509,9 +509,12 @@ LLXMLNodePtr LLSpinCtrl::getXML(bool save_children) const
 		node->createChild("label", TRUE)->setStringValue(mLabelBox->getText());
 
 		node->createChild("label_width", TRUE)->setIntValue(mLabelBox->getRect().getWidth());
-	}
 
-	node->createChild("font", TRUE)->setStringValue(LLFontGL::nameFromFont(mFontGL));
+		if (node->hasAttribute("font"))
+		{
+			node->createChild("font", TRUE)->setStringValue(LLFontGL::nameFromFont(mFontGL));
+		}
+	}
 
 	node->createChild("initial_val", TRUE)->setFloatValue(mInitialValue);
 
@@ -584,7 +587,10 @@ LLView* LLSpinCtrl::fromXML(LLXMLNodePtr node, LLView *parent, LLUICtrlFactory *
 							LLStringUtil::null,
 							label_width);
 
-	spinner->setLabelStyle(LLFontGL::getStyleFromString(font_style));
+	if (!font_style.empty())
+	{
+		spinner->setLabelStyle(LLFontGL::getStyleFromString(font_style));
+	}
 	spinner->setPrecision(precision);
 
 	spinner->initFromXML(node, parent);
