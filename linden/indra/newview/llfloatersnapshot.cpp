@@ -74,6 +74,7 @@
 #include "llimagepng.h"
 #include "llimagebmp.h"
 #include "llimagej2c.h"
+#include "llimagetga.h"
 #include "llvfile.h"
 #include "llvfs.h"
 
@@ -843,6 +844,9 @@ BOOL LLSnapshotLivePreview::onIdle( void* snapshot_preview )
 					case LLFloaterSnapshot::SNAPSHOT_FORMAT_JPEG:
 						previewp->mFormattedImage = new LLImageJPEG(previewp->mSnapshotQuality); 
 						break;
+					case LLFloaterSnapshot::SNAPSHOT_FORMAT_TGA:
+						previewp->mFormattedImage = new LLImageTGA(); 
+						break;
 					case LLFloaterSnapshot::SNAPSHOT_FORMAT_BMP:
 						previewp->mFormattedImage = new LLImageBMP(); 
 						break;
@@ -1115,14 +1119,17 @@ LLSnapshotLivePreview* LLFloaterSnapshot::Impl::getPreviewView(LLFloaterSnapshot
 LLSnapshotLivePreview::ESnapshotType LLFloaterSnapshot::Impl::getTypeIndex(LLFloaterSnapshot* floater)
 {
 	LLSnapshotLivePreview::ESnapshotType index = LLSnapshotLivePreview::SNAPSHOT_POSTCARD;
-	LLSD value = floater->childGetValue("snapshot_type_radio");
-	const std::string id = value.asString();
-	if (id == "postcard")
-		index = LLSnapshotLivePreview::SNAPSHOT_POSTCARD;
-	else if (id == "texture")
-		index = LLSnapshotLivePreview::SNAPSHOT_TEXTURE;
-	else if (id == "local")
-		index = LLSnapshotLivePreview::SNAPSHOT_LOCAL;
+	LLRadioGroup* snapshot_type_radio = floater->getChild<LLRadioGroup>("snapshot_type_radio");
+	if (snapshot_type_radio) 
+	{
+		const std::string id = snapshot_type_radio->getSelectedValue().asString();
+		if (id == "postcard")
+			index = LLSnapshotLivePreview::SNAPSHOT_POSTCARD;
+		else if (id == "texture")
+			index = LLSnapshotLivePreview::SNAPSHOT_TEXTURE;
+		else if (id == "local")
+			index = LLSnapshotLivePreview::SNAPSHOT_LOCAL;
+	}
 	return index;
 }
 
@@ -1131,14 +1138,19 @@ LLSnapshotLivePreview::ESnapshotType LLFloaterSnapshot::Impl::getTypeIndex(LLFlo
 LLFloaterSnapshot::ESnapshotFormat LLFloaterSnapshot::Impl::getFormatIndex(LLFloaterSnapshot* floater)
 {
 	ESnapshotFormat index = SNAPSHOT_FORMAT_PNG;
-	LLSD value = floater->childGetValue("local_format_combo");
-	const std::string id = value.asString();
-	if (id == "PNG")
-		index = SNAPSHOT_FORMAT_PNG;
-	else if (id == "JPEG")
-		index = SNAPSHOT_FORMAT_JPEG;
-	else if (id == "BMP")
-		index = SNAPSHOT_FORMAT_BMP;
+	if(floater->hasChild("local_format_combo"))
+	{
+		LLComboBox* local_format_combo = floater->getChild<LLComboBox>("local_format_combo");
+		const std::string id  = local_format_combo->getSelectedItemLabel();
+		if (id == "PNG")
+			index = SNAPSHOT_FORMAT_PNG;
+		else if (id == "JPEG")
+			index = SNAPSHOT_FORMAT_JPEG;
+		else if (id == "TGA")
+			index = SNAPSHOT_FORMAT_TGA;
+		else if (id == "BMP")
+			index = SNAPSHOT_FORMAT_BMP;
+	}
 	return index;
 }
 
