@@ -1902,61 +1902,74 @@ void LLPanelObject::draw()
 	// Tune the colors of the labels
 	LLTool* tool = LLToolMgr::getInstance()->getCurrentTool();
 
+	// These should really be set in the xui but for some reason that doesn't work! -- MC
+	mCtrlPosX	->setLabelColor(red);
+	mCtrlPosY	->setLabelColor(green);
+	mCtrlPosZ	->setLabelColor(blue);
+
+	mCtrlScaleX	->setLabelColor(red);
+	mCtrlScaleY	->setLabelColor(green);
+	mCtrlScaleZ	->setLabelColor(blue);
+
+	mCtrlRotX	->setLabelColor(red);
+	mCtrlRotY	->setLabelColor(green);
+	mCtrlRotZ	->setLabelColor(blue);
+
 	if (tool == LLToolCompTranslate::getInstance())
 	{
-		mCtrlPosX	->setLabelColor(red);
-		mCtrlPosY	->setLabelColor(green);
-		mCtrlPosZ	->setLabelColor(blue);
+		mCtrlPosX	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlPosY	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlPosZ	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		
+		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL);
 
-		mCtrlScaleX	->setLabelColor(white);
-		mCtrlScaleY	->setLabelColor(white);
-		mCtrlScaleZ	->setLabelColor(white);
-
-		mCtrlRotX	->setLabelColor(white);
-		mCtrlRotY	->setLabelColor(white);
-		mCtrlRotZ	->setLabelColor(white);
+		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL);
 	}
 	else if ( tool == LLToolCompScale::getInstance() )
 	{
-		mCtrlPosX	->setLabelColor(white);
-		mCtrlPosY	->setLabelColor(white);
-		mCtrlPosZ	->setLabelColor(white);
+		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL);
 
-		mCtrlScaleX	->setLabelColor(red);
-		mCtrlScaleY	->setLabelColor(green);
-		mCtrlScaleZ	->setLabelColor(blue);
+		mCtrlScaleX	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlScaleY	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlScaleZ	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 
-		mCtrlRotX	->setLabelColor(white);
-		mCtrlRotY	->setLabelColor(white);
-		mCtrlRotZ	->setLabelColor(white);
+		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL);
 	}
 	else if ( tool == LLToolCompRotate::getInstance() )
 	{
-		mCtrlPosX	->setLabelColor(white);
-		mCtrlPosY	->setLabelColor(white);
-		mCtrlPosZ	->setLabelColor(white);
+		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL);
 
-		mCtrlScaleX	->setLabelColor(white);
-		mCtrlScaleY	->setLabelColor(white);
-		mCtrlScaleZ	->setLabelColor(white);
+		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL);
 
-		mCtrlRotX	->setLabelColor(red);
-		mCtrlRotY	->setLabelColor(green);
-		mCtrlRotZ	->setLabelColor(blue);
+		mCtrlRotX	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlRotY	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
+		mCtrlRotZ	->setLabelStyle(LLFontGL::BOLD|LLFontGL::DROP_SHADOW);
 	}
 	else
 	{
-		mCtrlPosX	->setLabelColor(white);
-		mCtrlPosY	->setLabelColor(white);
-		mCtrlPosZ	->setLabelColor(white);
+		mCtrlPosX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlPosY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlPosZ	->setLabelStyle(LLFontGL::NORMAL);
 
-		mCtrlScaleX	->setLabelColor(white);
-		mCtrlScaleY	->setLabelColor(white);
-		mCtrlScaleZ	->setLabelColor(white);
+		mCtrlScaleX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlScaleY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlScaleZ	->setLabelStyle(LLFontGL::NORMAL);
 
-		mCtrlRotX	->setLabelColor(white);
-		mCtrlRotY	->setLabelColor(white);
-		mCtrlRotZ	->setLabelColor(white);
+		mCtrlRotX	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlRotY	->setLabelStyle(LLFontGL::NORMAL);
+		mCtrlRotZ	->setLabelStyle(LLFontGL::NORMAL);
 	}
 
 	LLPanel::draw();

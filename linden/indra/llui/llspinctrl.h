@@ -95,6 +95,9 @@ public:
 	void			setLabel(const LLStringExplicit& label);
 	void			setLabelColor(const LLColor4& c)			{ mTextEnabledColor = c; }
 	void			setDisabledLabelColor(const LLColor4& c)	{ mTextDisabledColor = c; }
+	// This should be refactored out into easy font styling settings for all ui controls
+	// for example: setBold, setUnstyled, etc., along with support in the xui -- MC
+	void			setLabelStyle(U8 style)						{ mLabelFontStyle = style; }
 	void			setAllowEdit(BOOL allow_edit);
 
 	virtual void	onTabInto();
@@ -132,6 +135,7 @@ private:
 	class LLLineEditor*	mEditor;
 	LLColor4		mTextEnabledColor;
 	LLColor4		mTextDisabledColor;
+	U8				mLabelFontStyle;
 
 	class LLButton*		mUpBtn;
 	class LLButton*		mDownBtn;
