@@ -1148,14 +1148,17 @@ LLFloaterSnapshot::ESnapshotFormat LLFloaterSnapshot::Impl::getFormatIndex(LLFlo
 LLViewerWindow::ESnapshotType LLFloaterSnapshot::Impl::getLayerType(LLFloaterSnapshot* floater)
 {
 	LLViewerWindow::ESnapshotType type = LLViewerWindow::SNAPSHOT_TYPE_COLOR;
-	LLSD value = floater->childGetValue("layer_types");
-	const std::string id = value.asString();
-	if (id == "colors")
-		type = LLViewerWindow::SNAPSHOT_TYPE_COLOR;
-	else if (id == "depth")
-		type = LLViewerWindow::SNAPSHOT_TYPE_DEPTH;
-	else if (id == "objects")
-		type = LLViewerWindow::SNAPSHOT_TYPE_OBJECT_ID;
+	if(floater->hasChild("layer_types"))
+	{
+		LLComboBox* layer_types = floater->getChild<LLComboBox>("layer_types");
+		const std::string id  = layer_types->getSelectedItemLabel();
+		if (id == "colors")
+			type = LLViewerWindow::SNAPSHOT_TYPE_COLOR;
+		else if (id == "depth")
+			type = LLViewerWindow::SNAPSHOT_TYPE_DEPTH;
+		else if (id == "objects")
+			type = LLViewerWindow::SNAPSHOT_TYPE_OBJECT_ID;
+	}
 	return type;
 }
 
@@ -1803,23 +1806,25 @@ void LLFloaterSnapshot::Impl::onCommitSnapshotFormat(LLUICtrl* ctrl, void* data)
 void LLFloaterSnapshot::Impl::comboSetCustom(LLFloaterSnapshot* floater, const std::string& comboname)
 {
 	LLComboBox* combo = floater->getChild<LLComboBox>(comboname);
-
-	combo->setCurrentByIndex(combo->getItemCount() - 1); // "custom" is always the last index
-
-	if(comboname == "postcard_size_combo") 
+	if (combo)
 	{
-		gSavedSettings.setS32("SnapshotPostcardLastResolution", combo->getCurrentIndex());
-	}
-	else if(comboname == "texture_size_combo") 
-	{
-		gSavedSettings.setS32("SnapshotTextureLastResolution", combo->getCurrentIndex());
-	}
-	else if(comboname == "local_size_combo") 
-	{
-		gSavedSettings.setS32("SnapshotLocalLastResolution", combo->getCurrentIndex());
-	}
+		combo->setCurrentByIndex(combo->getItemCount() - 1); // "custom" is always the last index
 
-	checkAspectRatio(floater, -1); // -1 means custom
+		if(comboname == "postcard_size_combo") 
+		{
+			gSavedSettings.setS32("SnapshotPostcardLastResolution", combo->getCurrentIndex());
+		}
+		else if(comboname == "texture_size_combo") 
+		{
+			gSavedSettings.setS32("SnapshotTextureLastResolution", combo->getCurrentIndex());
+		}
+		else if(comboname == "local_size_combo") 
+		{
+			gSavedSettings.setS32("SnapshotLocalLastResolution", combo->getCurrentIndex());
+		}
+
+		checkAspectRatio(floater, -1); // -1 means custom
+	}
 }
 
 
@@ -2152,6 +2157,9 @@ void LLFloaterSnapshot::hide(void*)
 //static 
 void LLFloaterSnapshot::update()
 {
+	if (!sInstance)
+		return;
+	
 	BOOL changed = FALSE;
 	for (std::set<LLSnapshotLivePreview*>::iterator iter = LLSnapshotLivePreview::sList.begin();
 		 iter != LLSnapshotLivePreview::sList.end(); ++iter)
