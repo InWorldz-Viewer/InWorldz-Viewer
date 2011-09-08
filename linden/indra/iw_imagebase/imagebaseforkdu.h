@@ -24,7 +24,7 @@
 #ifndef IW_IMAGEBASEFORKDU_H
 #define IW_IMAGEBASEFORKDU_H
 
-#include "../iw_kdu/iw_kdu_loader/stdtypes.h" // pure LGPL -- MC
+#include "../iw_kdu_loader/includes/stdtypes.h" // pure LGPL -- MC
 #include <string>
 
 // our LGPL "interface" class. We use this to send data to any non-GPLv2 decoders
