@@ -119,6 +119,17 @@
     <key>Value</key>
     <integer>1</integer>
   </map>
+  <key>RenderSculptProtection</key>
+  <map>
+    <key>Comment</key>
+    <string>Toggles derendering of potentially harmful sculpties. Warning: may cause false positives</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
   <key>RenderSculptSAMax</key>
   <map>
     <key>Comment</key>

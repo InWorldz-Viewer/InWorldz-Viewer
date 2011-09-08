@@ -2276,8 +2276,9 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 
 		// This is supposed to address the issue of lagging sculpts crashers
 		// but it might be better to just never fix this if it breaks too much
-		// content -- MC
-		if (vobj->isSculpted() && (vobj->mSculptSurfaceArea > LLVOVolume::sSculptSAThresh))
+		// content. Disabled by default -- MC
+		static LLCachedControl<BOOL> render_sculpt_protection("RenderSculptProtection", FALSE);
+		if (render_sculpt_protection && vobj->isSculpted() && (vobj->mSculptSurfaceArea > LLVOVolume::sSculptSAThresh))
 		{
 		    LLPipeline::sSculptSurfaceAreaFrame += vobj->mSculptSurfaceArea;
 		    if (LLPipeline::sSculptSurfaceAreaFrame > LLVOVolume::sSculptSAMax)
@@ -2415,8 +2416,6 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 			}		
 		}
 	}
-
-	LLPipeline::sSculptSurfaceAreaFrame = 0.f;
 
 	group->mBufferUsage = useage;
 
