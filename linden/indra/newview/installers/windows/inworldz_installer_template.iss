@@ -65,8 +65,8 @@ Source: %%PACKAGEFILES%%\libaprutil-1.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\llcommon.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\featuretable.txt; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\gpu_table.txt; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\iw_kdu_loader.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\kdu_v64R.dll; DestDir: {app}; Flags: ignoreversion
-Source: %%PACKAGEFILES%%\kdu_v64R.dll.config; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\openal32.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\OpenJPEG.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\README.txt; DestDir: {app}; Flags: ignoreversion

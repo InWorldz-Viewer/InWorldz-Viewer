@@ -230,7 +230,16 @@ class WindowsManifest(ViewerManifest):
                                'llplugin', 'slplugin', self.args['configuration'], "SLPlugin.exe"),
                   "SLPlugin.exe")
 
-        # need to get the inworldz kdu dll from any of the build directories as well
+        # need to get the inworldz kdu dlls from the release build directories as well
+        try:
+            self.path(self.find_existing_file('../iw_kdu_loader/iw_kdu_loader.dll',
+                  'release/iw_kdu_loader.dll'), 
+                  dst='iw_kdu_loader.dll')
+            pass
+        except:
+            print "Skipping iw_kdu_loader.dll"
+            pass
+        
         try:
             self.path(self.find_existing_file('../../libraries/i686-win32/lib/release/kdu_v64R.dll'), 
                   dst='kdu_v64R.dll')
@@ -246,9 +255,6 @@ class WindowsManifest(ViewerManifest):
 
         # For use in crash reporting (generates minidumps)
         self.path("dbghelp.dll")
-        
-        # Copy the kdu DSO .config
-        self.path("kdu_v64R.dll.config")
 
         # For using sound.
         if self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):
