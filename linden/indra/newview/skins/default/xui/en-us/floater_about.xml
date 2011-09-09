@@ -34,7 +34,7 @@
            follows="left|top|right|bottom" font="SansSerifSmall" height="374" left="6"
            max_length="65536" mouse_opaque="true" name="credits_editor" width="423"
            word_wrap="true">
-    InWorldz Viewer is brought to you by McCabe Maxsted and InWorldz, LLC, based on the Snowglobe Viewer.
+    InWorldz Viewer is brought to you by McCabe Maxsted and InWorldz, LLC, based on the Snowglobe Viewer. Linux version brought to you in part by Avian Overlord.
 
     Thanks go to the Snowglobe contributors as well as those who've contributed to the opensource Second Life viewer.
 
