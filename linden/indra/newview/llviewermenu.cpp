@@ -847,7 +847,13 @@ void init_client_menu(LLMenuGL* menu)
 									   &menu_check_control,
 									   (void*)"DebugPermissions"));
 	
-
+	menu->append(new LLMenuItemCheckGL("Double-Click Auto-Pilot", 
+				menu_toggle_control, NULL, menu_check_control, 
+				(void*)"DoubleClickAutoPilot"));
+	// add for double click teleport support
+	menu->append(new LLMenuItemCheckGL("Double-Click Teleport", 
+				menu_toggle_control, NULL, menu_check_control, 
+				(void*)"DoubleClickTeleport"));
 
 #ifdef TOGGLE_HACKED_GODLIKE_VIEWER
 	if (!LLViewerLogin::getInstance()->isInProductionGrid())
@@ -1091,13 +1097,6 @@ void init_debug_ui_menu(LLMenuGL* menu)
 	menu->append(new LLMenuItemCallGL( "Print Selected Object Info",	&print_object_info, NULL, NULL, 'P', MASK_CONTROL|MASK_SHIFT ));
 	menu->append(new LLMenuItemCallGL( "Print Agent Info",			&print_agent_nvpairs, NULL, NULL, 'P', MASK_SHIFT ));
 	menu->append(new LLMenuItemCallGL( "Memory Stats",  &output_statistics, NULL, NULL, 'M', MASK_SHIFT | MASK_ALT | MASK_CONTROL));
-	menu->append(new LLMenuItemCheckGL("Double-Click Auto-Pilot", 
-		menu_toggle_control, NULL, menu_check_control, 
-		(void*)"DoubleClickAutoPilot"));
-	// add for double click teleport support
-	menu->append(new LLMenuItemCheckGL("Double-Click Teleport", 
-		menu_toggle_control, NULL, menu_check_control, 
-		(void*)"DoubleClickTeleport"));
 	menu->appendSeparator();
 //	menu->append(new LLMenuItemCallGL( "Print Packets Lost",			&print_packets_lost, NULL, NULL, 'L', MASK_SHIFT ));
 	menu->append(new LLMenuItemToggleGL("Debug SelectMgr", &gDebugSelectMgr));
