@@ -137,6 +137,8 @@
 <!-- MAP -->
 <MapAvatar value="0, 255, 0, 255" />
 <MapFriend value="255, 255, 0, 255" />
+<MapMuted value="128, 128, 128, 255" />                 <!-- Muted avatars' glyph color -->
+<MapSpecial value="117, 225, 255, 255" />               <!-- glyph color for special avatars -->
 
 <!-- MINI-MAP -->
 <NetMapBackgroundColor value="0, 0, 0, 77" />

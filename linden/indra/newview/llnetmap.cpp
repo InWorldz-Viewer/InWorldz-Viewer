@@ -48,6 +48,7 @@
 #include "llfloateravatarinfo.h"
 #include "llfloaterworldmap.h"
 #include "llframetimer.h"
+#include "llmutelist.h"
 #include "lltracker.h"
 #include "llmenugl.h"
 #include "llsurface.h"
@@ -72,12 +73,26 @@ const F32 MAP_SCALE_MIN = 32;
 const F32 MAP_SCALE_MID = 1024;
 const F32 MAP_SCALE_MAX = 4096;
 const F32 MAP_SCALE_INCREMENT = 16;
-const F32 MAP_SCALE_ZOOM_FACTOR = 1.04f;	// Zoom in factor per click of the scroll wheel (4%)
+const F32 MAP_SCALE_ZOOM_FACTOR = 1.25f;			// Zoom in factor per click of the scroll wheel (25%)
 const F32 MAP_MINOR_DIR_THRESHOLD = 0.08f;
 const F32 MIN_DOT_RADIUS = 3.5f;
 const F32 DOT_SCALE = 0.75f;
 const F32 MIN_PICK_SCALE = 2.f;
 const S32 MOUSE_DRAG_SLOP = 2;				// How far the mouse needs to move before we think it's a drag
+
+// Local variables
+static LLColor4 avatar_color;
+static LLColor4 friend_color;
+static LLColor4 muted_color;
+static LLColor4 special_color;
+static std::vector<LLUUID>sSpecialList;
+
+// Local functions
+bool isSpecial(const LLUUID& agent_id)
+{
+	// avatar UUIDs we want to recognize as "special" IW avatars
+	return (std::find(sSpecialList.begin(), sSpecialList.end(), agent_id) != sSpecialList.end());
+}
 
 LLNetMap::LLNetMap(const std::string& name) :
 	LLPanel(name),
@@ -94,12 +109,27 @@ LLNetMap::LLNetMap(const std::string& name) :
 	mPixelsPerMeter = mScale / LLWorld::getInstance()->getRegionWidthInMeters();
 	mDotRadius = llmax(DOT_SCALE * mPixelsPerMeter, MIN_DOT_RADIUS);
 
+	// Founder IDs and IDs we want to consider "special"
+	sSpecialList.push_back(LLUUID("675d3d9f-64d9-11de-b0c3-fdcafd93e9d8")); 
+	sSpecialList.push_back(LLUUID("d2990096-d1c0-4038-ae46-e704746d5b73"));
+	sSpecialList.push_back(LLUUID("9d8cb15f-4b8a-4c08-ab79-6a4a85baf45e"));
+	sSpecialList.push_back(LLUUID("d95dd1e7-de3b-48fd-9458-2f3a06adce2a")); 
+	sSpecialList.push_back(LLUUID("15e426fd-3260-4a18-aff0-231673b1a8f3"));
+
+	avatar_color = gColors.getColor("MapAvatar");
+	friend_color = gColors.getColor("MapFriend");
+	muted_color = gColors.getColor("MapMuted");
+	special_color = gColors.getColor("MapSpecial");
+
 	mObjectImageCenterGlobal = gAgent.getCameraPositionGlobal();
 	
 	// Register event listeners for popup menu
 	(new LLScaleMap())->registerListener(this, "MiniMap.ZoomLevel");
 	(new LLCenterMap())->registerListener(this, "MiniMap.Center");
 	(new LLCheckCenterMap())->registerListener(this, "MiniMap.CheckCenter");
+	(new LLShowObjects())->registerListener(this, "MiniMap.ShowObjects");
+	(new LLCheckShowObjects())->registerListener(this, "MiniMap.CheckShowObjects");
+	(new LLShowWorldMap())->registerListener(this, "MiniMap.ShowWorldMap");
 	(new LLStopTracking())->registerListener(this, "MiniMap.StopTracking");
 	(new LLEnableTracking())->registerListener(this, "MiniMap.EnableTracking");
 	(new LLShowAgentProfile())->registerListener(this, "MiniMap.ShowProfile");
@@ -288,8 +318,12 @@ void LLNetMap::draw()
 			U8 *default_texture = mObjectRawImagep->getData();
 			memset( default_texture, 0, mObjectImagep->getWidth() * mObjectImagep->getHeight() * mObjectImagep->getComponents() );
 
-			// Draw objects
-			gObjectList.renderObjectsForMap(*this);
+			// Draw buildings
+			//gObjectList.renderObjectsForMap(*this);
+			if (gSavedSettings.getBOOL("MiniMapShowObjects"))
+			{
+				gObjectList.renderObjectsForMap(*this);
+			}
 
 			mObjectImagep->setSubImage(mObjectRawImagep, 0, 0, mObjectImagep->getWidth(), mObjectImagep->getHeight());
 			
@@ -330,8 +364,7 @@ void LLNetMap::draw()
 		F32 min_pick_dist = mDotRadius * MIN_PICK_SCALE; 
 
 		// Draw avatars
-		LLColor4 avatar_color = gColors.getColor( "MapAvatar" );
-		LLColor4 friend_color = gColors.getColor( "MapFriend" );
+		LLColor4 glyph_color;
 		std::vector<LLUUID> avatar_ids;
 		std::vector<LLVector3d> positions;
 		LLWorld::getInstance()->getAvatars(&avatar_ids, &positions);
@@ -341,9 +374,27 @@ void LLNetMap::draw()
 			// just be careful to sort the avatar IDs along with the positions. -MG
 			pos_map = globalPosToView(positions[i], rotate_map);
 
+			// Show them muted even if they're friends
+			if (LLMuteList::getInstance()->isMuted(avatar_ids[i]))
+			{
+				glyph_color = muted_color;
+			}
+			else if (is_agent_friend(avatar_ids[i]))
+			{
+				glyph_color = friend_color;
+			}
+			else if (isSpecial(avatar_ids[i]))
+			{
+				glyph_color = special_color;
+			}
+			else
+			{
+				glyph_color = avatar_color;
+			}
+
 			LLWorldMapView::drawAvatar(
 				pos_map.mV[VX], pos_map.mV[VY], 
-				is_agent_friend(avatar_ids[i]) ? friend_color : avatar_color, 
+				glyph_color, 
 				pos_map.mV[VZ],
 				mDotRadius);
 
@@ -549,8 +600,14 @@ BOOL LLNetMap::handleToolTip( S32 x, S32 y, std::string& msg, LLRect* sticky_rec
 			msg.append(fullname);
 			msg.append("\n");
 		}
-		msg.append( region->getName() );
-
+		
+ 		msg.append( region->getName() );
+		msg.append("\n");
+		gSavedSettings.getBOOL( "DoubleClickTeleport" ) ?
+						msg.append(getString("tooltip_tp")) : msg.append(getString("tooltip_map"));
+		msg.append("\n");
+		msg.append(getString("tooltip_pan"));
+		
 #ifndef LL_RELEASE_FOR_DOWNLOAD
 		std::string buffer;
 		msg.append("\n");
@@ -716,7 +773,7 @@ void LLNetMap::createObjectImage()
 	S32 square_size = llround( sqrt(width*width + height*height) );
 
 	// Find the least power of two >= the minimum size.
-	const S32 MIN_SIZE = 64;
+	const S32 MIN_SIZE = 32;
 	const S32 MAX_SIZE = 256;
 	S32 img_size = MIN_SIZE;
 	while( (img_size*2 < square_size ) && (img_size < MAX_SIZE) )
@@ -919,6 +976,28 @@ bool LLNetMap::LLCheckCenterMap::handleEvent(LLPointer<LLEvent> event, const LLS
 	BOOL enabled = (gSavedSettings.getS32("MiniMapCenter") == center);
 
 	self->findControl(userdata["control"].asString())->setValue(enabled);
+	return true;
+}
+
+bool LLNetMap::LLShowObjects::handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+{
+	BOOL show = gSavedSettings.getBOOL("MiniMapShowObjects");
+	gSavedSettings.setBOOL("MiniMapShowObjects", !show);
+
+	return true;
+}
+
+bool LLNetMap::LLCheckShowObjects::handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+{
+	LLNetMap *self = mPtr;
+	BOOL enabled = gSavedSettings.getBOOL("MiniMapShowObjects");
+	self->findControl(userdata["control"].asString())->setValue(enabled);
+	return true;
+}
+
+bool LLNetMap::LLShowWorldMap::handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+{
+	LLFloaterWorldMap::show(NULL, FALSE);
 	return true;
 }
 
