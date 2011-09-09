@@ -19,6 +19,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#ifndef IW_KDU_LOADER
+#define IW_KDU_LOADER
+
+#include "stdafx.h"
+
 // The following ifdef block is the standard way of creating macros which make exporting 
 // from a DLL simpler. All files within this DLL are compiled with the IW_KDU_LOADER_EXPORTS
 // symbol defined on the command line. this symbol should not be defined on any project
@@ -39,3 +44,6 @@
 
 // Note: we keep the exported functions in their specific files. Move them here
 // if this proves more difficult to maintain -- MC
+
+
+#endif // IW_KDU_LOADER

@@ -72,6 +72,9 @@ if (VIEWER)
   add_subdirectory(${LIBS_OPEN_PREFIX}llcrashlogger)
   add_subdirectory(${LIBS_OPEN_PREFIX}llplugin)
   add_subdirectory(${LIBS_OPEN_PREFIX}llui)
+  
+  # InWorldz kdu loader. Don't depend
+  add_subdirectory(${LIBS_OPEN_PREFIX}iw_kdu_loader) 
 
   # viewer media plugins
   add_subdirectory(${LIBS_OPEN_PREFIX}media_plugins)

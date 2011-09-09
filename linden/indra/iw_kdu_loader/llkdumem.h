@@ -27,7 +27,9 @@
 #ifndef LL_LLKDUMEM_H
 #define LL_LLKDUMEM_H
 
-#include "../../llcommon/stdtypes.h" // pure LGPL -- MC
+#include "stdafx.h"
+
+#include "stdtypes.h"
 
 // Support classes for reading and writing from memory buffers in KDU
 #include "kdu_image.h"

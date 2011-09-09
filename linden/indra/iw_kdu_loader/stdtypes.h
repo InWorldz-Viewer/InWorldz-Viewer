@@ -23,8 +23,10 @@
  * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
-#ifndef LL_STDTYPES_H
-#define LL_STDTYPES_H
+#ifndef IW_KDU_STDTYPES_H
+#define IW_KDU_STDTYPES_H
+
+#include "stdafx.h"
 
 #include <cfloat>
 #include <climits>
@@ -36,14 +38,14 @@ typedef unsigned short			U16;
 typedef signed int			S32;
 typedef unsigned int			U32;
 
-#if LL_WINDOWS
+#ifdef OS_WINDOWS
 // Windows wchar_t is 16-bit
 typedef U32				llwchar;
 #else
 typedef wchar_t				llwchar;
 #endif
 
-#if LL_WINDOWS
+#ifdef OS_WINDOWS
 typedef signed __int64			S64;
 // probably should be 'hyper' or similiar
 #define S64L(a)					(a)
@@ -52,7 +54,7 @@ typedef unsigned __int64		U64;
 #else
 typedef long long int			S64;
 typedef long long unsigned int		U64;
-#if LL_DARWIN || LL_LINUX || LL_SOLARIS
+#if defined(OS_MAC || OS_LINUX || OS_SOLARIS)
 #define S64L(a)				(a##LL)
 #define U64L(a)				(a##ULL)
 #endif
@@ -102,7 +104,7 @@ typedef U8 LLPCode;
 
 #define	LL_ARRAY_SIZE( _kArray ) ( sizeof( (_kArray) ) / sizeof( _kArray[0] ) )
 
-#if LL_LINUX && __GNUC__ <= 2
+#if (defined(OS_LINUX) && defined(__GNUC__) <= 2)
 typedef int intptr_t;
 #endif
 

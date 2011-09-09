@@ -22,7 +22,3 @@ set_source_files_properties(${iw_imagebase_HEADER_FILES}
 list(APPEND iw_imagebase_SOURCE_FILES ${iw_imagebase_HEADER_FILES})
 
 add_library (iw_imagebase ${iw_imagebase_SOURCE_FILES})
-#target_link_libraries(
-#    iw_imagebase
-#    ${OPENJPEG_LIBRARIES}
-#    )

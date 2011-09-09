@@ -28,8 +28,8 @@
  * $/LicenseInfo$
  */
 
-#if ! defined(LL_IS_APPROX_EQUAL_FRACTION_H)
-#define LL_IS_APPROX_EQUAL_FRACTION_H
+#ifndef IW_KDU_IS_APPROX_EQUAL_FRACTION_H
+#define IW_KDU_IS_APPROX_EQUAL_FRACTION_H
 
 #include "lldefs.h"
 #include <cmath>
@@ -76,4 +76,4 @@ inline BOOL is_approx_equal_fraction(F64 x, F64 y, U32 frac_bits)
     return is_approx_equal_fraction_impl<F64>(x, y, frac_bits);
 }
 
-#endif /* ! defined(LL_IS_APPROX_EQUAL_FRACTION_H) */
+#endif /* IW_KDU_IS_APPROX_EQUAL_FRACTION_H */

@@ -26,7 +26,6 @@
 
 // dll includes
 #include "stdafx.h"
-
 #include "InWorldzJ2C.h"
 #include "lldefs.h"
 #include "llformat.h"

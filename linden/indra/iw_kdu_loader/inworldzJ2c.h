@@ -33,8 +33,8 @@
 #include "stdtypes.h"
 
 // IW viewer includes
-#include "../../iw_imagebase/imagebaseforkdu.h"
-#include "../../llimage/inworldzj2cimpl.h"
+#include "../iw_imagebase/imagebaseforkdu.h"
+#include "../llimage/inworldzj2cimpl.h"
 
 //
 // KDU core header files

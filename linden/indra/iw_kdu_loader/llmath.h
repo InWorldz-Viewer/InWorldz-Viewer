@@ -24,8 +24,8 @@
  * $/LicenseInfo$
  */
 
-#ifndef LLMATH_H
-#define LLMATH_H
+#ifndef IW_KDU_MATH_H
+#define IW_KDU_MATH_H
 
 #include "stdafx.h"
 

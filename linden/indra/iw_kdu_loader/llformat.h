@@ -25,8 +25,8 @@
  * $/LicenseInfo$
  */
 
-#ifndef LL_LLFORMAT_H
-#define LL_LLFORMAT_H
+#ifndef IW_KDU_LLFORMAT_H
+#define IW_KDU_LLFORMAT_H
 
 #include <string>
 
@@ -42,4 +42,4 @@ std::string llformat(const char *fmt, ...);
 // to enable correct converting utf8_to_wstring.
 std::string llformat_to_utf8(const char *fmt, ...);
 
-#endif // LL_LLFORMAT_H
+#endif // IW_KDU_LLFORMAT_H

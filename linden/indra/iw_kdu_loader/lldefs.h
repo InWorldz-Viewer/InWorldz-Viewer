@@ -24,8 +24,8 @@
  * $/LicenseInfo$
  */
 
-#ifndef LL_LLDEFS_H
-#define LL_LLDEFS_H
+#ifndef IW_KDU_LLDEFS_H
+#define IW_KDU_LLDEFS_H
 
 #include "stdtypes.h"
 
@@ -236,5 +236,5 @@ inline LLDATATYPE llclampb(const LLDATATYPE& a)
 	return llmin(llmax(a, (LLDATATYPE)0), (LLDATATYPE)255);
 }
 
-#endif // LL_LLDEFS_H
+#endif // IW_KDU_LLDEFS_H
 
