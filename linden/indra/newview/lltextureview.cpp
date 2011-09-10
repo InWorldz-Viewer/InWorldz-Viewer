@@ -54,6 +54,8 @@
 #include "llviewerimage.h"
 #include "llviewerimagelist.h"
 #include "llvovolume.h"
+#include "llviewerstats.h"
+
 extern F32 texmem_lower_bound_scale;
 
 LLTextureView *gTextureView = NULL;
@@ -65,14 +67,14 @@ std::set<LLViewerImage*> LLTextureView::sDebugImages;
 
 ////////////////////////////////////////////////////////////////////////////
 
-static std::string title_string1a("Tex UUID Area  DDis(Req)  DecodePri(Fetch)     [download]");
-static std::string title_string1b("Tex UUID Area  DDis(Req)  Fetch(DecodePri)     [download]");
+static std::string title_string1a("Tex UUID Area  DDis(Req)  DecodePri(Fetch)     [download] pk/max");
+static std::string title_string1b("Tex UUID Area  DDis(Req)  Fetch(DecodePri)     [download] pk/max");
 static std::string title_string2("State");
 static std::string title_string3("Pkt Bnd");
 static std::string title_string4("  W x H (Dis) Mem");
 
 static S32 title_x1 = 0;
-static S32 title_x2 = 440;
+static S32 title_x2 = 460;
 static S32 title_x3 = title_x2 + 40;
 static S32 title_x4 = title_x3 + 50;
 static S32 texture_bar_height = 8;
@@ -162,7 +164,7 @@ void LLTextureBar::draw()
 	{
 		color = LLColor4::green4;
 	}
-	else if (mImagep->getBoostLevel())
+	else if (mImagep->getBoostLevel() > LLViewerImageBoostLevel::BOOST_NONE)
 	{
 		color = LLColor4::magenta;
 	}
@@ -349,7 +351,7 @@ void LLTextureBar::draw()
 		// draw the image size at the end
 		{
 			std::string num_str = llformat("%3dx%3d (%d) %7d", mImagep->getWidth(), mImagep->getHeight(),
-										mImagep->getDiscardLevel(), mImagep->mTextureMemory);
+										mImagep->getDiscardLevel(), mImagep->getHasGLTexture() ? mImagep->mTextureMemory : 0);
 			LLFontGL::getFontMonospace()->renderUTF8(num_str, 0, title_x4, getRect().getHeight(), color,
 											LLFontGL::LEFT, LLFontGL::TOP);
 		}
@@ -404,35 +406,49 @@ void LLGLTexMemBar::draw()
 	S32 total_mem = BYTES_TO_MEGA_BYTES(LLViewerImage::sTotalTextureMemoryInBytes);
 	S32 max_total_mem = LLViewerImage::sMaxTotalTextureMemInMegaBytes;
 	F32 discard_bias = LLViewerImage::sDesiredDiscardBias;
-	S32 line_height = (S32)(LLFontGL::getFontMonospace()->getLineHeight() + .5f);
 	F32 cache_usage = ((F32)(LLAppViewer::getTextureCache()->getUsage()/1024))/1024.f;
 	F32 cache_max_usage = ((F32)(LLAppViewer::getTextureCache()->getMaxUsage()/1024))/1024.f;
-// 	U32 cache_entries = LLAppViewer::getTextureCache()->getEntries();
-// 	U32 cache_max_entries = LLAppViewer::getTextureCache()->getMaxEntries();
-	
+	S32 line_height = (S32)(LLFontGL::getFontMonospace()->getLineHeight() + .5f);
+	F32 total_texture_downloaded = (F32)gTotalTextureBytes / (1024 * 1024);
+	F32 total_object_downloaded = (F32)gTotalObjectBytes / (1024 * 1024);
+	U32 total_http_requests = LLAppViewer::getTextureFetch()->getTotalNumHTTPRequests() ;
 	//----------------------------------------------------------------------------
 	LLGLSUIDefault gls_ui;
-	LLColor4 text_color(1.f, 1.f, 1.f, 0.75f);
+	static LLColor4 text_color(1.f, 1.f, 1.f, 0.75f);
 	LLColor4 color;
 	
-	std::string text;
-	text = llformat("GL Tot: %d/%d MB Bound: %d/%d MB Raw Tot: %d MB Bias: %.2f Cache: %.1f/%.1f MB",
+	std::string text = "";
+
+	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*6,
+											 text_color, LLFontGL::LEFT, LLFontGL::TOP);
+
+	text = llformat("GL mem: %d/%d MB | Bound mem: %d/%d MB | Raw img mem: %d MB | Img discard bias: %.2f",
 					total_mem,
 					max_total_mem,
 					bound_mem,
 					max_bound_mem,
-					LLImageRaw::sGlobalRawMemory >> 20,					discard_bias,
-					cache_usage, cache_max_usage);
+					LLImageRaw::sGlobalRawMemory >> 20,	discard_bias);
 	//, cache_entries, cache_max_entries
 
-	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*3,
+	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*5,
+											 text_color, LLFontGL::LEFT, LLFontGL::TOP);
+
+	text = llformat("Cache usage: %.1f/%.1f MB | Textures dl'd: %.1f MB | Objects dl'd: %.1f MB | HTTP reqs (total): %d(%d)",
+					cache_usage, 
+					cache_max_usage, 
+					total_texture_downloaded, 
+					total_object_downloaded, 
+					LLAppViewer::getTextureFetch()->getNumHTTPRequests(),
+					total_http_requests);
+
+	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*4,
 											 text_color, LLFontGL::LEFT, LLFontGL::TOP);
 
 	//----------------------------------------------------------------------------
 #if 0
 	S32 bar_left = 400;
 	S32 bar_width = 200;
-	S32 top = line_height*3 - 2;
+	S32 top = line_height*3 - 2 + v_offset;
 	S32 bottom = top - 6;
 	S32 left = bar_left;
 	S32 right = left + bar_width;
@@ -491,23 +507,27 @@ void LLGLTexMemBar::draw()
 #endif
 	//----------------------------------------------------------------------------
 
-	text = llformat("Textures: %d Fetch: %d(%d) Pkts:%d(%d) Cache R/W: %d/%d LFS:%d IW:%d RAW:%d HTP:%d BW: %.0f/%.0f",
+	text = llformat("Texture total: %d | Fetches (deletes): %d(%d) | Packets (bad): %d(%d)  | Bandwidth (throttle): %.0f/%.0f",
 					gImageList.getNumImages(),
 					LLAppViewer::getTextureFetch()->getNumRequests(),
 					LLAppViewer::getTextureFetch()->getNumDeletes(),
 					LLAppViewer::getTextureFetch()->mPacketCount,
 					LLAppViewer::getTextureFetch()->mBadPacketCount,
+					LLAppViewer::getTextureFetch()->getTextureBandwidth(),
+					gSavedSettings.getF32("ThrottleBandwidthKBPS"));
+
+	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*3,
+									 text_color, LLFontGL::LEFT, LLFontGL::TOP);
+
+	text = llformat("Cache R/W: %d/%d | LFS pending: %d | Img decodes pending: %d | Raw img total: %d",
 					LLAppViewer::getTextureCache()->getNumReads(),
 					LLAppViewer::getTextureCache()->getNumWrites(),
 					LLLFSThread::sLocal->getPending(),
 					LLAppViewer::getImageDecodeThread()->getPending(), 
-					LLImageRaw::sRawImageCount,
-					LLAppViewer::getTextureFetch()->getNumHTTPRequests(),
-					LLAppViewer::getTextureFetch()->getTextureBandwidth(),
-					gSavedSettings.getF32("ThrottleBandwidthKBPS"));
+					LLImageRaw::sRawImageCount);
 
 	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*2,
-									 text_color, LLFontGL::LEFT, LLFontGL::TOP);
+									text_color, LLFontGL::LEFT, LLFontGL::TOP);
 
 	left = 600;
 	
@@ -682,8 +702,9 @@ void LLTextureView::draw()
 			
 			if (mPrintList)
 			{
+				S32 tex_mem = imagep->getHasGLTexture() ? imagep->mTextureMemory : 0 ;
 				llinfos << imagep->getID()
-						<< "\t" <<  imagep->mTextureMemory
+						<< "\t" << tex_mem
 						<< "\t" << imagep->getBoostLevel()
 						<< "\t" << imagep->getDecodePriority()
 						<< "\t" << imagep->getWidth()

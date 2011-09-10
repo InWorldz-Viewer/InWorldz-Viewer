@@ -164,8 +164,8 @@ public:
 		mGetReason = reason;
 	}
 
-	void setCanUseHTTP(bool can_use_http) {mCanUseHTTP = can_use_http;}
-	bool getCanUseHTTP()const {return mCanUseHTTP ;}
+	void setCanUseHTTP(bool can_use_http) { mCanUseHTTP = can_use_http; }
+	bool getCanUseHTTP() const { return mCanUseHTTP; }
 
 protected:
 	LLTextureFetchWorker(LLTextureFetch* fetcher, const std::string& url, const LLUUID& id, const LLHost& host,
@@ -892,10 +892,10 @@ bool LLTextureFetchWorker::doWork(S32 param)
 				mLoaded = FALSE;
 				mGetStatus = 0;
 				mGetReason.clear();
-				lldebugs << "HTTP GET: " << mID << " Offset: " << offset
+				LL_DEBUGS("Texture") << "HTTP GET: " << mID << " Offset: " << offset
 						<< " Bytes: " << mRequestedSize
 						<< " Bandwidth(kbps): " << mFetcher->getTextureBandwidth() << "/" << mFetcher->mMaxBandwidth
-						<< llendl;
+						<< LL_ENDL;
 				setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority);
 				mState = WAIT_HTTP_REQ;	
 
@@ -1531,6 +1531,7 @@ LLTextureFetch::LLTextureFetch(LLTextureCache* cache, LLImageDecodeThread* image
 	  mImageDecodeThread(imagedecodethread),
 	  mTextureBandwidth(0),
 	  mHTTPTextureBits(0),
+	  mTotalHTTPRequests(0),
 	  mCurlGetRequest(NULL)
 {
 	mMaxBandwidth = gSavedSettings.getF32("ThrottleBandwidthKBPS");
@@ -1673,6 +1674,7 @@ void LLTextureFetch::addToHTTPQueue(const LLUUID& id)
 {
 	LLMutexLock lock(&mNetworkQueueMutex);
 	mHTTPTextureQueue.insert(id);
+	mTotalHTTPRequests++;
 }
 
 void LLTextureFetch::removeFromHTTPQueue(const LLUUID& id, S32 received_size)
@@ -1730,6 +1732,15 @@ S32 LLTextureFetch::getNumHTTPRequests()
 { 
 	mNetworkQueueMutex.lock() ;
 	S32 size = (S32)mHTTPTextureQueue.size(); 
+	mNetworkQueueMutex.unlock() ;
+
+	return size ;
+}
+
+U32 LLTextureFetch::getTotalNumHTTPRequests()
+{
+	mNetworkQueueMutex.lock() ;
+	U32 size = mTotalHTTPRequests ;
 	mNetworkQueueMutex.unlock() ;
 
 	return size ;
