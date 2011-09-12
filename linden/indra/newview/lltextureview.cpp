@@ -519,12 +519,13 @@ void LLGLTexMemBar::draw()
 	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*3,
 									 text_color, LLFontGL::LEFT, LLFontGL::TOP);
 
-	text = llformat("Cache R/W: %d/%d | LFS pending: %d | Img decodes pending: %d | Raw img total: %d",
+	text = llformat("Cache R/W: %d/%d | LFS pending: %d | Img decodes pending: %d | Raw img total/cached: %d/%d",
 					LLAppViewer::getTextureCache()->getNumReads(),
 					LLAppViewer::getTextureCache()->getNumWrites(),
 					LLLFSThread::sLocal->getPending(),
 					LLAppViewer::getImageDecodeThread()->getPending(), 
-					LLImageRaw::sRawImageCount);
+					LLImageRaw::sRawImageCount,
+					LLImageRaw::sRawImageCachedCount);
 
 	LLFontGL::getFontMonospace()->renderUTF8(text, 0, 0, line_height*2,
 									text_color, LLFontGL::LEFT, LLFontGL::TOP);

@@ -139,7 +139,10 @@ BOOL LLImageBase::sSizeOverride = FALSE;
 // virtual
 void LLImageBase::deleteData()
 {
-	delete[] mData;
+	if(mData)
+	{
+		delete[] mData;
+	}
 	mData = NULL;
 	mDataSize = 0;
 }
@@ -183,6 +186,7 @@ U8* LLImageBase::allocateData(S32 size)
 // virtual
 U8* LLImageBase::reallocateData(S32 size)
 {
+
 	LLMemType mt1((LLMemType::EMemType)mMemType);
 	U8 *new_datap = new U8[size];
 	if (!new_datap)
@@ -245,16 +249,17 @@ U8* LLImageBase::allocateDataSize(S32 width, S32 height, S32 ncomponents, S32 si
 
 S32 LLImageRaw::sGlobalRawMemory = 0;
 S32 LLImageRaw::sRawImageCount = 0;
+S32 LLImageRaw::sRawImageCachedCount = 0;
 
 LLImageRaw::LLImageRaw()
-	: LLImageBase()
+	: LLImageBase(), mCacheEntries(0)
 {
 	mMemType = LLMemType::MTYPE_IMAGERAW;
 	++sRawImageCount;
 }
 
 LLImageRaw::LLImageRaw(U16 width, U16 height, S8 components)
-	: LLImageBase()
+	: LLImageBase(), mCacheEntries(0)
 {
 	mMemType = LLMemType::MTYPE_IMAGERAW;
 	llassert( S32(width) * S32(height) * S32(components) <= MAX_IMAGE_DATA_SIZE );
@@ -263,7 +268,7 @@ LLImageRaw::LLImageRaw(U16 width, U16 height, S8 components)
 }
 
 LLImageRaw::LLImageRaw(U8 *data, U16 width, U16 height, S8 components)
-	: LLImageBase()
+	: LLImageBase(), mCacheEntries(0)
 {
 	mMemType = LLMemType::MTYPE_IMAGERAW;
 	if(allocateDataSize(width, height, components) && data)
@@ -274,7 +279,7 @@ LLImageRaw::LLImageRaw(U8 *data, U16 width, U16 height, S8 components)
 }
 
 LLImageRaw::LLImageRaw(const std::string& filename, bool j2c_lowest_mip_only)
-	: LLImageBase()
+	: LLImageBase(), mCacheEntries(0)
 {
 	createFromFile(filename, j2c_lowest_mip_only);
 }
@@ -285,6 +290,7 @@ LLImageRaw::~LLImageRaw()
 	//        NOT LLImageRaw::deleteData()
 	deleteData();
 	--sRawImageCount;
+	setInCache(false);
 }
 
 // virtual

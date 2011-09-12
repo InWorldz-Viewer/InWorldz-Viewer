@@ -339,6 +339,9 @@ void LLViewerImage::init(bool firstinit)
 	mDecodeFrame = 0;
 	mVisibleFrame = 0;
 	mForSculpt = FALSE ;
+
+	if(!firstinit && mCachedRawImage.notNull())
+		mCachedRawImage->setInCache(false);
 	mCachedRawImage = NULL ;
 	mCachedRawDiscardLevel = -1 ;
 	mCachedRawImageReady = FALSE ;
@@ -404,6 +407,8 @@ void LLViewerImage::cleanup()
 	
 	// Clean up image data
 	destroyRawImage();
+	if(mCachedRawImage.notNull())
+		mCachedRawImage->setInCache(false);
 	mCachedRawImage = NULL ;
 	mCachedRawDiscardLevel = -1 ;
 	mCachedRawImageReady = FALSE ;
@@ -1771,7 +1776,11 @@ void LLViewerImage::setCachedRawImage()
 			}
 			mRawImage->scale(w >> i, h >> i) ;
 		}
+		if(mCachedRawImage.notNull())
+			mCachedRawImage->setInCache(false);
 		mCachedRawImage = mRawImage ;
+		if(mCachedRawImage.notNull())
+			mCachedRawImage->setInCache(true);
 		mRawDiscardLevel += i ;
 		mCachedRawDiscardLevel = mRawDiscardLevel ;			
 	}
