@@ -59,9 +59,6 @@
 #include "llworld.h"
 #include "llfeaturemanager.h"
 #include "llviewernetwork.h"
-#if LL_LCD_COMPILE
-#include "lllcd.h"
-#endif
 
 
 class StatAttributes
@@ -199,10 +196,6 @@ const StatAttributes STAT_INFO[LLViewerStats::ST_COUNT] =
 	StatAttributes("Texture Bakes", FALSE, FALSE),
 	// ST_TEX_REBAKES
 	StatAttributes("Texture Rebakes", FALSE, FALSE),
-
-	// ST_LOGITECH_KEYBOARD
-	StatAttributes("Logitech LCD", FALSE, FALSE)
-
 };
 
 LLViewerStats::LLViewerStats()
@@ -610,13 +603,6 @@ void update_statistics(U32 frame_count)
 			texture_stats_timer.reset();
 		}
 	}
-
-#if LL_LCD_COMPILE
-	bool LCDenabled = gLcdScreen->Enabled();
-	LLViewerStats::getInstance()->setStat(LLViewerStats::ST_LOGITECH_LCD, LCDenabled);
-#else
-	LLViewerStats::getInstance()->setStat(LLViewerStats::ST_LOGITECH_LCD, false);
-#endif
 }
 
 class ViewerStatsResponder : public LLHTTPClient::Responder

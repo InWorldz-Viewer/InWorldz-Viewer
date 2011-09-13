@@ -57,7 +57,6 @@
 #include "llpanelgeneral.h"
 #include "llpanelinput.h"
 #include "llpanellogin.h"
-#include "llpanelLCD.h"
 #include "llpanelmsgs.h"
 #include "llpanelweb.h"
 #include "llpanelskins.h"
@@ -131,8 +130,7 @@ LLPreferenceCore::LLPreferenceCore(LLTabContainer* tab_container, LLButton * def
 	mDisplayPanel(NULL),
 	mAudioPanel(NULL),
 	mMsgPanel(NULL),
-	mSkinsPanel(NULL),
-	mLCDPanel(NULL)
+	mSkinsPanel(NULL)
 {
 	mGeneralPanel = new LLPanelGeneral();
 	mTabContainer->addTabPanel(mGeneralPanel, mGeneralPanel->getLabel(), FALSE, onTabChanged, mTabContainer);
@@ -170,20 +168,6 @@ LLPreferenceCore::LLPreferenceCore(LLTabContainer* tab_container, LLButton * def
 	mPrefsIM = new LLPrefsIM();
 	mTabContainer->addTabPanel(mPrefsIM->getPanel(), mPrefsIM->getPanel()->getLabel(), FALSE, onTabChanged, mTabContainer);
 	mPrefsIM->getPanel()->setDefaultBtn(default_btn);
-
-#if LL_LCD_COMPILE
-
-	// only add this option if we actually have a logitech keyboard / speaker set
-	if (gLcdScreen->Enabled())
-	{
-		mLCDPanel = new LLPanelLCD();
-		mTabContainer->addTabPanel(mLCDPanel, mLCDPanel->getLabel(), FALSE, onTabChanged, mTabContainer);
-		mLCDPanel->setDefaultBtn(default_btn);
-	}
-
-#else
-	mLCDPanel = NULL;
-#endif
 
 	mMsgPanel = new LLPanelMsgs();
 	mTabContainer->addTabPanel(mMsgPanel, mMsgPanel->getLabel(), FALSE, onTabChanged, mTabContainer);
@@ -273,14 +257,6 @@ void LLPreferenceCore::apply()
 	LLFloaterHardwareSettings::instance()->apply();
 
 	mWebPanel->apply();
-#if LL_LCD_COMPILE
-	// only add this option if we actually have a logitech keyboard / speaker set
-	if (gLcdScreen->Enabled())
-	{
-		mLCDPanel->apply();
-	}
-#endif
-//	mWebPanel->apply();
 }
 
 
@@ -301,14 +277,6 @@ void LLPreferenceCore::cancel()
 	LLFloaterHardwareSettings::instance()->cancel();
 
 	mWebPanel->cancel();
-#if LL_LCD_COMPILE
-	// only add this option if we actually have a logitech keyboard / speaker set
-	if (gLcdScreen->Enabled())
-	{
-		mLCDPanel->cancel();
-	}
-#endif
-//	mWebPanel->cancel();
 }
 
 // static
