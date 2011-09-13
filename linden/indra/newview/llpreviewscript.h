@@ -96,6 +96,8 @@ public:
 	static void		onBtnInsertFunction(LLUICtrl*, void*);
 	static void		doSave( void* userdata, BOOL close_after_save );
 	static void		onBtnSave(void*);
+	static void		onSetExternalEditor(void* data);
+	static void		onBtnXEd(void*);
 	static void		onBtnUndoChanges(void*);
 	static void		onBtnSaveToDisc(void*);
 	static void		onBtnLoadFromDisc(void*);
@@ -116,12 +118,16 @@ public:
 	static BOOL		enablePasteMenu(void* userdata);
 	static BOOL		enableSelectAllMenu(void* userdata);
 	static BOOL		enableDeselectMenu(void* userdata);
+	static BOOL		enableExternalEditor(void* userdata);
 
 	static BOOL		hasChanged(void* userdata);
 
 	void selectFirstError();
 	
 	void autoSave();
+	//dim external ed
+	void XedUpd();
+	void xedLaunch();
 
 	virtual BOOL handleKeyHere(KEY key, MASK mask);
 	
@@ -141,6 +147,8 @@ protected:
 private:
 	std::string		mSampleText;
 	std::string		mAutosaveFilename;
+	std::string     mXfname;
+	struct stat     mXstbuf;
 	std::string		mHelpURL;
 	std::string		mScriptTitle;
 	LLTextEditor*	mEditor;
@@ -159,6 +167,7 @@ private:
 	LLFrameTimer	mLiveHelpTimer;
 	S32				mLiveHelpHistorySize;
 	BOOL			mEnableSave;
+	BOOL			mEnableXEd;
 	BOOL			mHasScriptData;
 };
 
