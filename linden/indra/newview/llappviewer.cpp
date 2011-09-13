@@ -570,8 +570,10 @@ bool LLAppViewer::init()
     // *NOTE:Mani - LLCurl::initClass is not thread safe. 
     // Called before threads are created.
     LLCurl::initClass();
+	LL_INFOS("InitInfo") << "LLCurl initialized." << LL_ENDL ;
 
     initThreads();
+	LL_INFOS("InitInfo") << "Threads initialized." << LL_ENDL ;
 
     writeSystemInfo();
 
@@ -700,7 +702,8 @@ bool LLAppViewer::init()
 		// Early out from user choice.
 		return false;
 	}
-
+	LL_INFOS("InitInfo") << "Hardware test initialization done." << LL_ENDL ;
+	
 	// Always fetch the Ethernet MAC address, needed both for login
 	// and password load.
 	LLUUID::getNodeID(gMACAddress);
@@ -734,11 +737,13 @@ bool LLAppViewer::init()
 			OSMB_OK);
 		return 1;
 	}
+	LL_INFOS("InitInfo") << "Cache initialization is done." << LL_ENDL ;
 	
 	//
 	// Initialize the window
 	//
 	initWindow();
+	LL_INFOS("InitInfo") << "Window is initialized." << LL_ENDL ;
 
 	// call all self-registered classes
 	LLInitClassList::instance().fireCallbacks();
@@ -872,7 +877,8 @@ bool LLAppViewer::mainLoop()
 		{
 			LLFastTimer t(LLFastTimer::FTM_FRAME);
 			pingMainloopTimeout("Main:MiscNativeWindowEvents");
-			
+
+			if (gViewerWindow)
 			{
 				LLFastTimer t2(LLFastTimer::FTM_MESSAGES);
 				gViewerWindow->mWindow->processMiscNativeEvents();
@@ -880,6 +886,7 @@ bool LLAppViewer::mainLoop()
 			
 			pingMainloopTimeout("Main:GatherInput");
 			
+			if (gViewerWindow)
 			{
 				LLFastTimer t2(LLFastTimer::FTM_MESSAGES);
 				if (!restoreErrorTrap())
@@ -968,7 +975,7 @@ bool LLAppViewer::mainLoop()
 			// Sleep and run background threads
 			{
 				LLFastTimer t2(LLFastTimer::FTM_SLEEP);
-				bool run_multiple_threads = gSavedSettings.getBOOL("RunMultipleThreads");
+				static LLCachedControl<BOOL> run_multiple_threads("RunMultipleThreads", FALSE);
 
 				// yield some time to the os based on command line option
 				if(mYieldTime >= 0)
@@ -978,7 +985,7 @@ bool LLAppViewer::mainLoop()
 
 				// yield cooperatively when not running as foreground window
 				if (   gNoRender
-						|| !gViewerWindow->mWindow->getVisible()
+					   || (gViewerWindow && !gViewerWindow->mWindow->getVisible())
 						|| !gFocusMgr.getAppHasFocus())
 				{
 					// Sleep if we're not rendering, or the window is minimized.
@@ -1142,9 +1149,7 @@ bool LLAppViewer::cleanup()
 
 	llinfos << "Viewer disconnected" << llendflush;
 
-	{
-		display_cleanup();
-	}
+	display_cleanup(); 
 
 	release_start_screen(); // just in case
 
@@ -1153,11 +1158,14 @@ bool LLAppViewer::cleanup()
 	llinfos << "Cleaning Up" << llendflush;
 
 	// Must clean up texture references before viewer window is destroyed.
-	LLHUDManager::getInstance()->updateEffects();
-	LLHUDObject::updateAll();
-	LLHUDManager::getInstance()->cleanupEffects();
-	LLHUDObject::cleanupHUDObjects();
-	llinfos << "HUD Objects cleaned up" << llendflush;
+	if (LLHUDManager::instanceExists())
+	{
+		LLHUDManager::getInstance()->updateEffects();
+		LLHUDObject::updateAll();
+		LLHUDManager::getInstance()->cleanupEffects();
+		LLHUDObject::cleanupHUDObjects();
+		llinfos << "HUD Objects cleaned up" << llendflush;
+	}
 
 	LLKeyframeDataCache::clear();
 	
@@ -1172,8 +1180,10 @@ bool LLAppViewer::cleanup()
 	// Note: this is where gWorldMap used to be deleted.
 
 	// Note: this is where gHUDManager used to be deleted.
-	LLHUDManager::getInstance()->shutdownClass();
-	
+	if (LLHUDManager::instanceExists())
+	{
+		LLHUDManager::getInstance()->shutdownClass();
+	}
 
 	delete gAssetStorage;
 	gAssetStorage = NULL;
@@ -1184,14 +1194,14 @@ bool LLAppViewer::cleanup()
 	gCacheName = NULL;
 
 	// Note: this is where gLocalSpeakerMgr and gActiveSpeakerMgr used to be deleted.
-
-	LLWorldMap::getInstance()->reset(); // release any images
+	if (LLWorldMap::instanceExists())
+	{
+		LLWorldMap::getInstance()->reset(); // release any images
+	}
 
 	LLCalc::cleanUp();
 
-
 	llinfos << "Global stuff deleted" << llendflush;
-
 
 	// Note: this is where LLFeatureManager::getInstance()-> used to be deleted.
 
@@ -1234,26 +1244,41 @@ bool LLAppViewer::cleanup()
 	llinfos << "Shutting down." << llendflush;
 
 	// Destroy the UI
-	gViewerWindow->shutdownViews();
+	if (gViewerWindow)
+	{
+		gViewerWindow->shutdownViews();
+	}
 
+	llinfos << "Cleaning up Selections" << llendflush;
+	
 	// Clean up selection managers after UI is destroyed, as UI may be observing them.
 	// Clean up before GL is shut down because we might be holding on to objects with texture references
 	LLSelectMgr::cleanupGlobals();
+	
+	llinfos << "Shutting down OpenGL" << llendflush;
 
 	// Shut down OpenGL
-	gViewerWindow->shutdownGL();
+	if( gViewerWindow)
+	{
+		gViewerWindow->shutdownGL();
 	
-	// Destroy window, and make sure we're not fullscreen
-	// This may generate window reshape and activation events.
-	// Therefore must do this before destroying the message system.
-	delete gViewerWindow;
-	gViewerWindow = NULL;
-	llinfos << "ViewerWindow deleted" << llendflush;
+		// Destroy window, and make sure we're not fullscreen
+		// This may generate window reshape and activation events.
+		// Therefore must do this before destroying the message system.
+		delete gViewerWindow;
+		gViewerWindow = NULL;
+		llinfos << "ViewerWindow deleted" << llendflush;
+	}
 
+	llinfos << "Cleaning up Keyboard & Joystick" << llendflush;
+	
 	// viewer UI relies on keyboard so keep it aound until viewer UI isa gone
 	delete gKeyboard;
 	gKeyboard = NULL;
 
+	
+	llinfos << "Cleaning up Objects" << llendflush;
+	
 	LLViewerObject::cleanupVOClasses();
 
 	LLWaterParamManager::cleanupClass();
@@ -1276,6 +1301,8 @@ bool LLAppViewer::cleanup()
 	}
 	LLPrimitive::cleanupVolumeManager();
 
+	llinfos << "Additional Cleanup..." << llendflush;	
+	
 	LLViewerParcelMgr::cleanupGlobals();
 
 	// *Note: this is where gViewerStats used to be deleted.
@@ -1295,8 +1322,10 @@ bool LLAppViewer::cleanup()
 	// Also after shutting down the messaging system since it has VFS dependencies
 
 	//
+	llinfos << "Cleaning up VFS" << llendflush;
 	LLVFile::cleanupClass();
-	llinfos << "VFS cleaned up" << llendflush;
+
+	llinfos << "Saving Data" << llendflush;
 
 	// Quitting with "Remember Password" turned off should always stomp your
 	// saved password, whether or not you successfully logged in.  JC
@@ -1353,6 +1382,8 @@ bool LLAppViewer::cleanup()
 	
 	writeDebugInfo();
 
+	llinfos << "Shutting down Threads" << llendflush;
+
 	// Let threads finish
 	LLTimer idleTimer;
 	idleTimer.reset();
@@ -1382,8 +1413,8 @@ bool LLAppViewer::cleanup()
 	sTextureCache->shutdown();
 	sImageDecodeThread->shutdown();
 	
-	sTextureFetch->shutDownTextureCacheThread() ;
-	sTextureFetch->shutDownImageDecodeThread() ;
+	sTextureFetch->shutDownTextureCacheThread();
+	sTextureFetch->shutDownImageDecodeThread();
 	
 	delete sTextureCache;
     sTextureCache = NULL;
@@ -1391,6 +1422,9 @@ bool LLAppViewer::cleanup()
     sTextureFetch = NULL;
 	delete sImageDecodeThread;
     sImageDecodeThread = NULL;
+
+
+	llinfos << "Cleaning up Media and Textures" << llendflush;
 
 	//Note:
 	//LLViewerMedia::cleanupClass() has to be put before gImageList.shutdown()
@@ -1410,7 +1444,10 @@ bool LLAppViewer::cleanup()
 
 #ifndef LL_RELEASE_FOR_DOWNLOAD
 	llinfos << "Auditing VFS" << llendl;
-	gVFS->audit();
+	if(gVFS)
+	{
+		gVFS->audit();
+	}
 #endif
 
 	// For safety, the LLVFS has to be deleted *after* LLVFSThread. This should be cleaned up.
@@ -2250,6 +2287,7 @@ bool LLAppViewer::initWindow()
 		gSavedSettings.saveToFile( gSavedSettings.getString("ClientSettingsFile"), TRUE );
 	
 		gPipeline.init();
+		LL_INFOS("AppInit") << "gPipeline Initialized" << LL_ENDL;
 		stop_glerror();
 		gViewerWindow->initGLDefaults();
 
@@ -2277,7 +2315,7 @@ bool LLAppViewer::initWindow()
 	// show viewer window
 	//gViewerWindow->mWindow->show();
 
-	
+	LL_INFOS("AppInit") << "Window initialization done." << LL_ENDL;
 	return true;
 }
 
@@ -2545,7 +2583,10 @@ void LLAppViewer::handleViewerCrash()
 		gMessageSystem->stopLogging();
 	}
 
-	LLWorld::getInstance()->getInfo(gDebugInfo);
+	if (LLWorld::instanceExists())
+	{
+		LLWorld::getInstance()->getInfo(gDebugInfo);
+	}
 
 	// Close the debug file
 	pApp->writeDebugInfo();
@@ -2712,6 +2753,13 @@ void LLAppViewer::requestQuit()
 	
 	if( (LLStartUp::getStartupState() < STATE_STARTED) || !region )
 	{
+		// If we have a region, make some attempt to send a logout request first.
+		// This prevents the halfway-logged-in avatar from hanging around inworld for a couple minutes.
+		if(region)
+		{
+			sendLogoutRequest();
+		}
+		
 		// Quit immediately
 		forceQuit();
 		return;
@@ -2869,7 +2917,7 @@ bool LLAppViewer::initCache()
 		}
 	}
 
-	if(!read_only)
+	if (!read_only)
 	{
 		// Purge cache if user requested it
 		if (gSavedSettings.getBOOL("PurgeCacheOnStartup") || // cmd-line -- MC
@@ -2930,12 +2978,12 @@ bool LLAppViewer::initCache()
 	bool resize_vfs = (vfs_size_u32 != old_vfs_size);
 	if (resize_vfs)
 	{
-		gSavedSettings.setU32("VFSOldSize", vfs_size_u32/MB);
+		gSavedSettings.setU32("VFSOldSize", vfs_size_u32 / MB);
 	}
-	LL_INFOS("AppCache") << "VFS CACHE SIZE: " << vfs_size/(1024*1024) << " MB" << LL_ENDL;
+	LL_INFOS("AppCache") << "VFS CACHE SIZE: " << vfs_size / (1024*1024) << " MB" << LL_ENDL;
 	
 	// This has to happen BEFORE starting the vfs
-	//time_t	ltime;
+	// time_t	ltime;
 	srand(time(NULL));		// Flawfinder: ignore
 	U32 old_salt = gSavedSettings.getU32("VFSSalt");
 	U32 new_salt;
@@ -3055,9 +3103,13 @@ bool LLAppViewer::initCache()
 	}
 
 	gStaticVFS = new LLVFS(static_vfs_index_file, static_vfs_data_file, true, 0, false);
+	if (!gStaticVFS)
+	{
+		return false;
+	}
 
 	BOOL success = gVFS->isValid() && gStaticVFS->isValid();
-	if( !success )
+	if (!success)
 	{
 		return false;
 	}
@@ -3227,11 +3279,14 @@ void LLAppViewer::saveFinalSnapshot()
 		idle();
 
 		std::string snap_filename = gDirUtilp->getLindenUserDir();
-		snap_filename += gDirUtilp->getDirDelimiter();
-		snap_filename += SCREEN_LAST_FILENAME;
-		// use full pixel dimensions of viewer window (not post-scale dimensions)
-		gViewerWindow->saveSnapshot(snap_filename, gViewerWindow->getWindowDisplayWidth(), gViewerWindow->getWindowDisplayHeight(), FALSE, TRUE);
-		mSavedFinalSnapshot = TRUE;
+		if (!snap_filename.empty())
+		{
+			snap_filename += gDirUtilp->getDirDelimiter();
+			snap_filename += SCREEN_LAST_FILENAME;
+			// use full pixel dimensions of viewer window (not post-scale dimensions)
+			gViewerWindow->saveSnapshot(snap_filename, gViewerWindow->getWindowDisplayWidth(), gViewerWindow->getWindowDisplayHeight(), FALSE, TRUE);
+			mSavedFinalSnapshot = TRUE;
+		}
 	}
 }
 
@@ -3892,7 +3947,7 @@ void LLAppViewer::idleNetwork()
 	// Check that the circuit between the viewer and the agent's current
 	// region is still alive
 	LLViewerRegion *agent_region = gAgent.getRegion();
-	if (agent_region && LLStartUp::getStartupState() == STATE_STARTED)
+	if (agent_region && (LLStartUp::getStartupState() == STATE_STARTED))
 	{
 		LLUUID this_region_id = agent_region->getRegionID();
 		bool this_region_alive = agent_region->isAlive();
@@ -4064,7 +4119,8 @@ void LLAppViewer::resumeMainloopTimeout(const std::string& state, F32 secs)
 	{
 		if(secs < 0.0f)
 		{
-			secs = gSavedSettings.getF32("MainloopTimeoutDefault");
+			static LLCachedControl<F32> mainloop_timeout_default("MainloopTimeoutDefault", 20);
+			secs = mainloop_timeout_default;
 		}
 		
 		mMainloopTimeout->setTimeout(secs);
@@ -4091,7 +4147,8 @@ void LLAppViewer::pingMainloopTimeout(const std::string& state, F32 secs)
 	{
 		if(secs < 0.0f)
 		{
-			secs = gSavedSettings.getF32("MainloopTimeoutDefault");
+			static LLCachedControl<F32> mainloop_timeout_default("MainloopTimeoutDefault", 20);
+			secs = mainloop_timeout_default;
 		}
 
 		mMainloopTimeout->setTimeout(secs);

@@ -426,7 +426,17 @@ protected:
 template <typename T>
 class LLSingleton
 {
+	static bool &needsInit()
+	{
+		static bool needs_init = true;
+		return needs_init;
+	}
 public:
+	// Only call during a cleanup. Use getInstance() otherwise
+	static bool instanceExists()
+	{
+		return !needsInit();
+	}
 	virtual ~LLSingleton() {}
 #ifdef  LL_MSVC7
 // workaround for VC7 compiler bug
@@ -445,7 +455,7 @@ public:
 #endif
 	{
 		static T instance;
-		static bool needs_init = true;
+		bool &needs_init = needsInit();
 		if (needs_init)
 		{
 			needs_init = false;
