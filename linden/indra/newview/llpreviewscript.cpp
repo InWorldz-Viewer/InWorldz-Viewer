@@ -176,15 +176,22 @@ LLScriptEdCore::LLScriptEdCore(
 	mSampleText(sample),
 	mHelpURL(help_url),
 	mEditor( NULL ),
+	mFunctions(NULL),
+	mErrorList(NULL),
 	mLoadCallback( load_callback ),
 	mSaveCallback( save_callback ),
 	mSearchReplaceCallback( search_replace_callback ),
 	mUserdata( userdata ),
 	mForceClose( FALSE ),
+	mLiveHelpHandle(),
+	mLiveHelpTimer(),
 	mLastHelpToken(NULL),
 	mLiveHelpHistorySize(0),
 	mEnableSave(FALSE),
 	mEnableXEd(FALSE),
+	mXstbuf(),
+	mXfname(""),
+	mAutosaveFilename(""),
 	mHasScriptData(FALSE),
 	// We need to check for a new file every five seconds, or autosave every 60.
 	// There's probably a better solution to both of the above.
@@ -327,7 +334,11 @@ BOOL LLScriptEdCore::tick()
 	}
 	else
 	{
-		XedUpd();
+		// This should really be passed as a parameter -- MC
+		if (!mXfname.empty())
+		{
+			xedUpdateScript();
+		}
 	}
 	return FALSE;
 }
@@ -548,7 +559,7 @@ void LLScriptEdCore::xedLaunch()
 	fp = NULL;
 	llinfos << "XEditor: " << mXfname << llendl;
 	//record the stat
-	stat(mXfname.c_str(), &mXstbuf);
+	LLFile::stat(mXfname.c_str(), &mXstbuf);
 	//launch
 #if LL_WINDOWS
 	//just to get rid of the pesky black window
@@ -600,43 +611,45 @@ void LLScriptEdCore::xedLaunch()
 #endif
 }
 
-void LLScriptEdCore::XedUpd()
+void LLScriptEdCore::xedUpdateScript()
 {
-	struct stat stbuf;
-	stat(this->mXfname.c_str() , &stbuf);
-	if (this->mXstbuf.st_mtime != stbuf.st_mtime)
+	llstat stbuf;
+	if (LLFile::stat(this->mXfname.c_str() , &stbuf) == 0) // info found
 	{
-		this->mErrorList->addCommentText(std::string("Change Detected... Updating"));
-
-		this->mXstbuf = stbuf;
-		LLFILE* file = LLFile::fopen(this->mXfname, "rb");		/*Flawfinder: ignore*/
-	 	if(file)
-	 	{
-			// read in the whole file
-			fseek(file, 0L, SEEK_END);
-			S64 file_length = ftell(file);
-			fseek(file, 0L, SEEK_SET);
-			char* buffer = new char[file_length+1];
-			size_t nread = fread(buffer, 1, file_length, file);
-			if (nread < (size_t) file_length)
-			{
-				llwarns << "Short read" << llendl;
-			}
-			buffer[nread] = '\0';
-			fclose(file);
-			std::string ttext = LLStringExplicit(buffer);
-			LLStringUtil::replaceTabsWithSpaces(ttext, 4);
-			mEditor->setText(ttext);
-			LLScriptEdCore::doSave( this, FALSE );
-			//mEditor->makePristine();
-			delete[] buffer;
-			buffer = NULL;
-		}
-		else
+		if (this->mXstbuf.st_mtime != stbuf.st_mtime)
 		{
-			llwarns << "Error opening " << this->mXfname << llendl;
+			this->mErrorList->addCommentText(std::string("Change Detected... Updating"));
+
+			this->mXstbuf = stbuf;
+			LLFILE* file = LLFile::fopen(this->mXfname, "rb");		/*Flawfinder: ignore*/
+	 		if(file)
+	 		{
+				// read in the whole file
+				fseek(file, 0L, SEEK_END);
+				S64 file_length = ftell(file);
+				fseek(file, 0L, SEEK_SET);
+				char* buffer = new char[file_length+1];
+				size_t nread = fread(buffer, 1, file_length, file);
+				if (nread < (size_t) file_length)
+				{
+					llwarns << "Short read" << llendl;
+				}
+				buffer[nread] = '\0';
+				fclose(file);
+				std::string ttext = LLStringExplicit(buffer);
+				LLStringUtil::replaceTabsWithSpaces(ttext, 4);
+				mEditor->setText(ttext);
+				LLScriptEdCore::doSave( this, FALSE );
+				//mEditor->makePristine();
+				delete[] buffer;
+				buffer = NULL;
+			}
+			else
+			{
+				llwarns << "Error opening " << this->mXfname << llendl;
+			}
 		}
-	}					 
+	}
 }
 //end dim
 void LLScriptEdCore::autoSave()
@@ -1362,6 +1375,15 @@ LLPreviewLSL::LLPreviewLSL(const std::string& name, const LLRect& rect,
 	}
 }
 
+LLPreviewLSL::~LLPreviewLSL()
+{
+	if (mScriptEd && !(mScriptEd->mXfname.empty()))
+	{
+		llinfos << "remove autosave: " << mScriptEd->mXfname << llendl;
+		LLFile::remove(mScriptEd->mXfname.c_str());
+	}
+}
+
 // virtual
 void LLPreviewLSL::callbackLSLCompileSucceeded()
 {
@@ -1459,14 +1481,10 @@ void LLPreviewLSL::closeIfNeeded()
 	mPendingUploads--;
 	if (mPendingUploads <= 0 && mCloseAfterSave)
 	{
-		if( !mScriptEd->mAutosaveFilename.empty()) {
+		if (mScriptEd && !mScriptEd->mAutosaveFilename.empty()) 
+		{
 			llinfos << "remove autosave: " << mScriptEd->mAutosaveFilename << llendl;
 			LLFile::remove(mScriptEd->mAutosaveFilename.c_str());
-		}
-		if( !mScriptEd->mXfname.empty()) 
-		{
-			llinfos << "remove autosave: " << mScriptEd->mXfname << llendl;
-			LLFile::remove(mScriptEd->mXfname.c_str());
 		}
 		close();
 	}
@@ -1921,7 +1939,12 @@ LLLiveLSLEditor::LLLiveLSLEditor(const std::string& name,
 }
 
 LLLiveLSLEditor::~LLLiveLSLEditor()
-{
+{	
+	if (mScriptEd && (!(mScriptEd->mXfname.empty())))
+	{
+		llinfos << "remove autosave: " << mScriptEd->mXfname << llendl;
+		LLFile::remove(mScriptEd->mXfname.c_str());
+	}
 	LLLiveLSLEditor::sInstances.removeData(mItemID ^ mObjectID);
 }
 
@@ -2624,14 +2647,10 @@ void LLLiveLSLEditor::closeIfNeeded()
 	mPendingUploads--;
 	if (mPendingUploads <= 0 && mCloseAfterSave)
 	{
-		if( !mScriptEd->mAutosaveFilename.empty()) {
+		if (mScriptEd && (!mScriptEd->mAutosaveFilename.empty()))
+		{
 			llinfos << "remove autosave: " << mScriptEd->mAutosaveFilename << llendl;
 			LLFile::remove(mScriptEd->mAutosaveFilename.c_str());
-		}
-		if( !mScriptEd->mXfname.empty()) 
-		{
-			llinfos << "remove autosave: " << mScriptEd->mXfname << llendl;
-			LLFile::remove(mScriptEd->mXfname.c_str());
 		}
 		close();
 	}
