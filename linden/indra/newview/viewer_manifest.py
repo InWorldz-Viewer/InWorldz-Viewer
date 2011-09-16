@@ -318,6 +318,11 @@ class WindowsManifest(ViewerManifest):
             self.path("qjpcodecs4.dll")
             self.path("qkrcodecs4.dll")
             self.path("qtwcodecs4.dll")
+            self.end_prefix()
+
+        # winmm.dll shim
+        if self.prefix(src='../media_plugins/winmmshim/%s' % self.args['configuration'], dst=""):
+            self.path("winmm.dll")
             self.end_prefix()            
 
         # We no longer use private assemblies in the viewer -- MC
