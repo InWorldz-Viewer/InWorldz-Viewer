@@ -298,6 +298,7 @@ class WindowsManifest(ViewerManifest):
             self.path("qtnetwork4.dll")
             self.path("qtopengl4.dll")
             self.path("qtwebkit4.dll")
+            self.path("qtxmlpatterns4.dll")
             self.path("ssleay32.dll")
             self.end_prefix()
 
@@ -310,6 +311,14 @@ class WindowsManifest(ViewerManifest):
             self.path("qsvg4.dll")
             self.path("qtiff4.dll")
             self.end_prefix()
+
+        # For WebKit/Qt plugin runtimes (codecs)
+        if self.prefix(src="../../libraries/i686-win32/lib/release/codecs", dst="llplugin/codecs"):
+            self.path("qcncodecs4.dll")
+            self.path("qjpcodecs4.dll")
+            self.path("qkrcodecs4.dll")
+            self.path("qtwcodecs4.dll")
+            self.end_prefix()            
 
         # We no longer use private assemblies in the viewer -- MC
         # These need to be installed as a SxS assembly, currently a 'private' assembly.

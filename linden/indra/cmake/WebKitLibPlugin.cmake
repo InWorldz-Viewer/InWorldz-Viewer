@@ -47,6 +47,7 @@ elseif (LINUX)
            QtNetwork
            QtGui
            QtCore
+           jpeg
            fontconfig
            X11
            Xrender
