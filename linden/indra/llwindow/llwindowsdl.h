@@ -148,6 +148,8 @@ protected:
 		BOOL ignore_pixel_depth, U32 fsaa_samples);
 	~LLWindowSDL();
 
+	/*virtual*/ LLSD    getNativeKeyData();
+
 	void	initCursors();
 	void	quitCursors();
 	BOOL	isValid();
@@ -206,6 +208,10 @@ private:
 	BOOL mFlashing;
 	LLTimer mFlashTimer;
 #endif //LL_X11
+	
+	U32 mKeyScanCode;
+        U32 mKeyVirtualKey;
+	SDLMod mKeyModifiers;
 };
 
 

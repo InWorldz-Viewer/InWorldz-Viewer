@@ -116,6 +116,10 @@ public:
 
 	static std::vector<std::string> getDynamicFallbackFontList();
 
+	// Provide native key event data
+	/*virtual*/ LLSD getNativeKeyData();
+
+
 protected:
 	LLWindowMacOSX(
 		const std::string& title, const std::string& name, int x, int y, int width, int height, U32 flags,
@@ -197,7 +201,7 @@ protected:
 	NMRec		mBounceRec;
 	LLTimer		mBounceTimer;
 
-	// Imput method management through Text Service Manager.
+	// Input method management through Text Service Manager.
 	TSMDocumentID	mTSMDocument;
 	BOOL		mLanguageTextInputAllowed;
 	ScriptCode	mTSMScriptCode;
@@ -208,6 +212,7 @@ protected:
 
 	friend class LLWindowManager;
 	static WindowRef sMediaWindow;
+	EventRef 	mRawKeyEvent;
 
 };
 

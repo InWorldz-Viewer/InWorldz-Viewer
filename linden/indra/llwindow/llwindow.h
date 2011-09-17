@@ -204,6 +204,9 @@ public:
 	virtual void spawnWebBrowser(const std::string& escaped_url) {};
 
 	static std::vector<std::string> getDynamicFallbackFontList();
+	
+	// Provide native key event data
+	virtual LLSD getNativeKeyData() { return LLSD::emptyMap(); }
 
 protected:
 	LLWindow(BOOL fullscreen, U32 flags);

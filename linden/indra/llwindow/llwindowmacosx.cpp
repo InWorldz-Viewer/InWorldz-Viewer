@@ -250,6 +250,7 @@ LLWindowMacOSX::LLWindowMacOSX(const std::string& title, const std::string& name
 	mTSMScriptCode = 0;
 	mTSMLangCode = 0;
 	mPreeditor = NULL;
+	mRawKeyEvent = NULL;
 	mFSAASamples = fsaa_samples;
 	mForceRebuild = FALSE;
 	
@@ -2125,8 +2126,8 @@ OSStatus LLWindowMacOSX::eventHandler (EventHandlerCallRef myHandler, EventRef e
 
 					// First, process the raw event.
 					{
-						EventRef rawEvent;
-
+						EventRef rawEvent = NULL;
+						
 						// Get the original event and extract the modifier keys, so we can ignore command-key events.
 						if (GetEventParameter(event, kEventParamTextInputSendKeyboardEvent, typeEventRef, NULL, sizeof(rawEvent), NULL, &rawEvent) == noErr)
 						{
@@ -2135,6 +2136,9 @@ OSStatus LLWindowMacOSX::eventHandler (EventHandlerCallRef myHandler, EventRef e
 
 							// and call this function recursively to handle the raw key event.
 							eventHandler (myHandler, rawEvent);
+							
+							// save the raw event until we're done processing the unicode input as well.
+							mRawKeyEvent = rawEvent;
 						}
 					}
 
@@ -2188,6 +2192,7 @@ OSStatus LLWindowMacOSX::eventHandler (EventHandlerCallRef myHandler, EventRef e
 						delete[] buffer;
 					}
 
+					mRawKeyEvent = NULL;
 					result = err;
 				}
 				break;
@@ -2261,6 +2266,9 @@ OSStatus LLWindowMacOSX::eventHandler (EventHandlerCallRef myHandler, EventRef e
 			// Some of these may fail for some event types.  That's fine.
 			GetEventParameter (event, kEventParamKeyCode, typeUInt32, NULL, sizeof(UInt32), NULL, &keyCode);
 			GetEventParameter (event, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(UInt32), NULL, &modifiers);
+
+			// save the raw event so getNativeKeyData can use it.
+			mRawKeyEvent = event;
 
 			//			printf("key event, key code = 0x%08x, char code = 0x%02x (%c), modifiers = 0x%08x\n", keyCode, charCode, (char)charCode, modifiers);
 			//			fflush(stdout);
@@ -2357,6 +2365,8 @@ OSStatus LLWindowMacOSX::eventHandler (EventHandlerCallRef myHandler, EventRef e
 				result = eventNotHandledErr;
 				break;
 			}
+			
+			mRawKeyEvent = NULL;
 		}
 		break;
 
@@ -3188,8 +3198,62 @@ void LLWindowMacOSX::spawnWebBrowser(const std::string& escaped_url)
 	}
 }
 
+LLSD LLWindowMacOSX::getNativeKeyData()
+{
+	LLSD result = LLSD::emptyMap();
+	
+	if(mRawKeyEvent)
+	{
+		char char_code = 0;
+		UInt32 key_code = 0;
+		UInt32 modifiers = 0;
+		UInt32 keyboard_type = 0;
+		
+		GetEventParameter (mRawKeyEvent, kEventParamKeyMacCharCodes, typeChar, NULL, sizeof(char), NULL, &char_code);
+		GetEventParameter (mRawKeyEvent, kEventParamKeyCode, typeUInt32, NULL, sizeof(UInt32), NULL, &key_code);
+		GetEventParameter (mRawKeyEvent, kEventParamKeyModifiers, typeUInt32, NULL, sizeof(UInt32), NULL, &modifiers);
+		GetEventParameter (mRawKeyEvent, kEventParamKeyboardType, typeUInt32, NULL, sizeof(UInt32), NULL, &keyboard_type);
 
-BOOL LLWindowMacOSX::dialog_color_picker ( F32 *r, F32 *g, F32 *b)
+		result["char_code"] = (S32)char_code;
+		result["key_code"] = (S32)key_code;
+		result["modifiers"] = (S32)modifiers;
+		result["keyboard_type"] = (S32)keyboard_type;
+		
+#if 0
+		// This causes trouble for control characters -- apparently character codes less than 32 (escape, control-A, etc)
+		// cause llsd serialization to create XML that the llsd deserializer won't parse!
+		std::string unicode;
+		OSStatus err = noErr;
+		EventParamType actualType = typeUTF8Text;
+		UInt32 actualSize = 0;
+		char *buffer = NULL;
+		
+		err = GetEventParameter (mRawKeyEvent, kEventParamKeyUnicodes, typeUTF8Text, &actualType, 0, &actualSize, NULL);
+		if(err == noErr)
+		{
+			// allocate a buffer and get the actual data.
+			buffer = new char[actualSize];
+			err = GetEventParameter (mRawKeyEvent, kEventParamKeyUnicodes, typeUTF8Text, &actualType, actualSize, &actualSize, buffer);
+			if(err == noErr)
+			{
+				unicode.assign(buffer, actualSize);
+			}
+			delete[] buffer;
+		}
+		
+		result["unicode"] = unicode;
+#endif
+
+	}
+
+
+	lldebugs << "native key data is: " << result << llendl;
+	
+	return result;
+}
+
+
+BOOL LLWindowMacOSX::dialogColorPicker( F32 *r, F32 *g, F32 *b)
 {
 	BOOL	retval = FALSE;
 	OSErr	error = noErr;

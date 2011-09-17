@@ -549,3 +549,15 @@ void LLPluginProcessChild::setState(EState state)
 	LL_DEBUGS("PluginChild") << "setting state to " << state << LL_ENDL;
 	mState = state;
 };
+
+void LLPluginProcessChild::deliverQueuedMessages()
+{
+	if(!mBlockingRequest)
+	{
+		while(!mMessageQueue.empty())
+		{
+			receiveMessageRaw(mMessageQueue.front());
+			mMessageQueue.pop();
+		}
+	}
+}
