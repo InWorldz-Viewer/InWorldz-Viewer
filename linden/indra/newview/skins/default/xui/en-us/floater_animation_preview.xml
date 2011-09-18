@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater can_close="true" can_drag_on_left="false" can_minimize="false"
+<floater can_close="true" can_drag_on_left="false" can_minimize="true"
      can_resize="false" height="556" min_height="556" min_width="300"
      name="Animation Preview" title="" width="300">
 	<pad height="12" />

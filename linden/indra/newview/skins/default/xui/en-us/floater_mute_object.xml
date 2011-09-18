@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater can_close="true" can_drag_on_left="false" can_minimize="false"
+<floater can_close="true" can_drag_on_left="false" can_minimize="true"
      can_resize="false" height="140" min_height="140" min_width="375"
      name="mute by name" title="Mute object by name" width="375">
 	<text bottom_delta="-50" follows="top|left" font="SansSerif" height="16" left="20"

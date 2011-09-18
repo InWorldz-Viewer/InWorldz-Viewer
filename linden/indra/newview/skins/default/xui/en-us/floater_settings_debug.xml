@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater can_close="true" can_drag_on_left="false" can_minimize="false"
+<floater can_close="true" can_drag_on_left="false" can_minimize="true"
      can_resize="false" height="235" name="settings_debug"
      title="Debug Settings" width="350">
   <search_editor bottom="-45" height="20" name="control_search" visible="true" width="320" 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater can_close="true" can_drag_on_left="false" can_minimize="false"
+<floater can_close="true" can_drag_on_left="false" can_minimize="true"
      can_resize="false" height="485" min_height="485" min_width="450"
      name="sell land" title="Sell Land" width="450">
 	<texture_picker bottom_delta="-175" enabled="false" follows="top|left" height="135" left="244"

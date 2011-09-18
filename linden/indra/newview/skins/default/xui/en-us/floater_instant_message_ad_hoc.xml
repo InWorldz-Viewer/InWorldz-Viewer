@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <floater border="true" bottom="-298" can_close="true" can_drag_on_left="false"
-     can_minimize="false" can_resize="true" default_tab_group="1" enabled="true"
+     can_minimize="true" can_resize="true" default_tab_group="1" enabled="true"
      follows="left|top|right|bottom" height="297" label="(unknown)" left="1"
      min_height="225" min_width="265" mouse_opaque="true" name="im_floater"
      rect_control="" title="(unknown)" width="501">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater can_close="true" can_drag_on_left="false" can_minimize="false"
+<floater can_close="true" can_drag_on_left="false" can_minimize="true"
      can_resize="false" height="270" min_height="270" min_width="350"
      name="buy currency" title="Buy Currency" width="350">
 	<text bottom_delta="-48" follows="top|left" font="SansSerifHuge" height="24"

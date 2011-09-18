@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater can_close="true" can_drag_on_left="false" can_minimize="false" can_resize="false"
+<floater can_close="true" can_drag_on_left="false" can_minimize="true" can_resize="false"
      height="292" width="362" name="floater_hud"
      title="Tutorial">
 <!-- NOTE: Height and width must match values in settings.xml for 
