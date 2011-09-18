@@ -377,9 +377,9 @@
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>eeffb03bd6672b6e7751448e5306d874</string>
+            <string>efc845cf291073b1e4d381a271f194eb</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/freetype-2.1.5-linux-20081201.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/freetype-2.3.11-linux-20091103.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>

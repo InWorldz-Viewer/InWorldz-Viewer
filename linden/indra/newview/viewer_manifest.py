@@ -816,10 +816,10 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libalut.so.0.1.0","libalut.so.0")
             self.path("libalut.so.0.1.0","libalut.so")
            ## self.path("libkdu_v42R.so")
-            self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so")
-            self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so.0")
-            self.path("libgdk-x11-2.0.so.0.1200.12","libgdk-x11-2.0.so")
-            self.path("libgdk-x11-2.0.so.0.1200.12","libgdk-x11-2.0.so.0")
+            #self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so")
+            #self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so.0")
+            #self.path("libgdk-x11-2.0.so.0.1200.12","libgdk-x11-2.0.so")
+            #self.path("libgdk-x11-2.0.so.0.1200.12","libgdk-x11-2.0.so.0")
             self.end_prefix("lib")
 
             # Vivox runtimes
