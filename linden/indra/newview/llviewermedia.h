@@ -87,6 +87,8 @@ class LLViewerMedia
 		static void updateMedia();
 
 		static void cleanupClass();
+		static F32 getVolume();	
+		static void muteListChanged();
 
 };
 
@@ -120,6 +122,8 @@ public:
 	void start();
 	void seek(F32 time);
 	void setVolume(F32 volume);
+	void updateVolume();
+	F32 getVolume();
 	void focus(bool focus);
 	void mouseDown(S32 x, S32 y);
 	void mouseUp(S32 x, S32 y);
@@ -215,7 +219,7 @@ public:
 	bool mNeedsNewTexture;
 	bool mSuspendUpdates;
 	bool mVisible;
-
+	F32 mRequestedVolume;
 
 private:
 	LLViewerImage *updatePlaceholderImage();

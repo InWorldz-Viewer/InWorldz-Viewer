@@ -38,6 +38,7 @@
 #include "llmimetypes.h"
 #include "llviewercontrol.h"
 #include "llviewerimage.h"
+#include "llvovolume.h"
 #include "llviewerwindow.h"
 #include "llversionviewer.h"
 #include "llviewerimagelist.h"
@@ -46,6 +47,8 @@
 #include "llevent.h"		// LLSimpleListener
 #include "lluuid.h"
 #include "llkeyboard.h"
+#include "llmutelist.h"
+
 
 
 // Merov: Temporary definitions while porting the new viewer media code to Snowglobe
@@ -168,6 +171,7 @@ public:
 };
 typedef std::list<LLViewerMediaImpl*> impl_list;
 static impl_list sViewerMediaImplList;
+static F32 sGlobalVolume = 1.0f;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // LLViewerMedia
@@ -315,14 +319,25 @@ bool LLViewerMedia::textureHasMedia(const LLUUID& texture_id)
 // static
 void LLViewerMedia::setVolume(F32 volume)
 {
-	impl_list::iterator iter = sViewerMediaImplList.begin();
-	impl_list::iterator end = sViewerMediaImplList.end();
-
-	for(; iter != end; iter++)
+	if(volume != sGlobalVolume)
 	{
-		LLViewerMediaImpl* pimpl = *iter;
-		pimpl->setVolume(volume);
+		sGlobalVolume = volume;
+		impl_list::iterator iter = sViewerMediaImplList.begin();
+		impl_list::iterator end = sViewerMediaImplList.end();
+
+		for(; iter != end; iter++)
+		{
+			LLViewerMediaImpl* pimpl = *iter;
+			pimpl->updateVolume();
+		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+// static
+F32 LLViewerMedia::getVolume()
+{
+	return sGlobalVolume;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -374,7 +389,8 @@ LLViewerMediaImpl::LLViewerMediaImpl(const std::string& media_url,
 	mMimeType(mime_type),
 	mNeedsNewTexture(true),
 	mSuspendUpdates(false),
-	mVisible(true)
+	mVisible(true),
+	mRequestedVolume(1.0f)
 { 
 	createMediaSource();
 }
@@ -550,6 +566,8 @@ bool LLViewerMediaImpl::initializePlugin(const std::string& media_type)
 		media_source->setBrowserUserAgent(LLViewerMedia::getCurrentUserAgent());
 		
 		mMediaSource = media_source;
+		updateVolume();
+
 		return true;
 	}
 
@@ -631,10 +649,26 @@ void LLViewerMediaImpl::seek(F32 time)
 //////////////////////////////////////////////////////////////////////////////////////////
 void LLViewerMediaImpl::setVolume(F32 volume)
 {
+	mRequestedVolume = volume;
+	updateVolume();
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+void LLViewerMediaImpl::updateVolume()
+{
 	if(mMediaSource)
 	{
+		// always scale the volume by the global media volume 
+		F32 volume = mRequestedVolume * LLViewerMedia::getVolume();
+
 		mMediaSource->setVolume(volume);
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+F32 LLViewerMediaImpl::getVolume()
+{
+	return mRequestedVolume;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -927,6 +961,10 @@ void LLViewerMediaImpl::update()
 	if(mMediaSource == NULL)
 	{
 		return;
+	}
+	else
+	{
+		updateVolume();
 	}
 	
 	mMediaSource->idle();
@@ -1240,4 +1278,3 @@ LLViewerMediaImpl::canPaste() const
 	else
 		return FALSE;
 }
-
