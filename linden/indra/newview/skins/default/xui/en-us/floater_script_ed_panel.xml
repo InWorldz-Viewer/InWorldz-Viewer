@@ -26,7 +26,7 @@
 	<menu_bar bottom="-18" drop_shadow="false" enabled="true" follows="left|top|right"
 	     height="18" left="8" mouse_opaque="false" name="script_menu" opaque="false"
 	     tear_off="false" width="476">
-		<menu bottom="0" drop_shadow="true" enabled="true" height="62"
+		<menu bottom="0" drop_shadow="true" enabled="true" height="62" label="Script" 
 		     left="0" mouse_opaque="false" name="File" opaque="true" tear_off="false"
 		     width="138">
 			<menu_item_call bottom_delta="-30" height="20" label="Save" left="0" mouse_opaque="true"

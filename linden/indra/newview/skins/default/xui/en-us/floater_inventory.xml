@@ -24,7 +24,7 @@
 	<menu_bar bottom="-34" drop_shadow="false" follows="left|top|right" height="18" left="2"
 	     mouse_opaque="false" name="Inventory Menu" opaque="false" width="461">
 		<menu bottom_delta="16" drop_shadow="true" height="101"
-		     label="File" left="0" mouse_opaque="false" name="File" opaque="true"
+		     label="Inventory" left="0" mouse_opaque="false" name="File" opaque="true"
 		     tear_off="true" width="128">
 			<menu_item_call bottom_delta="-18" height="18" label="Open Item" left="0" mouse_opaque="true"
 			     name="Open" width="128">
