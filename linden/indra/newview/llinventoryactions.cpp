@@ -226,6 +226,16 @@ class LLNewWindow : public inventory_listener_t
 	}
 };
 
+class LLForceLoad : public inventory_listener_t
+{
+	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+	{
+		gInventory.sFullFetchStarted = TRUE;
+		gInventory.startBackgroundFetch();
+		return true;
+	}
+};
+
 class LLShowFilters : public inventory_listener_t
 {
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
@@ -704,6 +714,7 @@ void init_inventory_actions(LLInventoryView *floater)
 	(new LLDoCreateFloater())->registerListener(floater, "Inventory.DoCreate");
 
 	(new LLNewWindow())->registerListener(floater, "Inventory.NewWindow");
+	(new LLForceLoad())->registerListener(floater, "Inventory.ForceLoad");
 	(new LLShowFilters())->registerListener(floater, "Inventory.ShowFilters");
 	(new LLResetFilter())->registerListener(floater, "Inventory.ResetFilter");
 	(new LLSetSortBy())->registerListener(floater, "Inventory.SetSortBy");
