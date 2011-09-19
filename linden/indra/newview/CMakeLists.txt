@@ -456,6 +456,7 @@ set(viewer_SOURCE_FILES
     llwearablelist.cpp
     llweb.cpp
     llmediactrl.cpp
+    llwindlightremotectrl.cpp
     llwind.cpp
     llwlanimator.cpp
     llwldaycycle.cpp
@@ -889,6 +890,7 @@ set(viewer_HEADER_FILES
     llmediactrl.h
     llwind.h
     llwindebug.h
+    llwindlightremotectrl.h
     llwlanimator.h
     llwldaycycle.h
     llwlparammanager.h
