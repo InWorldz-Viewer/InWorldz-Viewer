@@ -148,9 +148,10 @@ bool LLCanCache::operator()(LLInventoryCategory* cat, LLInventoryItem* item)
 	{
 		// HACK: downcast
 		LLViewerInventoryCategory* c = (LLViewerInventoryCategory*)cat;
-		if(c->getVersion() != LLViewerInventoryCategory::VERSION_UNKNOWN)
+		S32 descendents_server = c->getDescendentCount();
+		if ((c->getVersion() != LLViewerInventoryCategory::VERSION_UNKNOWN) && 
+			(descendents_server != LLViewerInventoryCategory::DESCENDENT_COUNT_UNKNOWN))
 		{
-			S32 descendents_server = c->getDescendentCount();
 			LLInventoryModel::cat_array_t* cats;
 			LLInventoryModel::item_array_t* items;
 			mModel->getDirectDescendentsOf(
