@@ -782,14 +782,12 @@ class Linux_i686Manifest(LinuxManifest):
         # install either the libkdu_v64R we just built, or a prebuilt one, in
         # decreasing order of preference.  for linux package, this goes to bin/
         try:
-            self.path(self.find_existing_file('../libkdu_v63R.so',
-                '../../libraries/i686-linux/lib_release_client/libkdu_v63R.so',
-                '../../../../../Linux-x86-32/Linux-x86-32/libkdu_v63R.so'), 
-                  dst='bin/libkdu_v63R.so')
+            self.path(self.find_existing_file('../../libraries/i686-linux/lib_release_client/libkdu_v64R.so'), 
+		  dst='bin/libkdu_v64R.so')
             # keep this one to preserve syntax, open source mangling removes previous lines
             pass
         except:
-            print "Skipping libkdu_v63R.so - not found"
+            print "Skipping libkdu_v64R.so - not found"
             pass
 
         if self.prefix("../../libraries/i686-linux/lib_release_client", dst="lib"):
@@ -805,10 +803,12 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libELFIO.so")
            ## self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
             self.path("libopenjpeg.so.2")
-            self.path("libopenal.so.1.12.854","libopenal.so.1")
-            self.path("libopenal.so.1.12.854","libopenal.so")
-            self.path("libalut.so.0.1.0","libalut.so.0")
-            self.path("libalut.so.0.1.0","libalut.so")
+#            self.path("libopenal.so.1.12.854","libopenal.so.1")
+#            self.path("libopenal.so.1.12.854","libopenal.so")
+            self.path("libopenal.so.1")
+#            self.path("libalut.so.0.1.0","libalut.so.0")
+#            self.path("libalut.so.0.1.0","libalut.so")
+            self.path("libalut.so.0")
            ## self.path("libkdu_v42R.so")
             #self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so")
             #self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so.0")

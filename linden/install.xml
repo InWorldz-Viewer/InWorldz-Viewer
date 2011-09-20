@@ -554,13 +554,6 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/gstreamer-plugins-darwin-20100826.tar.bz2</uri>
           </map>
-          <key>linux</key>
-          <map>
-            <key>md5sum</key>
-            <string>62b96bb2721798958743d92a403d122a</string>
-            <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/gstreamer-plugins-linux-20091125.tar.bz2</uri>
-          </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
@@ -583,9 +576,9 @@
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>349ee367e0ac1e878b24b66e449c6ff8</string>
+            <string>47b7c6261940bcedf86e681bd93ec2cc</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/gtk-etc-linux-20101106.1.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/gtk-etc-linux-20091115.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -696,9 +689,9 @@
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>ca87644e377a6cf16db4ba6dbd2f8689</string>
+            <string>8ae0470cb9e2c599d0cd0f2108e321e6</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/kdu-binaries-5.2.1-linux-20080617.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/kdu-inworldz-v64-linux-20110918.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -1029,9 +1022,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>44f9bacc69a3d29ae0b46ed69ad7c2ce</string>
+            <string>5017e0c2b24c6c31956ce7e33b0443af</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/openal-linux32-20110304.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/openal-linux-20091115.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
