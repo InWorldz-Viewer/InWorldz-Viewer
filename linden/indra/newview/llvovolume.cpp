@@ -1968,8 +1968,9 @@ BOOL LLVOVolume::lineSegmentIntersect(const LLVector3& start, const LLVector3& e
 {
 	if (!mbCanSelect ||
 		(gHideSelectedObjects && isSelected()) ||
-			mDrawable->isDead() || 
-			!gPipeline.hasRenderType(mDrawable->getRenderType()))
+		(mDrawable.isNull()) || 
+		(mDrawable->isDead()) || 
+		!gPipeline.hasRenderType(mDrawable->getRenderType()))
 	{
 		return FALSE;
 	}
