@@ -5,7 +5,7 @@ Info for each AO state
 #ifndef AO_STATE_H
 #define AO_STATE_H
 
-namespace EAO
+namespace EAOState
 {
 	enum State
 	{
@@ -37,8 +37,6 @@ namespace EAO
 		FLY_SLOW,
 
 		TYPE,
-		WHISPER,
-		TALK,
 		SHOUT,
 
 		FLOAT,
@@ -46,7 +44,8 @@ namespace EAO
 		SWIM_UP,
 		SWIM_DOWN,
 
-		EDIT_OBJ,
+		CUSTOMIZE,
+		CUSTOMIZE_DONE,
 
 		COUNT
 	};
@@ -57,66 +56,18 @@ class AOState
 public:
 	AOState();
 	virtual ~AOState();
-	
-private:
 
-	struct AOStateItem
-	{
-		EAO::State state;		// State of the AO
-		std::string token;		// Token when reading ZHAO notecards
-		std::string label;		// Label associated with the state (used for UI stuff, debug msgs, etc)
-		LLUUID sim_anim;		// Simulator anim we want to override
-	};
-	
-	std::vector<AOStateItem> mStates;
-
-	friend bool operator== (const AOStateItem& item1, const AOStateItem& item2)
-	{
-	    return ((item1.state == item2.state) &&
-	            (item1.token == item2.token) &&
-	            (item1.label == item2.label) &&
-				(item1.sim_anim == item2.sim_anim));
-	}
-	 
-	friend bool operator!= (const AOStateItem& item1, const AOStateItem& item2)
-	{
-		return !(item1 == item2);
-	}
-
-	friend bool operator> (const AOStateItem& item1, const AOStateItem& item2)
-	{
-	    return item1.state > item2.state;
-	}
-
-	friend bool operator< (const AOStateItem& item1, const AOStateItem& item2)
-	{
-	    return item1.state < item2.state;
-	}
-
-	friend bool operator>= (const AOStateItem& item1, const AOStateItem& item2)
-	{
-	    return item1.state >= item2.state;
-	}
-
-	friend bool operator<= (const AOStateItem& item1, const AOStateItem& item2)
-	{
-	    return item1.state <= item2.state;
-	}
-
-public:
-
-	// Returns the EAO::State associated with a simulator animation
-	EAO::State getStateFromSimAnimID(const LLUUID& sim_anim);
-	// Returns the first simulator animation associated with an EAO::State
-	const LLUUID& getSimAnimIDFromState(EAO::State state);
-	// Returns the EAO::State associated with a notecard token
-	EAO::State getStateFromToken(const std::string& str_token);
+	// Returns the EAOState::State associated with a simulator animation
+	EAOState::State getStateFromSimAnimID(const LLUUID& sim_anim_id);
+	// Returns the first simulator animation associated with an EAOState::State
+	const LLUUID& getSimAnimIDFromState(EAOState::State state);
+	// Returns the EAOState::State associated with a notecard token
+	EAOState::State getStateFromToken(const std::string& str_token);
+	// returns true if a simulator animation can be overridden
+	bool hasOverrideState(const LLUUID& sim_anim_id);
 	// returns the token associated with the current state
 	// returns "" when the state is UNKNOWN or not found
-	std::string getTokenFromState(EAO::State state);
-	std::string getLabelFromState(EAO::State state);
-	// Returns the EAO::State associated with a label
-	EAO::State getStateFromLabel(const std::string& label);
+	std::string getTokenFromState(EAOState::State state);
 };
 
 #endif

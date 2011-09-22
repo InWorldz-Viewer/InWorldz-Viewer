@@ -32,15 +32,15 @@
 #include "llfloater.h"
 #include "aoutility.h"
 #include "aostate.h"
+/////#include "llviewercontrol.h"
+/////#include "llagent.h"
 
 class AOEngine;
 class AOEntry;
 class AONoteCardDropTarget;
 class LLFrameTimer;
 class LLComboBox;
-class LLScrollListCtrl;
-class LLTextBox;
-class LLButton;
+
 
 class FloaterAO : public LLFloater, public LLFloaterSingleton<FloaterAO> 
 {
@@ -50,35 +50,90 @@ public:
 
 	/*virtual*/	BOOL postBuild();
 
-	void reset();
-	void resetNotecard();
+    
 
-	static void onClickToggleAO(LLUICtrl*, void*);
-	static void onClickToggleSits(LLUICtrl*, void*);
-	static void onClickPrev(void* userdata);
-	static void onClickNext(void* userdata);
+	static S32 sStandIterator;
+
+	// When the AO is tied to the UI, initializing will always have to be done
+	//static bool init();
+
+	static void onClickToggleAO(LLUICtrl *, void*);
+	static void onClickToggleSits(LLUICtrl *, void*);
+
+	void init();
+
+	static BOOL loadAnims();
+
+	/*static S32 getAnimState();
+	static void setAnimState(S32 state);
+	static void setStates(const LLUUID& id, BOOL start);*/
+
+	static LLUUID getCurrentStandId();
+	static void setCurrentStandId(const LLUUID& id);
+
+	//static LLUUID getAnimID(const LLUUID& id);
+	//static S32 getStateFromAnimID(const LLUUID& id);
+	//static LLUUID getAnimIDFromState(const S32 state);
+	//static S32 getStateFromToken(std::string strtoken);
+
+	static void onClickLess(void* data);
+	static void onClickMore(void* data);
+
+	static void onClickPrevStand(void* userdata);
+	static void onClickNextStand(void* userdata);
 	static void onClickReloadCard(void* userdata);
 	static void onClickOpenCard(void* userdata);
 	static void onClickNewCard(void* userdata);
-	static void onAnimSelected(LLUICtrl* ctrl, void* userdata);
-	static void onSpinnerCommit(LLUICtrl* ctrl, void* userdata);
-	static void onComboBoxCommit(LLUICtrl* ctrl, void* userdata);
 
-	static void updateSelected(EAO::State state, const LLUUID& anim_id);
+	//static const LLUUID& getAssetIDByName(const std::string& name);
 
-	static void AOItemDrop(LLViewerInventoryItem* item);
-
-	static AONoteCardDropTarget* sAOItemDropTarget;
-
+	 static void updateSelected(EAOState::State state, const LLUUID& anim_id);
+	
 private:
 
-	LLComboBox* mCombo;
-	LLScrollListCtrl* mList;
-	LLTextBox* mDesc;
-	LLButton* mNext;
-	LLButton* mPrev;
+	LLComboBox*				mCombo_stands;
+	LLComboBox* 			mCombo_walks;
+	LLComboBox* 			mCombo_runs;
+	LLComboBox* 			mCombo_jumps;
+	LLComboBox* 			mCombo_sits;
+	LLComboBox* 			mCombo_gsits;
+	LLComboBox* 			mCombo_crouchs;
+	LLComboBox* 			mCombo_cwalks;
+	LLComboBox* 			mCombo_falls;
+	LLComboBox* 			mCombo_hovers;
+	LLComboBox* 			mCombo_flys;
+	LLComboBox* 			mCombo_flyslows;
+	LLComboBox* 			mCombo_flyups;
+	LLComboBox* 			mCombo_flydowns;
+	LLComboBox* 			mCombo_lands;
+	LLComboBox* 			mCombo_standups;
+	LLComboBox* 			mCombo_prejumps;
+	LLComboBox* 			mCombo_typing;
+	LLComboBox* 			mCombo_floating;
+	LLComboBox* 			mCombo_swimmingforward;
+	LLComboBox* 			mCombo_swimmingup;
+	LLComboBox* 			mCombo_swimmingdown;
+	LLComboBox* 			mCombo_customize;
 
-	void updateLayout(EAO::State state);
+	void updateLayout();
+
+	void updateAOCombo(LLComboBox* combo, EAOState::State state);
+
+public:
+
+	//static S32 sAnimState;
+	static LLUUID sCurrentStandId;
+
+	static AONoteCardDropTarget* sAOItemDropTarget;
+	static void AOItemDrop(LLViewerInventoryItem* item);
+	static void onSpinnerCommit(LLUICtrl* ctrl, void* userdata);
+	static void onComboBoxCommit(LLUICtrl* ctrl, void* userdata);
+	static bool setDefault(void *userdata, LLUUID ao_id, std::string defaultanim);
+
+protected:
+
+	//
+
 };
 
 #endif

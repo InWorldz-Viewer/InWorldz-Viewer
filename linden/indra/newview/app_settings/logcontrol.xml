@@ -86,7 +86,7 @@
               <string>Texture</string>
               <string>TextureCache</string>
               <!--<string>ViewerImages</string>-->
-							<string>Volume</string>
+							<!--<string>Volume</string>-->
 							<!--<string>Throttle</string>-->
 							<!--<string>Voice</string>-->
 							<!--<string>VivoxProtocolParser</string>-->

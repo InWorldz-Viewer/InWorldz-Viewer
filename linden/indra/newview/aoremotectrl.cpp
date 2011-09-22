@@ -115,7 +115,7 @@ void AORemoteCtrl::onClickToggleAOSit(void* data)
 //static 
 void AORemoteCtrl::onClickShowAO(void* data)
 {
-	FloaterAO::toggleInstance();
+	FloaterAO::showInstance();
 }
 
 //static

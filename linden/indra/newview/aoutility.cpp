@@ -154,7 +154,8 @@ void AONotecardCallback::fire(const LLUUID &inv_item)
 {
 	if (!mFileName.empty())
 	{ 
-		LLPreviewNotecard* nc = (LLPreviewNotecard*)LLPreview::find(inv_item);
+		LLPreviewNotecard* nc;
+		nc = (LLPreviewNotecard*)LLPreview::find(inv_item);
 		if (nc)
 		{
 			nc->open();

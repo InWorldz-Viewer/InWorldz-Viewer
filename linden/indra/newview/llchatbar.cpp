@@ -43,7 +43,6 @@
 #include "message.h"
 #include "llfocusmgr.h"
 
-#include "aoengine.h"
 #include "llagent.h"
 #include "llbutton.h"
 #include "llcombobox.h"
@@ -599,32 +598,17 @@ void LLChatBar::sendChatFromViewer(const LLWString &wtext, EChatType type, BOOL 
 		if (type == CHAT_TYPE_WHISPER)
 		{
 			lldebugs << "You whisper " << utf8_text << llendl;
-			LLUUID override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_WHISPER, true);
-			if (override_id.isNull())
-			{
-				override_id = ANIM_AGENT_WHISPER;
-			}
-			gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_START);
+			gAgent.sendAnimationRequest(ANIM_AGENT_WHISPER, ANIM_REQUEST_START);
 		}
 		else if (type == CHAT_TYPE_NORMAL)
 		{
 			lldebugs << "You say " << utf8_text << llendl;
-			LLUUID override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_TALK, true);
-			if (override_id.isNull())
-			{
-				override_id = ANIM_AGENT_TALK;
-			}
-			gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_START);
+			gAgent.sendAnimationRequest(ANIM_AGENT_TALK, ANIM_REQUEST_START);
 		}
 		else if (type == CHAT_TYPE_SHOUT)
 		{
 			lldebugs << "You shout " << utf8_text << llendl;
-			LLUUID override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_SHOUT, true);
-			if (override_id.isNull())
-			{
-				override_id = ANIM_AGENT_SHOUT;
-			}
-			gAgent.sendAnimationRequest(override_id, ANIM_REQUEST_START);
+			gAgent.sendAnimationRequest(ANIM_AGENT_SHOUT, ANIM_REQUEST_START);
 		}
 		else
 		{

@@ -7647,7 +7647,7 @@ class LLViewToggleAO : public view_listener_t
 {
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
 	{
-		FloaterAO::toggleInstance();
+		FloaterAO::showInstance();
 		return true;
 	}
 };
