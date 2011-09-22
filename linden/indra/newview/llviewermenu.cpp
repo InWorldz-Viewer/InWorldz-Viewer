@@ -7647,7 +7647,7 @@ class LLViewToggleAO : public view_listener_t
 {
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
 	{
-		FloaterAO::showInstance();
+		LLFloaterAO::show(NULL);
 		return true;
 	}
 };
@@ -7656,7 +7656,7 @@ class LLViewCheckAO: public view_listener_t
 {
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
 	{
-		gMenuHolder->findControl(userdata["control"].asString())->setValue(FloaterAO::instanceVisible());
+		gMenuHolder->findControl(userdata["control"].asString())->setValue(LLFloaterAO::getVisible());
 		return true;
 	}
 };

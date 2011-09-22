@@ -48,7 +48,6 @@
               <!--<string>AppInitStartupState</string>-->
               <!--<string>DBUS</string>-->
 							<!--<string>OpenAL</string>-->
-              <string>AO</string>
               <!--<string>AppCache</string>-->
 							<!--<string>APR</string>-->
 							<!--<string>AudioEngine</string>-->

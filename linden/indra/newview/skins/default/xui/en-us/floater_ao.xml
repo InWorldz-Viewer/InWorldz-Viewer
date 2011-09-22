@@ -294,6 +294,4 @@
   </text>
   <combo_box name="swimmingdown" label="" follows="left|top" height="20" left_delta="0" width="180" bottom_delta="-22" />
 
-  <combo_box name="customize" label="" follows="left|top" height="20" left_delta="0" width="180" bottom_delta="-22" />
-
 </floater>

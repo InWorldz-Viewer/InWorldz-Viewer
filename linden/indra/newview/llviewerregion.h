@@ -50,10 +50,9 @@
 #include "llvocache.h"
 #include "llweb.h"
 
-// don't include random one-word defines in headers! -- MC
 // Surface id's
-//#define LAND  1
-//#define WATER 2
+#define LAND  1
+#define WATER 2
 const U32	MAX_OBJECT_CACHE_ENTRIES = 10000;
 
 

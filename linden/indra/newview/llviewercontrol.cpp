@@ -38,7 +38,6 @@
 #include "indra_constants.h"
 
 // For Listeners
-#include "aoengine.h"
 #include "llaudioengine.h"
 #include "llagent.h"
 #include "llconsole.h"
@@ -456,40 +455,6 @@ bool handleRenderSculptSAMaxChanged(const LLSD& newvalue)
 	return true;
 }
 
-bool handleAOChanged(const LLSD& newvalue)
-{
-	if (newvalue.asBoolean())
-	{
-		AOEngine::getInstance()->init();
-		//gAgent.getAvatarObject()->stopMotion(AOEngine::getInstance()->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
-		//gAgent.getAvatarObject()->startMotion(AOEngine::getInstance()->getOverride(getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
-	}
-	else
-	{
-		gAgent.getAvatarObject()->stopMotion(AOEngine::getInstance()->getLastPlayedIDFromState(AOEngine::getInstance()->getCurrentState()));
-		gAgent.getAvatarObject()->startMotion(AOEngine::getInstance()->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
-	}
-	return true;
-}
-
-bool handleAOSitsChanged(const LLSD& newvalue)
-{
-	if (newvalue.asBoolean())
-	{
-		AOEngine::getInstance()->init();
-	}
-	else
-	{
-		if (EAOState::SIT == AOEngine::getInstance()->getCurrentState() ||
-			EAOState::SIT_GROUND == AOEngine::getInstance()->getCurrentState() )
-		{
-			gAgent.getAvatarObject()->stopMotion(AOEngine::getInstance()->getLastPlayedIDFromState(AOEngine::getInstance()->getCurrentState()));
-			gAgent.getAvatarObject()->startMotion(AOEngine::getInstance()->getStateList()->getSimAnimIDFromState(AOEngine::getInstance()->getCurrentState()));
-		}
-	}
-	return true;
-}
-
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -624,8 +589,6 @@ void settings_setup_listeners()
 	gSavedSettings.getControl("TranslateChat")->getSignal()->connect(boost::bind(&handleTranslateChatPrefsChanged, _1));	
 	gSavedSettings.getControl("RenderSculptSAThreshold")->getSignal()->connect(boost::bind(&handleRenderSculptSAThresholdChanged, _1));
 	gSavedSettings.getControl("RenderSculptSAMax")->getSignal()->connect(boost::bind(&handleRenderSculptSAMaxChanged, _1));
-	gSavedSettings.getControl("AOSitsEnabled")->getSignal()->connect(boost::bind(&handleAOSitsChanged, _1));
-	gSavedSettings.getControl("AOEnabled")->getSignal()->connect(boost::bind(&handleAOChanged, _1));
 }
 
 template <> eControlType get_control_type<U32>(const U32& in, LLSD& out) 

@@ -65,11 +65,7 @@ include_directories(
     )
 
 set(viewer_SOURCE_FILES
-	aoengine.cpp
-	aooverride.cpp
 	aoremotectrl.cpp
-	aostate.cpp
-	aoutility.cpp
     floaterao.cpp
     floaterbusy.cpp
     floatercache.cpp
@@ -493,11 +489,7 @@ endif (LINUX)
 set(viewer_HEADER_FILES
     CMakeLists.txt
     ViewerInstall.cmake
-    aoengine.h
-	aooverride.h
-	aoremotectrl.h
-	aostate.h
-	aoutility.h
+    aoremotectrl.h
     floaterao.h
     floaterbusy.h
     floatercache.h

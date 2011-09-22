@@ -57,7 +57,6 @@
 #include "llsdutil.h"
 //#include "vmath.h"
 
-#include "aoengine.h"
 #include "imageids.h"
 #include "llbox.h"
 #include "llbutton.h"
@@ -68,6 +67,7 @@
 #include "llface.h"
 #include "llfirstuse.h"
 #include "llfloater.h"
+#include "floaterao.h"
 #include "llfloateractivespeakers.h"
 #include "llfloateravatarinfo.h"
 #include "llfloaterbuildoptions.h"
@@ -2930,34 +2930,12 @@ void LLAgent::endAnimationUpdateUI()
 
 		if (mAvatarObject.notNull())
 		{
-			if (mCustomAnim)
+			if(mCustomAnim)
 			{
-				// Did we have override the starting anim?
-				LLUUID override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_CUSTOMIZE, false);
-				if (override_id.notNull())
-				{
-					sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
-					sendAnimationRequest(override_id, ANIM_REQUEST_STOP);
+				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
+				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_START);
 
-					// Do we have an override for end anim?
-					override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_CUSTOMIZE_DONE, true);
-					if (override_id.notNull())
-					{
-						sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_STOP);
-						sendAnimationRequest(override_id, ANIM_REQUEST_START);
-					}
-					else
-					{
-						sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_START);
-					}
-				}
-				else
-				{
-					sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
-					sendAnimationRequest(ANIM_AGENT_CUSTOMIZE_DONE, ANIM_REQUEST_START);
-				}
-
-				mCustomAnim = FALSE;
+				mCustomAnim = FALSE ;
 			}
 			
 		}
@@ -4061,10 +4039,7 @@ void LLAgent::changeCameraToMouselook(BOOL animate)
 	if( mCameraMode != CAMERA_MODE_MOUSELOOK )
 	{
 		gFocusMgr.setKeyboardFocus( NULL );
-		/*if (gSavedSettings.getBOOL("AONoStandsInMouselook"))
-		{
-			AOEngine::getInstance()->stopOverride(AOEngine::getInstance()->getLastPlayedIDFromState(STATE_AGENT_STAND), true);
-		}*/
+		if (gSavedSettings.getBOOL("AONoStandsInMouselook"))	LLFloaterAO::stopMotion(LLFloaterAO::getCurrentStandId(), FALSE,TRUE);
 		
 		mLastCameraMode = mCameraMode;
 		mCameraMode = CAMERA_MODE_MOUSELOOK;
@@ -4314,37 +4289,32 @@ void LLAgent::changeCameraToCustomizeAvatar(BOOL avatar_animate, BOOL camera_ani
 
 	if (mAvatarObject.notNull())
 	{
-		if (avatar_animate)
+		if(avatar_animate)
 		{
-			// Remove any pitch from the avatar
+				// Remove any pitch from the avatar
 			LLVector3 at = mFrameAgent.getAtAxis();
 			at.mV[VZ] = 0.f;
 			at.normalize();
 			gAgent.resetAxes(at);
 
-			LLUUID override_id = AOEngine::getInstance()->getOverride(ANIM_AGENT_CUSTOMIZE, true);
-			if (override_id.notNull())
+			sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_START);
+			mCustomAnim = TRUE ;
+			mAvatarObject->startMotion(ANIM_AGENT_CUSTOMIZE);
+			LLMotion* turn_motion = mAvatarObject->findMotion(ANIM_AGENT_CUSTOMIZE);
+
+			if (turn_motion)
 			{
-				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_STOP);
-				sendAnimationRequest(override_id, ANIM_REQUEST_START);
-				mAnimationDuration = gSavedSettings.getF32("ZoomTime") + CUSTOMIZE_AVATAR_CAMERA_ANIM_SLOP;
+				mAnimationDuration = turn_motion->getDuration() + CUSTOMIZE_AVATAR_CAMERA_ANIM_SLOP;
+
 			}
 			else
 			{
-				sendAnimationRequest(ANIM_AGENT_CUSTOMIZE, ANIM_REQUEST_START);
-				mAvatarObject->startMotion(ANIM_AGENT_CUSTOMIZE);
-				LLMotion* turn_motion = mAvatarObject->findMotion(ANIM_AGENT_CUSTOMIZE);
-				if (turn_motion)
-				{
-					mAnimationDuration = turn_motion->getDuration() + CUSTOMIZE_AVATAR_CAMERA_ANIM_SLOP;
-				}
-				else
-				{
-					mAnimationDuration = gSavedSettings.getF32("ZoomTime");
-				}
+				mAnimationDuration = gSavedSettings.getF32("ZoomTime");
 			}
-			mCustomAnim = TRUE;
 		}
+
+
+
 		gAgent.setFocusGlobal(LLVector3d::zero);
 	}
 	else
