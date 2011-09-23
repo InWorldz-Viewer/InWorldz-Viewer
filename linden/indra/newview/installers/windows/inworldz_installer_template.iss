@@ -280,6 +280,7 @@ Name: {app}\msvcp80.dll; Type: files; Tasks: ; Languages:
 Name: {app}\msvcr80.dll; Type: files; Tasks: ; Languages:
 Name: {app}\msvcr71.dll; Type: files; Tasks: ; Languages:
 Name: {app}\inworldz.exe.config; Type: files; Tasks: ; Languages:
+Name: {app}\kdu_v64R.dll.config; Type: files; Tasks: ; Languages:
 
 
 [Code]
