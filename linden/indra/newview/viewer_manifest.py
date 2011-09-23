@@ -784,6 +784,7 @@ class Linux_i686Manifest(LinuxManifest):
         try:
             self.path(self.find_existing_file('../../libraries/i686-linux/lib_release_client/libkdu_v64R.so'), 
 		  dst='bin/libkdu_v64R.so')
+
             # keep this one to preserve syntax, open source mangling removes previous lines
             pass
         except:
@@ -804,16 +805,9 @@ class Linux_i686Manifest(LinuxManifest):
            ## self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
             self.path("libopenjpeg.so.2")
 #            self.path("libopenal.so.1.12.854","libopenal.so.1")
-#            self.path("libopenal.so.1.12.854","libopenal.so")
-            self.path("libopenal.so.1")
+            self.path("libopenal.so","libopenal.so.1")
 #            self.path("libalut.so.0.1.0","libalut.so.0")
-#            self.path("libalut.so.0.1.0","libalut.so")
-            self.path("libalut.so.0")
-           ## self.path("libkdu_v42R.so")
-            #self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so")
-            #self.path("libgtk-x11-2.0.so.0.1200.12","libgtk-x11-2.0.so.0")
-            #self.path("libgdk-x11-2.0.so.0.1200.12","libgdk-x11-2.0.so")
-            #self.path("libgdk-x11-2.0.so.0.1200.12","libgdk-x11-2.0.so.0")
+            self.path("libalut.so")
             self.end_prefix("lib")
 
             # Vivox runtimes
