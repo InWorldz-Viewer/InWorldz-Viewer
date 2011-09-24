@@ -229,8 +229,13 @@ void LLView::sendChildToFront(LLView* child)
 {
 	if (child && child->getParent() == this) 
 	{
-		mChildList.remove( child );
-		mChildList.push_front(child);
+		// minor optimization, but more importantly,
+		//  won't temporarily create an empty list
+		if (child != mChildList.front())
+		{
+			mChildList.remove( child );
+			mChildList.push_front(child);
+		}
 	}
 }
 
@@ -238,8 +243,13 @@ void LLView::sendChildToBack(LLView* child)
 {
 	if (child && child->getParent() == this) 
 	{
-		mChildList.remove( child );
-		mChildList.push_back(child);
+		// minor optimization, but more importantly,
+		//  won't temporarily create an empty list
+		if (child != mChildList.back())
+		{
+			mChildList.remove( child );
+			mChildList.push_back(child);
+		}
 	}
 }
 
@@ -261,6 +271,10 @@ void LLView::moveChildToBackOfTabGroup(LLUICtrl* child)
 
 void LLView::addChild(LLView* child, S32 tab_group)
 {
+	if (!child)
+	{
+		return;
+	}
 	if (mParentView == child) 
 	{
 		llerrs << "Adding view " << child->getName() << " as child of itself" << llendl;
@@ -408,30 +422,38 @@ bool LLCompareByTabOrder::operator() (const LLView* const a, const LLView* const
 
 BOOL LLView::isInVisibleChain() const
 {
-	const LLView* cur_view = this;
-	while(cur_view)
+	BOOL visible = TRUE;
+
+	const LLView* viewp = this;
+	while(viewp)
 	{
-		if (!cur_view->getVisible())
+		if (!viewp->getVisible())
 		{
-			return FALSE;
+			visible = FALSE;
+			break;
 		}
-		cur_view = cur_view->getParent();
+		viewp = viewp->getParent();
 	}
-	return TRUE;
+	
+	return visible;
 }
 
 BOOL LLView::isInEnabledChain() const
 {
-	const LLView* cur_view = this;
-	while(cur_view)
+	BOOL enabled = TRUE;
+
+	const LLView* viewp = this;
+	while(viewp)
 	{
-		if (!cur_view->getEnabled())
+		if (!viewp->getEnabled())
 		{
-			return FALSE;
+			enabled = FALSE;
+			break;
 		}
-		cur_view = cur_view->getParent();
+		viewp = viewp->getParent();
 	}
-	return TRUE;
+	
+	return enabled;
 }
 
 // virtual

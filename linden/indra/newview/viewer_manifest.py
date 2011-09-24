@@ -206,7 +206,17 @@ class WindowsManifest(ViewerManifest):
         super(WindowsManifest, self).construct()
         # the final exe is complicated because we're not sure where it's coming from,
         # nor do we have a fixed name for the executable
-        self.path(self.find_existing_file('debug/inworldz-bin.exe', 'release/inworldz-bin.exe', 'releasesse2/inworldz-bin.exe', 'relwithdebinfo/inworldz-bin.exe'), dst=self.final_exe())
+        # Actually, we know on both counts -- MC
+        if self.configuration().lower() == "release":
+            self.path(self.find_existing_file('release/inworldz-bin.exe'), dst=self.final_exe())
+        elif self.configuration().lower() == "releasesse2":
+            self.path(self.find_existing_file('releasesse2/inworldz-bin.exe'), dst=self.final_exe())
+        elif self.configuration().lower() == "relwithdebinfo":
+            self.path(self.find_existing_file('relwithdebinfo/inworldz-bin.exe'), dst=self.final_exe())
+        elif self.configuration().lower() == "debug":
+            self.path(self.find_existing_file('debug/inworldz-bin.exe'), dst=self.final_exe())
+        else:
+            self.path(self.find_existing_file('release/inworldz-bin.exe', 'releasesse2/inworldz-bin.exe', 'relwithdebinfo/inworldz-bin.exe', 'debug/inworldz-bin.exe'), dst=self.final_exe())
 
         # copy over the the pdb file for the regular or SSE2 versions if we don't already have one copied
         symbol_ver = '.'.join(self.args['version'])
