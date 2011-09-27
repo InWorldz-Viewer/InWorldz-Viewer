@@ -24,6 +24,8 @@
  * $/LicenseInfo$
  */
 
+#if IW_KDU_ENABLED
+
 #ifndef LL_LLKDUMEM_H
 #define LL_LLKDUMEM_H
 
@@ -147,3 +149,5 @@ private:
 	U32 mDataSize;
 };
 #endif
+
+#endif //IW_KDU_ENABLED

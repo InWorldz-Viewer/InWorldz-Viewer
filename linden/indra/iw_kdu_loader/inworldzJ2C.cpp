@@ -24,6 +24,8 @@
  * $/LicenseInfo$
  */
 
+#if IW_KDU_ENABLED
+
 // dll includes
 #include "stdafx.h"
 #include "InWorldzJ2C.h"
@@ -1286,3 +1288,5 @@ void kdc_flow_control::process_components()
 		}
 	}
 }
+
+#endif //IW_KDU_ENABLED

@@ -11,9 +11,11 @@ include(InWorldz)
 # todo: find a script that does the job, but we can live
 # without a "real" pch in the meantime -- MC
 
-if (WINDOWS)
-  set(BUILD_SHARED_LIBS ON)
+set(BUILD_SHARED_LIBS ON)
   
+# VS2005-specific, pare these down when we're sure cmake
+# does the right thing on, say, 2010
+if (WINDOWS)
   add_definitions(
 	/O2
 	/GL
@@ -75,8 +77,7 @@ add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
 if (WINDOWS)
 	# Release -- need to figure out how to set release/debug
 	target_link_libraries(iw_kdu_loader
-		iw_imagebase
-		kdu_v64R
+		${IW_KDU_LIBRARIES}
 		kernel32 
 		user32 
 		gdi32 
@@ -98,4 +99,11 @@ if (WINDOWS)
 		)
 		
 	# add post-build copying to the right inworldz-bin.exe directory here
+else(WINDOWS)
+	target_link_libraries(iw_kdu_loader
+		${IW_KDU_LIBRARIES}
+		)
+	set_target_properties(iw_kdu_loader
+		PROPERTIES
+		)
 endif (WINDOWS)

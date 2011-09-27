@@ -19,6 +19,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
+#if IW_KDU_ENABLED
+
 #ifndef IW_KDU_LOADER
 #define IW_KDU_LOADER
 
@@ -47,3 +49,5 @@
 
 
 #endif // IW_KDU_LOADER
+
+#endif //IW_KDU_ENABLED

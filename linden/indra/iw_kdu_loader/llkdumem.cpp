@@ -24,6 +24,8 @@
  * $/LicenseInfo$
  */
 
+#if IW_KDU_ENABLED
+
 #include "stdafx.h"
 
 #include "llkdumem.h"
@@ -199,3 +201,5 @@ bool LLKDUMemIn::get(S32 comp_idx, kdu_line_buf& line, S32 x_tnum)
 
   return true;
 }
+
+#endif //IW_KDU_ENABLED

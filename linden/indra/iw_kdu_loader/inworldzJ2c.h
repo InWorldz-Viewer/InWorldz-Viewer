@@ -24,6 +24,8 @@
  * $/LicenseInfo$
  */
 
+#if IW_KDU_ENABLED
+
 #ifndef InWorldzJ2C_H
 #define InWorldzJ2C_H
 
@@ -115,3 +117,5 @@ extern "C" IW_KDU_LOADER_API InWorldzJ2C* createInWorldzJ2C();
 extern "C" IW_KDU_LOADER_API void destroyInWorldzJ2C(InWorldzJ2C* kdu);
 
 #endif
+
+#endif //IW_KDU_ENABLED

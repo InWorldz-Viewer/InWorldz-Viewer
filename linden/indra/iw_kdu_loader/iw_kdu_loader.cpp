@@ -25,18 +25,16 @@
    copies if necessary, but they're mostly typedefs and inline functions so
    you shouldn't have any real difficulty with them. 
 
-   If you're compiling this, you need to make sure you're including these dirs:
-	* ..\kdu\managed\all_includes
-	* ..\kdu\apps\image
-
-   And linking with these libs:
-	* ..\lib_x86\kdu_v64R.lib (or eq.)
-	* ..\lib_x86\kdu_v64RD.lib (or eq.)
+   If you're compiling this, you need to make sure you've included the kdu source
+   and libs at "linden\libraries\kdu\". See "linden\libraries\kdu\README.txt" for
+   details. 
 
    CMake should generate everything else.
 
 	-- MC
 */
+
+#if IW_KDU_ENABLED
 
 #include "stdafx.h"
 #include "iw_kdu_loader.h"
@@ -74,3 +72,5 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 
 
 #endif
+
+#endif //IW_KDU_ENABLED
