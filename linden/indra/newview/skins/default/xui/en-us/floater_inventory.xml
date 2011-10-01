@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <floater bottom="-720" can_close="true" can_drag_on_left="false" can_minimize="true"
-     can_resize="true" height="563" left="882" min_height="150" min_width="240"
+     can_resize="true" height="568" left="882" min_height="150" min_width="240"
      mouse_opaque="true" name="Inventory" rect_control="FloaterInventoryRect"
      title="Inventory" width="467">
-	<search_editor bottom="-54" follows="left|top|right" height="20" label="Type here to search"
+	<search_editor bottom="-56" follows="left|top|right" height="20" label="Type here to search"
 	     left="6" mouse_opaque="true" name="inventory search editor" width="455"
        font="SansSerifBigger" />
-	<tab_container bottom_delta="-512" follows="left|top|right|bottom" height="508" left="2"
+	<tab_container bottom_delta="-510" follows="left|top|right|bottom" height="506" left="2"
 	     mouse_opaque="false" name="inventory filter tabs" tab_position="top"
 	     width="463">
 		<inventory_panel allow_multi_select="true" border="true" bottom="-507"
@@ -22,7 +22,7 @@
 		     left_delta="0" mouse_opaque="true" name="Worn Items"
 		     sort_order="WornItemsSortOrder" width="461" />
 	</tab_container>
-	<menu_bar bottom="-34" drop_shadow="false" follows="left|top|right" height="18" left="2"
+	<menu_bar bottom="-37" drop_shadow="false" follows="left|top|right" height="19" left="2"
 	     mouse_opaque="false" name="Inventory Menu" opaque="false" width="461">
 		<menu bottom_delta="16" drop_shadow="true" height="101"
 		     label="Inventory" left="0" mouse_opaque="false" name="File" opaque="true"
