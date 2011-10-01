@@ -53,6 +53,7 @@
 							<!--<string>AudioEngine</string>-->
               <!--<string>InitInfo</string>-->
               <string>Inventory</string>
+              <!--<string>InventoryFetch</string>-->
               <!--<string>isOwnedSelf</string>-->
               <!--<string>MarkerFile</string>-->
 							<!--<string>MediaImpl</string>-->
@@ -81,9 +82,9 @@
 							<!--<string>RLV</string>-->
 							<!--<string>VOAvatar</string>-->
 
-              <string>http-texture</string>
-              <string>Texture</string>
-              <string>TextureCache</string>
+              <!--<string>http-texture</string>-->
+              <!--<string>Texture</string>-->
+              <!--<string>TextureCache</string>-->
               <!--<string>ViewerImages</string>-->
 							<!--<string>Volume</string>-->
 							<!--<string>Throttle</string>-->

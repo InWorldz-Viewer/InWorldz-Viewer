@@ -678,6 +678,51 @@ BOOL LLInventoryItem::importFile(LLFILE* fp)
 	return success;
 }
 
+LLSD LLInventoryItem::exportLLSD(bool include_asset_key)
+{
+	// Cache items
+	LLSD inv_item = LLSD::emptyArray();
+
+	LLSD item = LLSD::emptyMap();
+	item["item_id"] = mUUID;
+	item["parent_id"] = mParentUUID;
+
+	item["permissions"] = ll_create_sd_from_permissions(mPermissions);
+
+	// Check for permissions to see the asset id, and if so write it
+	// out as an asset id. Otherwise, apply our cheesy encryption.
+	if (include_asset_key)
+	{
+		U32 mask = mPermissions.getMaskBase();
+		if(((mask & PERM_ITEM_UNRESTRICTED) == PERM_ITEM_UNRESTRICTED)
+		   || (mAssetUUID.isNull()))
+		{
+			item["asset_id"] = mAssetUUID;
+		}
+		else
+		{
+			LLUUID shadow_id(mAssetUUID);
+			LLXORCipher cipher(MAGIC_ID.mData, UUID_BYTES);
+			cipher.encrypt(shadow_id.mData, UUID_BYTES);
+			item["shadow_id"] = shadow_id;
+		}
+	}
+	else
+	{
+		item["asset_id"] = LLUUID::null;
+	}
+	item["type"] = LLAssetType::lookup(mType);
+	item["inv_type"] = LLInventoryType::lookup(mInventoryType);
+	item["flags"] = llformat("%08x", mFlags);
+	item["name"] = mName;
+	item["desc"] = mDescription;
+	item["creation_date"] = (S32)mCreationDate;
+
+	inv_item["inv_item"] = item;
+
+	return inv_item;
+}
+
 BOOL LLInventoryItem::exportFile(LLFILE* fp, BOOL include_asset_key) const
 {
 	std::string uuid_str;
@@ -1453,6 +1498,9 @@ bool LLInventoryCategory::fromLLSD(LLSD& sd)
         LLStringUtil::replaceNonstandardASCII(mName, ' ');
         LLStringUtil::replaceChar(mName, '|', ' ');
     }
+
+	// note: no version check here! Not usable for cache!
+
     return true;
 }
 
@@ -1535,6 +1583,23 @@ BOOL LLInventoryCategory::importFile(LLFILE* fp)
 		}
 	}
 	return TRUE;
+}
+
+LLSD LLInventoryCategory::exportLLSD(bool include_asset_key)
+{
+	// Cache categories (different from llviewerinventory because we don't know a version)
+	LLSD inv_cat = LLSD::emptyArray();
+
+	LLSD category = LLSD::emptyMap();
+	category["cat_id"] = mUUID;
+	category["parent_id"] = mParentUUID;
+	category["type"] = LLAssetType::lookup(mType);
+	category["pref_type"] = LLAssetType::lookup(mPreferredType);
+	category["name"] = mName;
+
+	inv_cat["inv_category"] = category;
+
+	return inv_cat;
 }
 
 BOOL LLInventoryCategory::exportFile(LLFILE* fp, BOOL) const

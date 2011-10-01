@@ -30,11 +30,16 @@
  * $/LicenseInfo$
  */
 
+/**
+ * NOTE: in this case, "local" means your viewer cache -- MC
+ */
+
 #include "llviewerprecompiledheaders.h"
 #include "llviewerinventory.h"
 
 #include "message.h"
 #include "indra_constants.h"
+#include "llxorcipher.h"
 
 #include "llagent.h"
 #include "llviewercontrol.h"
@@ -198,10 +203,23 @@ void LLViewerInventoryItem::fetchFromServer(void) const
 	{
 		std::string url; 
 
-		if( ALEXANDRIA_LINDEN_ID.getString() == mPermissions.getOwner().getString())
-			url = gAgent.getRegion()->getCapability("FetchLib");
-		else	
-			url = gAgent.getRegion()->getCapability("FetchInventory");
+		LLViewerRegion* region = gAgent.getRegion();
+		// we have to check region. It can be null after region was destroyed. See EXT-245
+		if (region)
+		{
+		  if(gAgent.getID() != mPermissions.getOwner())
+		    {
+		      url = region->getCapability("FetchLib");
+		    }
+		  else
+		    {	
+		      url = region->getCapability("FetchInventory");
+		    }
+		}
+		else
+		{
+			llwarns << "Agent Region is absent" << llendl;
+		}
 
 		if (!url.empty())
 		{
@@ -233,8 +251,9 @@ void LLViewerInventoryItem::fetchFromServer(void) const
 }
 
 // virtual
-BOOL LLViewerInventoryItem::unpackMessage(LLSD item)
+BOOL LLViewerInventoryItem::importLLSD(LLSD item)
 {
+	// uses llinventory to parse LLSD
 	BOOL rv = LLInventoryItem::fromLLSD(item);
 	mIsComplete = TRUE;
 	return rv;
@@ -295,6 +314,119 @@ bool LLViewerInventoryItem::importFileLocal(LLFILE* fp)
 	bool rv = (LLInventoryItem::importFile(fp) ? true : false);
 	mIsComplete = false;
 	return rv;
+}
+
+bool LLViewerInventoryItem::importLLSDLocal(const LLSD& item)
+{
+	// private function to parse LLSD loaded from cache, as
+	// opposed to the function fromLLSD in llinventory
+
+	const LLUUID MAGIC_ID("3c115e51-04f4-523c-9fa6-98aff1034730");
+
+	bool success = true;
+
+	if (item.has("item_id"))
+    {
+        mUUID.set(item.get("item_id").asString());
+    }
+    if (item.has("parent_id"))
+    {
+        mParentUUID.set(item.get("parent_id").asString());
+    }
+	/*if (item.has("permissions"))
+	{
+		success = mPermissions.importLLSD(item.get("permissions"));
+	}*/
+	/*if (item.has("sale_info"))
+	{
+		// Sale info used to contain next owner perm. It is now in
+		// the permissions. Thus, we read that out, and fix legacy
+		// objects. It's possible this op would fail, but it
+		// should pick up the vast majority of the tasks.
+		BOOL has_perm_mask = FALSE;
+		U32 perm_mask = 0;
+		success = mSaleInfo.fromLLSD(item.get("sale_info"), has_perm_mask, perm_mask);
+		if (has_perm_mask)
+		{
+			if (perm_mask == PERM_NONE)
+			{
+				perm_mask = mPermissions.getMaskOwner();
+			}
+			// fair use fix.
+			if (!(perm_mask & PERM_COPY))
+			{
+				perm_mask |= PERM_TRANSFER;
+			}
+			mPermissions.setMaskNext(perm_mask);
+		}
+	}*/
+	if (item.has("shadow_id"))
+	{
+		mAssetUUID.set(item.get("shadow_id").asString());
+		LLXORCipher cipher(MAGIC_ID.mData, UUID_BYTES);
+		cipher.decrypt(mAssetUUID.mData, UUID_BYTES);
+	}
+	if (item.has("asset_id"))
+	{
+		mAssetUUID.set(item.get("asset_id").asString());
+	}
+	if (item.has("type"))
+	{
+		mType = LLAssetType::lookup(item.get("type").asString());
+	}
+	if (item.has("inv_type"))
+	{
+		mInventoryType = LLInventoryType::lookup(item.get("inv_type").asString());
+	}
+	if (item.has("flags"))
+	{
+		llformat(item.get("flags").asString().c_str(), "%x", &mFlags);
+	}
+	if (item.has("name"))
+	{
+		mName.assign(item.get("name").asString());
+		LLStringUtil::replaceNonstandardASCII(mName, ' ');
+		LLStringUtil::replaceChar(mName, '|', ' ');
+	}
+	if (item.has("desc"))
+	{
+		mDescription.assign(item.get("desc").asString());
+		LLStringUtil::replaceNonstandardASCII(mDescription, ' ');
+	}
+	if (item.has("creation_date"))
+	{
+		mCreationDate = item.get("date").asInteger();
+	}
+
+	// Need to convert 1.0 simstate files to a useful inventory type
+	// and potentially deal with bad inventory tyes eg, a landmark
+	// marked as a texture.
+	if ((LLInventoryType::IT_NONE == mInventoryType)
+	   || !inventory_and_asset_types_match(mInventoryType, mType))
+	{
+		lldebugs << "Resetting inventory type for " << mUUID << llendl;
+		mInventoryType = LLInventoryType::defaultForAssetType(mType);
+	}
+	return success;
+}
+
+LLSD LLViewerInventoryItem::exportLLSDLocal()
+{
+	// Cache items -- not used, see LLInventory
+	LLSD inv_item = LLSD::emptyArray();
+
+	LLSD item = LLSD::emptyMap();
+	item["item_id"] = mUUID;
+	item["parent_id"] = mParentUUID;
+	item["permissions"] = ll_create_sd_from_permissions(mPermissions);
+	item["type"] = LLAssetType::lookup(mType);
+	item["inv_type"] = LLInventoryType::lookup(mInventoryType);
+	item["name"] = mName;
+	item["creation_date"] = (S32)mCreationDate;
+
+	inv_item["inv_item"] = item;
+
+	return inv_item;
 }
 
 bool LLViewerInventoryItem::exportFileLocal(LLFILE* fp) const
@@ -383,7 +515,6 @@ void LLViewerInventoryCategory::copyViewerCategory(const LLViewerInventoryCatego
 	mDescendentsRequested = other->mDescendentsRequested;
 }
 
-
 void LLViewerInventoryCategory::updateParentOnServer(BOOL restamp) const
 {
 	LLMessageSystem* msg = gMessageSystem;
@@ -450,6 +581,7 @@ bool LLViewerInventoryCategory::fetchDescendents()
 	if((VERSION_UNKNOWN == mVersion)
 	   && mDescendentsRequested.hasExpired())	//Expired check prevents multiple downloads.
 	{
+		LL_DEBUGS("InventoryFetch") << "Fetching category children: " << mName << ", UUID: " << mUUID << LL_ENDL;
 		const F32 FETCH_TIMER_EXPIRY = 10.0f;
 		mDescendentsRequested.reset();
 		mDescendentsRequested.setTimerExpirySec(FETCH_TIMER_EXPIRY);
@@ -461,8 +593,21 @@ bool LLViewerInventoryCategory::fetchDescendents()
 		// This comes from LLInventoryFilter from llfolderview.h
 		U32 sort_order = gSavedSettings.getU32("InventorySortOrder") & 0x1;
 
-		std::string url = gAgent.getRegion()->getCapability("WebFetchInventoryDescendents");
-   
+		// *NOTE: For bug EXT-2879, originally commented out
+		// gAgent.getRegion()->getCapability in order to use the old
+		// message-based system.  This has been uncommented now that
+		// AIS folks are aware of the issue and have a fix in process.
+		// see ticket for details.
+
+		std::string url;
+		if (gAgent.getRegion())
+		{
+			url = gAgent.getRegion()->getCapability("WebFetchInventoryDescendents");
+		}
+		else
+		{
+			llwarns << "agent region is null" << llendl;
+		}
 		if (!url.empty()) //Capability found.  Build up LLSD and use it.
 		{
 			LLInventoryModel::startBackgroundFetch(mUUID);			
@@ -470,7 +615,7 @@ bool LLViewerInventoryCategory::fetchDescendents()
 		else
 		{	//Deprecated, but if we don't have a capability, use the old system.
 			// Yeah, but let's not flood the log with it.
-			// llinfos << "WebFetchInventoryDescendents capability not found.  Using deprecated UDP message." << llendl;
+			LL_DEBUGS("InventoryFetch") << "WebFetchInventoryDescendents capability not found.  Using deprecated UDP message." << LL_ENDL;
 			LLMessageSystem* msg = gMessageSystem;
 			msg->newMessage("FetchInventoryDescendents");
 			msg->nextBlock("AgentData");
@@ -557,6 +702,58 @@ bool LLViewerInventoryCategory::importFileLocal(LLFILE* fp)
 		}
 	}
 	return true;
+}
+
+bool LLViewerInventoryCategory::importLLSDLocal(const LLSD& category)
+{
+	// mostly a duplicate of fromLLSD in llinventory.cpp. Private function
+	if (category.has("cat_id"))
+    {
+        mUUID.set(category["cat_id"].asString());
+    }
+    if (category.has("parent_id"))
+    {
+        mParentUUID.set(category["parent_id"].asString());
+    }
+    if (category.has("type"))
+    {
+        mPreferredType = LLAssetType::lookup(category["type"].asString());
+    }
+	if (category.has("pref_type"))
+	{
+        mPreferredType = LLAssetType::lookup(category["pref_type"].asString());
+	}
+    if (category.has("name"))
+    {
+        mName = category["name"].asString();
+        LLStringUtil::replaceNonstandardASCII(mName, ' ');
+        LLStringUtil::replaceChar(mName, '|', ' ');
+    }
+	if (category.has("version"))
+    {
+		mVersion = category["version"].asInteger();
+	}
+
+	return true;
+}
+
+LLSD LLViewerInventoryCategory::exportLLSDLocal()
+{
+	// Cache categories
+	LLSD inv_cat = LLSD::emptyArray();
+
+	LLSD category = LLSD::emptyMap();
+	category["cat_id"] = mUUID;
+	category["parent_id"] = mParentUUID;
+	category["type"] = LLAssetType::lookup(mType);
+	category["pref_type"] = LLAssetType::lookup(mPreferredType);
+	category["name"] = mName;
+	category["owner_id"] = mOwnerID;
+	category["version"] = mVersion;
+
+	inv_cat["inv_category"] = category;
+
+	return inv_cat;
 }
 
 bool LLViewerInventoryCategory::exportFileLocal(LLFILE* fp) const
@@ -668,6 +865,11 @@ extern LLGestureManager gGestureManager;
 void ActivateGestureCallback::fire(const LLUUID& inv_item)
 {
 	if (inv_item.isNull())
+		return;
+	LLViewerInventoryItem* item = gInventory.getItem(inv_item);
+	if (!item)
+		return;
+	if (item->getType() != LLAssetType::AT_GESTURE)
 		return;
 
 	gGestureManager.activateGesture(inv_item);
@@ -803,18 +1005,28 @@ void copy_inventory_from_notecard(const LLUUID& object_id, const LLUUID& notecar
 		viewer_region = gAgent.getRegion();
 	}
 
-	if(viewer_region)
+	if (!viewer_region)
 	{
-		std::string url = viewer_region->getCapability("CopyInventoryFromNotecard");
-		if (!url.empty())
-		{
-			body["notecard-id"] = notecard_inv_id;
-			body["object-id"] = object_id;
-			body["item-id"] = src->getUUID();
-			body["folder-id"] = gInventory.findCategoryUUIDForType(src->getType());
-			body["callback-id"] = (LLSD::Integer)callback_id;
-
-			LLHTTPClient::post(url, body, new LLCopyInventoryFromNotecardResponder());
-		}
+	        LL_WARNS("Inventory") << "Can't find region from object_id "
+                                                 << object_id << " or gAgent"
+                                                 << LL_ENDL;
+        	return;
 	}
+	std::string url = viewer_region->getCapability("CopyInventoryFromNotecard");
+	if (url.empty())
+	{
+		LL_WARNS("Inventory") << "There is no 'CopyInventoryFromNotecard' capability"
+					<< " for region: " << viewer_region->getName()
+                                	<< LL_ENDL;
+		return;
+	}
+
+	body["notecard-id"] = notecard_inv_id;
+	body["object-id"] = object_id;
+	body["item-id"] = src->getUUID();
+	body["folder-id"] = gInventory.findCategoryUUIDForType(src->getType());
+	body["callback-id"] = (LLSD::Integer)callback_id;
+
+	LLHTTPClient::post(url, body, new LLCopyInventoryFromNotecardResponder());
 }
+

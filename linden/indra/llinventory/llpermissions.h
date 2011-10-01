@@ -200,6 +200,8 @@ public:
 	void setMaskGroup(U32 mask)	   { mMaskGroup = mask;}
 	void setMaskNext(U32 mask) { mMaskNextOwner = mask; }
 
+	void setGroupOwned(BOOL group_owned) { mIsGroupOwned = group_owned; }
+
 	// Allow accumulation of permissions. Results in the tightest
 	// permissions possible. In the case of clashing UUIDs, it sets
 	// the ID to LLUUID::null.
