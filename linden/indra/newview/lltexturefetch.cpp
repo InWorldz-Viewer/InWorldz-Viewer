@@ -300,7 +300,10 @@ public:
 							  const LLChannelDescriptors& channels,
 							  const LLIOPipe::buffer_ptr_t& buffer)
 	{
-		if ((gSavedSettings.getBOOL("LogTextureDownloadsToViewerLog")) || (gSavedSettings.getBOOL("LogTextureDownloadsToSimulator")))
+		static LLCachedControl<BOOL> log_to_viewer_log("LogTextureDownloadsToViewerLog", FALSE);
+		static LLCachedControl<BOOL> log_to_sim("LogTextureDownloadsToSimulator", FALSE);
+
+		if (log_to_viewer_log || log_to_sim)
 		{
 			mFetcher->mTextureInfo.setRequestStartTime(mID, mStartTime);
 			U64 timeNow = LLTimer::getTotalTime();
@@ -591,10 +594,11 @@ bool LLTextureFetchWorker::doWork(S32 param)
 	if ((mFetcher->isQuitting() || getFlags(LLWorkerClass::WCF_DELETE_REQUESTED)))
 	{
 		if (mState < DECODE_IMAGE)
-	{
+		{
 			return true; // abort
 		}
 	}
+
 	if(mImagePriority < F_ALMOST_ZERO)
 	{
 		if (mState == INIT || mState == LOAD_FROM_NETWORK || mState == LOAD_FROM_SIMULATOR)
@@ -662,19 +666,23 @@ bool LLTextureFetchWorker::doWork(S32 param)
 				return false;
 			}
 			mFileSize = 0;
-			mLoaded = FALSE;
-			setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority); // Set priority first since Responder may change it
-
-			CacheReadResponder* responder = new CacheReadResponder(mFetcher, mID, mFormattedImage);
+			mLoaded = FALSE;			
+			
 			if (mUrl.compare(0, 7, "file://") == 0)
 			{
+				setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority); // Set priority first since Responder may change it
+
 				// read file from local disk
 				std::string filename = mUrl.substr(7, std::string::npos);
+				CacheReadResponder* responder = new CacheReadResponder(mFetcher, mID, mFormattedImage);
 				mCacheReadHandle = mFetcher->mTextureCache->readFromCache(filename, mID, cache_priority,
 																		  offset, size, responder);
 			}
 			else if (mUrl.empty())
 			{
+				setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority); // Set priority first since Responder may change it
+
+				CacheReadResponder* responder = new CacheReadResponder(mFetcher, mID, mFormattedImage);
 				mCacheReadHandle = mFetcher->mTextureCache->readFromCache(mID, cache_priority,
 																		  offset, size, responder);
 			}
@@ -753,7 +761,8 @@ bool LLTextureFetchWorker::doWork(S32 param)
 
 	if (mState == LOAD_FROM_NETWORK)
 	{
-		bool get_url = gSavedSettings.getBOOL("ImagePipelineUseHTTP");
+		static LLCachedControl<BOOL> use_http("ImagePipelineUseHTTP", TRUE);
+		bool get_url = use_http;
 		if (!mUrl.empty()) get_url = false;
 // 		if (mHost != LLHost::invalid) get_url = false;
 		if ( get_url && mCanUseHTTP && mUrl.empty())//get http url.
@@ -834,6 +843,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		}
 		else
 		{
+			mFetcher->addToNetworkQueue(this); // failsafe
 			setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority);
 		}
 		return false;
@@ -843,18 +853,18 @@ bool LLTextureFetchWorker::doWork(S32 param)
 	{
 		if(mCanUseHTTP)
 		{
+			//NOTE:
 			//control the number of the http requests issued for:
 			//1, not openning too many file descriptors at the same time;
 			//2, control the traffic of http so udp gets bandwidth.
 			//
-			
-			// Changed this to default of 8. 32 seems to cause failures. -KC
-			//static const S32 MAX_NUM_OF_HTTP_REQUESTS_IN_QUEUE = 32 ;
-			const S32 HTTP_QUEUE_MAX_SIZE = 8;
-			if(mFetcher->getNumHTTPRequests() > HTTP_QUEUE_MAX_SIZE)
+			static const S32 MAX_NUM_OF_HTTP_REQUESTS_IN_QUEUE = 8 ;
+			if(mFetcher->getNumHTTPRequests() > MAX_NUM_OF_HTTP_REQUESTS_IN_QUEUE)
 			{
-				return false;  //wait.
+				return false ; //wait.
 			}
+			
+			mFetcher->removeFromNetworkQueue(this, false);
 			
 			S32 cur_size = 0;
 			if (mFormattedImage.notNull())
@@ -1838,9 +1848,11 @@ bool LLTextureFetch::updateRequestPriority(const LLUUID& id, F32 priority)
 //virtual
 S32 LLTextureFetch::update(U32 max_time_ms)
 {
+	static LLCachedControl<F32> band_width("ThrottleBandwidthKBPS", 500.F);
+
 	{
 		mNetworkQueueMutex.lock() ;
-		mMaxBandwidth = gSavedSettings.getF32("ThrottleBandwidthKBPS");
+		mMaxBandwidth = band_width ;
 
 		gImageList.sTextureBits += mHTTPTextureBits;
 		mHTTPTextureBits = 0 ;
@@ -2054,7 +2066,9 @@ void LLTextureFetch::sendRequestListToSimulators()
 // 				llinfos << "IMAGE REQUEST: " << req->mID << " Discard: " << req->mDesiredDiscard
 // 						<< " Packet: " << packet << " Priority: " << req->mImagePriority << llendl;
 
-				if ((gSavedSettings.getBOOL("LogTextureDownloadsToViewerLog")) || (gSavedSettings.getBOOL("LogTextureDownloadsToSimulator")))
+				static LLCachedControl<BOOL> log_to_viewer_log("LogTextureDownloadsToViewerLog", FALSE);
+				static LLCachedControl<BOOL> log_to_sim("LogTextureDownloadsToSimulator", FALSE);
+				if (log_to_viewer_log || log_to_sim)
 				{
 					mTextureInfo.setRequestStartTime(req->mID, LLTimer::getTotalTime());
 					mTextureInfo.setRequestOffset(req->mID, 0);
@@ -2275,7 +2289,10 @@ bool LLTextureFetch::receiveImagePacket(const LLHost& host, const LLUUID& id, U1
 
 	if(packet_num >= (worker->mTotalPackets - 1))
 	{
-		if ((gSavedSettings.getBOOL("LogTextureDownloadsToViewerLog")) || (gSavedSettings.getBOOL("LogTextureDownloadsToSimulator")))
+		static LLCachedControl<BOOL> log_to_viewer_log("LogTextureDownloadsToViewerLog", FALSE);
+		static LLCachedControl<BOOL> log_to_sim("LogTextureDownloadsToSimulator", FALSE);
+
+		if (log_to_viewer_log || log_to_sim)
 		{
 			U64 timeNow = LLTimer::getTotalTime();
 			mTextureInfo.setRequestSize(id, worker->mFileSize);
