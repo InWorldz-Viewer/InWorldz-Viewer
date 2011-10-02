@@ -1552,7 +1552,7 @@ void LLInventoryModel::backgroundFetch(void*)
 			// double timeouts on failure
 			sMinTimeBetweenFetches = llmin(sMinTimeBetweenFetches * 2.f, 10.f);
 			sMaxTimeBetweenFetches = llmin(sMaxTimeBetweenFetches * 2.f, 120.f);
-			LL_DEBUGS("Inventory") << "Inventory fetch times grown to min: " 
+			LL_DEBUGS("InventoryFetch") << "Inventory fetch times grown to min: " 
 								<< sMinTimeBetweenFetches << " seconds, max: " 
 								<< sMaxTimeBetweenFetches << " seconds" 
 								<< LL_ENDL;
@@ -1624,7 +1624,7 @@ void LLInventoryModel::backgroundFetch(void*)
 					// shrink timeouts based on success
 					sMinTimeBetweenFetches = llmax(sMinTimeBetweenFetches * 0.9f, 0.3f);
 					sMaxTimeBetweenFetches = llmax(sMaxTimeBetweenFetches * 0.9f, 15.f);
-					LL_DEBUGS("Inventory") << "Inventory fetch times shrunk to min: " 
+					LL_DEBUGS("InventoryFetch") << "Inventory fetch times shrunk to min: " 
 											<< sMinTimeBetweenFetches << " seconds, max: " 
 											<< sMaxTimeBetweenFetches << " seconds" 
 											<< LL_ENDL;
