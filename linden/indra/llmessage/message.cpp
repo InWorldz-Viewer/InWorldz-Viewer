@@ -256,6 +256,8 @@ LLMessageSystem::LLMessageSystem(const std::string& filename, U32 port,
 {
 	init();
 
+	mSendSize = 0;
+
 	mSystemVersionMajor = version_major;
 	mSystemVersionMinor = version_minor;
 	mSystemVersionPatch = version_patch;
@@ -326,6 +328,8 @@ LLMessageSystem::LLMessageSystem(const std::string& filename, U32 port,
 	mMaxMessageTime   = 1.f;
 
 	mTrueReceiveSize = 0;
+
+	mReceiveTime = 0.f;
 }
 
 
@@ -625,6 +629,7 @@ BOOL LLMessageSystem::checkMessages( S64 frame_count, bool faked_message, U8 fak
 			// process the message as normal
 			mIncomingCompressedSize = zeroCodeExpand(&buffer, &receive_size);
 			mCurrentRecvPacketID = ntohl(*((U32*)(&buffer[1])));
+
 			host = getSender();
 
 			const bool resetPacketId = true;
@@ -707,6 +712,7 @@ BOOL LLMessageSystem::checkMessages( S64 frame_count, bool faked_message, U8 fak
 			// But we don't want to acknowledge UseCircuitCode until the circuit is
 			// available, which is why the acknowledgement test is done above.  JC
 			bool trusted = cdp && cdp->getTrusted();
+
 			valid_packet = mTemplateMessageReader->validateMessage(
 				buffer,
 				receive_size,

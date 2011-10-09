@@ -54,6 +54,7 @@
 #include "llfocusmgr.h"
 #include "llviewerjoystick.h"
 #include "llfloaterjoystick.h"
+#include "llfloatermessagelog.h"
 #include "llares.h" 
 #include "llcurl.h"
 #include "llfloatersnapshot.h"
@@ -3240,6 +3241,11 @@ void LLAppViewer::badNetworkHandler()
 
 	// Flush all of our caches on exit in the case of disconnect due to
 	// invalid packets.
+	// Don't exit if we're trying to use the message log
+	if (LLFloaterMessageLog::sInstance)
+	{
+		return;
+	}
 
 	mPurgeOnExit = TRUE;
 
