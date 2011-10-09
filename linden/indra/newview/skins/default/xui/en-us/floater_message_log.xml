@@ -7,7 +7,7 @@
 		<column name="icon1" label="icon1" width="24" />
 	</scroll_list>
 	<button name="filter_choice_btn" follows="left|top" left="10" top="-150" right="-370" bottom="430" label="…"/>
-	<line_editor name="filter_edit" follows="left|top|right" left="30" top="-149" right="-28" bottom="430" max_length="65535"/>
+	<line_editor name="filter_edit" follows="left|top|right" left="30" top="-149" right="-95" bottom="430" max_length="65535"/>
 	<button name="filter_apply_btn" follows="top|right" width="80" top="-150" right="-9" bottom="430" label="Apply"/>
 	<button name="clear_log_btn" follows="top|right" width="80" top="-170" right="-9" bottom="410" label="Clear"/>
 	<scroll_list column_padding="0" draw_heading="false" follows="left|top|right" left="10" top="-190"
