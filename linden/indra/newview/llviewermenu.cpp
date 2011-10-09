@@ -114,6 +114,8 @@
 #include "llfloatergroups.h"
 #include "llfloaterhtmlcurrency.h"
 #include "llfloatermediabrowser.h"			// gViewerHtmlHelp
+#include "llfloatermessagelog.h"
+#include "llfloatermessagebuilder.h"
 #include "llfloaterhtmlsimple.h"
 #include "llfloaterhud.h"
 #include "llfloaterinspect.h"
@@ -312,6 +314,10 @@ void handle_show_notifications_console(void*);
 void handle_region_dump_settings(void*);
 void handle_region_dump_temp_asset_data(void*);
 void handle_region_clear_temp_asset_data(void*);
+
+// Advanced -> Network menu
+void handle_open_message_log(void*);
+void handle_open_message_builder(void*);
 
 // Object pie menu
 BOOL sitting_on_selection();
@@ -897,9 +903,16 @@ void init_client_menu(LLMenuGL* menu)
 		LLMenuGL* sub = NULL;
 		sub = new LLMenuGL("Network");
 
-		sub->append(new LLMenuItemCallGL("Enable Message Log",  
+		sub->append(new LLMenuItemCallGL("Message Log", 
+			&handle_open_message_log, NULL));
+		sub->append(new LLMenuItemCallGL("Message Builder...", 
+			&handle_open_message_builder, NULL));
+
+		sub->appendSeparator();
+
+		sub->append(new LLMenuItemCallGL("Enable Messages In Log File",  
 			&handle_viewer_enable_message_log,  NULL));
-		sub->append(new LLMenuItemCallGL("Disable Message Log", 
+		sub->append(new LLMenuItemCallGL("Disable Messages In Log File", 
 			&handle_viewer_disable_message_log, NULL));
 
 		sub->appendSeparator();
@@ -3027,6 +3040,16 @@ void process_grant_godlike_powers(LLMessageSystem* msg, void**)
 	{
 		llwarns << "Grant godlike for wrong agent " << agent_id << llendl;
 	}
+}
+
+void handle_open_message_log(void*)
+{
+	LLFloaterMessageLog::show();
+}
+
+void handle_open_message_builder(void*)
+{
+	LLFloaterMessageBuilder::show("");
 }
 
 /*
