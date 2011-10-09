@@ -54,7 +54,7 @@ typedef unsigned __int64		U64;
 #else
 typedef long long int			S64;
 typedef long long unsigned int		U64;
-#if defined(OS_MAC || OS_LINUX || OS_SOLARIS)
+#if defined(OS_MAC) || defined(OS_LINUX) || defined(OS_SOLARIS)
 #define S64L(a)				(a##LL)
 #define U64L(a)				(a##ULL)
 #endif

@@ -840,16 +840,16 @@ anguage Infrstructure (CLI) international standard</string>
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>7f818f13faf7c02838fe66f7d27e1913</string>
+            <string>13f9be04ba029d19f822abdcb755c700</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/llqtwebkit-darwin-20091124.tar.bz2</uri>
+            <uri>http://viewer-source-downloads.s3.amazonaws.com/install_pkgs/llqtwebkit-darwin-4.7.1-20110302.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>ffede2775355676096b1085cbb9d0da7</string>
+            <string>86076cb1da612a0e71860cb376d5c2ff</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/llqtwebkit-linux-20091117.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/llqtwebkit-4.7.1-linux-20111009.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
