@@ -22,6 +22,7 @@
  */
 
 #include "imagebaseforkdu.h"
+#include <cstring>
 
 ImageBaseForKDU::ImageBaseForKDU() :
 		mWidth(0),

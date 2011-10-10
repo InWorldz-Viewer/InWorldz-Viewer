@@ -14,7 +14,7 @@ include(Linking)
 include(PluginAPI)
 include(MediaPluginBase)
 include(FindOpenGL)
-include(PulseAudio)
+#include(PulseAudio)
 
 include(WebKitLibPlugin)
 

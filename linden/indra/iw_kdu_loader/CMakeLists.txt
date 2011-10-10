@@ -103,7 +103,7 @@ else(WINDOWS)
 	target_link_libraries(iw_kdu_loader
 		${IW_KDU_LIBRARIES}
 		)
-	set_target_properties(iw_kdu_loader
-		PROPERTIES
-		)
+#	set_target_properties(iw_kdu_loader
+#		PROPERTIES
+#		)
 endif (WINDOWS)
