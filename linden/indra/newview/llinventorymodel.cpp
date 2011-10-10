@@ -2670,7 +2670,7 @@ bool LLInventoryModel::loadFromFile(const std::string& filename,
 	file.close();
 
 	LLSD::array_iterator llsd_it = data.beginArray();
-	for (llsd_it; llsd_it != data.endArray(); ++llsd_it)
+	for (; llsd_it != data.endArray(); ++llsd_it)
 	{
 		if ((*llsd_it).has("inv_category"))
 		{
