@@ -102,7 +102,6 @@ public:
 
 	// file support - implemented here so that a minimal information
 	// set can be transmitted between simulator and viewer.
-// 	virtual BOOL importFile(LLFILE* fp);
 	virtual BOOL exportFile(LLFILE* fp, BOOL include_asset_key = TRUE) const;
 
 	virtual BOOL importLegacyStream(std::istream& input_stream);
@@ -259,9 +258,10 @@ public:
 	// network ok. It uses a simple crc check which is defeatable, but
 	// we want to detect network mangling somehow.
 	virtual BOOL unpackMessage(LLMessageSystem* msg, const char* block, S32 block_num = 0);
-	// file support
+	// cache file support
 	virtual BOOL importFile(LLFILE* fp);
 	virtual BOOL exportFile(LLFILE* fp, BOOL include_asset_key = TRUE) const;
+	virtual LLSD exportLLSD(bool include_asset_key = true);
 
 	virtual BOOL importLegacyStream(std::istream& input_stream);
 	virtual BOOL exportLegacyStream(std::ostream& output_stream, BOOL include_asset_key = TRUE) const;
@@ -322,6 +322,7 @@ public:
 	// file support
 	virtual BOOL importFile(LLFILE* fp);
 	virtual BOOL exportFile(LLFILE* fp, BOOL include_asset_key = TRUE) const;
+	virtual LLSD exportLLSD(bool include_asset_key = true);
 
 	virtual BOOL importLegacyStream(std::istream& input_stream);
 	virtual BOOL exportLegacyStream(std::ostream& output_stream, BOOL include_asset_key = TRUE) const;

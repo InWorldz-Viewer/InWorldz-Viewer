@@ -657,7 +657,6 @@ BOOL LLPermissions::importFile(LLFILE* fp)
 	return TRUE;
 }
 
-
 BOOL LLPermissions::exportFile(LLFILE* fp) const
 {
 	std::string uuid_str;
@@ -1249,6 +1248,7 @@ LLPermissions ll_permissions_from_sd(const LLSD& sd_perm)
 	rv.setMaskGroup(mask);
 	mask = (U32)(sd_perm[PERM_NEXT_OWNER_MASK_LABEL].asInteger());
 	rv.setMaskNext(mask);
+	rv.setGroupOwned(sd_perm[PERM_IS_OWNER_GROUP_LABEL]);
 	rv.fix();
 	return rv;
 }
