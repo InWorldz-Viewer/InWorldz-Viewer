@@ -1186,16 +1186,14 @@ BOOL LLFloaterAO::startMotion(const LLUUID& id, BOOL stand)
 {
 	if (stand)
 	{
-		if (getAnimID(id).notNull())
+		// we don't care about getAnimID here -- MC
+		if (gAgent.getAvatarObject() && gAgent.getAvatarObject()->mIsSitting)
 		{
-			if (gAgent.getAvatarObject() && gAgent.getAvatarObject()->mIsSitting)
-			{
-				return FALSE;
-			}
-
-			gAgent.sendAnimationRequest(id, ANIM_REQUEST_START);
-			return TRUE;
+			return FALSE;
 		}
+
+		gAgent.sendAnimationRequest(id, ANIM_REQUEST_START);
+		return TRUE;
 	}
 	else
 	{
@@ -1230,12 +1228,19 @@ BOOL LLFloaterAO::stopMotion(const LLUUID& id, BOOL stop_immediate, BOOL stand)
 		if (id.notNull() && gSavedSettings.getBOOL("AOEnabled"))
 		{
 //			llinfos << "  state " << getAnimState() << "/" << getStateFromAnimID(id) << "(now 0)  stop anim " << id << " overriding with " << getAnimID(id) << llendl;
+			bool change_stand = false;
+			if (getAnimState() == STATE_AGENT_STAND)
+			{
+				change_stand = true;
+			}
 			if (getAnimState() == getStateFromAnimID(id))
 			{
 				setAnimState(STATE_AGENT_IDLE);
 			}
-			changeStand(); // startMotion(getCurrentStandId(), 0, TRUE);
+			// startMotion(getCurrentStandId(), 0, TRUE);
 			gAgent.sendAnimationRequest(getAnimID(id), ANIM_REQUEST_STOP);
+			if (change_stand) changeStand(); 
+
 			return TRUE;
 		}
 	}
@@ -1391,11 +1396,11 @@ void LLFloaterAO::onNotecardLoadComplete(LLVFS *vfs,const LLUUID& asset_uuid,LLA
 						{
 							std::string strtoken(what[0]);
 							std::string stranim(*anim);
-							LLUUID animid(getAssetIDByName(stranim));
+							LLUUID animid = getAssetIDByName(stranim);
 
 //							llinfos << sInvFolderID.asString().c_str() << llendl;
 //							llinfos << "anim: " << stranim.c_str() << " assetid: " << animid << llendl;
-							if (!(animid.notNull()))
+							if (animid.isNull())
 							{
 								cmdline_printchat(llformat("Warning: animation '%s' could not be found (Section: %s).",stranim.c_str(),strtoken.c_str()));
 							}

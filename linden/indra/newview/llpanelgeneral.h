@@ -50,6 +50,8 @@ public:
 private:
 	static void onClickResetUISize(void*);
 	static void onLocationChanged(LLUICtrl* ctrl, void* data);
+
+	BOOL mWLControl;
 };
 
 #endif

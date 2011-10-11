@@ -149,6 +149,17 @@
 	     mouse_opaque="true" name="crash_report_textbox" v_pad="0" width="394">
 		Crash reports:
 	</text>-->
+  <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
+	     bottom="-362" drop_shadow_visible="true" enabled="true" follows="left|top"
+	     font="SansSerifSmall" h_pad="0" halign="left" height="18" left="10"
+	     mouse_opaque="true" name="crash_report_textbox" v_pad="0" width="394">
+    Toolbar:
+  </text>
+  <check_box bottom_delta="0" enabled="true" follows="left|top"
+     font="SansSerifSmall" height="16" initial_value="false"
+     label="Show WindLight toolbar" left="153"  mouse_opaque="true"
+     name="toggle_windlight_control" radio_style="false" width="237"
+     control_name="EnableWindlightRemote" />
 	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 	     bottom="-394" drop_shadow_visible="true" enabled="true" follows="left|top"
 	     font="SansSerifSmall" h_pad="0" halign="left" height="18" left="10"

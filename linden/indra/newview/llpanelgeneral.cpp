@@ -48,6 +48,7 @@
 #include "llviewerregion.h"
 
 LLPanelGeneral::LLPanelGeneral()
+:	mWLControl(FALSE)
 {
 	LLUICtrlFactory::getInstance()->buildPanel(this, "panel_preferences_general.xml");
 }
@@ -134,7 +135,10 @@ BOOL LLPanelGeneral::postBuild()
 	
 	childSetVisible("maturity_desired_combobox", can_choose);
 	childSetVisible("maturity_desired_textbox",	!can_choose);
-			
+
+	mWLControl = gSavedSettings.getBOOL("EnableWindlightRemote");
+	childSetValue("toggle_windlight_control", mWLControl);
+
 	return TRUE;
 }
 
@@ -196,10 +200,13 @@ void LLPanelGeneral::apply()
 	{
 		gAllowIdleAFK = childGetValue("afk_timeout_checkbox");
 	}
+
+	mWLControl = gSavedSettings.getBOOL("EnableWindlightRemote");
 }
 
 void LLPanelGeneral::cancel()
 {
+	gSavedSettings.setBOOL("EnableWindlightRemote", mWLControl);
 }
 
 // static
