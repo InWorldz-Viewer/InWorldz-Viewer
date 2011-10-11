@@ -1228,12 +1228,19 @@ BOOL LLFloaterAO::stopMotion(const LLUUID& id, BOOL stop_immediate, BOOL stand)
 		if (id.notNull() && gSavedSettings.getBOOL("AOEnabled"))
 		{
 //			llinfos << "  state " << getAnimState() << "/" << getStateFromAnimID(id) << "(now 0)  stop anim " << id << " overriding with " << getAnimID(id) << llendl;
+			bool change_stand = false;
+			if (getAnimState() == STATE_AGENT_STAND)
+			{
+				change_stand = true;
+			}
 			if (getAnimState() == getStateFromAnimID(id))
 			{
 				setAnimState(STATE_AGENT_IDLE);
 			}
-			changeStand(); // startMotion(getCurrentStandId(), 0, TRUE);
+			// startMotion(getCurrentStandId(), 0, TRUE);
 			gAgent.sendAnimationRequest(getAnimID(id), ANIM_REQUEST_STOP);
+			if (change_stand) changeStand(); 
+
 			return TRUE;
 		}
 	}
