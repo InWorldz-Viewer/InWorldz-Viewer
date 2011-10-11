@@ -322,7 +322,7 @@ public:
 	// file support
 	virtual BOOL importFile(LLFILE* fp);
 	virtual BOOL exportFile(LLFILE* fp, BOOL include_asset_key = TRUE) const;
-	virtual LLSD exportLLSD(bool include_asset_key = true);
+	virtual LLSD exportLLSD();
 
 	virtual BOOL importLegacyStream(std::istream& input_stream);
 	virtual BOOL exportLegacyStream(std::ostream& output_stream, BOOL include_asset_key = TRUE) const;

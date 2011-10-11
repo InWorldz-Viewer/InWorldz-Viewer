@@ -1585,7 +1585,7 @@ BOOL LLInventoryCategory::importFile(LLFILE* fp)
 	return TRUE;
 }
 
-LLSD LLInventoryCategory::exportLLSD(bool include_asset_key)
+LLSD LLInventoryCategory::exportLLSD()
 {
 	// Cache categories (different from llviewerinventory because we don't know a version)
 	LLSD inv_cat = LLSD::emptyArray();
