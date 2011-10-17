@@ -3707,7 +3707,7 @@ void fetch_items_from_llsd(const LLSD& items_llsd)
 			body[0]["items"].append(items_llsd[i]);
 			continue;
 		}
-		if (items_llsd[i]["owner_id"].asString() == ALEXANDRIA_LINDEN_ID.asString())
+		else if (items_llsd[i]["owner_id"].asString() == ALEXANDRIA_LINDEN_ID.asString())
 		{
 			body[1]["items"].append(items_llsd[i]);
 			continue;
@@ -3716,7 +3716,18 @@ void fetch_items_from_llsd(const LLSD& items_llsd)
 		
 	for (S32 i=0; i<body.size(); i++)
 	{
-		if (0 >= body[i].size()) continue;
+		if (!gAgent.getRegion())
+		{
+			llwarns << "Agent in null region, skipping loading" << llendl;
+			break;
+		}
+
+		if (0 == body[i]["items"].size()) 
+		{
+			lldebugs << "No items to fetch, skipping body" << llendl;
+			continue;
+		}
+
 		std::string url = gAgent.getRegion()->getCapability(body[i]["cap_name"].asString());
 
 		if (!url.empty())
