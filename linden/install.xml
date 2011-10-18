@@ -847,9 +847,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux</key>
           <map>
             <key>md5sum</key>
-            <string>86076cb1da612a0e71860cb376d5c2ff</string>
+            <string>96d1373934cb366deb3372be9904ab90</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/llqtwebkit-4.7.1-linux-20111009.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/llqtwebkit-linux-4.6-20101014.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
