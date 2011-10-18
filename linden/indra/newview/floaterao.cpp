@@ -1141,7 +1141,7 @@ BOOL LLFloaterAO::changeStand()
 
 			if (sStandIterator < 0)
 			{
-				sStandIterator = S32( mAOStands.size()-sStandIterator);
+				sStandIterator = S32( mAOStands.size()-1);
 			}
 			
 			if (sStandIterator > S32( mAOStands.size()-1))
