@@ -1136,7 +1136,7 @@ BOOL LLFloaterAO::changeStand()
 
 			if (gSavedSettings.getBOOL("AOStandRandomize"))
 			{
-				sStandIterator = ll_rand(mAOStands.size()-1);
+				sStandIterator = ll_rand(mAOStands.size());
 			}
 
 			if (sStandIterator < 0)
