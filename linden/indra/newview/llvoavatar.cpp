@@ -4741,7 +4741,7 @@ void LLVOAvatar::processAnimationStateChanges()
 		{
 			if (mIsSelf)
 			{
-				if ((gSavedSettings.getBOOL("AOEnabled")) && LLFloaterAO::stopMotion(anim_it->first, FALSE, TRUE)) // if the AO replaced this anim serverside then stop it serverside
+				if ((gSavedSettings.getBOOL("AOEnabled")) && LLFloaterAO::stopMotion(anim_it->first, FALSE, FALSE)) // if the AO replaced this anim serverside then stop it serverside
 				{
 //					return TRUE; //no local stop needed
 				}
