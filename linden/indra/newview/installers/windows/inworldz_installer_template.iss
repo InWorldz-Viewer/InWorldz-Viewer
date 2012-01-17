@@ -17,7 +17,7 @@ VersionInfoVersion=%%VERSION%%
 VersionInfoTextVersion=%%VERSION%%
 VersionInfoProductVersion=%%VERSION%%
 AppVersion=%%VERSION%%
-VersionInfoCopyright=2011
+VersionInfoCopyright=2012
 
 ; These won't change
 VersionInfoCompany=InWorldz, LLC
