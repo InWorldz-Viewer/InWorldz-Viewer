@@ -237,10 +237,9 @@ LLHUDEffect *LLHUDObject::addHUDEffect(const U8 type)
 	case LL_HUD_EFFECT_LOOKAT:
 		hud_objectp = new LLHUDEffectLookAt(type);
 		break;
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	/*case LL_HUD_EFFECT_VOICE_VISUALIZER:
+	case LL_HUD_EFFECT_VOICE_VISUALIZER:
 		hud_objectp = new LLVoiceVisualizer(type);
-		break;*/
+		break;
 	case LL_HUD_EFFECT_POINTAT:
 		hud_objectp = new LLHUDEffectPointAt(type);
 		break;

@@ -30,36 +30,35 @@
  * $/LicenseInfo$
  */
 
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//#ifndef LL_LLVOICEREMOTECTRL_H
-//#define LL_LLVOICEREMOTECTRL_H
-//
-//#include "llpanel.h"
-//
-//class LLButton;
-//
-//class LLVoiceRemoteCtrl : public LLPanel
-//{
-//public:
-//	LLVoiceRemoteCtrl (const std::string& name);
-//	virtual ~LLVoiceRemoteCtrl();
-//
-//	/*virtual*/ BOOL postBuild();
-//	/*virtual*/ void draw();
-//
-//	static void onBtnLock(void* user_data);
-//	static void onBtnTalkHeld(void *user_data);
-//	static void onBtnTalkReleased(void* user_data);
-//	static void onBtnTalkClicked(void* user_data);
-//	static void onClickSpeakers(void *user_data);
-//	static void onClickPopupBtn(void* user_data);
-//	static void onClickVoiceChannel(void* user_data);
-//	static void onClickEndCall(void* user_data);
-//
-//protected:
-//	LLButton* mTalkBtn;
-//	LLButton* mTalkLockBtn;
-//	LLButton* mSpeakersBtn;
-//};
-//
-//#endif // LL_LLVOICEREMOTECTRL_H
+#ifndef LL_LLVOICEREMOTECTRL_H
+#define LL_LLVOICEREMOTECTRL_H
+
+#include "llpanel.h"
+
+class LLButton;
+
+class LLVoiceRemoteCtrl : public LLPanel
+{
+public:
+	LLVoiceRemoteCtrl (const std::string& name);
+	virtual ~LLVoiceRemoteCtrl();
+
+	/*virtual*/ BOOL postBuild();
+	/*virtual*/ void draw();
+
+	static void onBtnLock(void* user_data);
+	static void onBtnTalkHeld(void *user_data);
+	static void onBtnTalkReleased(void* user_data);
+	static void onBtnTalkClicked(void* user_data);
+	static void onClickSpeakers(void *user_data);
+	static void onClickPopupBtn(void* user_data);
+	static void onClickVoiceChannel(void* user_data);
+	static void onClickEndCall(void* user_data);
+
+protected:
+	LLButton* mTalkBtn;
+	LLButton* mTalkLockBtn;
+	LLButton* mSpeakersBtn;
+};
+
+#endif // LL_LLVOICEREMOTECTRL_H

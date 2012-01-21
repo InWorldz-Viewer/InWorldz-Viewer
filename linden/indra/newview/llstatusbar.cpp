@@ -67,8 +67,7 @@
 #include "llviewerparcelmgr.h"
 #include "llviewerthrottle.h"
 #include "lluictrlfactory.h"
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//#include "llvoiceclient.h"	// for gVoiceClient
+#include "llvoiceclient.h"	// for gVoiceClient
 #include "llsecondlifeurls.h" //BUY_CURRENCY_URL
 
 #include "lltoolmgr.h"
@@ -114,7 +113,7 @@ static void onClickBalance(void*);
 static void onClickHealth(void*);
 static void onClickFly(void*);
 static void onClickPush(void*);
-//static void onClickVoice(void*); -- MC
+static void onClickVoice(void*);
 static void onClickBuild(void*);
 static void onClickScripts(void*);
 static void onClickBuyLand(void*);
@@ -164,7 +163,7 @@ mSquareMetersCommitted(0)
 	childSetAction("no_build", onClickBuild, this );
 	childSetAction("no_scripts", onClickScripts, this );
 	childSetAction("restrictpush", onClickPush, this );
-	//childSetAction("status_no_voice", onClickVoice, this ); -- MC
+	childSetAction("status_no_voice", onClickVoice, this );
 
 	childSetActionTextbox("ParcelNameText", onClickParcelInfo );
 	childSetActionTextbox("BalanceText", onClickBalance );
@@ -425,8 +424,7 @@ void LLStatusBar::refresh()
 		childSetVisible("restrictpush", FALSE);
 	}
 
-	// -- MC
-	/*BOOL have_voice = parcel && parcel->getParcelFlagAllowVoice(); 
+	BOOL have_voice = parcel && parcel->getParcelFlagAllowVoice(); 
 	if (have_voice)
 	{
 		childSetVisible("status_no_voice", FALSE);
@@ -438,7 +436,7 @@ void LLStatusBar::refresh()
 		r.setOriginAndSize( x, y, buttonRect.getWidth(), buttonRect.getHeight());
 		childSetRect( "status_no_voice", r );
 		x += buttonRect.getWidth();
-	}*/
+	}
 
 	BOOL canBuyLand = parcel
 		&& !parcel->isPublic()
@@ -773,11 +771,10 @@ static void onClickPush(void* )
 	LLNotifications::instance().add("PushRestricted");
 }
 
-// -- MC
-//static void onClickVoice(void* )
-//{
-//	LLNotifications::instance().add("NoVoice");
-//}
+static void onClickVoice(void* )
+{
+	LLNotifications::instance().add("NoVoice");
+}
 
 static void onClickBuild(void*)
 {

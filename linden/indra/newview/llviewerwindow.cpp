@@ -45,8 +45,8 @@
 #include "llxmltree.h"
 //#include "llviewercamera.h"
 #include "llrender.h"
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//#include "llvoiceclient.h"	// for push-to-talk button handling
+
+#include "llvoiceclient.h"	// for push-to-talk button handling
 
 
 //
@@ -1068,7 +1068,7 @@ BOOL LLViewerWindow::handleRightMouseUp(LLWindow *window,  LLCoordGL pos, MASK m
 
 BOOL LLViewerWindow::handleMiddleMouseDown(LLWindow *window,  LLCoordGL pos, MASK mask)
 {
-	//gVoiceClient->middleMouseState(true); -- MC
+	gVoiceClient->middleMouseState(true);
 
 	// Always handled as far as the OS is concerned.
 	return TRUE;
@@ -1076,7 +1076,7 @@ BOOL LLViewerWindow::handleMiddleMouseDown(LLWindow *window,  LLCoordGL pos, MAS
 
 BOOL LLViewerWindow::handleMiddleMouseUp(LLWindow *window,  LLCoordGL pos, MASK mask)
 {
-	//gVoiceClient->middleMouseState(false); -- MC
+	gVoiceClient->middleMouseState(false);
 
 	// Always handled as far as the OS is concerned.
 	return TRUE;
@@ -1212,7 +1212,7 @@ void LLViewerWindow::handleFocusLost(LLWindow *window)
 BOOL LLViewerWindow::handleTranslatedKeyDown(KEY key,  MASK mask, BOOL repeated)
 {
 	// Let the voice chat code check for its PTT key.  Note that this never affects event processing.
-	//gVoiceClient->keyDown(key, mask); -- MC
+	gVoiceClient->keyDown(key, mask);
 	
 	if (gAwayTimer.getElapsedTimeF32() > MIN_AFK_TIME)
 	{
@@ -1234,7 +1234,7 @@ BOOL LLViewerWindow::handleTranslatedKeyDown(KEY key,  MASK mask, BOOL repeated)
 BOOL LLViewerWindow::handleTranslatedKeyUp(KEY key,  MASK mask)
 {
 	// Let the voice chat code check for its PTT key.  Note that this never affects event processing.
-	//gVoiceClient->keyUp(key, mask); -- MC
+	gVoiceClient->keyUp(key, mask);
 
 	return FALSE;
 }

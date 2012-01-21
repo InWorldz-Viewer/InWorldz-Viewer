@@ -33,27 +33,26 @@
 #ifndef LLPREFSVOICE_H
 #define LLPREFSVOICE_H
 
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//#include "llpanel.h"
-//
-//class LLPrefsVoice : public LLPanel
-//{
-//public:
-//	LLPrefsVoice();
-//	~LLPrefsVoice();
-//
-//	BOOL postBuild();
-//
-//	void apply();
-//	void cancel();
-//
-//	void setKey(KEY key);
-//
-//private:
-//	static void onCommitEnableVoiceChat(LLUICtrl* ctrl, void* user_data);
-//	static void onClickSetKey(void* user_data);
-//	static void onClickSetMiddleMouse(void* user_data);
-//	static void onClickVoiceDeviceSettings(void* user_data);
-//};
+#include "llpanel.h"
+
+class LLPrefsVoice : public LLPanel
+{
+public:
+	LLPrefsVoice();
+	~LLPrefsVoice();
+
+	BOOL postBuild();
+
+	void apply();
+	void cancel();
+
+	void setKey(KEY key);
+
+private:
+	static void onCommitEnableVoiceChat(LLUICtrl* ctrl, void* user_data);
+	static void onClickSetKey(void* user_data);
+	static void onClickSetMiddleMouse(void* user_data);
+	static void onClickVoiceDeviceSettings(void* user_data);
+};
 
 #endif // LLPREFSVOICE_H
