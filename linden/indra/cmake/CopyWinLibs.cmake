@@ -491,6 +491,13 @@ copy_if_different(
     )
 set(all_targets ${all_targets} ${out_targets})
 
+copy_if_different(
+    ${vivox_src_dir} 
+    "${CMAKE_CURRENT_BINARY_DIR}/ReleaseSSE2"
+    out_targets 
+    ${vivox_files}
+    )
+set(all_targets ${all_targets} ${out_targets})
 
 copy_if_different(
     ${vivox_src_dir} 
