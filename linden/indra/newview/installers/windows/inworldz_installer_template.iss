@@ -5,6 +5,9 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 
+; IW stable AppId:   {DC6CCE02-BC61-43B1-B4CA-292C6BCCCB34}
+; IW beta AppId:     {EC2610A3-E3E6-45CA-9236-E777F7C5785C}
+
 ; These will change
 AppId={{DC6CCE02-BC61-43B1-B4CA-292C6BCCCB34}
 AppName=%%APPNAME%%
