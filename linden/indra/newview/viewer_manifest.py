@@ -354,8 +354,8 @@ class WindowsManifest(ViewerManifest):
 
         # Vivox runtimes
         if self.prefix(src="vivox-runtime/i686-win32", dst=""):
-            self.path("SLVoice.exe")
-            self.path("alut.dll")
+            self.path("iwvoice.exe")
+            #self.path("alut.dll")
             self.path("vivoxsdk.dll")
             self.path("ortp.dll")
             self.path("wrap_oal.dll")
@@ -525,12 +525,12 @@ class DarwinManifest(ViewerManifest):
                 self.path("uk.lproj")
                 self.path("zh-Hans.lproj")
 
-                # SLVoice and vivox lols
+                # iwvoice and vivox lols
                 self.path("vivox-runtime/universal-darwin/libalut.dylib", "libalut.dylib")
                 self.path("vivox-runtime/universal-darwin/libopenal.dylib", "libopenal.dylib")
                 self.path("vivox-runtime/universal-darwin/libortp.dylib", "libortp.dylib")
                 self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxsdk.dylib")
-                self.path("vivox-runtime/universal-darwin/SLVoice", "SLVoice")
+                self.path("vivox-runtime/universal-darwin/iwvoice", "iwvoice")
 
                 libdir = "../../libraries/universal-darwin/lib_release"
                 dylibs = {}
@@ -842,7 +842,7 @@ class Linux_i686Manifest(LinuxManifest):
 
             # Vivox runtimes
             if self.prefix(src="vivox-runtime/i686-linux", dst="bin"):
-                    self.path("SLVoice")
+                    self.path("iwvoice")
                     self.end_prefix()
             if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
                     self.path("libortp.so")

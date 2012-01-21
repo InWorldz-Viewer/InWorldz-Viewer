@@ -1932,7 +1932,7 @@ void deliver_message(const std::string& utf8_text,
 	
 	if((offline == IM_OFFLINE) && (LLVoiceClient::getInstance()->isOnlineSIP(other_participant_id)))
 	{
-		// User is online through the OOW connector, but not with a regular viewer.  Try to send the message via SLVoice.
+		// User is online through the OOW connector, but not with a regular viewer.  Try to send the message via iwvoice.
 		sent = gVoiceClient->sendTextMessage(other_participant_id, utf8_text);
 	}
 	

@@ -1538,7 +1538,7 @@ void LLVoiceClient::stateMachine()
 	}
 	else if(mTuningMode)
 	{
-		// Tuning mode is special -- it needs to launch SLVoice even if voice is disabled.
+		// Tuning mode is special -- it needs to launch iwvoice even if voice is disabled.
 	}
 	else
 	{
@@ -1642,11 +1642,11 @@ void LLVoiceClient::stateMachine()
 					std::string exe_path = gDirUtilp->getExecutableDir();
 					exe_path += gDirUtilp->getDirDelimiter();
 #if LL_WINDOWS
-					exe_path += "SLVoice.exe";
+					exe_path += "iwvoice.exe";
 #elif LL_DARWIN
-					exe_path += "../Resources/SLVoice";
+					exe_path += "../Resources/iwvoice";
 #else
-					exe_path += "SLVoice";
+					exe_path += "iwvoice";
 #endif
 					// See if the vivox executable exists
 					llstat s;
@@ -1667,14 +1667,14 @@ void LLVoiceClient::stateMachine()
 						args += " -ll ";
 						args += loglevel;
 						
-						LL_DEBUGS("Voice") << "Args for SLVoice: " << args << LL_ENDL;
+						LL_DEBUGS("Voice") << "Args for iwvoice: " << args << LL_ENDL;
 
 #if LL_WINDOWS
 						PROCESS_INFORMATION pinfo;
 						STARTUPINFOA sinfo;
 						memset(&sinfo, 0, sizeof(sinfo));
 						std::string exe_dir = gDirUtilp->getAppRODataDir();
-						cmd = "SLVoice.exe";
+						cmd = "iwvoice.exe";
 						cmd += args;
 						
 						// So retarded.  Windows requires that the second parameter to CreateProcessA be a writable (non-const) string...
@@ -3345,7 +3345,7 @@ void LLVoiceClient::sendPositionalUpdate(void)
 	}
 	
 	// Friends list updates can be huge, especially on the first voice login of an account with lots of friends.
-	// Batching them all together can choke SLVoice, so send them in separate writes.
+	// Batching them all together can choke iwvoice, so send them in separate writes.
 	sendFriendsListUpdates();
 }
 
@@ -3505,7 +3505,7 @@ void LLVoiceClient::clearAllLists()
 {
 	// FOR TESTING ONLY
 	
-	// This will send the necessary commands to delete ALL buddies, autoaccept rules, and block rules SLVoice tells us about.
+	// This will send the necessary commands to delete ALL buddies, autoaccept rules, and block rules iwvoice tells us about.
 	buddyListMap::iterator buddy_it;
 	for(buddy_it = mBuddyListMap.begin(); buddy_it != mBuddyListMap.end();)
 	{
@@ -3615,7 +3615,7 @@ void LLVoiceClient::sendFriendsListUpdates()
 								<< "<AccountHandle>" << mAccountHandle << "</AccountHandle>"
 								<< "<BuddyURI>" << buddy->mURI << "</BuddyURI>"
 								<< "<DisplayName>" << buddy->mDisplayName << "</DisplayName>"
-								<< "<BuddyData></BuddyData>"	// Without this, SLVoice doesn't seem to parse the command.
+								<< "<BuddyData></BuddyData>"	// Without this, iwvoice doesn't seem to parse the command.
 								<< "<GroupID>0</GroupID>"
 							<< "</Request>\n\n\n";	
 					}

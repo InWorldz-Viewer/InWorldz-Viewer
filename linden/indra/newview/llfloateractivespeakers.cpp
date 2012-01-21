@@ -1040,7 +1040,7 @@ void LLSpeakerMgr::update(BOOL resort_ok)
 		{
 			if(speakerp->mType == LLSpeaker::SPEAKER_EXTERNAL)
 			{
-				// external speakers should be timed out when they leave the voice channel (since they only exist via SLVoice)
+				// external speakers should be timed out when they leave the voice channel (since they only exist via iwvoice)
 				speakerp->mStatus = LLSpeaker::STATUS_NOT_IN_CHANNEL;
 			}
 			else
