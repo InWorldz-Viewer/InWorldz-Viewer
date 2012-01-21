@@ -1169,7 +1169,7 @@ if(ARTWORK_EXISTS)
 endif(ARTWORK_EXISTS)
 
 if (WINDOWS)
-  file(GLOB viewer_INSTALLER_FILES installers/windows/*.nsi)
+  file(GLOB viewer_INSTALLER_FILES installers/windows/*.iss)
 
   source_group("Installer Files" FILES ${viewer_INSTALLER_FILES})
 
