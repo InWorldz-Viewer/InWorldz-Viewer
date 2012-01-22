@@ -82,7 +82,7 @@ F32 LLVoiceClient::OVERDRIVEN_POWER_LEVEL = 0.7f;
 
 const F32 SPEAKING_TIMEOUT = 1.f;
 
-const int VOICE_MAJOR_VERSION = 1;
+const int VOICE_MAJOR_VERSION = 3;
 const int VOICE_MINOR_VERSION = 0;
 
 LLVoiceClient *gVoiceClient = NULL;
