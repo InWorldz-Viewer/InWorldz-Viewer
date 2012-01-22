@@ -63,9 +63,7 @@ void LLURLSimString::setString(const std::string& sim_string)
 	}
 	else
 	{
-		char* curlstr = curl_unescape(sim_string.c_str(), sim_string.size());
-		std::string tstring = std::string(curlstr);
-		curl_free(curlstr);
+		std::string tstring = LLCurl::unescapeSafe(sim_string);
 		std::string::size_type idx = tstring.find("//");
 		idx = (idx == std::string::npos) ? 0 : idx+2;
 		sInstance.mSimString = tstring.substr(idx);
@@ -173,9 +171,5 @@ std::string LLURLSimString::getURL()
 // static
 std::string LLURLSimString::unescapeRegionName(std::string region_name)
 {
-	std::string result;
-	char* curlstr = curl_unescape(region_name.c_str(), region_name.size());
-	result = std::string(curlstr);
-	curl_free(curlstr);
-	return result;
+	return LLCurl::unescapeSafe(region_name);
 }

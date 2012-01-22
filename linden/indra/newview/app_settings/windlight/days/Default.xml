@@ -2,35 +2,35 @@
     <array>
         <array>
             <real>0</real>
-            <string>A-12AM</string>
+            <string>12AM (00:00)</string>
         </array>
         <array>
             <real>0.125</real>
-            <string>A-3AM</string>
+            <string>3AM (03:00)</string>
         </array>
         <array>
             <real>0.25</real>
-            <string>A-6AM</string>
+            <string>6AM (06:00)</string>
         </array>
         <array>
             <real>0.375</real>
-            <string>A-9AM</string>
+            <string>9AM (09:00)</string>
         </array>
         <array>
             <real>0.5</real>
-            <string>A-12PM</string>
+            <string>12PM (12:00)</string>
         </array>
         <array>
             <real>0.625</real>
-            <string>A-3PM</string>
+            <string>3PM (15:00)</string>
         </array>
         <array>
             <real>0.75</real>
-            <string>A-6PM</string>
+            <string>6PM (18:00)</string>
         </array>
         <array>
             <real>0.875</real>
-            <string>A-9PM</string>
+            <string>9PM (21:00)</string>
         </array>
     </array>
 </llsd>
