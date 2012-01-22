@@ -429,19 +429,6 @@ bool handleVoiceClientPrefsChanged(const LLSD& newvalue)
 	return true;
 }
 
-bool handleTranslateChatPrefsChanged(const LLSD& newvalue)
-{
-	LLFloaterChat* floaterp = LLFloaterChat::getInstance();
-
-	if(floaterp)
-	{
-		// update "translate chat" pref in "Local Chat" floater
-		floaterp->updateSettings();
-	}
-	return true;
-}
-
-
 bool handleRenderSculptSAThresholdChanged(const LLSD& newvalue)
 {
 	LLVOVolume::sSculptSAThresh = newvalue.asReal();
@@ -584,8 +571,7 @@ void settings_setup_listeners()
 	gSavedSettings.getControl("VoiceInputAudioDevice")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1));
 	gSavedSettings.getControl("VoiceOutputAudioDevice")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1));
 	gSavedSettings.getControl("AudioLevelMic")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1));
-	gSavedSettings.getControl("LipSyncEnabled")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1));	
-	gSavedSettings.getControl("TranslateChat")->getSignal()->connect(boost::bind(&handleTranslateChatPrefsChanged, _1));	
+	gSavedSettings.getControl("LipSyncEnabled")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1));		
 	gSavedSettings.getControl("RenderSculptSAThreshold")->getSignal()->connect(boost::bind(&handleRenderSculptSAThresholdChanged, _1));
 	gSavedSettings.getControl("RenderSculptSAMax")->getSignal()->connect(boost::bind(&handleRenderSculptSAMaxChanged, _1));
 }
