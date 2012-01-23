@@ -87,6 +87,7 @@ class LLVoiceClient: public LLSingleton<LLVoiceClient>
 	public:
 		static void init(LLPumpIO *pump);	// Call this once at application startup (creates connector)
 		static void terminate();	// Call this to clean up during shutdown
+		const std::string getVersion();
 						
 	protected:
 		bool writeString(const std::string &str);
@@ -645,6 +646,8 @@ static	void updatePosition(void);
 		std::string mRenderDevice;
 		bool mCaptureDeviceDirty;
 		bool mRenderDeviceDirty;
+
+		std::string mVoiceVersion;
 		
 		// This should be called when the code detects we have changed parcels.
 		// It initiates the call to the server that gets the parcel channel.

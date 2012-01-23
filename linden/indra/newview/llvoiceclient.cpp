@@ -77,7 +77,6 @@
 
 #define USE_SESSION_GROUPS 0
 
-static bool sConnectingToAgni = false;
 F32 LLVoiceClient::OVERDRIVEN_POWER_LEVEL = 0.7f;
 
 const F32 SPEAKING_TIMEOUT = 1.f;
@@ -95,6 +94,8 @@ const F32 UPDATE_THROTTLE_SECONDS = 0.1f;
 
 const F32 LOGIN_RETRY_SECONDS = 10.0f;
 const int MAX_LOGIN_RETRIES = 12;
+
+static bool sInMainGrid = false;
 
 static void setUUIDFromStringHash(LLUUID &uuid, const std::string &str)
 {
@@ -1103,58 +1104,60 @@ static void killGateway()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-LLVoiceClient::LLVoiceClient()
-{	
-	gVoiceClient = this;
-	mWriteInProgress = false;
-	mAreaVoiceDisabled = false;
-	mPTT = true;
-	mUserPTTState = false;
-	mMuteMic = false;
-	mSessionTerminateRequested = false;
-	mRelogRequested = false;
-	mCommandCookie = 0;
-	mCurrentParcelLocalID = 0;
-	mLoginRetryCount = 0;
+LLVoiceClient::LLVoiceClient() :
+	mWriteInProgress(false),
+	mAreaVoiceDisabled(false),
+	mPTT(true),
+	mUserPTTState(false),
+	mMuteMic(false),
+	mSessionTerminateRequested(false),
+	mRelogRequested(false),
+	mCommandCookie(0),
+	mCurrentParcelLocalID(0),
+	mLoginRetryCount(0),
 
-	mSpeakerVolume = 0;
-	mMicVolume = 0;
+	mSpeakerVolume(0),
+	mMicVolume(0),
 
-	mAudioSession = NULL;
-	mAudioSessionChanged = false;
+	mAudioSession(NULL),
+	mAudioSessionChanged(false),
 
 	// Initial dirty state
-	mSpatialCoordsDirty = false;
-	mPTTDirty = true;
-	mFriendsListDirty = true;
-	mSpeakerVolumeDirty = true;
-	mMicVolumeDirty = true;
-	mBuddyListMapPopulated = false;
-	mBlockRulesListReceived = false;
-	mAutoAcceptRulesListReceived = false;
-	mCaptureDeviceDirty = false;
-	mRenderDeviceDirty = false;
+	mSpatialCoordsDirty(false),
+	mPTTDirty(true),
+	mFriendsListDirty(true),
+	mSpeakerVolumeDirty(true),
+	mMicVolumeDirty(true),
+	mBuddyListMapPopulated(false),
+	mBlockRulesListReceived(false),
+	mAutoAcceptRulesListReceived(false),
+	mCaptureDeviceDirty(false),
+	mRenderDeviceDirty(false),
 
 	// Use default values for everything then call updateSettings() after preferences are loaded
-	mVoiceEnabled = false;
-	mUsePTT = true;
-	mPTTIsToggle = false;
-	mEarLocation = 0;
-	mLipSyncEnabled = false;
+	mVoiceEnabled(false),
+	mUsePTT(true),
+	mPTTIsToggle(false),
+	mEarLocation(0),
+	mLipSyncEnabled(false),
 	
-	mTuningMode = false;
-	mTuningEnergy = 0.0f;
-	mTuningMicVolume = 0;
-	mTuningMicVolumeDirty = true;
-	mTuningSpeakerVolume = 0;
-	mTuningSpeakerVolumeDirty = true;
-					
-	//  gMuteListp isn't set up at this point, so we defer this until later.
-//	gMuteListp->addObserver(&mutelist_listener);
+	mTuningMode(false),
+	mTuningEnergy(0.0f),
+	mTuningMicVolume(0),
+	mTuningMicVolumeDirty(true),
+	mTuningSpeakerVolume(0),
+	mTuningSpeakerVolumeDirty(true),
 	
 	// stash the pump for later use
 	// This now happens when init() is called instead.
-	mPump = NULL;
+	mPump(NULL),
+
+	mVoiceVersion("")
+{
+	gVoiceClient = this;
+
+	// "ProductionGrid" is the main IW grid -- MC
+	sInMainGrid = LLViewerLogin::getInstance()->isInProductionGrid();
 	
 #if LL_DARWIN || LL_LINUX || LL_SOLARIS
 		// HACK: THIS DOES NOT BELONG HERE
@@ -1209,6 +1212,11 @@ void LLVoiceClient::terminate()
 		// Hint to other code not to access the voice client anymore.
 		gVoiceClient = NULL;
 	}
+}
+
+const std::string LLVoiceClient::getVersion()
+{
+	return mVoiceVersion;
 }
 
 //---------------------------------------------------
@@ -1342,8 +1350,6 @@ void LLVoiceClient::userAuthorized(const std::string& firstName, const std::stri
 
 	LL_INFOS("Voice") << "name \"" << mAccountDisplayName << "\" , ID " << agentID << LL_ENDL;
 
-	sConnectingToAgni = LLViewerLogin::getInstance()->isInProductionGrid();
-
 	mAccountName = nameFromID(agentID);
 }
 
@@ -1404,7 +1410,8 @@ void LLVoiceClient::login(
 		// we have an empty account server name
 		// so we fall back to hardcoded defaults
 
-		if(sConnectingToAgni)
+		// "ProductionGrid" is the main IW grid -- MC
+		if (sInMainGrid)
 		{
 			// Use the release account server
 			mVoiceSIPURIHostName = "bhr.vivox.com";
@@ -1775,7 +1782,7 @@ void LLVoiceClient::stateMachine()
 		case stateDaemonLaunched:
 			if(mUpdateTimer.hasExpired())
 			{
-				LL_DEBUGS("Voice") << "Connecting to vivox daemon" << LL_ENDL;
+				LL_DEBUGS("Voice") << "Connecting to vivox daemon:" << mDaemonHost << LL_ENDL;
 
 				mUpdateTimer.setTimerExpirySec(CONNECT_THROTTLE_SECONDS);
 
@@ -2001,6 +2008,11 @@ void LLVoiceClient::stateMachine()
 			{
 				LL_WARNS("Voice") << "too many login retries, giving up." << LL_ENDL;
 				setState(stateLoginFailed);
+				LLSD args;
+				std::stringstream errs;
+				errs << mVoiceAccountServerURI << "\n:UDP: 3478, 3479, 5060, 5062, 12000-17000";
+				args["HOSTID"] = errs.str();
+				LLNotifications::instance().add("NoVoiceConnect", args);	
 			}
 			else
 			{
@@ -2105,6 +2117,8 @@ void LLVoiceClient::stateMachine()
 					
 		//MARK: stateNoChannel
 		case stateNoChannel:
+			
+			LL_DEBUGS("Voice") << "State No Channel" << LL_ENDL;
 			// Do this here as well as inside sendPositionalUpdate().  
 			// Otherwise, if you log in but don't join a proximal channel (such as when your login location has voice disabled), your friends list won't sync.
 			sendFriendsListUpdates();
@@ -2129,6 +2143,7 @@ void LLVoiceClient::stateMachine()
 				sessionState *oldSession = mAudioSession;
 
 				mAudioSession = mNextAudioSession;
+				mAudioSessionChanged = true; // -- MC
 				if(!mAudioSession->mReconnect)	
 				{
 					mNextAudioSession = NULL;
@@ -2580,7 +2595,7 @@ void LLVoiceClient::sessionCreateSendMessage(sessionState *session, bool startAu
 
 void LLVoiceClient::sessionGroupAddSessionSendMessage(sessionState *session, bool startAudio, bool startText)
 {
-	LL_DEBUGS("Voice") << "requesting create: " << session->mSIPURI << LL_ENDL;
+	LL_DEBUGS("Voice") << "Requesting create: " << session->mSIPURI << LL_ENDL;
 	
 	session->mCreateInProgress = true;
 	if(startAudio)
@@ -2617,7 +2632,7 @@ void LLVoiceClient::sessionGroupAddSessionSendMessage(sessionState *session, boo
 
 void LLVoiceClient::sessionMediaConnectSendMessage(sessionState *session)
 {
-	LL_DEBUGS("Voice") << "connecting audio to session handle: " << session->mHandle << LL_ENDL;
+	LL_DEBUGS("Voice") << "Connecting audio to session handle: " << session->mHandle << LL_ENDL;
 
 	session->mMediaConnectInProgress = true;
 	
@@ -2875,8 +2890,10 @@ void LLVoiceClient::setRenderDevice(const std::string& name)
 void LLVoiceClient::tuningStart()
 {
 	mTuningMode = true;
+	LL_DEBUGS("Voice") << "Starting tuning" << LL_ENDL;
 	if(getState() >= stateNoChannel)
 	{
+		LL_DEBUGS("Voice") << "no channel" << LL_ENDL;
 		sessionTerminate();
 	}
 }
@@ -3311,7 +3328,9 @@ void LLVoiceClient::sendPositionalUpdate(void)
 					}
 					
 					if(volume == 0)
+					{
 						mute = true;
+					}
 
 					LL_DEBUGS("Voice") << "Setting volume/mute for avatar " << p->mAvatarID << " to " << volume << (mute?"/true":"/false") << LL_ENDL;
 					
@@ -3405,7 +3424,7 @@ void LLVoiceClient::buildLocalAudioUpdates(std::ostringstream &stream)
 
 	if(mSpeakerMuteDirty)
 	{
-		const char *muteval = ((mSpeakerVolume == 0)?"true":"false");
+		const char *muteval = ((mSpeakerVolume <= 0)?"true":"false");
 
 		mSpeakerMuteDirty = false;
 
@@ -3736,11 +3755,17 @@ void LLVoiceClient::connectorCreateResponse(int statusCode, std::string &statusS
 	{
 		LL_WARNS("Voice") << "Connector.Create response failure: " << statusString << LL_ENDL;
 		setState(stateConnectorFailed);
+		LLSD args;
+		std::stringstream errs;
+		errs << mVoiceAccountServerURI << "\n:UDP: 3478, 3479, 5060, 5062, 12000-17000";
+		args["HOSTID"] = errs.str();
+		LLNotifications::instance().add("NoVoiceConnect", args);	
 	}
 	else
 	{
 		// Connector created, move forward.
 		LL_INFOS("Voice") << "Connector.Create succeeded, Vivox SDK version is " << versionID << LL_ENDL;
+		mVoiceVersion = versionID;
 		mConnectorHandle = connectorHandle;
 		if(getState() == stateConnectorStarting)
 		{
@@ -3985,6 +4010,7 @@ void LLVoiceClient::sessionGroupAddedEvent(std::string &sessionGroupHandle)
 
 void LLVoiceClient::joinedAudioSession(sessionState *session)
 {
+	LL_DEBUGS("Voice") << "Joined Audio Session" << LL_ENDL;
 	if(mAudioSession != session)
 	{
 		sessionState *oldSession = mAudioSession;
@@ -4188,6 +4214,7 @@ void LLVoiceClient::accountLoginStateChangeEvent(
         login_state_error=100	
 	*/
 	
+	LL_DEBUGS("Voice") << "state change event: " << state << LL_ENDL;
 	switch(state)
 	{
 		case 1:
@@ -4883,7 +4910,9 @@ LLVoiceClient::participantState *LLVoiceClient::sessionState::addParticipant(con
 				result->mAvatarID = id;
 
 				if(result->updateMuteState())
+				{
 					mVolumeDirty = true;
+				}
 			}
 			else
 			{
@@ -5215,6 +5244,10 @@ LLVoiceClient::sessionState* LLVoiceClient::startUserIMSession(const LLUUID &uui
 		// No session with user, need to start one.
 		std::string uri = sipURIFromID(uuid);
 		session = addSession(uri);
+
+		llassert(session);
+		if (!session) return NULL;
+
 		session->mIsSpatial = false;
 		session->mReconnect = false;	
 		session->mIsP2P = true;
@@ -5512,7 +5545,7 @@ std::string LLVoiceClient::nameFromID(const LLUUID &uuid)
 		LLStringUtil::replaceChar(result, '_', ' ');
 		return result;
 	}
-	// Prepending this apparently prevents conflicts with reserved names inside the vivox and diamondware code.
+	// Prepending this apparently prevents conflicts with reserved names inside the vivox code.
 	result = "x";
 	
 	// Base64 encode and replace the pieces of base64 that are less compatible 

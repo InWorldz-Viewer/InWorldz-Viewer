@@ -88,7 +88,7 @@
               <!--<string>ViewerImages</string>-->
 							<!--<string>Volume</string>-->
 							<!--<string>Throttle</string>-->
-							<!--<string>Voice</string>-->
+							<string>Voice</string>
 							<!--<string>VivoxProtocolParser</string>-->
 							<!--<string>Wearable</string>-->
 
