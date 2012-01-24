@@ -136,12 +136,15 @@ Source: %%PACKAGEFILES%%\libxml2.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\SDL.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\xvidcore.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\z.dll; DestDir: {app}; Flags: ignoreversion
-
+    
 ; Voice files
 Source: %%PACKAGEFILES%%\ortp.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\iwvoice.exe; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\vivoxoal.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\vivoxplatform.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\vivoxsdk.dll; DestDir: {app}; Flags: ignoreversion
-Source: %%PACKAGEFILES%%\wrap_oal.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\zlib1.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\libsndfile-1.dll; DestDir: {app}; Flags: ignoreversion
 
 ; VC++ 2005 SP1 x86, VC++ 2008 SP1 x86, and VC++ 2010 SP1 x86 redist
 Source: ..\..\..\..\newview\installers\windows\vcredist_x86_VS2005_SP1_MFC_SEC.exe; DestDir: {app}\redist; DestName: vcredist_x86_VS2005_SP1_MFC_SEC.exe
