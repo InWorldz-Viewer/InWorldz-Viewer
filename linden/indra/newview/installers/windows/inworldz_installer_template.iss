@@ -47,7 +47,7 @@ Name: english; MessagesFile: compiler:Default.isl
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: checkedonce
-Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: checkedonce
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: checkedonce; OnlyBelowVersion: 0,6.1
 ; TODO: use scripting for something like this on uninstall:
 ; Name: uninstallsettings; Description: Remove user settings; Flags: checkablealone; Languages: ; GroupDescription: Uninstall:
 
@@ -136,7 +136,7 @@ Source: %%PACKAGEFILES%%\libxml2.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\SDL.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\xvidcore.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\z.dll; DestDir: {app}; Flags: ignoreversion
-    
+
 ; Voice files
 Source: %%PACKAGEFILES%%\ortp.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\iwvoice.exe; DestDir: {app}; Flags: ignoreversion
@@ -174,7 +174,7 @@ Root: HKCR; Subkey: inworldz\shell\open\command; ValueType: expandsz; Flags: uni
 [Icons]
 Name: {group}\{cm:UninstallProgram,InWorldz}; Filename: {uninstallexe}
 Name: {commondesktop}\InWorldz; Filename: {app}\inworldz.exe; Tasks: desktopicon; WorkingDir: {app}; IconIndex: 0
-Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\InWorldz; Filename: {app}\inworldz.exe; Tasks: quicklaunchicon; WorkingDir: {app}; MinVersion: 0,5.01.2600; OnlyBelowVersion: 0,6.0
+Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\InWorldz; Filename: {app}\inworldz.exe; Tasks: quicklaunchicon; WorkingDir: {app}
 Name: {group}\InWorldz; Filename: {app}\inworldz.exe; WorkingDir: {app}; Comment: inworldz; IconIndex: 0
 
 [Run]
