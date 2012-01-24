@@ -1311,6 +1311,8 @@ BOOL LLInventoryPanel::postBuild()
 	}
 	mFolders->setSortOrder(mFolders->getFilter()->getSortOrder());
 
+	// Just in case -- MC
+	gInventory.startBackgroundFetch();
 
 	return TRUE;
 }

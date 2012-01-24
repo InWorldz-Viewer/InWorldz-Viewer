@@ -3066,6 +3066,12 @@ void process_agent_movement_complete(LLMessageSystem* msg, void**)
 			avatarp->setPositionAgent(agent_pos);
 			avatarp->clearChat();
 			avatarp->slamPosition();
+
+			// Resume inventory fetching if we stall here -- MC
+			if (!gInventory.isEverythingFetched())
+			{
+				gInventory.startBackgroundFetch();
+			}
 		}
 
 		// add teleport destination to the list of visited places
