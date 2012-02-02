@@ -2119,10 +2119,15 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 
 			// go ahead and add the cats returned during the download
 			std::set<LLUUID>::iterator not_cached_id = cached_ids.end();
-			cached_category_count = cached_ids.size();
 			for (cat_set_t::iterator it = temp_cats.begin(); it != temp_cats.end(); ++it)
 			{
-				if ((*it)->getUUID().notNull() && (cached_ids.find((*it)->getUUID()) == not_cached_id))
+				if ((*it)->getUUID().isNull())
+				{
+					// should hopefully never happen -- MC
+					continue;
+				}
+
+				if (cached_ids.find((*it)->getUUID()) == not_cached_id)
 				{
 					// this check is performed so that we do not
 					// mark new folders in the skeleton (and not in cache)
@@ -2130,7 +2135,11 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 					LLViewerInventoryCategory *llvic = (*it);
 					llvic->setVersion(LLViewerInventoryCategory::VERSION_UNKNOWN);
 				}
-				addCategory(*it);
+
+				LLPointer<LLViewerInventoryCategory> new_cat = new LLViewerInventoryCategory((*it)->getUUID());
+				new_cat->copyViewerCategory(*it);
+				addCategory(new_cat);
+				cached_category_count++;
 				++child_counts[(*it)->getParentUUID()];
 			}
 
