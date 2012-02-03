@@ -52,8 +52,8 @@
 							<!--<string>APR</string>-->
 							<!--<string>AudioEngine</string>-->
               <!--<string>InitInfo</string>-->
-              <string>Inventory</string>
-              <string>InventoryFetch</string>
+              <!--<string>Inventory</string>-->
+              <!--<string>InventoryFetch</string>-->
               <!--<string>isOwnedSelf</string>-->
               <!--<string>MarkerFile</string>-->
 							<!--<string>MediaImpl</string>-->
