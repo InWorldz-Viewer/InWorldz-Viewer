@@ -1312,8 +1312,6 @@ BOOL LLInventoryPanel::postBuild()
 	}
 	mFolders->setSortOrder(mFolders->getFilter()->getSortOrder());
 
-	mFolders->refresh(); // We need to optimize this -- MC
-
 	if (!gInventory.isEverythingFetched())
 	{
 		gInventory.startBackgroundFetch();
