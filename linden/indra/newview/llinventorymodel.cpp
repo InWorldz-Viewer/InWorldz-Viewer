@@ -278,6 +278,10 @@ LLViewerInventoryCategory* LLInventoryModel::getCategory(const LLUUID& id) const
 	{
 		category = iter->second;
 	}
+	else
+	{
+		LL_DEBUGS("Inventory") << "Category searched for but not found! UUID: " << id << LL_ENDL;
+	}
 	return category;
 }
 
@@ -724,6 +728,7 @@ void LLInventoryModel::updateCategory(const LLViewerInventoryCategory* cat)
 		LLPointer<LLViewerInventoryCategory> new_cat = new LLViewerInventoryCategory(cat->getParentUUID());
 		new_cat->copyViewerCategory(cat);
 		addCategory(new_cat);
+		LL_DEBUGS("Inventory") << "New category created: " << cat->getName() << " (" << cat->getUUID() << ") with ParentUUID: " << cat->getParentUUID() << LL_ENDL;
 
 		// make sure this category is correctly referenced by it's parent.
 		cat_array_t* cat_array;
@@ -2866,6 +2871,7 @@ void LLInventoryModel::registerCallbacks(LLMessageSystem* msg)
 // 	static
 void LLInventoryModel::processUpdateCreateInventoryItem(LLMessageSystem* msg, void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processUpdateCreateInventoryItem" << LL_ENDL;
 	// do accounting and highlight new items if they arrive
 	if (gInventory.messageUpdateCore(msg, true))
 	{
@@ -2882,6 +2888,7 @@ void LLInventoryModel::processUpdateCreateInventoryItem(LLMessageSystem* msg, vo
 // static
 void LLInventoryModel::processFetchInventoryReply(LLMessageSystem* msg, void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processFetchInventoryReply" << LL_ENDL;
 	// no accounting
 	gInventory.messageUpdateCore(msg, false);
 }
@@ -3091,6 +3098,7 @@ void LLInventoryModel::processRemoveInventoryFolder(LLMessageSystem* msg,
 void LLInventoryModel::processSaveAssetIntoInventory(LLMessageSystem* msg,
 													 void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processSaveAssetIntoInventory" << LL_ENDL;
 	LLUUID agent_id;
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id);
 	if(agent_id != gAgent.getID())
@@ -3138,6 +3146,7 @@ struct InventoryCallbackInfo
 // static
 void LLInventoryModel::processBulkUpdateInventory(LLMessageSystem* msg, void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processBulkUpdateInventory" << LL_ENDL;
 	LLUUID agent_id;
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id);
 	if(agent_id != gAgent.getID())
@@ -3303,6 +3312,7 @@ void LLInventoryModel::processBulkUpdateInventory(LLMessageSystem* msg, void**)
 // static
 void LLInventoryModel::processInventoryDescendents(LLMessageSystem* msg,void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processInventoryDescendents" << LL_ENDL;
 	LLUUID agent_id;
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id);
 	if(agent_id != gAgent.getID())
