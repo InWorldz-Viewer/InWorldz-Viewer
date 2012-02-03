@@ -324,6 +324,8 @@ public:
 	// relations.
 	void buildParentChildMap();
 
+	// Empty the entire contents
+	void empty();
 	//
 	// Category accounting.
 	//
@@ -388,8 +390,7 @@ protected:
 	// preferred type. Returns LLUUID::null if not found
  	LLUUID findCatUUID(LLAssetType::EType preferred_type);
 
-	// Empty the entire contents
-	void empty();
+
 
 	// Given the current state of the inventory items, figure out the
 	// clone information. *FIX: This is sub-optimal, since we can

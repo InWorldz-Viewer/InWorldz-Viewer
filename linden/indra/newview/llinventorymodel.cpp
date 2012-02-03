@@ -1019,7 +1019,7 @@ void LLInventoryModel::notifyObservers(const std::string service_name)
 			observer->changed(mModifyMask);
 		}
 
-		// safe way to incrament since changed may delete entries! (@!##%@!@&*!)
+		// safe way to increment since changed may delete entries! (@!##%@!@&*!)
 		iter = mObservers.upper_bound(observer); 
 	}
 
@@ -1139,6 +1139,12 @@ void LLInventoryModel::fetchInventoryResponder::error(U32 status, const std::str
 
 void LLInventoryModel::fetchDescendentsOf(const LLUUID& folder_id)
 {
+	if(folder_id.isNull()) 
+	{
+		llwarns << "Calling fetch descendents on NULL folder id!" << llendl;
+		return;
+	}
+
 	LLViewerInventoryCategory* cat = getCategory(folder_id);
 	if(!cat)
 	{
@@ -1388,8 +1394,6 @@ void LLInventoryModel::bulkFetch(std::string url)
         }
         else
         {
-				
-
 		    LLViewerInventoryCategory* cat = gInventory.getCategory(sFetchQueue.front());
 		
 		    if (cat)
@@ -1424,29 +1428,28 @@ void LLInventoryModel::bulkFetch(std::string url)
 						    sFetchQueue.push_back(child_categories->get(child_num)->getUUID());
 					    }
 				    }
-    
 			    }
 		    }
         }
 		sFetchQueue.pop_front();
 	}
 		
-		if (folder_count > 0)
+	if (folder_count > 0)
+	{
+		sBulkFetchCount++;
+		if (body["folders"].size())
 		{
-			sBulkFetchCount++;
-			if (body["folders"].size())
-			{
-				LL_DEBUGS("Inventory") << " fetch descendents post to " << url << ": " << ll_pretty_print_sd(body) << LL_ENDL;
-				LLHTTPClient::post(url, body, new fetchDescendentsResponder(body),300.0);
-			}
-			if (body_lib["folders"].size())
-			{
-				std::string url_lib = gAgent.getRegion()->getCapability("FetchLibDescendents");
-				LL_DEBUGS("Inventory") << " fetch descendents lib post: " << ll_pretty_print_sd(body_lib) << LL_ENDL;
-				LLHTTPClient::post(url_lib, body_lib, new fetchDescendentsResponder(body_lib),300.0);
-			}
-			sFetchTimer.reset();
+			LL_DEBUGS("Inventory") << " fetch descendents post to " << url << ": " << ll_pretty_print_sd(body) << LL_ENDL;
+			LLHTTPClient::post(url, body, new fetchDescendentsResponder(body),300.0);
 		}
+		if (body_lib["folders"].size())
+		{
+			std::string url_lib = gAgent.getRegion()->getCapability("FetchLibDescendents");
+			LL_DEBUGS("Inventory") << " fetch descendents lib post: " << ll_pretty_print_sd(body_lib) << LL_ENDL;
+			LLHTTPClient::post(url_lib, body_lib, new fetchDescendentsResponder(body_lib),300.0);
+		}
+		sFetchTimer.reset();
+	}
 	else if (isBulkFetchProcessingComplete())
 	{
 		if (sFullFetchStarted)

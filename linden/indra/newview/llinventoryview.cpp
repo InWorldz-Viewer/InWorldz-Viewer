@@ -897,6 +897,7 @@ void LLInventoryView::cleanup()
 	{
 		sActiveViews.get(i)->destroy();
 	}
+	gInventory.empty();
 }
 
 void LLInventoryView::toggleFindOptions()
@@ -1311,8 +1312,12 @@ BOOL LLInventoryPanel::postBuild()
 	}
 	mFolders->setSortOrder(mFolders->getFilter()->getSortOrder());
 
-	// Just in case -- MC
-	gInventory.startBackgroundFetch();
+	mFolders->refresh(); // We need to optimize this -- MC
+
+	if (!gInventory.isEverythingFetched())
+	{
+		gInventory.startBackgroundFetch();
+	}
 
 	return TRUE;
 }
@@ -1569,9 +1574,9 @@ void LLInventoryPanel::buildNewViews(const LLUUID& id)
 		if (objectp->getType() <= LLAssetType::AT_NONE ||
 			objectp->getType() >= LLAssetType::AT_COUNT)
 		{
-			llwarns << "LLInventoryPanel::buildNewViews called with objectp->mType == " 
+			LL_DEBUGS("Inventory") << "LLInventoryPanel::buildNewViews called with objectp->mType == " 
 				<< ((S32) objectp->getType())
-				<< " (shouldn't happen)" << llendl;
+				<< " (shouldn't happen)" << LL_ENDL;
 		}
 		else if (objectp->getType() == LLAssetType::AT_CATEGORY) // build new view for category
 		{

@@ -53,7 +53,7 @@
 							<!--<string>AudioEngine</string>-->
               <!--<string>InitInfo</string>-->
               <string>Inventory</string>
-              <!--<string>InventoryFetch</string>-->
+              <string>InventoryFetch</string>
               <!--<string>isOwnedSelf</string>-->
               <!--<string>MarkerFile</string>-->
 							<!--<string>MediaImpl</string>-->
@@ -88,7 +88,7 @@
               <!--<string>ViewerImages</string>-->
 							<!--<string>Volume</string>-->
 							<!--<string>Throttle</string>-->
-							<string>Voice</string>
+							<!--<string>Voice</string>-->
 							<!--<string>VivoxProtocolParser</string>-->
 							<!--<string>Wearable</string>-->
 
