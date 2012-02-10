@@ -125,6 +125,20 @@ public:
 	};
 	typedef boost::intrusive_ptr<Responder>	ResponderPtr;
 
+	// use these instead of curl_escape/curl_unescape to avoid curl bugs
+	// check for empty strings before sending stuff here -- MC
+	static std::string escapeSafe(const std::string& unescaped_string) 
+		{ return escapeSafe(unescaped_string, unescaped_string.size()); }
+	static std::string escapeSafe(const std::string& unescaped_string, S32 length);
+	static std::string escapeSafe(const char* unescaped_string, S32 length);
+
+	static std::string unescapeSafe(const std::string& escaped_string)
+		{ return unescapeSafe(escaped_string, escaped_string.size()); }
+	static std::string unescapeSafe(const char* escaped_string) 
+		{ return unescapeSafe(escaped_string, 0); }
+	static std::string unescapeSafe(const std::string& escaped_string, S32 length);
+	static std::string unescapeSafe(const char* escaped_string, S32 length);
+
 
 	/**
 	 * @ brief Set certificate authority file used to verify HTTPS certs.

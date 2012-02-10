@@ -144,7 +144,7 @@ public:
 				if ( mInvitiationType == LLIMMgr::INVITATION_TYPE_VOICE )
 				{
 					floaterp->requestAutoConnect();
-					//LLFloaterIMPanel::onClickStartCall(floaterp); -- MC
+					LLFloaterIMPanel::onClickStartCall(floaterp);
 					// always open IM window when connecting to voice
 					LLFloaterChatterBox::showInstance(TRUE);
 				}
@@ -374,7 +374,7 @@ bool inviteUserResponse(const LLSD& notification, const LLSD& response)
 				if (im_floater)
 				{
 					im_floater->requestAutoConnect();
-					//LLFloaterIMPanel::onClickStartCall(im_floater); -- MC
+					LLFloaterIMPanel::onClickStartCall(im_floater);
 					// always open IM window when connecting to voice
 					LLFloaterChatterBox::showInstance(session_id);
 				}
@@ -419,12 +419,11 @@ bool inviteUserResponse(const LLSD& notification, const LLSD& response)
 	{
 		if (type == IM_SESSION_P2P_INVITE)
 		{
-			// -- MC
-			/*if(gVoiceClient)
+			if(gVoiceClient)
 			{
 				std::string s = payload["session_handle"].asString();
 				gVoiceClient->declineInvite(s);
-			}*/
+			}
 		}
 		else
 		{
@@ -766,14 +765,12 @@ LLUUID LLIMMgr::addP2PSession(const std::string& name,
 {
 	LLUUID session_id = addSession(name, IM_NOTHING_SPECIAL, other_participant_id);
 
-	// -- MC
-	/*LLFloaterIMPanel* floater = findFloaterBySession(session_id);
-	
+	LLFloaterIMPanel* floater = findFloaterBySession(session_id);
 	if(floater)
 	{
 		LLVoiceChannelP2P* voice_channelp = (LLVoiceChannelP2P*)floater->getVoiceChannel();
 		voice_channelp->setSessionHandle(voice_session_handle, caller_uri);		
-	}*/
+	}
 
 	return session_id;
 }
@@ -907,8 +904,7 @@ void LLIMMgr::inviteToSession(
 	std::string notify_box_type;
 
 	BOOL ad_hoc_invite = FALSE;
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	/*if(type == IM_SESSION_P2P_INVITE)
+	if(type == IM_SESSION_P2P_INVITE)
 	{
 		//P2P is different...they only have voice invitations
 		notify_box_type = "VoiceInviteP2P";
@@ -925,7 +921,7 @@ void LLIMMgr::inviteToSession(
 		notify_box_type = "VoiceInviteAdHoc";
 		ad_hoc_invite = TRUE;
 	}
-	else*/ if ( inv_type == INVITATION_TYPE_IMMEDIATE )
+	else if ( inv_type == INVITATION_TYPE_IMMEDIATE )
 	{
 		notify_box_type = "InviteAdHoc";
 		ad_hoc_invite = TRUE;
@@ -942,30 +938,29 @@ void LLIMMgr::inviteToSession(
 	payload["session_uri"] = session_uri;
 	payload["notify_box_type"] = notify_box_type;
 	
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	//LLVoiceChannel* channelp = LLVoiceChannel::getChannelByID(session_id);
-	//if (channelp && channelp->callStarted())
-	//{
-	//	// you have already started a call to the other user, so just accept the invite
-	//	LLNotifications::instance().forceResponse(LLNotification::Params("VoiceInviteP2P").payload(payload), 0);
-	//	return;
-	//}
+	LLVoiceChannel* channelp = LLVoiceChannel::getChannelByID(session_id);
+	if (channelp && channelp->callStarted())
+	{
+		// you have already started a call to the other user, so just accept the invite
+		LLNotifications::instance().forceResponse(LLNotification::Params("VoiceInviteP2P").payload(payload), 0);
+		return;
+	}
 
-	//if (type == IM_SESSION_P2P_INVITE || ad_hoc_invite)
-	//{
-	//	// is the inviter a friend?
-	//	if (LLAvatarTracker::instance().getBuddyInfo(caller_id) == NULL)
-	//	{
-	//		// if not, and we are ignoring voice invites from non-friends
-	//		// then silently decline
-	//		if (gSavedSettings.getBOOL("VoiceCallsFriendsOnly"))
-	//		{
-	//			// invite not from a friend, so decline
-	//			LLNotifications::instance().forceResponse(LLNotification::Params("VoiceInviteP2P").payload(payload), 1);
-	//			return;
-	//		}
-	//	}
-	//}
+	if (type == IM_SESSION_P2P_INVITE || ad_hoc_invite)
+	{
+		// is the inviter a friend?
+		if (LLAvatarTracker::instance().getBuddyInfo(caller_id) == NULL)
+		{
+			// if not, and we are ignoring voice invites from non-friends
+			// then silently decline
+			if (gSavedSettings.getBOOL("VoiceCallsFriendsOnly"))
+			{
+				// invite not from a friend, so decline
+				LLNotifications::instance().forceResponse(LLNotification::Params("VoiceInviteP2P").payload(payload), 1);
+				return;
+			}
+		}
+	}
 
 	if ( !mPendingInvitations.has(session_id.asString()) )
 	{
@@ -1699,26 +1694,24 @@ public:
 		} //end if invitation has instant message
 		else if ( input["body"].has("voice") )
 		{
-			// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-			return;
-			//if (gNoRender)
-			//{
-			//	return;
-			//}
-			//
-			//if(!LLVoiceClient::voiceEnabled())
-			//{
-			//	// Don't display voice invites unless the user has voice enabled.
-			//	return;
-			//}
+			if (gNoRender)
+			{
+				return;
+			}
+			
+			if(!LLVoiceClient::voiceEnabled())
+			{
+				// Don't display voice invites unless the user has voice enabled.
+				return;
+			}
 
-			//gIMMgr->inviteToSession(
-			//	input["body"]["session_id"].asUUID(), 
-			//	input["body"]["session_name"].asString(), 
-			//	input["body"]["from_id"].asUUID(),
-			//	input["body"]["from_name"].asString(),
-			//	IM_SESSION_INVITE,
-			//	LLIMMgr::INVITATION_TYPE_VOICE);
+			gIMMgr->inviteToSession(
+				input["body"]["session_id"].asUUID(), 
+				input["body"]["session_name"].asString(), 
+				input["body"]["from_id"].asUUID(),
+				input["body"]["from_name"].asString(),
+				IM_SESSION_INVITE,
+				LLIMMgr::INVITATION_TYPE_VOICE);
 		}
 		else if ( input["body"].has("immediate") )
 		{

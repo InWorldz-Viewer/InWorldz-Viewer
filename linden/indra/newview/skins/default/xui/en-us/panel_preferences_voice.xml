@@ -83,12 +83,12 @@
 	     label="Switch off microphone when ending IM calls"
 		 mouse_opaque="true" name="auto_disengage_mic_check"
 	     radio_style="false" width="200" />
-	<button bottom_delta="-40" follows="left|top" font="SansSerif" height="20"
+	<button bottom_delta="-40" follows="left|top" font="SansSerif" height="22"
 	     label="Device Settings" left="28" mouse_opaque="true"
 	     name="device_settings_btn" width="155" />
-	<text_editor type="string" length="1" allow_html="false" bg_readonly_color="0 0 0 0" bottom_delta="-32"
+	<text_editor type="string" length="1" allow_html="false" bg_readonly_color="0 0 0 0" bottom_delta="-64"
 	     embedded_items="false" enabled="false" follows="left|top"
-	     font="SansSerifSmall" height="35" hide_border="true" hide_scrollbar="true"
+	     font="SansSerifSmall" height="70" hide_border="true" hide_scrollbar="true"
 	     left="28" max_length="65535" mouse_opaque="true"
 	     name="device_settings_text" tab_stop="false" width="450" word_wrap="true">
 		NOTE: Running the Device Settings will temporarily disconnect you from Voice Chat, and changes you make will be immediately applied.

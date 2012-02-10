@@ -1120,6 +1120,30 @@ anguage Infrstructure (CLI) international standard</string>
           </map>
         </map>
       </map>
+      <key>vivox</key>
+      <map>
+        <key>copyright</key>
+        <string> </string>
+        <key>license</key>
+        <string>vivox</string>
+        <key>packages</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>md5sum</key>
+            <string>07afcc25e144e3f9cabc55e25a719b75</string>
+            <key>url</key>
+            <uri>http://inworldz.com/imprudence/libs/vivox-inworldz-3.2.0002.10426-darwin-20120122.tar.bz2</uri>
+          </map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>3ee3652a2d5eed3fb3001ee8a1c08b54</string>
+            <key>url</key>
+            <uri>http://inworldz.com/imprudence/libs/vivox-inworldz-3.2.0002.10426-windows-20120122.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
       <key>xmlrpc-epi</key>
       <map>
         <key>copyright</key>
@@ -1558,6 +1582,11 @@ EA0300
       </map>
       <key>things</key>
       <map>
+      </map>
+      <key>vivox</key>
+      <map>
+        <key>text</key>
+        <string>on file</string>
       </map>
       <key>xmlrpc-epi</key>
       <map>

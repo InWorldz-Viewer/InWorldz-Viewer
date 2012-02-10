@@ -278,6 +278,10 @@ LLViewerInventoryCategory* LLInventoryModel::getCategory(const LLUUID& id) const
 	{
 		category = iter->second;
 	}
+	else
+	{
+		LL_DEBUGS("Inventory") << "Category searched for but not found! UUID: " << id << LL_ENDL;
+	}
 	return category;
 }
 
@@ -724,6 +728,7 @@ void LLInventoryModel::updateCategory(const LLViewerInventoryCategory* cat)
 		LLPointer<LLViewerInventoryCategory> new_cat = new LLViewerInventoryCategory(cat->getParentUUID());
 		new_cat->copyViewerCategory(cat);
 		addCategory(new_cat);
+		LL_DEBUGS("Inventory") << "New category created: " << cat->getName() << " (" << cat->getUUID() << ") with ParentUUID: " << cat->getParentUUID() << LL_ENDL;
 
 		// make sure this category is correctly referenced by it's parent.
 		cat_array_t* cat_array;
@@ -1019,7 +1024,7 @@ void LLInventoryModel::notifyObservers(const std::string service_name)
 			observer->changed(mModifyMask);
 		}
 
-		// safe way to incrament since changed may delete entries! (@!##%@!@&*!)
+		// safe way to increment since changed may delete entries! (@!##%@!@&*!)
 		iter = mObservers.upper_bound(observer); 
 	}
 
@@ -1139,6 +1144,12 @@ void LLInventoryModel::fetchInventoryResponder::error(U32 status, const std::str
 
 void LLInventoryModel::fetchDescendentsOf(const LLUUID& folder_id)
 {
+	if(folder_id.isNull()) 
+	{
+		llwarns << "Calling fetch descendents on NULL folder id!" << llendl;
+		return;
+	}
+
 	LLViewerInventoryCategory* cat = getCategory(folder_id);
 	if(!cat)
 	{
@@ -1388,8 +1399,6 @@ void LLInventoryModel::bulkFetch(std::string url)
         }
         else
         {
-				
-
 		    LLViewerInventoryCategory* cat = gInventory.getCategory(sFetchQueue.front());
 		
 		    if (cat)
@@ -1424,29 +1433,28 @@ void LLInventoryModel::bulkFetch(std::string url)
 						    sFetchQueue.push_back(child_categories->get(child_num)->getUUID());
 					    }
 				    }
-    
 			    }
 		    }
         }
 		sFetchQueue.pop_front();
 	}
 		
-		if (folder_count > 0)
+	if (folder_count > 0)
+	{
+		sBulkFetchCount++;
+		if (body["folders"].size())
 		{
-			sBulkFetchCount++;
-			if (body["folders"].size())
-			{
-				LL_DEBUGS("Inventory") << " fetch descendents post to " << url << ": " << ll_pretty_print_sd(body) << LL_ENDL;
-				LLHTTPClient::post(url, body, new fetchDescendentsResponder(body),300.0);
-			}
-			if (body_lib["folders"].size())
-			{
-				std::string url_lib = gAgent.getRegion()->getCapability("FetchLibDescendents");
-				LL_DEBUGS("Inventory") << " fetch descendents lib post: " << ll_pretty_print_sd(body_lib) << LL_ENDL;
-				LLHTTPClient::post(url_lib, body_lib, new fetchDescendentsResponder(body_lib),300.0);
-			}
-			sFetchTimer.reset();
+			LL_DEBUGS("Inventory") << " fetch descendents post to " << url << ": " << ll_pretty_print_sd(body) << LL_ENDL;
+			LLHTTPClient::post(url, body, new fetchDescendentsResponder(body),300.0);
 		}
+		if (body_lib["folders"].size())
+		{
+			std::string url_lib = gAgent.getRegion()->getCapability("FetchLibDescendents");
+			LL_DEBUGS("Inventory") << " fetch descendents lib post: " << ll_pretty_print_sd(body_lib) << LL_ENDL;
+			LLHTTPClient::post(url_lib, body_lib, new fetchDescendentsResponder(body_lib),300.0);
+		}
+		sFetchTimer.reset();
+	}
 	else if (isBulkFetchProcessingComplete())
 	{
 		if (sFullFetchStarted)
@@ -2083,9 +2091,8 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 
 				if (cit == temp_cats.end())
 				{
-					llwarns << "Can't load " << (*cit)->getName() 
-							<< "(" << (*cit)->getUUID()
-							<< ") because cit == temp_cats.end()" 
+					llwarns << "Can't load " << inventory_filename
+							<< " because cit == temp_cats.end()" 
 							<< llendl;
 					continue; // cache corruption?? not sure why this happens -SJB
 				}
@@ -2095,9 +2102,8 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 				// not sent down in the skeleton.
 				if (cit == not_cached)
 				{
-					llwarns << "Can't load " << (*cit)->getName() 
-							<< "(" << (*cit)->getUUID()
-							<< ") because cit == not_cached" 
+					llwarns << "Can't load " << inventory_filename
+							<< " because cit == not_cached" 
 							<< llendl;
 					continue;
 				}
@@ -2121,10 +2127,15 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 
 			// go ahead and add the cats returned during the download
 			std::set<LLUUID>::iterator not_cached_id = cached_ids.end();
-			cached_category_count = cached_ids.size();
 			for (cat_set_t::iterator it = temp_cats.begin(); it != temp_cats.end(); ++it)
 			{
-				if ((*it)->getUUID().notNull() && (cached_ids.find((*it)->getUUID()) == not_cached_id))
+				if ((*it)->getUUID().isNull())
+				{
+					// should hopefully never happen -- MC
+					continue;
+				}
+
+				if (cached_ids.find((*it)->getUUID()) == not_cached_id)
 				{
 					// this check is performed so that we do not
 					// mark new folders in the skeleton (and not in cache)
@@ -2132,7 +2143,11 @@ bool LLInventoryModel::loadSkeleton(const LLInventoryModel::options_t& options,
 					LLViewerInventoryCategory *llvic = (*it);
 					llvic->setVersion(LLViewerInventoryCategory::VERSION_UNKNOWN);
 				}
-				addCategory(*it);
+
+				LLPointer<LLViewerInventoryCategory> new_cat = new LLViewerInventoryCategory((*it)->getUUID());
+				new_cat->copyViewerCategory(*it);
+				addCategory(new_cat);
+				cached_category_count++;
 				++child_counts[(*it)->getParentUUID()];
 			}
 
@@ -2856,6 +2871,7 @@ void LLInventoryModel::registerCallbacks(LLMessageSystem* msg)
 // 	static
 void LLInventoryModel::processUpdateCreateInventoryItem(LLMessageSystem* msg, void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processUpdateCreateInventoryItem" << LL_ENDL;
 	// do accounting and highlight new items if they arrive
 	if (gInventory.messageUpdateCore(msg, true))
 	{
@@ -2872,6 +2888,7 @@ void LLInventoryModel::processUpdateCreateInventoryItem(LLMessageSystem* msg, vo
 // static
 void LLInventoryModel::processFetchInventoryReply(LLMessageSystem* msg, void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processFetchInventoryReply" << LL_ENDL;
 	// no accounting
 	gInventory.messageUpdateCore(msg, false);
 }
@@ -3081,6 +3098,7 @@ void LLInventoryModel::processRemoveInventoryFolder(LLMessageSystem* msg,
 void LLInventoryModel::processSaveAssetIntoInventory(LLMessageSystem* msg,
 													 void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processSaveAssetIntoInventory" << LL_ENDL;
 	LLUUID agent_id;
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id);
 	if(agent_id != gAgent.getID())
@@ -3128,6 +3146,7 @@ struct InventoryCallbackInfo
 // static
 void LLInventoryModel::processBulkUpdateInventory(LLMessageSystem* msg, void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processBulkUpdateInventory" << LL_ENDL;
 	LLUUID agent_id;
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id);
 	if(agent_id != gAgent.getID())
@@ -3293,6 +3312,7 @@ void LLInventoryModel::processBulkUpdateInventory(LLMessageSystem* msg, void**)
 // static
 void LLInventoryModel::processInventoryDescendents(LLMessageSystem* msg,void**)
 {
+	LL_DEBUGS("Inventory") << "LLInventoryModel::processInventoryDescendents" << LL_ENDL;
 	LLUUID agent_id;
 	msg->getUUIDFast(_PREHASH_AgentData, _PREHASH_AgentID, agent_id);
 	if(agent_id != gAgent.getID())
@@ -3707,7 +3727,7 @@ void fetch_items_from_llsd(const LLSD& items_llsd)
 			body[0]["items"].append(items_llsd[i]);
 			continue;
 		}
-		if (items_llsd[i]["owner_id"].asString() == ALEXANDRIA_LINDEN_ID.asString())
+		else if (items_llsd[i]["owner_id"].asString() == ALEXANDRIA_LINDEN_ID.asString())
 		{
 			body[1]["items"].append(items_llsd[i]);
 			continue;
@@ -3716,7 +3736,18 @@ void fetch_items_from_llsd(const LLSD& items_llsd)
 		
 	for (S32 i=0; i<body.size(); i++)
 	{
-		if (0 >= body[i].size()) continue;
+		if (!gAgent.getRegion())
+		{
+			llwarns << "Agent in null region, skipping loading" << llendl;
+			break;
+		}
+
+		if (0 == body[i]["items"].size()) 
+		{
+			lldebugs << "No items to fetch, skipping body" << llendl;
+			continue;
+		}
+
 		std::string url = gAgent.getRegion()->getCapability(body[i]["cap_name"].asString());
 
 		if (!url.empty())

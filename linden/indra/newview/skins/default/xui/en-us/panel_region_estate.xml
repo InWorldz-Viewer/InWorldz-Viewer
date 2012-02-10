@@ -61,10 +61,10 @@ regions in the estate.
 	     radio_style="false"
 	     tool_tip="Ban residents who have not verified their age. See inworldz.com/support.php for more information."
 	     width="278" />
-	<!--<check_box bottom_delta="-22" follows="left|top" height="20" label="Allow Voice Chat"
+	<check_box bottom_delta="-22" follows="left|top" height="20" label="Allow Voice Chat"
 	     left="12" name="voice_chat_check" width="200" />
 	<button bottom_delta="0" follows="left|top" font="SansSerifSmall" height="18" label="?"
-	     name="voice_chat_help" right="250" width="18" />-->
+	     name="voice_chat_help" right="250" width="18" />
 	<check_box bottom_delta="-20" follows="left|top" height="20" label="Allow Direct Teleport"
 	     left="12" name="allow_direct_teleport" width="80" />
 	<button bottom_delta="0" follows="left|top" font="SansSerifSmall" height="18" label="?"

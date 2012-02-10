@@ -395,7 +395,9 @@ bool LLViewerLogin::isInProductionGrid()
 	std::vector<std::string> uris = getGridURIs();
 	if (uris.size() > 0)
 	{
-		if((getCurrentGridURI().find("inworldz") != std::string::npos))
+		// Don't consider any InWorldz Beta Grid production -- MC
+		if ((getCurrentGridURI().find("inworldz") != std::string::npos) &&
+			(getCurrentGridURI().find("beta") == std::string::npos))
 		{
 			return true;
 		}

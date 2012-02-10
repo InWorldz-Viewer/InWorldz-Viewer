@@ -60,10 +60,9 @@
 #include "llviewerparcelmgr.h"
 #include "lluictrlfactory.h"
 #include "llviewerwindow.h"
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//#include "llvoiceclient.h" -- MC
+#include "llvoiceclient.h"
 #include "llvoavatar.h"
-//#include "llvoiceremotectrl.h" -- MC
+#include "llvoiceremotectrl.h"
 #include "llmediactrl.h"
 #include "llwindlightremotectrl.h"
 #include "llselectmgr.h"
@@ -89,13 +88,12 @@ void* LLOverlayBar::createMediaRemote(void* userdata)
 	return self->mMediaRemote;
 }
 
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//void* LLOverlayBar::createVoiceRemote(void* userdata)
-//{
-//	LLOverlayBar *self = (LLOverlayBar*)userdata;	
-//	self->mVoiceRemote = new LLVoiceRemoteCtrl(std::string("voice_remote"));
-//	return self->mVoiceRemote;
-//}
+void* LLOverlayBar::createVoiceRemote(void* userdata)
+{
+	LLOverlayBar *self = (LLOverlayBar*)userdata;
+	self->mVoiceRemote = new LLVoiceRemoteCtrl(std::string("voice_remote"));
+	return self->mVoiceRemote;
+}
 
 void* LLOverlayBar::createWindlightRemote(void* userdata)
 {
@@ -120,7 +118,7 @@ void* LLOverlayBar::createChatBar(void* userdata)
 LLOverlayBar::LLOverlayBar()
 	:	LLPanel(),
 		mMediaRemote(NULL),
-		//mVoiceRemote(NULL), -- MC
+		mVoiceRemote(NULL),
 		mWindlightRemote(NULL),
 		mAORemote(NULL),
 		mMusicState(STOPPED),
@@ -133,7 +131,7 @@ LLOverlayBar::LLOverlayBar()
 
 	LLCallbackMap::map_t factory_map;
 	factory_map["media_remote"] = LLCallbackMap(LLOverlayBar::createMediaRemote, this);
-	//factory_map["voice_remote"] = LLCallbackMap(LLOverlayBar::createVoiceRemote, this); -- MC
+	factory_map["voice_remote"] = LLCallbackMap(LLOverlayBar::createVoiceRemote, this);
 	factory_map["windlight_remote"] = LLCallbackMap(LLOverlayBar::createWindlightRemote, this);
 	factory_map["ao_remote"] = LLCallbackMap(LLOverlayBar::createAORemote, this);
 	factory_map["chat_bar"] = LLCallbackMap(LLOverlayBar::createChatBar, this);
@@ -294,13 +292,13 @@ void LLOverlayBar::refresh()
 	moveChildToBackOfTabGroup(mAORemote);
 	moveChildToBackOfTabGroup(mWindlightRemote);
 	moveChildToBackOfTabGroup(mMediaRemote);
-	//moveChildToBackOfTabGroup(mVoiceRemote); -- MC
+	moveChildToBackOfTabGroup(mVoiceRemote);
 
 	// turn off the whole bar in mouselook
 	if (gAgent.cameraMouselook())
 	{
 		childSetVisible("media_remote_container", FALSE);
-		//childSetVisible("voice_remote_container", FALSE); -- MC
+		childSetVisible("voice_remote_container", FALSE);
 		childSetVisible("windlight_remote_container", FALSE);
 		childSetVisible("ao_remote_container", FALSE);
 		childSetVisible("state_buttons", FALSE);
@@ -309,7 +307,7 @@ void LLOverlayBar::refresh()
 	{
 		// update "remotes"
 		childSetVisible("media_remote_container", TRUE);
-		//childSetVisible("voice_remote_container", LLVoiceClient::voiceEnabled()); -- MC
+		childSetVisible("voice_remote_container", LLVoiceClient::voiceEnabled());
 		childSetVisible("windlight_remote_container", gSavedSettings.getBOOL("EnableWindlightRemote"));
 		childSetVisible("ao_remote_container", gSavedSettings.getBOOL("EnableAORemote"));
 		childSetVisible("state_buttons", TRUE);

@@ -58,7 +58,7 @@
 #include "llviewermessage.h"
 #include "lltimer.h"
 #include "lltextbox.h"
-//#include "llvoiceclient.h" -- MC
+#include "llvoiceclient.h"
 
 //Maximum number of people you can select to do an operation on at once.
 #define MAX_FRIEND_SELECT 20
@@ -116,15 +116,13 @@ LLPanelFriends::LLPanelFriends() :
 	mObserver = new LLLocalFriendsObserver(this);
 	LLAvatarTracker::instance().addObserver(mObserver);
 	// For notification when SIP online status changes.
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	//LLVoiceClient::getInstance()->addObserver(mObserver);
+	LLVoiceClient::getInstance()->addObserver(mObserver);
 }
 
 LLPanelFriends::~LLPanelFriends()
 {
 	// For notification when SIP online status changes.
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	//LLVoiceClient::getInstance()->removeObserver(mObserver);
+	LLVoiceClient::getInstance()->removeObserver(mObserver);
 	LLAvatarTracker::instance().removeObserver(mObserver);
 	delete mObserver;
 }
@@ -251,8 +249,7 @@ BOOL LLPanelFriends::addFriend(const LLUUID& agent_id)
 	const LLRelationship* relationInfo = at.getBuddyInfo(agent_id);
 	if(!relationInfo) return FALSE;
 
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	//bool isOnlineSIP = LLVoiceClient::getInstance()->isOnlineSIP(agent_id);
+	bool isOnlineSIP = LLVoiceClient::getInstance()->isOnlineSIP(agent_id);
 	bool isOnline = relationInfo->isOnline();
 
 	std::string fullname;
@@ -275,12 +272,11 @@ BOOL LLPanelFriends::addFriend(const LLUUID& agent_id)
 		friend_column["font-style"] = "BOLD";	
 		online_status_column["value"] = "icon_avatar_online.tga";
 	}
-	// SIP is dead, anyway -- MC
-	/*else if(isOnlineSIP)
+	else if(isOnlineSIP)
 	{
 		friend_column["font-style"] = "BOLD";	
 		online_status_column["value"] = ONLINE_SIP_ICON_NAME;
-	}*/
+	}
 
 	LLSD& online_column = element["columns"][LIST_VISIBLE_ONLINE];
 	online_column["column"] = "icon_visible_online";
@@ -331,8 +327,7 @@ BOOL LLPanelFriends::updateFriendItem(const LLUUID& agent_id, const LLRelationsh
 	LLScrollListItem* itemp = mFriendsList->getItem(agent_id);
 	if (!itemp) return FALSE;
 	
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	//bool isOnlineSIP = LLVoiceClient::getInstance()->isOnlineSIP(itemp->getUUID());
+	bool isOnlineSIP = LLVoiceClient::getInstance()->isOnlineSIP(itemp->getUUID());
 	bool isOnline = info->isOnline();
 
 	std::string fullname;
@@ -345,17 +340,16 @@ BOOL LLPanelFriends::updateFriendItem(const LLUUID& agent_id, const LLRelationsh
 	{
 		statusIcon = "icon_avatar_online.tga";
 	}
-	// SIP is dead, anyway -- MC
-	/*else if(isOnlineSIP)
+	else if(isOnlineSIP)
 	{
 		statusIcon = ONLINE_SIP_ICON_NAME;
-	}*/
+	}
 
 	itemp->getColumn(LIST_ONLINE_STATUS)->setValue(statusIcon);
 	
 	itemp->getColumn(LIST_FRIEND_NAME)->setValue(fullname);
 	// render name of online friends in bold text
-	((LLScrollListText*)itemp->getColumn(LIST_FRIEND_NAME))->setFontStyle((isOnline /*|| isOnlineSIP*/) ? LLFontGL::BOLD : LLFontGL::NORMAL); // -- MC
+	((LLScrollListText*)itemp->getColumn(LIST_FRIEND_NAME))->setFontStyle((isOnline || isOnlineSIP) ? LLFontGL::BOLD : LLFontGL::NORMAL);	
 	itemp->getColumn(LIST_VISIBLE_ONLINE)->setValue(info->isRightGrantedTo(LLRelationship::GRANT_ONLINE_STATUS));
 	itemp->getColumn(LIST_VISIBLE_MAP)->setValue(info->isRightGrantedTo(LLRelationship::GRANT_MAP_LOCATION));
 	itemp->getColumn(LIST_EDIT_MINE)->setValue(info->isRightGrantedTo(LLRelationship::GRANT_MODIFY_OBJECTS));

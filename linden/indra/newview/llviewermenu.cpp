@@ -5663,11 +5663,10 @@ class LLShowFloater : public view_listener_t
 		{
 			LLFloaterAbout::show(NULL);
 		}
-		// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-		/*else if (floater_name == "active speakers")
+		else if (floater_name == "active speakers")
 		{
 			LLFloaterActiveSpeakers::toggleInstance(LLSD());
-		}*/
+		}
 		else if (floater_name == "beacons")
 		{
 			LLFloaterBeacons::toggleInstance(LLSD());
@@ -5738,11 +5737,10 @@ class LLFloaterVisible : public view_listener_t
 		{
 			new_value = LLFloaterStats::instanceVisible();
 		}
-		// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-		/*else if (floater_name == "active speakers")
+		else if (floater_name == "active speakers")
 		{
 			new_value = LLFloaterActiveSpeakers::instanceVisible(LLSD());
-		}*/
+		}
 		else if (floater_name == "beacons")
 		{
 			new_value = LLFloaterBeacons::instanceVisible(LLSD());

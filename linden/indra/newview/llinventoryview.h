@@ -258,6 +258,8 @@ public:
 
 	void toggleFindOptions();
 	void updateSortControls();
+	// Manually update's the Inventory window's title when we have items to count
+	void updateTitle();
 
 	LLInventoryViewFinder* getFinder() { return (LLInventoryViewFinder*)mFinderHandle.get(); }
 

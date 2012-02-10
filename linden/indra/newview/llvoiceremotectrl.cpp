@@ -31,8 +31,7 @@
 
 #include "llviewerprecompiledheaders.h"
 
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-/*#include "llvoiceremotectrl.h"
+#include "llvoiceremotectrl.h"
 
 #include "llagent.h"
 #include "llui.h"
@@ -289,4 +288,4 @@ void LLVoiceRemoteCtrl::onClickSpeakers(void *user_data)
 void LLVoiceRemoteCtrl::onClickVoiceChannel(void* user_data)
 {
 	LLFloaterChatterBox::showInstance();
-}*/
+}

@@ -24,7 +24,7 @@
     <column name="friend_last_update_generation" width="0" />
   </scroll_list>
   <pad bottom="-7" height="0" left="-90" width="1" />
-  <button bottom_delta="-45" follows="top|right" height="22" label="IM"
+  <button bottom_delta="-45" follows="top|right" height="22" label="IM/Call"
 	     left_delta="0" name="im_btn" tool_tip="Open Instant Message session"
 	     width="80" />
   <button bottom_delta="-25" follows="top|right" height="22" label="Profile"

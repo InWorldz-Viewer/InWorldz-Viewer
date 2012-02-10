@@ -1,12 +1,12 @@
-Second Life - Linux Voice Support README
+InWorldz - Linux Voice Support README
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 WHAT IS IT?
 -=-=-=-=-=-
 
 Linux Voice Support is a new feature in testing which allows users
-of the Linux Second Life client to participate in voice-chat with other
-residents and groups inside Second Life, with an appropriate
+of the Linux InWorldz client to participate in voice-chat with other
+residents and groups inside InWorldz, with an appropriate
 headset/microphone.
 
 Linux Voice Support is currently EXPERIMENTAL and is known to still
@@ -44,8 +44,8 @@ SOLUTION:
 a. Ensure that 'Enable voice chat' is enabled in the Voice Chat
   preferences window and that you are in a voice-enabled area (you
   will see a blue headphone icon in the SL menu-bar).
-b. If the above does not help, exit Second Life and ensure that any
-  remaining 'SLVoice' processes (as reported by 'ps', 'top' or similar)
+b. If the above does not help, exit InWorldz and ensure that any
+  remaining 'iwvoice' processes (as reported by 'ps', 'top' or similar)
   are killed.
 
 PROBLEM 2: I have a white dot over my head but I never see (or hear!) anyone
@@ -81,6 +81,5 @@ a. Use your system mixer-setting program or the 'alsamixer' program to ensure
 FURTHER PROBLEMS?
 -=-=-=-=-=-=-=-=-
 
-Please report further issues to the public Second Life issue-tracker
-at <http://jira.secondlife.com/> (please note, however, that this is not
-a support forum).
+Please report further issues to the public InWorldz issue-tracker
+(please note, however, that this is not a support forum).

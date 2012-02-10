@@ -110,6 +110,40 @@ std::string LLCurl::getVersionString()
 	return std::string(curl_version());
 }
 
+//static 
+std::string LLCurl::escapeSafe(const std::string& unescaped_string, S32 length)
+{
+	return escapeSafe(unescaped_string.c_str(), length);
+}
+
+//static 
+std::string LLCurl::escapeSafe(const char* unescaped_string, S32 length)
+{
+	char* curl_str = curl_escape(unescaped_string, length);
+	std::string escaped_string(curl_str);
+	curl_free(curl_str);
+	curl_str = NULL;
+	LLStringUtil::replaceString(escaped_string, "-", "%2D");
+	return escaped_string;
+}
+
+//static
+std::string LLCurl::unescapeSafe(const std::string& escaped_string, S32 length)
+{
+	return unescapeSafe(escaped_string.c_str(), length);
+}
+
+//static 
+std::string LLCurl::unescapeSafe(const char* escaped_string, S32 length)
+{
+	char * curl_str = curl_unescape(escaped_string, length);
+	std::string unescaped_string(curl_str);
+	curl_free(curl_str);
+	curl_str = NULL;
+	LLStringUtil::replaceString(unescaped_string, "%2D", "-");
+	return unescaped_string;
+}
+
 //////////////////////////////////////////////////////////////////////////////
 
 LLCurl::Responder::Responder()

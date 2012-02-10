@@ -93,6 +93,8 @@ LLDynamicArray<LLInventoryView*> LLInventoryView::sActiveViews;
 BOOL LLInventoryView::sWearNewClothing = FALSE;
 LLUUID LLInventoryView::sWearNewClothingTransactionID;
 
+static std::string sOldTitle = "";
+
 ///----------------------------------------------------------------------------
 /// Local function declarations, constants, enums, and typedefs
 ///----------------------------------------------------------------------------
@@ -619,22 +621,42 @@ LLInventoryView::~LLInventoryView( void )
 
 void LLInventoryView::draw()
 {
- 	if (!LLInventoryModel::backgroundFetchActive())
-	{
-		LLLocale locale(LLLocale::USER_LOCALE);
-		std::ostringstream title;
-		title << "Inventory";
-		std::string item_count_string;
-		LLResMgr::getInstance()->getIntegerString(item_count_string, gInventory.getItemCount());
-		title << " (" << item_count_string << " items)";
-		title << mFilterText;
-		setTitle(title.str());
-	}
+ 	// Why is this done in draw()? Needs to be moved to an observer -- MC
+	updateTitle();
+
 	if (mActivePanel && mSearchEditor)
 	{
 		mSearchEditor->setText(mActivePanel->getFilterSubString());
 	}
+
 	LLFloater::draw();
+}
+
+void LLInventoryView::updateTitle()
+{
+	if (gInventory.getItemCount() > 0)
+	{
+		std::ostringstream title;
+		title << "Inventory";
+		std::string item_count_string;
+		LLLocale locale(LLLocale::USER_LOCALE);
+		LLResMgr::getInstance()->getIntegerString(item_count_string, gInventory.getItemCount());
+ 		if (!LLInventoryModel::backgroundFetchActive())
+		{
+			title << " (" << item_count_string << " items)";
+		}
+		else
+		{
+			title << " (Fetched " << item_count_string << " items...)";
+		}
+		title << mFilterText;
+		std::string title_str(title.str());
+		if (sOldTitle != title_str) // title never empty -- MC
+		{
+			setTitle(title_str);
+			sOldTitle = title_str;
+		}
+	}
 }
 
 void LLOpenFilteredFolders::doItem(LLFolderViewItem *item)
@@ -776,18 +798,7 @@ BOOL LLInventoryView::handleKeyHere(KEY key, MASK mask)
 
 void LLInventoryView::changed(U32 mask)
 {
-	std::ostringstream title;
-	title << "Inventory";
- 	if (LLInventoryModel::backgroundFetchActive())
-	{
-		LLLocale locale(LLLocale::USER_LOCALE);
-		std::string item_count_string;
-		LLResMgr::getInstance()->getIntegerString(item_count_string, gInventory.getItemCount());
-		title << " (Fetched " << item_count_string << " items...)";
-	}
-	title << mFilterText;
-	setTitle(title.str());
-
+	updateTitle();
 }
 
 // static
@@ -822,7 +833,7 @@ LLInventoryView* LLInventoryView::showAgentInventory(BOOL take_keyboard_focus)
 	if(iv)
 	{
 		// Make sure it's in front and it makes a noise
-		iv->setTitle(std::string("Inventory"));
+		iv->updateTitle();
 		iv->open();		/*Flawfinder: ignore*/
 	}
 	//if (take_keyboard_focus)
@@ -897,6 +908,7 @@ void LLInventoryView::cleanup()
 	{
 		sActiveViews.get(i)->destroy();
 	}
+	gInventory.empty();
 }
 
 void LLInventoryView::toggleFindOptions()
@@ -1311,6 +1323,10 @@ BOOL LLInventoryPanel::postBuild()
 	}
 	mFolders->setSortOrder(mFolders->getFilter()->getSortOrder());
 
+	if (!gInventory.isEverythingFetched())
+	{
+		gInventory.startBackgroundFetch();
+	}
 
 	return TRUE;
 }
@@ -1567,9 +1583,9 @@ void LLInventoryPanel::buildNewViews(const LLUUID& id)
 		if (objectp->getType() <= LLAssetType::AT_NONE ||
 			objectp->getType() >= LLAssetType::AT_COUNT)
 		{
-			llwarns << "LLInventoryPanel::buildNewViews called with objectp->mType == " 
+			LL_DEBUGS("Inventory") << "LLInventoryPanel::buildNewViews called with objectp->mType == " 
 				<< ((S32) objectp->getType())
-				<< " (shouldn't happen)" << llendl;
+				<< " (shouldn't happen)" << LL_ENDL;
 		}
 		else if (objectp->getType() == LLAssetType::AT_CATEGORY) // build new view for category
 		{

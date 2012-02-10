@@ -38,9 +38,8 @@
 #include "llvieweraudio.h"
 #include "llviewercamera.h"
 #include "llviewercontrol.h"
-#include "llviewerregion.h"
 #include "llviewerwindow.h"
-//#include "llvoiceclient.h" -- MC
+#include "llvoiceclient.h"
 #include "llviewermedia.h"
 
 /////////////////////////////////////////////////////////
@@ -170,8 +169,7 @@ void audio_update_volume(bool force_update)
 	LLViewerMedia::setVolume( media_muted ? 0.0f : media_volume );
 
 	// Voice
-	// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-	/*if (gVoiceClient)
+	if (gVoiceClient)
 	{
 		F32 voice_volume = gSavedSettings.getF32("AudioLevelVoice");
 		voice_volume = mute_volume * master_volume * voice_volume;
@@ -187,7 +185,7 @@ void audio_update_volume(bool force_update)
 		{
 			gVoiceClient->setMuteMic(false);
 		}
-	}*/
+	}
 }
 
 void audio_update_listener()

@@ -38,8 +38,7 @@
 #include "lluuid.h"
 #include "lldarray.h"
 #include "llinstantmessage.h"
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//#include "llvoiceclient.h"
+#include "llvoiceclient.h"
 #include "llstyle.h"
 
 class LLLineEditor;
@@ -49,131 +48,130 @@ class LLInventoryCategory;
 class LLIMSpeakerMgr;
 class LLPanelActiveSpeakers;
 
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//class LLVoiceChannel : public LLVoiceClientStatusObserver
-//{
-//public:
-//	typedef enum e_voice_channel_state
-//	{
-//		STATE_NO_CHANNEL_INFO,
-//		STATE_ERROR,
-//		STATE_HUNG_UP,
-//		STATE_READY,
-//		STATE_CALL_STARTED,
-//		STATE_RINGING,
-//		STATE_CONNECTED
-//	} EState;
-//
-//	LLVoiceChannel(const LLUUID& session_id, const std::string& session_name);
-//	virtual ~LLVoiceChannel();
-//
-//	/*virtual*/ void onChange(EStatusType status, const std::string &channelURI, bool proximal);
-//
-//	virtual void handleStatusChange(EStatusType status);
-//	virtual void handleError(EStatusType status);
-//	virtual void deactivate();
-//	virtual void activate();
-//	virtual void setChannelInfo(
-//		const std::string& uri,
-//		const std::string& credentials);
-//	virtual void getChannelInfo();
-//	virtual BOOL isActive();
-//	virtual BOOL callStarted();
-//
-//	const LLUUID getSessionID() { return mSessionID; }
-//	EState getState() { return mState; }
-//
-//	void updateSessionID(const LLUUID& new_session_id);
-//	const LLSD& getNotifyArgs() { return mNotifyArgs; }
-//
-//	static LLVoiceChannel* getChannelByID(const LLUUID& session_id);
-//	static LLVoiceChannel* getChannelByURI(std::string uri);
-//	static LLVoiceChannel* getCurrentVoiceChannel() { return sCurrentVoiceChannel; }
-//	static void initClass();
-//	
-//	static void suspend();
-//	static void resume();
-//
-//protected:
-//	virtual void setState(EState state);
-//	void setURI(std::string uri);
-//
-//	std::string	mURI;
-//	std::string	mCredentials;
-//	LLUUID		mSessionID;
-//	EState		mState;
-//	std::string	mSessionName;
-//	LLSD mNotifyArgs;
-//	BOOL		mIgnoreNextSessionLeave;
-//	LLHandle<LLPanel> mLoginNotificationHandle;
-//
-//	typedef std::map<LLUUID, LLVoiceChannel*> voice_channel_map_t;
-//	static voice_channel_map_t sVoiceChannelMap;
-//
-//	typedef std::map<std::string, LLVoiceChannel*> voice_channel_map_uri_t;
-//	static voice_channel_map_uri_t sVoiceChannelURIMap;
-//
-//	static LLVoiceChannel* sCurrentVoiceChannel;
-//	static LLVoiceChannel* sSuspendedVoiceChannel;
-//	static BOOL sSuspended;
-//};
-//
-//class LLVoiceChannelGroup : public LLVoiceChannel
-//{
-//public:
-//	LLVoiceChannelGroup(const LLUUID& session_id, const std::string& session_name);
-//
-//	/*virtual*/ void handleStatusChange(EStatusType status);
-//	/*virtual*/ void handleError(EStatusType status);
-//	/*virtual*/ void activate();
-//	/*virtual*/ void deactivate();
-//	/*vritual*/ void setChannelInfo(
-//		const std::string& uri,
-//		const std::string& credentials);
-//	/*virtual*/ void getChannelInfo();
-//
-//protected:
-//	virtual void setState(EState state);
-//
-//private:
-//	U32 mRetries;
-//	BOOL mIsRetrying;
-//};
-//
-//class LLVoiceChannelProximal : public LLVoiceChannel, public LLSingleton<LLVoiceChannelProximal>
-//{
-//public:
-//	LLVoiceChannelProximal();
-//
-//	/*virtual*/ void onChange(EStatusType status, const std::string &channelURI, bool proximal);
-//	/*virtual*/ void handleStatusChange(EStatusType status);
-//	/*virtual*/ void handleError(EStatusType status);
-//	/*virtual*/ BOOL isActive();
-//	/*virtual*/ void activate();
-//	/*virtual*/ void deactivate();
-//
-//};
-//
-//class LLVoiceChannelP2P : public LLVoiceChannelGroup
-//{
-//public:
-//	LLVoiceChannelP2P(const LLUUID& session_id, const std::string& session_name, const LLUUID& other_user_id);
-//
-//	/*virtual*/ void handleStatusChange(EStatusType status);
-//	/*virtual*/ void handleError(EStatusType status);
-//    /*virtual*/ void activate();
-//	/*virtual*/ void getChannelInfo();
-//
-//	void setSessionHandle(const std::string& handle, const std::string &inURI);
-//
-//protected:
-//	virtual void setState(EState state);
-//
-//private:
-//	std::string	mSessionHandle;
-//	LLUUID		mOtherUserID;
-//	BOOL		mReceivedCall;
-//};
+class LLVoiceChannel : public LLVoiceClientStatusObserver
+{
+public:
+	typedef enum e_voice_channel_state
+	{
+		STATE_NO_CHANNEL_INFO,
+		STATE_ERROR,
+		STATE_HUNG_UP,
+		STATE_READY,
+		STATE_CALL_STARTED,
+		STATE_RINGING,
+		STATE_CONNECTED
+	} EState;
+
+	LLVoiceChannel(const LLUUID& session_id, const std::string& session_name);
+	virtual ~LLVoiceChannel();
+
+	/*virtual*/ void onChange(EStatusType status, const std::string &channelURI, bool proximal);
+
+	virtual void handleStatusChange(EStatusType status);
+	virtual void handleError(EStatusType status);
+	virtual void deactivate();
+	virtual void activate();
+	virtual void setChannelInfo(
+		const std::string& uri,
+		const std::string& credentials);
+	virtual void getChannelInfo();
+	virtual BOOL isActive();
+	virtual BOOL callStarted();
+
+	const LLUUID getSessionID() { return mSessionID; }
+	EState getState() { return mState; }
+
+	void updateSessionID(const LLUUID& new_session_id);
+	const LLSD& getNotifyArgs() { return mNotifyArgs; }
+
+	static LLVoiceChannel* getChannelByID(const LLUUID& session_id);
+	static LLVoiceChannel* getChannelByURI(std::string uri);
+	static LLVoiceChannel* getCurrentVoiceChannel() { return sCurrentVoiceChannel; }
+	static void initClass();
+	
+	static void suspend();
+	static void resume();
+
+protected:
+	virtual void setState(EState state);
+	void setURI(std::string uri);
+
+	std::string	mURI;
+	std::string	mCredentials;
+	LLUUID		mSessionID;
+	EState		mState;
+	std::string	mSessionName;
+	LLSD mNotifyArgs;
+	BOOL		mIgnoreNextSessionLeave;
+	LLHandle<LLPanel> mLoginNotificationHandle;
+
+	typedef std::map<LLUUID, LLVoiceChannel*> voice_channel_map_t;
+	static voice_channel_map_t sVoiceChannelMap;
+
+	typedef std::map<std::string, LLVoiceChannel*> voice_channel_map_uri_t;
+	static voice_channel_map_uri_t sVoiceChannelURIMap;
+
+	static LLVoiceChannel* sCurrentVoiceChannel;
+	static LLVoiceChannel* sSuspendedVoiceChannel;
+	static BOOL sSuspended;
+};
+
+class LLVoiceChannelGroup : public LLVoiceChannel
+{
+public:
+	LLVoiceChannelGroup(const LLUUID& session_id, const std::string& session_name);
+
+	/*virtual*/ void handleStatusChange(EStatusType status);
+	/*virtual*/ void handleError(EStatusType status);
+	/*virtual*/ void activate();
+	/*virtual*/ void deactivate();
+	/*vritual*/ void setChannelInfo(
+		const std::string& uri,
+		const std::string& credentials);
+	/*virtual*/ void getChannelInfo();
+
+protected:
+	virtual void setState(EState state);
+
+private:
+	U32 mRetries;
+	BOOL mIsRetrying;
+};
+
+class LLVoiceChannelProximal : public LLVoiceChannel, public LLSingleton<LLVoiceChannelProximal>
+{
+public:
+	LLVoiceChannelProximal();
+
+	/*virtual*/ void onChange(EStatusType status, const std::string &channelURI, bool proximal);
+	/*virtual*/ void handleStatusChange(EStatusType status);
+	/*virtual*/ void handleError(EStatusType status);
+	/*virtual*/ BOOL isActive();
+	/*virtual*/ void activate();
+	/*virtual*/ void deactivate();
+
+};
+
+class LLVoiceChannelP2P : public LLVoiceChannelGroup
+{
+public:
+	LLVoiceChannelP2P(const LLUUID& session_id, const std::string& session_name, const LLUUID& other_user_id);
+
+	/*virtual*/ void handleStatusChange(EStatusType status);
+	/*virtual*/ void handleError(EStatusType status);
+    /*virtual*/ void activate();
+	/*virtual*/ void getChannelInfo();
+
+	void setSessionHandle(const std::string& handle, const std::string &inURI);
+
+protected:
+	virtual void setState(EState state);
+
+private:
+	std::string	mSessionHandle;
+	LLUUID		mOtherUserID;
+	BOOL		mReceivedCall;
+};
 
 class LLFloaterIMPanel : public LLFloater
 {
@@ -235,23 +233,23 @@ public:
 	static void		onClickProfile( void* userdata );
 	static void		onClickGroupInfo( void* userdata );
 	static void		onClickClose( void* userdata );
-	//static void		onClickStartCall( void* userdata ); -- MC
-	//static void		onClickEndCall( void* userdata ); -- MC
+	static void		onClickStartCall( void* userdata );
+	static void		onClickEndCall( void* userdata );
 	static void		onClickSend( void* userdata );
 	static void		onClickToggleActiveSpeakers( void* userdata );
 	static void*	createSpeakersPanel(void* data);
 	static void		onKickSpeaker(void* user_data);
 
 	//callbacks for P2P muting and volume control
-	//static void onClickMuteVoice(void* user_data); -- MC
-	//static void onVolumeChange(LLUICtrl* source, void* user_data); -- MC
+	static void onClickMuteVoice(void* user_data);
+	static void onVolumeChange(LLUICtrl* source, void* user_data);
 
 	const LLUUID& getSessionID() const { return mSessionUUID; }
 	const LLUUID& getOtherParticipantID() const { return mOtherParticipantUUID; }
 	void updateSpeakersList(const LLSD& speaker_updates);
 	void processSessionUpdate(const LLSD& update);
 	void setSpeakers(const LLSD& speaker_list);
-	//LLVoiceChannel* getVoiceChannel() { return mVoiceChannel; } -- MC
+	LLVoiceChannel* getVoiceChannel() { return mVoiceChannel; }
 	EInstantMessage getDialogType() const { return mDialog; }
 
 	void requestAutoConnect();
@@ -309,7 +307,7 @@ private:
 	LLUUID mSessionUUID;
 
 	std::string mSessionLabel;
-	//LLVoiceChannel*	mVoiceChannel; -- MC
+	LLVoiceChannel*	mVoiceChannel;
 
 	BOOL mSessionInitialized;
 	LLSD mQueuedMsgsForInit;

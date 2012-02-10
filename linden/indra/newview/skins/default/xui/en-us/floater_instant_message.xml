@@ -39,20 +39,20 @@
 	</string>
 	<button bottom="-40" follows="left|top" height="20" label="Profile..." left="5"
 	     name="profile_callee_btn" width="80" />
-	<!--<button bottom="-40" follows="left|top" halign="center" height="20"
+	<button bottom="-40" follows="left|top" halign="center" height="20"
 	     image_overlay="icn_voice-call-start.tga" image_overlay_alignment="left"
 	     label="Call" left_delta="85" name="start_call_btn" width="100" />
 	<button bottom="-40" follows="left|top" halign="center" height="20"
 	     image_overlay="icn_voice-call-end.tga" image_overlay_alignment="left"
 	     label="End Call" left_delta="0" name="end_call_btn" pad_right="10"
-	     visible="false" width="100" />-->
+	     visible="false" width="100" />
 	<panel border="false" bottom="-37" follows="left|top|right" height="20"
 	     left_delta="96" name="speaker_controls" width="100">
-		<!--<volume_slider bottom="0" follows="left|bottom" height="15" increment="0.05" initial_val="0.5"
+		<volume_slider bottom="0" follows="left|bottom" height="15" increment="0.05" initial_val="0.5"
 		     left_delta="0" max_val="1.0" min_val="0.0" name="speaker_volume" width="56" />
 		<button bottom_delta="0" height="20" image_selected="icn_speaker-muted_dark.tga"
 		     image_unselected="icn_speaker_dark.tga" label="" left_delta="56"
-		     name="mute_btn" tool_tip="Mute voice" width="25" /-->>
+		     name="mute_btn" tool_tip="Mute voice" width="25" />
 	</panel>
 	<text_editor type="string" length="1" bg_readonly_color="ChatHistoryBgColor" bg_writeable_color="ChatHistoryBgColor"
 	     bottom="30" embedded_items="false" enabled="false"

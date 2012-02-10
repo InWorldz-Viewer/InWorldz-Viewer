@@ -6961,6 +6961,25 @@ What would you like to name your new skin?
   </form>
 </notification>
 
+<notification
+ icon="alertmodal.tga"
+ name="NoVoiceConnect"
+ type="alertmodal">
+We're having trouble connecting to your voice server:
+
+[HOSTID]
+
+Voice communications will not be available.
+Please check your network and firewall setup.
+  <form name="form">
+    <button
+     default="true"
+     index="0"
+     name="OK"
+     text="OK"/>
+  </form>
+</notification>  
+  
   <!--End InWorldz notifications-->
 
 

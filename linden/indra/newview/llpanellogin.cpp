@@ -854,19 +854,15 @@ void LLPanelLogin::loadLoginPage()
 	std::string version = llformat("%d.%d.%d (%d)",
 						LL_VERSION_MAJOR, LL_VERSION_MINOR, LL_VERSION_PATCH, LL_VIEWER_BUILD);
 
-	char* curl_channel = curl_escape(gSavedSettings.getString("VersionChannelName").c_str(), 0);
-	char* curl_version = curl_escape(version.c_str(), 0);
+	std::string curl_channel = LLCurl::escapeSafe(gSavedSettings.getString("VersionChannelName"));
+	std::string curl_version = LLCurl::escapeSafe(version);
 
 	oStr << "&channel=" << curl_channel;
 	oStr << "&version=" << curl_version;
 
-	curl_free(curl_channel);
-	curl_free(curl_version);
-
 	// Grid
-	char* curl_grid = curl_escape(LLViewerLogin::getInstance()->getGridLabel().c_str(), 0);
+	std::string curl_grid = LLCurl::escapeSafe(LLViewerLogin::getInstance()->getGridLabel());
 	oStr << "&grid=" << curl_grid;
-	curl_free(curl_grid);
 
 	gViewerWindow->setMenuBackgroundColor(false, !LLViewerLogin::getInstance()->isInProductionGrid());
 	gLoginMenuBarView->setBackgroundColor(gMenuBarView->getBackgroundColor());
@@ -920,12 +916,10 @@ void LLPanelLogin::loadLoginPage()
 		lastname = gSavedSettings.getString("LastName");
 	}
 	
-	char* curl_region = curl_escape(region.c_str(), 0);
+	std::string curl_region = LLCurl::escapeSafe(region);
 
 	oStr <<"firstname=" << firstname <<
 		"&lastname=" << lastname << "&location=" << location <<	"&region=" << curl_region;
-	
-	curl_free(curl_region);
 
 	if (!password.empty())
 	{

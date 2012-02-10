@@ -61,8 +61,7 @@
 #include "llpanelweb.h"
 #include "llpanelskins.h"
 #include "llprefschat.h"
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
-//#include "llprefsvoice.h"
+#include "llprefsvoice.h"
 #include "llprefsim.h"
 #include "llresizehandle.h"
 #include "llresmgr.h"
@@ -160,10 +159,9 @@ LLPreferenceCore::LLPreferenceCore(LLTabContainer* tab_container, LLButton * def
 	mTabContainer->addTabPanel(mPrefsChat->getPanel(), mPrefsChat->getPanel()->getLabel(), FALSE, onTabChanged, mTabContainer);
 	mPrefsChat->getPanel()->setDefaultBtn(default_btn);
 
-	// -- MC
-	/*mPrefsVoice = new LLPrefsVoice();
+	mPrefsVoice = new LLPrefsVoice();
 	mTabContainer->addTabPanel(mPrefsVoice, mPrefsVoice->getLabel(), FALSE, onTabChanged, mTabContainer);
-	mPrefsVoice->setDefaultBtn(default_btn);*/
+	mPrefsVoice->setDefaultBtn(default_btn);
 
 	mPrefsIM = new LLPrefsIM();
 	mTabContainer->addTabPanel(mPrefsIM->getPanel(), mPrefsIM->getPanel()->getLabel(), FALSE, onTabChanged, mTabContainer);
@@ -248,7 +246,7 @@ void LLPreferenceCore::apply()
 	mDisplayPanel->apply();
 	mAudioPanel->apply();
 	mPrefsChat->apply();
-	//mPrefsVoice->apply(); -- MC
+	mPrefsVoice->apply();
 	mPrefsIM->apply();
 	mMsgPanel->apply();
 	mSkinsPanel->apply();
@@ -268,7 +266,7 @@ void LLPreferenceCore::cancel()
 	mDisplayPanel->cancel();
 	mAudioPanel->cancel();
 	mPrefsChat->cancel();
-	//mPrefsVoice->cancel(); -- MC
+	mPrefsVoice->cancel();
 	mPrefsIM->cancel();
 	mMsgPanel->cancel();
 	mSkinsPanel->cancel();

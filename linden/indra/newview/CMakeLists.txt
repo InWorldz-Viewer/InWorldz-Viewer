@@ -373,7 +373,6 @@ set(viewer_SOURCE_FILES
     lltoolview.cpp
     lltracker.cpp
     lltrans.cpp
-    lltranslate.cpp
     lluploaddialog.cpp
     llurl.cpp
     llurldispatcher.cpp
@@ -802,7 +801,6 @@ set(viewer_HEADER_FILES
     lltoolview.h
     lltracker.h
     lltrans.h
-    lltranslate.h
     lluiconstants.h
     lluploaddialog.h
     llurl.h
@@ -1169,7 +1167,7 @@ if(ARTWORK_EXISTS)
 endif(ARTWORK_EXISTS)
 
 if (WINDOWS)
-  file(GLOB viewer_INSTALLER_FILES installers/windows/*.nsi)
+  file(GLOB viewer_INSTALLER_FILES installers/windows/*.iss)
 
   source_group("Installer Files" FILES ${viewer_INSTALLER_FILES})
 

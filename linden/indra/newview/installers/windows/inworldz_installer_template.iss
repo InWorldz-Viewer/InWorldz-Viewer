@@ -5,6 +5,9 @@
 ; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 
+; IW stable AppId:   {DC6CCE02-BC61-43B1-B4CA-292C6BCCCB34}
+; IW beta AppId:     {EC2610A3-E3E6-45CA-9236-E777F7C5785C}
+
 ; These will change
 AppId={{DC6CCE02-BC61-43B1-B4CA-292C6BCCCB34}
 AppName=%%APPNAME%%
@@ -17,7 +20,7 @@ VersionInfoVersion=%%VERSION%%
 VersionInfoTextVersion=%%VERSION%%
 VersionInfoProductVersion=%%VERSION%%
 AppVersion=%%VERSION%%
-VersionInfoCopyright=2011
+VersionInfoCopyright=2012
 
 ; These won't change
 VersionInfoCompany=InWorldz, LLC
@@ -44,7 +47,7 @@ Name: english; MessagesFile: compiler:Default.isl
 
 [Tasks]
 Name: desktopicon; Description: {cm:CreateDesktopIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: checkedonce
-Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: checkedonce
+Name: quicklaunchicon; Description: {cm:CreateQuickLaunchIcon}; GroupDescription: {cm:AdditionalIcons}; Flags: checkedonce; OnlyBelowVersion: 0,6.1
 ; TODO: use scripting for something like this on uninstall:
 ; Name: uninstallsettings; Description: Remove user settings; Flags: checkablealone; Languages: ; GroupDescription: Uninstall:
 
@@ -134,6 +137,15 @@ Source: %%PACKAGEFILES%%\SDL.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\xvidcore.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\z.dll; DestDir: {app}; Flags: ignoreversion
 
+; Voice files
+Source: %%PACKAGEFILES%%\ortp.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\iwvoice.exe; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\vivoxoal.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\vivoxplatform.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\vivoxsdk.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\zlib1.dll; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\libsndfile-1.dll; DestDir: {app}; Flags: ignoreversion
+
 ; VC++ 2005 SP1 x86, VC++ 2008 SP1 x86, and VC++ 2010 SP1 x86 redist
 Source: ..\..\..\..\newview\installers\windows\vcredist_x86_VS2005_SP1_MFC_SEC.exe; DestDir: {app}\redist; DestName: vcredist_x86_VS2005_SP1_MFC_SEC.exe
 ;Source: ..\..\..\..\newview\installers\windows\vcredist_x86_VS2008_SP1_ATL_SEC.exe; DestDir: {app}\redist; DestName: vcredist_x86_VS2008_SP1_ATL_SEC.exe
@@ -155,7 +167,7 @@ Source: ..\..\..\..\newview\installers\windows\vcredist_x86_VS2010_SP1.exe; Dest
 Root: HKCR; Subkey: inworldz; ValueType: string; Flags: uninsdeletekey deletekey; ValueName: (default); ValueData: URL:InWorldz
 Root: HKCR; Subkey: inworldz; ValueType: string; Flags: uninsdeletekey deletekey; ValueName: URL Protocol
 Root: HKCR; Subkey: inworldz\DefaultIcon; Flags: uninsdeletekey deletekey; ValueType: string; ValueData: {app}\inworldz.exe
-Root: HKCR; Subkey: inworldz\shell\open\command; ValueType: expandsz; Flags: uninsdeletekey deletekey; ValueData: "{app}\inworldz.exe -url ""%1"""; Languages:
+Root: HKCR; Subkey: inworldz\shell\open\command; ValueType: expandsz; Flags: uninsdeletekey deletekey; ValueData: "{app}\inworldz.exe -url ""%1"""; Languages: 
 ; Root: HKCU; Subkey: Environment; ValueType: string; ValueName: GST_PLUGIN_PATH; Flags: deletevalue uninsdeletevalue; ValueData: {app}\lib
 ; Root: HKCU; Subkey: Environment; ValueType: expandsz; ValueName: PATH; ValueData: {app}
 
@@ -163,24 +175,24 @@ Root: HKCR; Subkey: inworldz\shell\open\command; ValueType: expandsz; Flags: uni
 Name: {group}\{cm:UninstallProgram,InWorldz}; Filename: {uninstallexe}
 Name: {commondesktop}\InWorldz; Filename: {app}\inworldz.exe; Tasks: desktopicon; WorkingDir: {app}; IconIndex: 0
 Name: {userappdata}\Microsoft\Internet Explorer\Quick Launch\InWorldz; Filename: {app}\inworldz.exe; Tasks: quicklaunchicon; WorkingDir: {app}
-Name: {group}\InWorldz; Filename: {app}\inworldz.exe; WorkingDir: {app}; Comment: inworldz; IconIndex: 0;
+Name: {group}\InWorldz; Filename: {app}\inworldz.exe; WorkingDir: {app}; Comment: inworldz; IconIndex: 0
 
 [Run]
-; Install redistributables. 
+; Install redistributables.
 ;
-;     !!!!BEWARE!!!! 
+;     !!!!BEWARE!!!!
 ;
 ; Command line parameters and filenames WILL change with each version. Blame Microsoft.
 
 ; Always use /q for VS2005 rather than something quieter such as Parameters: "/q:a c:""msiexec /i vcredist.msi /qn"" ". The redist will fail sometimes if you do otherwise.
-Filename: {app}\redist\vcredist_x86_VS2005_SP1_MFC_SEC.exe; Parameters: "/q"; Check: Needs2005Redist; Flags: runhidden
+Filename: {app}\redist\vcredist_x86_VS2005_SP1_MFC_SEC.exe; Parameters: /q; Check: Needs2005Redist; Flags: runhidden
 ;Filename: {app}\redist\vcredist_x86_VS2008_SP1_ATL_SEC.exe; Parameters: "/q"; Check: Needs2008Redist; Flags: runhidden
-Filename: {app}\redist\vcredist_x86_VS2010_SP1.exe; Parameters: "/q /norestart"; Check: Needs2010Redist; Flags: runhidden
+Filename: {app}\redist\vcredist_x86_VS2010_SP1.exe; Parameters: /q /norestart; Check: Needs2010Redist; Flags: runhidden
 Filename: {app}\inworldz.exe; WorkingDir: {app}; Flags: nowait postinstall
 
 [UninstallDelete]
-Name: {userappdata}\InWorldz\user_settings\password.dat; Type: files; Languages:
-Name: {userappdata}\InWorldz\user_settings\settings.xml; Type: files; Languages:
+Name: {userappdata}\InWorldz\user_settings\password.dat; Type: files; Languages: 
+Name: {userappdata}\InWorldz\user_settings\settings.xml; Type: files; Languages: 
 ; 1.1 and lower cache location:
 Name: {userappdata}\InWorldz\cache; Type: filesandordirs
 ; 1.2 and higher cache location:
@@ -192,99 +204,99 @@ Name: C:\Documents and Settings\{username}\.gstreamer-0.10; Type: filesandordirs
 
 [InstallDelete]
 ; Name: {app}\*.dll; Type: files; Tasks: ; Languages:
-Name: {app}\licenses.txt; Type: files; Tasks: ; Languages:
+Name: {app}\licenses.txt; Type: files; Tasks: ; Languages: 
 ; ALWAYS delete the plugins! Beware if you don't
 Name: {app}\lib\gstreamer-plugins\*; Type: filesandordirs; Tasks: ; Languages: 
 ; Name: {app}\skins\default\xui\*; Type: filesandordirs; Tasks: ; Languages:
 ; Old xui skin files can cause bugs, always kill them
-Name: {app}\skins\silver\xui\en-us\*; Type: filesandordirs; Tasks: ; Languages:
-Name: {app}\app_settings\mozilla; Type: filesandordirs; Tasks: ; Languages:
-Name: {app}\app_settings\mozilla_debug; Type: filesandordirs; Tasks: ; Languages:
-Name: {app}\app_settings\viewerversion.xml; Type: filesandordirs; Tasks: ; Languages:
+Name: {app}\skins\silver\xui\en-us\*; Type: filesandordirs; Tasks: ; Languages: 
+Name: {app}\app_settings\mozilla; Type: filesandordirs; Tasks: ; Languages: 
+Name: {app}\app_settings\mozilla_debug; Type: filesandordirs; Tasks: ; Languages: 
+Name: {app}\app_settings\viewerversion.xml; Type: filesandordirs; Tasks: ; Languages: 
 Name: C:\Documents and Settings\{username}\.gstreamer-0.10\*; Type: filesandordirs
 Name: C:\Users\{username}\.gstreamer-0.10\*; Type: filesandordirs
 ; Breaks the browser if installing on top of 1.1:
-Name: {app}\gksvggdiplus.dll; Type: files; Tasks: ; Languages:
+Name: {app}\gksvggdiplus.dll; Type: files; Tasks: ; Languages: 
 ; Breaks inworld audio if it's from an old version with a different GUID
-Name: {app}\alut.dll; Type: files; Tasks: ; Languages:
+Name: {app}\alut.dll; Type: files; Tasks: ; Languages: 
 
 ; Old plugin files we want to kill:
-Name: {app}\charset.dll; Type: files; Tasks: ; Languages:
-Name: {app}\freebl3.dll; Type: files; Tasks: ; Languages:
-Name: {app}\glew32.dll; Type: files; Tasks: ; Languages:
-Name: {app}\iconv.dll; Type: files; Tasks: ; Languages:
-Name: {app}\intl.dll; Type: files; Tasks: ; Languages:
-Name: {app}\InWorldzViewer.exe; Type: files; Tasks: ; Languages:
-Name: {app}\js3250.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libcairo-2.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libfaad-2.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgcrypt-11.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgio-2.0-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libglib-2.0-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgmodule-2.0-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgnutls-26.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgobject-2.0-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgpg-error-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstapp.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstaudio.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstaudio-0.10.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstbase-0.10.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstcdda.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstcontroller-0.10.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstdataprotocol-0.10.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstdshow.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstfft.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstinterfaces.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstnet-0.10.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstnetbuffer.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstpbutils.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstreamer-0.10.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstriff.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstrtp.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstrtsp.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstsdp.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgsttag.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgstvideo.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libgthread-2.0-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libjpeg.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libmp3lame-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libneon-27.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libogg-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\liboil-0.3-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libopenjpeg-2.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libpng12-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libschroedinger-1.0-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libspeex-1.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libtheora-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libvorbis-0.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libvorbisenc-2.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libxml2-2.dll; Type: files; Tasks: ; Languages:
-Name: {app}\libxml2.dll; Type: files; Tasks: ; Languages:
-Name: {app}\nspr4.dll; Type: files; Tasks: ; Languages:
-Name: {app}\nss3.dll; Type: files; Tasks: ; Languages:
-Name: {app}\nssckbi.dll; Type: files; Tasks: ; Languages:
-Name: {app}\plc4.dll; Type: files; Tasks: ; Languages:
-Name: {app}\plds4.dll; Type: files; Tasks: ; Languages:
-Name: {app}\smime3.dll; Type: files; Tasks: ; Languages:
-Name: {app}\softokn3.dll; Type: files; Tasks: ; Languages:
-Name: {app}\ssl3.dll; Type: files; Tasks: ; Languages:
-Name: {app}\xpcom.dll; Type: files; Tasks: ; Languages:
-Name: {app}\xul.dll; Type: files; Tasks: ; Languages:
-Name: {app}\xvidcore.dll; Type: files; Tasks: ; Languages:
-Name: {app}\zlib1.dll; Type: files; Tasks: ; Languages:
+Name: {app}\charset.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\freebl3.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\glew32.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\iconv.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\intl.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\InWorldzViewer.exe; Type: files; Tasks: ; Languages: 
+Name: {app}\js3250.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libcairo-2.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libfaad-2.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgcrypt-11.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgio-2.0-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libglib-2.0-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgmodule-2.0-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgnutls-26.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgobject-2.0-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgpg-error-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstapp.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstaudio.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstaudio-0.10.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstbase-0.10.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstcdda.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstcontroller-0.10.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstdataprotocol-0.10.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstdshow.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstfft.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstinterfaces.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstnet-0.10.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstnetbuffer.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstpbutils.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstreamer-0.10.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstriff.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstrtp.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstrtsp.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstsdp.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgsttag.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgstvideo.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libgthread-2.0-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libjpeg.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libmp3lame-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libneon-27.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libogg-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\liboil-0.3-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libopenjpeg-2.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libpng12-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libschroedinger-1.0-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libspeex-1.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libtheora-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libvorbis-0.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libvorbisenc-2.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libxml2-2.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\libxml2.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\nspr4.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\nss3.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\nssckbi.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\plc4.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\plds4.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\smime3.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\softokn3.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\ssl3.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\xpcom.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\xul.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\xvidcore.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\zlib1.dll; Type: files; Tasks: ; Languages: 
 
 ; We don't distribute the CRT like this anymore; murder death kill
-Name: {app}\SLPlugin.exe.config; Type: files; Tasks: ; Languages:
-Name: {app}\Microsoft.VC80.CRT.manifest; Type: files; Tasks: ; Languages:
-Name: {app}\msvcp80.dll; Type: files; Tasks: ; Languages:
-Name: {app}\msvcr80.dll; Type: files; Tasks: ; Languages:
-Name: {app}\msvcr71.dll; Type: files; Tasks: ; Languages:
-Name: {app}\inworldz.exe.config; Type: files; Tasks: ; Languages:
-Name: {app}\kdu_v64R.dll.config; Type: files; Tasks: ; Languages:
+Name: {app}\SLPlugin.exe.config; Type: files; Tasks: ; Languages: 
+Name: {app}\Microsoft.VC80.CRT.manifest; Type: files; Tasks: ; Languages: 
+Name: {app}\msvcp80.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\msvcr80.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\msvcr71.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\inworldz.exe.config; Type: files; Tasks: ; Languages: 
+Name: {app}\kdu_v64R.dll.config; Type: files; Tasks: ; Languages: 
 
 
 [Code]
-// [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x86] 
+// [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\VisualStudio\10.0\VC\VCRedist\x86]
 //   Installed = 1 (REG_DWORD)
 function IsVS2010RedistInstalled(): Boolean;
 var
@@ -323,14 +335,14 @@ const
   VS2005_X86 =              '{A49F249F-0C91-497F-86DF-B2585E8E76B7}';    // http://www.microsoft.com/downloads/details.aspx?familyid=32BC1BEE-A3F9-4C13-9C99-220B62A191EE
   VS2005_SP1_X86 =          '{7299052B-02A4-4627-81F2-1818DA5D550D}';    // 8.0.50727.762: http://www.microsoft.com/downloads/details.aspx?FamilyID=200B2FD9-AE1A-4A14-984D-389C36F85647
   VS2005_SP1_X86_ATL_SEC =  '{837B34E3-7C30-493C-8F6A-2B0F04E2912C}';    // 8.0.50727.4053: http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=14431
-  VS2005_SP1_X86_MFC_SEC =  '{710f4c1c-cc18-4c49-8cbf-51240c89a1a2}';    // 8.0.50727.6195: http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=26347     
-  
+  VS2005_SP1_X86_MFC_SEC =  '{710f4c1c-cc18-4c49-8cbf-51240c89a1a2}';    // 8.0.50727.6195: http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=26347
+
   VS2008_X86 =              '{FF66E9F6-83E7-3A3E-AF14-8DE9A809A6A4}';    // http://www.microsoft.com/downloads/details.aspx?FamilyID=9b2da534-3e03-4391-8a4d-074b9f2bc1bf
   VS2008_SP1_X86 =          '{9A25302D-30C0-39D9-BD6F-21E6EC160475}';    // 9.0.30729.17: http://www.microsoft.com/downloads/details.aspx?familyid=A5C84275-3B97-4AB7-A40D-3802B2AF5FC2
   VS2008_SP1_X86_ATL_SEC =  '{1F1C2DFC-2D24-3E06-BCB8-725134ADF989}';    // 9.0.30729.4148: http://www.microsoft.com/downloads/details.aspx?familyid=2051A0C1-C9B5-4B0A-A8F5-770A549FD78C
   // These updates currently don't have redist links:
   // 9.0.30729.5026:
-  // 9.0.30729.5570: 
+  // 9.0.30729.5570:
   // 9.0.30729.6161: http://support.microsoft.com/kb/2538243
 
   INSTALLSTATE_INVALIDARG	= -2;	  // An invalid parameter was passed to the function

@@ -353,13 +353,15 @@ class WindowsManifest(ViewerManifest):
         #self.path(src="%s/inworldz-bin.exe.config" % self.args['configuration'], dst=self.final_exe() + ".config")
 
         # Vivox runtimes
-        #if self.prefix(src="vivox-runtime/i686-win32", dst=""):
-        #    self.path("SLVoice.exe")
-        #    self.path("alut.dll")
-        #    self.path("vivoxsdk.dll")
-        #    self.path("ortp.dll")
-        #    self.path("wrap_oal.dll")
-        #    self.end_prefix()
+        if self.prefix(src="vivox-runtime/i686-win32", dst=""):
+            self.path("iwvoice.exe")
+            self.path("libsndfile-1.dll")
+            self.path("ortp.dll")
+            self.path("vivoxoal.dll")
+            self.path("vivoxplatform.dll")
+            self.path("vivoxsdk.dll")
+            self.path("zlib1.dll")
+            self.end_prefix()
 
         # Gstreamer plugins
         if self.prefix(src="lib/gstreamer-plugins", dst=""):
@@ -525,12 +527,13 @@ class DarwinManifest(ViewerManifest):
                 self.path("uk.lproj")
                 self.path("zh-Hans.lproj")
 
-                # SLVoice and vivox lols
-                #self.path("vivox-runtime/universal-darwin/libalut.dylib", "libalut.dylib")
-                #self.path("vivox-runtime/universal-darwin/libopenal.dylib", "libopenal.dylib")
-                #self.path("vivox-runtime/universal-darwin/libortp.dylib", "libortp.dylib")
-                #self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxsdk.dylib")
-                #self.path("vivox-runtime/universal-darwin/SLVoice", "SLVoice")
+                # iwvoice and vivox lols
+                self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libsndfile.dylib")
+                self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxoal.dylib")
+                self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxplatform.dylib")
+                self.path("vivox-runtime/universal-darwin/libortp.dylib", "libortp.dylib")
+                self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxsdk.dylib")
+                self.path("vivox-runtime/universal-darwin/iwvoice", "iwvoice")
 
                 libdir = "../../libraries/universal-darwin/lib_release"
                 dylibs = {}
@@ -714,7 +717,7 @@ class LinuxManifest(ViewerManifest):
         self.path("res/"+self.icon_name(),self.icon_name())
         if self.prefix("linux_tools", dst=""):
             self.path("client-readme.txt","README-linux.txt")
-            #self.path("client-readme-voice.txt","README-linux-voice.txt")
+            self.path("client-readme-voice.txt","README-linux-voice.txt")
             self.path("client-readme-joystick.txt","README-linux-joystick.txt")
             self.path("wrapper.sh",self.wrapper_name())
             self.path("handle_inworldzprotocol.sh")
@@ -841,13 +844,13 @@ class Linux_i686Manifest(LinuxManifest):
             self.end_prefix("lib")
 
             # Vivox runtimes
-            #if self.prefix(src="vivox-runtime/i686-linux", dst="bin"):
-            #        self.path("SLVoice")
-            #        self.end_prefix()
-            #if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
-            #        self.path("libortp.so")
-            #        self.path("libvivoxsdk.so")
-            #        self.end_prefix("lib")
+            if self.prefix(src="vivox-runtime/i686-linux", dst="bin"):
+                    self.path("iwvoice")
+                    self.end_prefix()
+            if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
+                    self.path("libortp.so")
+                    self.path("libvivoxsdk.so")
+                    self.end_prefix("lib")
 
 class Linux_x86_64Manifest(LinuxManifest):
     def construct(self):

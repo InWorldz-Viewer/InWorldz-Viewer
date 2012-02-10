@@ -93,8 +93,8 @@ void* LLFloaterMyFriends::createGroupsPanel(void* data)
 static std::string sTitle = "";
 static int sIMUnreadCount = 0;
 
-LLFloaterChatterBox::LLFloaterChatterBox(const LLSD& seed) //:
-	//mActiveVoiceFloater(NULL) -- MC
+LLFloaterChatterBox::LLFloaterChatterBox(const LLSD& seed) :
+	mActiveVoiceFloater(NULL)
 {
 	mAutoResize = FALSE;
 
@@ -167,43 +167,41 @@ void LLFloaterChatterBox::draw()
 	{
 		gIMMgr->clearNewIMNotification();
 	}
-
-	// -- MC
-	//LLFloater* current_active_floater = getCurrentVoiceFloater();
+	LLFloater* current_active_floater = getCurrentVoiceFloater();
 	// set icon on tab for floater currently associated with active voice channel
-	//if(mActiveVoiceFloater != current_active_floater)
-	//{
-	//	// remove image from old floater's tab
-	//	if (mActiveVoiceFloater)
-	//	{
-	//		mTabContainer->setTabImage(mActiveVoiceFloater, "");
-	//	}
-	//}
+	if(mActiveVoiceFloater != current_active_floater)
+	{
+		// remove image from old floater's tab
+		if (mActiveVoiceFloater)
+		{
+			mTabContainer->setTabImage(mActiveVoiceFloater, "");
+		}
+	}
 
-	//// update image on current active tab
-	//if (current_active_floater)
-	//{
-	//	LLColor4 icon_color = LLColor4::white;
-	//	LLVoiceChannel* channelp = LLVoiceChannel::getCurrentVoiceChannel();
-	//	if (channelp)
-	//	{
-	//		if (channelp->isActive())
-	//		{
-	//			icon_color = LLColor4::green;
-	//		}
-	//		else if (channelp->getState() == LLVoiceChannel::STATE_ERROR)
-	//		{
-	//			icon_color = LLColor4::red;
-	//		}
-	//		else // active, but not connected
-	//		{
-	//			icon_color = LLColor4::yellow;
-	//		}
-	//	}
-	//	mTabContainer->setTabImage(current_active_floater, "active_voice_tab.tga", icon_color);
-	//}
+	// update image on current active tab
+	if (current_active_floater)
+	{
+		LLColor4 icon_color = LLColor4::white;
+		LLVoiceChannel* channelp = LLVoiceChannel::getCurrentVoiceChannel();
+		if (channelp)
+		{
+			if (channelp->isActive())
+			{
+				icon_color = LLColor4::green;
+			}
+			else if (channelp->getState() == LLVoiceChannel::STATE_ERROR)
+			{
+				icon_color = LLColor4::red;
+			}
+			else // active, but not connected
+			{
+				icon_color = LLColor4::yellow;
+			}
+		}
+		mTabContainer->setTabImage(current_active_floater, "active_voice_tab.tga", icon_color);
+	}
 
-	//mActiveVoiceFloater = current_active_floater;
+	mActiveVoiceFloater = current_active_floater;
 
 	LLMultiFloater::draw();
 }
@@ -339,43 +337,41 @@ void LLFloaterChatterBox::addFloater(LLFloater* floaterp,
 	}
 
 	// make sure active voice icon shows up for new tab
-	// only if we're using voice -- MC
-	/*if (floaterp == mActiveVoiceFloater)
+	if (floaterp == mActiveVoiceFloater)
 	{
 		mTabContainer->setTabImage(floaterp, "active_voice_tab.tga");	
-	}*/
+	}
 }
 
-// Disable voice options in the gui. Leaving here in case InWorldz decides to get voice -- MC
 //static 
-//LLFloater* LLFloaterChatterBox::getCurrentVoiceFloater()
-//{
-//	if (!LLVoiceClient::voiceEnabled())
-//	{
-//		return NULL;
-//	}
-//	if (LLVoiceChannelProximal::getInstance() == LLVoiceChannel::getCurrentVoiceChannel())
-//	{
-//		// show near me tab if in proximal channel
-//		return LLFloaterChat::getInstance(LLSD());
-//	}
-//	else
-//	{
-//		LLFloaterChatterBox* floater = LLFloaterChatterBox::getInstance(LLSD());
-//		// iterator over all IM tabs (skip friends and near me)
-//		for (S32 i = 0; i < floater->getFloaterCount(); i++)
-//		{
-//			LLPanel* panelp = floater->mTabContainer->getPanelByIndex(i);
-//			if (panelp->getName() == "im_floater")
-//			{
-//				// only LLFloaterIMPanels are called "im_floater"
-//				LLFloaterIMPanel* im_floaterp = (LLFloaterIMPanel*)panelp;
-//				if (im_floaterp->getVoiceChannel()  == LLVoiceChannel::getCurrentVoiceChannel())
-//				{
-//					return im_floaterp;
-//				}
-//			}
-//		}
-//	}
-//	return NULL;
-//}
+LLFloater* LLFloaterChatterBox::getCurrentVoiceFloater()
+{
+	if (!LLVoiceClient::voiceEnabled())
+	{
+		return NULL;
+	}
+	if (LLVoiceChannelProximal::getInstance() == LLVoiceChannel::getCurrentVoiceChannel())
+	{
+		// show near me tab if in proximal channel
+		return LLFloaterChat::getInstance(LLSD());
+	}
+	else
+	{
+		LLFloaterChatterBox* floater = LLFloaterChatterBox::getInstance(LLSD());
+		// iterator over all IM tabs (skip friends and near me)
+		for (S32 i = 0; i < floater->getFloaterCount(); i++)
+		{
+			LLPanel* panelp = floater->mTabContainer->getPanelByIndex(i);
+			if (panelp->getName() == "im_floater")
+			{
+				// only LLFloaterIMPanels are called "im_floater"
+				LLFloaterIMPanel* im_floaterp = (LLFloaterIMPanel*)panelp;
+				if (im_floaterp->getVoiceChannel()  == LLVoiceChannel::getCurrentVoiceChannel())
+				{
+					return im_floaterp;
+				}
+			}
+		}
+	}
+	return NULL;
+}

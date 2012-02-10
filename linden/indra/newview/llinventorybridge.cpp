@@ -1914,6 +1914,10 @@ void LLFolderBridge::buildContextMenu(LLMenuGL& menu, U32 flags)
 	LLUUID trash_id = model->findCategoryUUIDForType(LLAssetType::AT_TRASH);
 	LLUUID lost_and_found_id = model->findCategoryUUIDForType(LLAssetType::AT_LOST_AND_FOUND);
 
+	// Fixes LL bug
+	mItems.clear();
+	mDisabledItems.clear();
+
 	if (lost_and_found_id == mUUID)
 	  {
 		// This is the lost+found folder.
