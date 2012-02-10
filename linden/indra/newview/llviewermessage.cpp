@@ -94,6 +94,7 @@
 #include "llhudmanager.h"
 #include "llimpanel.h"
 #include "llinventorymodel.h"
+#include "llinventorypanel.h"
 #include "llinventoryview.h"
 #include "llmenugl.h"
 #include "llmutelist.h"

@@ -35,6 +35,8 @@
 #include "llviewercontrol.h"
 #include "llcallingcard.h"
 
+#include "llinventorypanel.h" // icky, redo this too -- MC
+
 enum EInventoryIcon
 {
 	TEXTURE_ICON_NAME,

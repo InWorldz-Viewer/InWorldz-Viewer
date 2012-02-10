@@ -88,6 +88,7 @@
 #include "llhudeffectlookat.h"
 #include "llhudmanager.h"
 #include "llinventorymodel.h"
+#include "llinventorypanel.h"
 #include "llinventoryview.h"
 #include "lljoystickbutton.h"
 #include "llmenugl.h"

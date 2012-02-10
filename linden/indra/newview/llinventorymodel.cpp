@@ -45,6 +45,7 @@
 #include "llagent.h"
 #include "llfloater.h"
 #include "llfocusmgr.h"
+#include "llinventorypanel.h"
 #include "llinventoryview.h"
 #include "llviewerinventory.h"
 #include "llviewermessage.h"

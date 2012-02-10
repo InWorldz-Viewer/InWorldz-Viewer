@@ -38,7 +38,7 @@
 #include "llagent.h"
 #include "llbutton.h"
 #include "llfocusmgr.h"
-#include "llinventoryview.h"
+#include "llinventorypanel.h"
 #include "llinventorymodel.h"
 #include "lllineeditor.h"
 #include "llscrolllistctrl.h"

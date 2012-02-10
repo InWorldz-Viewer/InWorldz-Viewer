@@ -156,6 +156,7 @@
 #include "llimagej2c.h"
 #include "llimagetga.h"
 #include "llinventorymodel.h"
+#include "llinventorypanel.h"
 #include "llinventoryview.h"
 #include "llkeyboard.h"
 #include "llpanellogin.h"
