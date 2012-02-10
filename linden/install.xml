@@ -228,9 +228,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>53e5ab7affff7121a5af2f82b4d58b54</string>
+            <string>d391c33898a5dbc7e7537bf0d9cda36e</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/curl-7.19.6-windows-20091016.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/curl-7.18.1-windows-20080723.tar.bz2</uri>
           </map>
         </map>
       </map>
