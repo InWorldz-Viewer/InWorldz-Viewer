@@ -40,8 +40,8 @@ elseif (LINUX)
     else (STANDALONE)
        set(WEBKIT_PLUGIN_LIBRARIES
            llqtwebkit
-#           qgif
-#           qjpeg
+           qgif
+           qjpeg
            QtWebKit
            QtOpenGL
            QtNetwork

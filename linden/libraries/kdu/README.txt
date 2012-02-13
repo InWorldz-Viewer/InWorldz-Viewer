@@ -1,3 +1,4 @@
+
 Unpack the Kakadu library source into the "source" directory, 
 then build the library. 
 
@@ -12,4 +13,8 @@ it here.
 For more on how CMake works with the iw_kdu_loader project,
 check out the implementation in "indra/cmake".
 
+<<<<<<< HEAD
 -- McCabe 
+=======
+-- McCabe 
+>>>>>>> upstream/next

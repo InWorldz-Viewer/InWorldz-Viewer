@@ -850,6 +850,9 @@ class Linux_i686Manifest(LinuxManifest):
             if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
                     self.path("libortp.so")
                     self.path("libvivoxsdk.so")
+#                    self.path("libvivoxoal.so")
+#                    self.path("libvivoxplatform.so")
+#                    self.path("libsndfile.so")
                     self.end_prefix("lib")
 
 class Linux_x86_64Manifest(LinuxManifest):
