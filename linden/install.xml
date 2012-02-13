@@ -1135,6 +1135,13 @@ anguage Infrstructure (CLI) international standard</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/vivox-inworldz-3.2.0002.10426-darwin-20120122.tar.bz2</uri>
           </map>
+          <key>linux</key>
+          <map>
+            <key>md5sum</key>
+            <string>581abada85ae249a773e90dc96f615f9</string>
+            <key>url</key>
+            <uri>https://github.com/downloads/Avian-IW/InWorldz-Viewer/iwvoice-2.1-linux-20090310.tar.bz2</uri>
+          </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
