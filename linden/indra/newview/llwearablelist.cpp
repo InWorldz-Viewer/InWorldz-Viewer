@@ -321,3 +321,49 @@ LLWearable* LLWearableList::createNewWearable( EWearableType type )
 
 	return wearable;
 }
+
+LLSD LLWearableList::getWearableParams(const LLUUID& asset_id)
+{
+	std::map< LLUUID, LLWearable* >::iterator wIt = mList.find(asset_id);
+	if (wIt != mList.end())
+	{
+		LLWearable* wearable = (*wIt).second;
+		if (wearable)
+		{
+			LLSD params;
+			for (LLWearable::param_map_t::const_iterator iter = wearable->mVisualParamMap.begin();
+				 iter != wearable->mVisualParamMap.end(); ++iter)
+			{
+				LLSD indiv_param;
+				indiv_param["param_id"] = iter->first;
+				indiv_param["param_weight"] = iter->second;
+				params.append(indiv_param);
+			}
+			return params;
+		}
+	}
+	return LLSD();
+}
+
+LLSD LLWearableList::getWearableTextures(const LLUUID& asset_id)
+{
+	std::map< LLUUID, LLWearable* >::iterator wIt = mList.find(asset_id);
+	if (wIt != mList.end())
+	{
+		LLWearable* wearable = (*wIt).second;
+		if (wearable)
+		{
+			LLSD textures;
+			for (LLWearable::te_map_t::const_iterator iter = wearable->mTEMap.begin();
+				 iter != wearable->mTEMap.end(); ++iter)
+			{
+				LLSD indiv_text;
+				indiv_text["te"] = iter->first;
+				indiv_text["image_id"] = iter->second;
+				textures.append(indiv_text);
+			}
+			return textures;
+		}
+	}
+	return LLSD();
+}

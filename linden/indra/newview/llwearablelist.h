@@ -51,6 +51,8 @@ public:
 							LLAssetType::EType asset_type,
 							void(*asset_arrived_callback)(LLWearable*, void* userdata),
 							void* userdata );
+	LLSD				getWearableParams(const LLUUID& asset_id);
+	LLSD				getWearableTextures(const LLUUID& asset_id);
 
 	LLWearable*			createWearableMatchedToInventoryItem( LLWearable* old_wearable, LLViewerInventoryItem* item );
 	LLWearable*			createCopyFromAvatar( LLWearable* old_wearable, const std::string& new_name = std::string() );

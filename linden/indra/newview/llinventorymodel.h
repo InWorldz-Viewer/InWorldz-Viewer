@@ -293,9 +293,6 @@ public:
 	// call this method to request the inventory.
 	//void requestFromServer(const LLUUID& agent_id);
 
-	// call this method on logout to save a terse representation
-	void cache(const LLUUID& parent_folder_id, const LLUUID& agent_id);
-
 	// Generates a string containing the path to the item specified by
 	// item_id.
 	void appendPath(const LLUUID& id, std::string& path);
@@ -390,21 +387,11 @@ protected:
 	// preferred type. Returns LLUUID::null if not found
  	LLUUID findCatUUID(LLAssetType::EType preferred_type);
 
-
-
 	// Given the current state of the inventory items, figure out the
 	// clone information. *FIX: This is sub-optimal, since we can
 	// insert this information snurgically, but this makes sure the
 	// implementation works before we worry about optimization.
 	//void recalculateCloneInformation();
-
-	// file import/export.
-	static bool loadFromFile(const std::string& filename,
-							 cat_array_t& categories,
-							 item_array_t& items); 
-	static bool saveToFile(const std::string& filename,
-						   const cat_array_t& categories,
-						   const item_array_t& items); 
 
 	// message handling functionality
 	//static void processUseCachedInventory(LLMessageSystem* msg, void**);
@@ -443,6 +430,7 @@ protected:
 	//inv_map_t mInventory;
 	cat_map_t mCategoryMap;
 	item_map_t mItemMap;
+	std::set<LLUUID> mIDsLoadedFromCache;
 
 	std::map<LLUUID, bool> mCategoryLock;
 	std::map<LLUUID, bool> mItemLock;
@@ -475,6 +463,8 @@ protected:
 	bool mIsAgentInvUsable;
 
 public:
+	// Access the UUIDs loaded from the inventory cache on startup. Use only as Read-Only
+	const std::set<LLUUID>* getIDsLoadedFromCache() const { return &mIDsLoadedFromCache; }
 	// Returns the UUID of the 'Animations' folder in 'My Inventory' sent from the server at startup
 	LLUUID getAnimationsFolderUUID() const		{ return mAnimationsFolderUUID; }
 	// *NOTE: DEBUG functionality

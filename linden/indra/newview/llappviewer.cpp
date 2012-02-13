@@ -49,6 +49,7 @@
 #include "llmd5.h"
 #include "llpumpio.h"
 #include "llimpanel.h"
+#include "llinventorycache.h"
 #include "llmimetypes.h"
 #include "llstartup.h"
 #include "llfocusmgr.h"
@@ -4034,10 +4035,10 @@ void LLAppViewer::disconnectViewer()
 	if (!gNoRender)
 	{
 		// save inventory if appropriate
-		gInventory.cache(gAgent.getInventoryRootID(), gAgent.getID());
+		LLInventoryCache::createCache(gAgent.getInventoryRootID(), gAgent.getID());
 		if(gInventoryLibraryRoot.notNull() && gInventoryLibraryOwner.notNull())
 		{
-			gInventory.cache(gInventoryLibraryRoot, gInventoryLibraryOwner);
+			LLInventoryCache::createCache(gInventoryLibraryRoot, gInventoryLibraryOwner);
 		}
 	}
 

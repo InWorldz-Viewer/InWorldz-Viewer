@@ -369,6 +369,8 @@ NOTE: If an image can't be found at "file_name" it'll be loaded as IMG_DEFAULT (
 	<texture name="inv_item_texture.tga"				file_name="interface/inv_item_texture.tga"	/>
 	<texture name="inv_item_underpants.tga"				file_name="interface/inv_item_underpants.tga"	/>
 	<texture name="inv_item_undershirt.tga"				file_name="interface/inv_item_undershirt.tga"	/>
+	<texture name="inv_item_alpha.tga"					file_name="interface/inv_item_alpha.tga"	/>
+	<texture name="inv_item_tattoo.tga"					file_name="interface/inv_item_tattoo.tga"	/>
 
 
 

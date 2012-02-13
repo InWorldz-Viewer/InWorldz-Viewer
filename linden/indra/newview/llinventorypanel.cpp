@@ -77,11 +77,6 @@ BOOL LLInventoryPanel::postBuild()
 	}
 	mFolders->setSortOrder(mFolders->getFilter()->getSortOrder());
 
-	if (!gInventory.isEverythingFetched())
-	{
-		gInventory.startBackgroundFetch();
-	}
-
 	return TRUE;
 }
 

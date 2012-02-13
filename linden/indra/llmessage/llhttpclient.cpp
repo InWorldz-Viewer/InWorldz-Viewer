@@ -243,7 +243,7 @@ static void request(
                 req->useProxy(false);
             }
             header << iter->first << ": " << iter->second.asString() ;
-            lldebugs << "header = " << header.str() << llendl;
+            llinfos << "header = " << header.str() << llendl;
             req->addHeader(header.str().c_str());
         }
     }

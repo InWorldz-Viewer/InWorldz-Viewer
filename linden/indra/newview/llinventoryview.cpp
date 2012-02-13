@@ -90,7 +90,6 @@ static LLRegisterWidget<LLInventoryPanel> r("inventory_panel");
 
 LLDynamicArray<LLInventoryView*> LLInventoryView::sActiveViews;
 
-//BOOL LLInventoryView::sOpenNextNewItem = FALSE;
 BOOL LLInventoryView::sWearNewClothing = FALSE;
 LLUUID LLInventoryView::sWearNewClothingTransactionID;
 
@@ -358,18 +357,6 @@ void LLInventoryViewFinder::selectAllTypes(void* user_data)
 	self->childSetValue("check_sound", TRUE);
 	self->childSetValue("check_texture", TRUE);
 	self->childSetValue("check_snapshot", TRUE);
-
-/*
-	self->mCheckCallingCard->set(TRUE);
-	self->mCheckClothing->set(TRUE);
-	self->mCheckGesture->set(TRUE);
-	self->mCheckLandmark->set(TRUE);
-	self->mCheckNotecard->set(TRUE);
-	self->mCheckObject->set(TRUE);
-	self->mCheckScript->set(TRUE);
-	self->mCheckSound->set(TRUE);
-	self->mCheckTexture->set(TRUE);
-	self->mCheckSnapshot->set(TRUE);*/
 }
 
 //static
@@ -377,20 +364,6 @@ void LLInventoryViewFinder::selectNoTypes(void* user_data)
 {
 	LLInventoryViewFinder* self = (LLInventoryViewFinder*)user_data;
 	if(!self) return;
-
-	/*
-	self->childSetValue("check_animation", FALSE);
-	self->mCheckCallingCard->set(FALSE);
-	self->mCheckClothing->set(FALSE);
-	self->mCheckGesture->set(FALSE);
-	self->mCheckLandmark->set(FALSE);
-	self->mCheckNotecard->set(FALSE);
-	self->mCheckObject->set(FALSE);
-	self->mCheckScript->set(FALSE);
-	self->mCheckSound->set(FALSE);
-	self->mCheckTexture->set(FALSE);
-	self->mCheckSnapshot->set(FALSE);*/
-
 
 	self->childSetValue("check_animation", FALSE);
 	self->childSetValue("check_calling_card", FALSE);
@@ -456,10 +429,9 @@ void LLSaveFolderState::doFolder(LLFolderViewFolder* folder)
 LLInventoryView::LLInventoryView(const std::string& name,
 								 const std::string& rect,
 								 LLInventoryModel* inventory) :
-	LLFloater(name, rect, std::string("Inventory"), RESIZE_YES,
-			  INV_MIN_WIDTH, INV_MIN_HEIGHT, DRAG_ON_TOP,
-			  MINIMIZE_NO, CLOSE_YES),
-	mActivePanel(NULL)
+	LLFloater(std::string("Inventory")),
+	mActivePanel(NULL),
+	mSavedFolderState(NULL)
 	//LLHandle<LLFloater> mFinderHandle takes care of its own initialization
 {
 	init(inventory);
@@ -471,7 +443,8 @@ LLInventoryView::LLInventoryView(const std::string& name,
 	LLFloater(name, rect, std::string("Inventory"), RESIZE_YES,
 			  INV_MIN_WIDTH, INV_MIN_HEIGHT, DRAG_ON_TOP,
 			  MINIMIZE_NO, CLOSE_YES),
-	mActivePanel(NULL)
+	mActivePanel(NULL),
+	mSavedFolderState(NULL)
 	//LLHandle<LLFloater> mFinderHandle takes care of its own initialization
 {
 	init(inventory);
@@ -491,9 +464,11 @@ void LLInventoryView::init(LLInventoryModel* inventory)
 	addBoolControl("Inventory.FoldersAlwaysByName", TRUE);
 	addBoolControl("Inventory.SystemFoldersToTop", TRUE);
 	updateSortControls();
-
-	mSavedFolderState = new LLSaveFolderState();
-	mSavedFolderState->setApply(FALSE);
+	
+	if (!mSavedFolderState)
+	{
+		mSavedFolderState = new LLSaveFolderState();
+	}
 
 	LLUICtrlFactory::getInstance()->buildFloater(this, "floater_inventory.xml", NULL);
 
@@ -562,6 +537,13 @@ void LLInventoryView::init(LLInventoryModel* inventory)
 	sActiveViews.put(this);
 
 	gInventory.addObserver(this);
+
+	mSavedFolderState->setApply(TRUE);
+
+	if (!gInventory.isEverythingFetched())
+	{
+		gInventory.startBackgroundFetch();
+	}
 }
 
 BOOL LLInventoryView::postBuild()

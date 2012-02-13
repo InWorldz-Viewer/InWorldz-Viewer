@@ -141,6 +141,23 @@ LLWearable::LLWearable(const LLAssetID& asset_id) :
 	mTransactionID.setNull();
 }
 
+LLWearable::LLWearable(const LLUUID& asset_id, 
+					   EWearableType wearable_type,
+					   const std::string& name, 
+					   const std::string& desc,
+					   const LLPermissions& permissions,
+					   const LLSaleInfo& sale_info) :
+	mDefinitionVersion( LLWearable::sCurrentDefinitionVersion ),
+	mAssetID(asset_id),
+	mType(wearable_type),
+	mName(name),
+	mDescription(desc),
+	mPermissions(permissions),
+	mSaleInfo(sale_info)
+{
+	mTransactionID.setNull();
+}
+
 LLWearable::~LLWearable()
 {
 }

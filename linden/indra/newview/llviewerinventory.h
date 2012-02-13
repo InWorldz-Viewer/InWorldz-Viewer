@@ -35,6 +35,7 @@
 
 #include "llinventory.h"
 #include "llframetimer.h"
+#include "llviewerinventory.h"
 #include "llwearable.h"
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
