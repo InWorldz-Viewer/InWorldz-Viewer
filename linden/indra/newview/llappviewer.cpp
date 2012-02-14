@@ -2906,7 +2906,7 @@ bool LLAppViewer::initCache()
 	LLAppViewer::getTextureCache()->setReadOnly(read_only);
 
 	BOOL texture_cache_mismatch = FALSE;
-	static const S32 cache_version = 6;
+	static const S32 cache_version = 7;
 	if (gSavedSettings.getS32("LocalCacheVersion") != cache_version)
 	{
 		texture_cache_mismatch = TRUE;
