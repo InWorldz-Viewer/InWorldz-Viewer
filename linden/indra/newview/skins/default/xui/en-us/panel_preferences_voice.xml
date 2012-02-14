@@ -86,6 +86,9 @@
 	<button bottom_delta="-40" follows="left|top" font="SansSerif" height="22"
 	     label="Device Settings" left="28" mouse_opaque="true"
 	     name="device_settings_btn" width="155" />
+  <button bottom_delta="0" follows="left|top" font="SansSerifSmall" halign="center" height="20"
+       	label="Reconnect to Voice" left_delta="160" mouse_opaque="true"
+       	name="reset_voice" width="160" />
 	<text_editor type="string" length="1" allow_html="false" bg_readonly_color="0 0 0 0" bottom_delta="-64"
 	     embedded_items="false" enabled="false" follows="left|top"
 	     font="SansSerifSmall" height="70" hide_border="true" hide_scrollbar="true"
