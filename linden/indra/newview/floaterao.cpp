@@ -1136,12 +1136,12 @@ BOOL LLFloaterAO::changeStand()
 
 			if (gSavedSettings.getBOOL("AOStandRandomize"))
 			{
-				sStandIterator = ll_rand(mAOStands.size()-1);
+				sStandIterator = ll_rand(mAOStands.size());
 			}
 
 			if (sStandIterator < 0)
 			{
-				sStandIterator = S32( mAOStands.size()-sStandIterator);
+				sStandIterator = S32( mAOStands.size()-1);
 			}
 			
 			if (sStandIterator > S32( mAOStands.size()-1))
@@ -1225,7 +1225,8 @@ BOOL LLFloaterAO::stopMotion(const LLUUID& id, BOOL stop_immediate, BOOL stand)
 	}
 	else
 	{
-		if (id.notNull() && gSavedSettings.getBOOL("AOEnabled"))
+//		if (id.notNull() && gSavedSettings.getBOOL("AOEnabled"))
+		if (getAnimID(id).notNull() && gSavedSettings.getBOOL("AOEnabled"))
 		{
 //			llinfos << "  state " << getAnimState() << "/" << getStateFromAnimID(id) << "(now 0)  stop anim " << id << " overriding with " << getAnimID(id) << llendl;
 			bool change_stand = false;
@@ -1238,8 +1239,8 @@ BOOL LLFloaterAO::stopMotion(const LLUUID& id, BOOL stop_immediate, BOOL stand)
 				setAnimState(STATE_AGENT_IDLE);
 			}
 			// startMotion(getCurrentStandId(), 0, TRUE);
-			gAgent.sendAnimationRequest(getAnimID(id), ANIM_REQUEST_STOP);
 			if (change_stand) changeStand(); 
+			gAgent.sendAnimationRequest(getAnimID(id), ANIM_REQUEST_STOP);
 
 			return TRUE;
 		}
