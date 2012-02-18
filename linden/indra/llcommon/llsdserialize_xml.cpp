@@ -358,7 +358,9 @@ static unsigned get_till_eol(std::istream& input, char *buf, unsigned bufsize)
 		char c = input.get();
 		buf[count++] = c;
 		if (is_eol(c))
+		{
 			break;
+		}
 	}
 	return count;
 }
@@ -391,6 +393,36 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 
 		if (status == XML_STATUS_ERROR)
 		{
+			std::string error_string(XML_ErrorString(XML_GetErrorCode( mParser )));
+			if (input.gcount() == 0)
+			{
+				// nothing to do -- MC
+				data = LLSD();
+				return LLSDParser::PARSE_FAILURE;
+			}
+			else if (error_string != "parsing aborted") // end of input
+			{
+				S32 line_number = XML_GetCurrentLineNumber( mParser );
+				// This parses LLCurl::Responder::completedRaw always, even
+				// when not using XML. We have to do this little ugliness 
+				// in order to make this error message meaningful.
+				// See Expat's xmlparse.c for the full list of errors -- MC
+				if (error_string == "not well-formed (invalid token)")
+				{
+					std::string text((char*)buffer);
+					if ((text.find('>') != std::string::npos) ||
+						(text.find('<') != std::string::npos))
+					{
+						llwarns << "LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
+								<< error_string << llendl;
+					}
+					break;
+				}
+				
+				llinfos << "Possible LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
+						<< error_string << llendl;
+			}
+			// Always break here -- MC
 			break;
 		}
 	}
@@ -408,14 +440,14 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 		{
 			((char*) buffer)[count ? count - 1 : 0] = '\0';
 		}
-		llinfos << "LLSDXMLParser::Impl::parse: XML_STATUS_ERROR parsing:" << (char*) buffer << llendl;
+
 		data = LLSD();
 		return LLSDParser::PARSE_FAILURE;
 	}
 
 	clear_eol(input);
 	data = mResult;
-	return mParseCount;
+	return mParseCount; // why return mParseCount?! -- MC
 }
 
 
@@ -486,7 +518,13 @@ S32 LLSDXMLParser::Impl::parseLines(std::istream& input, LLSD& data)
 	if (status == XML_STATUS_ERROR  
 		&& !mGracefullStop)
 	{
-		llinfos << "LLSDXMLParser::Impl::parseLines: XML_STATUS_ERROR" << llendl;
+		std::string error_string( XML_ErrorString(XML_GetErrorCode( mParser )));
+		if ("parsing aborted" != error_string )//end of input
+		{
+			S32 line_number = XML_GetCurrentLineNumber( mParser );
+			llwarns << "LLSDXMLParser::Impl::parseLines failed.  Line " << line_number << ": " 
+				<< error_string << llendl;
+		}
 		return LLSDParser::PARSE_FAILURE;
 	}
 
@@ -552,7 +590,9 @@ void LLSDXMLParser::Impl::parsePart(const char* buf, int len)
 		XML_Status status = XML_Parse(mParser, buf, len, false);
 		if (status == XML_STATUS_ERROR)
 		{
-			llinfos << "Unexpected XML parsing error at start" << llendl;
+			std::string error_string( XML_ErrorString(XML_GetErrorCode( mParser )) );
+
+			llwarns << "Unexpected XML parsing error at start: " << error_string << llendl;
 		}
 	}
 }
