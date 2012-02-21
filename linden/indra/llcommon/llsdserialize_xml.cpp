@@ -394,13 +394,7 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 		if (status == XML_STATUS_ERROR)
 		{
 			std::string error_string(XML_ErrorString(XML_GetErrorCode( mParser )));
-			if (input.gcount() == 0)
-			{
-				// nothing to do -- MC
-				data = LLSD();
-				return LLSDParser::PARSE_FAILURE;
-			}
-			else if (error_string != "parsing aborted") // end of input
+			if (error_string != "parsing aborted") // end of input
 			{
 				S32 line_number = XML_GetCurrentLineNumber( mParser );
 				// This parses LLCurl::Responder::completedRaw always, even
