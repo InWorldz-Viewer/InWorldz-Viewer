@@ -1502,6 +1502,20 @@ if (WINDOWS)
       COMMENT "Copying llcommon.dll to the runtime folder."
       )
 
+  if (IW_KDU)
+	  get_target_property(BUILT_IW_KDU_LOADER iw_kdu_loader LOCATION)
+	  add_custom_command(
+		  TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+		  COMMAND ${CMAKE_COMMAND}
+		  ARGS
+		  -E
+		  copy_if_different
+		  ${BUILT_IW_KDU_LOADER}
+		  ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+		  COMMENT "Copying iw_kdu_loader.dll to the runtime folder."
+		  )
+  endif (IW_KDU)
+  
   get_target_property(BUILT_SLPLUGIN SLPlugin LOCATION)
   add_custom_command(
       TARGET ${VIEWER_BINARY_NAME} POST_BUILD
