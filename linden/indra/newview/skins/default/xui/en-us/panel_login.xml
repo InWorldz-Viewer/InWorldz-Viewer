@@ -76,11 +76,11 @@
 	     width="135">
     Start location:
   </text>
-  <combo_box allow_text_entry="true" bottom_delta="-20" follows="left|bottom" height="18"
-	     left_delta="0" max_chars="20" mouse_opaque="true"
+  <combo_box allow_text_entry="false" bottom_delta="-20" follows="left|bottom" height="18"
+	     left_delta="0" max_chars="255" mouse_opaque="true"
 	     name="server_combo" width="135" />
   <combo_box allow_text_entry="true" bottom_delta="-20" follows="left|bottom" height="18"
-	     left_delta="0" max_chars="128" mouse_opaque="true"
+	     left_delta="0" max_chars="255" mouse_opaque="true"
 	     name="start_location_combo" width="135">
     <combo_item name="MyHome" value="My Home">
       My Home
