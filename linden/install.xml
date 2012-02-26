@@ -1036,9 +1036,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>8ded552db94e06574db77a83ff672420</string>
+            <string>DF56DBFB9A056FABBC4BD1B72E7AB1F4</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/openal-soft-1.13-windows-20110624.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/openal-soft-1.13-windows-20120222.tar.bz2</uri>
           </map>
         </map>
       </map>
