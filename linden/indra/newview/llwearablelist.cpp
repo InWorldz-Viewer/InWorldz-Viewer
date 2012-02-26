@@ -181,8 +181,8 @@ void LLWearableList::processGetAssetReply( const char* filename, const LLAssetID
 	if (wearable) // success
 	{
 		gWearableList.mList[ uuid ] = wearable;
-		LL_DEBUGS("Wearable") << "processGetAssetReply()" << LL_ENDL;
-		LL_DEBUGS("Wearable") << wearable << LL_ENDL;
+		LL_DEBUGS("Wearables") << "processGetAssetReply()" << LL_ENDL;
+		LL_DEBUGS("Wearables") << wearable << LL_ENDL;
 	}
 	else
 	{
