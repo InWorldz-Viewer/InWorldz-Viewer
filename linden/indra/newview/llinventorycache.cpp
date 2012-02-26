@@ -162,7 +162,7 @@ bool LLInventoryCache::addToCache(const std::string& filename,
 		return false;
 	}
 
-	LL_INFOS("Invnetory") << "Saving inventory cache: " << filename << LL_ENDL;
+	LL_INFOS("Inventory") << "Saving inventory cache: " << filename << LL_ENDL;
 
 	S32 count = categories.count();
 	if (count <= 0)
@@ -218,7 +218,7 @@ bool LLInventoryCache::addToCache(const std::string& filename,
 
 	if (addToCache(filename, inv_to_cache))
 	{
-		LL_DEBUGS("Inventory") << "Cached " << category_total << " categories and " << count_total << " inventory items" << LL_ENDL;
+		LL_INFOS("Inventory") << "Cached " << category_total << " categories and " << count_total << " inventory items" << LL_ENDL;
 	}
 
 	return true;
@@ -262,7 +262,7 @@ bool LLInventoryCache::loadFromCache(const std::string& filename,
 	file.open(filename.c_str());
     if (file.is_open())
     {
-		LL_INFOS("Inventory") << "Loading " << filename << llendl;
+		LL_DEBUGS("Inventory") << "Loading " << filename << llendl;
         LLSDSerialize::fromXML(data, file);
     }
 	file.close();
@@ -294,7 +294,7 @@ bool LLInventoryCache::loadFromCache(const std::string& filename,
 				// caching.
 				if (inv_item->getUUID().isNull())
 				{
-					llwarns << "Ignoring inventory with null item id" << llendl;
+					LL_DEBUGS("Inventory") << "Ignoring inventory with null item id" << LL_ENDL;
 					inv_item = NULL;						
 				}
 				else
@@ -305,6 +305,7 @@ bool LLInventoryCache::loadFromCache(const std::string& filename,
 			}
 			else
 			{
+				// (Will fail for bodyparts and clothing 'til wearables get cached properly)
 				llwarns << "inv_item importing from cache failed. Ignoring invalid inventory item " << (*llsd_it)<< llendl;
 				inv_item = NULL;
 			}
@@ -316,9 +317,9 @@ bool LLInventoryCache::loadFromCache(const std::string& filename,
 		}
 	}
 
-	LL_DEBUGS("Inventory") << "Inventory loaded  " << cat_count_total 
+	LL_INFOS("Inventory") << "Inventory loaded  " << cat_count_total 
 							<< " categories and " << item_count_total 
-							<< " items from file" << LL_ENDL;
+							<< " items from "  << filename << LL_ENDL;
 	return true;
 }
 
@@ -340,15 +341,18 @@ LLPointer<LLViewerInventoryCategory> LLInventoryCache::createCatFromCache(const 
 	S32 version						= (category.has("version"))		? (category["version"].asInteger())	: (LLViewerInventoryCategory::VERSION_UNKNOWN);
 
 	// create the category if we can
-	if (valid_id(id) &&
-		valid_string(name) &&
-		valid_id(owner_id))
+	if (valid_id(id)/* &&
+		valid_id(owner_id)*/)
 	{
 		// note: null parent_id means folders like "My Inventory"
 		LLStringUtil::replaceNonstandardASCII(name, ' ');
         LLStringUtil::replaceChar(name, '|', ' ');
 		
-		LLPointer<LLViewerInventoryCategory> pCat = new LLViewerInventoryCategory(id, parent_id, pref_type, name, owner_id);
+		LLPointer<LLViewerInventoryCategory> pCat = new LLViewerInventoryCategory(owner_id);
+		pCat->setUUID(id);
+		pCat->setParent(parent_id);
+		pCat->setPreferredType(pref_type);
+		pCat->rename(name);
 		pCat->setVersion(version);
 
 		return pCat;
@@ -364,13 +368,13 @@ LLSD LLInventoryCache::catToCacheLLSD(const LLViewerInventoryCategory &cat_to_ca
 	LLSD inv_category = LLSD::emptyArray();
 
 	LLSD category = LLSD::emptyMap();
-	category["cat_id"] = cat_to_cache.getUUID().asString();
-	category["parent_id"] = cat_to_cache.getParentUUID().asString();
+	category["cat_id"] = cat_to_cache.getUUID();
+	category["parent_id"] = cat_to_cache.getParentUUID();
 	category["type"] = LLAssetType::lookup(cat_to_cache.getType());
 	// everything but AT_NONE are system folders
 	category["pref_type"] = LLAssetType::lookup(cat_to_cache.getPreferredType());
 	category["name"] = cat_to_cache.getName();
-	category["owner_id"] = cat_to_cache.getOwnerID().asString();
+	category["owner_id"] = cat_to_cache.getOwnerID();
 	category["version"] = cat_to_cache.getVersion();
 
 	inv_category["inv_category"] = category;
@@ -381,6 +385,7 @@ LLSD LLInventoryCache::catToCacheLLSD(const LLViewerInventoryCategory &cat_to_ca
 // static
 LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLSD& item)
 {
+	bool is_complete = true;
 	LLUUID id						= (item.has("item_id"))		? (item["item_id"].asUUID())	: (LLUUID::null);
 	LLUUID parent_id				= (item.has("parent_id"))	? (item["parent_id"].asUUID())	: (LLUUID::null);
 	LLAssetType::EType type			= (item.has("type"))		? (LLAssetType::lookup(item["type"].asString())) : (LLAssetType::AT_NONE);
@@ -395,7 +400,7 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		llformat(item.get("flags").asString().c_str(), "%x", &flags);
 	}
 	LLUUID shadow_id;
-	if (item.has("shadow_id")) // legacy stuff
+	if (item.has("shadow_id"))
 	{
 		asset_id.set(item.get("shadow_id").asString());
 		LLXORCipher cipher(MAGIC_ID.mData, UUID_BYTES);
@@ -404,7 +409,11 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 	LLPermissions permissions;
 	if (item.has("permissions"))
 	{
-		ll_permissions_from_sd(item.get("permissions"));
+		permissions.set(ll_permissions_from_sd(item.get("permissions")));
+	}
+	else
+	{
+		is_complete = false;
 	}
 	LLSaleInfo sale_info;
 	if (item.has("sale_info"))
@@ -437,7 +446,6 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		valid_asset_type(type) &&
 		valid_inv_type(inv_type) && // IT_NONE is never used
 		inventory_and_asset_types_match(inv_type, type) &&
-		valid_string(name) &&
 		valid_asset_id(asset_id, type)
 		)
 	{
@@ -458,8 +466,16 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		}
 
 		// Note that we don't create items that have a mismatch. This is new behavior
-		LLPointer<LLViewerInventoryItem> pItem = new LLViewerInventoryItem(id, parent_id, permissions, asset_id, type, inv_type, name, desc, sale_info, flags, creation_date);
-		
+		LLPointer<LLViewerInventoryItem> pItem = NULL;
+		if (is_complete)
+		{
+			pItem = new LLViewerInventoryItem(id, parent_id, permissions, asset_id, type, inv_type, name, desc, sale_info, flags, creation_date);
+		}
+		else
+		{
+			pItem = new LLViewerInventoryItem(id, parent_id, name, inv_type);
+		}
+
 		return pItem;
 	}
 
@@ -473,9 +489,10 @@ LLSD LLInventoryCache::itemToCacheLLSD(const LLViewerInventoryItem& item_to_cach
 	LLSD inv_item = LLSD::emptyArray();
 
 	LLSD item = LLSD::emptyMap();
-	item["item_id"] = item_to_cache.getUUID().asString();
-	item["parent_id"] = item_to_cache.getParentUUID().asString();
+	item["item_id"] = item_to_cache.getUUID();
+	item["parent_id"] = item_to_cache.getParentUUID();
 
+	// Cache anyway, even if perms are broken. We want LLViewerInventoryItem to handle that
 	item["permissions"] = ll_create_sd_from_permissions(item_to_cache.getPermissions());
 
 	// Check for permissions to see the asset id, and if so write it
@@ -486,7 +503,7 @@ LLSD LLInventoryCache::itemToCacheLLSD(const LLViewerInventoryItem& item_to_cach
 		if(((mask & PERM_ITEM_UNRESTRICTED) == PERM_ITEM_UNRESTRICTED)
 			|| (item_to_cache.getAssetUUID().isNull()))
 		{
-			item["asset_id"] = item_to_cache.getAssetUUID().asString();
+			item["asset_id"] = item_to_cache.getAssetUUID();
 		}
 		else
 		{

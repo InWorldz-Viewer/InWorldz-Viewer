@@ -86,10 +86,164 @@
       <integer>0</integer>
     </array>
   </map>
+  <key>HTTPInventory</key>
+  <map>
+    <key>Comment</key>
+    <string>If TRUE use HTTP inventory, otherwise use UDP</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
   <key>IgnoreSimulatorCameraConstraints</key>
   <map>
     <key>Comment</key>
     <string>Ignores the 'push' the simulator applies to your camera to keep it out of objects.(Requires restart to work correctly)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>InspectShowOwnerName</key>
+  <map>
+    <key>Comment</key>
+    <string>Show owner name in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>InspectShowLastOwnerName</key>
+  <map>
+    <key>Comment</key>
+    <string>Show last owner name in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowCreatorName</key>
+  <map>
+    <key>Comment</key>
+    <string>Show creator name in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>InspectShowFaceNum</key>
+  <map>
+    <key>Comment</key>
+    <string>Show face count in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowVertexNum</key>
+  <map>
+    <key>Comment</key>
+    <string>Show vertex count in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowPerms</key>
+  <map>
+    <key>Comment</key>
+    <string>Show object perms in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>InspectShowDebugPerms</key>
+  <map>
+    <key>Comment</key>
+    <string>Show debug perms in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowScriptNum</key>
+  <map>
+    <key>Comment</key>
+    <string>Show script count in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowInvNum</key>
+  <map>
+    <key>Comment</key>
+    <string>Show inventory count in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowInvItemPerms</key>
+  <map>
+    <key>Comment</key>
+    <string>Show inventory item perms in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowInvItemDebugPerms</key>
+  <map>
+    <key>Comment</key>
+    <string>Show inventory item debug perms in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowParticleSource</key>
+  <map>
+    <key>Comment</key>
+    <string>Show particle sources in inspect window</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>InspectShowCreationDate</key>
+  <map>
+    <key>Comment</key>
+    <string>Show creation date in inspect window</string>
     <key>Persist</key>
     <integer>1</integer>
     <key>Type</key>

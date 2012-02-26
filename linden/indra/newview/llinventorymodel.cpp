@@ -1153,7 +1153,6 @@ void  fetchDescendentsResponder::result(const LLSD& content)
 	LL_DEBUGS("Inventory") << " fetch descendents got " << ll_pretty_print_sd(content) << LL_ENDL;
 	if (content.has("folders"))	
 	{
-
 		for(LLSD::array_const_iterator folder_it = content["folders"].beginArray();
 			folder_it != content["folders"].endArray();
 			++folder_it)
@@ -1232,7 +1231,7 @@ void  fetchDescendentsResponder::result(const LLSD& content)
 				++item_it)
 			{	
 				LLSD item = *item_it;
-				titem->importLLSD(item);
+				titem->importLLSD(item); // uses fromLLSD() but also sets the item as complete -- MC
 				
 				gInventory.updateItem(titem);
 			}
@@ -1266,7 +1265,7 @@ void  fetchDescendentsResponder::result(const LLSD& content)
 	
 	if (LLInventoryModel::isBulkFetchProcessingComplete())
 	{
-		LL_DEBUGS("Inventory") << "Inventory fetch completed" << LL_ENDL;
+		llinfos << "Inventory fetch ended" << llendl;
 		if (LLInventoryModel::sFullFetchStarted)
 		{
 			LLInventoryModel::sAllFoldersFetched = TRUE;
@@ -1485,7 +1484,7 @@ void LLInventoryModel::backgroundFetch(void*)
 	{
 		//If we'll be using the capability, we'll be sending batches and the background thing isn't as important.
 		std::string url = gAgent.getRegion()->getCapability("WebFetchInventoryDescendents");   
-		if (!url.empty()) 
+		if (gSavedSettings.getBOOL("HTTPInventory") && !url.empty()) 
 		{
 			bulkFetch(url);
 			return;

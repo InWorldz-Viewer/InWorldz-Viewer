@@ -495,7 +495,7 @@ bool LLViewerInventoryCategory::fetchDescendents()
 		{
 			llwarns << "agent region is null" << llendl;
 		}
-		if (!url.empty()) //Capability found.  Build up LLSD and use it.
+		if (gSavedSettings.getBOOL("HTTPInventory") && !url.empty()) //Capability found.  Build up LLSD and use it.
 		{
 			LLInventoryModel::startBackgroundFetch(mUUID);			
 		}
