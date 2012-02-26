@@ -2142,6 +2142,7 @@ bool idle_startup()
 			}
 		}
  		options.clear();
+		// loadSkeleton *also* triggers cache loading -- MC
  		if(LLUserAuth::getInstance()->getOptions("inventory-skel-lib", options)
 			&& gInventoryLibraryOwner.notNull())
  		{
@@ -2159,8 +2160,10 @@ bool idle_startup()
  			}
  		}
 
+		gInventory.buildParentChildMap(); // -- MC
+
 		// start background fetching for animations here in case the cache is empty.
-		// We do this to improve AO support (that's Animatoni Overrider, not LL's
+		// We do this to improve AO support (that's Animation Overrider, not LL's
 		// silly "AO" acronym -- MC
 		if (gInventory.getAnimationsFolderUUID() != LLUUID::null)
 		{
@@ -2268,7 +2271,6 @@ bool idle_startup()
 		{
 			LLClassifiedInfo::loadCategories(options);
 		}
-		gInventory.buildParentChildMap();
 
 		llinfos << "Setting Inventory changed mask and notifying observers" << llendl;
 		gInventory.addChangedMask(LLInventoryObserver::ALL, LLUUID::null);
