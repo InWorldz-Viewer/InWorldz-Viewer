@@ -449,14 +449,6 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		valid_asset_id(asset_id, type)
 		)
 	{
-		// For some ungodly reason, wearables are unique and have their own enumeration. 
-		// Have to check for those too or they'll just be bodyparts
-		if (inv_type == LLInventoryType::IT_WEARABLE)
-		{
-			// for now, don't load 'em
-			return NULL;
-		}
-
 		LLStringUtil::replaceNonstandardASCII(name, ' ');
         LLStringUtil::replaceChar(name, '|', ' ');
 
@@ -474,6 +466,44 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		else
 		{
 			pItem = new LLViewerInventoryItem(id, parent_id, name, inv_type);
+		}
+
+		if (inv_type == LLInventoryType::IT_WEARABLE)
+		{
+			EWearableType wearable = LLWearable::typeNameToType(item["wearable"].asString());
+			if (wearable != WT_INVALID)
+			{
+				if (type == LLAssetType::AT_BODYPART)
+				{
+					switch (wearable)
+					{
+						case WT_EYES:	pItem->setFlags(pItem->getFlags() | WT_EYES); break;
+						case WT_HAIR:	pItem->setFlags(pItem->getFlags() | WT_HAIR); break;
+						case WT_SKIN:	pItem->setFlags(pItem->getFlags() | WT_SKIN); break;
+						case WT_SHAPE:	pItem->setFlags(pItem->getFlags() | WT_SHAPE); break;
+						default: break;
+					}
+				}
+				else if (type == LLAssetType::AT_CLOTHING)
+				{
+					switch (wearable)
+					{
+						case WT_TATTOO:		pItem->setFlags(pItem->getFlags() | WT_TATTOO); break;
+						case WT_ALPHA:		pItem->setFlags(pItem->getFlags() | WT_ALPHA); break;
+						case WT_SKIRT:		pItem->setFlags(pItem->getFlags() | WT_SKIRT); break;
+						case WT_UNDERPANTS: pItem->setFlags(pItem->getFlags() | WT_UNDERPANTS); break;
+						case WT_UNDERSHIRT: pItem->setFlags(pItem->getFlags() | WT_UNDERSHIRT); break;
+						case WT_GLOVES:		pItem->setFlags(pItem->getFlags() | WT_GLOVES); break;
+						case WT_JACKET:		pItem->setFlags(pItem->getFlags() | WT_JACKET); break;
+						case WT_SOCKS:		pItem->setFlags(pItem->getFlags() | WT_SOCKS); break;
+						case WT_SHOES:		pItem->setFlags(pItem->getFlags() | WT_SHOES); break;
+						case WT_PANTS:		pItem->setFlags(pItem->getFlags() | WT_PANTS); break;
+						case WT_SHIRT:		pItem->setFlags(pItem->getFlags() | WT_SHIRT); break;
+						default: break;
+					}
+				}
+			}
+			pItem->setFlags(pItem->getFlags() & pItem->II_FLAGS_WEARABLES_MASK);
 		}
 
 		return pItem;
@@ -524,20 +554,38 @@ LLSD LLInventoryCache::itemToCacheLLSD(const LLViewerInventoryItem& item_to_cach
 	item["desc"] = item_to_cache.getDescription();
 	item["creation_date"] = (S32)(item_to_cache.getCreationDate());
 	// special rules are involved with wearables
-	/*if (item_to_cache.getInventoryType() == LLInventoryType::IT_WEARABLE)
+	if (item_to_cache.getInventoryType() == LLInventoryType::IT_WEARABLE)
 	{
-		LLSD params = gWearableList.getWearableParams(item_to_cache.getAssetUUID());
-		if (params.size() > 0)
+		if (item_to_cache.getType() == LLAssetType::AT_BODYPART)
 		{
-			item["wearable_params"] = params;
+			switch (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_WEARABLES_MASK)
+			{
+				case WT_SHAPE: item["wearable"] =	LLWearable::typeToTypeName(WT_SHAPE); break;
+				case WT_SKIN: item["wearable"] =	LLWearable::typeToTypeName(WT_SKIN); break;
+				case WT_HAIR: item["wearable"] =	LLWearable::typeToTypeName(WT_HAIR); break;
+				case WT_EYES: item["wearable"] =	LLWearable::typeToTypeName(WT_EYES); break;
+				default: break;
+			}
 		}
-
-		LLSD textures = gWearableList.getWearableTextures(item_to_cache.getAssetUUID());
-		if (textures.size() > 0)
+		else if (item_to_cache.getType() == LLAssetType::AT_CLOTHING)
 		{
-			item["wearable_textures"] = textures;
+			switch (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_WEARABLES_MASK)
+			{
+				case WT_SHIRT: item["wearable"] =		LLWearable::typeToTypeName(WT_SHIRT); break;
+				case WT_PANTS: item["wearable"] =		LLWearable::typeToTypeName(WT_PANTS); break;
+				case WT_SHOES: item["wearable"] =		LLWearable::typeToTypeName(WT_SHOES); break;
+				case WT_SOCKS: item["wearable"] =		LLWearable::typeToTypeName(WT_SOCKS); break;
+				case WT_JACKET: item["wearable"] =		LLWearable::typeToTypeName(WT_JACKET); break;
+				case WT_GLOVES: item["wearable"] =		LLWearable::typeToTypeName(WT_GLOVES); break;
+				case WT_UNDERSHIRT: item["wearable"] =	LLWearable::typeToTypeName(WT_UNDERSHIRT); break;
+				case WT_UNDERPANTS: item["wearable"] =	LLWearable::typeToTypeName(WT_UNDERPANTS); break;
+				case WT_SKIRT: item["wearable"] =		LLWearable::typeToTypeName(WT_SKIRT); break;
+				case WT_ALPHA: item["wearable"] =		LLWearable::typeToTypeName(WT_ALPHA); break;
+				case WT_TATTOO: item["wearable"] =		LLWearable::typeToTypeName(WT_TATTOO); break;
+				default: break;
+			}
 		}
-	}*/
+	}
 
 	inv_item["inv_item"] = item;
 
