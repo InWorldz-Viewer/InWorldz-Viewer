@@ -251,6 +251,17 @@
     <key>Value</key>
     <integer>1</integer>
   </map>
+  <key>InventoryCacheVersion</key>
+  <map>
+    <key>Comment</key>
+    <string>Version of the inventory cache we expect to find</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>U32</string>
+    <key>Value</key>
+    <real>1</real>
+  </map>
   <key>AudioLevelGestures</key>
   <map>
     <key>Comment</key>

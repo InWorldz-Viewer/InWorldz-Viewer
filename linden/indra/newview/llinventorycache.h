@@ -64,6 +64,10 @@ protected:
 	static LLPointer<LLViewerInventoryItem> createItemFromCache(const LLSD& item);
 	// Creates a category from a cache file. Only LLSD formatting is supported
 	static LLPointer<LLViewerInventoryCategory> createCatFromCache(const LLSD& category);
+
+	// Returns true if the last known cache version is the same as the
+	// one in settings. If not, updates the setting to be compatible
+	static bool versionCorrect();
 };
 
 #endif //LL_INVENTORYCACHE_H

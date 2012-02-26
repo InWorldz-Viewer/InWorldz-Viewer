@@ -33,20 +33,37 @@
 #include "llinventory.h"
 #include "llinventoryview.h"
 #include "llsdserialize.h"
+#include "llviewercontrol.h"
 #include "llwearablelist.h"
 #include "llxorcipher.h"
 
 // constants
+const U32 INVENTORY_CACHE_VERSION = 1; // update this with every change to the cache format
 const char CACHE_FORMAT_STRING[] = "%s.inv";
 const LLUUID MAGIC_ID("3c115e51-04f4-523c-9fa6-98aff1034730"); // uuid used in cypher for inv
 
 // helper functions
 bool valid_string(const std::string& str)			{	return !str.empty();	}
 bool valid_id(const LLUUID& id)						{	return id.notNull();	}
-bool valid_asset_id(const LLUUID& id, LLAssetType::EType type);
 bool valid_asset_type(LLAssetType::EType type)		{	return (type > LLAssetType::AT_NONE) && (type < LLAssetType::AT_COUNT);	}
 bool valid_inv_type(LLInventoryType::EType type)	{	return (type > LLInventoryType::IT_NONE) && (type < LLInventoryType::IT_COUNT);	}
-//bool valid_wearable_type(EWearableType type)		{	return (type != EWearableType::WT_INVALID) && (type < EWearableType::WT_COUNT);	} // no idea why invalid isn't negative
+bool valid_asset_id(const LLUUID& id, LLAssetType::EType type)
+{
+	// this should *really* be part of llassettype.cpp since we
+	// want to look for valid items that have null asset ids
+	// in the inventory
+	if (id.notNull() || (id.isNull() && 
+						(type != LLAssetType::AT_CATEGORY) && 
+						(type != LLAssetType::AT_ROOT_CATEGORY) && 
+						(type != LLAssetType::AT_SNAPSHOT_CATEGORY) && 
+						(type != LLAssetType::AT_TRASH) && 
+						(type != LLAssetType::AT_LOST_AND_FOUND) && 
+						(type != LLAssetType::AT_SIMSTATE)))
+	{
+		return true;
+	}
+	return false;
+}
 
 // cache test
 class LLCanCache : public LLInventoryCollectFunctor 
@@ -247,6 +264,14 @@ bool LLInventoryCache::loadFromCache(const std::string& filename,
 									LLInventoryCache::cat_array_t& categories,
 									LLInventoryCache::item_array_t& items)
 {
+	// version set in settings.xml
+	if (!versionCorrect())
+	{
+		// don't load anything. Old cache belonging to this avatar
+		// will be overwritten when we exit
+		return false;
+	}
+
 	if (filename.empty())
 	{
 		llwarns << "Filename is empty!" << llendl;
@@ -592,20 +617,16 @@ LLSD LLInventoryCache::itemToCacheLLSD(const LLViewerInventoryItem& item_to_cach
 	return inv_item;
 }
 
-bool valid_asset_id(const LLUUID& id, LLAssetType::EType type)
+//static 
+bool LLInventoryCache::versionCorrect()
 {
-	// this should *really* be part of llassettype.cpp since we
-	// want to look for valid items that have null asset ids
-	// in the inventory
-	if (id.notNull() || (id.isNull() && 
-						(type != LLAssetType::AT_CATEGORY) && 
-						(type != LLAssetType::AT_ROOT_CATEGORY) && 
-						(type != LLAssetType::AT_SNAPSHOT_CATEGORY) && 
-						(type != LLAssetType::AT_TRASH) && 
-						(type != LLAssetType::AT_LOST_AND_FOUND) && 
-						(type != LLAssetType::AT_SIMSTATE)))
+	if (gSavedSettings.getU32("InventoryCacheVersion") != INVENTORY_CACHE_VERSION)
+	{
+		gSavedSettings.setU32("InventoryCacheVersion", INVENTORY_CACHE_VERSION);
+		return false;
+	}
+	else
 	{
 		return true;
 	}
-	return false;
 }
