@@ -31,6 +31,7 @@
 
 #include <cstdarg>
 #include <string>
+#include <cstdio>
 
 // common used function with va_list argument
 // wrapper for vsnprintf to be called from llformatXXX functions.
