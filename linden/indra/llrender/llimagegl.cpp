@@ -1629,9 +1629,22 @@ BOOL LLImageGL::getMask(const LLVector2 &tc)
 	{
 		S32 width = getWidth()/2;
 		S32 height = getHeight()/2;
+		F32 u;
+		F32 v;
 
-		F32 u = tc.mV[0] - floorf(tc.mV[0]);
-		F32 v = tc.mV[1] - floorf(tc.mV[1]);
+		// Crappy solution: check if these values are NaN.
+		// Better would be to figure out where this is actually happening
+		// (hopefully catches all platforms) -- MC
+		if (llisnan(tc[0]) || llisnan(tc[1]) || (llfinite(tc[0]) && llfinite(tc[1])))
+		{
+			llwarns << "LLImageGL::getMask: LLVector2 includes a NaN value" << llendl;
+			return FALSE;
+		}
+		else
+		{
+			u = tc.mV[0] - floorf(tc.mV[0]);
+			v = tc.mV[1] - floorf(tc.mV[1]);
+		}
 
 		if (u < 0.f || u > 1.f ||
 		    v < 0.f || v > 1.f)
