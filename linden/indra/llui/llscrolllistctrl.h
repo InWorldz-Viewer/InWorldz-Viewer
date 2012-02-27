@@ -410,6 +410,8 @@ public:
 	virtual void addColumn(const LLSD& column, EAddPosition pos = ADD_BOTTOM);
 	virtual void clearColumns();
 	virtual void setColumnLabel(const std::string& column, const std::string& label);
+	virtual const LLFontGL* getFont() const { return mGLFont; }
+	virtual void setFont(LLFontGL* font) { mGLFont = font; }
 
 	virtual LLScrollListColumn* getColumn(S32 index);
 	virtual S32 getNumColumns() const { return mColumnsIndexed.size(); }

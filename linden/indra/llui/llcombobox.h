@@ -109,6 +109,9 @@ public:
 	// items, this is just the label.
 	virtual LLSD	getValue() const;
 
+	virtual const LLFontGL* getFont() const		{ return mGLFont; }
+	virtual void setFont(LLFontGL* font)		{ mGLFont = font; }
+
 	void			setAllowTextEntry(BOOL allow, S32 max_chars = 50, BOOL make_tentative = TRUE);
 	void			setTextEntry(const LLStringExplicit& text);
 	void			setFocusText(BOOL b);	// Sets focus to the text input area instead of the list

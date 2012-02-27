@@ -36,6 +36,7 @@
 #include "stdtypes.h"
 #include "stdenums.h"
 #include "llstring.h"
+#include "llfontgl.h"
 
 class LLSD;
 class LLUUID;
@@ -105,6 +106,8 @@ public:
 	virtual S32 getScrollPos() const = 0;
 	virtual void setScrollPos( S32 pos ) = 0;
 	virtual void scrollToShowSelected() = 0;
+	virtual const LLFontGL* getFont() const = 0;
+	virtual void setFont(LLFontGL* font) = 0;
 };
 
 #endif
