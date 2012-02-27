@@ -275,6 +275,7 @@ void LLParcel::setDesc(const std::string& desc)
 void LLParcel::setMusicURL(const std::string& url)
 {
     mMusicURL = url;
+	LLStringUtil::trim(mMusicURL);
     // The escaping here must match the escaping in the database
     // abstraction layer.
     // This should really filter the url in some way. Other than
@@ -285,6 +286,7 @@ void LLParcel::setMusicURL(const std::string& url)
 void LLParcel::setMediaURL(const std::string& url)
 {
     mMediaURL = url;
+	LLStringUtil::trim(mMediaURL);
     // The escaping here must match the escaping in the database
     // abstraction layer if it's ever added.
     // This should really filter the url in some way. Other than
@@ -324,6 +326,7 @@ void LLParcel::setMediaHeight(S32 height)
 void LLParcel::setMediaCurrentURL(const std::string& url)
 {
     mMediaCurrentURL = url;
+	LLStringUtil::trim(mMediaCurrentURL);
     // The escaping here must match the escaping in the database
     // abstraction layer if it's ever added.
     // This should really filter the url in some way. Other than
