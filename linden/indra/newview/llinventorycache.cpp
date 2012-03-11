@@ -411,6 +411,7 @@ LLSD LLInventoryCache::catToCacheLLSD(const LLViewerInventoryCategory &cat_to_ca
 LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLSD& item)
 {
 	bool is_complete = true;
+	bool is_multiple_object = false;
 	LLUUID id						= (item.has("item_id"))		? (item["item_id"].asUUID())	: (LLUUID::null);
 	LLUUID parent_id				= (item.has("parent_id"))	? (item["parent_id"].asUUID())	: (LLUUID::null);
 	LLAssetType::EType type			= (item.has("type"))		? (LLAssetType::lookup(item["type"].asString())) : (LLAssetType::AT_NONE);
@@ -464,6 +465,10 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 			permissions.setMaskNext(perm_mask);
 		}
 	}
+	if (item.has("is_multiple_object"))
+	{
+		is_multiple_object = item.get("is_multiple_object").asBoolean();
+	}
 
 	// create the item if we can
 	if (valid_id(id) &&
@@ -491,6 +496,12 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		else
 		{
 			pItem = new LLViewerInventoryItem(id, parent_id, name, inv_type);
+		}
+
+		// We don't set flags in the ctor because of the if above
+		if (is_multiple_object && (inv_type == LLInventoryType::IT_OBJECT))
+		{
+			pItem->setFlags(pItem->getFlags() | LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS);
 		}
 
 		if (inv_type == LLInventoryType::IT_WEARABLE)
@@ -528,7 +539,7 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 					}
 				}
 			}
-			pItem->setFlags(pItem->getFlags() & pItem->II_FLAGS_WEARABLES_MASK);
+			pItem->setFlags(pItem->getFlags() & LLInventoryItem::II_FLAGS_WEARABLES_MASK);
 		}
 
 		return pItem;
@@ -574,6 +585,11 @@ LLSD LLInventoryCache::itemToCacheLLSD(const LLViewerInventoryItem& item_to_cach
 	}
 	item["type"] = LLAssetType::lookup(item_to_cache.getType());
 	item["inv_type"] = LLInventoryType::lookup(item_to_cache.getInventoryType());
+	if ((item_to_cache.getInventoryType() == LLInventoryType::IT_OBJECT) && 
+		(item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS))
+	{
+		item["is_multiple_object"] = true;
+	}
 	item["flags"] = llformat("%08x", item_to_cache.getFlags());
 	item["name"] = item_to_cache.getName();
 	item["desc"] = item_to_cache.getDescription();
