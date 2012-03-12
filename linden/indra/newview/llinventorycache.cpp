@@ -412,6 +412,13 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 {
 	bool is_complete = true;
 	bool is_multiple_object = false;
+	bool is_object_slam_perm = false;
+	bool is_object_slam_perm_sale = false;
+	bool is_object_perm_overwrite_base = false;
+	bool is_object_perm_overwrite_owner = false;
+	bool is_object_perm_overwrite_group = false;
+	bool is_object_perm_overwrite_everyone = false;
+	bool is_object_perm_overwrite_next_owner = false;
 	LLUUID id						= (item.has("item_id"))		? (item["item_id"].asUUID())	: (LLUUID::null);
 	LLUUID parent_id				= (item.has("parent_id"))	? (item["parent_id"].asUUID())	: (LLUUID::null);
 	LLAssetType::EType type			= (item.has("type"))		? (LLAssetType::lookup(item["type"].asString())) : (LLAssetType::AT_NONE);
@@ -469,6 +476,34 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 	{
 		is_multiple_object = item.get("is_multiple_object").asBoolean();
 	}
+	if (item.has("is_object_slam_perm"))
+	{
+		is_object_slam_perm = item.get("is_object_slam_perm").asBoolean();
+	}
+	if (item.has("is_object_slam_perm_sale"))
+	{
+		is_object_slam_perm_sale = item.get("is_object_slam_perm_sale").asBoolean();
+	}
+	if (item.has("is_object_perm_overwrite_base"))
+	{
+		is_object_perm_overwrite_base = item.get("is_object_perm_overwrite_base").asBoolean();
+	}
+	if (item.has("is_object_perm_overwrite_owner"))
+	{
+		is_object_perm_overwrite_owner = item.get("is_object_perm_overwrite_owner").asBoolean();
+	}
+	if (item.has("is_object_perm_overwrite_group"))
+	{
+		is_object_perm_overwrite_group = item.get("is_object_perm_overwrite_group").asBoolean();
+	}
+	if (item.has("is_object_perm_overwrite_everyone"))
+	{
+		is_object_perm_overwrite_everyone = item.get("is_object_perm_overwrite_everyone").asBoolean();
+	}
+	if (item.has("is_object_perm_overwrite_next_owner"))
+	{
+		is_object_perm_overwrite_next_owner = item.get("is_object_perm_overwrite_next_owner").asBoolean();
+	}
 
 	// create the item if we can
 	if (valid_id(id) &&
@@ -499,9 +534,28 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		}
 
 		// We don't set flags in the ctor because of the if above
-		if (is_multiple_object && (inv_type == LLInventoryType::IT_OBJECT))
+		// TODO: remove variables and make this short and neat
+		if (inv_type == LLInventoryType::IT_OBJECT)
 		{
-			pItem->setFlags(pItem->getFlags() | LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS);
+			U32 new_flags = 0;
+			if (is_multiple_object)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS;
+			if (is_object_slam_perm)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_SLAM_PERM;
+			if (is_object_slam_perm_sale)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_SLAM_SALE;
+			if (is_object_perm_overwrite_base)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_BASE;
+			if (is_object_perm_overwrite_owner)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_OWNER;
+			if (is_object_perm_overwrite_group)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_GROUP;
+			if (is_object_perm_overwrite_everyone)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_EVERYONE;
+			if (is_object_perm_overwrite_next_owner)
+				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_NEXT_OWNER;
+
+			pItem->setFlags(pItem->getFlags() | new_flags);
 		}
 
 		if (inv_type == LLInventoryType::IT_WEARABLE)
@@ -585,10 +639,46 @@ LLSD LLInventoryCache::itemToCacheLLSD(const LLViewerInventoryItem& item_to_cach
 	}
 	item["type"] = LLAssetType::lookup(item_to_cache.getType());
 	item["inv_type"] = LLInventoryType::lookup(item_to_cache.getInventoryType());
-	if ((item_to_cache.getInventoryType() == LLInventoryType::IT_OBJECT) && 
-		(item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS))
+	// Landmark visited/not visited
+	if (item_to_cache.getInventoryType() == LLInventoryType::IT_LANDMARK)
 	{
-		item["is_multiple_object"] = true;
+		item["visited"] = (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_LANDMARK_VISITED) ? true : false;
+	}
+	// Object flags
+	if (item_to_cache.getInventoryType() == LLInventoryType::IT_OBJECT)
+	{ 
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS)
+		{
+			item["is_multiple_object"] = true;
+		}
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_SLAM_PERM)
+		{
+			item["is_object_slam_perm"] = true;
+		}
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_SLAM_SALE)
+		{
+			item["is_object_slam_perm_sale"] = true;
+		}
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_BASE)
+		{
+			item["is_object_perm_overwrite_base"] = true;
+		}
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_OWNER)
+		{
+			item["is_object_perm_overwrite_owner"] = true;
+		}
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_GROUP)
+		{
+			item["is_object_perm_overwrite_group"] = true;
+		}
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_EVERYONE)
+		{
+			item["is_object_perm_overwrite_everyone"] = true;
+		}
+		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_PERM_OVERWRITE_NEXT_OWNER)
+		{
+			item["is_object_perm_overwrite_next_owner"] = true;
+		}
 	}
 	item["flags"] = llformat("%08x", item_to_cache.getFlags());
 	item["name"] = item_to_cache.getName();
