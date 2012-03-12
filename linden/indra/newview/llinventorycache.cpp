@@ -411,7 +411,7 @@ LLSD LLInventoryCache::catToCacheLLSD(const LLViewerInventoryCategory &cat_to_ca
 LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLSD& item)
 {
 	bool is_complete = true;
-	bool is_multiple_object = false;
+	bool is_object_multiple = false;
 	bool is_object_slam_perm = false;
 	bool is_object_slam_perm_sale = false;
 	bool is_object_perm_overwrite_base = false;
@@ -472,9 +472,9 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 			permissions.setMaskNext(perm_mask);
 		}
 	}
-	if (item.has("is_multiple_object"))
+	if (item.has("is_object_multiple"))
 	{
-		is_multiple_object = item.get("is_multiple_object").asBoolean();
+		is_object_multiple = item.get("is_object_multiple").asBoolean();
 	}
 	if (item.has("is_object_slam_perm"))
 	{
@@ -538,7 +538,7 @@ LLPointer<LLViewerInventoryItem> LLInventoryCache::createItemFromCache(const LLS
 		if (inv_type == LLInventoryType::IT_OBJECT)
 		{
 			U32 new_flags = 0;
-			if (is_multiple_object)
+			if (is_object_multiple)
 				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS;
 			if (is_object_slam_perm)
 				new_flags |= LLInventoryItem::II_FLAGS_OBJECT_SLAM_PERM;
@@ -649,7 +649,7 @@ LLSD LLInventoryCache::itemToCacheLLSD(const LLViewerInventoryItem& item_to_cach
 	{ 
 		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_HAS_MULTIPLE_ITEMS)
 		{
-			item["is_multiple_object"] = true;
+			item["is_object_multiple"] = true;
 		}
 		if (item_to_cache.getFlags() & LLInventoryItem::II_FLAGS_OBJECT_SLAM_PERM)
 		{
