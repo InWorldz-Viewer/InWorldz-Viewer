@@ -11,7 +11,8 @@ include(InWorldz)
 # todo: find a script that does the job, but we can live
 # without a "real" pch in the meantime -- MC
 
-set(BUILD_SHARED_LIBS ON)
+#temp comment out- Avian
+#set(BUILD_SHARED_LIBS ON)
   
 # VS2005-specific, pare these down when we're sure cmake
 # does the right thing on, say, 2010
@@ -39,10 +40,23 @@ if (WINDOWS)
 	/TP
 	/errorReport:prompt
 	)
+else (WINDOWS)
+  #Hack for linux/darwin build of 'iw_kdu_loader/stdadfx.h' - Avian
+  include (00-Common)
+  #end Hack
+
+  add_definitions(
+#	-g
+#	-c
+#	-shared
+	-fPIC
+	-D "IW_KDU_LOADER_EXPORTS"
+	)
 endif (WINDOWS)
 
 include_directories(
 	${IW_IMAGEBASE_INCLUDE_DIRS}
+	${IW_KDU_INCLUDE_DIRS}
     )
 	
 set(iw_kdu_loader_SOURCE_FILES
@@ -72,7 +86,13 @@ set_source_files_properties(${iw_kdu_loader_HEADER_FILES}
 
 list(APPEND iw_kdu_loader_SOURCE_FILES ${iw_kdu_loader_HEADER_FILES})
 
-add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
+if (WINDOWS)
+    add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
+else (WINDOWS)
+    add_library (iw_kdu_loader SHARED ${iw_kdu_loader_SOURCE_FILES})
+endif (WINDOWS)
+
+#add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
 
 if (WINDOWS)
 	# Release -- need to figure out how to set release/debug
@@ -103,7 +123,10 @@ else(WINDOWS)
 	target_link_libraries(iw_kdu_loader
 		${IW_KDU_LIBRARIES}
 		)
-#	set_target_properties(iw_kdu_loader
-#		PROPERTIES
-#		)
+	set_target_properties(iw_kdu_loader
+		PROPERTIES
+		LINK_FLAGS "-shared -Wl"
+#		LINK_FLAGS "-shared -Wl, -soname "
+#		LINK_FLAGS_DEBUG "-shared -Wl, -soname, "
+		)
 endif (WINDOWS)

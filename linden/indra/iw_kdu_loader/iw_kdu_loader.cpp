@@ -35,6 +35,9 @@
 */
 
 #if IW_KDU_ENABLED
+//#include "llviewerprecompiledheaders.h"
+//#include "linden_common.h"
+//#include "llapr.h"
 
 #include "stdafx.h"
 #include "iw_kdu_loader.h"
@@ -67,9 +70,11 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 #endif
 
 
-#elif OS_LINUX	// add Linux main here
-#elif OS_MAC	// add mac main here
+//Terrible Hack for now - Avian
+//#elif defined(OS_LINUX)	// add Linux main here
+#else
 
+//#elif OS_MAC	// add mac main here
 
 #endif
 

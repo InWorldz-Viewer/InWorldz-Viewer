@@ -143,6 +143,7 @@ class ViewerManifest(LLManifest):
         # is not specified, as some code may branch depending on
         # whether or not this is present
         return self.args.get('login_channel')
+#        return self.args.get('iw_kdu_lib')
 
     def buildtype(self):
         return self.args['buildtype']
@@ -163,6 +164,9 @@ class ViewerManifest(LLManifest):
     def installer_prefix(self):
         mapping={"inworldz":'InWorldz-'}
         return mapping[self.viewer_branding_id()]
+
+#    print 'Avian --> channel: ' + self.args['channel']
+#    print 'Avian --> login_channel: ' + self.login_channel()
 
     def flags_list(self):
         """ Convenience function that returns the command-line flags
@@ -811,17 +815,34 @@ class LinuxManifest(ViewerManifest):
 class Linux_i686Manifest(LinuxManifest):
     def construct(self):
         super(Linux_i686Manifest, self).construct()
-        
-        # install either the libkdu_v64R we just built, or a prebuilt one, in
+
+        # install either the libkdu_a64R we just built, or a prebuilt one, in
         # decreasing order of preference.  for linux package, this goes to bin/
         try:
-            self.path(self.find_existing_file('../../libraries/i686-linux/lib_release_client/libkdu_v64R.so'), 
-		  dst='bin/libkdu_v64R.so')
+#Messy - keep original until sure of KDU status
+#            self.path(self.find_existing_file('../iw_kdu_loader/libiw_kdu_loader.so',
+#                  'release/libiw_kdu_loader.so'), 
+            self.path(self.find_existing_file('../iw_kdu_loader/libiw_kdu_loader.so'),
+                  dst='bin/libiw_kdu_loader.so')
 
             # keep this one to preserve syntax, open source mangling removes previous lines
             pass
         except:
-            print "Skipping libkdu_v64R.so - not found"
+            print "Skipping libiw_kdu_loader.so - not found"
+
+            pass
+
+        try:
+#Messy - keep original until sure of KDU status
+#            self.path(self.find_existing_file("../../libraries/kdu/source/lib/Linux-x86-32-gcc/libkdu.a",
+#                  "../../libraries/i686-linux/lib_release_client/libkdu_v64R.so"), 
+            self.path(self.find_existing_file('../../libraries/kdu/source/lib/Linux-x86-32-gcc/libkdu_a64R.so'),
+                  dst='lib/libkdu_a64R.so')
+
+            # keep this one to preserve syntax, open source mangling removes previous lines
+            pass
+        except:
+            print "Skipping KDU library file - not found"
             pass
 
         if self.prefix("../../libraries/i686-linux/lib_release_client", dst="lib"):

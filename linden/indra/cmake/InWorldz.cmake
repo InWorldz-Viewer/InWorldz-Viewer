@@ -3,8 +3,6 @@
 include(Prebuilt)
 include(Variables)
 
-
-
 # # # # # # # # # # # # # # # # # # # # # 
 #
 #	iw_imgbase project
@@ -27,6 +25,7 @@ set(IW_IMAGEBASE_LIBRARIES iw_imagebase)
 
 # check for the coresys dir, but any would do
 set(TEST_KDU_DIR ${LIBS_PREBUILT_DIR}/kdu/source/coresys)
+
 set(STRING_KDU 	"Building with InWorldz Kakadu (KDU) image decoding.")
 set(STRING_OJ 	"Building with OpenJPEG image decoding.")
 
@@ -39,7 +38,7 @@ else (EXISTS ${TEST_KDU_DIR}/)
 endif (EXISTS ${TEST_KDU_DIR}/)
 
 if (IW_KDU)
-	use_prebuilt_binary(kdu)
+#	use_prebuilt_binary(kdu)
 	add_definitions(-DIW_KDU_ENABLED=1)
 else (IW_KDU)
 	add_definitions(-DIW_KDU_ENABLED=FALSE)
@@ -53,11 +52,19 @@ set(IW_KDU_INCLUDE_DIRS
 
 # Make a guess using the ARCH setting. Not sure if this is the
 # right way to do this?
-if (ARCH EQUAL x86_64)
+if (WINDOWS)
+    if (ARCH EQUAL x86_64)
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/lib_x64)
-else (ARCH EQUAL x86_64)	
+    else (ARCH EQUAL x86_64)	
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/lib_x86)
-endif (ARCH EQUAL x86_64)
+    endif (ARCH EQUAL x86_64)
+else (WINDOWS)
+    if (ARCH EQUAL x86_64)
+	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/source/lib/Linux-x86-64-gcc)
+    else (ARCH EQUAL x86_64)	
+	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/source/lib/Linux-x86-32-gcc)
+    endif (ARCH EQUAL x86_64)
+endif (WINDOWS)
 
 # We want to avoid compiler errors if the lib is linked without KDU
 if (EXISTS ${KDU_LIB_DIR}/)
@@ -68,16 +75,18 @@ if (EXISTS ${KDU_LIB_DIR}/)
 			optimized ${KDU_LIB_DIR}/kdu_v64R.lib
 			)
 	elseif (LINUX)
-		set(IW_KDU_LIBRARIES
+	    set(IW_KDU_LIBRARIES
 			${IW_IMAGEBASE_LIBRARIES}
-			debug ${KDU_LIB_DIR}/kdu_v64D.so
-			optimized ${KDU_LIB_DIR}/kdu_v64R.so
+			debug ${KDU_LIB_DIR}/libkdu_a64R.so
+			optimized ${KDU_LIB_DIR}/libkdu_a64R.so
+#			debug ${KDU_LIB_DIR}/libkdu.a
+#			optimized ${KDU_LIB_DIR}/libkdu.a
 			)
 	elseif (DARWIN)
 		set(IW_KDU_LIBRARIES
 			${IW_IMAGEBASE_LIBRARIES}
-			debug ${KDU_LIB_DIR}/kdu_v64D.dylib
-			optimized ${KDU_LIB_DIR}/kdu_v64R.dylib
+			debug ${KDU_LIB_DIR}/kdu_a64D.dylib
+			optimized ${KDU_LIB_DIR}/kdu_a64R.dylib
 			)
 	endif (WINDOWS)
 else (EXISTS ${KDU_LIB_DIR}/)
