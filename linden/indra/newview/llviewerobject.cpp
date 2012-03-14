@@ -206,7 +206,7 @@ LLViewerObject::LLViewerObject(const LLUUID &id, const LLPCode pcode, LLViewerRe
 	mClickAction(0),
 	mSculptSurfaceArea(0.0)
 {
-	if(!is_global)
+	if (!is_global)
 	{
 		llassert(mRegionp);
 	}
@@ -218,7 +218,7 @@ LLViewerObject::LLViewerObject(const LLUUID &id, const LLPCode pcode, LLViewerRe
 
 	mPositionRegion = LLVector3(0.f, 0.f, 0.f);
 
-	if(!is_global)
+	if (!is_global && mRegionp)
 	{
 		mPositionAgent = mRegionp->getOriginAgent();
 	}
@@ -552,7 +552,11 @@ void LLViewerObject::removeChild(LLViewerObject *childp)
 			}
 
 			mChildList.erase(i);
-			childp->setParent(NULL);			
+
+			if(childp->getParent() == this)
+			{
+				childp->setParent(NULL);			
+			}
 			break;
 		}
 	}
@@ -697,7 +701,24 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 	// Coordinates of objects on simulators are region-local.
 	U64 region_handle;
 	mesgsys->getU64Fast(_PREHASH_RegionData, _PREHASH_RegionHandle, region_handle);
-	mRegionp = LLWorld::getInstance()->getRegionFromHandle(region_handle);
+	
+	{
+		LLViewerRegion* regionp = LLWorld::getInstance()->getRegionFromHandle(region_handle);
+		if(regionp != mRegionp && regionp && mRegionp)//region cross
+		{
+			//this is the redundant position and region update, but it is necessary in case the viewer misses the following 
+			//position and region update messages from sim.
+			//this redundant update should not cause any problems.
+			LLVector3 delta_pos =  mRegionp->getOriginAgent() - regionp->getOriginAgent();
+			setPositionParent(getPosition() + delta_pos); //update to the new region position immediately.
+			setRegion(regionp) ; //change the region.
+		}
+		else
+		{
+			mRegionp = regionp ;
+		}
+	}	
+	
 	if (!mRegionp)
 	{
 		U32 x, y;
@@ -805,6 +826,7 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					htonmemcpy(collision_plane.mV, &data[count], MVT_LLVector4, sizeof(LLVector4));
 					((LLVOAvatar*)this)->setFootPlane(collision_plane);
 					count += sizeof(LLVector4);
+					// fall through
 				case 60:
 					this_update_precision = 32;
 					// this is a terse update
@@ -844,6 +866,7 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					htonmemcpy(collision_plane.mV, &data[count], MVT_LLVector4, sizeof(LLVector4));
 					((LLVOAvatar*)this)->setFootPlane(collision_plane);
 					count += sizeof(LLVector4);
+					// fall through
 				case 32:
 					this_update_precision = 16;
 					test_pos_parent.quantize16(-0.5f*size, 1.5f*size, MIN_HEIGHT, MAX_HEIGHT);
@@ -1143,6 +1166,7 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					htonmemcpy(collision_plane.mV, &data[count], MVT_LLVector4, sizeof(LLVector4));
 					((LLVOAvatar*)this)->setFootPlane(collision_plane);
 					count += sizeof(LLVector4);
+					// fall through
 				case 60:
 					// this is a terse 32 update
 					// pos
@@ -1182,6 +1206,7 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					htonmemcpy(collision_plane.mV, &data[count], MVT_LLVector4, sizeof(LLVector4));
 					((LLVOAvatar*)this)->setFootPlane(collision_plane);
 					count += sizeof(LLVector4);
+					// fall through
 				case 32:
 					// this is a terse 16 update
 					this_update_precision = 16;
