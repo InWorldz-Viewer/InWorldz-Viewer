@@ -227,9 +227,12 @@ void LLNewAgentInventoryResponder::uploadComplete(const LLSD& content)
 	{
 		LLStatusBar::sendMoneyBalanceRequest();
 
-		LLSD args;
-		args["AMOUNT"] = llformat("%d", expected_upload_cost);
-		LLNotifications::instance().add("UploadPayment", args);
+		if (expected_upload_cost > 0)
+		{
+			LLSD args;
+			args["AMOUNT"] = llformat("%d", expected_upload_cost);
+			LLNotifications::instance().add("UploadPayment", args);
+		}
 	}
 
 	// Actually add the upload to viewer inventory

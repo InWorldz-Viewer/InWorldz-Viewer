@@ -5191,7 +5191,7 @@ Uploading in-world and web site snapshots...
 <notification
  icon="notify.tga"
  name="UploadPayment"
- type="notify">
+ type="notifytip">
 You paid I'z$[AMOUNT] to upload.
 </notification>
 
