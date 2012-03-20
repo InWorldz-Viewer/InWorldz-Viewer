@@ -12,7 +12,7 @@ include(InWorldz)
 # without a "real" pch in the meantime -- MC
 
 #temp comment out- Avian
-#set(BUILD_SHARED_LIBS ON)
+set(BUILD_SHARED_LIBS ON)
   
 # VS2005-specific, pare these down when we're sure cmake
 # does the right thing on, say, 2010
@@ -89,7 +89,8 @@ list(APPEND iw_kdu_loader_SOURCE_FILES ${iw_kdu_loader_HEADER_FILES})
 if (WINDOWS)
     add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
 else (WINDOWS)
-    add_library (iw_kdu_loader SHARED ${iw_kdu_loader_SOURCE_FILES})
+    add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
+#    add_library (iw_kdu_loader SHARED ${iw_kdu_loader_SOURCE_FILES})
 endif (WINDOWS)
 
 #add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})

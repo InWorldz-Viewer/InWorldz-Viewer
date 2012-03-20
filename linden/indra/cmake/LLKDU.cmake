@@ -1,6 +1,6 @@
 # -*- cmake -*-
 
-#Note to McMabe - Hacked this for now until you you can safefully clear out all Windows references to LLKDU
+#Note to McMabe - Hacked this for now until you you can safefully clear out all Windows references to LLKDU 
 
 if (WINDOWS)
 

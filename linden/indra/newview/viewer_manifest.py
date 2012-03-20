@@ -143,7 +143,6 @@ class ViewerManifest(LLManifest):
         # is not specified, as some code may branch depending on
         # whether or not this is present
         return self.args.get('login_channel')
-#        return self.args.get('iw_kdu_lib')
 
     def buildtype(self):
         return self.args['buildtype']
@@ -164,9 +163,6 @@ class ViewerManifest(LLManifest):
     def installer_prefix(self):
         mapping={"inworldz":'InWorldz-'}
         return mapping[self.viewer_branding_id()]
-
-#    print 'Avian --> channel: ' + self.args['channel']
-#    print 'Avian --> login_channel: ' + self.login_channel()
 
     def flags_list(self):
         """ Convenience function that returns the command-line flags

@@ -35,9 +35,6 @@
 */
 
 #if IW_KDU_ENABLED
-//#include "llviewerprecompiledheaders.h"
-//#include "linden_common.h"
-//#include "llapr.h"
 
 #include "stdafx.h"
 #include "iw_kdu_loader.h"

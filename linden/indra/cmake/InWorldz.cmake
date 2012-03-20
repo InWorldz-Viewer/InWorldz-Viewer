@@ -38,7 +38,11 @@ else (EXISTS ${TEST_KDU_DIR}/)
 endif (EXISTS ${TEST_KDU_DIR}/)
 
 if (IW_KDU)
-#	use_prebuilt_binary(kdu)
+    # Note to McCabe - Hack till Windows vesions safelly compiles without LLKDU
+    if (WINDOWS)
+	use_prebuilt_binary(kdu)
+    endif (WINDOWS)
+    # end Hack
 	add_definitions(-DIW_KDU_ENABLED=1)
 else (IW_KDU)
 	add_definitions(-DIW_KDU_ENABLED=FALSE)
@@ -58,12 +62,14 @@ if (WINDOWS)
     else (ARCH EQUAL x86_64)	
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/lib_x86)
     endif (ARCH EQUAL x86_64)
-else (WINDOWS)
+elseif (LINUX)
     if (ARCH EQUAL x86_64)
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/source/lib/Linux-x86-64-gcc)
     else (ARCH EQUAL x86_64)	
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/source/lib/Linux-x86-32-gcc)
     endif (ARCH EQUAL x86_64)
+elseif (DARWIN)
+    # need to add proper DARWIN/Mac stuff here
 endif (WINDOWS)
 
 # We want to avoid compiler errors if the lib is linked without KDU
