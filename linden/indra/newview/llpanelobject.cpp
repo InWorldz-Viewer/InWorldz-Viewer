@@ -441,6 +441,8 @@ void LLPanelObject::getState( )
 	mBtnPastePos->setEnabled(enable_move);
 	mBtnPastePosClip->setEnabled(enable_move);
 
+	mCtrlPosZ->setMaxValue(MAX_OBJECT_Z);
+
 	if (enable_scale)
 	{
 		vec = objectp->getScale();
@@ -2313,7 +2315,7 @@ void LLPanelObject::onPastePos(void* user_data)
 	LLCalc* calcp = LLCalc::getInstance();
 	mClipboardPos.mV[VX] = llclamp( mClipboardPos.mV[VX], 0.f, 256.f);
 	mClipboardPos.mV[VY] = llclamp( mClipboardPos.mV[VY], 0.f, 256.f);
-	mClipboardPos.mV[VZ] = llclamp( mClipboardPos.mV[VZ], 0.f, 10000.f);
+	mClipboardPos.mV[VZ] = llclamp( mClipboardPos.mV[VZ], 0.f, MAX_OBJECT_Z);
 
 	self->mCtrlPosX->set( mClipboardPos.mV[VX] );
 	self->mCtrlPosY->set( mClipboardPos.mV[VY] );
@@ -2392,7 +2394,7 @@ void LLPanelObject::onPastePosClip(void* user_data)
 
 	mClipboardPos.mV[VX] = llclamp(mClipboardPos.mV[VX], 0.f, 256.f);
 	mClipboardPos.mV[VY] = llclamp(mClipboardPos.mV[VY], 0.f, 256.f);
-	mClipboardPos.mV[VZ] = llclamp(mClipboardPos.mV[VZ], 0.f, 10000.f);
+	mClipboardPos.mV[VZ] = llclamp(mClipboardPos.mV[VZ], 0.f, MAX_OBJECT_Z);
 
 	self->mCtrlPosX->set( mClipboardPos.mV[VX] );
 	self->mCtrlPosY->set( mClipboardPos.mV[VY] );

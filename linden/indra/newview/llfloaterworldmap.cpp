@@ -752,7 +752,7 @@ void LLFloaterWorldMap::updateLocation()
 void LLFloaterWorldMap::trackURL(const std::string& region_name, S32 x_coord, S32 y_coord, S32 z_coord)
 {
 	LLSimInfo* sim_info = LLWorldMap::getInstance()->simInfoFromName(region_name);
-	z_coord = llclamp(z_coord, 0, 4096);
+	z_coord = llclamp(z_coord, 0, 10000); // allowing you to go higher introduces big floating point errors -- MC
 	if (sim_info)
 	{
 		LLVector3 local_pos;
