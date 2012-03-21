@@ -889,6 +889,11 @@ bool LLTextureFetchWorker::doWork(S32 param)
 			resetFormattedData(); // discard any previous data we had
 			cur_size = 0 ;
 
+			if (mFormattedImage->isDecoded())
+			{
+				llerrs << "bad range request for" << mID.asString() <<  llendl;
+			}
+
 			mRequestedSize = mDesiredSize;
 			mRequestedDiscard = mDesiredDiscard;
 			mRequestedSize -= cur_size;
@@ -899,6 +904,10 @@ bool LLTextureFetchWorker::doWork(S32 param)
 			bool res = false;
 			if (!mUrl.empty())
 			{
+				if (mRequestedSize <= 0)
+				{
+					llerrs << "bad range request for" << mID.asString() <<  llendl;
+				}
 				mLoaded = FALSE;
 				mGetStatus = 0;
 				mGetReason.clear();
