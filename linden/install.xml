@@ -580,13 +580,6 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/gtk-etc-linux-20101106.1.tar.bz2</uri>
           </map>
-          <key>windows</key>
-          <map>
-            <key>md5sum</key>
-            <string>d963750bcd333a108b3697d220c87d09</string>
-            <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/gtk-atk-pango-glib-windows-20080613.tar.bz2</uri>
-          </map>
         </map>
       </map>
       <key>jpeglib</key>

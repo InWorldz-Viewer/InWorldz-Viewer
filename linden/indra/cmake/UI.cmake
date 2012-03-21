@@ -31,11 +31,11 @@ if (STANDALONE)
     add_definitions(${${pkg}_CFLAGS_OTHERS})
   endforeach(pkg)
 else (STANDALONE)
-  if (NOT DARWIN)
+
+  if (LINUX)
+	# don't need this on Win or Mac
     use_prebuilt_binary(glib)		# gtk-etc needs glib
     use_prebuilt_binary(gtk-atk-pango-glib)
-  endif (NOT DARWIN)
-  if (LINUX)
     set(UI_LIBRARIES
         atk-1.0
         cairo
