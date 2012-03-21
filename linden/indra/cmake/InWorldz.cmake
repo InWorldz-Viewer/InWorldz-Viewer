@@ -16,7 +16,6 @@ set(IW_IMAGEBASE_INCLUDE_DIRS
 set(IW_IMAGEBASE_LIBRARIES iw_imagebase)
 
 
-
 # # # # # # # # # # # # # # # # # # # # #
 # 
 #	kdu and iw_kdu_loader project
