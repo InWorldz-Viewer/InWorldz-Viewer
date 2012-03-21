@@ -1635,7 +1635,7 @@ BOOL LLImageGL::getMask(const LLVector2 &tc)
 		// Crappy solution: check if these values are NaN.
 		// Better would be to figure out where this is actually happening
 		// (hopefully catches all platforms) -- MC
-		if (llisnan(tc[0]) || llisnan(tc[1]) || (llfinite(tc[0]) && llfinite(tc[1])))
+		if (llisnan(tc[0]) || llisnan(tc[1]) || !(llfinite(tc[0]) && llfinite(tc[1])))
 		{
 			llwarns << "LLImageGL::getMask: LLVector2 includes a NaN value" << llendl;
 			return FALSE;
