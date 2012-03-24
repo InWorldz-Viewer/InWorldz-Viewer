@@ -41,6 +41,9 @@
 
 const S32 MIN_IMAGE_MIP =  2; // 4x4, only used for expand/contract power of 2
 const S32 MAX_IMAGE_MIP = 11; // 2048x2048
+
+// *TODO : Use MAX_IMAGE_MIP as max discard level and modify j2c management so that the number 
+// of levels is read from the header's file, not inferred from its size.
 const S32 MAX_DISCARD_LEVEL = 5;
 
 const S32 MIN_IMAGE_SIZE = (1<<MIN_IMAGE_MIP); // 4, only used for expand/contract power of 2
@@ -48,7 +51,7 @@ const S32 MAX_IMAGE_SIZE = (1<<MAX_IMAGE_MIP); // 2048
 const S32 MIN_IMAGE_AREA = MIN_IMAGE_SIZE * MIN_IMAGE_SIZE;
 const S32 MAX_IMAGE_AREA = MAX_IMAGE_SIZE * MAX_IMAGE_SIZE;
 const S32 MAX_IMAGE_COMPONENTS = 8;
-const S32 MAX_IMAGE_DATA_SIZE = MAX_IMAGE_AREA * MAX_IMAGE_COMPONENTS;
+const S32 MAX_IMAGE_DATA_SIZE = MAX_IMAGE_AREA * MAX_IMAGE_COMPONENTS; //2048 * 2048 * 8 = 16 MB
 
 // Note!  These CANNOT be changed without modifying simulator code
 // *TODO: change both to 1024 when SIM texture fetching is deprecated
@@ -128,6 +131,8 @@ public:
 
 	void setSize(S32 width, S32 height, S32 ncomponents);
 	U8* allocateDataSize(S32 width, S32 height, S32 ncomponents, S32 size = -1); // setSize() + allocateData()
+	void enableOverSize() {mAllowOverSize = true ;}
+	void disableOverSize() {mAllowOverSize = false; }
 
 protected:
 	// special accessor to allow direct setting of mData and mDataSize by LLImageFormatted
@@ -139,8 +144,6 @@ public:
 	// Function for calculating the download priority for textures
 	// <= 0 priority means that there's no need for more data.
 	static F32 calc_download_priority(F32 virtual_size, F32 visible_area, S32 bytes_sent);
-
-	static void setSizeOverride(BOOL enabled) { sSizeOverride = enabled; }
 
 	static EImageCodec getCodecFromExtension(const std::string& exten);
 	
@@ -154,11 +157,10 @@ private:
 	S8 mComponents;
 
 	BOOL mBadBufferAllocation ;
+	BOOL mAllowOverSize ;
 
 public:
 	S16 mMemType; // debug
-	
-	static BOOL sSizeOverride;
 };
 
 // Raw representation of an image (used for textures, and other uncompressed formats
@@ -292,13 +294,13 @@ public:
 	// subclasses must return a prefered file extension (lowercase without a leading dot)
 	virtual std::string getExtension() = 0;
 	// calcHeaderSize() returns the maximum size of header;
-	//   0 indicates we don't know have a header and have to lead the entire file
+	//   0 indicates we don't have a header and have to read the entire file
 	virtual S32 calcHeaderSize() { return 0; };
 	// calcDataSize() returns how many bytes to read to load discard_level (including header)
 	virtual S32 calcDataSize(S32 discard_level);
 	// calcDiscardLevelBytes() returns the smallest valid discard level based on the number of input bytes
 	virtual S32 calcDiscardLevelBytes(S32 bytes);
-	// getRawDiscardLevel()by default returns mDiscardLevel, but may be overridden (LLImageJ2C)
+	// getRawDiscardLevel() by default returns mDiscardLevel, but may be overridden (LLImageJ2C)
 	virtual S8  getRawDiscardLevel() { return mDiscardLevel; }
 	
 	BOOL load(const std::string& filename);

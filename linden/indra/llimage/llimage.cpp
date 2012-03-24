@@ -94,6 +94,7 @@ LLImageBase::LLImageBase()
 	  mHeight(0),
 	  mComponents(0),
 	  mBadBufferAllocation(FALSE),
+	  mAllowOverSize(FALSE),
 	  mMemType(LLMemType::MTYPE_IMAGEBASE)
 {
 }
@@ -134,8 +135,6 @@ void LLImageBase::sanityCheck()
 	}
 }
 
-BOOL LLImageBase::sSizeOverride = FALSE;
-
 // virtual
 void LLImageBase::deleteData()
 {
@@ -160,11 +159,21 @@ U8* LLImageBase::allocateData(S32 size)
 			llerrs << llformat("LLImageBase::allocateData called with bad dimensions: %dx%dx%d",mWidth,mHeight,mComponents) << llendl;
 		}
 	}
-	else if (size <= 0 || (size > 4096*4096*16 && sSizeOverride == FALSE))
-	{
-		llerrs << "LLImageBase::allocateData: bad size: " << size << llendl;
-	}
 	
+	//make this function thread-safe.
+	static const U32 MAX_BUFFER_SIZE = 4096 * 4096 * 16 ; //256 MB
+	if (size < 1 || size > MAX_BUFFER_SIZE) 
+	{
+		llinfos << "width: " << mWidth << " height: " << mHeight << " components: " << mComponents << llendl ;
+		if(mAllowOverSize)
+		{
+			llinfos << "Oversize: " << size << llendl ;
+		}
+		else
+		{
+			llerrs << "LLImageBase::allocateData: bad size: " << size << llendl;
+		}
+	}
 	if (!mData || size != mDataSize)
 	{
 		deleteData(); // virtual
