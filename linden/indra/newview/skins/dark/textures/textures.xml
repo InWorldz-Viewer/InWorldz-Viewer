@@ -407,7 +407,7 @@ NOTE: If an image can't be found at "file_name" it'll be loaded as IMG_DEFAULT (
 
 <!-- MISC -->
 
-	<texture name="folder_arrow.tga" 				file_name="interface/folder_arrow.png"/>
+	<texture name="folder_arrow.tga" 				file_name="interface/folder_arrow.tga"/>
 	<texture name="arrow_down.tga" 					file_name="interface/arrow_down.tga"/>
 	<texture name="direction_arrow.tga"				file_name="interface/direction_arrow.tga"	/>
 	<texture name="mute_icon.tga" 					file_name="interface/mute_icon.tga" />
