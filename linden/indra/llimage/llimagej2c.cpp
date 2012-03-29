@@ -499,7 +499,7 @@ BOOL LLImageJ2C::encode(const LLImageRaw *raw_imagep, const char* comment_text, 
 		}
 		else
 		{
-			res = mImplKDU->encodeImpl(&base, &raw, comment_text, encode_time);
+			res = mImplKDU->encodeImpl(&base, &raw, comment_text, encode_time, mReversible);
 			
 			if ((base.getData() != NULL) &&
 				((base.getData() != this->getData()) &&
