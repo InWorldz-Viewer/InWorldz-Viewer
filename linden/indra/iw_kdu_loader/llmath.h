@@ -43,7 +43,7 @@
 #include <float.h>
 #define llisnan(val)	_isnan(val)
 #define llfinite(val)	_finite(val)
-#elif (OS_LINUX && __GNUC__ <= 2)
+#elif defined(OS_LINUX) && (__GNUC__ <= 2)
 #define llisnan(val)	isnan(val)
 #define llfinite(val)	isfinite(val)
 #elif OS_SOLARIS
@@ -200,7 +200,9 @@ inline S32 llfloor( F32 f )
 		}
 		return result;
 #else
-		return (S32)floorf(f);
+// temp test - Avian
+//		return (S32)floorf(f);
+		return (S32)floor(f);
 #endif
 }
 

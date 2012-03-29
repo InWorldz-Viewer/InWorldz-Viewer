@@ -73,6 +73,7 @@ class LLXMLRPCTransaction;
 
 class LLUserAuth : public LLSingleton<LLUserAuth>
 {
+LOG_CLASS(LLUserAuth);
 public:
 	LLUserAuth();
 	~LLUserAuth();

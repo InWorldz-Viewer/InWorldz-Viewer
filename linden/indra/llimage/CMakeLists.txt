@@ -57,6 +57,7 @@ add_library (llimage ${llimage_SOURCE_FILES})
 add_dependencies(llimage prepare)
 target_link_libraries(
     llimage
+    llimagej2coj        # *HACK: In theory a noop for KDU builds? - Avian (from phoenix)
     ${JPEG_LIBRARIES}
     ${PNG_LIBRARIES}
     ${ZLIB_LIBRARIES}

@@ -73,7 +73,7 @@ class PlatformSetup(object):
     for t in ('Debug', 'Release', 'ReleaseSSE2', 'RelWithDebInfo'):
         build_types[t.lower()] = t
 
-    build_type = build_types['relwithdebinfo']
+    build_type = build_types['release']
     standalone = 'OFF'
     unattended = 'OFF'
     universal = 'OFF'
