@@ -188,9 +188,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>ed53511382d0fd9fec59a9f6544d9672</string>
+            <string>3112F67C02F2398CC5AFC30163D5E94B</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/boost-1.39.0-windows-20091029.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/boost-1.39.0-windows-20110618.tar.bz2</uri>
           </map>
         </map>
       </map>
