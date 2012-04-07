@@ -407,8 +407,8 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 					if ((text.find('>') != std::string::npos) ||
 						(text.find('<') != std::string::npos))
 					{
-						llwarns << "LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
-								<< error_string << llendl;
+						LL_DEBUGS("Messaging") << "LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
+								<< error_string << LL_ENDL;
 					}
 					break;
 				}
