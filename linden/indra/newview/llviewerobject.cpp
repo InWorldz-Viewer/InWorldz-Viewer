@@ -1102,14 +1102,22 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					LLDataPackerBinaryBuffer dp(buffer, size);
 
 					U8 num_parameters;
-					dp.unpackU8(num_parameters, "num_params");
+					if (!dp.unpackU8(num_parameters, "num_params"))
+					{
+						llwarns << "Unable to unpack 'num_params' for object!" << llendl;
+						num_parameters = 0;
+					}
 					U8 param_block[MAX_OBJECT_PARAMS_SIZE];
 					for (U8 param=0; param<num_parameters; ++param)
 					{
 						U16 param_type;
 						S32 param_size;
 						dp.unpackU16(param_type, "param_type");
-						dp.unpackBinaryData(param_block, param_size, "param_data");
+						if (!dp.unpackBinaryData(param_block, param_size, "param_data"))
+						{
+							llwarns << "Unable to unpack 'param_data' for object" << llendl;
+							break;
+						}
 						//llinfos << "Param type: " << param_type << ", Size: " << param_size << llendl;
 						LLDataPackerBinaryBuffer dp2(param_block, param_size);
 						unpackParameterEntry(param_type, &dp2);
@@ -1512,14 +1520,22 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 
 				// Unpack extra params
 				U8 num_parameters;
-				dp->unpackU8(num_parameters, "num_params");
+				if (!dp->unpackU8(num_parameters, "num_params"))
+				{
+					llwarns << "Unable to unpack 'num_params' for object!" << llendl;
+					num_parameters = 0;
+				}
 				U8 param_block[MAX_OBJECT_PARAMS_SIZE];
 				for (U8 param=0; param<num_parameters; ++param)
 				{
 					U16 param_type;
 					S32 param_size;
 					dp->unpackU16(param_type, "param_type");
-					dp->unpackBinaryData(param_block, param_size, "param_data");
+					if (!dp->unpackBinaryData(param_block, param_size, "param_data"))
+					{
+						llwarns << "Unable to unpack 'param_data' for object" << llendl;
+						break;
+					}
 					//llinfos << "Param type: " << param_type << ", Size: " << param_size << llendl;
 					LLDataPackerBinaryBuffer dp2(param_block, param_size);
 					unpackParameterEntry(param_type, &dp2);
