@@ -1109,7 +1109,8 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 						U16 param_type;
 						S32 param_size;
 						dp.unpackU16(param_type, "param_type");
-						dp.unpackBinaryData(param_block, param_size, "param_data");
+						if (!dp.unpackBinaryData(param_block, param_size, "param_data"))
+							break;	// bad packet format
 						//llinfos << "Param type: " << param_type << ", Size: " << param_size << llendl;
 						LLDataPackerBinaryBuffer dp2(param_block, param_size);
 						unpackParameterEntry(param_type, &dp2);
