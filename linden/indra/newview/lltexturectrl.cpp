@@ -1282,6 +1282,7 @@ void LLTextureCtrl::setImageAssetID( const LLUUID& asset_id )
 	{
 		mImageItemID.setNull();
 		mImageAssetID = asset_id;
+		mDirty = TRUE;
 		LLFloaterTexturePicker* floaterp = (LLFloaterTexturePicker*)mFloaterHandle.get();
 		if( floaterp && getEnabled() )
 		{
