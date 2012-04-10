@@ -187,7 +187,8 @@ void LLPrefsIMImpl::apply()
 
 		gDirUtilp->setChatLogsDir(gSavedPerAccountSettings.getString("InstantMessageLogPath"));
 
-		gDirUtilp->setPerAccountChatLogsDir(gSavedSettings.getString("FirstName"), 
+		gDirUtilp->setPerAccountChatLogsDir(LLViewerLogin::getInstance()->getGridLabel(), 
+											gSavedSettings.getString("FirstName"), 
 											gSavedSettings.getString("LastName") );
 		LLFile::mkdir(gDirUtilp->getPerAccountChatLogsDir());
 		
