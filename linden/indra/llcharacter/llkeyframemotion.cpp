@@ -1639,6 +1639,13 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 			str = (char*)bin_data;
 			constraintp->mSourceConstraintVolume = mCharacter->getCollisionVolumeID(str);
 
+			if(constraintp->mSourceConstraintVolume == -1)
+			{
+				llwarns << "can't find a valid source collision volume." << llendl;
+				delete constraintp;
+				return FALSE;
+			}
+
 			if (!dp.unpackVector3(constraintp->mSourceConstraintOffset, "source_offset"))
 			{
 				llwarns << "can't read constraint source offset" << llendl;
@@ -1671,6 +1678,12 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 			{
 				constraintp->mConstraintTargetType = CONSTRAINT_TARGET_TYPE_BODY;
 				constraintp->mTargetConstraintVolume = mCharacter->getCollisionVolumeID(str);
+				if(constraintp->mTargetConstraintVolume == -1)
+				{
+					llwarns << "can't find a valid target collision volume." << llendl;
+					delete constraintp;
+					return FALSE;
+				}
 			}
 
 			if (!dp.unpackVector3(constraintp->mTargetConstraintOffset, "target_offset"))
