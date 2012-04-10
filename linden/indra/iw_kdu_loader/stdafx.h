@@ -29,10 +29,14 @@
 	#include <windows.h>
 	# pragma warning(disable: 4996) // _CRT_SECURE_NO_WARNINGS
 	#define OS_WINDOWS // define for Windows that's used in this library only
-//#elif // add check for linux here
-//	#define OS_LINUX
-//#elif //add check for mac here
+
+//See Hack in 'iw_kdu_loader/CMakeLists.txt' - Avian
+#elif LL_LINUX
+	#define OS_LINUX
+
+//#elif LL_DARWIN //add check for mac here
 //	#define OS_MAC
+
 #endif
 
 // TODO: reference additional headers your program requires here

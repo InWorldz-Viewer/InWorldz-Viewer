@@ -42,7 +42,7 @@ typedef struct _xmlrpc_value* XMLRPC_VALUE;
 class LLXMLRPCValue
 	// a c++ wrapper around XMLRPC_VALUE
 {
-public:
+LOG_CLASS(LLXMLRPCValue);public:
 	LLXMLRPCValue()						: mV(NULL) { }
 	LLXMLRPCValue(XMLRPC_VALUE value)	: mV(value) { }
 	
@@ -88,6 +88,7 @@ private:
 class LLXMLRPCTransaction
 	// an asynchronous request and respones via XML-RPC
 {
+LOG_CLASS(LLXMLRPCTransaction);
 public:
 	LLXMLRPCTransaction(const std::string& uri,
 		XMLRPC_REQUEST request, bool useGzip = true);
