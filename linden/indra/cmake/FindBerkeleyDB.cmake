@@ -19,7 +19,7 @@ FIND_PATH(DB_INCLUDE_DIR db.h
 SET(DB_NAMES ${DB_NAMES} db)
 FIND_LIBRARY(DB_LIBRARY
   NAMES ${DB_NAMES}
-  PATHS /usr/lib /usr/local/lib
+  PATHS /usr/lib64 /usr/local/lib64 /usr/lib /usr/local/lib
   )
 
 IF (DB_LIBRARY AND DB_INCLUDE_DIR)

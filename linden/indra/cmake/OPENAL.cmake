@@ -31,7 +31,8 @@ if (OPENAL)
   if (STANDALONE)
     include(FindPkgConfig)
     include(FindOpenAL)
-    pkg_check_modules(OPENAL_LIB REQUIRED openal)
+#
+    pkg_check_modules(OPENAL_LIB REQUIRED openal-soft)
     pkg_check_modules(FREEALUT_LIB REQUIRED freealut)
   else (STANDALONE)
     use_prebuilt_binary(openal-soft)
@@ -50,12 +51,11 @@ if (OPENAL)
 	  )
   else (WINDOWS)
 	set(OPENAL_LIBRARIES 
-	  openal
+          openal
 	  ${ALUT_LIB}
-    )
+        )
   endif (WINDOWS)
 endif (OPENAL)
-
 
 if (OPENAL)
   message(STATUS "Building with OpenAL audio support")

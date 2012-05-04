@@ -174,7 +174,9 @@ if (LINUX)
       add_definitions(-DCTYPE_WORKAROUND)
     endif (NOT DEBIAN_VERSION STREQUAL "3.1")
 
-    if (EXISTS /usr/lib/mysql4/mysql)
+    if (EXISTS /usr/lib64/mysql4/mysql)
+      link_directories(/usr/lib64/mysql4/mysql)
+    elseif (EXISTS /usr/lib/mysql4/mysql)
       link_directories(/usr/lib/mysql4/mysql)
     endif (EXISTS /usr/lib/mysql4/mysql)
 
