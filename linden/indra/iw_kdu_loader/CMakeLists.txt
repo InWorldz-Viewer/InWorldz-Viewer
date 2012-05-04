@@ -46,12 +46,9 @@ else (WINDOWS)
   #end Hack
 
   add_definitions(
-#	-g
-#	-c
-#	-shared
 	-fPIC
 	-D "IW_KDU_LOADER_EXPORTS"
-	)
+  )
 endif (WINDOWS)
 
 include_directories(
@@ -86,14 +83,7 @@ set_source_files_properties(${iw_kdu_loader_HEADER_FILES}
 
 list(APPEND iw_kdu_loader_SOURCE_FILES ${iw_kdu_loader_HEADER_FILES})
 
-if (WINDOWS)
-    add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
-else (WINDOWS)
-    add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
-#    add_library (iw_kdu_loader SHARED ${iw_kdu_loader_SOURCE_FILES})
-endif (WINDOWS)
-
-#add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
+add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
 
 if (WINDOWS)
 	# Release -- need to figure out how to set release/debug
@@ -127,7 +117,5 @@ else(WINDOWS)
 	set_target_properties(iw_kdu_loader
 		PROPERTIES
 		LINK_FLAGS "-shared -Wl"
-#		LINK_FLAGS "-shared -Wl, -soname "
-#		LINK_FLAGS_DEBUG "-shared -Wl, -soname, "
 		)
 endif (WINDOWS)
