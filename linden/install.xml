@@ -67,6 +67,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/SDL-1.2.12-linux-20081222c.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>214fe53a11b3cdef115d36cb95aae185</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/SDL-1.2.12-linux64-20091230.tar.bz2</uri>
+          </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
@@ -99,9 +106,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>1a7e1186855d48d8316ce86803095f70</string>
+            <string>5ee61e2cffc9b6f2a1bc5027cd51529e</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/apr_suite-1.2.8-linux64-20080909a.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/apr_suite-1.3.9-linux64-20091204.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -139,9 +146,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>c4242416e0b2e642c0bf062a19a250e4</string>
+            <string>c7ec29e8dfe856d74a15b66d557c3010</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/ares-1.3.0-linux64-20080909.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/ares-1.7.1-linux64-20101115.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -185,6 +192,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/boost-1.39.0-linux-20100222a.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>ebfaa439a8a78db7d99a26a73a70994a</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/boost-1.39.0-linux64-20100901.tar.bz2</uri>
+          </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
@@ -221,9 +235,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>6994192cea7ab2d885a158a3de474273</string>
+            <string>1c9ff00e520748983a9bb0f131c30448</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/curl-7.16.4a-linux64-20090303.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/curl-7.21.2-linux64-20101115.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -270,6 +284,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/dbusglib-linux-20101031.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>09be41e3145e1a960e50f2f9ce0a5e7d</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/dbusglib-linux64-20101007.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>elfio</key>
@@ -284,6 +305,13 @@
             <string>82ea408af2f968cfe5f013ab241323ef</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/elfio-1.0.3-linux-20080812.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>e829a52ba67e02b011cf2e372914d32f</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/elfio-1.0.3-linux64-20091129.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -314,9 +342,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>278c61871419b9a4d50a4f88b7922403</string>
+            <string>fe25958da18039faf7a38845f2057561</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/expat-1.95.8-linux64-20080909.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/expat-2.0.1-linux64-20091204.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -339,6 +367,13 @@
             <string>9af6a1ed39fa540bfcaa402b0ea22f78</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/fontconfig-2.2.3-linux-20080613.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>13b551e5deafbaa6cfd105fa072bdfba</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/fontconfig-2.7.3-linux64-20091230.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -384,9 +419,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>35f6fa557ba90f9cda0a18d1af2055a4</string>
+            <string>1b4624ab06a7ba30e29d1994424db41e</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/freetype-2.1.5-linux64-20080909.tar.bz2</uri>
+            <uri>http://imprudenceviewer.org/download/libs/freetype-2.3.11-linux64-20091230.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -503,6 +538,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/google-linux-20080812.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>6a83ddce8673acb5057ed3a14769deee</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/google-linux64-20091203.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>gstreamer</key>
@@ -580,6 +622,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/gtk-etc-linux-20101106.1.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>e8cb3f28379b7730004da44f04263936</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/gtk-etc-linux64-20091231.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>jpeglib</key>
@@ -609,9 +658,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>0e7facf7d48531d20c0cd6a3c3f04021</string>
+            <string>8b5f413bdefec7cfe3d9ad2d69986bdc</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/jpeglib-6b-linux64-20080909.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/jpeglib-6b-linux64-20101012.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -793,6 +842,13 @@ anguage Infrstructure (CLI) international standard</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/libuuid-linux-20090417.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>3f2a0b553a2a72d3b9a39f528f057b18</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/libuuid-linux64-lenny-20091130.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>libxml</key>
@@ -843,6 +899,13 @@ anguage Infrstructure (CLI) international standard</string>
             <string>96d1373934cb366deb3372be9904ab90</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/llqtwebkit-linux-4.6-20101014.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>863f7b31556b1d368651f85457f4e46d</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/llqtwebkit-linux64-20101012.1.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -909,6 +972,13 @@ anguage Infrstructure (CLI) international standard</string>
             <string>9469c3732a33a154fa0a2807b9f36ccc</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/ndofdev-linux-0.2-20080828.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>c5eb5b49d48ee370fc6ed8798e1fc58c</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/ndofdev-linux64-0.2-20091129.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -1022,9 +1092,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux64</key>
           <map>
              <key>md5sum</key>
-            <string>ea42b868511e2d5fab2df11dceaf2b7e</string>
+            <string>7b1039886ab997d2926604540426961f</string>
              <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/openal-linux64-20100428.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/openal-1.13-Linux-x86_64-20110708.tar.bz2</uri>
            </map>
           <key>windows</key>
           <map>
@@ -1062,9 +1132,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux64</key>
            <map>
              <key>md5sum</key>
-             <string>5b812951f5a300540a7a51dcf65c39f0</string>
+             <string>c7a951e709984a3d9031554f751247c1</string>
              <key>url</key>
-             <uri>http://inworldz.com/imprudence/libs/openjpeg-1.4-linux64-20100526.tar.bz2</uri>
+             <uri>http://download.kokuaviewer.org/files/libs/openjpeg-1.3-linux64-20100228.tar.bz2</uri>
            </map>
           <key>windows</key>
           <map>
@@ -1129,6 +1199,13 @@ anguage Infrstructure (CLI) international standard</string>
             <uri>http://inworldz.com/imprudence/libs/vivox-inworldz-3.2.0002.10426-darwin-20120122.tar.bz2</uri>
           </map>
           <key>linux</key>
+          <map>
+            <key>md5sum</key>
+            <string>581abada85ae249a773e90dc96f615f9</string>
+            <key>url</key>
+            <uri>https://github.com/downloads/Avian-IW/InWorldz-Viewer/iwvoice-2.1-linux-20090310.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
           <map>
             <key>md5sum</key>
             <string>581abada85ae249a773e90dc96f615f9</string>
