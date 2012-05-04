@@ -51,10 +51,12 @@
 SCRIPTSRC=$(readlink -f "$0" || echo "$0")
 RUN_PATH=$(dirname "${SCRIPTSRC}" || echo .)
 BINARY_TYPE=$(expr match "$(file -b ${RUN_PATH}/bin/SLPlugin)" '\(.*executable\)')
-if [ "`uname -m`" == "x86_64" -a "${BINARY_TYPE}" == "ELF 32-bit LSB executable" ]; then
-    export LL_DISABLE_GSTREAMER=x
-    echo '64-bit Linux detected: Disabling GStreamer (streaming video and music) by default; edit ./inworldz to re-enable.'
-fi
+
+##Bypass 64bit check for gstreamer as we now have a real 64bit viewer
+#if [ "`uname -m`" == "x86_64" -a "${BINARY_TYPE}" == "ELF 32-bit LSB executable" ]; then
+#    export LL_DISABLE_GSTREAMER=x
+#    echo '64-bit Linux detected: Disabling GStreamer (streaming video and music) by default; edit ./inworldz to re-enable.'
+#fi
 
 ## Everything below this line is just for advanced troubleshooters.
 ##-------------------------------------------------------------------
@@ -101,7 +103,14 @@ cd "${RUN_PATH}"
 export SAVED_LD_LIBRARY_PATH="${LD_LIBRARY_PATH}"
 
 if [ -n "$LL_TCMALLOC" ]; then
+  #check if 64bit system
+  if [ "`uname -m`" == "x86_64" -a "${BINARY_TYPE}" == "ELF 32-bit LSB executable" ]; then
+    tcmalloc_libs='/usr/lib64/libtcmalloc.so.0 /usr/lib64/libstacktrace.so.0 /lib/libpthread.so.0'
+  else
     tcmalloc_libs='/usr/lib/libtcmalloc.so.0 /usr/lib/libstacktrace.so.0 /lib/libpthread.so.0'
+  fi
+
+#    tcmalloc_libs='/usr/lib/libtcmalloc.so.0 /usr/lib/libstacktrace.so.0 /lib/libpthread.so.0'
     all=1
     for f in $tcmalloc_libs; do
         if [ ! -f $f ]; then
@@ -135,14 +144,18 @@ if [ -n "$LL_RUN_ERR" ]; then
 		if [ "`uname -m`" = "x86_64" ]; then
 			echo
 			cat << EOFMARKER
-You are running the InWorldz Viewer on a x86_64 platform.  The
-most common problems when launching the Viewer (particularly
-'bin/$VIEWER_BINARY: not found' and 'error while
-loading shared libraries') may be solved by installing your Linux
-distribution's 32-bit compatibility packages.
-For example, on Ubuntu and other Debian-based Linuxes you might run:
-$ sudo apt-get install ia32-libs ia32-libs-gtk ia32-libs-kde ia32-libs-sdl
+Running 64bit Linux IW Viewer - Please read the log to see if
+any 64bit libs could not be found, and install them.
 EOFMARKER
+#			cat << EOFMARKER
+#You are running the InWorldz Viewer on a x86_64 platform.  The
+#most common problems when launching the Viewer (particularly
+#'bin/$VIEWER_BINARY: not found' and 'error while
+#loading shared libraries') may be solved by installing your Linux
+#distribution's 32-bit compatibility packages.
+#For example, on Ubuntu and other Debian-based Linuxes you might run:
+#$ sudo apt-get install ia32-libs ia32-libs-gtk ia32-libs-kde ia32-libs-sdl
+#EOFMARKER
 		fi
 	fi
 fi

@@ -876,8 +876,69 @@ class Linux_x86_64Manifest(LinuxManifest):
     def construct(self):
         super(Linux_x86_64Manifest, self).construct()
 
+# --- Kdu stuff goes here
+        # Try to install either the libkdu_a64R we built
+        try:
+            self.path(self.find_existing_file('../iw_kdu_loader/libiw_kdu_loader.so'),
+                  dst='bin/libiw_kdu_loader.so')
+
+            # keep this one to preserve syntax, open source mangling removes previous lines
+            pass
+        except:
+            print "Skipping libiw_kdu_loader.so - not found"
+
+            pass
+
+        try:
+            self.path(self.find_existing_file('../../libraries/kdu/source/lib/Linux-x86-64-gcc/libkdu_a64R.so'),
+                  dst='lib/libkdu_a64R.so')
+
+            # keep this one to preserve syntax, open source mangling removes previous lines
+            pass
+        except:
+            print "Skipping KDU library file - not found"
+            pass
+
+ 
+# --- normal stuff here
+
+        if self.prefix("../../libraries/x86_64-linux/lib_release_client", dst="lib"):
+
+            self.path("libapr-1.so.0")
+            self.path("libaprutil-1.so.0")
+            self.path("libdb-4.2.so")
+            self.path("libcrypto.so.0.9.8")
+            self.path("libexpat.so.1")
+            self.path("libssl.so.0.9.8")
+            self.path("libuuid.so")
+            self.path("libSDL-1.2.so.0")
+            self.path("libELFIO.so")
+           ## self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
+            self.path("libopenjpeg.so.2")
+#            self.path("libopenal.so.1.12.854","libopenal.so.1")
+            self.path("libopenal.so.1.13.0", "libopenal.so.1")
+#            self.path("libopenal.so","libopenal.so.1")
+#            self.path("libalut.so.0.1.0","libalut.so.0")
+            self.path("libalut.so.0.0.0","libalut.so.0")
+            self.end_prefix("lib")
+
+### Temporarily bypass voice
+            # Vivox runtimes
+#            if self.prefix(src="vivox-runtime/i686-linux", dst="bin/voice"):
+#                    self.path("iwvoice")
+#                    self.end_prefix()
+#            if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
+#                    self.path("libortp.so")
+#                    self.path("libvivoxsdk.so")
+##                    self.path("libvivoxoal.so")
+##                    self.path("libvivoxplatform.so")
+##                    self.path("libsndfile.so")
+#                    self.end_prefix("lib")
+
+
+
         # support file for valgrind debug tool
-        self.path("inworldz-i686.supp")
+        #self.path("inworldz-i686.supp")
 
 if __name__ == "__main__":
     main()
