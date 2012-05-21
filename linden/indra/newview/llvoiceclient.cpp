@@ -1653,7 +1653,7 @@ void LLVoiceClient::stateMachine()
 #elif LL_DARWIN
 					exe_path += "../Resources/iwvoice";
 #else
-					exe_path += "iwvoice";
+					exe_path += "../voice/iwvoice";
 #endif
 					// See if the vivox executable exists
 					llstat s;

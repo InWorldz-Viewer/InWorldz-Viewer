@@ -48,9 +48,9 @@
 ## - GStreamer is automatically disabled for 32-bit Viewers on 64-bit
 ##   systems due to common fatal incompatibilities; remove/comment these
 ##   lines if you want to try anyway.
-SCRIPTSRC=$(readlink -f "$0" || echo "$0")
-RUN_PATH=$(dirname "${SCRIPTSRC}" || echo .)
-BINARY_TYPE=$(expr match "$(file -b ${RUN_PATH}/bin/SLPlugin)" '\(.*executable\)')
+#SCRIPTSRC=$(readlink -f "$0" || echo "$0")
+#RUN_PATH=$(dirname "${SCRIPTSRC}" || echo .)
+#BINARY_TYPE=$(expr match "$(file -b ${RUN_PATH}/bin/SLPlugin)" '\(.*executable\)')
 
 ##Bypass 64bit check for gstreamer as we now have a real 64bit viewer
 #if [ "`uname -m`" == "x86_64" -a "${BINARY_TYPE}" == "ELF 32-bit LSB executable" ]; then
@@ -128,7 +128,9 @@ if [ -n "$LL_TCMALLOC" ]; then
 fi
 
 export VIEWER_BINARY='do-not-directly-run-inworldz-bin'
-export SL_ENV='LD_LIBRARY_PATH="`pwd`"/lib:"`pwd`"/app_settings/mozilla-runtime-linux-i686:"${LD_LIBRARY_PATH}"'
+#export SL_ENV='LD_LIBRARY_PATH="`pwd`"/lib:"`pwd`"/app_settings/mozilla-runtime-linux-i686:"${LD_LIBRARY_PATH}"'
+	export SL_ENV='LD_LIBRARY_PATH="`pwd`"/lib:"`pwd`"/voice:"${LD_LIBRARY_PATH}"'
+
 export SL_CMD='$LL_WRAPPER bin/$VIEWER_BINARY'
 export SL_OPT="`cat gridargs.dat` $@"
 

@@ -861,16 +861,11 @@ class Linux_i686Manifest(LinuxManifest):
             self.end_prefix("lib")
 
             # Vivox runtimes
-            if self.prefix(src="vivox-runtime/i686-linux", dst="bin"):
+            if self.prefix(src="vivox-runtime/i686-linux", dst="voice"):
                     self.path("iwvoice")
-                    self.end_prefix()
-            if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
                     self.path("libortp.so")
                     self.path("libvivoxsdk.so")
-#                    self.path("libvivoxoal.so")
-#                    self.path("libvivoxplatform.so")
-#                    self.path("libsndfile.so")
-                    self.end_prefix("lib")
+                    self.end_prefix("voice")
 
 class Linux_x86_64Manifest(LinuxManifest):
     def construct(self):
@@ -900,7 +895,7 @@ class Linux_x86_64Manifest(LinuxManifest):
             pass
 
  
-# --- normal stuff here
+# --- normal lib moves here
 
         if self.prefix("../../libraries/x86_64-linux/lib_release_client", dst="lib"):
 
@@ -910,35 +905,37 @@ class Linux_x86_64Manifest(LinuxManifest):
             self.path("libcrypto.so.0.9.8")
             self.path("libexpat.so.1")
             self.path("libssl.so.0.9.8")
-            self.path("libuuid.so")
+            self.path("libuuid.so","libuuid.so.1")
             self.path("libSDL-1.2.so.0")
             self.path("libELFIO.so")
-           ## self.path("libopenjpeg.so.1.3.0", "libopenjpeg.so.1.3")
             self.path("libopenjpeg.so.2")
-#            self.path("libopenal.so.1.12.854","libopenal.so.1")
-            self.path("libopenal.so.1.13.0", "libopenal.so.1")
-#            self.path("libopenal.so","libopenal.so.1")
-#            self.path("libalut.so.0.1.0","libalut.so.0")
-            self.path("libalut.so.0.0.0","libalut.so.0")
+            self.path("libopenal.so.1")
+            self.path("libalut.so.0")
+            self.path("libjpeg.so.62.0.0", "libjpeg.so.62")
             self.end_prefix("lib")
 
-### Temporarily bypass voice
-            # Vivox runtimes
-#            if self.prefix(src="vivox-runtime/i686-linux", dst="bin/voice"):
-#                    self.path("iwvoice")
-#                    self.end_prefix()
-#            if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
-#                    self.path("libortp.so")
-#                    self.path("libvivoxsdk.so")
-##                    self.path("libvivoxoal.so")
-##                    self.path("libvivoxplatform.so")
-##                    self.path("libsndfile.so")
-#                    self.end_prefix("lib")
+# Vivox runtime libs move
 
-
-
-        # support file for valgrind debug tool
-        #self.path("inworldz-i686.supp")
+        if self.prefix(src="vivox-runtime/x86_64-linux", dst="voice"):
+            self.path("iwvoice")
+	    self.path("libvivoxsdk.so")
+            self.path("libortp.so")
+# 32bit libs for voice
+	    self.path("libalut.so")
+	    self.path("libalut.so.0")
+	    self.path("libalut.so.0.1.0")
+	    self.path("libidn.so.11")
+	    self.path("libopenal.so")
+	    self.path("libopenal.so.1")
+	    self.path("libopenal.so.1.12.854")
+	    self.path("libuuid.so.1")
+	    self.path("libz.so")
+	    self.path("libz.so.1")
+	    self.path("libz.so.1.2.3.4")
+#            self.path("libvivoxoal.so")
+#            self.path("libvivoxplatform.so")
+#            self.path("libsndfile.so")
+            self.end_prefix("voice")
 
 if __name__ == "__main__":
     main()
