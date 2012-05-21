@@ -1092,9 +1092,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux64</key>
           <map>
              <key>md5sum</key>
-            <string>7b1039886ab997d2926604540426961f</string>
+            <string>8d1ba70a777b7961e06e70818a0060e9</string>
              <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/openal-1.13-Linux-x86_64-20110708.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/openal-linux64-20091230.tar.bz2</uri>
            </map>
           <key>windows</key>
           <map>
@@ -1132,9 +1132,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux64</key>
            <map>
              <key>md5sum</key>
-             <string>c7a951e709984a3d9031554f751247c1</string>
+             <string>5b812951f5a300540a7a51dcf65c39f0</string>
              <key>url</key>
-             <uri>http://download.kokuaviewer.org/files/libs/openjpeg-1.3-linux64-20100228.tar.bz2</uri>
+             <uri>http://inworldz.com/imprudence/libs/openjpeg-1.4-linux64-20100526.tar.bz2</uri>
            </map>
           <key>windows</key>
           <map>
@@ -1208,9 +1208,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>581abada85ae249a773e90dc96f615f9</string>
+            <string>448c754d5bdf2ddd26f869c4d743cf22</string>
             <key>url</key>
-            <uri>https://github.com/downloads/Avian-IW/InWorldz-Viewer/iwvoice-2.1-linux-20090310.tar.bz2</uri>
+            <uri>https://github.com/downloads/Avian-IW/InWorldz-Viewer/iwvoice-2.1-linux64-20120520.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
