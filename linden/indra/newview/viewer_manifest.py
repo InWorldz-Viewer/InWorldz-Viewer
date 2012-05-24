@@ -715,6 +715,12 @@ class LinuxManifest(ViewerManifest):
         self.path("licenses-linux.txt","licenses.txt")
         
         self.path("res/"+self.icon_name(),self.icon_name())
+
+# copy over another icon file but with the '.ico' suffix
+        if self.prefix("res", dst=""):
+            self.path("inworldz_icon-96.ico")
+            self.end_prefix("res")
+
         if self.prefix("linux_tools", dst=""):
             self.path("client-readme.txt","README-linux.txt")
             self.path("client-readme-voice.txt","README-linux-voice.txt")
@@ -763,7 +769,7 @@ class LinuxManifest(ViewerManifest):
         return mapping[self.viewer_branding_id()]
     
     def icon_name(self):
-        mapping={"inworldz":"inworldz_icon.png"}
+        mapping={"inworldz":"inworldz_icon-96.png"}
         return mapping[self.viewer_branding_id()]
 
     def package_finish(self):
