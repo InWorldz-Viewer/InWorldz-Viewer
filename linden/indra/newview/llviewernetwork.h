@@ -75,6 +75,7 @@ enum EGridInfo
  **/
 class LLViewerLogin : public LLSingleton<LLViewerLogin>
 {
+LOG_CLASS(LLViewerLogin);
 public:
 	LLViewerLogin();
 

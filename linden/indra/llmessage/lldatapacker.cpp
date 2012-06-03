@@ -355,19 +355,26 @@ BOOL LLDataPackerBinaryBuffer::packS32(const S32 value, const char *name)
 
 BOOL LLDataPackerBinaryBuffer::unpackS32(S32 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(sizeof(S32), name);
+	value = 0;
+
+	if (!verifyLength(sizeof(S32), name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(&value, mCurBufferp, MVT_S32, 4);
 	mCurBufferp += 4;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::packF32(const F32 value, const char *name)
 {
 	BOOL success = TRUE;
-	success &= verifyLength(sizeof(F32), name);
+	if (!verifyLength(sizeof(F32), name))
+	{
+		return FALSE;
+	}
 
 	if (mWriteEnabled) 
 	{ 
@@ -380,70 +387,88 @@ BOOL LLDataPackerBinaryBuffer::packF32(const F32 value, const char *name)
 
 BOOL LLDataPackerBinaryBuffer::unpackF32(F32 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(sizeof(F32), name);
+	value = 0.0f;
+
+	if (!verifyLength(sizeof(F32), name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(&value, mCurBufferp, MVT_F32, 4);
 	mCurBufferp += 4;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::packColor4(const LLColor4 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(16, name);
+	if (!verifyLength(16, name))
+	{
+		return FALSE;
+	}
 
 	if (mWriteEnabled) 
 	{ 
 		htonmemcpy(mCurBufferp, value.mV, MVT_LLVector4, 16); 
 	}
 	mCurBufferp += 16;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::unpackColor4(LLColor4 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(16, name);
+	value.setToWhite();
+
+	if (!verifyLength(16, name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(value.mV, mCurBufferp, MVT_LLVector4, 16);
 	mCurBufferp += 16;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::packColor4U(const LLColor4U &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(4, name);
+	if (!verifyLength(4, name))
+	{
+		return FALSE;
+	}
 
 	if (mWriteEnabled) 
 	{ 
 		htonmemcpy(mCurBufferp, value.mV, MVT_VARIABLE, 4);  
 	}
 	mCurBufferp += 4;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::unpackColor4U(LLColor4U &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(4, name);
+	value.setToWhite();
+
+	if (!verifyLength(4, name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(value.mV, mCurBufferp, MVT_VARIABLE, 4);
 	mCurBufferp += 4;
-	return success;
+	return TRUE;
 }
 
 
 
 BOOL LLDataPackerBinaryBuffer::packVector2(const LLVector2 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(8, name);
+	if (!verifyLength(8, name))
+	{
+		return FALSE;
+	}
 
 	if (mWriteEnabled) 
 	{ 
@@ -451,102 +476,134 @@ BOOL LLDataPackerBinaryBuffer::packVector2(const LLVector2 &value, const char *n
 		htonmemcpy(mCurBufferp+4, &value.mV[1], MVT_F32, 4);  
 	}
 	mCurBufferp += 8;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::unpackVector2(LLVector2 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(8, name);
+	value.setZero();
+
+	if (!verifyLength(8, name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(&value.mV[0], mCurBufferp, MVT_F32, 4);
 	htonmemcpy(&value.mV[1], mCurBufferp+4, MVT_F32, 4);
 	mCurBufferp += 8;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::packVector3(const LLVector3 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(12, name);
+	if (!verifyLength(12, name))
+	{
+		return FALSE;
+	}
 
 	if (mWriteEnabled) 
 	{ 
 		htonmemcpy(mCurBufferp, value.mV, MVT_LLVector3, 12);  
 	}
 	mCurBufferp += 12;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::unpackVector3(LLVector3 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(12, name);
+	value.setZero();
+
+	if (!verifyLength(12, name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(value.mV, mCurBufferp, MVT_LLVector3, 12);
 	mCurBufferp += 12;
-	return success;
+	return TRUE;
 }
 
 BOOL LLDataPackerBinaryBuffer::packVector4(const LLVector4 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(16, name);
+	if (!verifyLength(16, name))
+	{
+		return FALSE;
+	}
 
 	if (mWriteEnabled) 
 	{ 
 		htonmemcpy(mCurBufferp, value.mV, MVT_LLVector4, 16);  
 	}
 	mCurBufferp += 16;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::unpackVector4(LLVector4 &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(16, name);
+	value.clear();
+	if (!verifyLength(16, name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(value.mV, mCurBufferp, MVT_LLVector4, 16);
 	mCurBufferp += 16;
-	return success;
+	return TRUE;
 }
 
 BOOL LLDataPackerBinaryBuffer::packUUID(const LLUUID &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(16, name);
+	if (!verifyLength(16, name))
+	{
+		return FALSE;
+	}
 
 	if (mWriteEnabled) 
 	{ 
 		htonmemcpy(mCurBufferp, value.mData, MVT_LLUUID, 16);  
 	}
 	mCurBufferp += 16;
-	return success;
+	return TRUE;
 }
 
 
 BOOL LLDataPackerBinaryBuffer::unpackUUID(LLUUID &value, const char *name)
 {
-	BOOL success = TRUE;
-	success &= verifyLength(16, name);
+	value.setNull();
+
+	if (!verifyLength(16, name))
+	{
+		return FALSE;
+	}
 
 	htonmemcpy(value.mData, mCurBufferp, MVT_LLUUID, 16);
 	mCurBufferp += 16;
-	return success;
+	return TRUE;
 }
 
 const LLDataPackerBinaryBuffer&	LLDataPackerBinaryBuffer::operator=(const LLDataPackerBinaryBuffer &a)
 {
-	if (a.getBufferSize() > getBufferSize())
+	S32 mysize = getBufferSize();
+	S32 newsize = a.getBufferSize();
+	if (newsize > mysize)
 	{
 		// We've got problems, ack!
-		llerrs << "Trying to do an assignment with not enough room in the target." << llendl;
+		llwarns << "Trying to do an assignment with not enough room in the target, truncating the assignment!" << llendl;
+		memcpy(mBufferp, a.mBufferp, mysize);	/*Flawfinder: ignore*/
 	}
-	memcpy(mBufferp, a.mBufferp, a.getBufferSize());	/*Flawfinder: ignore*/
+	else 
+	{
+		memcpy(mBufferp, a.mBufferp, newsize);	/*Flawfinder: ignore*/
+		if (mysize > newsize)
+		{
+			// Zero out the rest of the buffer to prevent security issues
+			memset(&mBufferp[newsize], 0, mysize - newsize);
+		}
+	}
 	return *this;
 }
 
@@ -615,6 +672,7 @@ BOOL LLDataPackerAsciiBuffer::unpackString(std::string& value, const char *name)
 	BOOL res = getValueStr(name, valuestr, DP_BUFSIZE); // NULL terminated
 	if (!res) // 
 	{
+		value = "";
 		return FALSE;
 	}
 	value = valuestr;

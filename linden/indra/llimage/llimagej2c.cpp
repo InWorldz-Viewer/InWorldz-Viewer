@@ -86,9 +86,9 @@ void LLImageJ2C::openDSO()
 #if LL_WINDOWS
 	dso_name = "iw_kdu_loader.dll";
 #elif LL_DARWIN
-	dso_name = "libkdu_v64R.dylib";
+	dso_name = "libiw_kdu_loader.dylib";
 #else
-	dso_name = "libkdu_v64R.so";
+	dso_name = "libiw_kdu_loader.so";
 #endif
 
 	dso_path = gDirUtilp->findFile(dso_name,
@@ -499,7 +499,7 @@ BOOL LLImageJ2C::encode(const LLImageRaw *raw_imagep, const char* comment_text, 
 		}
 		else
 		{
-			res = mImplKDU->encodeImpl(&base, &raw, comment_text, encode_time);
+			res = mImplKDU->encodeImpl(&base, &raw, comment_text, encode_time, mReversible);
 			
 			if ((base.getData() != NULL) &&
 				((base.getData() != this->getData()) &&

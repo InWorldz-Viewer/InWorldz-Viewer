@@ -15,6 +15,7 @@ linden/indra/newview/dbghelp.dll
 linden/indra/newview/media_plugin_gstreamer010.log
 linden/indra/newview/lib/*
 linden/indra/test_apps/
+linden/indra/newview/vivox-runtime/
 
 
 # COMPILED STUFF

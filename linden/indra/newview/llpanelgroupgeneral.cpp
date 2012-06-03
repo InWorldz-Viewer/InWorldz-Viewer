@@ -846,6 +846,7 @@ void LLPanelGroupGeneral::update(LLGroupChange gc)
 		{
 			mInsignia->setImageAssetID(mDefaultIconID);
 		}
+		mInsignia->resetDirty();
 	}
 
 	if (mEditCharter)

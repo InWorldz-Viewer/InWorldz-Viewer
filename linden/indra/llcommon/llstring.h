@@ -881,6 +881,7 @@ void LLStringUtilBase<T>::addCRLF(std::basic_string<T>& string)
 		}
 
 		string.assign(t, size);
+		delete[] t;
 	}
 }
 

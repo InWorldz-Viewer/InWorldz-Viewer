@@ -1648,5 +1648,136 @@ Responds to request_id with status and body
 string llGetHTTPHeader(key request_id, string header)
 Returns the value for header for request_id
   </string>
+  <string name="LSLTipText_llGetLinkNumberOfSides">
+integer llGetLinkNumberOfSides(integer link)
+Returns the number of sides of a specified linked prim.
+  </string>
+  <string name="LSLTipText_llSetLinkTextureAnim">
+llSetLinkTextureAnim(integer link, integer mode, integer face, integer sizex, integer sizey, float start, float length, float rate)
+Animate the texture on a specified prim's face/faces.
+	</string>
+  <string name="LSLTipText_llLinkParticleSystem">
+llLinkParticleSystem(integer linknumber,list rules)
+Creates a particle system based on rules.  Empty list removes particle system from object.
+List format is [ rule1, data1, rule2, data2 . . . rulen, datan ].
+	</string>
+  <string name="LSLTipText_llSetLinkPrimitiveParamsFast">
+llSetLinkPrimitiveParamsFast(integer linknumber,list rules)
+Set primitive parameters for linknumber based on rules.
+	</string>
+	<string name="LSLTipText_llGetLinkPrimitiveParams">
+llGetLinkPrimitiveParams(integer linknumber,list rules)
+Get primitive parameters for linknumber based on rules.
+	</string>
+  <string name="LSLTipText_llClearPrimMedia">
+llClearPrimMedia(integer face)
+Clears (deletes) the media and all params from the given face.
+  </string>
+  <string name="LSLTipText_llGetPrimMediaParams">
+list llGetPrimMediaParams(integer face, list params)
+Returns the media params for a particular face on an object, given the desired list of names, in the order requested.
+(Returns an empty list if no media exists on the face.)
+	</string>
+  <string name="LSLTipText_llSetPrimMediaParams">
+llSetPrimMediaParams(integer face, list params)
+Sets the media params for a particular face on an object. If media is not already on this object, add it.
+List is a set of name/value pairs in no particular order.  Params not specified are unchanged, or if new media is added then set to the default specified.
+The possible names are below, along with the types of values and what they mean.
+	</string>
+  <string name="LSLTipText_iwAvatarName2Key">
+key iwAvatarName2Key(string firstname, string lastname)
+Returns the UUID (key) associated with an avatar's first and last name
+  </string>
+  <string name="LSLTipText_iwLinkTargetOmega">
+iwLinkTargetOmega(integer link, vector axis, float spinrate, float gain)
+Rotates the object/prim around axis at spinrate * llVecMag(axis) in radians per second with strength gain
+  </string>
+  <string name="LSLTipText_iwMakeNotecard">
+iwMakeNotecard(string name, list data)
+Creates a new notecard in the prim's inventory.
+Sleeps the script for 5 seconds
+  </string>
+  <string name="LSLTipText_llAvatarOnLinkSitTarget">
+key llAvatarOnLinkSitTarget(integer linknumber)
+Returns the UUID of the avatar seated on a sit target on a specified prim. If no avatar is found, returns NULL_KEY
+  </string>
+  <string name="LSLTipText_iwGetLastOwner">
+key iwGetLastOwner()
+Returns the UUID of the last owner to rez this object
+  </string>
+  <string name="LSLTipText_iwRemoveLinkInventory">
+iwRemoveLinkInventory(integer linknumber, string item)
+Removes a named inventory item from a specified prim
+  </string>
+  <string name="LSLTipText_iwGiveLinkInventory">
+iwGiveLinkInventory(integer linknumber, key destination, string inventory)
+Gives inventory from a specified prim to a specified target key
+  </string>
+  <string name="LSLTipText_iwGiveLinkInventoryList">
+iwGiveLinkInventoryList(integer linknumber, key target, string folder, list inventory)
+Gives inventory items in a specified prim to a specified target key. Creates a new folder
+  </string>
+  <string name="LSLTipText_iwGetNotecardSegment">
+key iwGetNotecardSegment(string name, integer line, integer startoffset, integer maxlength)
+Returns a line of notecard name via the dataserver event, from startoffset for maxlength characters
+  </string>
+  <string name="LSLTipText_iwGetLinkNumberOfNotecardLines">
+key iwGetLinkNumberOfNotecardLines(integer linknumber, string name)
+Returns the number of lines in notecard name in a specified prim via the dataserver event (cast return value to integer)
+  </string>
+  <string name="LSLTipText_iwGetLinkNotecardLine">
+key iwGetLinkNotecardLine(integer linknumber, string name, integer line)
+Returns a specified line of notecard name in a specified prim via the dataserver event.
+Line counting starts at 0
+  </string>
+  <string name="LSLTipText_iwGetLinkNotecardSegment">
+key iwGetLinkNotecardSegment(integer linknumber, string name, integer line, integer startoffset, integer maxlength)
+Returns a line of notecard name in a specified prim via the dataserver event, from startoffset for maxlength characters
+  </string>
+  <string name="LSLTipText_llSetRegionPos">
+integer llSetRegionPos(vector position)
+Tries to move the entire object so that the root prim is within 0.1m of position in the current region
+Returns an integer boolean, TRUE if the object is successfully placed within 0.1 m of position
+Returns FALSE and does not move the position is off-region
+Returns FALSE and does not move the object if the object has physics enabled
+Returns FALSE and does not move the object if the object cannot move to position due to prim limits, bans, etc
+  </string>
+  <string name="LSLTipText_iwGetLinkInventoryNumber">
+integer iwGetLinkInventoryNumber(integer linknumber, integer type)
+Returns an integer that is the number of items of a specified type in a linked prim's inventory
+  </string>
+  <string name="LSLTipText_iwGetLinkInventoryType">
+integer iwGetLinkInventoryType(integer linknumber, string name)
+Returns an integer that is the type of inventory item name in a linked prim
+  </string>
+  <string name="LSLTipText_iwGetLinkInventoryPermMask">
+integer iwGetLinkInventoryPermMask(integer linknumber, string item, integer mask)
+Returns an integer bitfield that is the requested permission mask for a linked prim's inventory item
+  </string>
+  <string name="LSLTipText_iwGetLinkInventoryName">
+string iwGetLinkInventoryName(integer linknumber, integer type, integer number)
+Returns the name of a linked prim's inventory item if that item is of the specified type at index number. Otherwise, returns an emtpy string.
+The first item in a prim's inventory is at index 0
+  </string>
+  <string name="LSLTipText_iwGetLinkInventoryKey">
+key iwGetLinkInventoryKey(integer linknumber, string name)
+Returns the UUID associated with a linked prim's inventory name
+  </string>
+  <string name="LSLTipText_iwGetLinkInventoryCreator">
+key iwGetLinkInventoryCreator(integer linknumber, string item)
+Returns the UUID of the creator of a linked prim's inventory item
+  </string>
+  <string name="LSLTipText_iwSHA256String">
+string iwSHA256String(string source)
+Returns the SHA256 hash for the specified source string
+  </string>
+  <string name="LSLTipText_iwTeleportAgent">
+iwTeleportAgent(key agent, string region, vector pos, vector lookat)
+Teleports an agent to the location specified. Bypasses prompts and dialogs
+  </string>
+  <string name="LSLTipText_iwActiveGroup">
+integer iwActiveGroup(key agent, key group)
+Returns TRUE if an avatar (agent) is in the same region and has the specified group active. Otherwise, returns FALSE.
+If group is NULL_KEY, returns TRUE if the avatar has no active group
+  </string>
 </strings>
-

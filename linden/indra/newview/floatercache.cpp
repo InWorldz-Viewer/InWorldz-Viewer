@@ -85,6 +85,9 @@ void FloaterCache::onClickOK(void* data)
 			gSavedSettings.setBOOL("PurgeCacheOnNextStartup", TRUE);
 		}
 
+		// Save all settings to disk in case we crash before quitting
+		gSavedSettings.saveToFile( gSavedSettings.getString("ClientSettingsFile"), TRUE );
+
 		self->close();
 	}
 }

@@ -3123,7 +3123,7 @@ bool LLAppViewer::initCache()
 
 void LLAppViewer::purgeCache()
 {
-	LL_INFOS("AppCache") << "Begin purging cachees..." << llendl;
+	llinfos << "Begin purging viewer caches..." << llendl;
 	if (gSavedSettings.getBOOL("PurgeCacheOnStartup")) // purging from cmd line
 	{
 		LLAppViewer::getTextureCache()->purgeCache(LL_PATH_CACHE);

@@ -794,7 +794,8 @@ bool idle_startup()
 		//  Note: it only loads them if it can figure out the saved username. 
 		if (!firstname.empty() && !lastname.empty()) 
 		{
-			gDirUtilp->setLindenUserDir(firstname, lastname);
+			// MC - this needs fixing
+			gDirUtilp->setLindenUserDir(LLViewerLogin::getInstance()->getGridLabel(), firstname, lastname);
 			LLURLHistory::loadFile("url_history.xml");
 		} 
 
@@ -945,14 +946,18 @@ bool idle_startup()
 
 			LL_INFOS("AppInit") << "Attempting login as: " << firstname << " " << lastname << LL_ENDL;
 			gDebugInfo["LoginName"] = firstname + " " + lastname;	
+
+			// create necessary directories
+			gDirUtilp->setLindenUserDir(LLViewerLogin::getInstance()->getGridLabel(), firstname, lastname);
+			LLFile::mkdir(gDirUtilp->getLindenUserDir());
+		}
+		else
+		{
+			// we don't do anything from here on out -- MC
+			llerrs << "No first or last name given! Cannot proceed!" << llendl;
 		}
 
-		// create necessary directories
-		// *FIX: these mkdir's should error check
-		gDirUtilp->setLindenUserDir(firstname, lastname);
-    	LLFile::mkdir(gDirUtilp->getLindenUserDir());
-
-        // Set PerAccountSettingsFile to the default value.
+		// Set PerAccountSettingsFile to the default value.
 		gSavedSettings.setString("PerAccountSettingsFile",
 			gDirUtilp->getExpandedFilename(LL_PATH_PER_SL_ACCOUNT, 
 				LLAppViewer::instance()->getSettingsFilename("Default", "PerAccount")
@@ -980,7 +985,7 @@ bool idle_startup()
 			gDirUtilp->setChatLogsDir(gSavedPerAccountSettings.getString("InstantMessageLogPath"));		
 		}
 		
-		gDirUtilp->setPerAccountChatLogsDir(firstname, lastname);
+		gDirUtilp->setPerAccountChatLogsDir(LLViewerLogin::getInstance()->getGridLabel(), firstname, lastname);
 
 		LLFile::mkdir(gDirUtilp->getChatLogsDir());
 		LLFile::mkdir(gDirUtilp->getPerAccountChatLogsDir());

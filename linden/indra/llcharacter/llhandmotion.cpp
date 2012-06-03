@@ -208,7 +208,8 @@ std::string LLHandMotion::getHandPoseName(eHandPose pose)
 	{
 		return std::string(gHandPoseNames[pose]);
 	}
-	return LLStringUtil::null;
+	LL_WARNS("Bounds") << "Was passed an invalid hand pose: " << (S32)pose << LL_ENDL;
+	return std::string("Hands_Relaxed");
 }
 
 LLHandMotion::eHandPose LLHandMotion::getHandPose(std::string posename)
@@ -220,7 +221,7 @@ LLHandMotion::eHandPose LLHandMotion::getHandPose(std::string posename)
 			return (eHandPose)pose;
 		}
 	}
-	return (eHandPose)0;
+	return (eHandPose)1;
 }
 
 // End

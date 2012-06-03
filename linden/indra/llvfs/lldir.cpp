@@ -193,8 +193,9 @@ const std::string &LLDir::getOSUserAppDir() const
 	return mOSUserAppDir;
 }
 
-const std::string &LLDir::getLindenUserDir() const
+const std::string &LLDir::getLindenUserDir(bool empty_ok) const
 {
+	llassert(empty_ok || !mLindenUserDir.empty());
 	return mLindenUserDir;
 }
 
@@ -542,7 +543,7 @@ std::string LLDir::getForbiddenFileChars()
 	return "\\/:*?\"<>|";
 }
 
-void LLDir::setLindenUserDir(const std::string &first, const std::string &last)
+void LLDir::setLindenUserDir(const std::string &grid, const std::string &first, const std::string &last)
 {
 	// if both first and last aren't set, assume we're grabbing the cached dir
 	if (!first.empty() && !last.empty())
@@ -558,6 +559,14 @@ void LLDir::setLindenUserDir(const std::string &first, const std::string &last)
 		mLindenUserDir += firstlower;
 		mLindenUserDir += "_";
 		mLindenUserDir += lastlower;
+
+		if (!grid.empty())
+		{
+			std::string gridlower(grid);
+			LLStringUtil::toLower(gridlower);
+			mLindenUserDir += "@";
+			mLindenUserDir += gridlower;
+		}
 	}
 	else
 	{
@@ -579,7 +588,7 @@ void LLDir::setChatLogsDir(const std::string &path)
 	}
 }
 
-void LLDir::setPerAccountChatLogsDir(const std::string &first, const std::string &last)
+void LLDir::setPerAccountChatLogsDir(const std::string &grid, const std::string &first, const std::string &last)
 {
 	// if both first and last aren't set, assume we're grabbing the cached dir
 	if (!first.empty() && !last.empty())
@@ -595,6 +604,14 @@ void LLDir::setPerAccountChatLogsDir(const std::string &first, const std::string
 		mPerAccountChatLogsDir += firstlower;
 		mPerAccountChatLogsDir += "_";
 		mPerAccountChatLogsDir += lastlower;
+
+		if (!grid.empty())
+		{
+			std::string gridlower(grid);
+			LLStringUtil::toLower(gridlower);
+			mPerAccountChatLogsDir += "@";
+			mPerAccountChatLogsDir += gridlower;
+		}
 	}
 	else
 	{

@@ -67,9 +67,11 @@ BOOL APIENTRY DllMain( HMODULE hModule,
 #endif
 
 
-#elif OS_LINUX	// add Linux main here
-#elif OS_MAC	// add mac main here
+//Terrible Hack for now - Avian
+//#elif defined(OS_LINUX)	// add Linux main here
+#else
 
+//#elif OS_MAC	// add mac main here
 
 #endif
 

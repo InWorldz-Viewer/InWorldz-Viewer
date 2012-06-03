@@ -61,6 +61,7 @@ public:
 	virtual BOOL		unpackBinaryDataFixed(U8 *value, S32 size, const char *name) = 0;
 
 	virtual BOOL		packU8(const U8 value, const char *name) = 0;
+	// Sets the 
 	virtual BOOL		unpackU8(U8 &value, const char *name) = 0;
 
 	virtual BOOL		packU16(const U16 value, const char *name) = 0;
@@ -70,9 +71,11 @@ public:
 	virtual BOOL		unpackU32(U32 &value, const char *name) = 0;
 
 	virtual BOOL		packS32(const S32 value, const char *name) = 0;
+	// Sets the value to 0 if verifyLength is false
 	virtual BOOL		unpackS32(S32 &value, const char *name) = 0;
 
 	virtual BOOL		packF32(const F32 value, const char *name) = 0;
+	// Sets the value 
 	virtual BOOL		unpackF32(F32 &value, const char *name) = 0;
 
 	// Packs a float into an integer, using the given size
@@ -83,21 +86,27 @@ public:
 								const BOOL is_signed, const U32 int_bits, const U32 frac_bits);
 
 	virtual BOOL		packColor4(const LLColor4 &value, const char *name) = 0;
+	// Sets the value to white if verifyLength is false
 	virtual BOOL		unpackColor4(LLColor4 &value, const char *name) = 0;
 
 	virtual BOOL		packColor4U(const LLColor4U &value, const char *name) = 0;
+	// Sets the value to white if verifyLength is false
 	virtual BOOL		unpackColor4U(LLColor4U &value, const char *name) = 0;
 
 	virtual BOOL		packVector2(const LLVector2 &value, const char *name) = 0;
+	// Sets the value to 0 if verifyLength is false
 	virtual BOOL		unpackVector2(LLVector2 &value, const char *name) = 0;
 
 	virtual BOOL		packVector3(const LLVector3 &value, const char *name) = 0;
+	// Sets the value to 0 if verifyLength is false
 	virtual BOOL		unpackVector3(LLVector3 &value, const char *name) = 0;
 
 	virtual BOOL		packVector4(const LLVector4 &value, const char *name) = 0;
+	// Sets the value to 0 if verifyLength is false
 	virtual BOOL		unpackVector4(LLVector4 &value, const char *name) = 0;
 
 	virtual BOOL		packUUID(const LLUUID &value, const char *name) = 0;
+	// Sets the value to NULL if verifyLength is false
 	virtual BOOL		unpackUUID(LLUUID &value, const char *name) = 0;
 			U32			getPassFlags() const	{ return mPassFlags; }
 			void		setPassFlags(U32 flags)	{ mPassFlags = flags; }
@@ -188,6 +197,7 @@ public:
 
 	/*virtual*/ void dumpBufferToLog();
 protected:
+	// Returns false if sent a negative size
 	inline BOOL verifyLength(const S32 data_size, const char *name);
 
 	U8 *mBufferp;
@@ -197,10 +207,15 @@ protected:
 
 inline BOOL LLDataPackerBinaryBuffer::verifyLength(const S32 data_size, const char *name)
 {
-	if (mWriteEnabled && (mCurBufferp - mBufferp) > mBufferSize - data_size)
+	if (!mWriteEnabled)
+	{
+		return TRUE;
+	}
+
+	if ((data_size < 0) || ((mCurBufferp - mBufferp) > mBufferSize - data_size))
 	{
 		llwarns << "Buffer overflow in BinaryBuffer length verify, field name " << name << "!" << llendl;
-		llwarns << "Current pos: " << (int)(mCurBufferp - mBufferp) << " Buffer size: " << mBufferSize << " Data size: " << data_size << llendl;
+		llwarns << "Current pos: " << (S32)(mCurBufferp - mBufferp) << " Buffer size: " << mBufferSize << " Data size: " << data_size << llendl;
 		return FALSE;
 	}
 

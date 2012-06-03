@@ -28,7 +28,7 @@ set(all_targets ${all_targets} ${out_targets})
 set(debug_src_dir "${CMAKE_SOURCE_DIR}/../libraries/i686-win32/lib/debug")
 set(debug_files
 	alut.dll
-	kdu_v64R.dll
+	kdu_v64D.dll
     libapr-1.dll
     libaprutil-1.dll
     libapriconv-1.dll
