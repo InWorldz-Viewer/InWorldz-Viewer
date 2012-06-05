@@ -475,7 +475,7 @@ class WindowsManifest(ViewerManifest):
         self.created_path(self.dst_path_of(new_script))
         self.package_file = base_filename + ".exe"
 
-        print "New ISS script created at " +  self.args['dest'] + "\\" + new_script       
+        print "New ISS script created at file:///" +  self.args['dest'] + "\\" + new_script       
 
 
 class DarwinManifest(ViewerManifest):
