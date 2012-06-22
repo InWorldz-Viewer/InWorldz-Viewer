@@ -207,9 +207,9 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>1bece4ebdc5fc3818854bc3df14b511b</string>
+            <string>c426dfaad3b662405e49ed3701a55d38</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/curl-7.16.4a-darwin-20090304.tar.bz2</uri>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/curl-7.16.0-darwin-20080812.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -324,6 +324,25 @@
             <string>5dbbdb4a9b5bec86d180ef20a5f8ccfb</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/expat-1.95.8-windows-20090917.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
+      <key>flac</key>
+      <map>
+        <key>copyright</key>
+        <string>Copyright (C) 2001,2002,2003,2004,2005,2006,2007  Josh Coalson</string>
+        <key>description</key>
+        <string>libFLAC - Free Lossless Audio Codec</string>
+        <key>license</key>
+        <string>xiph-bsd</string>
+        <key>packages</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>md5sum</key>
+            <string>0fc6d13b79a0c806f9d32c00f374de67</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/flac-1.2.1-darwin-20091107.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -635,9 +654,9 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>4c6b949778099a63550898f00f3e6a5e</string>
+            <string>1007ddeeca66145b75055f81462364cd</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/jsoncpp-svn-r69-darwin-20090923.tar.bz2</uri>
+            <uri>http://imprudenceviewer.org/download/libs/jpeg-6b-darwin-20091108.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -736,6 +755,42 @@ anguage Infrstructure (CLI) international standard</string>
           </map>
         </map>
       </map>
+      <key>liboil</key>
+      <map>
+        <key>copyright</key>
+        <string>Portions copyright 2002,2003,2004,2005 David A. Schleef &lt;ds@schleef.org&gt;
+Portions copyright Motorola, Inc. 2003
+Portions copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura
+</string>
+        <key>license</key>
+        <string>liboil</string>
+        <key>description</key>
+        <string>Optimized Inner Loops library</string>
+        <key>packages</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>md5sum</key>
+            <string>23c41164df134e50c887ded186f8144e</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/liboil-0.3.15-darwin-20091107.tar.bz2</uri>
+          </map>
+          <key>linux</key>
+          <map>
+            <key>md5sum</key>
+            <string>85219034b4e4c17e792f8bb54a1973f7</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/liboil-0.3.16-linux-20091125.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>15d8f97d5ec3a27f643708511ca8bee6</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/liboil-0.3.16-linux64-20091130.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
       <key>libpng</key>
       <map>
         <key>copyright</key>
@@ -749,9 +804,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>82659b48831cbf58bf04b86602939e0b</string>
+            <string>13fd90d50a0bd7ea9b8c8db5bf97cc5e</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/libpng-1.2.35-darwin-20090304.tar.bz2</uri>
+            <uri>http://imprudenceviewer.org/download/libs/libpng-1.2.35-darwin-20091107.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -886,6 +941,33 @@ anguage Infrstructure (CLI) international standard</string>
           </map>
         </map>
       </map>
+      <key>neon</key>
+      <map>
+        <key>copyright</key>
+        <string>Copyright (C) 1999-2006 Joe Orton &lt;joe@manyfish.co.uk&gt;
+Portions are:
+Copyright (C) 1999-2000 Tommi Komulainen &lt;Tommi.Komulainen@iki.fi&gt;
+Copyright (C) 1999-2000 Peter Boos &lt;pedib@colorfullife.com&gt;
+Copyright (C) 1991, 1995, 1996, 1997 Free Software Foundation, Inc.
+Copyright (C) 2004 Aleix Conchillo Flaque &lt;aleix@member.fsf.org&gt;
+Copyright (C) 2004 Jiang Lei &lt;tristone@deluxe.ocn.ne.jp&gt;
+Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
+</string>
+        <key>description</key>
+        <string>HTTP and WebDAV client library</string>
+        <key>license</key>
+        <string>lgpl</string>
+        <key>packages</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>md5sum</key>
+            <string>c8582be73def7f40fdc236ba9e33b4ac</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/neon-0.28.4-darwin-20091109.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
       <key>ndofdev</key>
       <map>
         <key>copyright</key>
@@ -932,9 +1014,9 @@ anguage Infrstructure (CLI) international standard</string>
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>a6843398b780645c4897c9776c688926</string>
+            <string>30c75ce29c2ce2f6e8063067db31989d</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/ogg-vorbis-1.03-1.1.2-darwin-20080812.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/ogg-vorbis-darwin-1.2.2-1.3.2-20110517.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -1072,6 +1154,117 @@ anguage Infrstructure (CLI) international standard</string>
             <string>8e611d266d9e589bc3913dbe0a08853c</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/openjpeg-1.4.565-windows-20100514.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
+      <key>pulseaudio</key>
+      <map>
+        <key>copyright</key>
+        <string>Copyright 2004-2006 Lennart Poettering, Copyright 2006 Pierre Ossman (ossman@cendio.se) for Cendio AB</string>
+        <key>description</key>
+        <string>pulseaudio: headers only</string>
+        <key>license</key>
+        <string>lgpl</string>
+        <key>packages</key>
+        <map>
+<!--          <key>linux</key>
+          <map>
+            <key>md5sum</key>
+            <string>30cb00069fe2a545fbf7be1070386236</string>
+            <key>url</key>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/linux-pulse-headers-0.9.14.tar.bz2</uri>
+          </map>
+          <key>linux64</key>--><key>common</key>
+          <map>
+            <key>md5sum</key>
+            <string>c5c3b840bb77ee41fa06970663c15302</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/pulseaudio-headers-0.9.21-63-gd3efa-dirty.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
+      <key>quicktime</key>
+      <map>
+        <key>copyright</key>
+        <string>Copyright (C) 1990-2006 by Apple Computer, Inc., all rights reserved.</string>
+        <key>description</key>
+        <string>Separate download. Used to play in-world video clips on a prim. </string>
+        <key>license</key>
+        <string>quicktime</string>
+        <key>packages</key>
+        <map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>7a2e6fc89b1ef027f3a36ebb46fb0c8a</string>
+            <key>url</key>
+            <uri>scp:install-packages.lindenlab.com:/local/www/install-packages/doc/quicktime-windows-20080611.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
+      <key>smartheap</key>
+      <map>
+        <key>copyright</key>
+        <string>Copyright (C) 1991-2000 Compuware Corporation. All Rights Reserved.</string>
+        <key>description</key>
+        <string>Memory Management Library</string>
+        <key>license</key>
+        <string>smartheap</string>
+        <key>packages</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>md5sum</key>
+            <string>f54131b5f228e805c64c2e4e6c96579a</string>
+            <key>url</key>
+            <uri>scp:install-packages.lindenlab.com:/local/www/install-packages/doc/smartheap-6.0.2-darwin-20080610.tar.bz2</uri>
+          </map>
+          <key>linux</key>
+          <map>
+            <key>md5sum</key>
+            <string>499208522bf7d7843e1d014d64214e06</string>
+            <key>url</key>
+            <uri>scp:install-packages.lindenlab.com:/local/www/install-packages/doc/smartheap-6.0.2-linux-20080610.tar.bz2</uri>
+          </map>
+          <key>windows</key>
+          <map>
+            <key>md5sum</key>
+            <string>78fd47017f21d11eae43bca3e38a3e1e</string>
+            <key>url</key>
+            <uri>scp:install-packages.lindenlab.com:/local/www/install-packages/doc/smartheap-6.0.2-windows-20080611.tar.bz2</uri>
+          </map>
+        </map>
+      </map>
+      <key>theora</key>
+      <map>
+        <key>copyright</key>
+        <string>Copyright (C) 2002-2009 Xiph.org Foundation</string>
+        <key>description</key>
+        <string>Ogg Theora video format</string>
+        <key>license</key>
+        <string>xiph-bsd</string>
+        <key>packages</key>
+        <map>
+          <key>darwin</key>
+          <map>
+            <key>md5sum</key>
+            <string>ba438bfe25ada5c7be7051f9a91ca300</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/theora-1.0alpha5-darwin-20091107.tar.bz2</uri>
+          </map>
+          <key>linux</key>
+          <map>
+            <key>md5sum</key>
+            <string>e01af61872bc77d74eb0620a9f4c9f4e</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/theora-linux-20091115.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>b1141b53eb3576cc0c32997bf0fb097c</string>
+            <key>url</key>
+            <uri>http://imprudenceviewer.org/download/libs/theora-linux64-20091202.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -1404,6 +1597,11 @@ your work.
         <key>text</key>
         <string>http://daniel.haxx.se/projects/c-ares/license.html</string>
       </map>
+      <key>creative commons attribution-share alike 3.0</key>
+      <map>
+        <key>url</key>
+        <string>http://creativecommons.org/licenses/by-sa/3.0/legalcode</string>
+      </map>
       <key>curl</key>
       <map>
         <key>url</key>
@@ -1506,6 +1704,11 @@ Cass Everitt - cass@r3.nu
       <map>
         <key>text</key>
         <string>http://www.libpng.org/pub/png/src/libpng-LICENSE.txt</string>
+      </map>
+      <key>liboil</key>
+      <map>
+        <key>url</key>
+        <string>http://cgit.freedesktop.org/liboil/tree/COPYING</string>
       </map>
       <key>linden</key>
       <map>

@@ -206,8 +206,6 @@ F32 gSimFrames;
 BOOL gAllowIdleAFK = TRUE;
 BOOL gAllowTapTapHoldRun = TRUE;
 BOOL gShowObjectUpdates = FALSE;
-BOOL gUseQuickTime = TRUE;
-
 BOOL gAcceptTOS = FALSE;
 BOOL gAcceptCriticalMessage = FALSE;
 

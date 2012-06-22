@@ -131,7 +131,7 @@
 			none
 		</widgettype>
 		<impl>
-			media_plugin_webkit
+			media_plugin_quicktime
 		</impl>
 	</mimetype>
 	<mimetype name="audio/*">
@@ -439,7 +439,7 @@
 			movie
 		</widgettype>
 		<impl>
-			media_plugin_gstreamer
+			media_plugin_quicktime
 		</impl>
 	</mimetype>
 	<mimetype menu="1" name="video/quicktime">

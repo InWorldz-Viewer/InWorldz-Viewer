@@ -1024,6 +1024,7 @@ void LLWindowMacOSX::hide()
 	HideWindow(mWindow);
 }
 
+//virtual
 void LLWindowMacOSX::minimize()
 {
 	setMouseClipping(FALSE);
@@ -1031,6 +1032,7 @@ void LLWindowMacOSX::minimize()
 	CollapseWindow(mWindow, true);
 }
 
+//virtual
 void LLWindowMacOSX::restore()
 {
 	show();
@@ -3253,7 +3255,7 @@ LLSD LLWindowMacOSX::getNativeKeyData()
 }
 
 
-BOOL LLWindowMacOSX::dialogColorPicker( F32 *r, F32 *g, F32 *b)
+BOOL LLWindowMacOSX::dialog_color_picker( F32 *r, F32 *g, F32 *b)
 {
 	BOOL	retval = FALSE;
 	OSErr	error = noErr;

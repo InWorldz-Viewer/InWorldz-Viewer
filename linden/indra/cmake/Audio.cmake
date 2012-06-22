@@ -40,3 +40,13 @@ link_directories(
     ${VORBISFILE_LIBRARY_DIRS}
     ${OGG_LIBRARY_DIRS}
     )
+
+if(NOT vorbis_link_msg)
+  set(vorbis_link_msg ON CACHE BOOL "ogg vorbis linked from:\n")
+  message("ogg vorbis linked from:\n"
+    ${VORBIS_LIBRARY_DIRS} "\n"
+    ${VORBISENC_LIBRARY_DIRS} "\n"
+    ${VORBISFILE_LIBRARY_DIRS} "\n"
+    ${OGG_LIBRARY_DIRS} "\n"
+  )
+endif(NOT vorbis_link_msg)
