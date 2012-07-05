@@ -900,7 +900,7 @@ void init_client_menu(LLMenuGL* menu)
 	init_debug_avatar_menu(sub_menu);
 	menu->appendMenu(sub_menu);
 
-{
+	{
 		LLMenuGL* sub = NULL;
 		sub = new LLMenuGL("Network And Logging");
 
@@ -915,6 +915,29 @@ void init_client_menu(LLMenuGL* menu)
 			&handle_viewer_enable_message_log,  NULL));
 		sub->append(new LLMenuItemCallGL("Disable Messages In Log File", 
 			&handle_viewer_disable_message_log, NULL));
+
+		sub->appendSeparator();
+
+		{
+			LLMenuGL* sub_recorder = new LLMenuGL("Recorder");
+
+			sub_recorder->append(new LLMenuItemCheckGL("Full Session Logging", &menu_toggle_control, NULL, &menu_check_control, (void*)"StatsSessionTrackFrameStats"));
+
+			sub_recorder->append(new LLMenuItemCallGL("Start Logging",	&LLFrameStats::startLogging, NULL));
+			sub_recorder->append(new LLMenuItemCallGL("Stop Logging",	&LLFrameStats::stopLogging, NULL));
+			sub_recorder->append(new LLMenuItemCallGL("Log 10 Seconds", &LLFrameStats::timedLogging10, NULL));
+			sub_recorder->append(new LLMenuItemCallGL("Log 30 Seconds", &LLFrameStats::timedLogging30, NULL));
+			sub_recorder->append(new LLMenuItemCallGL("Log 60 Seconds", &LLFrameStats::timedLogging60, NULL));
+			sub_recorder->appendSeparator();
+			sub_recorder->append(new LLMenuItemCallGL("Start Playback", &LLAgentPilot::startPlayback, NULL));
+			sub_recorder->append(new LLMenuItemCallGL("Stop Playback",	&LLAgentPilot::stopPlayback, NULL));
+			sub_recorder->append(new LLMenuItemToggleGL("Loop Playback", &LLAgentPilot::sLoop) );
+			sub_recorder->append(new LLMenuItemCallGL("Start Record",	&LLAgentPilot::startRecord, NULL));
+			sub_recorder->append(new LLMenuItemCallGL("Stop Record",	&LLAgentPilot::saveRecord, NULL));
+
+			sub->appendMenu( sub_recorder );
+			sub_recorder->createJumpKeys();
+		}
 
 		sub->appendSeparator();
 
@@ -934,32 +957,9 @@ void init_client_menu(LLMenuGL* menu)
 										  &menu_check_control,
 										  (void*)"LogProcessObject"));
 
-		sub->appendSeparator();
-
 		sub->append(new LLMenuItemCallGL("Drop a Packet", 
 			&drop_packet, NULL, NULL, 
 			'L', MASK_ALT | MASK_CONTROL));
-
-		menu->appendMenu( sub );
-		sub->createJumpKeys();
-	}
-	{
-		LLMenuGL* sub = NULL;
-		sub = new LLMenuGL("Recorder");
-
-		sub->append(new LLMenuItemCheckGL("Full Session Logging", &menu_toggle_control, NULL, &menu_check_control, (void*)"StatsSessionTrackFrameStats"));
-
-		sub->append(new LLMenuItemCallGL("Start Logging",	&LLFrameStats::startLogging, NULL));
-		sub->append(new LLMenuItemCallGL("Stop Logging",	&LLFrameStats::stopLogging, NULL));
-		sub->append(new LLMenuItemCallGL("Log 10 Seconds", &LLFrameStats::timedLogging10, NULL));
-		sub->append(new LLMenuItemCallGL("Log 30 Seconds", &LLFrameStats::timedLogging30, NULL));
-		sub->append(new LLMenuItemCallGL("Log 60 Seconds", &LLFrameStats::timedLogging60, NULL));
-		sub->appendSeparator();
-		sub->append(new LLMenuItemCallGL("Start Playback", &LLAgentPilot::startPlayback, NULL));
-		sub->append(new LLMenuItemCallGL("Stop Playback",	&LLAgentPilot::stopPlayback, NULL));
-		sub->append(new LLMenuItemToggleGL("Loop Playback", &LLAgentPilot::sLoop) );
-		sub->append(new LLMenuItemCallGL("Start Record",	&LLAgentPilot::startRecord, NULL));
-		sub->append(new LLMenuItemCallGL("Stop Record",	&LLAgentPilot::saveRecord, NULL));
 
 		menu->appendMenu( sub );
 		sub->createJumpKeys();
