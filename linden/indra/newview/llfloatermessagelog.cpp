@@ -586,6 +586,7 @@ void LLFloaterMessageLog::show()
 		sInstance = new LLFloaterMessageLog();
 	}
 	sInstance->open();
+	sInstance->center();
 }
 
 BOOL LLFloaterMessageLog::postBuild()
