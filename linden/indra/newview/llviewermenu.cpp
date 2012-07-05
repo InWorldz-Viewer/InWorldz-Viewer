@@ -902,7 +902,7 @@ void init_client_menu(LLMenuGL* menu)
 
 {
 		LLMenuGL* sub = NULL;
-		sub = new LLMenuGL("Network");
+		sub = new LLMenuGL("Network And Logging");
 
 		sub->append(new LLMenuItemCallGL("Message Log", 
 			&handle_open_message_log, NULL));
@@ -928,6 +928,11 @@ void init_client_menu(LLMenuGL* menu)
 										  NULL, 
 										  &menu_check_control,
 										  (void*)"PingInterpolate"));
+		sub->append(new LLMenuItemCheckGL("Add Object Update Data To Log", 
+										  &menu_toggle_control,
+										  NULL, 
+										  &menu_check_control,
+										  (void*)"LogProcessObject"));
 
 		sub->appendSeparator();
 

@@ -441,6 +441,12 @@ bool handleRenderSculptSAMaxChanged(const LLSD& newvalue)
 	return true;
 }
 
+bool handleLogProcessObjectChanged(const LLSD& newvalue)
+{
+	LLViewerObject::sLogProcessObject = newvalue.asReal();
+	return true;
+}
+
 
 ////////////////////////////////////////////////////////////////////////////
 
@@ -574,6 +580,7 @@ void settings_setup_listeners()
 	gSavedSettings.getControl("LipSyncEnabled")->getSignal()->connect(boost::bind(&handleVoiceClientPrefsChanged, _1));		
 	gSavedSettings.getControl("RenderSculptSAThreshold")->getSignal()->connect(boost::bind(&handleRenderSculptSAThresholdChanged, _1));
 	gSavedSettings.getControl("RenderSculptSAMax")->getSignal()->connect(boost::bind(&handleRenderSculptSAMaxChanged, _1));
+	gSavedSettings.getControl("LogProcessObject")->getSignal()->connect(boost::bind(&handleLogProcessObjectChanged, _1));
 }
 
 template <> eControlType get_control_type<U32>(const U32& in, LLSD& out) 

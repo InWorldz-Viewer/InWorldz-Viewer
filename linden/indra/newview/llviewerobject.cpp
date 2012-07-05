@@ -111,6 +111,8 @@ LLColor4	LLViewerObject::sNoEditSelectColor(	1.0f, 0.f, 0.f, 0.3f);	// Can't edi
 S32			LLViewerObject::sAxisArrowLength(50);
 BOOL		LLViewerObject::sPulseEnabled(FALSE);
 BOOL		LLViewerObject::sUseSharedDrawables(FALSE); // TRUE
+bool		LLViewerObject::sLogProcessObject(false);
+
 
 // static
 LLViewerObject *LLViewerObject::createObject(const LLUUID &id, const LLPCode pcode, LLViewerRegion *regionp)
@@ -1334,9 +1336,15 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 		{
 			case OUT_TERSE_IMPROVED:
 			{
-#ifdef DEBUG_UPDATE_TYPE
-				llinfos << "CompTI:" << getID() << llendl;
-#endif
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\nProcessing object, compressed msg (dp != NULL):"
+						<< "\nUpdate type: OUT_TERSE_IMPROVED"
+						<< "\nState: " << (U32)mState
+						<< "\nValues after unpacking: " 
+						<< llendl;
+				}
+
 				U8		value;
 				dp->unpackU8(value, "agent");
 				if (value)
@@ -1344,44 +1352,91 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					LLVector4 collision_plane;
 					dp->unpackVector4(collision_plane, "Plane");
 					((LLVOAvatar*)this)->setFootPlane(collision_plane);
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tagent: true" << "\n\tPlane: " << collision_plane << llendl;
+					}
 				}
+				else
+				{
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tagent: false" << llendl;
+					}
+				}
+
 				test_pos_parent = getPosition();
 				dp->unpackVector3(new_pos_parent, "Pos");
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\tPos: " << new_pos_parent << llendl;
+				}
+
 				dp->unpackU16(val[VX], "VelX");
 				dp->unpackU16(val[VY], "VelY");
 				dp->unpackU16(val[VZ], "VelZ");
-				setVelocity(U16_to_F32(val[VX], -128.f, 128.f),
-							U16_to_F32(val[VY], -128.f, 128.f),
-							U16_to_F32(val[VZ], -128.f, 128.f));
+				F32 x_val = U16_to_F32(val[VX], -128.f, 128.f);
+				F32 y_val = U16_to_F32(val[VY], -128.f, 128.f);
+				F32 z_val = U16_to_F32(val[VZ], -128.f, 128.f);
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\tVelX: " << x_val << "\n\tVelY: " << y_val << "\n\tVelZ: " << z_val << llendl;
+				}
+				setVelocity(x_val, y_val, z_val);
+
 				dp->unpackU16(val[VX], "AccX");
 				dp->unpackU16(val[VY], "AccY");
 				dp->unpackU16(val[VZ], "AccZ");
-				setAcceleration(U16_to_F32(val[VX], -64.f, 64.f),
-								U16_to_F32(val[VY], -64.f, 64.f),
-								U16_to_F32(val[VZ], -64.f, 64.f));
+				x_val = U16_to_F32(val[VX], -64.f, 64.f);
+				y_val = U16_to_F32(val[VY], -64.f, 64.f);
+				z_val = U16_to_F32(val[VZ], -64.f, 64.f);
+				setAcceleration(x_val, y_val, z_val);
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\tAccX (Acceleration): " << x_val << "\n\tAccY (Acceleration): " << y_val << "\n\tAccZ (Acceleration): " << z_val << llendl;
+				}
 
 				dp->unpackU16(val[VX], "ThetaX");
 				dp->unpackU16(val[VY], "ThetaY");
 				dp->unpackU16(val[VZ], "ThetaZ");
 				dp->unpackU16(val[VS], "ThetaS");
-				new_rot.mQ[VX] = U16_to_F32(val[VX], -1.f, 1.f);
-				new_rot.mQ[VY] = U16_to_F32(val[VY], -1.f, 1.f);
-				new_rot.mQ[VZ] = U16_to_F32(val[VZ], -1.f, 1.f);
-				new_rot.mQ[VS] = U16_to_F32(val[VS], -1.f, 1.f);
+				x_val = U16_to_F32(val[VX], -1.f, 1.f);
+				y_val = U16_to_F32(val[VY], -1.f, 1.f);
+				z_val = U16_to_F32(val[VZ], -1.f, 1.f);
+				F32 s_val = U16_to_F32(val[VS], -1.f, 1.f);
+				new_rot.mQ[VX] = x_val;
+				new_rot.mQ[VY] = y_val;
+				new_rot.mQ[VZ] = z_val;
+				new_rot.mQ[VS] = s_val;
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\tThetaX (Rotation): " << x_val << "\n\tThetaY (Rotation): " << y_val << "\n\tThetaZ (Rotation): " << z_val << "\n\tThetaZ (Rotation): " << s_val << llendl;
+				}
+
 				dp->unpackU16(val[VX], "AccX");
 				dp->unpackU16(val[VY], "AccY");
 				dp->unpackU16(val[VZ], "AccZ");
 				setAngularVelocity(	U16_to_F32(val[VX], -64.f, 64.f),
 									U16_to_F32(val[VY], -64.f, 64.f),
 									U16_to_F32(val[VZ], -64.f, 64.f));
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\tAccX (AngularVelocity): " << x_val << "\n\tAccY (AngularVelocity): " << y_val << "\n\tAccZ (AngularVelocity): " << z_val << llendl;
+				}
 			}
 			break;
 			case OUT_FULL_COMPRESSED:
 			case OUT_FULL_CACHED:
 			{
-#ifdef DEBUG_UPDATE_TYPE
-				llinfos << "CompFull:" << getID() << llendl;
-#endif
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\nProcessing object, compressed msg (dp != NULL):"
+						<< "\nUpdate type: OUT_FULL_COMPRESSED or OUT_FULL_CACHED"
+						<< "\nState: " << (U32)mState
+						<< "\nValues after unpacking: " 
+						<< llendl;
+				}
+
 				dp->unpackU32(crc, "CRC");
 				mTotalCRC = crc;
 				dp->unpackU8(material, "Material");
@@ -1408,19 +1463,44 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 				dp->setPassFlags(value);
 				dp->unpackUUID(owner_id, "Owner");
 
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\tCRC: " << crc
+						<< "\n\tMaterial: " << material << " (Old Material: " << old_material << ")"
+						<< "\n\tClickAction: " << (U32)click_action
+						<< "\n\tScale: " << new_scale
+						<< "\n\tPos: " << new_pos_parent
+						<< "\n\tRot: " << vec << " (Acceleration set to zero)"
+						<< "\n\tSpecialCode: " << value
+						<< "\n\tOwner: " << owner_id
+						<< llendl;
+				}
+
 				if (value & 0x80)
 				{
 					dp->unpackVector3(vec, "Omega");
 					setAngularVelocity(vec);
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tOmega (AngularVelocity): " << vec << llendl;
+					}
 				}
 
 				if (value & 0x20)
 				{
 					dp->unpackU32(parent_id, "ParentID");
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tParentID: " << parent_id << llendl;
+					}
 				}
 				else
 				{
 					parent_id = 0;
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tParentID: none sent" << llendl;
+					}
 				}
 
 				S32 sp_size;
@@ -1431,6 +1511,10 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					delete [] mData;
 					mData = new U8[1];
 					dp->unpackU8(((U8*)mData)[0], "TreeData");
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tTreeData: " << mData << llendl;
+					}
 				}
 				else if (value & 0x1)
 				{
@@ -1438,10 +1522,18 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					delete [] mData;
 					mData = new U8[size];
 					dp->unpackBinaryData((U8 *)mData, sp_size, "PartData");
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tScratchPadSize: " << size << "\n\tPartData: " << mData << llendl;
+					}
 				}
 				else
 				{
 					mData = NULL;
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tNo data sent: " << llendl;
+					}
 				}
 
 				// Setup object text
@@ -1466,11 +1558,20 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					mText->setStringUTF8(temp_string);
 
 					setChanged(TEXTURE);
+
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tText: " << temp_string << "\n\tColor" << coloru << llendl;
+					}
 				}
 				else if(mText.notNull())
 				{
 					mText->markDead();
 					mText = NULL;
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tNo Text sent, removing existing text" << llendl;
+					}
 				}
 
 				if (value & 0x200)
@@ -1491,12 +1592,20 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 						mMedia->mMediaURL = media_url;
 						mMedia->mPassedWhitelist = FALSE;
 					}
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tMediaURL: " << media_url << llendl;
+					}
 				}
 				else if (mMedia)
 				{
 					retval |= MEDIA_URL_REMOVED;
 					delete mMedia;
 					mMedia = NULL;
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tNo MediaURL sent, removing existing media url" << llendl;
+					}
 				}
 
 				//
@@ -1505,12 +1614,20 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 				if (value & 0x8)
 				{
 					unpackParticleSource(*dp, owner_id);
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tIs a particle source? TRUE" << llendl;
+					}
 				}
 				else
 				{
 					deleteParticleSource();
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tIs a particle source? FALSE" << llendl;
+					}
 				}
-				
+
 				// Mark all extra parameters not used
 				std::map<U16, ExtraParameter*>::iterator iter;
 				for (iter = mExtraParameterList.begin(); iter != mExtraParameterList.end(); ++iter)
@@ -1536,7 +1653,10 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 						llwarns << "Unable to unpack 'param_data' for object" << llendl;
 						break;
 					}
-					//llinfos << "Param type: " << param_type << ", Size: " << param_size << llendl;
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tParam type: " << param_type << "\n\tSize: " << param_size << llendl;
+					}
 					LLDataPackerBinaryBuffer dp2(param_block, param_size);
 					unpackParameterEntry(param_type, &dp2);
 				}
@@ -1556,6 +1676,14 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					dp->unpackF32(gain, "SoundGain");
 					dp->unpackU8(sound_flags, "SoundFlags");
 					dp->unpackF32(cutoff, "SoundRadius");
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tSoundUUID: " << sound_uuid
+							<< "\n\tSoundGain" << gain
+							<< "\n\tSoundFlags" << (U32)sound_flags
+							<< "\n\tSoundRadius" << cutoff
+							<< llendl;
+					}
 				}
 
 				if (value & 0x100)
@@ -1564,6 +1692,10 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 					dp->unpackString(name_value_list, "NV");
 
 					setNameValueList(name_value_list);
+					if (sLogProcessObject)
+					{
+						llinfos << "\n\tNV: " << name_value_list << llendl;
+					}
 				}
 
 				mTotalCRC = crc;
@@ -1581,6 +1713,10 @@ U32 LLViewerObject::processUpdateMessage(LLMessageSystem *mesgsys,
 
 					// ...new objects that should come in selected need to be added to the selected list
 				mCreateSelected = ((flags & FLAGS_CREATE_SELECTED) != 0);
+				if (sLogProcessObject)
+				{
+					llinfos << "\n\tFlags: " << flags << "\n\tIs create selected? (Should be TRUE): " << mCreateSelected << llendl;
+				}
 			}
 			break;
 
