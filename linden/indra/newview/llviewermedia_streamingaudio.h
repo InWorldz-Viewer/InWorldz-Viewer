@@ -46,6 +46,7 @@ class LLStreamingAudio_MediaPlugins :
 	public LLStreamingAudioInterface,
 	public LLPluginClassMediaOwner
 {
+	LOG_CLASS(LLStreamingAudio_MediaPlugins);
  public:
 	LLStreamingAudio_MediaPlugins();
 	/*virtual*/ ~LLStreamingAudio_MediaPlugins();

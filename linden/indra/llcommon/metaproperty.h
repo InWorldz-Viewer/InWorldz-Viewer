@@ -43,6 +43,7 @@ class LLMetaClass;
 class LLReflective;
 class LL_COMMON_API LLMetaProperty
 {
+LOG_CLASS(LLMetaProperty);
 public:
 	LLMetaProperty(const std::string& name, const LLMetaClass& object_class);
   virtual ~LLMetaProperty();
