@@ -107,6 +107,8 @@ LLPrefsChatImpl::LLPrefsChatImpl()
 	childSetValue("play_typing_animation", gSavedSettings.getBOOL("PlayTypingAnim"));
 	childSetValue("console_opacity", gSavedSettings.getF32("ConsoleBackgroundOpacity"));
 	childSetValue("bubble_chat_opacity", gSavedSettings.getF32("ChatBubbleOpacity"));
+// **Avian-Vertical Tab
+	childSetValue("vertical-imtabs-toggle", gSavedSettings.getBOOL("VerticalIMTabs"));
 }
 
 void LLPrefsChatImpl::refreshValues()
@@ -189,6 +191,8 @@ void LLPrefsChatImpl::apply()
 	gSavedSettings.setF32("ConsoleBackgroundOpacity", childGetValue("console_opacity").asReal());
 	gSavedSettings.setF32("ChatBubbleOpacity", childGetValue("bubble_chat_opacity").asReal());
 
+// **Avian - Vertical Tab
+	gSavedSettings.setBOOL("VerticalIMTabs", childGetValue("vertical-imtabs-toggle").asBoolean());
 
 	refreshValues(); // member values become the official values and cancel becomes a no-op.
 }
