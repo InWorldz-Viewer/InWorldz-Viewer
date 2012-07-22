@@ -34,8 +34,8 @@
 #elif LL_LINUX
 	#define OS_LINUX
 
-//#elif LL_DARWIN //add check for mac here
-//	#define OS_MAC
+#elif LL_DARWIN //add check for mac here
+	#define OS_MAC
 
 #endif
 

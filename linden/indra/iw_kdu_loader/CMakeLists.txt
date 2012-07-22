@@ -88,12 +88,12 @@ list(APPEND iw_kdu_loader_SOURCE_FILES ${iw_kdu_loader_HEADER_FILES})
 
 if (WINDOWS)
     add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
-else (WINDOWS)
+elseif (LINUX)
     add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
-#    add_library (iw_kdu_loader SHARED ${iw_kdu_loader_SOURCE_FILES})
+elseif (DARWIN)
+    add_library (iw_kdu_loader SHARED ${iw_kdu_loader_SOURCE_FILES})
 endif (WINDOWS)
 
-#add_library (iw_kdu_loader ${iw_kdu_loader_SOURCE_FILES})
 
 if (WINDOWS)
 	# Release -- need to figure out how to set release/debug
@@ -120,7 +120,7 @@ if (WINDOWS)
 		)
 		
 	# add post-build copying to the right inworldz-bin.exe directory here
-else(WINDOWS)
+elseif (LINUX)
 	target_link_libraries(iw_kdu_loader
 		${IW_KDU_LIBRARIES}
 		)
@@ -129,5 +129,15 @@ else(WINDOWS)
 		LINK_FLAGS "-shared -Wl"
 #		LINK_FLAGS "-shared -Wl, -soname "
 #		LINK_FLAGS_DEBUG "-shared -Wl, -soname, "
+		)
+elseif (DARWIN)
+	# This is completely the wrong way to do this
+	target_link_libraries(iw_kdu_loader
+		${IW_IMAGEBASE_LIBRARIES}
+		${KDU_LIB_DIR}/libkdu_v64R.a
+		)
+	set_target_properties(iw_kdu_loader
+		PROPERTIES
+		LINK_FLAGS "-shared -Wl"
 		)
 endif (WINDOWS)

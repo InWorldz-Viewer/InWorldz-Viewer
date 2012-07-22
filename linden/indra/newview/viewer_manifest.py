@@ -644,29 +644,34 @@ class DarwinManifest(ViewerManifest):
 
 
                 # SLVoice and vivox lols
+                self.path("vivox-runtime/universal-darwin/libsndfile.dylib", "libsndfile.dylib")
+                self.path("vivox-runtime/universal-darwin/libvivoxoal.dylib", "libvivoxoal.dylib")
+                self.path("vivox-runtime/universal-darwin/libvivoxplatform.dylib", "libvivoxplatform.dylib")
                 self.path("vivox-runtime/universal-darwin/libortp.dylib", "libortp.dylib")
                 self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxsdk.dylib")
                 self.path("vivox-runtime/universal-darwin/iwvoice", "iwvoice")
 
                 libdir = "../../libraries/universal-darwin/lib_release"
-                #dylibs = {}
                 
-                # need to get the kdu dll from any of the build directories as well
-                #for lib in "llkdu", "llcommon":
-                #    libfile = "lib%s.dylib" % lib
-                #    try:
-                #        self.path(self.find_existing_file(os.path.join(os.pardir,
-                #                                                       lib,
-                #                                                       self.args['configuration'],
-                #                                                       libfile),
-                #                                          os.path.join(libdir, libfile)),
-                #                  dst=libfile)
-                #    except RuntimeError:
-                #        print "Skipping %s" % libfile
-                #        dylibs[lib] = False
-                #    else:
-                #        dylibs[lib] = True
-
+                
+                
+                # IW KDU
+                self.path("../iw_kdu_loader/" + self.args['configuration'] + "/libiw_kdu_loader.dylib", "libiw_kdu_loader.dylib")
+                
+                kdu_lib = ''
+                if self.args['configuration'] == 'Debug':
+                	kdu_lib = 'libkdu_v64D.dylib'
+                else:
+                	kdu_lib = 'libkdu_v64R.dylib'
+                	
+                try:
+            		self.path(self.find_existing_file('../../libraries/kdu/bin/' + kdu_lib), 
+                  dst=kdu_lib)
+                except:
+		            print "Skipping KDU lib"
+		            
+		            
+                
                 self.path(os.path.join(os.pardir,
                                        "llcommon",
                                        self.args['configuration'],

@@ -1,6 +1,7 @@
 
 Unpack the Kakadu library source into the "source" directory, 
-then build the library, e.g. /kdu/source/coresys
+e.g. "kdu/source/coresys" then build the library using the
+included compiling instructions. 
 
 After compiling Kakadu, binary files will be created in a 
 subdirectory, for example a "linden\libraries\kdu\lib_x86" 

@@ -39,13 +39,12 @@
 	#else
 		#define IW_KDU_LOADER_API __declspec(dllimport)
 	#endif
-#elif defined(OS_LINUX)
+#elif defined(OS_LINUX) || defined(OS_MAC)
 	#ifdef IW_KDU_LOADER_EXPORTS
 		#define IW_KDU_LOADER_API __attribute__ ((visibility ("default")))
 	#else
 		#define IW_KDU_LOADER_API __attribute__ ((visibility ("hidden")))
 	#endif
-//#elif OS_MAC	// add mac macro here?
 #endif
 
 
