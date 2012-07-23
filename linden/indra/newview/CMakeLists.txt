@@ -65,10 +65,12 @@ include_directories(
     )
 
 set(viewer_SOURCE_FILES
-	aoremotectrl.cpp
+    aoremotectrl.cpp
+    chatbar_as_cmdline.cpp
     floaterao.cpp
     floaterbusy.cpp
     floatercache.cpp
+    floatercommandline.cpp
     jcfloaterareasearch.cpp
     hbfloatergrouptitles.cpp
     llagent.cpp
@@ -493,9 +495,11 @@ set(viewer_HEADER_FILES
     CMakeLists.txt
     ViewerInstall.cmake
     aoremotectrl.h
+    chatbar_as_cmdline.h
     floaterao.h
     floaterbusy.h
     floatercache.h
+    floatercommandline.h
     jcfloaterareasearch.h
     hbfloatergrouptitles.h
     llagent.h

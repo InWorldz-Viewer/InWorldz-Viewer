@@ -60,7 +60,8 @@
 static LLFrameTimer sInitTimer;
 
 // Uncomment and use instead if we ever add the chatbar as a command line - MC
-//void cmdline_printchat(std::string message);
+void cmdline_printchat(std::string message);
+/*
 void cmdline_printchat(std::string message)
 {
     LLChat chat;
@@ -68,6 +69,7 @@ void cmdline_printchat(std::string message)
 	chat.mSourceType = CHAT_SOURCE_SYSTEM;
     LLFloaterChat::addChat(chat, FALSE, FALSE);
 }
+*/
 
 AOInvTimer* gAOInvTimer = NULL;
 
