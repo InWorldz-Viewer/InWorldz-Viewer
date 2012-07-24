@@ -13129,5 +13129,31 @@
 
   <!-- End: chatbar_as_cmdline -->
 
+<!-- Begin: linden/inventory trees and grasses -->
+
+  <key>LastGrass</key>
+  <map>
+    <key>Comment</key>
+    <string>The last grass selected in the create dialog</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>Random</string>
+  </map>
+  <key>LastTree</key>
+  <map>
+    <key>Comment</key>
+    <string>The last tree selected in the create dialog</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>Random</string>
+  </map>
+
+
 </map>
 </llsd>
