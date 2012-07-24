@@ -131,6 +131,7 @@ elseif (LINUX)
 #		LINK_FLAGS_DEBUG "-shared -Wl, -soname, "
 		)
 elseif (DARWIN)
+	set(CMAKE_OSX_ARCHITECTURES "i386")
 	# This is completely the wrong way to do this
 	target_link_libraries(iw_kdu_loader
 		${IW_IMAGEBASE_LIBRARIES}
