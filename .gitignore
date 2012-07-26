@@ -25,6 +25,7 @@ linden/indra/build-*
 linden/installed.xml
 *.pyc
 pdb_files/*.pdb
+bin
 
 
 # PATCHES
