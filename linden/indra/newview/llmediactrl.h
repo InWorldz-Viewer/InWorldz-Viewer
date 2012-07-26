@@ -91,14 +91,13 @@ class LLMediaCtrl :
 		// Javascript or some other mechanism.  However, we need the search
 		// floater and login page to handle these URLs.  Those are safe
 		// because we control the page content.  See DEV-9530.  JC.
-		void setTrusted( bool valIn );
+		void setTrusted(bool valIn);
+		bool isTrusted() { return mTrusted; }
 
 		void setHomePageUrl( const std::string urlIn );
 		std::string getHomePageUrl();
-
-		// set/clear URL to visit when a 404 page is reached
-		void set404RedirectUrl( std::string redirect_url );
-		void clr404RedirectUrl();
+		
+		void setTarget(const std::string& target);
 
 		// accessor/mutator for flag that indicates if frequent updates to texture happen
 		bool getFrequentUpdates() { return mFrequentUpdates; };
@@ -154,6 +153,8 @@ class LLMediaCtrl :
 		std::string mHomePageUrl;
 		std::string mExternalUrl;
 		std::string mCurrentNavUrl;
+		std::string mTarget;
+		std::string mErrorPageURL;
 		bool mIgnoreUIScale;
 		bool mAlwaysRefresh;
 		viewer_media_t mMediaSource;

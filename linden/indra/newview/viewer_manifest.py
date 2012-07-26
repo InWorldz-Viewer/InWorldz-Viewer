@@ -568,6 +568,8 @@ class DarwinManifest(ViewerManifest):
                 self.path("uk.lproj")
                 self.path("zh-Hans.lproj")
 
+                #libdir = "../packages/lib/release"
+                dylibs = {}
 
                 # if (not self.standalone()) and self.prefix(src="../../libraries/universal-darwin/lib_release/gstreamer-plugins", dst="lib/gstreamer-plugins"):
                 #     self.path("libgstaacparse.so")
@@ -670,19 +672,28 @@ class DarwinManifest(ViewerManifest):
                 except:
 		            print "Skipping KDU lib"
 		            
-		            
-                
-                self.path(os.path.join(os.pardir,
-                                       "llcommon",
-                                       self.args['configuration'],
-                                       "libllcommon.dylib"),
-                          dst="libllcommon.dylib")
+                # Need to get the llcommon dll from any of the build directories as well
+                lib = "llcommon"
+                libfile = "lib%s.dylib" % lib
+                try:
+                    self.path(self.find_existing_file(os.path.join(os.pardir,
+                                                                    lib,
+                                                                    self.args['configuration'],
+                                                                    libfile),
+                                                      os.path.join(libdir, libfile)),
+                                                      dst=libfile)
+                except RuntimeError:
+                    print "Skipping %s" % libfile
+                    dylibs[lib] = False
+                else:
+                    dylibs[lib] = True
 
+                if dylibs["llcommon"]:
+                    for libfile in ("libapr-1.0.3.7.dylib",
+                                    "libaprutil-1.0.3.8.dylib",
+                                    "libexpat.0.5.0.dylib"):
+                        self.path(os.path.join(libdir, libfile), libfile)
 
-                for libfile in ("libapr-1.0.3.7.dylib",
-                                "libaprutil-1.0.3.8.dylib",
-                                "libexpat.0.5.0.dylib"):
-                    self.path(os.path.join(libdir, libfile), libfile)
 
                 # our apps
                 #self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
@@ -709,17 +720,19 @@ class DarwinManifest(ViewerManifest):
                 self.path("../llplugin/slplugin/" + self.args['configuration'] + "/SLPlugin.app", "SLPlugin.app")
 
                 # symlinks for SLPlugin.app dependencies
-                slplugin_res_path = self.dst_path_of("SLPlugin.app/Contents/Resources")
-                for libfile in ("libllcommon.dylib",
-                                "libapr-1.0.3.7.dylib",
-                                "libaprutil-1.0.3.8.dylib",
-                                "libexpat.0.5.0.dylib",
-                                ):
-                    target_lib = os.path.join('../../..', libfile)
-                    self.run_command("ln -sf %(target)r %(link)r" % 
-                                     {'target': target_lib,
-                                      'link' : os.path.join(slplugin_res_path, libfile)}
-                                     )
+                if dylibs["llcommon"]:
+                    slplugin_res_path = self.dst_path_of("SLPlugin.app/Contents/Resources")
+                    for libfile in ("libllcommon.dylib",
+                                    "libapr-1.0.3.7.dylib",
+                                    "libaprutil-1.0.3.8.dylib",
+                                    "libexpat.0.5.0.dylib",
+                                    ):
+                        target_lib = os.path.join('../../..', libfile)
+                                                
+                        self.run_command("ln -sf %(target)r %(link)r" % 
+                                         {'target': target_lib,
+                                          'link' : os.path.join(slplugin_res_path, libfile)}
+                                         )
 
                 # plugins
                 if self.prefix(src="", dst="llplugin"):

@@ -152,9 +152,6 @@ BOOL LLPanelDirFind::postBuild()
 		// need to handle inworldz:///app/ URLs for direct teleports
 		mWebBrowser->setTrusted( true );
 
-		// redirect 404 pages from S3 somewhere else
-		mWebBrowser->set404RedirectUrl( getString("redirect_404_url") );
-
 		navigateToDefaultPage();
 	}
 

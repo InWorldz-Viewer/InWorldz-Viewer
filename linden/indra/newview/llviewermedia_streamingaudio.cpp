@@ -35,6 +35,7 @@
 
 #include "linden_common.h"
 #include "llpluginclassmedia.h"
+#include "llpluginclassmediaowner.h"
 #include "llviewermedia.h"
 #include "llviewercontrol.h"
 
@@ -66,7 +67,7 @@ void LLStreamingAudio_MediaPlugins::start(const std::string& url)
 	if (!mMediaPlugin) // lazy-init the underlying media plugin
 	{
 		mMediaPlugin = initializeMedia("audio/mpeg"); // assumes that whatever media implementation supports mp3 also supports vorbis.
-		llinfos << "mMediaPlugin is now " << mMediaPlugin << llendl;
+		llinfos << "streaming audio mMediaPlugin is now " << mMediaPlugin << llendl;
 	}
 
 	mVersion = mMediaPlugin ? mMediaPlugin->getPluginVersion() : std::string();
@@ -82,7 +83,7 @@ void LLStreamingAudio_MediaPlugins::start(const std::string& url)
 		mURL = url;
 		mMediaPlugin->loadURI ( url );
 		mMediaPlugin->start();
-		llinfos << "Playing....." << llendl;		
+		llinfos << "Playing internet stream: " << mURL << llendl;		
 	} else {
 		llinfos << "setting stream to NULL"<< llendl;
 		mURL.clear();
@@ -110,10 +111,12 @@ void LLStreamingAudio_MediaPlugins::pause(int pause)
 	
 	if(pause)
 	{
+		llinfos << "Pausing internet stream: " << mURL << llendl;
 		mMediaPlugin->pause();
 	} 
 	else 
 	{
+		llinfos << "Unpausing internet stream: " << mURL << llendl;
 		mMediaPlugin->start();
 	}
 }
@@ -129,6 +132,20 @@ int LLStreamingAudio_MediaPlugins::isPlaying()
 	if (!mMediaPlugin)
 		return 0;
 	
+	LLPluginClassMediaOwner::EMediaStatus status =
+		mMediaPlugin->getStatus();
+
+	switch (status)
+	{
+	case LLPluginClassMediaOwner::MEDIA_LOADING: // but not MEDIA_LOADED
+	case LLPluginClassMediaOwner::MEDIA_PLAYING:
+		return 1; // Active and playing
+	case LLPluginClassMediaOwner::MEDIA_PAUSED:
+		return 2; // paused
+	default:
+		return 0; // stopped
+	}
+/*
 	// *TODO: can probably do better than this
 	if (mMediaPlugin->isPluginRunning())
 	{
@@ -141,6 +158,7 @@ int LLStreamingAudio_MediaPlugins::isPlaying()
 	}
 
 	return 2; // paused
+*/
 }
 
 void LLStreamingAudio_MediaPlugins::setGain(F32 vol)
@@ -166,7 +184,12 @@ std::string LLStreamingAudio_MediaPlugins::getURL()
 
 std::string LLStreamingAudio_MediaPlugins::getVersion()
 {
-	return mVersion;
+	if(mMediaPlugin)
+		return mMediaPlugin->getPluginVersion();
+
+	std::string version = LLMIMETypes::implType("audio/mpeg");
+	std::replace(version.begin(), version.end(), '_', ' ');
+	return version;
 }
 
 void LLStreamingAudio_MediaPlugins::handleMediaEvent(LLPluginClassMedia* self, EMediaEvent event)
@@ -188,7 +211,7 @@ void LLStreamingAudio_MediaPlugins::handleMediaEvent(LLPluginClassMedia* self, E
 
 LLPluginClassMedia* LLStreamingAudio_MediaPlugins::initializeMedia(const std::string& media_type)
 {
-	LLPluginClassMediaOwner* owner = this;
+	LLPluginClassMediaOwner* owner = (LLPluginClassMediaOwner*)this;
 	S32 default_size = 1; // audio-only - be minimal, doesn't matter
 	LLPluginClassMedia* media_source = LLViewerMediaImpl::newSourceFromMediaType(media_type, owner, default_size, default_size);
 
