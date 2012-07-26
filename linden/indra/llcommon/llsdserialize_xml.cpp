@@ -353,11 +353,16 @@ void clear_eol(std::istream& input)
 static unsigned get_till_eol(std::istream& input, char *buf, unsigned bufsize)
 {
 	unsigned count = 0;
-	while (count < bufsize && input.good())
+	while (count < bufsize)
 	{
-		char c = input.get();
-		buf[count++] = c;
-		if (is_eol(c))
+		int c = input.get();
+		if (c == EOF)
+			break;
+		if (!input.good())
+			break;
+
+		buf[count++] = (char)c;
+		if (is_eol((char)c))
 		{
 			break;
 		}
