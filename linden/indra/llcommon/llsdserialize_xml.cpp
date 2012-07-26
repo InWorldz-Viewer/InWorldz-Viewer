@@ -397,6 +397,7 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 			if (error_string != "parsing aborted") // end of input
 			{
 				S32 line_number = XML_GetCurrentLineNumber( mParser );
+				long byte_index = XML_GetCurrentByteIndex(mParser);
 				// This parses LLCurl::Responder::completedRaw always, even
 				// when not using XML. We have to do this little ugliness 
 				// in order to make this error message meaningful.
@@ -407,14 +408,18 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 					if ((text.find('>') != std::string::npos) ||
 						(text.find('<') != std::string::npos))
 					{
-						LL_DEBUGS("Messaging") << "LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
-								<< error_string << LL_ENDL;
+						llwarns << "LLSDXMLParser::Impl::parse error.  Line: " << line_number 
+								<< "  Byte index (long): " << byte_index
+								<< "  Error string: " << error_string 
+								<< llendl;
 					}
 					break;
 				}
 				
-				llinfos << "Possible LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
-						<< error_string << llendl;
+				llinfos << "Possible LLSDXMLParser::Impl::parse error.  Line: " << line_number 
+						<< "  Byte index (long): " << byte_index
+						<< "  Error string: " << error_string 
+						<< llendl;
 			}
 			// Always break here -- MC
 			break;
