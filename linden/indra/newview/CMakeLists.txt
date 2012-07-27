@@ -1174,6 +1174,10 @@ endif(ARTWORK_EXISTS)
 
 if (WINDOWS)
   file(GLOB viewer_INSTALLER_FILES installers/windows/*.iss)
+  set(viewer_INSTALLER_FILES
+	${viewer_INSTALLER_FILES} 
+	viewer_manifest.py
+	)
 
   source_group("Installer Files" FILES ${viewer_INSTALLER_FILES})
 

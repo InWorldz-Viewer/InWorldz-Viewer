@@ -222,7 +222,7 @@ class WindowsManifest(ViewerManifest):
         # copy over the the pdb file for the regular or SSE2 versions if we don't already have one copied
         symbol_ver = '.'.join(self.args['version'])
         symbol_file = 'inworldz-%s.%s.pdb' % (symbol_ver, self.args['configuration'])
-        symbol_path = '../../../../../pdb_files/%s' % (symbol_file)
+        symbol_path = '../../../../../bin/pdb_files/%s' % (symbol_file)
         if os.path.isfile(os.getcwd() + symbol_path):
             print "%s already exists, skipping" % (symbol_path)
         else:

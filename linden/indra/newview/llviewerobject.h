@@ -552,6 +552,7 @@ public:
 	LLPointer<LLHUDText> mText;
 	LLPointer<LLHUDIcon> mIcon;
 
+	static bool sLogProcessObject;
 	static			BOOL		sUseSharedDrawables;
 	F32		mSculptSurfaceArea;
 

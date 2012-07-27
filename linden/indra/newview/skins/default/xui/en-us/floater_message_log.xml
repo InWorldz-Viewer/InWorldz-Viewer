@@ -1,31 +1,144 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<floater name="Message Log" title="Message Log" width="400" min_width="400" height="600" min_height="600" can_close="true" can_resize="true" can_minimize="true">
-	<scroll_list column_padding="0" draw_heading="false" follows="left|top|right" left="10" top="-25"
-			  name="net_list" search_column="0" right="-10" bottom="450">
-		<column dynamicwidth="true" name="text" label="text" />
-		<column name="icon0" label="icon0" width="24" />
-		<column name="icon1" label="icon1" width="24" />
+<floater name="Message Log" title="Message Log" width="430" min_width="400" height="600" min_height="600" can_close="true" can_resize="true" can_minimize="true">
+	<scroll_list column_padding="0" 
+               draw_heading="true" 
+               follows="left|top|right" 
+               left="10" 
+               top="-25"			  
+               name="net_list" 
+               search_column="0" 
+               right="-10"
+               bottom="495">
+		<column dynamicwidth="true" name="text" label="Region(s)" />
+		<column name="icon0" label="icon0" width="24" image="icon_net_close_circuit.tga" tool_tip="Click to close circuit" />
+		<column name="icon1" label="icon1" width="24" image="icon_net_close_eventpoll_gray.tga" tool_tip="Click to close event poll" />
 	</scroll_list>
-	<button name="filter_choice_btn" follows="left|top" left="10" top="-150" right="-370" bottom="430" label="…"/>
-	<line_editor name="filter_edit" follows="left|top|right" left="30" top="-149" right="-95" bottom="430" max_length="65535"/>
-	<button name="filter_apply_btn" follows="top|right" width="80" top="-150" right="-9" bottom="430" label="Apply"/>
-	<button name="clear_log_btn" follows="top|right" width="80" top="-170" right="-9" bottom="410" label="Clear"/>
-	<scroll_list column_padding="0" draw_heading="false" follows="left|top|right" left="10" top="-190"
-			  name="message_log" search_column="0" right="-10" bottom="200">
-		<column name="sequence" label="sequence" width="48"/>
-		<column name="type" label="type" width="32"/>
-		<column name="direction" label="direction" width="32"/>
-		<column name="net" label="net" width="100"/>
-		<column name="name" label="name" width="128"/>
+
+	<text_editor name="filter_edit" 
+               follows="left|top|right" 
+               left="12" 
+               height="100" 
+               right="-11"
+               bottom_delta="-101"
+               font="SansSerifSmall"
+               is_unicode="false"
+               word_wrap="true"
+               max_length="65535"
+               />
+  <button name="filter_choice_btn" 
+          follows="left|top" 
+          left="10" 
+          width="95" 
+          height="25" 
+          bottom_delta="-28" 
+          label="Presets…"
+          />
+  <button name="import_csv_btn" 
+          follows="top|right" 
+          width="35" 
+          height="25" 
+          left_delta="97" 
+          bottom_delta="0" 
+          label=""
+          tool_top="Open a .csv file of message log presets" 
+          image_overlay="message_log_open.png"
+          />
+  <button name="export_csv_btn" 
+          follows="top|right" 
+          width="35" 
+          height="25" 
+          left_delta="37" 
+          bottom_delta="0" 
+          label=""
+          tool_top="Save a .csv file of message log presets" 
+          image_overlay="message_log_save.png"
+          />
+  <button name="stop_btn" 
+          follows="top|right" 
+          width="35" 
+          height="25" 
+          right="-9" 
+          bottom_delta="0" 
+          label=""
+          image_overlay="message_log_stop.png"
+          />
+  <button name="start_btn" 
+          follows="top|right" 
+          width="35" 
+          height="25" 
+          left_delta="-37" 
+          bottom_delta="0" 
+          label=""
+          image_overlay="message_log_start.png"
+          />
+  <button name="clear_log_btn" 
+          follows="top|right" 
+          width="80" 
+          height="25" 
+          left_delta="-85"
+          bottom_delta="0" 
+          label="Clear"
+          />
+	<button name="filter_apply_btn" 
+          follows="top|right" 
+          width="80" 
+          height="25" 
+          left_delta="-82" 
+          bottom_delta="0" 
+          label="Apply"
+          />
+	<scroll_list column_padding="0" 
+               draw_heading="true" 
+               follows="left|top|right" 
+               left="10" 
+               height="148"
+			         name="message_log" 
+               search_column="0" 
+               right="-10" 
+               bottom_delta="-148">
+		<column name="sequence" label="Seq." width="48" tool_tip="Sequence" />
+		<column name="type" label="Pkt." width="37" tool_tip="Type of packet" />
+		<column name="direction" label="&lt;-&gt;" width="39" tool_tip="Direction" />
+		<column name="net" label="Region" width="90" tool_tip="Location" />
+		<column name="name" label="Message" width="90" tool_tip="Name of message" />
 		<!--<column name="flag_zer" label="zer" width="8"/>
 		<column name="flag_rel" label="rel" width="8"/>
 		<column name="flag_rsd" label="rsd" width="8"/>
 		<column name="flag_ack" label="ack" width="8"/>-->
-		<column name="summary" label="summary" dynamicwidth="true"/>
+		<column name="summary" label="Summary" dynamicwidth="true" tool_tip="Summary" />
 	</scroll_list>
-	<text name="log_status_text" follows="left|top|right" left="10" top="-172" right="-10" height="20">
-	</text>
-	<text_editor name="net_info" follows="left|top|right|bottom" left="10" top="-400" bottom="30" right="-10" enabled="false" max_length="65535">
+	<text name="log_status_text" 
+        follows="left|top|right" 
+        height="18" 
+        font="SansSerifSmall"
+        bottom_delta="-18" 
+        right="-10"
+        />
+	<text_editor name="net_info" 
+               follows="left|top|right|bottom" 
+               left="10" 
+               height="170" 
+               bottom="30" 
+               right="-10" 
+               enabled="false" 
+               max_length="65535">
 	</text_editor>
-	<button name="send_to_message_builder_btn" follows="right|bottom" left="210" top="-570" right="-10" bottom="10" label="Send to Message Builder" enabled="false"/>
+	<button name="send_to_message_builder_btn" 
+          follows="right|bottom" 
+          height="25"
+          width="200" 
+          right="-10" 
+          bottom="3" 
+          label="Send To Message Builder" 
+          enabled="false"
+          />
+  <button name="copy_to_clipboard_btn" 
+          follows="left|bottom" 
+          height="25"
+          width="200" 
+          left="10" 
+          bottom="3" 
+          label="Copy To Clipboard" 
+          enabled="false"
+          />
 </floater>

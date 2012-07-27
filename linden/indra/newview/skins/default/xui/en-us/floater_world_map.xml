@@ -132,9 +132,9 @@
 	     mouse_opaque="true" name="search_label" v_pad="0" width="222">
 		Search Results:
 	</text>
-	<scroll_list background_visible="true" bottom_delta="-326" draw_border="true"
+	<scroll_list background_visible="true" bottom_delta="-306" draw_border="true"
 	     draw_stripes="false" 
-	     follows="top|right|bottom" height="320" left="1013" multi_select="false"
+	     follows="top|right|bottom" height="300" left="1013" multi_select="false"
 	     name="search_results" width="222">
 		<column label="" name="icon" width="16" />
 		<column label="" name="sim_name" width="206" />
@@ -145,18 +145,18 @@
 	     mouse_opaque="true" name="location_label" v_pad="0" width="98">
 		Location:
 	</text>
-	<spinner bottom_delta="0" decimal_digits="0" follows="bottom|right" height="16"
-	     increment="1" initial_val="128" left="1090" max_val="255" min_val="0"
+	<spinner bottom_delta="-20" decimal_digits="0" follows="bottom|right" height="16"
+	     increment="1" initial_val="128" left_delta="0" max_val="255" min_val="0"
 	     mouse_opaque="true" name="spin x"
-	     tool_tip="X coordinate of location to show on map" width="48" />
+	     tool_tip="X coordinate of location to show on map" width="72" />
 	<spinner bottom_delta="0" decimal_digits="0" follows="bottom|right" height="16"
-	     increment="1" initial_val="128" left_delta="50" max_val="255" min_val="0"
+	     increment="1" initial_val="128" left_delta="75" max_val="255" min_val="0"
 	     mouse_opaque="true" name="spin y"
-	     tool_tip="Y coordinate of location to show on map" width="48" />
+	     tool_tip="Y coordinate of location to show on map" width="72" />
 	<spinner bottom_delta="0" decimal_digits="0" follows="bottom|right" height="16"
-	     increment="1" initial_val="0" left_delta="50" max_val="4096" min_val="0"
+	     increment="1" initial_val="0" left_delta="75" max_val="10000" min_val="0"
 	     mouse_opaque="true" name="spin z"
-	     tool_tip="Z coordinate of location to show on map" width="48" />
+	     tool_tip="Z coordinate of location to show on map" width="72" />
 	<button bottom="-625" follows="right|bottom" font="SansSerif" halign="center"
 	     height="20" label="Teleport" label_selected="Teleport" left="-230"
 	     mouse_opaque="true" name="Teleport"
