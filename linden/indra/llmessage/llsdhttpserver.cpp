@@ -86,7 +86,7 @@ public:
 		desc.source(__FILE__, __LINE__);
 	}
 	
-    virtual LLSD simplePost(const LLSD& params) const
+	virtual LLSD simplePost(const LLSD& params) const
 	{
 		return params;
 	}
