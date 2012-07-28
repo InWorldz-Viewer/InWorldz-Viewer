@@ -116,7 +116,7 @@ public:
 		FFSAVE_HPA = 15,
 		FFSAVE_TEXT = 16,
 		FFSAVE_LSL = 17,
-		FFSAVE_CSV = 18,
+		FFSAVE_CSV = 18
 	};
 
 	// open the dialog. This is a modal operation

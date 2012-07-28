@@ -399,7 +399,7 @@ LLTemplateParser::LLTemplateParser(LLTemplateTokenizer & tokens):
 
 	while(LLMessageTemplate * templatep = parseMessage(tokens))
 	{
-		if (templatep->getDeprecation() != MD_DEPRECATED)
+		if (templatep->getDeprecation() != MD_MSG_DEPRECATED)
 		{
 			mMessages.push_back(templatep);
 		}
@@ -524,7 +524,7 @@ LLMessageTemplate * LLTemplateParser::parseMessage(LLTemplateTokenizer & tokens)
 	// get deprecation
 	if(tokens.want("Deprecated"))
 	{
-		templatep->setDeprecation(MD_DEPRECATED);
+		templatep->setDeprecation(MD_MSG_DEPRECATED);
 	}
 	else if (tokens.want("UDPDeprecated"))
 	{
