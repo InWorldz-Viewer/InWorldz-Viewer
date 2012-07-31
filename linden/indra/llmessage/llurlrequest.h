@@ -44,6 +44,7 @@
 #include "lliopipe.h"
 #include "llchainio.h"
 #include "llerror.h"
+#include "llcurl.h"
 
 class LLURLRequestDetail;
 
@@ -114,7 +115,7 @@ public:
 	 * 
 	 */
 	void setURL(const std::string& url);
-
+	std::string getURL() const;
 	/** 
 	 * @brief Add a header to the http post.
 	 *
@@ -172,6 +173,8 @@ public:
      * @ brief Set the CURLOPT_PROXY header to the given value.
      */
 	void useProxy(const std::string& proxy);
+
+	/*virtual*/ bool isValid() ;
 
 public:
 	/** 

@@ -213,6 +213,11 @@ LLXMLRPCTransaction::Impl::Impl(const std::string& uri,
 	XMLRPC_RequestSetData(request, params.getValue());
 	
 	init(request, useGzip);
+    // DEV-28398: without this XMLRPC_RequestFree() call, it looks as though
+    // the 'request' object is simply leaked. It's less clear to me whether we
+    // should also ask to free request value data (second param 1), since the
+    // data come from 'params'.
+    XMLRPC_RequestFree(request, 1);
 }
 
 
@@ -223,6 +228,14 @@ void LLXMLRPCTransaction::Impl::init(XMLRPC_REQUEST request, bool useGzip)
 	if (!mCurlRequest)
 	{
 		mCurlRequest = new LLCurlEasyRequest();
+	}
+	if(!mCurlRequest->isValid())
+	{
+		llwarns << "mCurlRequest is invalid." << llendl ;
+
+		delete mCurlRequest ;
+		mCurlRequest = NULL ;
+		return ;
 	}
 	
 	if (LLSocks::getInstance()->isHttpProxyEnabled())
@@ -243,7 +256,7 @@ void LLXMLRPCTransaction::Impl::init(XMLRPC_REQUEST request, bool useGzip)
 		}
 	}
 
-//	mCurlRequest->setopt(CURLOPT_VERBOSE, 1); // usefull for debugging
+//	mCurlRequest->setopt(CURLOPT_VERBOSE, 1); // useful for debugging
 	mCurlRequest->setopt(CURLOPT_NOSIGNAL, 1);
 	mCurlRequest->setWriteCallback(&curlDownloadCallback, (void*)this);
     	BOOL vefifySSLCert = !gSavedSettings.getBOOL("NoVerifySSLCert");
@@ -291,10 +304,20 @@ LLXMLRPCTransaction::Impl::~Impl()
 	}
 	
 	delete mCurlRequest;
+	mCurlRequest = NULL ;
 }
 
 bool LLXMLRPCTransaction::Impl::process()
 {
+	if(!mCurlRequest || !mCurlRequest->isValid())
+	{
+		llwarns << "transaction failed." << llendl ;
+
+		delete mCurlRequest ;
+		mCurlRequest = NULL ;
+		return true ; //failed, quit.
+	}
+
 	switch(mStatus)
 	{
 		case LLXMLRPCTransaction::StatusComplete:
@@ -316,16 +339,10 @@ bool LLXMLRPCTransaction::Impl::process()
 			// continue onward
 		}
 	}
-	
-	const F32 MAX_PROCESSING_TIME = 0.05f;
-	LLTimer timer;
-
-	while (mCurlRequest->perform() > 0)
+		
+	if(!mCurlRequest->wait())
 	{
-		if (timer.getElapsedTimeF32() >= MAX_PROCESSING_TIME)
-		{
-			return false;
-		}
+		return false ;
 	}
 
 	while(1)

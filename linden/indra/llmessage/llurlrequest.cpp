@@ -83,6 +83,12 @@ LLURLRequestDetail::LLURLRequestDetail() :
 {
 	LLMemType m1(LLMemType::MTYPE_IO_URL_REQUEST);
 	mCurlRequest = new LLCurlEasyRequest();
+	
+	if(!mCurlRequest->isValid()) //failed.
+	{
+		delete mCurlRequest ;
+		mCurlRequest = NULL ;
+	}
 }
 
 LLURLRequestDetail::~LLURLRequestDetail()
@@ -119,12 +125,18 @@ LLURLRequest::~LLURLRequest()
 {
 	LLMemType m1(LLMemType::MTYPE_IO_URL_REQUEST);
 	delete mDetail;
+	mDetail = NULL ;
 }
 
 void LLURLRequest::setURL(const std::string& url)
 {
 	LLMemType m1(LLMemType::MTYPE_IO_URL_REQUEST);
 	mDetail->mURL = url;
+}
+
+std::string LLURLRequest::getURL() const
+{
+	return mDetail->mURL;
 }
 
 void LLURLRequest::addHeader(const char* header)
@@ -196,12 +208,24 @@ void LLURLRequest::useProxy(const std::string &proxy)
     mDetail->mCurlRequest->setoptString(CURLOPT_PROXY, proxy);
 }
 
+//virtual 
+bool LLURLRequest::isValid() 
+{
+	return mDetail->mCurlRequest && mDetail->mCurlRequest->isValid(); 
+}
+
 // virtual
 LLIOPipe::EStatus LLURLRequest::handleError(
 	LLIOPipe::EStatus status,
 	LLPumpIO* pump)
 {
 	LLMemType m1(LLMemType::MTYPE_IO_URL_REQUEST);
+	
+	if(!isValid())
+	{
+		return STATUS_EXPIRED ;
+	}
+
 	if(mCompletionCallback && pump)
 	{
 		LLURLRequestComplete* complete = NULL;
@@ -259,7 +283,10 @@ LLIOPipe::EStatus LLURLRequest::process_impl(
 	{
 		PUMP_DEBUG;
 		LLIOPipe::EStatus status = STATUS_BREAK;
-		mDetail->mCurlRequest->perform();
+		if(!mDetail->mCurlRequest->wait())
+		{
+			return status ;
+		}
 		while(1)
 		{
 			CURLcode result;
@@ -346,6 +373,12 @@ void LLURLRequest::initialize()
 	LLMemType m1(LLMemType::MTYPE_IO_URL_REQUEST);
 	mState = STATE_INITIALIZED;
 	mDetail = new LLURLRequestDetail;
+
+	if(!isValid())
+	{
+		return ;
+	}
+
 	mDetail->mCurlRequest->setopt(CURLOPT_NOSIGNAL, 1);
 	mDetail->mCurlRequest->setWriteCallback(&downCallback, (void*)this);
 	mDetail->mCurlRequest->setReadCallback(&upCallback, (void*)this);
@@ -369,6 +402,9 @@ bool LLURLRequest::configure()
 	case HTTP_GET:
 		mDetail->mCurlRequest->setopt(CURLOPT_HTTPGET, 1);
 		mDetail->mCurlRequest->setopt(CURLOPT_FOLLOWLOCATION, 1);
+
+		// Set Accept-Encoding to allow response compression
+		mDetail->mCurlRequest->setoptString(CURLOPT_ENCODING, "");
 		rv = true;
 		break;
 
@@ -393,6 +429,9 @@ bool LLURLRequest::configure()
 
 		// Set the handle for an http post
 		mDetail->mCurlRequest->setPost(NULL, bytes);
+
+		// Set Accept-Encoding to allow response compression
+		mDetail->mCurlRequest->setoptString(CURLOPT_ENCODING, "");
 		rv = true;
 		break;
 
