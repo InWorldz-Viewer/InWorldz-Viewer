@@ -288,8 +288,8 @@ class HTTPGetResponder : public LLCurl::Responder
 {
 	LOG_CLASS(HTTPGetResponder);
 public:
-	HTTPGetResponder(LLTextureFetch* fetcher, const LLUUID& id, U64 startTime, S32 requestedSize, U32 offset)
-		: mFetcher(fetcher), mID(id), mStartTime(startTime), mRequestedSize(requestedSize), mOffset(offset)
+	HTTPGetResponder(LLTextureFetch* fetcher, const LLUUID& id, U64 startTime, S32 requestedSize, U32 offset, bool redir)
+		: mFetcher(fetcher), mID(id), mStartTime(startTime), mRequestedSize(requestedSize), mOffset(offset), mFollowRedir(redir)
 	{
 	}
 	~HTTPGetResponder()
@@ -914,7 +914,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 				std::vector<std::string> headers;
 				headers.push_back("Accept: image/x-j2c");
 				res = mFetcher->mCurlGetRequest->getByteRange(mUrl, headers, offset, mRequestedSize,
-															  new HTTPGetResponder(mFetcher, mID, LLTimer::getTotalTime(), mRequestedSize, offset));
+															  new HTTPGetResponder(mFetcher, mID, LLTimer::getTotalTime(), mRequestedSize, offset, true));
 			}
 			if (!res)
 			{
