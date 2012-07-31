@@ -1846,7 +1846,7 @@ bool LLTextureFetch::updateRequestPriority(const LLUUID& id, F32 priority)
 
 // MAIN THREAD
 //virtual
-S32 LLTextureFetch::update(U32 max_time_ms)
+S32 LLTextureFetch::update(F32 max_time_ms)
 {
 	static LLCachedControl<F64> band_width("ThrottleBandwidthKBPS", 500.F);
 
