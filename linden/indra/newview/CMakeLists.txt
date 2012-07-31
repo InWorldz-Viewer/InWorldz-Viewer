@@ -1116,6 +1116,14 @@ list(APPEND viewer_SOURCE_FILES ${viewer_XUI_FILES})
 set(viewer_LIBRARY_INSTALL_FILES
     ${CMAKE_SOURCE_DIR}/../install.xml
     )
+# To make my mac compiling life easier -- MC
+if (DARWIN)
+  set(viewer_LIBRARY_INSTALL_FILES
+	${viewer_LIBRARY_INSTALL_FILES} 
+	${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
+	${CMAKE_SOURCE_DIR}/develop.py
+	)
+endif (DARWIN)
 
 source_group("Library Install File" FILES ${viewer_LIBRARY_INSTALL_FILES})
 
