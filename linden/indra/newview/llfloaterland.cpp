@@ -324,8 +324,7 @@ BOOL LLPanelLandGeneral::postBuild()
 
 	mEditDesc = getChild<LLTextEditor>("Description");
 	mEditDesc->setCommitOnFocusLost(TRUE);
-	mEditDesc->setCommitCallback(onCommitAny);	
-	childSetPrevalidate("Description", LLLineEditor::prevalidatePrintableNotPipe);
+	mEditDesc->setCommitCallback(onCommitAny);
 	childSetUserData("Description", this);
 
 	
@@ -616,7 +615,10 @@ void LLPanelLandGeneral::refresh()
 									);
 
 		mEditName->setText( parcel->getName() );
-		mEditDesc->setText( parcel->getDesc() );
+		//strip nonprintables here a good idea? -- MC
+		std::string parcel_desc(parcel->getDesc());
+		LLStringUtil::stripNonprintable(parcel_desc);
+		mEditDesc->setText( parcel_desc );
 
 		BOOL for_sale = parcel->getForSale();
 				
