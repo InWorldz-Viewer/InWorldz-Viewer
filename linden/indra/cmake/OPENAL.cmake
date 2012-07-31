@@ -3,8 +3,11 @@
 include(Variables)
 include(Linking)
 include(FindPkgConfig)
+include(Prebuilt)
 
-set(OPENAL ON CACHE BOOL "Enable OpenAL")
+if (NOT OPENAL)
+  set(OPENAL ON CACHE BOOL "Enable OpenAL")
+endif (NOT OPENAL)
 
 # If STANDALONE but NOT PKG_CONFIG_FOUND we should fail,
 # but why try to find it as prebuilt?
@@ -18,7 +21,7 @@ if (OPENAL AND STANDALONE AND PKG_CONFIG_FOUND)
 
 elseif (OPENAL)
 
-  # message(STATUS "Building with OpenAL audio support")
+  message(STATUS "Building with OpenAL audio support")
 
   # OPENAL_LIB
   use_prebuilt_binary(openal-soft)
@@ -28,7 +31,6 @@ elseif (OPENAL)
 	  optimized ${ARCH_PREBUILT_DIRS_RELEASE}/openal32.lib
 	  debug ${ARCH_PREBUILT_DIRS_DEBUG}/openal32.lib
       )
-  
   elseif (DARWIN)
     # Look for for system's OpenAL.framework
     # Nemu: This code has never looked for the system's OpenAL.framework
@@ -37,17 +39,9 @@ elseif (OPENAL)
   else (WINDOWS)
     set(OPENAL_LIB openal)
   endif (WINDOWS)
-  
-  if (NOT OPENAL_LIB)
-    message(FATAL_ERROR "OpenAL not found!")
-  else (NOT OPENAL_LIB)
-    # message(STATUS "OpenAL found: ${OPENAL_LIB}")
-  endif (NOT OPENAL_LIB)
-
 
 
   # OPENAL_INCLUDE_DIR
-
   if (DARWIN)
     set(OPENAL_INCLUDE_DIR ${LIBS_PREBUILT_DIR}/${LL_ARCH_DIR}/include/AL)
   else (DARWIN)
@@ -57,16 +51,8 @@ elseif (OPENAL)
       )
   endif (DARWIN)
 
-  if (NOT OPENAL_INCLUDE_DIR)
-    message(FATAL_ERROR "al.h not found!")
-  else (NOT OPENAL_INCLUDE_DIR)
-    # message(STATUS "al.h found in: ${OPENAL_INCLUDE_DIR}")
-  endif (NOT OPENAL_INCLUDE_DIR)
-
-
 
   # ALUT_LIB
-
   if (WINDOWS)
    set(ALUT_LIB
 	 optimized ${ARCH_PREBUILT_DIRS_RELEASE}/alut.lib
@@ -78,16 +64,8 @@ elseif (OPENAL)
     set(ALUT_LIB alut)
   endif (WINDOWS)
 
-  if (NOT ALUT_LIB)
-    message(FATAL_ERROR "ALUT not found!")
-  else (NOT ALUT_LIB)
-    # message(STATUS "ALUT found: ${ALUT_LIB}")
-  endif (NOT ALUT_LIB)
-
-
-
+  
   # ALUT_INCLUDE_DIR
-
   if (WINDOWS)
 	  find_path(ALUT_INCLUDE_DIR
 	    NAMES alut.h
@@ -96,15 +74,6 @@ elseif (OPENAL)
   elseif (DARWIN)
 	  set(ALUT_INCLUDE_DIR ${LIBS_PREBUILT_DIR}/${LL_ARCH_DIR}/include/AL)
   endif (WINDOWS)
-
-  if (NOT ALUT_INCLUDE_DIR)
-    message(FATAL_ERROR "alut.h not found!")
-  else (NOT ALUT_INCLUDE_DIR)
-    # message(STATUS "alut.h found in: ${ALUT_INCLUDE_DIR}")
-  endif (NOT ALUT_INCLUDE_DIR)
-
-
-
 
   set(OPENAL_LIBRARIES
     ${OPENAL_LIB}
@@ -115,10 +84,37 @@ elseif (OPENAL)
     ${OPENAL_INCLUDE_DIR}
     ${ALUT_INCLUDE_DIR}
     )
-  
-
-  set(OPENAL_FOUND TRUE CACHE BOOL
-    "Found OpenAL and ALUT libraries successfully"
-    )
 
 endif (OPENAL AND STANDALONE AND PKG_CONFIG_FOUND)
+
+
+# This is BROKEN, but I have on idea why -- MC
+# if (OPENAL)
+  # if (NOT ALUT_LIB)
+    # message(FATAL_ERROR "ALUT not found!")
+  # else (NOT ALUT_LIB)
+    ##message(STATUS "ALUT found: ${ALUT_LIB}")
+  # endif (NOT ALUT_LIB)
+
+  # if (NOT ALUT_INCLUDE_DIR)
+    # message(FATAL_ERROR "alut.h not found!")
+  # else (NOT ALUT_INCLUDE_DIR)
+    ##message(STATUS "alut.h found in: ${ALUT_INCLUDE_DIR}")
+  # endif (NOT ALUT_INCLUDE_DIR)
+  
+  # if (NOT OPENAL_LIB)
+    # message(FATAL_ERROR "OpenAL not found!")
+  # else (NOT OPENAL_LIB)
+    ##message(STATUS "OpenAL found: ${OPENAL_LIB}")
+  # endif (NOT OPENAL_LIB)
+
+  # if (NOT OPENAL_INCLUDE_DIR)
+    # message(FATAL_ERROR "al.h not found!")
+  # else (NOT OPENAL_INCLUDE_DIR)
+    ##message(STATUS "al.h found in: ${OPENAL_INCLUDE_DIR}")
+  # endif (NOT OPENAL_INCLUDE_DIR)
+  
+  # set(OPENAL_FOUND TRUE CACHE BOOL
+    # "Found OpenAL and ALUT libraries successfully"
+    # )
+# endif(OPENAL)

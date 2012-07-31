@@ -3,9 +3,8 @@
 project(llaudio)
 
 include(00-Common)
-include(LLAudio)
 include(Audio)
-include(OPENAL)
+include(LLAudio)
 include(FMOD)
 include(OPENAL)
 include(LLCommon)
