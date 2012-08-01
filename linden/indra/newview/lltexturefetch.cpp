@@ -47,6 +47,7 @@
 #include "llworkerthread.h"
 
 #include "llagent.h"
+#include "llstartup.h"
 #include "lltexturecache.h"
 #include "llviewercontrol.h"
 #include "llviewerimagelist.h"
@@ -146,7 +147,7 @@ public:
 	/*virtual*/ bool deleteOK(); // called from update() (WORK THREAD)
 
 	~LLTextureFetchWorker();
-	void release() { --mActiveCount; }
+	//void release() { --mActiveCount; }
 
 	S32 callbackHttpGet(const LLChannelDescriptors& channels,
 						 const LLIOPipe::buffer_ptr_t& buffer,
@@ -166,7 +167,7 @@ public:
 
 	void setCanUseHTTP(bool can_use_http) { mCanUseHTTP = can_use_http; }
 	bool getCanUseHTTP() const { return mCanUseHTTP; }
-
+	
 protected:
 	LLTextureFetchWorker(LLTextureFetch* fetcher, const std::string& url, const LLUUID& id, const LLHost& host,
 						 F32 priority, S32 discard, S32 size);
@@ -380,6 +381,9 @@ const char* LLTextureFetchWorker::sStateDescs[] = {
 	"WAIT_ON_WRITE",
 	"DONE",
 };
+
+// two mintues -- MC
+const F32 FETCH_TIMEOUT = 120.f;
 
 // called from MAIN THREAD
 
@@ -899,6 +903,8 @@ bool LLTextureFetchWorker::doWork(S32 param)
 			bool res = false;
 			if (!mUrl.empty())
 			{
+				mRequestedTimer.reset();
+
 				mLoaded = FALSE;
 				mGetStatus = 0;
 				mGetReason.clear();
@@ -1064,6 +1070,12 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		}
 		else
 		{
+			if (FETCH_TIMEOUT < mRequestedTimer.getElapsedTimeF32())
+			{
+				mState = DONE;
+				return true;
+			}
+
 			setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority);
 			return false;
 		}
@@ -1844,6 +1856,18 @@ bool LLTextureFetch::updateRequestPriority(const LLUUID& id, F32 priority)
 
 //////////////////////////////////////////////////////////////////////////////
 
+// Comment from v2: MAIN THREAD (unthreaded envs), WORKER THREAD (threaded envs)
+void LLTextureFetch::commonUpdate()
+{
+	// Update Curl on same thread as mCurlGetRequest was constructed
+	S32 processed = mCurlGetRequest->process();
+	if (processed > 0)
+	{
+		lldebugs << "processed: " << processed << " messages." << llendl;
+	}
+}
+
+
 // MAIN THREAD
 //virtual
 S32 LLTextureFetch::update(F32 max_time_ms)
@@ -1864,17 +1888,15 @@ S32 LLTextureFetch::update(F32 max_time_ms)
 	
 	if (!mDebugPause)
 	{
-		sendRequestListToSimulators();
+		if (LLStartUp::getStartupState() > STATE_AGENT_SEND)
+		{
+			sendRequestListToSimulators();
+		}
 	}
 
 	if (!mThreaded)
 	{
-		// Update Curl on same thread as mCurlGetRequest was constructed
-		S32 processed = mCurlGetRequest->process();
-		if (processed > 0)
-		{
-			lldebugs << "processed: " << processed << " messages." << llendl;
-		}
+		commonUpdate();
 	}
 
 	return res;
@@ -1929,12 +1951,7 @@ void LLTextureFetch::threadedUpdate()
 	}
 	process_timer.reset();
 	
-	// Update Curl on same thread as mCurlGetRequest was constructed
-	S32 processed = mCurlGetRequest->process();
-	if (processed > 0)
-	{
-		lldebugs << "processed: " << processed << " messages." << llendl;
-	}
+	commonUpdate();
 
 #if 0
 	const F32 INFO_TIME = 1.0f; 
