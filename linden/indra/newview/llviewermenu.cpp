@@ -7520,7 +7520,7 @@ void handle_load_from_xml(void*)
 
 void handle_web_browser_test(void*)
 {
-	LLWeb::loadURL("http://secondlife.com/app/search/izurls.html");
+	LLWeb::loadURL("http://inworldz.com/imprudence/app/search/izurls.html");
 }
 
 void handle_buy_currency_test(void*)
