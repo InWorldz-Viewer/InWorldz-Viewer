@@ -266,6 +266,7 @@ private:
 
 	CURL*				mCurlEasyHandle;
 	struct curl_slist*	mHeaders;
+	struct curl_slist*	mAliases;
 	
 	std::stringstream	mRequest;
 	LLChannelDescriptors mChannels;
