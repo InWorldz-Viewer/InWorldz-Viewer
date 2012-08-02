@@ -299,6 +299,17 @@
 			media_plugin_quicktime
 		</impl>
 	</mimetype>
+	<mimetype name="audio/x-scpls">
+		<label name="audio/x-scpls_label">
+			Audio (.pls playlist)
+		</label>
+		<widgettype>
+			audio
+		</widgettype>
+		<impl>
+			media_plugin_quicktime
+		</impl>
+	</mimetype>
 	<mimetype name="audio/x-wav">
 		<label name="audio/x-wav_label">
 			Audio (WAV)
