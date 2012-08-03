@@ -299,6 +299,17 @@
 			media_plugin_quicktime
 		</impl>
 	</mimetype>
+	<mimetype name="audio/x-mpegurl">
+		<label name="audio/x-mpegurl_label">
+			Audio (M3U playlist)
+		</label>
+		<widgettype>
+			audio
+		</widgettype>
+		<impl>
+			media_plugin_quicktime
+		</impl>
+	</mimetype>
 	<mimetype name="audio/x-scpls">
 		<label name="audio/x-scpls_label">
 			Audio (.pls playlist)
@@ -313,6 +324,28 @@
 	<mimetype name="audio/x-wav">
 		<label name="audio/x-wav_label">
 			Audio (WAV)
+		</label>
+		<widgettype>
+			audio
+		</widgettype>
+		<impl>
+			media_plugin_quicktime
+		</impl>
+	</mimetype>
+	<mimetype name="application/octet-stream">
+		<label name="application/octet-stream_label">
+			HTTP Byte Stream
+		</label>
+		<widgettype>
+			audio
+		</widgettype>
+		<impl>
+			media_plugin_quicktime
+		</impl>
+	</mimetype>
+	<mimetype name="application/xspf+xml">
+		<label name="application/xspf+xml_label">
+			Audio (XSPF playlist)
 		</label>
 		<widgettype>
 			audio
