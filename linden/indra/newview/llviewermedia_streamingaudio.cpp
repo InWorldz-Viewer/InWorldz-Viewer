@@ -86,7 +86,11 @@ void LLStreamingAudio_MediaPlugins::start(const std::string& url)
 #ifdef LL_DARWIN
 		LLURI uri(test_url);
 		std::string scheme = uri.scheme();
-		if(scheme.empty() || "http" == scheme || "https" == scheme)
+		if ((scheme.empty() || "http" == scheme || "https" == scheme) &&
+			((test_url.length() > 4) &&
+			 (test_url.substr(test_url.length()-4, 4) != ".pls") &&		// Shoutcast listen.pls playlists
+			 (test_url.substr(test_url.length()-4, 4) != ".m3u"))		// Icecast liten.m3u playlists
+			)
 		{
 			std::string temp_url = "icy:" + uri.opaque();
 			test_url = temp_url; 
