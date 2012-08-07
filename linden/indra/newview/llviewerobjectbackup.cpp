@@ -1239,7 +1239,7 @@ void LLObjectBackup::uploadNextAsset()
 
 	S32 file_size;
 	LLAPRFile outfile;
-	outfile.open(filename, LL_APR_RB, LLAPRFile::local, &file_size);
+	outfile.open(filename, LL_APR_RB, NULL, &file_size);
 	if (outfile.getFileHandle())
 	{
 		const S32 buf_size = 65536;
