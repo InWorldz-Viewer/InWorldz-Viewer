@@ -35,6 +35,8 @@
 
 #include "lltimer.h"
 
+class LLUUID;
+
 // timer to automatically play media
 class LLViewerParcelMediaAutoPlay : LLEventTimer
 {
@@ -47,6 +49,7 @@ class LLViewerParcelMediaAutoPlay : LLEventTimer
 
  private:
 	S32 mLastParcelID;
+	LLUUID mLastRegionID;
 	BOOL mPlayed;
 	F32 mTimeInParcel;
 };

@@ -40,34 +40,43 @@
 #include "lluuid.h"
 #include "message.h"
 #include "llviewerimagelist.h"         // for texture stats
+#include "llviewerregion.h"
 #include "llagent.h"
 
 const F32 AUTOPLAY_TIME  = 5;          // how many seconds before we autoplay
 const F32 AUTOPLAY_SIZE  = 24*24;      // how big the texture must be (pixel area) before we autoplay
 const F32 AUTOPLAY_SPEED = 0.1f;        // how slow should the agent be moving to autoplay
 
+
+static LLViewerParcelMediaAutoPlay *sAutoPlay = NULL;
+
+
 LLViewerParcelMediaAutoPlay::LLViewerParcelMediaAutoPlay() :
 	LLEventTimer(1),
 	mPlayed(FALSE),
 	mTimeInParcel(0),
-	mLastParcelID(-1)
+	mLastParcelID(-1),
+	mLastRegionID(LLUUID::null)
 {
 }
-
-static LLViewerParcelMediaAutoPlay *sAutoPlay = NULL;
 
 // static
 void LLViewerParcelMediaAutoPlay::initClass()
 {
 	if (!sAutoPlay)
+	{
 		sAutoPlay = new LLViewerParcelMediaAutoPlay;
+	}
 }
 
 // static
 void LLViewerParcelMediaAutoPlay::cleanupClass()
 {
 	if (sAutoPlay)
+	{
 		delete sAutoPlay;
+		sAutoPlay = NULL;
+	}
 }
 
 // static
@@ -81,35 +90,50 @@ void LLViewerParcelMediaAutoPlay::playStarted()
 
 BOOL LLViewerParcelMediaAutoPlay::tick()
 {
-	LLParcel *this_parcel = NULL;
-	std::string this_media_url;
-	LLUUID this_media_texture_id;
-	S32 this_parcel_id = 0;
-
-	this_parcel = LLViewerParcelMgr::getInstance()->getAgentParcel();
+	LLParcel*		this_parcel = LLViewerParcelMgr::getInstance()->getAgentParcel();
+	std::string		this_media_url;
+	LLUUID			this_media_texture_id;
+	S32				this_parcel_id = 0;
+	std::string		this_mime_type = "none/none";
+	LLViewerRegion* this_region = gAgent.getRegion();
+	LLUUID			this_region_id;
 
 	if (this_parcel)
 	{
 		this_media_url = std::string(this_parcel->getMediaURL());
-
 		this_media_texture_id = this_parcel->getMediaID();
-
 		this_parcel_id = this_parcel->getLocalID();
+		this_mime_type = this_parcel->getMediaType();
+	}
+	else
+	{
+		return FALSE;
 	}
 
-	if (this_parcel_id != mLastParcelID)
+	if (this_region)
+	{
+		this_region_id = this_region->getRegionID();
+	}
+	else
+	{
+		return FALSE;
+	}
+
+	if ((this_parcel_id != mLastParcelID) || (this_region_id != mLastRegionID))
 	{
 		// we've entered a new parcel
-		mPlayed    = FALSE;                   // we haven't autoplayed yet
+		mPlayed		  = FALSE;                // we haven't autoplayed yet
 		mTimeInParcel = 0;                    // reset our timer
 		mLastParcelID = this_parcel_id;
+		mLastRegionID = this_region_id;
 	}
 
 	mTimeInParcel += mPeriod;                 // increase mTimeInParcel by the amount of time between ticks
 
 	if ((!mPlayed) &&                         // if we've never played
 		(mTimeInParcel > AUTOPLAY_TIME) &&    // and if we've been here for so many seconds
-		(this_media_url.size() != 0) &&       // and if the parcel has media
+		(!this_media_url.empty()) &&			// and if the parcel has media
+		(this_mime_type != "none/none") &&       // and a valid mime type
 		(LLViewerParcelMedia::sMediaImpl.isNull()))   // and if the media is not already playing
 	{
 		if (this_media_texture_id.notNull())  // and if the media texture is good
@@ -141,7 +165,6 @@ BOOL LLViewerParcelMediaAutoPlay::tick()
 			}
 		}
 	}
-
 
 	return FALSE; // continue ticking forever please.
 }
