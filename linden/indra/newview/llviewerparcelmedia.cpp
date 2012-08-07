@@ -295,9 +295,9 @@ void LLViewerParcelMedia::focus(bool focus)
 }
 
 // static
-LLViewerMediaImpl::EMediaStatus LLViewerParcelMedia::getStatus()
+LLPluginClassMediaOwner::EMediaStatus LLViewerParcelMedia::getStatus()
 {	
-	LLViewerMediaImpl::EMediaStatus result = LLViewerMediaImpl::MEDIA_NONE;
+	LLPluginClassMediaOwner::EMediaStatus result = LLPluginClassMediaOwner::MEDIA_NONE;
 	
 	if (sMediaImpl.notNull() && sMediaImpl->hasMedia())
 	{
