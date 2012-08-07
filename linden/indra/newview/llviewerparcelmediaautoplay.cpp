@@ -49,7 +49,8 @@ const F32 AUTOPLAY_SPEED = 0.1f;        // how slow should the agent be moving t
 LLViewerParcelMediaAutoPlay::LLViewerParcelMediaAutoPlay() :
 	LLEventTimer(1),
 	mPlayed(FALSE),
-	mTimeInParcel(0)
+	mTimeInParcel(0),
+	mLastParcelID(-1)
 {
 }
 
