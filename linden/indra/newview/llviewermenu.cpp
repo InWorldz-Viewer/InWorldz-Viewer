@@ -791,17 +791,6 @@ void init_client_menu(LLMenuGL* menu)
 		// Debugging view for unified notifications
 		sub->append(new LLMenuItemCallGL("Notifications Console...",
 						 &handle_show_notifications_console, NULL, NULL, '5', MASK_CONTROL|MASK_SHIFT ));
-		
-
-		sub->appendSeparator();
-
-
-		sub->append(new LLMenuItemCallGL("Region Info to Debug Console", 
-			&handle_region_dump_settings, NULL));
-		sub->append(new LLMenuItemCallGL("Group Info to Debug Console",
-			&handle_dump_group_info, NULL, NULL));
-		sub->append(new LLMenuItemCallGL("Capabilities Info to Debug Console",
-			&handle_dump_capabilities_info, NULL, NULL));
 		sub->createJumpKeys();
 	}
 	
@@ -951,15 +940,23 @@ void init_client_menu(LLMenuGL* menu)
 										  NULL, 
 										  &menu_check_control,
 										  (void*)"PingInterpolate"));
-		sub->append(new LLMenuItemCheckGL("Add Object Update Data To Log", 
-										  &menu_toggle_control,
-										  NULL, 
-										  &menu_check_control,
-										  (void*)"LogProcessObject"));
-
 		sub->append(new LLMenuItemCallGL("Drop a Packet", 
 			&drop_packet, NULL, NULL, 
 			'L', MASK_ALT | MASK_CONTROL));
+
+		sub->appendSeparator();
+
+		sub->append(new LLMenuItemCallGL("Region Info To Debug Console", 
+			&handle_region_dump_settings, NULL));
+		sub->append(new LLMenuItemCallGL("Group Info To Debug Console",
+			&handle_dump_group_info, NULL, NULL));
+		sub->append(new LLMenuItemCallGL("Capabilities Info To Debug Console",
+			&handle_dump_capabilities_info, NULL, NULL));
+		sub->append(new LLMenuItemCheckGL("Object Update Data To Debug Console", 
+								  &menu_toggle_control,
+								  NULL, 
+								  &menu_check_control,
+								  (void*)"LogProcessObject"));
 
 		menu->appendMenu( sub );
 		sub->createJumpKeys();
