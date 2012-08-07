@@ -366,7 +366,7 @@ class WindowsManifest(ViewerManifest):
 
         # Gstreamer plugins
         if self.prefix(src="lib/gstreamer-plugins", dst=""):
-            self.path("*.dll", dst="lib/gstreamer-plugins/*.dll")
+            self.path("*.dll", dst="llplugin/lib/gstreamer-plugins/*.dll")
             self.end_prefix()
 
         # Gstreamer libs
