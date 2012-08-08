@@ -175,7 +175,7 @@ public:
 };
 typedef std::list<LLViewerMediaImpl*> impl_list;
 static impl_list sViewerMediaImplList;
-static F32 sGlobalVolume = 1.0f;
+//static F32 sGlobalVolume = 1.0f;
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // LLViewerMedia
