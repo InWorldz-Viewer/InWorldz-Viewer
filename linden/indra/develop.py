@@ -532,13 +532,15 @@ class WindowsSetup(PlatformSetup):
             project_name=self.project_name,
             word_size=self.word_size,
             )
-        #if simple:
+        # default to packaging disabled
+        # if simple:
         #    return 'cmake %(opts)s "%(dir)s"' % args
         return ('cmake -G "%(generator)s" '
                 '-DSTANDALONE:BOOL=%(standalone)s '
                 '-DUNATTENDED:BOOL=%(unattended)s '
                 '-DWORD_SIZE:STRING=%(word_size)s '
                 '-DROOT_PROJECT_NAME:STRING=%(project_name)s '
+                #'-DPACKAGE:BOOL=ON '
                 '%(opts)s "%(dir)s"' % args)
 
     def get_HKLM_registry_value(self, key_str, value_str):

@@ -20,7 +20,7 @@
 					<key>tags</key>
 						<array>
 							<string>AppInit</string>
-              <string>LLKDU</string>
+                <string>LLKDU</string>
 							<string>SystemInfo</string>
 							<string>TextureCache</string>
 							<string>AppCache</string>
@@ -44,58 +44,60 @@
 
 <!--Unused debug messages below-->
 
-              <!--<string>AppInit</string>-->
-              <!--<string>AppInitStartupState</string>-->
-              <!--<string>DBUS</string>-->
-							<!--<string>OpenAL</string>-->
-              <!--<string>AppCache</string>-->
-							<!--<string>APR</string>-->
-							<!--<string>AudioEngine</string>-->
-              <!--<string>InitInfo</string>-->
-              <!--<string>Inventory</string>-->
-              <!--<string>InventoryFetch</string>-->
-              <!--<string>isOwnedSelf</string>-->
-              <!--<string>MarkerFile</string>-->
-							<!--<string>MediaImpl</string>-->
-							<!--<string>MediaInfo</string>-->
-							<!--<string>MediaCallback</string>-->
-							<!--<string>MediaBuffering</string>-->
-							<!--<string>MediaManager</string>-->
-							<!--<string>MediaState</string>-->
+                <!--<string>AppInit</string>-->
+                <!--<string>AppInitStartupState</string>-->
+                <!--<string>DBUS</string>-->
+                <!--<string>OpenAL</string>-->
+                <!--<string>AppCache</string>-->
+                <!--<string>APR</string>-->
+                <!--<string>AudioEngine</string>-->
+                <!--<string>InitInfo</string>-->
+                <!--<string>Inventory</string>-->
+                <!--<string>InventoryFetch</string>-->
+                <!--<string>isOwnedSelf</string>-->
+                <!--<string>MarkerFile</string>-->
+                <string>Media</string>
+                <string>MediaImpl</string>
+                <!--<string>MediaInfo</string>-->
+                <!--<string>MediaCallback</string>-->
+                <!--<string>MediaBuffering</string>-->
+                <!--<string>MediaManager</string>-->
+                <!--<string>MediaState</string>-->
 
-							<!--<string>Messaging</string>-->
-							<!--<string>Notifications</string>-->
-              
-              <!--<string>Plugin</string>-->
-              <!--<string>PluginClassMedia</string>-->
-              <!--<string>PluginInstance</string>-->
-              <!--<string>PluginPipe</string>-->
-              <!--<string>PluginChild</string>-->
-              <!--<string>PluginSpam</string>-->
-              <!--<string>PluginParent</string>-->
-              <!--<string>PluginViewerMedia</string>-->
-              <!--<string>ShaderLoading</string>-->
-              <string>Rendering</string>
-							<!--<string>ShaderLoading</string>-->
+                <!--<string>Messaging</string>-->
+                <!--<string>Notifications</string>-->
+                
+                <!--<string>Plugin</string>-->
+                <!--<string>PluginClassMedia</string>-->
+                <!--<string>PluginInstance</string>-->
+                <!--<string>PluginPipe</string>-->
+                <!--<string>PluginChild</string>-->
+                <!--<string>PluginSpam</string>-->
+                <!--<string>PluginParent</string>-->
+                <!--<string>PluginViewerMedia</string>-->
+                <string>slplugin</string>
+                <!--<string>ShaderLoading</string>-->
+                <string>Rendering</string>
+                <!--<string>ShaderLoading</string>-->
 
-							<!--<string>Openjpeg</string>-->
-							<!--<string>RLV</string>-->
-							<!--<string>VOAvatar</string>-->
+                <!--<string>Openjpeg</string>-->
+                <!--<string>RLV</string>-->
+                <!--<string>VOAvatar</string>-->
 
-              <!--<string>http-texture</string>-->
-              <!--<string>Texture</string>-->
-              <!--<string>TextureCache</string>-->
-              <!--<string>ViewerImages</string>-->
-							<!--<string>Volume</string>-->
-							<!--<string>Throttle</string>-->
-							<!--<string>Voice</string>-->
-							<!--<string>VivoxProtocolParser</string>-->
-							<!--<string>Wearables</string>-->
+                <!--<string>http-texture</string>-->
+                <!--<string>Texture</string>-->
+                <!--<string>TextureCache</string>-->
+                <!--<string>ViewerImages</string>-->
+                <!--<string>Volume</string>-->
+                <!--<string>Throttle</string>-->
+                <!--<string>Voice</string>-->
+                <!--<string>VivoxProtocolParser</string>-->
+                <!--<string>Wearables</string>-->
 
-							<!--<string>XMLNode</string>-->
+                <!--<string>XMLNode</string>-->
 
-						</array>
-				</map>
-			</array>
+                </array>
+            </map>
+        </array>
 	</map>
 </llsd>

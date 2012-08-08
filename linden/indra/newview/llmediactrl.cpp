@@ -73,6 +73,8 @@ LLMediaCtrl::LLMediaCtrl( const std::string& name, const LLRect& rect ) :
 	mOpenLinksInInternalBrowser( false ),
 	mTrusted( false ),
 	mHomePageUrl( "" ),
+
+	mErrorPageURL(""),
 	mIgnoreUIScale( true ),
 	mAlwaysRefresh( false ),
 	mExternalUrl( "" ),
@@ -132,10 +134,10 @@ LLMediaCtrl::~LLMediaCtrl()
 //
 void LLMediaCtrl::setBorderVisible( BOOL border_visible )
 {
-	if ( mBorder )
+	if (mBorder)
 	{
-		mBorder->setVisible( border_visible );
-	};
+		mBorder->setVisible(border_visible);
+	}
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,6 +165,10 @@ void LLMediaCtrl::setOpenInInternalBrowser( bool valIn )
 void LLMediaCtrl::setTrusted( bool valIn )
 {
 	mTrusted = valIn;
+	if (mMediaSource)
+	{
+		mMediaSource->setTrustedBrowser(mTrusted);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -198,7 +204,7 @@ BOOL LLMediaCtrl::handleMouseUp( S32 x, S32 y, MASK mask )
 	if (mMediaSource)
 	{
 		mMediaSource->mouseUp(x, y);
-
+#if 0	// Now using Qt Webkit...
 		// *HACK: LLMediaImplLLMozLib automatically takes focus on mouseup,
 		// in addition to the onFocusReceived() call below.  Undo this. JC
 		if (!mTakeFocusOnClick)
@@ -206,6 +212,7 @@ BOOL LLMediaCtrl::handleMouseUp( S32 x, S32 y, MASK mask )
 			mMediaSource->focus(false);
 			gViewerWindow->focusClient();
 		}
+#endif
 	}
 	
 	gFocusMgr.setMouseCapture( NULL );
@@ -432,22 +439,6 @@ bool LLMediaCtrl::canNavigateForward()
 
 ////////////////////////////////////////////////////////////////////////////////
 //
-void LLMediaCtrl::set404RedirectUrl( std::string redirect_url )
-{
-	if(mMediaSource && mMediaSource->hasMedia())
-		mMediaSource->getMediaPlugin()->set_status_redirect( 404, redirect_url );
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//
-void LLMediaCtrl::clr404RedirectUrl()
-{
-	if(mMediaSource && mMediaSource->hasMedia())
-		mMediaSource->getMediaPlugin()->set_status_redirect(404, "");
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//
 void LLMediaCtrl::navigateTo( std::string url_in, std::string mime_type)
 {
 	// don't browse to anything that starts with inworldz:// or iz:// or secondlife:// or sl://
@@ -528,6 +519,15 @@ void LLMediaCtrl::navigateHome()
 void LLMediaCtrl::setHomePageUrl( const std::string urlIn )
 {
 	mHomePageUrl = urlIn;
+}
+
+void LLMediaCtrl::setTarget(const std::string& target)
+{
+	mTarget = target;
+	if (mMediaSource)
+	{
+		mMediaSource->setTarget(mTarget);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -804,6 +804,16 @@ void LLMediaCtrl::handleMediaEvent(LLPluginClassMedia* self, EMediaEvent event)
 		case MEDIA_EVENT_LOCATION_CHANGED:
 		{
 			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_LOCATION_CHANGED, new uri is: " << self->getLocation() << LL_ENDL;
+		};
+		break;
+
+		case MEDIA_EVENT_NAVIGATE_ERROR_PAGE:
+		{
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_NAVIGATE_ERROR_PAGE" << LL_ENDL;
+			if (mErrorPageURL.length() > 0)
+			{
+				navigateTo(mErrorPageURL, "text/html");
+			};
 		};
 		break;
 

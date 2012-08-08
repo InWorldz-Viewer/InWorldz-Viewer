@@ -4,29 +4,21 @@
  *
  * $LicenseInfo:firstyear=2006&license=viewergpl$
  * 
- * Copyright (c) 2006-2009, Linden Research, Inc.
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
  * 
- * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlifegrid.net/programs/open_source/licensing/gplv2
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlifegrid.net/programs/open_source/licensing/flossexception
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
- * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
 
@@ -79,8 +71,10 @@ namespace
 		{
 			if (mResponder.get())
 			{
-				mResponder->completedRaw(mStatus, mReason, channels, buffer);
+				// Allow clients to parse headers before we attempt to parse
+				// the body and provide completed/result/error calls.
 				mResponder->completedHeader(mStatus, mReason, mHeaderOutput);
+				mResponder->completedRaw(mStatus, mReason, channels, buffer);
 			}
 		}
 		virtual void header(const std::string& header, const std::string& value)
@@ -159,7 +153,7 @@ namespace
 			if(fstream.is_open())
 			{
 				fstream.seekg(0, std::ios::end);
-				U32 fileSize = fstream.tellg();
+				U32 fileSize = (U32)fstream.tellg();
 				fstream.seekg(0, std::ios::beg);
 				std::vector<char> fileBuffer(fileSize);
 				fstream.read(&fileBuffer[0], fileSize);
@@ -211,7 +205,8 @@ static void request(
 	Injector* body_injector,
 	LLCurl::ResponderPtr responder,
 	const F32 timeout = HTTP_REQUEST_EXPIRY_SECS,
-	const LLSD& headers = LLSD())
+	const LLSD& headers = LLSD()
+    )
 {
 	if (!LLHTTPClient::hasPump())
 	{
@@ -221,6 +216,11 @@ static void request(
 	LLPumpIO::chain_t chain;
 
 	LLURLRequest* req = new LLURLRequest(method, url);
+	if(!req->isValid())//failed
+	{
+		delete req ;
+		return ;
+	}
 	req->checkRootCertificate(true);
 
     // Insert custom headers is the caller sent any
@@ -258,6 +258,11 @@ static void request(
 		{
 			req->addHeader("Accept: application/llsd+xml");
 		}
+	}
+
+	if (responder)
+	{
+		responder->setURL(url);
 	}
 
 	req->setCallback(new LLHTTPClientURLAdaptor(responder));
@@ -374,70 +379,140 @@ private:
 	std::string mBuffer;
 };
 
-// *TODO: Deprecate (only used by dataserver)
-// This call is blocking! This is probably usually bad. :(
-LLSD LLHTTPClient::blockingGet(const std::string& url)
-{
-	llinfos << "blockingGet of " << url << llendl;
+// These calls are blocking! This is usually bad, unless you're a dataserver. Then it's awesome.
 
-	// Returns an LLSD map: {status: integer, body: map}
-	char curl_error_buffer[CURL_ERROR_SIZE];
-	CURL* curlp = curl_easy_init();
+/**
+	@brief does a blocking request on the url, returning the data or bad status.
+
+	@param url URI to verb on.
+	@param method the verb to hit the URI with.
+	@param body the body of the call (if needed - for instance not used for GET and DELETE, but is for POST and PUT)
+	@param headers HTTP headers to use for the request.
+	@param timeout Curl timeout to use. Defaults to 5. Rationale:
+	Without this timeout, blockingGet() calls have been observed to take
+	up to 90 seconds to complete.  Users of blockingGet() already must 
+	check the HTTP return code for validity, so this will not introduce
+	new errors.  A 5 second timeout will succeed > 95% of the time (and 
+	probably > 99% of the time) based on my statistics. JC
+
+	@returns an LLSD map: {status: integer, body: map}
+  */
+static LLSD blocking_request(
+	const std::string& url,
+	LLURLRequest::ERequestAction method,
+	const LLSD& body,
+	const LLSD& headers = LLSD(),
+	const F32 timeout = 5
+)
+{
+	llinfos << "blockingRequest of " << url << llendl;
+	char curl_error_buffer[CURL_ERROR_SIZE] = "\0";
+	CURL* curlp = LLCurl::newEasyHandle();
+	llassert_always(curlp != NULL) ;
 
 	LLHTTPBuffer http_buffer;
-
-	// Without this timeout, blockingGet() calls have been observed to take
-	// up to 90 seconds to complete.  Users of blockingGet() already must 
-	// check the HTTP return code for validity, so this will not introduce
-	// new errors.  A 5 second timeout will succeed > 95% of the time (and 
-	// probably > 99% of the time) based on my statistics. JC
+	std::string body_str;
+	
+	// other request method checks root cert first, we skip?
+	
+	// * Set curl handle options
 	curl_easy_setopt(curlp, CURLOPT_NOSIGNAL, 1);	// don't use SIGALRM for timeouts
-	curl_easy_setopt(curlp, CURLOPT_TIMEOUT, 5);	// seconds
-
+	curl_easy_setopt(curlp, CURLOPT_TIMEOUT, timeout);	// seconds, see warning at top of function.
 	curl_easy_setopt(curlp, CURLOPT_WRITEFUNCTION, LLHTTPBuffer::curl_write);
 	curl_easy_setopt(curlp, CURLOPT_WRITEDATA, &http_buffer);
 	curl_easy_setopt(curlp, CURLOPT_URL, url.c_str());
 	curl_easy_setopt(curlp, CURLOPT_ERRORBUFFER, curl_error_buffer);
-	curl_easy_setopt(curlp, CURLOPT_FAILONERROR, 1);
 
-	struct curl_slist *header_list = NULL;
-	header_list = curl_slist_append(header_list, "Accept: application/llsd+xml");
-	CURLcode curl_result = curl_easy_setopt(curlp, CURLOPT_HTTPHEADER, header_list);
+	// * Setup headers (don't forget to free them after the call!)
+	curl_slist* headers_list = NULL;
+	if (headers.isMap())
+	{
+		LLSD::map_const_iterator iter = headers.beginMap();
+		LLSD::map_const_iterator end  = headers.endMap();
+		for (; iter != end; ++iter)
+		{
+			std::ostringstream header;
+			header << iter->first << ": " << iter->second.asString() ;
+			lldebugs << "header = " << header.str() << llendl;
+			headers_list = curl_slist_append(headers_list, header.str().c_str());
+		}
+	}
+	
+	// * Setup specific method / "verb" for the URI (currently only GET and POST supported + poppy)
+	if (method == LLURLRequest::HTTP_GET)
+	{
+		curl_easy_setopt(curlp, CURLOPT_HTTPGET, 1);
+	}
+	else if (method == LLURLRequest::HTTP_POST)
+	{
+		curl_easy_setopt(curlp, CURLOPT_POST, 1);
+		//serialize to ostr then copy to str - need to because ostr ptr is unstable :(
+		std::ostringstream ostr;
+		LLSDSerialize::toXML(body, ostr);
+		body_str = ostr.str();
+		curl_easy_setopt(curlp, CURLOPT_POSTFIELDS, body_str.c_str());
+		//copied from PHP libs, correct?
+		headers_list = curl_slist_append(headers_list, "Content-Type: application/llsd+xml");
+
+		// copied from llurlrequest.cpp
+		// it appears that apache2.2.3 or django in etch is busted. If
+		// we do not clear the expect header, we get a 500. May be
+		// limited to django/mod_wsgi.
+		headers_list = curl_slist_append(headers_list, "Expect:");
+	}
+	
+	// * Do the action using curl, handle results
+	lldebugs << "HTTP body: " << body_str << llendl;
+	headers_list = curl_slist_append(headers_list, "Accept: application/llsd+xml");
+	CURLcode curl_result = curl_easy_setopt(curlp, CURLOPT_HTTPHEADER, headers_list);
 	if ( curl_result != CURLE_OK )
 	{
-		llinfos << "Curl is hosed - can't add Accept header for llsd+xml" << llendl;
+		llinfos << "Curl is hosed - can't add headers" << llendl;
 	}
 
 	LLSD response = LLSD::emptyMap();
-
 	S32 curl_success = curl_easy_perform(curlp);
-
 	S32 http_status = 499;
 	curl_easy_getinfo(curlp,CURLINFO_RESPONSE_CODE, &http_status);
 
 	response["status"] = http_status;
-
-	if (curl_success != 0 
-		&& http_status != 404)  // We expect 404s, don't spam for them.
+	// if we get a non-404 and it's not a 200 OR maybe it is but you have error bits,
+	if ( http_status != 404 && (http_status != 200 || curl_success != 0) )
 	{
+		// We expect 404s, don't spam for them.
+		llwarns << "CURL REQ URL: " << url << llendl;
+		llwarns << "CURL REQ METHOD TYPE: " << method << llendl;
+		llwarns << "CURL REQ HEADERS: " << headers.asString() << llendl;
+		llwarns << "CURL REQ BODY: " << body_str << llendl;
+		llwarns << "CURL HTTP_STATUS: " << http_status << llendl;
 		llwarns << "CURL ERROR: " << curl_error_buffer << llendl;
-		
+		llwarns << "CURL ERROR BODY: " << http_buffer.asString() << llendl;
 		response["body"] = http_buffer.asString();
 	}
 	else
 	{
 		response["body"] = http_buffer.asLLSD();
+		llinfos << "CURL response: " << http_buffer.asString() << llendl;
 	}
 	
-	if(header_list)
+	if(headers_list)
 	{	// free the header list  
-		curl_slist_free_all(header_list); 
-		header_list = NULL;
+		curl_slist_free_all(headers_list); 
 	}
 
-	curl_easy_cleanup(curlp);
-
+	// * Cleanup
+	LLCurl::deleteEasyHandle(curlp);
 	return response;
+}
+
+LLSD LLHTTPClient::blockingGet(const std::string& url)
+{
+	return blocking_request(url, LLURLRequest::HTTP_GET, LLSD());
+}
+
+LLSD LLHTTPClient::blockingPost(const std::string& url, const LLSD& body)
+{
+	return blocking_request(url, LLURLRequest::HTTP_POST, body);
 }
 
 void LLHTTPClient::put(

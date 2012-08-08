@@ -353,11 +353,16 @@ void clear_eol(std::istream& input)
 static unsigned get_till_eol(std::istream& input, char *buf, unsigned bufsize)
 {
 	unsigned count = 0;
-	while (count < bufsize && input.good())
+	while (count < bufsize)
 	{
-		char c = input.get();
-		buf[count++] = c;
-		if (is_eol(c))
+		int c = input.get();
+		if (c == EOF)
+			break;
+		if (!input.good())
+			break;
+
+		buf[count++] = (char)c;
+		if (is_eol((char)c))
 		{
 			break;
 		}
@@ -397,6 +402,7 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 			if (error_string != "parsing aborted") // end of input
 			{
 				S32 line_number = XML_GetCurrentLineNumber( mParser );
+				long byte_index = XML_GetCurrentByteIndex(mParser);
 				// This parses LLCurl::Responder::completedRaw always, even
 				// when not using XML. We have to do this little ugliness 
 				// in order to make this error message meaningful.
@@ -407,14 +413,18 @@ S32 LLSDXMLParser::Impl::parse(std::istream& input, LLSD& data)
 					if ((text.find('>') != std::string::npos) ||
 						(text.find('<') != std::string::npos))
 					{
-						LL_DEBUGS("Messaging") << "LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
-								<< error_string << LL_ENDL;
+						llwarns << "LLSDXMLParser::Impl::parse error.  Line: " << line_number 
+								<< "  Byte index (long): " << byte_index
+								<< "  Error string: " << error_string 
+								<< llendl;
 					}
 					break;
 				}
 				
-				llinfos << "Possible LLSDXMLParser::Impl::parse error.  Line " << line_number << ": " 
-						<< error_string << llendl;
+				llinfos << "Possible LLSDXMLParser::Impl::parse error.  Line: " << line_number 
+						<< "  Byte index (long): " << byte_index
+						<< "  Error string: " << error_string 
+						<< llendl;
 			}
 			// Always break here -- MC
 			break;
@@ -768,6 +778,7 @@ void LLSDXMLParser::Impl::endElementHandler(const XML_Char* name)
 		case ELEMENT_INTEGER:
 			{
 				S32 i;
+				// sscanf okay here with different locales - ints don't change for different locale settings like floats do.
 				if ( sscanf(mCurrentContent.c_str(), "%d", &i ) == 1 )
 				{	// See if sscanf works - it's faster
 					value = i;
@@ -781,15 +792,19 @@ void LLSDXMLParser::Impl::endElementHandler(const XML_Char* name)
 		
 		case ELEMENT_REAL:
 			{
-				F64 r;
-				if ( sscanf(mCurrentContent.c_str(), "%lf", &r ) == 1 )
-				{	// See if sscanf works - it's faster
-					value = r;
-				}
-				else
-				{
-					value = LLSD(mCurrentContent).asReal();
-				}
+				value = LLSD(mCurrentContent).asReal();
+				// removed since this breaks when locale has decimal separator that isn't '.'
+				// investigated changing local to something compatible each time but deemed higher
+				// risk that just using LLSD.asReal() each time.
+				//F64 r;
+				//if ( sscanf(mCurrentContent.c_str(), "%lf", &r ) == 1 )
+				//{	// See if sscanf works - it's faster
+				//	value = r;
+				//}
+				//else
+				//{
+				//	value = LLSD(mCurrentContent).asReal();
+				//}
 			}
 			break;
 		

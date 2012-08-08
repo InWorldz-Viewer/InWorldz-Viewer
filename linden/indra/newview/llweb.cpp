@@ -46,10 +46,15 @@ void LLWeb::initClass()
 	LLAlertDialog::setURLLoader(&sAlertURLLoader);
 }
 
-// static
 void LLWeb::loadURL(const std::string& url)
 {
-	if (gSavedSettings.getBOOL("UseExternalBrowser"))
+	loadURL( url, "" );
+}
+
+// static
+void LLWeb::loadURL(const std::string& url, const std::string& target)
+{
+	if (gSavedSettings.getBOOL("UseExternalBrowser") || (target == "_external"))
 	{
 		loadURLExternal(url);
 	}

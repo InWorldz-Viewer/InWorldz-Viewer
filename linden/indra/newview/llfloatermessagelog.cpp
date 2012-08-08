@@ -22,6 +22,8 @@
 
 #include "llviewerprecompiledheaders.h"
 #include "llfloatermessagelog.h"
+
+#include "llfilepicker.h"
 #include "lluictrlfactory.h"
 #include "llworld.h"
 #include "llviewerregion.h"
@@ -553,8 +555,9 @@ std::list<LLNetListItem*>			LLFloaterMessageLog::sNetListItems;
 std::deque<LLMessageLogEntry>		LLFloaterMessageLog::sMessageLogEntries;
 std::vector<LLFloaterMessageLogItem> LLFloaterMessageLog::sFloaterMessageLogItems;
 LLMessageLogFilter					LLFloaterMessageLog::sMessageLogFilter = LLMessageLogFilter();
-std::string							LLFloaterMessageLog::sMessageLogFilterString("!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !SoundTrigger !AttachedSound !PreloadSound");
+std::string							LLFloaterMessageLog::sMessageLogFilterString("!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !SoundTrigger !AttachedSound !PreloadSound !ParcelOverlay !ImageData !RequestImage");
 BOOL								LLFloaterMessageLog::sBusyApplyingFilter = FALSE;
+bool								LLFloaterMessageLog::sPauseUI = false;
 
 LLFloaterMessageLog::LLFloaterMessageLog()
 :	LLFloater(),
@@ -586,6 +589,7 @@ void LLFloaterMessageLog::show()
 		sInstance = new LLFloaterMessageLog();
 	}
 	sInstance->open();
+	sInstance->center();
 }
 
 BOOL LLFloaterMessageLog::postBuild()
@@ -597,6 +601,11 @@ BOOL LLFloaterMessageLog::postBuild()
 	childSetCommitCallback("filter_edit", onCommitFilter, this);
 	childSetAction("clear_log_btn", onClickClearLog, this);
 	childSetAction("send_to_message_builder_btn", onClickSendToMessageBuilder, this);
+	childSetAction("copy_to_clipboard_btn", onClickCopy, this);
+	childSetAction("import_csv_btn", onClickImportCSV, this);
+	childSetAction("export_csv_btn", onClickExportCSV, this);
+	childSetAction("start_btn", onClickStart, this);
+	childSetAction("stop_btn", onClickStop, this);
 	childSetText("filter_edit", sMessageLogFilterString);
 
 	refreshNetList();
@@ -824,6 +833,7 @@ void LLFloaterMessageLog::setNetInfoMode(ENetInfoMode mode)
 		refreshNetInfo(TRUE);
 	}
 	childSetEnabled("send_to_message_builder_btn", mNetInfoMode == NI_LOG);
+	getChild<LLButton>("copy_to_clipboard_btn")->setEnabled(true);
 }
 
 // static
@@ -838,7 +848,12 @@ void LLFloaterMessageLog::onLog(LLMessageLogEntry entry)
 }
 // static
 void LLFloaterMessageLog::conditionalLog(LLFloaterMessageLogItem item)
-{	
+{
+	// "Stop" really means don't update the UI. This keeps everything else running normally
+	if (sPauseUI)
+	{
+		return;
+	}
 	if (!sBusyApplyingFilter)
 	{
 		sInstance->childSetText("log_status_text", llformat("Showing %d messages from %d", sFloaterMessageLogItems.size(), sMessageLogEntries.size()));
@@ -1035,7 +1050,7 @@ void LLFloaterMessageLog::startApplyingFilter(std::string filter, BOOL force)
 	new_filter.set(sMessageLogFilterString);
 	if (!filter.length() || filter.at(filter.length()-1) != ' ')
 	{
-		childSetText("filter_edit", filter + " ");
+		childSetText("filter_edit", filter);
 	}
 	if (force
 		|| (new_filter.mNegativeNames != sMessageLogFilter.mNegativeNames)
@@ -1103,11 +1118,12 @@ void LLFloaterMessageLog::onClickClearLog(void* user_data)
 void LLFloaterMessageLog::onClickFilterChoice(void* user_data)
 {
 	LLMenuGL* menu = new LLMenuGL(LLStringUtil::null);
-	menu->append(new LLMenuItemCallGL("No Filter", onClickFilterMenu, NULL, (void*)""));
+	menu->append(new LLMenuItemCallGL("Default (uncommon only)", onClickFilterMenu, NULL, (void*)"!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !SoundTrigger !AttachedSound !PreloadSound !ParcelOverlay !ImageData !RequestImage"));
 	menu->append(new LLMenuItemCallGL("Fewer Spammy Messages", onClickFilterMenu, NULL, (void*)"!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket"));
 	menu->append(new LLMenuItemCallGL("Fewer Spammy Messages (minus sounds)", onClickFilterMenu, NULL, (void*)"!StartPingCheck !CompletePingCheck !PacketAck !SimulatorViewerTimeMessage !SimStats !AgentUpdate !AgentAnimation !AvatarAnimation !ViewerEffect !CoarseLocationUpdate !LayerData !CameraConstraint !ObjectUpdateCached !RequestMultipleObjects !ObjectUpdate !ObjectUpdateCompressed !ImprovedTerseObjectUpdate !KillObject !ImagePacket !SendXferPacket !ConfirmXferPacket !TransferPacket !SoundTrigger !AttachedSound !PreloadSound"));
 	menu->append(new LLMenuItemCallGL("Object Updates", onClickFilterMenu, NULL, (void*)"ObjectUpdateCached ObjectUpdate ObjectUpdateCompressed ImprovedTerseObjectUpdate KillObject RequestMultipleObjects"));
 	menu->append(new LLMenuItemCallGL("Abnormal", onClickFilterMenu, NULL, (void*)"Invalid TestMessage AddCircuitCode NeighborList AvatarTextureUpdate SimulatorMapUpdate SimulatorSetMap SubscribeLoad UnsubscribeLoad SimulatorReady SimulatorPresentAtLocation SimulatorLoad SimulatorShutdownRequest RegionPresenceRequestByRegionID RegionPresenceRequestByHandle RegionPresenceResponse UpdateSimulator LogDwellTime FeatureDisabled LogFailedMoneyTransaction UserReportInternal SetSimStatusInDatabase SetSimPresenceInDatabase OpenCircuit CloseCircuit DirFindQueryBackend DirPlacesQueryBackend DirClassifiedQueryBackend DirLandQueryBackend DirPopularQueryBackend GroupNoticeAdd DataHomeLocationRequest DataHomeLocationReply DerezContainer ObjectCategory ObjectExportSelected StateSave ReportAutosaveCrash AgentAlertMessage NearestLandingRegionRequest NearestLandingRegionReply NearestLandingRegionUpdated TeleportLandingStatusChanged ConfirmEnableSimulator KickUserAck SystemKickUser AvatarPropertiesRequestBackend UpdateParcel RemoveParcel MergeParcel LogParcelChanges CheckParcelSales ParcelSales StartAuction ConfirmAuctionStart CompleteAuction CancelAuction CheckParcelAuctions ParcelAuctions ChatPass EdgeDataPacket SimStatus ChildAgentUpdate ChildAgentAlive ChildAgentPositionUpdate ChildAgentDying ChildAgentUnknown AtomicPassObject KillChildAgents ScriptSensorRequest ScriptSensorReply DataServerLogout RequestInventoryAsset InventoryAssetResponse TransferInventory TransferInventoryAck EventLocationRequest EventLocationReply MoneyTransferBackend RoutedMoneyBalanceReply SetStartLocation NetTest SetCPURatio SimCrashed NameValuePair RemoveNameValuePair UpdateAttachment RemoveAttachment EmailMessageRequest EmailMessageReply InternalScriptMail ScriptDataRequest ScriptDataReply InviteGroupResponse TallyVotes LiveHelpGroupRequest LiveHelpGroupReply GroupDataUpdate LogTextMessage CreateTrustedCircuit ParcelRename SystemMessage RpcChannelRequest RpcChannelReply RpcScriptRequestInbound RpcScriptRequestInboundForward RpcScriptReplyInbound ScriptMailRegistration Error"));
+	menu->append(new LLMenuItemCallGL("No Filter", onClickFilterMenu, NULL, (void*)""));
 	menu->updateParent(LLMenuGL::sMenuContainer);
 	menu->setCanTearOff(FALSE);
 	LLView* buttonp = sInstance->getChild<LLView>("filter_choice_btn");
@@ -1143,6 +1159,133 @@ void LLFloaterMessageLog::onClickSendToMessageBuilder(void* user_data)
 			std::string message_text = iter->getFull(FALSE);
 			LLFloaterMessageBuilder::show(message_text);
 			break;
+		}
+	}
+}
+
+// static
+void LLFloaterMessageLog::onClickCopy(void* user_data)
+{
+	LLFloaterMessageLog* self = (LLFloaterMessageLog*)user_data;
+	if (self)
+	{
+		LLTextEditor* text_editor = self->getChild<LLTextEditor>("net_info", true);
+		if (text_editor)
+		{
+			std::string buffer = text_editor->getText();
+			gViewerWindow->mWindow->copyTextToClipboard(utf8str_to_wstring(buffer));
+		}
+	}
+}
+
+// static
+void LLFloaterMessageLog::onClickImportCSV(void* user_data)
+{
+	LLFloaterMessageLog* self = (LLFloaterMessageLog*)user_data;
+	if (self)
+	{
+		LLFilePicker& file_picker = LLFilePicker::instance();
+		if (!file_picker.getOpenFile(LLFilePicker::FFLOAD_CSV))
+		{
+			return;
+		}
+		
+		std::string filename = file_picker.getFirstFile();
+
+		std::ifstream fin(filename.c_str());
+		
+		std::string line;
+		std::string input;
+		while (!fin.eof())
+		{ 
+			getline(fin, line);
+			input = input + line;
+		}
+		fin.close();
+
+		if (input.empty())
+		{
+			// this shouldn't be hardcoded -- MC
+			LLSD args;
+			args["MESSAGE"] = "Nothing imported. Please verify the contents of your .csv file";
+			LLNotifications::instance().add("GenericAlert", args);
+		}
+		else
+		{
+			std::string result = "";
+			std::string::size_type start = 0;
+			std::string::size_type comma = 0;
+			do 
+			{
+				comma = input.find(",", start);
+				if (comma == std::string::npos)
+				{
+					comma = input.length();
+				}
+				std::string item(input, start, comma-start);
+
+				//llinfos << "csv item parsed " << item << llendl;
+				result += item;
+				result += " ";
+				
+				start = comma + 1;
+			}
+			while (comma < input.length());
+			
+			LLStringUtil::trim(result);
+			self->childSetText("filter_edit", result);
+			self->startApplyingFilter(result, FALSE);
+		}
+	}
+}
+
+// static 
+void LLFloaterMessageLog::onClickExportCSV(void *user_data)
+{
+	LLFloaterMessageLog* self = (LLFloaterMessageLog*)user_data;
+	if (self)
+	{
+		std::string text = self->childGetText("filter_edit");
+		// These will never have spaces, so just check for user error
+		LLStringUtil::trim(text);
+		LLStringUtil::replaceString(text, "  ", " ");
+		LLStringUtil::replaceString(text, " ", ",");
+
+		LLFilePicker& file_picker = LLFilePicker::instance();
+		if (!file_picker.getSaveFile(LLFilePicker::FFSAVE_CSV))
+		{
+			return;
+		}
+
+		std::string filename = file_picker.getFirstFile();
+		std::ofstream fout(filename.c_str());
+		fout << text;
+		fout.close();
+	}
+}
+
+// static 
+void LLFloaterMessageLog::onClickStart(void *user_data)
+{
+	LLFloaterMessageLog* self = (LLFloaterMessageLog*)user_data;
+	if (self)
+	{
+		if (self->sPauseUI == true)
+		{
+			self->sPauseUI = false;
+		}
+	}
+}
+
+// static 
+void LLFloaterMessageLog::onClickStop(void *user_data)
+{
+	LLFloaterMessageLog* self = (LLFloaterMessageLog*)user_data;
+	if (self)
+	{
+		if (self->sPauseUI == false)
+		{
+			self->sPauseUI = true;
 		}
 	}
 }

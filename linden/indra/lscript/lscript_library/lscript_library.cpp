@@ -450,6 +450,50 @@ void LLScriptLibrary::init()
 	addFunction(10.f, 0.f, dummy_func, "llHTTPResponse", NULL, "kis");
 	addFunction(10.f, 0.f, dummy_func, "llGetHTTPHeader", "s", "ks");
 
+	addFunction(10.f, 0.f, dummy_func, "llGetLinkNumberOfSides", "i", "i");
+	addFunction(10.f, 0.f, dummy_func, "llSetLinkTextureAnim", NULL, "iiiiifff");
+	addFunction(10.f, 0.f, dummy_func, "llLinkParticleSystem", NULL, "il");
+	addFunction(10.f, 0.f, dummy_func, "llSetLinkPrimitiveParamsFast", NULL, "il");
+	addFunction(10.f, 0.f, dummy_func, "llGetLinkPrimitiveParams", NULL, "il");
+	addFunction(10.f, 0.f, dummy_func, "llClearPrimMedia", NULL, "i");
+	addFunction(10.f, 0.f, dummy_func, "llGetPrimMediaParams", "l", "il");
+	addFunction(10.f, 0.f, dummy_func, "llSetPrimMediaParams", NULL, "il");
+
+	// Begin InWorldz-specific functions
+	addFunction(10.f, 0.f, dummy_func, "iwAvatarName2Key", "k", "ss");
+	addFunction(10.f, 0.f, dummy_func, "iwLinkTargetOmega", NULL, "ivff");
+	addFunction(10.f, 0.f, dummy_func, "iwMakeNotecard", NULL, "sl");
+	addFunction(10.f, 0.f, dummy_func, "llSetRegionPos", "i", "v");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkInventoryNumber", "i", "ii");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkInventoryType", "i", "is");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkInventoryPermMask", "i", "isi");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkInventoryName", "s", "isi");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkInventoryKey", "k", "is");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkInventoryCreator", "k", "is");
+	addFunction(10.f, 0.f, dummy_func, "iwSHA256String", "s", "s");
+	addFunction(10.f, 0.f, dummy_func, "iwTeleportAgent", NULL, "ksvv");
+	addFunction(10.f, 0.f, dummy_func, "llAvatarOnLinkSitTarget", "k", "i");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLastOwner", "k", NULL);
+	addFunction(10.f, 0.f, dummy_func, "iwRemoveLinkInventory", NULL, "is");
+	addFunction(10.f, 0.f, dummy_func, "iwGiveLinkInventory", NULL, "iks");
+	addFunction(10.f, 0.f, dummy_func, "iwGiveLinkInventoryList", NULL, "iksl");
+	addFunction(10.f, 0.f, dummy_func, "iwGetNotecardSegment", "k", "siii");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkNumberOfNotecardLines", "k", "is");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkNotecardLine", "k", "isi");
+	addFunction(10.f, 0.f, dummy_func, "iwGetLinkNotecardSegment", "k", "isiii");
+	addFunction(10.f, 0.f, dummy_func, "iwActiveGroup", "i", "kk");
+	// End InWorldz-specific functinos
+
+	/*
+	"k" - key
+	"i" - integer
+	"s" - string
+	"v" - vector
+	"f" - float
+	"q" - quaternion 
+	"l" - list
+	*/
+
 	// energy, sleep, dummy_func, name, return type, parameters, gods-only
 
 	// IF YOU ADD NEW SCRIPT CALLS, YOU MUST PUT THEM AT THE END OF THIS LIST.

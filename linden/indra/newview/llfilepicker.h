@@ -92,7 +92,8 @@ public:
 		FFLOAD_SLOBJECT = 7,
 		FFLOAD_RAW = 8,
 		FFLOAD_TEXT = 9,
-		FFLOAD_APP = 10
+		FFLOAD_APP = 10,
+		FFLOAD_CSV = 11
 	};
 
 	enum ESaveFilter
@@ -114,7 +115,8 @@ public:
 		FFSAVE_JPEG = 14,
 		FFSAVE_HPA = 15,
 		FFSAVE_TEXT = 16,
-		FFSAVE_LSL = 17
+		FFSAVE_LSL = 17,
+		FFSAVE_CSV = 18
 	};
 
 	// open the dialog. This is a modal operation

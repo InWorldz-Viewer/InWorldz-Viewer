@@ -137,6 +137,8 @@ void gSetInitDataDefaults(LLPartInitData *setMe)
 }
 
 LLPartSysCompressedPacket::LLPartSysCompressedPacket()
+:
+mNumBytes(0)
 {
 	// default constructor for mDefaults called implicitly/automatically here
 	for(int i = 0; i < MAX_PART_SYS_PACKET_SIZE; i++) 

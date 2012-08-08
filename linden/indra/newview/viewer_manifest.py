@@ -108,6 +108,7 @@ class ViewerManifest(LLManifest):
                         self.path("*.png")
                         self.path("*/*/*.html")
                         self.path("*/*/*.gif")
+                        self.path("*/*/*.png")
                         self.end_prefix("*/html")
                 self.end_prefix("skins")
         
@@ -221,7 +222,7 @@ class WindowsManifest(ViewerManifest):
         # copy over the the pdb file for the regular or SSE2 versions if we don't already have one copied
         symbol_ver = '.'.join(self.args['version'])
         symbol_file = 'inworldz-%s.%s.pdb' % (symbol_ver, self.args['configuration'])
-        symbol_path = '../../../../../pdb_files/%s' % (symbol_file)
+        symbol_path = '../../../../../bin/pdb_files/%s' % (symbol_file)
         if os.path.isfile(os.getcwd() + symbol_path):
             print "%s already exists, skipping" % (symbol_path)
         else:
@@ -365,7 +366,7 @@ class WindowsManifest(ViewerManifest):
 
         # Gstreamer plugins
         if self.prefix(src="lib/gstreamer-plugins", dst=""):
-            self.path("*.dll", dst="lib/gstreamer-plugins/*.dll")
+            self.path("*.dll", dst="llplugin/lib/gstreamer-plugins/*.dll")
             self.end_prefix()
 
         # Gstreamer libs
@@ -475,7 +476,7 @@ class WindowsManifest(ViewerManifest):
         self.created_path(self.dst_path_of(new_script))
         self.package_file = base_filename + ".exe"
 
-        print "New ISS script created at " +  self.args['dest'] + "\\" + new_script       
+        print "New ISS script created at file:///" +  self.args['dest'] + "\\" + new_script       
 
 
 class DarwinManifest(ViewerManifest):
@@ -487,7 +488,53 @@ class DarwinManifest(ViewerManifest):
             self.path(self.info_plist_name(), dst="Info.plist")
 
             # copy additional libs in <bundle>/Contents/MacOS/
-            self.path("../../libraries/universal-darwin/lib_release/libndofdev.dylib", dst="MacOS/libndofdev.dylib")
+            if self.prefix(src="../../libraries/universal-darwin/lib_release", dst="MacOS/"):
+
+                self.path("libndofdev.dylib")
+                
+                self.path("libopenal.1.dylib")
+                self.path("libalut.0.dylib")
+
+                # self.path("libglib-2.0.dylib")
+                # self.path("libgmodule-2.0.dylib")
+                # self.path("libgobject-2.0.dylib")
+                # self.path("libgthread-2.0.dylib")
+                
+                # self.path("libgstreamer-0.10.dylib")
+                # self.path("libgstapp-0.10.dylib")
+                # self.path("libgstaudio-0.10.dylib")
+                # self.path("libgstbase-0.10.dylib")
+                # self.path("libgstcdda-0.10.dylib")
+                # self.path("libgstcontroller-0.10.dylib")
+                # self.path("libgstdataprotocol-0.10.dylib")
+                # self.path("libgstfft-0.10.dylib")
+                # self.path("libgstinterfaces-0.10.dylib")
+                # self.path("libgstnet-0.10.dylib")
+                # self.path("libgstnetbuffer-0.10.dylib")
+                # self.path("libgstpbutils-0.10.dylib")
+                # self.path("libgstriff-0.10.dylib")
+                # self.path("libgstrtp-0.10.dylib")
+                # self.path("libgstrtsp-0.10.dylib")
+                # self.path("libgstsdp-0.10.dylib")
+                # self.path("libgsttag-0.10.dylib")
+                # self.path("libgstvideo-0.10.dylib")
+
+                # self.path("libxml2.2.dylib")
+                # self.path("libfaad.2.dylib")
+                # self.path("libFLAC.8.dylib")
+                # self.path("libintl.3.dylib")
+                self.path("libjpeg.62.dylib")
+                self.path("libpng12.0.dylib")
+                # self.path("libneon.27.dylib")
+                self.path("libogg.0.dylib")
+                # self.path("liboil-0.3.0.dylib")
+                self.path("libopenjpeg.1.4.dylib")
+                # self.path("libtheora.0.dylib")
+                self.path("libvorbis.0.dylib")
+                self.path("libvorbisenc.2.dylib")
+                self.path("libvorbisfile.3.dylib")
+
+                self.end_prefix("../../libraries/universal-darwin/lib_release")
 
             # most everything goes in the Resources directory
             if self.prefix(src="", dst="Resources"):
@@ -499,15 +546,9 @@ class DarwinManifest(ViewerManifest):
 
                 self.path("licenses-mac.txt", dst="licenses.txt")
                 self.path("featuretable_mac.txt")
-                self.path("InWorldz.nib")
+                self.path("SecondLife.nib")
+		self.path("inworldz.icns")
 
-                if self.viewer_branding_id()=='inworldz':
-                    # If we are not using the default channel, use the 'Firstlook
-                    # icon' to show that it isn't a stable release.
-                    if self.default_channel() and self.default_grid():
-                        self.path("inworldz.icns")
-                    else:
-                        self.path("inworldz_development.icns", "inworldz.icns")
 
                 # Translations
                 self.path("English.lproj")
@@ -527,61 +568,171 @@ class DarwinManifest(ViewerManifest):
                 self.path("uk.lproj")
                 self.path("zh-Hans.lproj")
 
-                # iwvoice and vivox lols
-                self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libsndfile.dylib")
-                self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxoal.dylib")
-                self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxplatform.dylib")
+                #libdir = "../packages/lib/release"
+                dylibs = {}
+
+                # if (not self.standalone()) and self.prefix(src="../../libraries/universal-darwin/lib_release/gstreamer-plugins", dst="lib/gstreamer-plugins"):
+                #     self.path("libgstaacparse.so")
+                #     self.path("libgstadder.so")
+                #     self.path("libgstaiffparse.so")
+                #     self.path("libgstamrparse.so")
+                #     self.path("libgstapp.so")
+                #     self.path("libgstaudioconvert.so")
+                #     self.path("libgstaudiorate.so")
+                #     self.path("libgstaudioresample.so")
+                #     self.path("libgstautodetect.so")
+                #     self.path("libgstavi.so")
+                #     self.path("libgstcoreelements.so")
+                #     self.path("libgstcoreindexers.so")
+                #     self.path("libgstdebug.so")
+                #     self.path("libgstdecodebin.so")
+                #     self.path("libgstdecodebin2.so")
+                #     self.path("libgstdeinterlace2.so")
+                #     self.path("libgstequalizer.so")
+                #     self.path("libgstfaad.so")
+                #     self.path("libgstffmpeg.so")
+                #     self.path("libgstffmpegcolorspace.so")
+                #     self.path("libgstffmpegscale.so")
+                #     self.path("libgstfilter.so")
+                #     self.path("libgstflac.so")
+                #     self.path("libgstflv.so")
+                #     self.path("libgstgdp.so")
+                #     self.path("libgsth264parse.so")
+                #     self.path("libgsticydemux.so")
+                #     self.path("libgstid3demux.so")
+                #     self.path("libgstinterleave.so")
+                #     self.path("libgstjpeg.so")
+                #     self.path("libgstlevel.so")
+                #     self.path("libgstmetadata.so")
+                #     self.path("libgstmpeg4videoparse.so")
+                #     self.path("libgstmpegdemux.so")
+                #     self.path("libgstmpegvideoparse.so")
+                #     self.path("libgstmultifile.so")
+                #     self.path("libgstmultipart.so")
+                #     self.path("libgstneonhttpsrc.so")
+                #     self.path("libgstogg.so")
+                #     self.path("libgstosxaudio.so")
+                #     self.path("libgstosxvideosink.so")
+                #     self.path("libgstplaybin.so")
+                #     self.path("libgstpng.so")
+                #     self.path("libgstpostproc.so")
+                #     self.path("libgstqtdemux.so")
+                #     #self.path("libgstqtwrapper.so")
+                #     self.path("libgstqueue2.so")
+                #     self.path("libgstreal.so")
+                #     self.path("libgstrtp.so")
+                #     self.path("libgstrtpmanager.so")
+                #     self.path("libgstrtsp.so")
+                #     self.path("libgstsdpelem.so")
+                #     self.path("libgstselector.so")
+                #     self.path("libgststereo.so")
+                #     self.path("libgsttcp.so")
+                #     self.path("libgsttheora.so")
+                #     self.path("libgsttypefindfunctions.so")
+                #     self.path("libgstudp.so")
+                #     self.path("libgstvideobalance.so")
+                #     self.path("libgstvideobox.so")
+                #     self.path("libgstvideocrop.so")
+                #     self.path("libgstvideoflip.so")
+                #     self.path("libgstvideomixer.so")
+                #     self.path("libgstvideorate.so")
+                #     self.path("libgstvideoscale.so")
+                #     self.path("libgstvideosignal.so")
+                #     self.path("libgstvolume.so")
+                #     self.path("libgstvorbis.so")
+                #     self.path("libgstwavparse.so")
+                    
+                #     self.end_prefix("../../libraries/universal-darwin/lib_release/gstreamer-plugins")
+
+
+                # SLVoice and vivox lols
+                self.path("vivox-runtime/universal-darwin/libsndfile.dylib", "libsndfile.dylib")
+                self.path("vivox-runtime/universal-darwin/libvivoxoal.dylib", "libvivoxoal.dylib")
+                self.path("vivox-runtime/universal-darwin/libvivoxplatform.dylib", "libvivoxplatform.dylib")
                 self.path("vivox-runtime/universal-darwin/libortp.dylib", "libortp.dylib")
                 self.path("vivox-runtime/universal-darwin/libvivoxsdk.dylib", "libvivoxsdk.dylib")
                 self.path("vivox-runtime/universal-darwin/iwvoice", "iwvoice")
 
                 libdir = "../../libraries/universal-darwin/lib_release"
-                dylibs = {}
                 
-                # need to get the kdu dll from any of the build directories as well
-                for lib in "llkdu", "llcommon":
-                    libfile = "lib%s.dylib" % lib
-                    try:
-                        self.path(self.find_existing_file(os.path.join(os.pardir,
-                                                                       lib,
-                                                                       self.args['configuration'],
-                                                                       libfile),
-                                                          os.path.join(libdir, libfile)),
-                                  dst=libfile)
-                    except RuntimeError:
-                        print "Skipping %s" % libfile
-                        dylibs[lib] = False
-                    else:
-                        dylibs[lib] = True
+                
+                
+                # IW KDU
+                self.path("../iw_kdu_loader/" + self.args['configuration'] + "/libiw_kdu_loader.dylib", "libiw_kdu_loader.dylib")
+                
+                kdu_lib = ''
+                if self.args['configuration'] == 'Debug':
+                	kdu_lib = 'libkdu_v64D.dylib'
+                else:
+                	kdu_lib = 'libkdu_v64R.dylib'
+                	
+                try:
+            		self.path(self.find_existing_file('../../libraries/kdu/bin/' + kdu_lib), 
+                  dst=kdu_lib)
+                except:
+		            print "Skipping KDU lib"
+		            
+                # Need to get the llcommon dll from any of the build directories as well
+                lib = "llcommon"
+                libfile = "lib%s.dylib" % lib
+                try:
+                    self.path(self.find_existing_file(os.path.join(os.pardir,
+                                                                    lib,
+                                                                    self.args['configuration'],
+                                                                    libfile),
+                                                      os.path.join(libdir, libfile)),
+                                                      dst=libfile)
+                except RuntimeError:
+                    print "Skipping %s" % libfile
+                    dylibs[lib] = False
+                else:
+                    dylibs[lib] = True
 
-                for libfile in ("libapr-1.0.3.7.dylib",
-                                "libaprutil-1.0.3.8.dylib",
-                                "libexpat.0.5.0.dylib"):
-                    self.path(os.path.join(libdir, libfile), libfile)
-                
+                if dylibs["llcommon"]:
+                    for libfile in ("libapr-1.0.3.7.dylib",
+                                    "libaprutil-1.0.3.8.dylib",
+                                    "libexpat.0.5.0.dylib"):
+                        self.path(os.path.join(libdir, libfile), libfile)
+
+
                 # our apps
-                self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
+                #self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
                 #self.path("../mac_updater/" + self.args['configuration'] + "/mac-updater.app", "mac-updater.app")
 
                 # our apps dependencies on shared libs
-                mac_crash_logger_res_path = self.dst_path_of("mac-crash-logger.app/Contents/Resources")
+                #mac_crash_logger_res_path = self.dst_path_of("mac-crash-logger.app/Contents/Resources")
                 #mac_updater_res_path = self.dst_path_of("mac-updater.app/Contents/Resources")
-                for libfile in ("libllcommon.dylib",
-                                "libapr-1.0.3.7.dylib",
-                                "libaprutil-1.0.3.8.dylib",
-                                "libexpat.0.5.0.dylib"):
-                    target_lib = os.path.join('../../..', libfile)
-                    self.run_command("ln -sf %(target)r %(link)r" %
-                                     {'target': target_lib,
-                                      'link' : os.path.join(mac_crash_logger_res_path, libfile)}
-                                     )
+                #for libfile in ("libllcommon.dylib",
+                 #               "libapr-1.0.3.7.dylib",
+                 #               "libaprutil-1.0.3.8.dylib",
+                 #               "libexpat.0.5.0.dylib"):
+                 #   target_lib = os.path.join('../../..', libfile)
+                    #self.run_command("ln -sf %(target)r %(link)r" %
+                    #                 {'target': target_lib,
+                    #                  'link' : os.path.join(mac_crash_logger_res_path, libfile)}
+                    #                 )
                     #self.run_command("ln -sf %(target)r %(link)r" %
                     #                 {'target': target_lib,
                     #                  'link' : os.path.join(mac_updater_res_path, libfile)}
                     #                 )
 
                 # plugin launcher
-                self.path("../llplugin/slplugin/" + self.args['configuration'] + "/SLPlugin", "SLPlugin")
+                self.path("../llplugin/slplugin/" + self.args['configuration'] + "/SLPlugin.app", "SLPlugin.app")
+
+                # symlinks for SLPlugin.app dependencies
+                if dylibs["llcommon"]:
+                    slplugin_res_path = self.dst_path_of("SLPlugin.app/Contents/Resources")
+                    for libfile in ("libllcommon.dylib",
+                                    "libapr-1.0.3.7.dylib",
+                                    "libaprutil-1.0.3.8.dylib",
+                                    "libexpat.0.5.0.dylib",
+                                    ):
+                        target_lib = os.path.join('../../..', libfile)
+                                                
+                        self.run_command("ln -sf %(target)r %(link)r" % 
+                                         {'target': target_lib,
+                                          'link' : os.path.join(slplugin_res_path, libfile)}
+                                         )
 
                 # plugins
                 if self.prefix(src="", dst="llplugin"):

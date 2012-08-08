@@ -106,8 +106,14 @@ public:
 	static void onClickFilterMenu(void* user_data);
 	static void onClickSendToMessageBuilder(void* user_data);
 	static void onClickClearLog(void* user_data);
+	static void onClickCopy(void* user_data);
+	static void onClickExportCSV(void* user_data);
+	static void onClickImportCSV(void* user_data);
+	static void onClickStart(void* user_data);
+	static void onClickStop(void* user_data);
 
 	static BOOL sBusyApplyingFilter;
+	static bool sPauseUI;
 	LLMessageLogFilterApply* mMessageLogFilterApply;
 	static LLFloaterMessageLog* sInstance;
 	static std::list<LLNetListItem*> sNetListItems;

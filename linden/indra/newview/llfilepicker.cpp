@@ -60,6 +60,7 @@ LLFilePicker LLFilePicker::sInstance;
 #define XML_FILTER L"XML files (*.xml)\0*.xml\0"
 #define SLOBJECT_FILTER L"Objects (*.slobject)\0*.slobject\0"
 #define RAW_FILTER L"RAW files (*.raw)\0*.raw\0"
+#define CSV_FILTER L"CSV (*.csv; *.txt)\0*.csv;*txt\0"
 #ifdef LL_WINDOWS
 	#define APP_FILTER L"Executable files (*.exe)\0*.exe\0"
 #else
@@ -188,6 +189,10 @@ BOOL LLFilePicker::setupFilter(ELoadFilter filter)
 #endif
 	case FFLOAD_XML:
 		mOFN.lpstrFilter = XML_FILTER \
+			L"\0";
+		break;
+	case FFLOAD_CSV:
+		mOFN.lpstrFilter = CSV_FILTER \
 			L"\0";
 		break;
 	case FFLOAD_SLOBJECT:
@@ -481,6 +486,16 @@ BOOL LLFilePicker::getSaveFile(ESaveFilter filter, const std::string& filename)
 		mOFN.lpstrDefExt = L"j2c";
 		mOFN.lpstrFilter =
 			L"Compressed Images (*.j2c)\0*.j2c\0" \
+			L"\0";
+		break;
+	case FFSAVE_CSV:
+		if (filename.empty())
+		{
+			wcsncpy( mFilesW,L"untitled.csv", FILENAME_BUFFER_SIZE);
+		}
+		mOFN.lpstrDefExt = L"csv";
+		mOFN.lpstrFilter =
+			L"CSV (*.csv)\0*.csv\0" \
 			L"\0";
 		break;
 	default:
@@ -1150,6 +1165,10 @@ static std::string add_xml_filter_to_gtkchooser(GtkWindow *picker)
 						       LLTrans::getString("xml_file") + " (*.xml)");
 }
 
+static std::string add_csv_filter_to_gtkchooser(GtkWindow *picker)
+{
+	return add_simple_pattern_filter_to_gtkchooser(picker, "*.csv", "CSV (*.csv)");
+}
 
 BOOL LLFilePicker::getSaveFile( ESaveFilter filter, const std::string& filename )
 {
@@ -1267,6 +1286,9 @@ BOOL LLFilePicker::getOpenFile( ELoadFilter filter )
 			break;
 		case FFLOAD_XML:
 			filtername = add_xml_filter_to_gtkchooser(picker);
+			break;
+		case FFLOAD_CSV"
+			filtername = add_csv_filter_to_gtkchooser(picker);
 			break;
 		default:;
 			break;

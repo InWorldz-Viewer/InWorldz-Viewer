@@ -57,7 +57,7 @@ public:
 	LLTextureFetch(LLTextureCache* cache, LLImageDecodeThread* imagedecodethread, bool threaded);
 	~LLTextureFetch();
 
-	/*virtual*/ S32 update(U32 max_time_ms);	
+	/*virtual*/ S32 update(F32 max_time_ms);	
 	void shutDownTextureCacheThread() ; //called in the main thread after the TextureCacheThread shuts down.
 	void shutDownImageDecodeThread() ;  //called in the main thread after the ImageDecodeThread shuts down.
 
@@ -90,21 +90,20 @@ public:
 	LLTextureFetchWorker* getWorkerAfterLock(const LLUUID& id);
 
 	LLTextureInfo* getTextureInfo() { return &mTextureInfo; }
-	
+
 protected:
 	void addToNetworkQueue(LLTextureFetchWorker* worker);
 	void removeFromNetworkQueue(LLTextureFetchWorker* worker, bool cancel);
 	void addToHTTPQueue(const LLUUID& id);
 	void removeFromHTTPQueue(const LLUUID& id, S32 received_size = 0);
 	void removeRequest(LLTextureFetchWorker* worker, bool cancel);
-	// Called from worker thread (during doWork)
-	void processCurlRequests();	
 
 private:
 	void sendRequestListToSimulators();
 	/*virtual*/ void startThread(void);
 	/*virtual*/ void endThread(void);
 	/*virtual*/ void threadedUpdate(void);
+	void commonUpdate();
 
 public:
 	LLUUID mDebugID;

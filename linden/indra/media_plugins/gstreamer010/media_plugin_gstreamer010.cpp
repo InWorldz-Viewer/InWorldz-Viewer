@@ -984,7 +984,10 @@ void MediaPluginGStreamer010::set_gst_plugin_path()
 	std::string plugin_path =	
 		"GST_PLUGIN_PATH=" +
 #if LL_WINDOWS
-		imp_dir + "\\lib\\gstreamer-plugins" +
+		// On windows, the path should be maindir\llplugin\lib\gstreamer-plugins
+		// but getcwd() isn't reliable and can put us a directory higher sometimes
+		imp_dir + "\\lib\\gstreamer-plugins" + G_SEARCHPATH_SEPARATOR_S +
+		imp_dir + "llplugin\\lib\\gstreamer-plugins" +
 #elif LL_DARWIN
 		imp_dir + separator +
 		imp_dir + "/../Resources/lib/gstreamer-plugins" +

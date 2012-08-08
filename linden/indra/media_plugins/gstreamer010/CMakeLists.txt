@@ -51,12 +51,17 @@ add_library(media_plugin_gstreamer010
     ${media_plugin_gstreamer010_SOURCE_FILES}
 )
 
+if (DARWIN)
+	find_library(COREFOUNDATION_LIBRARY NAMES CoreFoundation) 
+endif (DARWIN)
+
 target_link_libraries(media_plugin_gstreamer010
   ${LLPLUGIN_LIBRARIES}
   ${MEDIA_PLUGIN_BASE_LIBRARIES}
   ${LLCOMMON_LIBRARIES}
   ${PLUGIN_API_WINDOWS_LIBRARIES}
   ${GSTREAMER010_LIBRARIES}
+  ${COREFOUNDATION_LIBRARY}
 )
 
 add_dependencies(media_plugin_gstreamer010

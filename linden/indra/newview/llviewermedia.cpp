@@ -44,11 +44,15 @@
 #include "llviewerimagelist.h"
 #include "llpluginclassmedia.h"
 
+#include "llurldispatcher.h"
+
 #include "llevent.h"		// LLSimpleListener
 #include "lluuid.h"
 #include "llkeyboard.h"
+#include "llappviewer.h"
+#include "llfilepicker.h"
 #include "llmutelist.h"
-
+#include "llweb.h"
 
 
 // Merov: Temporary definitions while porting the new viewer media code to Snowglobe
@@ -201,7 +205,7 @@ viewer_media_t LLViewerMedia::newMediaImpl(const std::string& media_url,
 		media_impl->mMediaAutoScale = media_auto_scale;
 		media_impl->mMediaLoop = media_loop;
 		if(! media_url.empty())
-			media_impl->navigateTo(media_url, mime_type, true);
+			media_impl->navigateTo(media_url, mime_type, false);
 	}
 	return media_impl;
 }
@@ -319,25 +323,14 @@ bool LLViewerMedia::textureHasMedia(const LLUUID& texture_id)
 // static
 void LLViewerMedia::setVolume(F32 volume)
 {
-	if(volume != sGlobalVolume)
+	impl_list::iterator iter = sViewerMediaImplList.begin();
+	impl_list::iterator end = sViewerMediaImplList.end();
+
+	for(; iter != end; iter++)
 	{
-		sGlobalVolume = volume;
-		impl_list::iterator iter = sViewerMediaImplList.begin();
-		impl_list::iterator end = sViewerMediaImplList.end();
-
-		for(; iter != end; iter++)
-		{
-			LLViewerMediaImpl* pimpl = *iter;
-			pimpl->updateVolume();
-		}
+		LLViewerMediaImpl* pimpl = *iter;
+		pimpl->setVolume(volume);
 	}
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-// static
-F32 LLViewerMedia::getVolume()
-{
-	return sGlobalVolume;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -353,6 +346,8 @@ void LLViewerMedia::updateMedia()
 		pimpl->update();
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // static
@@ -390,7 +385,8 @@ LLViewerMediaImpl::LLViewerMediaImpl(const std::string& media_url,
 	mNeedsNewTexture(true),
 	mSuspendUpdates(false),
 	mVisible(true),
-	mRequestedVolume(1.0f)
+	mHasFocus(false),
+	mBackgroundColor(LLColor4::black) // Do not set to white or may get "white flash" bug.
 { 
 	createMediaSource();
 }
@@ -432,7 +428,7 @@ void LLViewerMediaImpl::createMediaSource()
 {
 	if(! mMediaURL.empty())
 	{
-		navigateTo(mMediaURL, mMimeType, true);
+		navigateTo(mMediaURL, mMimeType, false);
 	}
 	else if(! mMimeType.empty())
 	{
@@ -463,7 +459,7 @@ void LLViewerMediaImpl::setMediaType(const std::string& media_type)
 
 //////////////////////////////////////////////////////////////////////////////////////////
 /*static*/
-LLPluginClassMedia* LLViewerMediaImpl::newSourceFromMediaType(std::string media_type, LLPluginClassMediaOwner *owner /* may be NULL */, S32 default_width, S32 default_height)
+LLPluginClassMedia* LLViewerMediaImpl::newSourceFromMediaType(std::string media_type, LLPluginClassMediaOwner *owner /* may be NULL */, S32 default_width, S32 default_height, const std::string target)
 {
 	std::string plugin_basename = LLMIMETypes::implType(media_type);
 
@@ -504,6 +500,7 @@ LLPluginClassMedia* LLViewerMediaImpl::newSourceFromMediaType(std::string media_
 		else
 		{
 			LLPluginClassMedia* media_source = new LLPluginClassMedia(owner);
+			media_source->setOwner(owner);
 			media_source->setSize(default_width, default_height);
 			media_source->setUserDataPath(user_data_path);
 			media_source->setLanguageCode(LLUI::getLanguage());
@@ -519,8 +516,13 @@ LLPluginClassMedia* LLViewerMediaImpl::newSourceFromMediaType(std::string media_
 			// collect 'javascript enabled' setting from prefs and send to embedded browser
 			bool javascript_enabled = gSavedSettings.getBOOL( "BrowserJavascriptEnabled" );
 			media_source->setJavascriptEnabled( javascript_enabled );
-
-			if (media_source->init(launcher_name, plugin_name, gSavedSettings.getBOOL("PluginAttachDebuggerToPlugins")))
+		
+			//bool media_plugin_debugging_enabled = gSavedSettings.getBOOL("MediaPluginDebugging");
+			//media_source->enableMediaPluginDebugging( media_plugin_debugging_enabled );
+			media_source->setTarget(target);
+			
+			const std::string plugin_dir = gDirUtilp->getLLPluginDir();
+			if (media_source->init(launcher_name, plugin_dir, plugin_name, gSavedSettings.getBOOL("PluginAttachDebuggerToPlugins")))
 			{
 				return media_source;
 			}
@@ -556,7 +558,7 @@ bool LLViewerMediaImpl::initializePlugin(const std::string& media_type)
 	// and unconditionally set the mime type
 	mMimeType = media_type;
 
-	LLPluginClassMedia* media_source = newSourceFromMediaType(media_type, this, mMediaWidth, mMediaHeight);
+	LLPluginClassMedia* media_source = newSourceFromMediaType(media_type, this, mMediaWidth, mMediaHeight, mTarget);
 	
 	if (media_source)
 	{
@@ -564,9 +566,29 @@ bool LLViewerMediaImpl::initializePlugin(const std::string& media_type)
 		media_source->setLoop(mMediaLoop);
 		media_source->setAutoScale(mMediaAutoScale);
 		media_source->setBrowserUserAgent(LLViewerMedia::getCurrentUserAgent());
+		media_source->focus(mHasFocus);
+		media_source->setBackgroundColor(mBackgroundColor);
+
+		if(gSavedSettings.getBOOL("BrowserIgnoreSSLCertErrors"))
+		{
+			media_source->ignore_ssl_cert_errors(true);
+		}
+
+		// start by assuming the default CA file will be used
+		std::string ca_path = gDirUtilp->getExpandedFilename( LL_PATH_APP_SETTINGS, "CA.pem" );
+
+		// default turned off so pick up the user specified path
+		if( ! gSavedSettings.getBOOL("BrowserUseDefaultCAFile"))
+		{
+			ca_path = gSavedSettings.getString("BrowserCAFilePath");
+		}
+		// set the path to the CA.pem file
+		media_source->addCertificateFilePath( ca_path );
 		
+		media_source->proxy_setup(gSavedSettings.getBOOL("BrowserProxyEnabled"), gSavedSettings.getString("BrowserProxyAddress"), gSavedSettings.getS32("BrowserProxyPort"));
+
+
 		mMediaSource = media_source;
-		updateVolume();
 
 		return true;
 	}
@@ -649,31 +671,18 @@ void LLViewerMediaImpl::seek(F32 time)
 //////////////////////////////////////////////////////////////////////////////////////////
 void LLViewerMediaImpl::setVolume(F32 volume)
 {
-	mRequestedVolume = volume;
-	updateVolume();
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
-void LLViewerMediaImpl::updateVolume()
-{
 	if(mMediaSource)
 	{
-		// always scale the volume by the global media volume 
-		F32 volume = mRequestedVolume * LLViewerMedia::getVolume();
-
 		mMediaSource->setVolume(volume);
 	}
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-F32 LLViewerMediaImpl::getVolume()
-{
-	return mRequestedVolume;
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////
 void LLViewerMediaImpl::focus(bool focus)
 {
+
+	mHasFocus = focus;
+
 	if (mMediaSource)
 	{
 		// call focus just for the hell of it, even though this apopears to be a nop
@@ -686,6 +695,13 @@ void LLViewerMediaImpl::focus(bool focus)
 //			mMediaSource->mouseEvent(LLPluginClassMedia::MOUSE_EVENT_UP, 1, 1, 0);
 		}
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+bool LLViewerMediaImpl::hasFocus() const
+{
+	// FIXME: This might be able to be a bit smarter by hooking into LLViewerMediaFocus, etc.
+	return mHasFocus;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -759,6 +775,18 @@ BOOL LLViewerMediaImpl::handleMouseUp(S32 x, S32 y, MASK mask)
 
 	return TRUE; 
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////
+const std::string& LLViewerMediaImpl::getName() const 
+{ 
+	if (mMediaSource)
+	{
+		return mMediaSource->getMediaName();
+	}
+	
+	return LLStringUtil::null; 
+};
+
 //////////////////////////////////////////////////////////////////////////////////////////
 void LLViewerMediaImpl::navigateHome()
 {
@@ -962,10 +990,6 @@ void LLViewerMediaImpl::update()
 	{
 		return;
 	}
-	else
-	{
-		updateVolume();
-	}
 	
 	mMediaSource->idle();
 	
@@ -1063,7 +1087,10 @@ LLViewerImage* LLViewerMediaImpl::updatePlaceholderImage()
 		// MEDIAOPT: seems insane that we actually have to make an imageraw then
 		// immediately discard it
 		LLPointer<LLImageRaw> raw = new LLImageRaw(texture_width, texture_height, texture_depth);
-		raw->clear(0x0f, 0x0f, 0x0f, 0xff);
+		// Clear the texture to the background color, ignoring alpha.
+		// convert background color channels from [0.0, 1.0] to [0, 255];
+		raw->clear(int(mBackgroundColor.mV[VX] * 255.0f), int(mBackgroundColor.mV[VY] * 255.0f), int(mBackgroundColor.mV[VZ] * 255.0f), 0xff);
+
 		int discard_level = 0;
 
 		// ask media source for correct GL image format constants
@@ -1201,22 +1228,218 @@ bool LLViewerMediaImpl::hasMedia()
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
-void LLViewerMediaImpl::handleMediaEvent(LLPluginClassMedia* self, LLPluginClassMediaOwner::EMediaEvent event)
+//
+void LLViewerMediaImpl::resetPreviousMediaState()
 {
+	mPreviousMediaState = MEDIA_NONE;
+	mPreviousMediaTime = 0.0f;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+void LLViewerMediaImpl::handleMediaEvent(LLPluginClassMedia* plugin, LLPluginClassMediaOwner::EMediaEvent event)
+{
+	bool pass_through = true;
 	switch(event)
 	{
-		case MEDIA_EVENT_PLUGIN_FAILED:
+		case MEDIA_EVENT_CLICK_LINK_NOFOLLOW:
 		{
+			LL_DEBUGS("Media") << "MEDIA_EVENT_CLICK_LINK_NOFOLLOW, uri is: "
+							   << plugin->getClickURL() << LL_ENDL;
+			// NOTE: this is dealt with in LLMediaCtrl::handleMediaEvent()
+			// since if dealt from here, we won't be able to pass the media
+			// control to LLURLDispatcher::dispatch()
+			break;
+		}
+
+		case MEDIA_EVENT_CLICK_LINK_HREF:
+		{
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_CLICK_LINK_HREF, target is \"" << plugin->getClickTarget() << "\", uri is " << plugin->getClickURL() << LL_ENDL;
+			// retrieve the event parameters
+			std::string url = plugin->getClickURL();
+			std::string target = plugin->getClickTarget();
+//			std::string uuid = plugin->getClickUUID();
+			// loadURL now handles distinguishing between _blank, _external, and other named targets.
+			LLWeb::loadURL(url, target);
+		};
+		break;
+		case MEDIA_EVENT_PLUGIN_FAILED_LAUNCH:
+		{
+			// The plugin failed to load properly.  Make sure the timer doesn't retry.
+			// TODO: maybe mark this plugin as not loadable somehow?
+			mMediaSourceFailed = true;
+
+			// Reset the last known state of the media to defaults.
+			resetPreviousMediaState();
+			
+			// TODO: may want a different message for this case?
 			LLSD args;
-			args["PLUGIN"] = LLMIMETypes::implType(mMimeType);
+			args["PLUGIN"] = LLMIMETypes::implType(mCurrentMimeType);
 			LLNotifications::instance().add("MediaPluginFailed", args);
 		}
 		break;
+
+		case MEDIA_EVENT_PLUGIN_FAILED:
+		{
+			// The plugin crashed.
+			mMediaSourceFailed = true;
+
+			// Reset the last known state of the media to defaults.
+			resetPreviousMediaState();
+
+			LLSD args;
+			args["PLUGIN"] = LLMIMETypes::implType(mCurrentMimeType);
+			// SJB: This is getting called every frame if the plugin fails to load, continuously respawining the alert!
+			LLNotifications::instance().add("MediaPluginFailed", args);
+		}
+		break;
+		
+		case MEDIA_EVENT_CURSOR_CHANGED:
+		{
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_CURSOR_CHANGED" << LL_ENDL;
+		}
+		break;
+
+		case LLViewerMediaObserver::MEDIA_EVENT_NAVIGATE_BEGIN:
+		{
+			LL_DEBUGS("Media") << "MEDIA_EVENT_NAVIGATE_BEGIN, uri is: " << plugin->getNavigateURI() << LL_ENDL;
+
+			if(getNavState() == MEDIANAVSTATE_SERVER_SENT)
+			{
+				setNavState(MEDIANAVSTATE_SERVER_BEGUN);
+			}
+			else
+			{
+				setNavState(MEDIANAVSTATE_BEGUN);
+			}
+		}
+		break;
+
+		case LLViewerMediaObserver::MEDIA_EVENT_NAVIGATE_COMPLETE:
+		{
+			LL_DEBUGS("Media") << "MEDIA_EVENT_NAVIGATE_COMPLETE, uri is: " << plugin->getNavigateURI() << LL_ENDL;
+
+			std::string url = plugin->getNavigateURI();
+			if(getNavState() == MEDIANAVSTATE_BEGUN)
+			{
+				if(mCurrentMediaURL == url)
+				{
+					// This is a navigate that takes us to the same url as the previous navigate.
+					setNavState(MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED_SPURIOUS);
+				}
+				else
+				{
+					mCurrentMediaURL = url;
+					setNavState(MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED);
+				}
+			}
+			else if(getNavState() == MEDIANAVSTATE_SERVER_BEGUN)
+			{
+				mCurrentMediaURL = url;
+				setNavState(MEDIANAVSTATE_SERVER_COMPLETE_BEFORE_LOCATION_CHANGED);
+			}
+			else
+			{
+				// all other cases need to leave the state alone.
+			}
+		}
+		break;
+		
+		case LLViewerMediaObserver::MEDIA_EVENT_LOCATION_CHANGED:
+		{
+			LL_DEBUGS("Media") << "MEDIA_EVENT_LOCATION_CHANGED, uri is: " << plugin->getLocation() << LL_ENDL;
+
+			std::string url = plugin->getLocation();
+
+			if(getNavState() == MEDIANAVSTATE_BEGUN)
+			{
+				if(mCurrentMediaURL == url)
+				{
+					// This is a navigate that takes us to the same url as the previous navigate.
+					setNavState(MEDIANAVSTATE_FIRST_LOCATION_CHANGED_SPURIOUS);
+				}
+				else
+				{
+					mCurrentMediaURL = url;
+					setNavState(MEDIANAVSTATE_FIRST_LOCATION_CHANGED);
+				}
+			}
+			else if(getNavState() == MEDIANAVSTATE_SERVER_BEGUN)
+			{
+				mCurrentMediaURL = url;
+				setNavState(MEDIANAVSTATE_SERVER_FIRST_LOCATION_CHANGED);
+			}
+			else
+			{
+				// Don't track redirects.
+				setNavState(MEDIANAVSTATE_NONE);
+			}
+		}
+		break;
+
+		case LLViewerMediaObserver::MEDIA_EVENT_PICK_FILE_REQUEST:
+		{
+			// Display a file picker
+			std::string response;
+			
+			LLFilePicker& picker = LLFilePicker::instance();
+			if (!picker.getOpenFile(LLFilePicker::FFLOAD_ALL))
+			{
+				// The user didn't pick a file -- the empty response string will indicate this.
+			}
+			
+			response = picker.getFirstFile();
+			
+			plugin->sendPickFileResponse(response);
+		}
+		break;
+		
+		case LLViewerMediaObserver::MEDIA_EVENT_CLOSE_REQUEST:
+		{
+			std::string uuid = plugin->getClickUUID();
+
+			llinfos << "MEDIA_EVENT_CLOSE_REQUEST for uuid " << uuid << llendl;
+
+			if(uuid.empty())
+			{
+				// This close request is directed at this instance, let it fall through.
+			}
+			else
+			{
+				// This close request is directed at another instance
+				pass_through = false;
+				//TODO: LLFloaterMediaBrowser::closeRequest(uuid);
+			}
+		}
+		break;
+
+		case LLViewerMediaObserver::MEDIA_EVENT_GEOMETRY_CHANGE:
+		{
+			std::string uuid = plugin->getClickUUID();
+
+			llinfos << "MEDIA_EVENT_GEOMETRY_CHANGE for uuid " << uuid << llendl;
+
+			if(uuid.empty())
+			{
+				// This geometry change request is directed at this instance, let it fall through.
+			}
+			else
+			{
+				// This request is directed at another instance
+				pass_through = false;
+				//TODO: LLFloaterMediaBrowser::geometryChanged(uuid, plugin->getGeometryX(), plugin->getGeometryY(), plugin->getGeometryWidth(), plugin->getGeometryHeight());
+			}
+		}
+		break;
+
 		default:
 		break;
 	}
-	// Just chain the event to observers.
-	emitEvent(self, event);
+
+	if(pass_through)
+	{
+		// Just chain the event to observers.
+		emitEvent(plugin, event);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1277,4 +1500,33 @@ LLViewerMediaImpl::canPaste() const
 		return mMediaSource->canPaste();
 	else
 		return FALSE;
+}
+
+void LLViewerMediaImpl::setBackgroundColor(LLColor4 color)
+{
+	mBackgroundColor = color; 
+
+	if(mMediaSource)
+	{
+		mMediaSource->setBackgroundColor(mBackgroundColor);
+	}
+};
+
+void LLViewerMediaImpl::setNavState(EMediaNavState state)
+{
+	mMediaNavState = state;
+	
+	switch (state) 
+	{
+		case MEDIANAVSTATE_NONE: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_NONE" << llendl; break;
+		case MEDIANAVSTATE_BEGUN: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_BEGUN" << llendl; break;
+		case MEDIANAVSTATE_FIRST_LOCATION_CHANGED: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_FIRST_LOCATION_CHANGED" << llendl; break;
+		case MEDIANAVSTATE_FIRST_LOCATION_CHANGED_SPURIOUS: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_FIRST_LOCATION_CHANGED_SPURIOUS" << llendl; break;
+		case MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED" << llendl; break;
+		case MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED_SPURIOUS: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED_SPURIOUS" << llendl; break;
+		case MEDIANAVSTATE_SERVER_SENT: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_SERVER_SENT" << llendl; break;
+		case MEDIANAVSTATE_SERVER_BEGUN: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_SERVER_BEGUN" << llendl; break;
+		case MEDIANAVSTATE_SERVER_FIRST_LOCATION_CHANGED: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_SERVER_FIRST_LOCATION_CHANGED" << llendl; break;
+		case MEDIANAVSTATE_SERVER_COMPLETE_BEFORE_LOCATION_CHANGED: LL_DEBUGS("Media") << "Setting nav state to MEDIANAVSTATE_SERVER_COMPLETE_BEFORE_LOCATION_CHANGED" << llendl; break;
+	}
 }

@@ -185,7 +185,7 @@ void LLMessageTemplate::banUdp()
 		"UDPDeprecated",
 		"UDPBlackListed"
 	};
-	if (mDeprecation != MD_DEPRECATED)
+	if (mDeprecation != MD_MSG_DEPRECATED)
 	{
 		llinfos << "Setting " << mName << " to UDPBlackListed was " << deprecation[mDeprecation] << llendl;
 		mDeprecation = MD_UDPBLACKLISTED;

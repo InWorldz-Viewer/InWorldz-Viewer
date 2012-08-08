@@ -4,31 +4,25 @@
  * @date 2005-10-05
  * @brief Implementation of the http server classes
  *
- * $LicenseInfo:firstyear=2005&license=viewergpl$
- * 
- * Copyright (c) 2005-2009, Linden Research, Inc.
- * 
+ * $LicenseInfo:firstyear=2005&license=viewerlgpl$
  * Second Life Viewer Source Code
- * The source code in this file ("Source Code") is provided by Linden Lab
- * to you under the terms of the GNU General Public License, version 2.0
- * ("GPL"), unless you have obtained a separate licensing agreement
- * ("Other License"), formally executed by you and Linden Lab.  Terms of
- * the GPL can be found in doc/GPL-license.txt in this distribution, or
- * online at http://secondlifegrid.net/programs/open_source/licensing/gplv2
+ * Copyright (C) 2010, Linden Research, Inc.
  * 
- * There are special exceptions to the terms and conditions of the GPL as
- * it is applied to this Source Code. View the full text of the exception
- * in the file doc/FLOSS-exception.txt in this software distribution, or
- * online at
- * http://secondlifegrid.net/programs/open_source/licensing/flossexception
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation;
+ * version 2.1 of the License only.
  * 
- * By copying, modifying or distributing this software, you acknowledge
- * that you have read and understood your obligations described above,
- * and agree to abide by those obligations.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
  * 
- * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
- * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
- * COMPLETENESS OR PERFORMANCE.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * 
+ * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
  * $/LicenseInfo$
  */
 
@@ -74,7 +68,12 @@ class LLHTTPPipe : public LLIOPipe
 {
 public:
 	LLHTTPPipe(const LLHTTPNode& node)
-		: mNode(node), mResponse(NULL), mState(STATE_INVOKE), mChainLock(0), mStatusCode(0)
+		: mNode(node),
+		  mResponse(NULL),
+		  mState(STATE_INVOKE),
+		  mChainLock(0),
+		  mLockedPump(NULL),
+		  mStatusCode(0)
 		{ }
 	virtual ~LLHTTPPipe()
 	{
@@ -105,12 +104,13 @@ private:
 		// from LLHTTPNode::Response
 		virtual void result(const LLSD&);
 		virtual void extendedResult(S32 code, const std::string& body, const LLSD& headers);
+		
 		virtual void status(S32 code, const std::string& message);
 
 		void nullPipe();
 
 	private:
-		Response() {;} // Must be accessed through LLPointer.
+		Response() : mPipe(NULL) {} // Must be accessed through LLPointer.
 		LLHTTPPipe* mPipe;
 	};
 	friend class Response;
@@ -402,7 +402,7 @@ void LLHTTPPipe::unlockChain()
 class LLHTTPResponseHeader : public LLIOPipe
 {
 public:
-	LLHTTPResponseHeader() {}
+	LLHTTPResponseHeader() : mCode(0) {}
 	virtual ~LLHTTPResponseHeader() {}
 
 protected:
@@ -520,7 +520,7 @@ protected:
 	 * seek orfor string assignment.
 	 * @returns Returns true if a line was found.
 	 */
-	bool readLine(
+	bool readHeaderLine(
 		const LLChannelDescriptors& channels,
 		buffer_ptr_t buffer,
 		U8* dest,
@@ -591,7 +591,7 @@ LLHTTPResponder::~LLHTTPResponder()
 	//lldebugs << "destroying LLHTTPResponder" << llendl;
 }
 
-bool LLHTTPResponder::readLine(
+bool LLHTTPResponder::readHeaderLine(
 	const LLChannelDescriptors& channels,
 	buffer_ptr_t buffer,
 	U8* dest,
@@ -669,7 +669,7 @@ LLIOPipe::EStatus LLHTTPResponder::process_impl(
 #endif
 		
 		PUMP_DEBUG;
-		if(readLine(channels, buffer, (U8*)buf, len))
+		if(readHeaderLine(channels, buffer, (U8*)buf, len))
 		{
 			bool read_next_line = false;
 			bool parse_all = true;
@@ -733,7 +733,13 @@ LLIOPipe::EStatus LLHTTPResponder::process_impl(
 					if(read_next_line)
 					{
 						len = HEADER_BUFFER_SIZE;	
-						readLine(channels, buffer, (U8*)buf, len);
+						if (!readHeaderLine(channels, buffer, (U8*)buf, len))
+						{
+							// Failed to read the header line, probably too long.
+							// readHeaderLine already marked the channel/buffer as bad.
+							keep_parsing = false;
+							break;
+						}
 					}
 					if(0 == len)
 					{
@@ -803,6 +809,8 @@ LLIOPipe::EStatus LLHTTPResponder::process_impl(
 
   			// Copy everything after mLast read to the out.
 			LLBufferArray::segment_iterator_t seg_iter;
+
+			buffer->lock();
 			seg_iter = buffer->splitAfter(mLastRead);
 			if(seg_iter != buffer->endSegment())
 			{
@@ -823,7 +831,7 @@ LLIOPipe::EStatus LLHTTPResponder::process_impl(
 				}
 #endif
 			}
-
+			buffer->unlock();
 			//
 			// *FIX: get rid of extra bytes off the end
 			//

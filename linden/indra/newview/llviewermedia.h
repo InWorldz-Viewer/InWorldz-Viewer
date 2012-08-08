@@ -39,6 +39,9 @@
 #include "llpluginclassmediaowner.h"
 
 #include "llviewermediaobserver.h"
+#include "v4color.h"
+
+#include "llurl.h"
 
 class LLViewerMediaImpl;
 class LLUUID;
@@ -87,8 +90,11 @@ class LLViewerMedia
 		static void updateMedia();
 
 		static void cleanupClass();
-		static F32 getVolume();	
 		static void muteListChanged();
+
+	// Set the proxy config for all loaded plugins
+	static void setProxyConfig(bool enable, const std::string &host, int port);
+	
 
 };
 
@@ -122,9 +128,9 @@ public:
 	void start();
 	void seek(F32 time);
 	void setVolume(F32 volume);
-	void updateVolume();
-	F32 getVolume();
 	void focus(bool focus);
+	// True if the impl has user focus.
+	bool hasFocus() const;
 	void mouseDown(S32 x, S32 y);
 	void mouseUp(S32 x, S32 y);
 	void mouseMove(S32 x, S32 y);
@@ -155,9 +161,13 @@ public:
 	bool isMediaPlaying();
 	bool isMediaPaused();
 	bool hasMedia();
+	
+	void resetPreviousMediaState();
+
+	void setTarget(const std::string& target) { mTarget = target; }
 
 	// utility function to create a ready-to-use media instance from a desired media type.
-	static LLPluginClassMedia* newSourceFromMediaType(std::string media_type, LLPluginClassMediaOwner *owner /* may be NULL */, S32 default_width, S32 default_height);
+	static LLPluginClassMedia* newSourceFromMediaType(std::string media_type, LLPluginClassMediaOwner *owner /* may be NULL */, S32 default_width, S32 default_height, const std::string target = LLStringUtil::null);
 
 	// Internally set our desired browser user agent string, including
 	// the Second Life version and skin name.  Used because we can
@@ -183,14 +193,15 @@ public:
 	/*virtual*/ BOOL	handleToolTip(S32 x, S32 y, std::string& msg, LLRect* sticky_rect_screen) { return FALSE; };
 	/*virtual*/ BOOL	handleMiddleMouseDown(S32 x, S32 y, MASK mask) { return FALSE; };
 	/*virtual*/ BOOL	handleMiddleMouseUp(S32 x, S32 y, MASK mask) {return FALSE; };
-	/*virtual*/ const std::string& getName() const { return LLStringUtil::null; };
+	/*virtual*/ const std::string& getName() const;
+
 	/*virtual*/ BOOL isView() const { return FALSE; };
 	/*virtual*/ void	screenPointToLocal(S32 screen_x, S32 screen_y, S32* local_x, S32* local_y) const {};
 	/*virtual*/ void	localPointToScreen(S32 local_x, S32 local_y, S32* screen_x, S32* screen_y) const {};
 	/*virtual*/ BOOL hasMouseCapture() { return gFocusMgr.getMouseCapture() == this; };
 
 	// Inherited from LLPluginClassMediaOwner
-	/*virtual*/ void handleMediaEvent(LLPluginClassMedia* self, LLPluginClassMediaOwner::EMediaEvent);
+	/*virtual*/ void handleMediaEvent(LLPluginClassMedia* plugin, LLPluginClassMediaOwner::EMediaEvent);
 
 	// LLEditMenuHandler overrides
 	/*virtual*/ void	cut();
@@ -201,6 +212,31 @@ public:
 
 	/*virtual*/ void	paste();
 	/*virtual*/ BOOL	canPaste() const;
+	 
+	void setBackgroundColor(LLColor4 color);
+
+	bool isTrustedBrowser() { return mTrustedBrowser; }
+	void setTrustedBrowser(bool trusted) { mTrustedBrowser = trusted; }
+
+	typedef enum 
+	{
+		MEDIANAVSTATE_NONE,										// State is outside what we need to track for navigation.
+		MEDIANAVSTATE_BEGUN,									// a MEDIA_EVENT_NAVIGATE_BEGIN has been received which was not server-directed
+		MEDIANAVSTATE_FIRST_LOCATION_CHANGED,					// first LOCATION_CHANGED event after a non-server-directed BEGIN
+		MEDIANAVSTATE_FIRST_LOCATION_CHANGED_SPURIOUS,			// Same as above, but the new URL is identical to the previously navigated URL.
+		MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED,			// we received a NAVIGATE_COMPLETE event before the first LOCATION_CHANGED
+		MEDIANAVSTATE_COMPLETE_BEFORE_LOCATION_CHANGED_SPURIOUS,// Same as above, but the new URL is identical to the previously navigated URL.
+		MEDIANAVSTATE_SERVER_SENT,								// server-directed nav has been requested, but MEDIA_EVENT_NAVIGATE_BEGIN hasn't been received yet
+		MEDIANAVSTATE_SERVER_BEGUN,								// MEDIA_EVENT_NAVIGATE_BEGIN has been received which was server-directed
+		MEDIANAVSTATE_SERVER_FIRST_LOCATION_CHANGED,			// first LOCATION_CHANGED event after a server-directed BEGIN
+		MEDIANAVSTATE_SERVER_COMPLETE_BEFORE_LOCATION_CHANGED	// we received a NAVIGATE_COMPLETE event before the first LOCATION_CHANGED
+		
+	}EMediaNavState;
+    
+	// Returns the current nav state of the media.
+	// note that this will be updated BEFORE listeners and objects receive media messages 
+	EMediaNavState getNavState() { return mMediaNavState; }
+	void setNavState(EMediaNavState state);
 	
 public:
 	// a single media url with some data and an impl.
@@ -210,6 +246,10 @@ public:
 	std::string mMediaURL;
 	std::string mHomeURL;
 	std::string mMimeType;
+
+	std::string mCurrentMediaURL;	// The most current media url from the plugin (via the "location changed" or "navigate complete" events).
+	std::string mCurrentMimeType;	// The MIME type that caused the currently loaded plugin to be loaded.
+
 	S32 mLastMouseX;	// save the last mouse coord we get, so when we lose capture we can simulate a mouseup at that point.
 	S32 mLastMouseY;
 	S32 mMediaWidth;
@@ -219,7 +259,15 @@ public:
 	bool mNeedsNewTexture;
 	bool mSuspendUpdates;
 	bool mVisible;
-	F32 mRequestedVolume;
+	
+	EMediaNavState mMediaNavState;
+	bool mHasFocus;
+	int mPreviousMediaState;
+	F64 mPreviousMediaTime;
+	bool mMediaSourceFailed;
+	LLColor4 mBackgroundColor;
+	bool mTrustedBrowser;
+	std::string mTarget;
 
 private:
 	LLViewerImage *updatePlaceholderImage();

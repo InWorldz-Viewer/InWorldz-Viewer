@@ -50,6 +50,14 @@ endif (IW_KDU)
 set(IW_KDU_INCLUDE_DIRS
 		${LIBS_PREBUILT_DIR}/kdu/source/managed/all_includes
 		${LIBS_PREBUILT_DIR}/kdu/source/apps/image
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys/coding
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys/common
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys/compressed
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys/parameters
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys/roi
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys/threads
+		${LIBS_PREBUILT_DIR}/kdu/source/coresys/transform
 		)
 
 # Make a guess using the ARCH setting. Not sure if this is the
@@ -67,7 +75,11 @@ elseif (LINUX)
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/source/lib/Linux-x86-32-gcc)
     endif (WORD_SIZE EQUAL 64)
 elseif (DARWIN)
-    # need to add proper DARWIN/Mac stuff here
+    if (ARCH EQUAL x86_64)
+	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/lib)
+    else (ARCH EQUAL x86_64)	
+	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/lib)
+    endif (ARCH EQUAL x86_64)
 endif (WINDOWS)
 
 # We want to avoid compiler errors if the lib is linked without KDU
@@ -89,8 +101,8 @@ if (EXISTS ${KDU_LIB_DIR}/)
 	elseif (DARWIN)
 		set(IW_KDU_LIBRARIES
 			${IW_IMAGEBASE_LIBRARIES}
-			debug ${KDU_LIB_DIR}/kdu_a64D.dylib
-			optimized ${KDU_LIB_DIR}/kdu_a64R.dylib
+			debug ${KDU_LIB_DIR}/libkdu_v64D.a
+			optimized ${KDU_LIB_DIR}/libkdu_v64R.a
 			)
 	endif (WINDOWS)
 else (EXISTS ${KDU_LIB_DIR}/)

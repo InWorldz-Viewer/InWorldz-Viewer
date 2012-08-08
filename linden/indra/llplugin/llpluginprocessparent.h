@@ -58,6 +58,7 @@ public:
 	~LLPluginProcessParent();
 		
 	void init(const std::string &launcher_filename, 
+			  const std::string &plugin_dir,
 			  const std::string &plugin_filename, 
 			  bool debug);
 
@@ -153,6 +154,7 @@ private:
 	LLProcessLauncher mProcess;
 	
 	std::string mPluginFile;
+	std::string mPluginDir;
 
 	LLPluginProcessParentOwner *mOwner;
 	

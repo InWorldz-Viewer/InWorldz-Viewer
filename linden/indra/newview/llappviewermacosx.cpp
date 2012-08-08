@@ -172,7 +172,7 @@ bool LLAppViewerMacOSX::initParseCommandLine(LLCommandLineParser& clp)
 	llifstream ifs(filename, llifstream::binary);
 	if (!ifs.is_open())
 	{
-		llwarns << "Unable to open file" << filename << llendl;
+		//llwarns << "Unable to open file" << filename << llendl;
 		return false;
 	}
 	

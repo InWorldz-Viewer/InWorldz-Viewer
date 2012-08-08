@@ -175,7 +175,7 @@ int APIENTRY WinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdL
 #else
 int main(int argc, char **argv)
 #endif
-{
+{	
 	ll_init_apr();
 
 	// Set up llerror logging 
@@ -203,6 +203,11 @@ int main(int argc, char **argv)
 	// see the missing heartbeat and log appropriately.
 	initExceptionHandler();
 #elif LL_DARWIN || LL_LINUX
+	std::string arg_info = llformat("argc = %d\n", argc);
+	for (int i = 0; i < argc; i++)
+		arg_info += llformat("argv[%d] = %s\n", i, argv[i]);
+	llinfos << arg_info << llendl;
+	
 	if(argc < 2)
 	{
 		LL_ERRS("slplugin") << "usage: " << argv[0] << " launcher_port" << LL_ENDL;

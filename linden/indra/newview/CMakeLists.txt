@@ -920,11 +920,13 @@ if (DARWIN)
   find_library(APPKIT_LIBRARY AppKit)
   find_library(COCOA_LIBRARY Cocoa)
   find_library(IOKIT_LIBRARY IOKit)
+  find_library(SECURITY_LIBRARY SECURITY)
 
   set(viewer_LIBRARIES
     ${COCOA_LIBRARY}
     ${AGL_LIBRARY}
     ${IOKIT_LIBRARY}
+    ${SECURITY_LIBRARY}
     )
 
   # Add resource files to the project.
@@ -1118,6 +1120,14 @@ list(APPEND viewer_SOURCE_FILES ${viewer_XUI_FILES})
 set(viewer_LIBRARY_INSTALL_FILES
     ${CMAKE_SOURCE_DIR}/../install.xml
     )
+# To make my mac compiling life easier -- MC
+if (DARWIN)
+  set(viewer_LIBRARY_INSTALL_FILES
+	${viewer_LIBRARY_INSTALL_FILES} 
+	${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
+	${CMAKE_SOURCE_DIR}/develop.py
+	)
+endif (DARWIN)
 
 source_group("Library Install File" FILES ${viewer_LIBRARY_INSTALL_FILES})
 
@@ -1176,6 +1186,10 @@ endif(ARTWORK_EXISTS)
 
 if (WINDOWS)
   file(GLOB viewer_INSTALLER_FILES installers/windows/*.iss)
+  set(viewer_INSTALLER_FILES
+	${viewer_INSTALLER_FILES} 
+	viewer_manifest.py
+	)
 
   source_group("Installer Files" FILES ${viewer_INSTALLER_FILES})
 
@@ -1337,11 +1351,11 @@ target_link_libraries(${VIEWER_BINARY_NAME}
     ${LLCOMMON_LIBRARIES}
     ${NDOF_LIBRARY}
     ${viewer_LIBRARIES}
+    ${BOOST_FILESYSTEM_LIBRARY}
     ${BOOST_PROGRAM_OPTIONS_LIBRARY}
     ${BOOST_REGEX_LIBRARY}
-    ${Boost_SYSTEM_LIBRARY}
-    ${Boost_SIGNALS_LIBRARY}
-    ${Boost_FILESYSTEM_LIBRARY}
+    ${BOOST_SIGNALS_LIBRARY}
+    ${BOOST_SYSTEM_LIBRARY}
     ${DBUSGLIB_LIBRARIES}
     ${OPENGL_LIBRARIES}
     ${FMODWRAPPER_LIBRARY}
