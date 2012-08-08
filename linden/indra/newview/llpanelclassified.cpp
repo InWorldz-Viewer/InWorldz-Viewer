@@ -54,6 +54,7 @@
 #include "lllineeditor.h"
 #include "llfloateravatarinfo.h"
 #include "llfloaterclassified.h"
+#include "llstatusbar.h"
 #include "lltabcontainervertical.h"
 #include "lltextbox.h"
 #include "llcombobox.h"
@@ -304,7 +305,8 @@ BOOL LLPanelClassified::postBuild()
 	mUpdateBtn = getChild<LLButton>("classified_update_btn");
     mUpdateBtn->setClickedCallback(onClickUpdate);
     mUpdateBtn->setCallbackUserData(this);
-
+	mUpdateBtn->setEnabled(gStatusBar->getBalance() >= MINIMUM_PRICE_FOR_LISTING);
+	
 	if (!mInFinder)
 	{
 		mClickThroughText = getChild<LLTextBox>("click_through_text");
@@ -787,8 +789,8 @@ void LLPanelClassified::refresh()
 
 		mSetBtn->setVisible(is_self);
 		mSetBtn->setEnabled(is_self);
-
-		mUpdateBtn->setEnabled(is_self && checkDirty());
+		
+		mUpdateBtn->setEnabled(is_self && checkDirty() && (gStatusBar->getBalance() >= MINIMUM_PRICE_FOR_LISTING));
 		mUpdateBtn->setVisible(is_self);
 	}
 }
