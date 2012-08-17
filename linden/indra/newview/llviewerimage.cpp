@@ -764,7 +764,7 @@ void LLViewerImage::updateVirtualSize()
 	for(U32 i = 0 ; i < mNumFaces ; i++)
 	{				
 		LLFace* facep = mFaceList[i] ;
-		if(facep->getDrawable()->isRecentlyVisible())
+		if (facep && facep->getDrawable()->isRecentlyVisible())
 		{
 			addTextureStats(facep->getVirtualSize()) ;
 			setAdditionalDecodePriority(facep->getImportanceToCamera()) ;
