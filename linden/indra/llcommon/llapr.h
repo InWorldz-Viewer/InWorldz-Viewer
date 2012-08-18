@@ -4,25 +4,31 @@
  * @date 2004-11-28
  * @brief Helper functions for using the apache portable runtime library.
  *
- * $LicenseInfo:firstyear=2004&license=viewerlgpl$
+ * $LicenseInfo:firstyear=2004&license=viewergpl$
+ * 
+ * Copyright (c) 2004-2009, Linden Research, Inc.
+ * 
  * Second Life Viewer Source Code
- * Copyright (C) 2010, Linden Research, Inc.
+ * The source code in this file ("Source Code") is provided by Linden Lab
+ * to you under the terms of the GNU General Public License, version 2.0
+ * ("GPL"), unless you have obtained a separate licensing agreement
+ * ("Other License"), formally executed by you and Linden Lab.  Terms of
+ * the GPL can be found in doc/GPL-license.txt in this distribution, or
+ * online at http://secondlifegrid.net/programs/open_source/licensing/gplv2
  * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License only.
+ * There are special exceptions to the terms and conditions of the GPL as
+ * it is applied to this Source Code. View the full text of the exception
+ * in the file doc/FLOSS-exception.txt in this software distribution, or
+ * online at
+ * http://secondlifegrid.net/programs/open_source/licensing/flossexception
  * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * By copying, modifying or distributing this software, you acknowledge
+ * that you have read and understood your obligations described above,
+ * and agree to abide by those obligations.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
- * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
+ * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
+ * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
+ * COMPLETENESS OR PERFORMANCE.
  * $/LicenseInfo$
  */
 
@@ -43,9 +49,6 @@
 #include "llstring.h"
 
 extern LL_COMMON_API apr_thread_mutex_t* gLogMutexp;
-extern apr_thread_mutex_t* gCallStacksLogMutexp;
-
-struct apr_dso_handle_t;
 
 /** 
  * @brief initialize the common apr constructs -- apr itself, the
@@ -66,9 +69,9 @@ class LL_COMMON_API LLAPRPool
 {
 public:
 	LLAPRPool(apr_pool_t *parent = NULL, apr_size_t size = 0, BOOL releasePoolFlag = TRUE) ;
-	virtual ~LLAPRPool() ;
+	~LLAPRPool() ;
 
-	virtual apr_pool_t* getAPRPool() ;
+	apr_pool_t* getAPRPool() ;
 	apr_status_t getStatus() {return mStatus ; }
 
 protected:
@@ -88,24 +91,29 @@ protected:
 //which clears memory automatically.
 //so it can not hold static data or data after memory is cleared
 //
-class LL_COMMON_API LLVolatileAPRPool : public LLAPRPool
+class LL_COMMON_API LLVolatileAPRPool : protected LLAPRPool
 {
 public:
-	LLVolatileAPRPool(BOOL is_local = TRUE, apr_pool_t *parent = NULL, apr_size_t size = 0, BOOL releasePoolFlag = TRUE);
-	virtual ~LLVolatileAPRPool();
+	LLVolatileAPRPool(apr_pool_t *parent = NULL, apr_size_t size = 0, BOOL releasePoolFlag = TRUE);
+	~LLVolatileAPRPool(){}
 
-	/*virtual*/ apr_pool_t* getAPRPool() ; //define this virtual function to avoid any mistakenly calling LLAPRPool::getAPRPool().
-	apr_pool_t* getVolatileAPRPool() ;	
+	apr_pool_t* getVolatileAPRPool() ;
+	
 	void        clearVolatileAPRPool() ;
 
 	BOOL        isFull() ;
-	
+	BOOL        isEmpty() {return !mNumActiveRef ;}
+
+	static void initLocalAPRFilePool();
+	static void createLocalAPRFilePool();
+	static void destroyLocalAPRFilePool(void* thread_local_data);
+	static LLVolatileAPRPool* getLocalAPRFilePool();
+
 private:
 	S32 mNumActiveRef ; //number of active pointers pointing to the apr_pool.
-	S32 mNumTotalRef ;  //number of total pointers pointing to the apr_pool since last creating.  
+	S32 mNumTotalRef ;  //number of total pointers pointing to the apr_pool since last creating.   
 
-	apr_thread_mutex_t *mMutexp;
-	apr_pool_t         *mMutexPool;
+	static apr_threadkey_t*		sLocalAPRFilePoolKey;
 } ;
 
 /** 
@@ -170,7 +178,7 @@ typedef LLAtomic32<U32> LLAtomicU32;
 typedef LLAtomic32<S32> LLAtomicS32;
 
 // File IO convenience functions.
-// Returns NULL if the file fails to open, sets *sizep to file size if not NULL
+// Returns NULL if the file fails to openm sets *sizep to file size of not NULL
 // abbreviated flags
 #define LL_APR_R (APR_READ) // "r"
 #define LL_APR_W (APR_CREATE|APR_TRUNCATE|APR_WRITE) // "w"
@@ -188,7 +196,7 @@ typedef LLAtomic32<S32> LLAtomicS32;
 //      especially do not put some time-costly operations between open() and close().
 //      otherwise it might lock the APRFilePool.
 //there are two different apr_pools the APRFile can use:
-//      1, a temporary pool passed to an APRFile function, which is used within this function and only once.
+//      1, a temperary pool passed to an APRFile function, which is used within this function and only once.
 //      2, a global pool.
 //
 
@@ -200,12 +208,16 @@ private:
 	LLVolatileAPRPool *mCurrentFilePoolp ; //currently in use apr_pool, could be one of them: sAPRFilePoolp, or a temp pool. 
 
 public:
+	enum access_t {
+		global,		// Use a global pool for long-lived file accesses. This should really only happen from the main thread.
+		local		// Use a thread-local volatile pool for short file accesses.
+	};
+
 	LLAPRFile() ;
-	LLAPRFile(const std::string& filename, apr_int32_t flags, LLVolatileAPRPool* pool = NULL);
+	LLAPRFile(const std::string& filename, apr_int32_t flags, access_t access_type);
 	~LLAPRFile() ;
-	
-	apr_status_t open(const std::string& filename, apr_int32_t flags, LLVolatileAPRPool* pool = NULL, S32* sizep = NULL);
-	apr_status_t open(const std::string& filename, apr_int32_t flags, BOOL use_global_pool); //use gAPRPoolp.
+
+	apr_status_t open(const std::string& filename, apr_int32_t flags, access_t access_type, S32* sizep = NULL);
 	apr_status_t close() ;
 
 	// Returns actual offset, -1 if seek fails
@@ -218,46 +230,35 @@ public:
 	
 	apr_file_t* getFileHandle() {return mFile;}	
 
-private:
-	apr_pool_t* getAPRFilePool(apr_pool_t* pool) ;	
-	
 //
 //*******************************************************************************************************************************
 //static components
 //
-public:
-	static LLVolatileAPRPool *sAPRFilePoolp ; //a global apr_pool for APRFile, which is used only when local pool does not exist.
-
 private:
-	static apr_file_t* open(const std::string& filename, LLVolatileAPRPool* pool, apr_int32_t flags);
-	static apr_status_t close(apr_file_t* file, LLVolatileAPRPool* pool) ;
 	static S32 seek(apr_file_t* file, apr_seek_where_t where, S32 offset);
 public:
 	// returns false if failure:
-	static bool remove(const std::string& filename, LLVolatileAPRPool* pool = NULL);
-	static bool rename(const std::string& filename, const std::string& newname, LLVolatileAPRPool* pool = NULL);
-	static bool isExist(const std::string& filename, LLVolatileAPRPool* pool = NULL, apr_int32_t flags = APR_READ);
-	static S32 size(const std::string& filename, LLVolatileAPRPool* pool = NULL);
-	static bool makeDir(const std::string& dirname, LLVolatileAPRPool* pool = NULL);
-	static bool removeDir(const std::string& dirname, LLVolatileAPRPool* pool = NULL);
+	static bool remove(const std::string& filename);
+	static bool rename(const std::string& filename, const std::string& newname);
+	static bool isExist(const std::string& filename, apr_int32_t flags = APR_READ);
+	static S32 size(const std::string& filename);
+	static bool makeDir(const std::string& dirname);
+	static bool removeDir(const std::string& dirname);
 
 	// Returns bytes read/written, 0 if read/write fails:
-	static S32 readEx(const std::string& filename, void *buf, S32 offset, S32 nbytes, LLVolatileAPRPool* pool = NULL);	
-	static S32 writeEx(const std::string& filename, void *buf, S32 offset, S32 nbytes, LLVolatileAPRPool* pool = NULL); // offset<0 means append
+	static S32 readEx(const std::string& filename, void *buf, S32 offset, S32 nbytes);
+	static S32 writeEx(const std::string& filename, void *buf, S32 offset, S32 nbytes);
 //*******************************************************************************************************************************
 };
 
 /**
- * @brief Function which appropriately logs error or remains quiet on
+ * @brief Function which approprately logs error or remains quiet on
  * APR_SUCCESS.
  * @return Returns <code>true</code> if status is an error condition.
  */
 bool LL_COMMON_API ll_apr_warn_status(apr_status_t status);
-/// There's a whole other APR error-message function if you pass a DSO handle.
-bool LL_COMMON_API ll_apr_warn_status(apr_status_t status, apr_dso_handle_t* handle);
 
 void LL_COMMON_API ll_apr_assert_status(apr_status_t status);
-void LL_COMMON_API ll_apr_assert_status(apr_status_t status, apr_dso_handle_t* handle);
 
 extern "C" LL_COMMON_API apr_pool_t* gAPRPoolp; // Global APR memory pool
 
