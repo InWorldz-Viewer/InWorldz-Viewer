@@ -146,9 +146,9 @@
           <key>windows</key>
           <map>
             <key>md5sum</key>
-            <string>4b84738eec2e21b0c096d53b79ee2681</string>
+            <string>f5cf8d121b26f2e7944f7e63cdbff04d</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/ares-1.7.1-windows-20100611a.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/ares-1.6.0-windows-20091105.tar.bz2</uri>
           </map>
         </map>
       </map>
