@@ -207,9 +207,9 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>348248D4A1E9DAA50D9E8F31BBD10618</string>
-			      <key>url</key>
-			      <uri>http://inworldz.com/imprudence/libs/curl-7.21.1-darwin-20110316-v1.tar.bz2</uri>
+            <string>c426dfaad3b662405e49ed3701a55d38</string>
+            <key>url</key>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/curl-7.16.0-darwin-20080812.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
