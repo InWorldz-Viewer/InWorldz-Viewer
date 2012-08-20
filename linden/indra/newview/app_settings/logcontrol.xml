@@ -56,6 +56,7 @@
               <!--<string>InventoryFetch</string>-->
               <!--<string>isOwnedSelf</string>-->
               <!--<string>MarkerFile</string>-->
+              <string>Media</string>
 							<!--<string>MediaImpl</string>-->
 							<!--<string>MediaInfo</string>-->
 							<!--<string>MediaCallback</string>-->
@@ -66,14 +67,15 @@
 							<!--<string>Messaging</string>-->
 							<!--<string>Notifications</string>-->
               
-              <!--<string>Plugin</string>-->
-              <!--<string>PluginClassMedia</string>-->
-              <!--<string>PluginInstance</string>-->
-              <!--<string>PluginPipe</string>-->
-              <!--<string>PluginChild</string>-->
-              <!--<string>PluginSpam</string>-->
-              <!--<string>PluginParent</string>-->
-              <!--<string>PluginViewerMedia</string>-->
+              <string>Plugin</string>
+              <string>PluginClassMedia</string>
+              <string>PluginInstance</string>
+              <string>PluginPipe</string>
+              <string>PluginChild</string>
+              <string>PluginSocket</string>
+              <string>PluginSpam</string>
+              <string>PluginParent</string>
+              <string>PluginViewerMedia</string>
               <!--<string>ShaderLoading</string>-->
               <string>Rendering</string>
 							<!--<string>ShaderLoading</string>-->
