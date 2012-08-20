@@ -122,7 +122,7 @@ private:
 
 	void setInitState(int state)
 	{
-//		std::cerr << "changing init state to " << state << std::endl;
+		std::cout << "changing init state to " << state << std::endl;
 		mInitState = state;
 	}
 	
@@ -166,12 +166,12 @@ private:
 			unsigned int buffer_size = rowspan * height;
 #endif // !LL_QTWEBKIT_USES_PIXMAPS
 			
-//			std::cerr << "webkit plugin: updating" << std::endl;
+			std::cout << "webkit plugin: updating" << std::endl;
 			
 			// TODO: should get rid of this memcpy if possible
 			if ( mPixels && browser_pixels )
 			{
-//				std::cerr << "    memcopy of " << buffer_size << " bytes" << std::endl;
+				std::cout << "    memcopy of " << buffer_size << " bytes" << std::endl;
 
 #if LL_QTWEBKIT_USES_PIXMAPS
 				// copy the pixel data upside-down because of the co-ord system
@@ -186,7 +186,7 @@ private:
 
 			if ( mWidth > 0 && mHeight > 0 )
 			{
-//				std::cerr << "Setting dirty, " << mWidth << " x " << mHeight << std::endl;
+				std::cout << "Setting dirty, " << mWidth << " x " << mHeight << std::endl;
 				setDirty( 0, 0, mWidth, mHeight );
 			}
 
@@ -649,7 +649,7 @@ private:
 			break;
 		}
 		
-//		std::cerr << "key event " << (int)key_event << ", native_key_data = " << native_key_data << std::endl;
+		std::cout << "key event " << (int)key_event << ", native_key_data = " << native_key_data << std::endl;
 		
 		uint32_t native_scan_code = 0;
 		uint32_t native_virtual_key = 0;
@@ -667,7 +667,7 @@ private:
 	{		
 		uint32_t key = LLQtWebKit::KEY_NONE;
 		
-//		std::cerr << "unicode input, native_key_data = " << native_key_data << std::endl;
+		std::cout << "unicode input, native_key_data = " << native_key_data << std::endl;
 		
 		if(utf8str.size() == 1)
 		{
@@ -745,7 +745,7 @@ private:
 MediaPluginWebKit::MediaPluginWebKit(LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data) :
 	MediaPluginBase(host_send_func, host_user_data)
 {
-//	std::cerr << "MediaPluginWebKit constructor" << std::endl;
+	std::cout << "MediaPluginWebKit constructor" << std::endl;
 
 	mBrowserWindowId = 0;
 	mInitState = INIT_STATE_UNINITIALIZED;
@@ -774,12 +774,12 @@ MediaPluginWebKit::~MediaPluginWebKit()
 	// clean up
 	LLQtWebKit::getInstance()->reset();
 
-//	std::cerr << "MediaPluginWebKit destructor" << std::endl;
+	std::cout << "MediaPluginWebKit destructor" << std::endl;
 }
 
 void MediaPluginWebKit::receiveMessage(const char *message_string)
 {
-//	std::cerr << "MediaPluginWebKit::receiveMessage: received message: \"" << message_string << "\"" << std::endl;
+	//std::cout << "MediaPluginWebKit::receiveMessage: received message: \"" << message_string << "\"" << std::endl;
 	LLPluginMessage message_in;
 	
 	if(message_in.parse(message_string) >= 0)
@@ -825,10 +825,10 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 				info.mSize = (size_t)message_in.getValueS32("size");
 				std::string name = message_in.getValue("name");
 				
-//				std::cerr << "MediaPluginWebKit::receiveMessage: shared memory added, name: " << name 
-//					<< ", size: " << info.mSize 
-//					<< ", address: " << info.mAddress 
-//					<< std::endl;
+				std::cout << "MediaPluginWebKit::receiveMessage: shared memory added, name: " << name 
+					<< ", size: " << info.mSize 
+					<< ", address: " << info.mAddress 
+					<< std::endl;
 
 				mSharedSegments.insert(SharedSegmentMap::value_type(name, info));
 			
@@ -837,7 +837,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 			{
 				std::string name = message_in.getValue("name");
 				
-//				std::cerr << "MediaPluginWebKit::receiveMessage: shared memory remove, name = " << name << std::endl;
+				std::cout << "MediaPluginWebKit::receiveMessage: shared memory remove, name = " << name << std::endl;
 
 				SharedSegmentMap::iterator iter = mSharedSegments.find(name);
 				if(iter != mSharedSegments.end())
@@ -852,7 +852,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 				}
 				else
 				{
-//					std::cerr << "MediaPluginWebKit::receiveMessage: unknown shared memory region!" << std::endl;
+					std::cout << "MediaPluginWebKit::receiveMessage: unknown shared memory region!" << std::endl;
 				}
 
 				// Send the response so it can be cleaned up.
@@ -862,7 +862,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 			}
 			else
 			{
-//				std::cerr << "MediaPluginWebKit::receiveMessage: unknown base message: " << message_name << std::endl;
+				std::cout << "MediaPluginWebKit::receiveMessage: unknown base message: " << message_name << std::endl;
 			}
 		}
 		else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA_TIME)
@@ -903,6 +903,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 				else
 				{
 					// if initialization failed, we're done.
+					std::cerr << "Fatal error: initialization failed" << std::endl;
 					mDeleteMe = true;
 				}
 
@@ -955,8 +956,8 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 							// size changed so tell the browser
 							LLQtWebKit::getInstance()->setSize( mBrowserWindowId, mWidth, mHeight );
 							
-	//						std::cerr << "webkit plugin: set size to " << mWidth << " x " << mHeight 
-	//								<< ", rowspan is " << LLQtWebKit::getInstance()->getBrowserRowSpan(mBrowserWindowId) << std::endl;
+							std::cout << "webkit plugin: set size to " << mWidth << " x " << mHeight 
+									<< ", rowspan is " << LLQtWebKit::getInstance()->getBrowserRowSpan(mBrowserWindowId) << std::endl;
 									
 							S32 real_width = LLQtWebKit::getInstance()->getBrowserRowSpan(mBrowserWindowId) / LLQtWebKit::getInstance()->getBrowserDepth(mBrowserWindowId); 
 							
@@ -968,7 +969,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 							else
 							{
 								// This won't work -- it'll be bigger than the allocated memory.  This is a fatal error.
-	//							std::cerr << "Fatal error: browser rowbytes greater than texture width" << std::endl;
+								std::cerr << "Fatal error: browser rowbytes greater than texture width" << std::endl;
 								mDeleteMe = true;
 								return;
 							}
@@ -976,6 +977,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 						else
 						{
 							// Setting up the browser window failed.  This is a fatal error.
+							std::cerr << "Fatal error: setting up the browser window failed" << std::endl;
 							mDeleteMe = true;
 						}
 
@@ -999,7 +1001,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 			{
 				std::string uri = message_in.getValue("uri");
 
-//				std::cout << "loading URI: " << uri << std::endl;
+				std::cout << "loading URI: " << uri << std::endl;
 				
 				if(!uri.empty())
 				{
@@ -1103,7 +1105,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 			}
 			else
 			{
-//				std::cerr << "MediaPluginWebKit::receiveMessage: unknown media message: " << message_string << std::endl;
+				std::cout << "MediaPluginWebKit::receiveMessage: unknown media message: " << message_string << std::endl;
 			}
 		}
 		else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA_BROWSER)
@@ -1219,12 +1221,12 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 			}
 			else
 			{
-//				std::cerr << "MediaPluginWebKit::receiveMessage: unknown media_browser message: " << message_string << std::endl;
+				std::cout << "MediaPluginWebKit::receiveMessage: unknown media_browser message: " << message_string << std::endl;
 			};
 		}
 		else
 		{
-//			std::cerr << "MediaPluginWebKit::receiveMessage: unknown message class: " << message_class << std::endl;
+			std::cout << "MediaPluginWebKit::receiveMessage: unknown message class: " << message_class << std::endl;
 		};
 	}
 }
