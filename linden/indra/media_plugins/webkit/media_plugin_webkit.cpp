@@ -875,6 +875,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 		}
 		else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA)
 		{
+			std::cout << "MediaPluginWebKit::receiveMessage: received LLPLUGIN_MESSAGE_CLASS_MEDIA message: " << message_string << std::endl;
 			if(message_name == "init")
 			{
 				mTarget = message_in.getValue("target");
@@ -1084,22 +1085,22 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 				
 				unicodeInput(text, decodeModifiers(modifiers), native_key_data);
 			}
-			if(message_name == "edit_cut")
+			else if(message_name == "edit_cut")
 			{
 				LLQtWebKit::getInstance()->userAction( mBrowserWindowId, LLQtWebKit::UA_EDIT_CUT );
 				checkEditState();
 			}
-			if(message_name == "edit_copy")
+			else if(message_name == "edit_copy")
 			{
 				LLQtWebKit::getInstance()->userAction( mBrowserWindowId, LLQtWebKit::UA_EDIT_COPY );
 				checkEditState();
 			}
-			if(message_name == "edit_paste")
+			else if(message_name == "edit_paste")
 			{
 				LLQtWebKit::getInstance()->userAction( mBrowserWindowId, LLQtWebKit::UA_EDIT_PASTE );
 				checkEditState();
 			}
-			if(message_name == "pick_file_response")
+			else if(message_name == "pick_file_response")
 			{
 				onPickFileResponse(message_in.getValue("file"));
 			}
