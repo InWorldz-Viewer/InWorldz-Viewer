@@ -654,9 +654,9 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>1007ddeeca66145b75055f81462364cd</string>
+            <string>4c6b949778099a63550898f00f3e6a5e</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/jpeg-6b-darwin-20091108.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/jsoncpp-svn-r69-darwin-20090923.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
