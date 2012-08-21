@@ -54,6 +54,8 @@ extern "C" {
 
 #if LL_WINDOWS
 # include <direct.h>
+# include <stdlib.h>
+# include <stdio.h>
 #else
 # include <unistd.h>
 # include <stdlib.h>
@@ -206,7 +208,7 @@ private:
 		char cwd[ FILENAME_MAX ];	// I *think* this is defined on all platforms we use
 		if (NULL == getcwd( cwd, FILENAME_MAX - 1 ))
 		{
-			llwarns << "Couldn't get cwd - probably too long - failing to init." << llendl;
+			std::cout << "Couldn't get cwd - probably too long - failing to init." << std::endl;
 			return false;
 		}
 		std::string application_dir = std::string( cwd );
@@ -257,7 +259,7 @@ private:
 #if LL_WINDOWS
 		char window_title[ MAX_PATH ];
 		GetConsoleTitleA( window_title, MAX_PATH );
-		void* native_window_handle = (void*)FindWindowA( NULL, window_title );
+		void* native_window_handle = (void*)FindWindowA( NULL, window_title );		
 #else
 		void* native_window_handle = 0;
 #endif
@@ -875,7 +877,7 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 		}
 		else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA)
 		{
-			std::cout << "MediaPluginWebKit::receiveMessage: received LLPLUGIN_MESSAGE_CLASS_MEDIA message: " << message_string << std::endl;
+			std::cout << "MediaPluginWebKit::receiveMessage: LLPLUGIN_MESSAGE_CLASS_MEDIA (non mouse_event) message: " << message_string << std::endl;
 			if(message_name == "init")
 			{
 				mTarget = message_in.getValue("target");
@@ -1239,6 +1241,36 @@ void MediaPluginWebKit::setVolume(F32 volume)
 
 int init_media_plugin(LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data, LLPluginInstance::sendMessageFunction *plugin_send_func, void **plugin_user_data)
 {
+#ifdef LL_WINDOWS
+	// Make sure no files in a user's PATH interfere with the plugin. Even if
+	// their PATH is empty, set it anyway before anything is initialized
+	// getcwd can put us in llplugin or the .exe directory, depending-- MC
+	char* raw_dir = _getcwd(NULL, 0);
+	if (raw_dir != NULL)
+	{
+		std::string cur_dir(raw_dir);
+		std::string new_path = "PATH=";
+		char* old_path = getenv("PATH");
+		if (old_path != NULL)
+		{
+			new_path += cur_dir + ";" + cur_dir + "\\llplugin" + ";" + std::string(old_path);
+		}
+		else
+		{
+			new_path += cur_dir + ";" + cur_dir + "\\llplugin";
+		}
+
+		if (_putenv(new_path.c_str()) == -1)
+		{
+			std::cout << "Setting PATH environment variable to " << new_path << " failed!" << std::endl; 
+		}
+		else
+		{
+			std::cout << "Setting PATH environment variable to " << new_path << std::endl; 
+		}
+	}
+#endif // LL_WINDOWS
+
 	MediaPluginWebKit *self = new MediaPluginWebKit(host_send_func, host_user_data);
 	*plugin_send_func = MediaPluginWebKit::staticReceiveMessage;
 	*plugin_user_data = (void*)self;
