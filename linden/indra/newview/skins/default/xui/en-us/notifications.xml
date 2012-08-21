@@ -5544,11 +5544,11 @@ If you want to view streaming media on parcels that support it you should go to 
 No Media Plugin was found to handle the "[MIME_TYPE]" mime type.  Media of this type will be unavailable.
 </notification>
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="MediaPluginFailed"
- type="alertmodal">
+ type="alert">
 The following Media Plugin has failed:
-[PLUGIN]
+     [PLUGIN]
 
 Please re-install the plugin or contact the vendor if you continue to experience problems.
  <form name="form">
@@ -5562,7 +5562,7 @@ Please re-install the plugin or contact the vendor if you continue to experience
  name="MediaPluginFailedWebkit"
  type="alert">
 The following browser plugin has failed:
-   [PLUGIN]
+     [PLUGIN]
 
 Make sure "Flash For Other Browsers" is installed.
 The latest version can be found at: 
