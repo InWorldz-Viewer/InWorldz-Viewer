@@ -292,6 +292,7 @@ BOOL LLFloaterScriptQueue::popNext()
 // static
 LLFloaterCompileQueue* LLFloaterCompileQueue::create(BOOL mono)
 {
+	mono = FALSE; // -- MC
 	S32 left, top;
 	gFloaterView->getNewFloaterPosition(&left, &top);
 	LLRect rect = gSavedSettings.getRect("CompileOutputRect");

@@ -6493,14 +6493,7 @@ void queue_actions(LLFloaterScriptQueue* q, const std::string& noscriptmsg, cons
 void handle_compile_queue(std::string to_lang)
 {
 	LLFloaterCompileQueue* queue;
-	if (to_lang == "mono")
-	{
-		queue = LLFloaterCompileQueue::create(TRUE);
-	}
-	else
-	{
-		queue = LLFloaterCompileQueue::create(FALSE);
-	}
+	queue = LLFloaterCompileQueue::create(FALSE);
 	queue_actions(queue, "CannotRecompileSelectObjectsNoScripts", "CannotRecompileSelectObjectsNoPermission");
 }
 
@@ -6527,10 +6520,6 @@ class LLToolsSelectedScriptAction : public view_listener_t
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
 	{
 		std::string action = userdata.asString();
-		if (action == "compile mono")
-		{
-			handle_compile_queue("mono");
-		}
 		if (action == "compile lsl")
 		{
 			handle_compile_queue("lsl");
@@ -6787,7 +6776,7 @@ class LLEditableSelected : public view_listener_t
 	}
 };
 
-class LLEditableSelectedMono : public view_listener_t
+class LLEditableSelectedIWScript : public view_listener_t
 {
 	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
 	{
@@ -8223,5 +8212,5 @@ void initialize_menus()
 	addMenu(new LLSomethingSelected(), "SomethingSelected");
 	addMenu(new LLSomethingSelectedNoHUD(), "SomethingSelectedNoHUD");
 	addMenu(new LLEditableSelected(), "EditableSelected");
-	addMenu(new LLEditableSelectedMono(), "EditableSelectedMono");
+	addMenu(new LLEditableSelectedIWScript(), "EditableSelectedIWScript");
 }
