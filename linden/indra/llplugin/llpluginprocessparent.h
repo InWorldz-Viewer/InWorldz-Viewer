@@ -172,6 +172,8 @@ private:
 	bool mDebug;
 	bool mBlocked;
 	bool mPolledInput;
+	U32 mPortToBind;
+	U32 mBindRetryCount;
 
 	LLProcessLauncher mDebugger;
 	
