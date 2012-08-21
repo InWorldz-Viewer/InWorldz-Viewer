@@ -72,6 +72,7 @@
                 <!--<string>PluginInstance</string>-->
                 <!--<string>PluginPipe</string>-->
                 <!--<string>PluginChild</string>-->
+                <!--<string>PluginSocket</string>-->
                 <!--<string>PluginSpam</string>-->
                 <!--<string>PluginParent</string>-->
                 <!--<string>PluginViewerMedia</string>-->

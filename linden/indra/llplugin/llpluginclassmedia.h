@@ -273,6 +273,11 @@ public:
 	const std::string& getMediaName() const { return mMediaName; };
 	std::string getMediaDescription() const { return mMediaDescription; };
 
+	#if LL_WINDOWS
+	//Open a debug console for this plugin.
+	void showConsole();
+    #endif
+
 	// Crash the plugin.  If you use this outside of a testbed, you will be punished.
 	void		crashPlugin();
 	

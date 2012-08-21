@@ -210,15 +210,23 @@ bool MediaPluginGStreamer010::writeToLog(const char* str, ...)
 
 	time_t timeptr = time(NULL);
 	struct tm* ltime = localtime(&timeptr);
-	fprintf(fp, "[%d:%d:%d] ", ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
-    va_list arglist;
+	char strbuf[1024];
+	char strmsg[1024];
+	sprintf(strbuf, "[%d:%d:%d] ", ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
+	va_list arglist;
     va_start(arglist, str);
-    vfprintf(fp, str, arglist);
-    va_end(arglist);
-    fprintf(fp, " \n");
+	vsprintf(strmsg, str, arglist);
+	strcat(strbuf, strmsg);
+
+	// write to log file
+	fprintf(fp, strbuf);
+	fprintf(fp, "\n");
 	fclose(fp);
 
-    return true;
+	// mirror in console window if we have one
+	puts(strbuf);
+
+	return true;
 }
 
 gboolean
