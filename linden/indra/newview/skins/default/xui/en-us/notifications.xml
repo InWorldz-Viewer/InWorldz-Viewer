@@ -5572,20 +5572,20 @@ http://get.adobe.com/flashplayer/otherversions/
     text="When the browser plugin fails"/>
  </form>
 </notification>
-  
+
 <notification
  icon="alert.tga"
  name="MediaPluginFailedQuickTime"
  type="alert">
-The QuickTime Media Plugin has failed:
-     [PLUGIN]
+  The QuickTime Media Plugin has failed:
+  [PLUGIN]
 
-If the error persists, reinstalling QuickTime might fix it.
- <form name="form">
-  <ignore name="ignore"
-    text="When the QuickTime plugin fails"/>
- </form>
-</notification
+  If the error persists, reinstalling QuickTime might fix it.
+  <form name="form">
+    <ignore name="ignore"
+      text="When the QuickTime plugin fails"/>
+  </form>
+</notification>
   
 <notification
  icon="notify.tga"
