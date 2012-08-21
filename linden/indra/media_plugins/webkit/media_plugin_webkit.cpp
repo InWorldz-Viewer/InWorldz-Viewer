@@ -168,12 +168,12 @@ private:
 			unsigned int buffer_size = rowspan * height;
 #endif // !LL_QTWEBKIT_USES_PIXMAPS
 			
-			std::cout << "webkit plugin: updating" << std::endl;
+			//std::cout << "webkit plugin: updating" << std::endl;
 			
 			// TODO: should get rid of this memcpy if possible
 			if ( mPixels && browser_pixels )
 			{
-				std::cout << "    memcopy of " << buffer_size << " bytes" << std::endl;
+				//std::cout << "    memcopy of " << buffer_size << " bytes" << std::endl;
 
 #if LL_QTWEBKIT_USES_PIXMAPS
 				// copy the pixel data upside-down because of the co-ord system
@@ -188,7 +188,7 @@ private:
 
 			if ( mWidth > 0 && mHeight > 0 )
 			{
-				std::cout << "Setting dirty, " << mWidth << " x " << mHeight << std::endl;
+				//std::cout << "Setting dirty, " << mWidth << " x " << mHeight << std::endl;
 				setDirty( 0, 0, mWidth, mHeight );
 			}
 
@@ -877,7 +877,12 @@ void MediaPluginWebKit::receiveMessage(const char *message_string)
 		}
 		else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA)
 		{
-			std::cout << "MediaPluginWebKit::receiveMessage: LLPLUGIN_MESSAGE_CLASS_MEDIA (non mouse_event) message: " << message_string << std::endl;
+			// These are spammy, comment out the line below if you need 'em -- MC
+			if (message_name != "mouse_event")
+			{
+				std::cout << "MediaPluginWebKit::receiveMessage: LLPLUGIN_MESSAGE_CLASS_MEDIA (non mouse_event) message: " << message_string << std::endl;
+			}
+
 			if(message_name == "init")
 			{
 				mTarget = message_in.getValue("target");
