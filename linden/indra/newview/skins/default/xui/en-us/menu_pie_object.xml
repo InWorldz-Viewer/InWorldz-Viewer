@@ -44,7 +44,11 @@
 			<on_enable function="Object.EnableReturn" />
 		</menu_item_call>
 		<pie_menu label="More &gt;" name="Rate Menu">
-			<menu_item_separator />
+			<menu_item_call enabled="true" hidden="false" label="Recompile Scripts"
+             mouse_opaque="true" name="LSL">
+       <on_click function="Tools.SelectedScriptAction" userdata="compile lsl" />
+       <on_enable function="EditableSelectedIWScript" />
+     </menu_item_call>
 			<menu_item_call enabled="true" label="Derender" mouse_opaque="true" name="Derender">
 				<on_click function="Object.DERENDER" />
 			</menu_item_call>
@@ -55,7 +59,11 @@
 				<on_click function="Object.Export" />
 				<on_enable function="Object.EnableExport" />
 			</menu_item_call>
-			<menu_item_separator />
+			<menu_item_call enabled="false" label="Reset Scripts"
+		       mouse_opaque="true" name="Reset Scripts in Selection">
+			  <on_click function="Tools.SelectedScriptAction" userdata="reset" />
+			  <on_enable function="EditableSelected" />
+		  </menu_item_call>
 			<menu_item_call enabled="false" label="Mute" mouse_opaque="true" name="Object Mute">
 				<on_click function="Object.Mute" />
 				<on_enable function="Object.EnableMute" />
