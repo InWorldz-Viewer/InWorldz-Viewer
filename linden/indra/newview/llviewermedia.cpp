@@ -524,6 +524,13 @@ LLPluginClassMedia* LLViewerMediaImpl::newSourceFromMediaType(std::string media_
 			const std::string plugin_dir = gDirUtilp->getLLPluginDir();
 			if (media_source->init(launcher_name, plugin_dir, plugin_name, gSavedSettings.getBOOL("PluginAttachDebuggerToPlugins")))
 			{
+				#if LL_WINDOWS
+				if (gSavedSettings.getBOOL("ShowConsoleWindow"))
+				{
+					media_source->showConsole();
+				}
+				#endif
+
 				return media_source;
 			}
 			else
@@ -1287,14 +1294,31 @@ void LLViewerMediaImpl::handleMediaEvent(LLPluginClassMedia* plugin, LLPluginCla
 			resetPreviousMediaState();
 
 			LLSD args;
-			args["PLUGIN"] = LLMIMETypes::implType(mCurrentMimeType);
+			std::string plugin_name = LLMIMETypes::implType(mMimeType);
+			args["PLUGIN"] = plugin_name;
+			// These should really be hardcoded in LLMimeTypes, if anywhere -- MC
+			std::string notification_name;
+			LLStringUtil::toLower(plugin_name);
+			if (plugin_name.find("quicktime") != std::string::npos)
+			{
+				notification_name = "MediaPluginQuickTime";
+			}
+			else if (plugin_name.find("webkit") != std::string::npos)
+			{
+				notification_name = "MediaPluginFailedWebkit";
+			}
+			else
+			{
+				notification_name = "MediaPluginFailed";
+			}
+
 			// SJB: This is getting called every frame if the plugin fails to load, continuously respawining the alert!
 			// Only show it once per plugin change -- MC
 			static std::string last_plugin_name = "";
 			if (plugin->getMediaName() != last_plugin_name)
 			{
 				last_plugin_name = plugin->getMediaName();
-				LLNotifications::instance().add("MediaPluginFailed", args);
+				LLNotifications::instance().add(notification_name, args);
 			}
 		}
 		break;

@@ -5548,7 +5548,7 @@ No Media Plugin was found to handle the "[MIME_TYPE]" mime type.  Media of this 
  name="MediaPluginFailed"
  type="alert">
 The following Media Plugin has failed:
-[PLUGIN]
+     [PLUGIN]
 
 Please re-install the plugin or contact the vendor if you continue to experience problems.
  <usetemplate
@@ -5556,6 +5556,37 @@ Please re-install the plugin or contact the vendor if you continue to experience
    name="okignore"
    yestext="OK"/>
 </notification>
+
+<notification
+ icon="alert.tga"
+ name="MediaPluginFailedWebkit"
+ type="alert">
+The following browser plugin has failed:
+     [PLUGIN]
+
+Make sure "Flash For Other Browsers" is installed.
+The latest version can be found at: 
+http://get.adobe.com/flashplayer/otherversions/
+ <form name="form">
+  <ignore name="ignore"
+    text="When the browser plugin fails"/>
+ </form>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="MediaPluginFailedQuickTime"
+ type="alert">
+  The QuickTime Media Plugin has failed:
+  [PLUGIN]
+
+  If the error persists, reinstalling QuickTime might fix it.
+  <form name="form">
+    <ignore name="ignore"
+      text="When the QuickTime plugin fails"/>
+  </form>
+</notification>
+  
 <notification
  icon="notify.tga"
  name="OwnedObjectsReturned"
