@@ -1215,8 +1215,26 @@ void LLViewerMediaImpl::handleMediaEvent(LLPluginClassMedia* self, LLPluginClass
 		case MEDIA_EVENT_PLUGIN_FAILED:
 		{
 			LLSD args;
-			args["PLUGIN"] = LLMIMETypes::implType(mMimeType);
-			LLNotifications::instance().add("MediaPluginFailed", args);
+			std::string plugin_name = LLMIMETypes::implType(mMimeType);
+			args["PLUGIN"] = plugin_name;
+
+			// These should really be hardcoded in LLMimeTypes, if anywhere -- MC
+			std::string notification_name;
+			LLStringUtil::toLower(plugin_name);
+			if (plugin_name.find("quicktime") != std::string::npos)
+			{
+				notification_name = "MediaPluginQuickTime";
+			}
+			else if (plugin_name.find("webkit") != std::string::npos)
+			{
+				notification_name = "MediaPluginFailedWebkit";
+			}
+			else
+			{
+				notification_name = "MediaPluginFailed";
+			}
+
+			LLNotifications::instance().add(notification_name, args);
 		}
 		break;
 		default:
