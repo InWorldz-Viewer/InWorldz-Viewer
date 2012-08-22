@@ -3382,7 +3382,15 @@ void LLVOAvatar::idleUpdateBelowWater()
 	F32 avatar_height = (F32)(getPositionGlobal().mdV[VZ]);
 
 	F32 water_height;
-	water_height = getRegion()->getWaterHeight();
+	if (getRegion())
+	{
+		water_height = getRegion()->getWaterHeight();
+	}
+	else
+	{
+		// Diconnected or in the middle of a TelePort.
+		return;
+	}
 
 	mBelowWater =  avatar_height < water_height;
 
