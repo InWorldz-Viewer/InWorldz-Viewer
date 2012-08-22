@@ -76,7 +76,8 @@ Source: %%PACKAGEFILES%%\README.txt; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
 
 ; Gstreamer-specific files below
-Source: %%PACKAGEFILES%%\lib\*; DestDir: {app}\lib; Flags: ignoreversion recursesubdirs createallsubdirs
+; safety-check for copying
+Source: %%PACKAGEFILES%%\llplugin\lib\*; DestDir: {app}\llplugin\lib; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: %%PACKAGEFILES%%\avcodec-gpl-52.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\avdevice-gpl-52.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\avfilter-gpl-1.dll; DestDir: {app}; Flags: ignoreversion
@@ -284,6 +285,7 @@ Name: {app}\xpcom.dll; Type: files; Tasks: ; Languages:
 Name: {app}\xul.dll; Type: files; Tasks: ; Languages: 
 Name: {app}\xvidcore.dll; Type: files; Tasks: ; Languages: 
 Name: {app}\zlib1.dll; Type: files; Tasks: ; Languages: 
+Name: {app}\lib; Type: filesandordirs; Tasks: ; Languages: 
 
 ; We don't distribute the CRT like this anymore; murder death kill
 Name: {app}\SLPlugin.exe.config; Type: files; Tasks: ; Languages: 
