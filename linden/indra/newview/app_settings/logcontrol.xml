@@ -56,8 +56,8 @@
                 <!--<string>InventoryFetch</string>-->
                 <!--<string>isOwnedSelf</string>-->
                 <!--<string>MarkerFile</string>-->
-                <string>Media</string>
-                <string>MediaImpl</string>
+                <!--<string>Media</string>-->
+                <!--<string>MediaImpl</string>-->
                 <!--<string>MediaInfo</string>-->
                 <!--<string>MediaCallback</string>-->
                 <!--<string>MediaBuffering</string>-->
