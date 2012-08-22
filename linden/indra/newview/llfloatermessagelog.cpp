@@ -1273,6 +1273,7 @@ void LLFloaterMessageLog::onClickStart(void *user_data)
 		if (self->sPauseUI == true)
 		{
 			self->sPauseUI = false;
+			sInstance->startApplyingFilter(sInstance->childGetText("filter_edit"), FALSE);
 		}
 	}
 }
