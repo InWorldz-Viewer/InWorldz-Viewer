@@ -942,6 +942,11 @@ void MediaPluginGStreamer010::set_gst_plugin_path()
 	if( raw_dir != NULL )
 	{
 		imp_dir = std::string( raw_dir );
+		// add a trailing slash to the end if there isn't one
+		if (*(imp_dir.rbegin()) != '\\')
+		{
+			imp_dir += '\\';
+		}
 	}
 #elif LL_DARWIN
 	CFBundleRef main_bundle = CFBundleGetMainBundle();
@@ -986,7 +991,6 @@ void MediaPluginGStreamer010::set_gst_plugin_path()
 		old_plugin_path = separator + std::string( old_path );
 	}
 
-
 	// Search both Imprudence and Imprudence\lib\gstreamer-plugins.
 	// But we also want to search the path the user has set, if any.
 	std::string plugin_path =	
@@ -994,8 +998,10 @@ void MediaPluginGStreamer010::set_gst_plugin_path()
 #if LL_WINDOWS
 		// On windows, the path should be maindir\llplugin\lib\gstreamer-plugins
 		// but getcwd() isn't reliable and can put us a directory higher sometimes
-		imp_dir + "\\lib\\gstreamer-plugins" + G_SEARCHPATH_SEPARATOR_S +
-		imp_dir + "llplugin\\lib\\gstreamer-plugins" +
+		// The third path is so we can load the plugins when running in Visual Studio
+		imp_dir + "lib\\gstreamer-plugins" + G_SEARCHPATH_SEPARATOR_S +
+		imp_dir + "llplugin\\lib\\gstreamer-plugins" + G_SEARCHPATH_SEPARATOR_S +
+		imp_dir + "..\\..\\..\\..\\newview\\lib\\gstreamer-plugins" +
 #elif LL_DARWIN
 		imp_dir + separator +
 		imp_dir + "/../Resources/lib/gstreamer-plugins" +
