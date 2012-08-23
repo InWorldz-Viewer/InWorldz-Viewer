@@ -1126,7 +1126,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 				}
 				else
 				{
-// 					llwarns << "UNABLE TO LOAD TEXTURE: " << mID << " RETRIES: " << mRetryAttempt << llendl;
+ 					LL_DEBUGS("Texture") << "UNABLE TO LOAD TEXTURE: " << mID << " RETRIES: " << mRetryAttempt << LL_ENDL;
 					mState = DONE; // failed
 				}
 			}
