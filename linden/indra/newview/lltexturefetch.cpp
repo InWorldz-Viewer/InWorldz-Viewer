@@ -914,7 +914,6 @@ bool LLTextureFetchWorker::doWork(S32 param)
 						<< LL_ENDL;
 				setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority);
 				mState = WAIT_HTTP_REQ;	
-
 				mFetcher->addToHTTPQueue(mID);
 				// Will call callbackHttpGet when curl request completes
 				std::vector<std::string> headers;
@@ -1433,7 +1432,7 @@ void LLTextureFetchWorker::callbackCacheRead(bool success, LLImageFormatted* ima
 	LLMutexLock lock(&mWorkMutex);
 	if (mState != LOAD_FROM_TEXTURE_CACHE)
 	{
-// 		llwarns << "Read callback for " << mID << " with state = " << mState << llendl;
+		LL_DEBUGS("Texture") << "WARNING: Read callback for " << mID << " with state = " << mState << LL_ENDL;
 		return;
 	}
 	if (success)
@@ -1457,7 +1456,7 @@ void LLTextureFetchWorker::callbackCacheWrite(bool success)
 	LLMutexLock lock(&mWorkMutex);
 	if (mState != WAIT_ON_WRITE)
 	{
-// 		llwarns << "Write callback for " << mID << " with state = " << mState << llendl;
+	LL_DEBUGS("Texture") << "WARNING: Write callback for " << mID << " with state = " << mState << LL_ENDL;
 		return;
 	}
 	mWritten = TRUE;
@@ -1475,7 +1474,7 @@ void LLTextureFetchWorker::callbackDecoded(bool success, LLImageRaw* raw, LLImag
 	}
 	if (mState != DECODE_IMAGE_UPDATE)
 	{
-// 		llwarns << "Decode callback for " << mID << " with state = " << mState << llendl;
+		LL_DEBUGS("Texture") << "WARNING: Decode callback for " << mID << " with state = " << mState << LL_ENDL;
 		mDecodeHandle = 0;
 		return;
 	}
@@ -1504,7 +1503,7 @@ void LLTextureFetchWorker::callbackDecoded(bool success, LLImageRaw* raw, LLImag
 		removeFromCache();
 		mDecodedDiscard = -1; // Redundant, here for clarity and paranoia
 	}
-	mDecoded = TRUE;
+	//mDecoded = TRUE;
 // 	llinfos << mID << " : DECODE COMPLETE " << llendl;
 	setPriority(LLWorkerThread::PRIORITY_HIGH | mWorkPriority);
 	// Set the decode flag at the end of the callback or we trigger race conditions between the fetch thread and the 
@@ -1611,6 +1610,10 @@ bool LLTextureFetch::createRequest(const std::string& url, const LLUUID& id, con
 		// this will calculate how much data we need without having to parse the header
 
 		desired_size = LLImageJ2C::calcDataSizeJ2C(w, h, c, desired_discard);
+	}
+	else if (can_use_http) // MC
+	{
+		desired_size = TEXTURE_CACHE_ENTRY_SIZE;
 	}
 	else
 	{
@@ -2118,7 +2121,6 @@ void LLTextureFetch::sendRequestListToSimulators()
 	}
 	
 	// Send cancelations
-	{
 	LLMutexLock lock2(&mNetworkQueueMutex);
 	if (gMessageSystem && !mCancelQueue.empty())
 	{
@@ -2163,7 +2165,6 @@ void LLTextureFetch::sendRequestListToSimulators()
 		}
 		mCancelQueue.clear();
 	}
-	}
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -2173,12 +2174,12 @@ bool LLTextureFetchWorker::insertPacket(S32 index, U8* data, S32 size)
 	mRequestedTimer.reset();
 	if (index >= mTotalPackets)
 	{
-// 		llwarns << "Received Image Packet " << index << " > max: " << mTotalPackets << " for image: " << mID << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Received Image Packet " << index << " > max: " << mTotalPackets << " for image: " << mID << LL_ENDL;
 		return false;
 	}
 	if (index > 0 && index < mTotalPackets-1 && size != MAX_IMG_PACKET_SIZE)
 	{
-// 		llwarns << "Received bad sized packet: " << index << ", " << size << " != " << MAX_IMG_PACKET_SIZE << " for image: " << mID << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Received bad sized packet: " << index << ", " << size << " != " << MAX_IMG_PACKET_SIZE << " for image: " << mID << LL_ENDL;
 		return false;
 	}
 	
@@ -2188,7 +2189,7 @@ bool LLTextureFetchWorker::insertPacket(S32 index, U8* data, S32 size)
 	}
 	else if (mPackets[index] != NULL)
 	{
-// 		llwarns << "Received duplicate packet: " << index << " for image: " << mID << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Received duplicate packet: " << index << " for image: " << mID << LL_ENDL;
 		return false;
 	}
 
@@ -2210,26 +2211,26 @@ bool LLTextureFetch::receiveImageHeader(const LLHost& host, const LLUUID& id, U8
 	
 	if (!worker)
 	{
-// 		llwarns << "Received header for non active worker: " << id << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Received header for non active worker: " << id << LL_ENDL;
 		res = false;
 	}
 	else if (worker->mState != LLTextureFetchWorker::LOAD_FROM_NETWORK ||
 			 worker->mSentRequest != LLTextureFetchWorker::SENT_SIM)
 	{
-// 		llwarns << "receiveImageHeader for worker: " << id
-// 				<< " in state: " << LLTextureFetchWorker::sStateDescs[worker->mState]
-// 				<< " sent: " << worker->mSentRequest << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: receiveImageHeader for worker: " << id
+ 						<< " in state: " << LLTextureFetchWorker::sStateDescs[worker->mState]
+ 						<< " sent: " << worker->mSentRequest << LL_ENDL;
 		res = false;
 	}
 	else if (worker->mLastPacket != -1)
 	{
 		// check to see if we've gotten this packet before
-// 		llwarns << "Received duplicate header for: " << id << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Received duplicate header for: " << id << LL_ENDL;
 		res = false;
 	}
 	else if (!data_size)
 	{
-// 		llwarns << "Img: " << id << ":" << " Empty Image Header" << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Img: " << id << ":" << " Empty Image Header" << LL_ENDL;
 		res = false;
 	}
 	if (!res)
@@ -2265,17 +2266,17 @@ bool LLTextureFetch::receiveImagePacket(const LLHost& host, const LLUUID& id, U1
 	
 	if (!worker)
 	{
-// 		llwarns << "Received packet " << packet_num << " for non active worker: " << id << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Received packet " << packet_num << " for non active worker: " << id << LL_ENDL;
 		res = false;
 	}
 	else if (worker->mLastPacket == -1)
 	{
-// 		llwarns << "Received packet " << packet_num << " before header for: " << id << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Received packet " << packet_num << " before header for: " << id << LL_ENDL;
 		res = false;
 	}
 	else if (!data_size)
 	{
-// 		llwarns << "Img: " << id << ":" << " Empty Image Header" << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: Img: " << id << ":" << " Empty Image Header" << LL_ENDL;
 		res = false;
 	}
 	if (!res)
@@ -2299,8 +2300,8 @@ bool LLTextureFetch::receiveImagePacket(const LLHost& host, const LLUUID& id, U1
 	}
 	else
 	{
-// 		llwarns << "receiveImagePacket " << packet_num << "/" << worker->mLastPacket << " for worker: " << id
-// 				<< " in state: " << LLTextureFetchWorker::sStateDescs[worker->mState] << llendl;
+		LL_DEBUGS("TextureFetchWorker") << "WARNING: receiveImagePacket " << packet_num << "/" << worker->mLastPacket << " for worker: " << id
+ 				<< " in state: " << LLTextureFetchWorker::sStateDescs[worker->mState] << LL_ENDL;
 		removeFromNetworkQueue(worker, true); // failsafe
 	}
 

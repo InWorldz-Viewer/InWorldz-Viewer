@@ -1707,16 +1707,13 @@ void LLViewerImage::destroySavedRawImage()
 void LLViewerImage::destroyRawImage()
 {
 	if (mAuxRawImage.notNull()) sAuxCount--;
-
-	if (mRawImage.notNull())
+	if (mRawImage.notNull()) sRawCount--;
+		
+	if(mForceToSaveRawImage)
 	{
-		sRawCount--;
-		if(mForceToSaveRawImage)
-		{
-			saveRawImage() ;
-		}
-		setCachedRawImage() ;
+		saveRawImage() ;
 	}
+	setCachedRawImage() ;
 
 	mRawImage = NULL;
 	mAuxRawImage = NULL;

@@ -88,6 +88,7 @@
                 <!--<string>http-texture</string>-->
                 <!--<string>Texture</string>-->
                 <!--<string>TextureCache</string>-->
+                <!--<string>TextureFetchWorker</string>-->
                 <!--<string>ViewerImages</string>-->
                 <!--<string>Volume</string>-->
                 <!--<string>Throttle</string>-->

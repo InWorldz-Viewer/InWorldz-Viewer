@@ -53,7 +53,7 @@
 //  Actual texture body files
 
 //note: there is no good to define 1024 for TEXTURE_CACHE_ENTRY_SIZE while FIRST_PACKET_SIZE is 600 on sim side.
-const S32 TEXTURE_CACHE_ENTRY_SIZE = FIRST_PACKET_SIZE;//1024;
+const S32 TEXTURE_CACHE_ENTRY_SIZE = 1024;//FIRST_PACKET_SIZE; // MC
 const S64 TEXTURE_PURGED_CACHE_SIZE = 80; // % amount of cache left after a purge.
 const F32 TEXTURE_CACHE_LRU_SIZE = .10f; // % amount for LRU list (low overhead to regenerate)
 
