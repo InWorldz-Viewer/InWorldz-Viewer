@@ -643,7 +643,9 @@ MediaPluginGStreamer010::setVolume( float volume )
 	// possible, as many gst-plugins-base versions up to at least
 	// November 2008 have critical race-conditions in setting volume - sigh
 	if (mVolume == volume)
+	{
 		return true; // nothing to do, everything's fine
+	}
 
 	mVolume = volume;
 	if (mDoneInit && mPlaybin)
@@ -1355,7 +1357,7 @@ void MediaPluginGStreamer010::receiveMessage(const char *message_string)
 			else if(message_name == "set_volume")
 			{
 				double volume = message_in.getValueReal("volume");
-				writeToLog("MediaPluginGStreamer010::receiveMessage: set_volumee: %d", volume);
+				writeToLog("MediaPluginGStreamer010::receiveMessage: set_volume: %f", volume);
 				setVolume(volume);
 			}
 		}
