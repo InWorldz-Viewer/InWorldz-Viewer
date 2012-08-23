@@ -58,7 +58,19 @@ Source: %%PACKAGEFILES%%\character\*; DestDir: {app}\character; Flags: ignorever
 Source: %%PACKAGEFILES%%\fonts\*; DestDir: {app}\fonts; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: %%PACKAGEFILES%%\app_settings\*; DestDir: {app}\app_settings; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: %%PACKAGEFILES%%\skins\*; DestDir: {app}\skins; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: %%PACKAGEFILES%%\llplugin\*; DestDir: {app}\llplugin; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: %%PACKAGEFILES%%\llplugin\codecs\*; DestDir: {app}\llplugin\codecs; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: %%PACKAGEFILES%%\llplugin\imageformats\*; DestDir: {app}\llplugin\imageformats; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: %%PACKAGEFILES%%\llplugin\libeay32.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\media_plugin_gstreamer010.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\media_plugin_quicktime.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\media_plugin_webkit.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\qtcore4.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\qtgui4.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\qtnetwork4.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\qtopengl4.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\qtwebkit4.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\qtxmlpatterns4.dll; DestDir: {app}\llplugin; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\llplugin\ssleay32.dll; DestDir: {app}\llplugin; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\doc\*; DestDir: {app}\doc; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: %%PACKAGEFILES%%\alut.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\dbghelp.dll; DestDir: {app}; Flags: ignoreversion
@@ -76,7 +88,6 @@ Source: %%PACKAGEFILES%%\README.txt; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
 
 ; Gstreamer-specific files below
-; safety-check for copying
 Source: %%PACKAGEFILES%%\llplugin\lib\*; DestDir: {app}\llplugin\lib; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: %%PACKAGEFILES%%\avcodec-gpl-52.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\avdevice-gpl-52.dll; DestDir: {app}; Flags: ignoreversion
