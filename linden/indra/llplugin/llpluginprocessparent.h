@@ -81,6 +81,11 @@ public:
 	// Go to the proper error state
 	void errorState(void);
 
+	// Go to STATE_CLEANUP
+	// Don't call this unless you know what you're doing
+	// and you know this is exactly what you want to do
+	void cleanupState();
+
 	void setSleepTime(F64 sleep_time, bool force_send = false);
 	F64 getSleepTime(void) const { return mSleepTime; };
 

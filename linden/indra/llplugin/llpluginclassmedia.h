@@ -284,6 +284,11 @@ public:
 	// Hang the plugin.  If you use this outside of a testbed, you will be punished.
 	void		hangPlugin();
 
+	// This sends the message "base", "cleanup" to the plugin
+	// Don't call this unless you know what you're doing
+	// and you know this is exactly what you want to do
+	void		forceCleanUpPlugin();
+
 	///////////////////////////////////
 	// media time class functions
 	bool pluginSupportsMediaTime(void);

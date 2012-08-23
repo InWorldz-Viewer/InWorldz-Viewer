@@ -69,6 +69,11 @@ void LLStreamingAudio_MediaPlugins::start(const std::string& url)
 		mMediaPlugin = initializeMedia("audio/mpeg"); // assumes that whatever media implementation supports mp3 also supports vorbis.
 		llinfos << "streaming audio mMediaPlugin is now " << mMediaPlugin << llendl;
 	}
+	else if (mMediaPlugin->isPluginExited()) // If we stopped
+	{
+		mMediaPlugin->reset();
+		mMediaPlugin = initializeMedia("audio/mpeg");
+	}
 
 	mVersion = mMediaPlugin ? mMediaPlugin->getPluginVersion() : std::string();
 
@@ -96,17 +101,16 @@ void LLStreamingAudio_MediaPlugins::start(const std::string& url)
 			test_url = temp_url; 
 		}
 #endif //LL_DARWIN
-		llinfos << "Starting internet stream: " << test_url << llendl;
+		//llinfos << "Starting internet stream: " << test_url << llendl;
 		mURL = test_url;
 		mMediaPlugin->loadURI ( test_url );
 		mMediaPlugin->start();
-		llinfos << "Playing internet stream: " << mURL << llendl;		
+		llinfos << "Attempting to play internet stream: " << mURL << llendl;		
 	}
-	else 
+	else
 	{
-		llinfos << "setting stream to NULL"<< llendl;
-		mURL.clear();
-		mMediaPlugin->stop();
+		//llinfos << "setting stream to NULL"<< llendl;
+		stop();
 	}
 }
 
@@ -118,6 +122,9 @@ void LLStreamingAudio_MediaPlugins::stop()
 	{
 		llinfos << "Stopping internet stream: " << mURL << llendl;
 		mMediaPlugin->stop();
+
+		// MURDER DEATH KILL -- MC
+		mMediaPlugin->forceCleanUpPlugin();
 	}
 
 	mURL.clear();
