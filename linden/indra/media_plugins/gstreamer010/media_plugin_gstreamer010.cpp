@@ -1159,6 +1159,7 @@ void MediaPluginGStreamer010::receiveMessage(const char *message_string)
 			}
 			else if(message_name == "cleanup")
 			{
+				writeToLog("MediaPluginGStreamer010::receiveMessage: cleanup");
 				unload();
 				closedown();
 			}
@@ -1354,6 +1355,7 @@ void MediaPluginGStreamer010::receiveMessage(const char *message_string)
 			else if(message_name == "set_volume")
 			{
 				double volume = message_in.getValueReal("volume");
+				writeToLog("MediaPluginGStreamer010::receiveMessage: set_volumee: %d", volume);
 				setVolume(volume);
 			}
 		}
