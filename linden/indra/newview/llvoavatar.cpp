@@ -1816,6 +1816,11 @@ BOOL LLVOAvatar::buildSkeleton(const LLVOAvatarSkeletonInfo *info)
 	return TRUE;
 }
 
+LLVOAvatar* LLVOAvatar::asAvatar()
+{
+	return this;
+}
+
 //-----------------------------------------------------------------------------
 // LLVOAvatar::startDefaultMotions()
 //-----------------------------------------------------------------------------
@@ -9146,6 +9151,11 @@ void LLVOAvatar::updateFreezeCounter(S32 counter)
 
 BOOL LLVOAvatar::updateLOD()
 {
+	if (isImpostor())
+	{
+		return TRUE;
+	}
+
 	BOOL res = updateJointLODs();
 
 	LLFace* facep = mDrawable->getFace(0);

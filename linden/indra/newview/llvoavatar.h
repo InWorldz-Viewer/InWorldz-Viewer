@@ -95,6 +95,7 @@ public:
 	static void initClass(); // Initialize data that's only init'd once per class.
 	static void cleanupClass();	// Cleanup data that's only init'd once per class.
 	static BOOL parseSkeletonFile(const std::string& filename);
+	virtual	LLVOAvatar*		asAvatar();
 	virtual U32 processUpdateMessage(LLMessageSystem *mesgsys,
 									 void **user_data,
 									 U32 block_num,
