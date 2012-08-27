@@ -1934,6 +1934,11 @@ S32 LLSpatialPartition::cull(LLCamera &camera, std::vector<LLDrawable *>* result
 
 BOOL earlyFail(LLCamera* camera, LLSpatialGroup* group)
 {
+	if (camera->getOrigin().isExactlyZero())
+	{
+		return FALSE;
+	}
+
 	const F32 vel = SG_OCCLUSION_FUDGE*2.f;
 	LLVector3 c = group->mBounds[0];
 	LLVector3 r = group->mBounds[1] + LLVector3(vel,vel,vel);
