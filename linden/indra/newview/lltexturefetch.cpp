@@ -382,8 +382,7 @@ const char* LLTextureFetchWorker::sStateDescs[] = {
 	"DONE",
 };
 
-// two mintues -- MC
-const F32 FETCH_TIMEOUT = 120.f;
+const F32 FETCH_TIMEOUT = 180.f; // -- MC
 
 // called from MAIN THREAD
 
@@ -1069,8 +1068,9 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		}
 		else
 		{
-			if (FETCH_TIMEOUT < mRequestedTimer.getElapsedTimeF32())
+			if (mRequestedTimer.getElapsedTimeF32() > FETCH_TIMEOUT)
 			{
+				mRequestedTimer.reset();
 				mState = DONE;
 				return true;
 			}
