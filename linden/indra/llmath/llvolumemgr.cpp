@@ -39,10 +39,10 @@
 const F32 BASE_THRESHOLD = 0.03f;
 
 //static
-F32 LLVolumeLODGroup::mDetailThresholds[NUM_LODS] = {BASE_THRESHOLD,
-													 2*BASE_THRESHOLD,
-													 8*BASE_THRESHOLD,
-													 100*BASE_THRESHOLD};
+F32 LLVolumeLODGroup::mDetailThresholds[NUM_LODS] = {BASE_THRESHOLD,		// 0.03
+													 2*BASE_THRESHOLD,		// 0.06
+													 8*BASE_THRESHOLD,		// 0.24
+													 100*BASE_THRESHOLD};	// 3
 
 //static
 F32 LLVolumeLODGroup::mDetailScales[NUM_LODS] = {1.f, 1.5f, 2.5f, 4.f};
