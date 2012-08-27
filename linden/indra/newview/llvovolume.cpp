@@ -804,7 +804,7 @@ BOOL LLVOVolume::calcLOD()
 	distance *= sDistanceFactor;
 			
 	F32 rampDist = LLVOVolume::sLODFactor * 2;
-	
+
 	if (distance < rampDist)
 	{
 		// Boost LOD when you're REALLY close
@@ -2296,6 +2296,8 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 		vobj->updateTextureVirtualSize();
 		vobj->preRebuild();
 
+		drawablep->clearState(LLDrawable::HAS_ALPHA);
+
 		//for each face
 		for (S32 i = 0; i < drawablep->getNumFaces(); i++)
 		{
@@ -2364,6 +2366,7 @@ void LLVolumeGeometryManager::rebuildGeom(LLSpatialGroup* group)
 					}
 					else
 					{
+						drawablep->setState(LLDrawable::HAS_ALPHA);
 						alpha_faces.push_back(facep);
 					}
 				}
@@ -2770,7 +2773,7 @@ void LLVolumeGeometryManager::genDrawInfo(LLSpatialGroup* group, U32 mask, std::
 					}
 				}
 				
-				if (!is_alpha && te->getShiny())
+				if (!is_alpha && te->getShiny() && LLPipeline::sRenderBump)
 				{
 					registerFace(group, facep, LLRenderPass::PASS_SHINY);
 				}
@@ -2781,7 +2784,7 @@ void LLVolumeGeometryManager::genDrawInfo(LLSpatialGroup* group, U32 mask, std::
 				llassert((mask & LLVertexBuffer::MAP_NORMAL) || fullbright);
 				facep->setPoolType((fullbright) ? LLDrawPool::POOL_FULLBRIGHT : LLDrawPool::POOL_SIMPLE);
 				
-				if (!force_simple && te->getBumpmap())
+				if (!force_simple && te->getBumpmap() && LLPipeline::sRenderBump)
 				{
 					registerFace(group, facep, LLRenderPass::PASS_BUMP);
 				}

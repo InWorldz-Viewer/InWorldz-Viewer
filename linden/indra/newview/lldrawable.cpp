@@ -700,7 +700,7 @@ void LLDrawable::updateDistance(LLCamera& camera, bool force_update)
 				{
 					LLVector3 box = (facep->mExtents[1] - facep->mExtents[0]) * 0.25f;
 					LLVector3 v = (facep->mCenterLocal-camera.getOrigin());
-					LLVector3 at = camera.getAtAxis();
+					const LLVector3& at = camera.getAtAxis();
 					for (U32 j = 0; j < 3; j++)
 					{
 						v.mV[j] -= box.mV[j] * at.mV[j];
@@ -714,7 +714,7 @@ void LLDrawable::updateDistance(LLCamera& camera, bool force_update)
 			pos = LLVector3(getPositionGroup());
 		}
 
-		pos -= camera.getOrigin();	
+		pos -= camera.getOrigin();
 		mDistanceWRTCamera = llround(pos.magVec(), 0.01f);
 		mVObjp->updateLOD();
 	}
@@ -1016,8 +1016,16 @@ LLSpatialBridge::LLSpatialBridge(LLDrawable* root, U32 data_mask)
 	mPartitionType = LLViewerRegion::PARTITION_VOLUME;
 	
 	mOctree->balance();
+
+	llassert(mDrawable);
+	llassert(mDrawable->getRegion());
+	LLSpatialPartition *part = mDrawable->getRegion()->getSpatialPartition(mPartitionType);
+	llassert(part);
 	
-	mDrawable->getRegion()->getSpatialPartition(mPartitionType)->put(this);
+	if (part)
+	{
+		part->put(this);
+	}
 }
 
 LLSpatialBridge::~LLSpatialBridge()
@@ -1278,12 +1286,25 @@ void LLSpatialBridge::updateDistance(LLCamera& camera_in, bool force_update)
 		return;
 	}
 
-	LLCamera camera = transformCamera(camera_in);
-	
-	mDrawable->updateDistance(camera, force_update);
-	
 	if (mDrawable->getVObj())
 	{
+		if (mDrawable->getVObj()->isAttachment())
+		{
+			LLDrawable* parent = mDrawable->getParent();
+			if (parent && parent->getVObj())
+			{
+				LLVOAvatar* av = parent->getVObj()->asAvatar();
+				if (av && av->isImpostor())
+				{
+					return;
+				}
+			}
+		}
+
+		LLCamera camera = transformCamera(camera_in);
+	
+		mDrawable->updateDistance(camera, force_update);
+	
 		LLViewerObject::const_child_list_t& child_list = mDrawable->getVObj()->getChildren();
 		for (LLViewerObject::child_list_t::const_iterator iter = child_list.begin();
 			 iter != child_list.end(); iter++)
@@ -1316,8 +1337,17 @@ void LLSpatialBridge::move(LLDrawable *drawablep, LLSpatialGroup *curp, BOOL imm
 
 BOOL LLSpatialBridge::updateMove()
 {
+	llassert_always(mDrawable);
+	llassert_always(mDrawable->mVObjp);
+	llassert_always(mDrawable->getRegion());
+	LLSpatialPartition* part = mDrawable->getRegion()->getSpatialPartition(mPartitionType);
+	llassert_always(part);
+
 	mOctree->balance();
-	mDrawable->getRegion()->getSpatialPartition(mPartitionType)->move(this, getSpatialGroup(), TRUE);
+	if (part)
+	{
+		part->move(this, getSpatialGroup(), TRUE);
+	}
 	return TRUE;
 }
 
