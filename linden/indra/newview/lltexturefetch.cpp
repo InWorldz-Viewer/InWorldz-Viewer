@@ -1504,11 +1504,11 @@ void LLTextureFetchWorker::callbackDecoded(bool success, LLImageRaw* raw, LLImag
 		mDecodedDiscard = -1; // Redundant, here for clarity and paranoia
 	}
 	//mDecoded = TRUE;
-// 	llinfos << mID << " : DECODE COMPLETE " << llendl;
 	setPriority(LLWorkerThread::PRIORITY_HIGH | mWorkPriority);
 	// Set the decode flag at the end of the callback or we trigger race conditions between the fetch thread and the 
 	// decode threads that's calling this callback. The fetch thread might set mFormattedImage to NULL before we
 	// have time here to call getDiscardLevel() which causes crashes
+	LL_DEBUGS("Texture") << mID << " : DECODE COMPLETE, mDecoded set to TRUE" << LL_ENDL;
 	mDecoded = TRUE;
 }
 
