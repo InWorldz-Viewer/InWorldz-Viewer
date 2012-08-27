@@ -1070,6 +1070,9 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		{
 			if (mRequestedTimer.getElapsedTimeF32() > FETCH_TIMEOUT)
 			{
+				llwarns << "Request timer exceeded timeout " << FETCH_TIMEOUT << ", trying to download " 
+						<< mID << " in state WAIT_HTTP_REQ. Skipping, setting state to DONE" 
+						<< llendl;
 				mRequestedTimer.reset();
 				mState = DONE;
 				return true;
