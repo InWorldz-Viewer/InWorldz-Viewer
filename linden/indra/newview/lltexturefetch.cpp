@@ -945,7 +945,8 @@ bool LLTextureFetchWorker::doWork(S32 param)
 				S32 max_attempts;
 				if (mGetStatus == HTTP_NOT_FOUND || mGetStatus == 499 || mGetStatus == HTTP_SERVICE_UNAVAILABLE)
 				{
-					mHTTPFailCount = max_attempts = 1; // Don't retry
+					max_attempts = 2; // Retry once -- MC
+					++mHTTPFailCount;
 					if(mGetStatus == HTTP_NOT_FOUND)
 					{
 						llwarns << "Texture missing from server (404): " << mUrl << llendl;
