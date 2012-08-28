@@ -803,9 +803,9 @@ BOOL LLVOVolume::calcLOD()
 	F32 distance = mDrawable->mDistanceWRTCamera;
 	distance *= sDistanceFactor;
 			
-	F32 rampDist = LLVOVolume::sLODFactor * 2;
+	F32 rampDist = llmax(LLVOVolume::sLODFactor * 2, 6.f); // MC
 
-	if (distance < rampDist)
+	if (distance <= rampDist) // MC
 	{
 		// Boost LOD when you're REALLY close
 		distance *= 1.0f/rampDist;
