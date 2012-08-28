@@ -819,7 +819,6 @@ F32 LLViewerImage::calcDecodePriority()
 		LLAppViewer::getTextureFetch()->mDebugCount++; // for setting breakpoints
 	}
 #endif
-	
 	if (mNeedsCreateTexture)
 	{
 		return mDecodePriority; // no change while waiting to create
