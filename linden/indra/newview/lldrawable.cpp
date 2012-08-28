@@ -95,7 +95,6 @@ void LLDrawable::init()
 	mRenderType = 0;
 	mCurrentScale = LLVector3(1,1,1);
 	mDistanceWRTCamera = 0.0f;
-
 	mQuietCount = 0;
 
 	mState     = 0;
@@ -108,6 +107,10 @@ void LLDrawable::init()
 	mGeneration = -1;
 	mBinRadius = 1.f;
 	mSpatialBridge = NULL;
+
+	mExtents[0].clear();
+	mExtents[1].clear();
+	mPositionGroup.setZero();
 }
 
 // static
@@ -950,11 +953,31 @@ LLSpatialPartition* LLDrawable::getSpatialPartition()
 	return retval;
 }
 
+const S32 MIN_VIS_FRAME_RANGE = 2 ; //two frames:the current one and the last one.
+//static 
+S32 LLDrawable::getMinVisFrameRange()
+{
+	return MIN_VIS_FRAME_RANGE ;
+}
+
 BOOL LLDrawable::isRecentlyVisible() const
 {
 	//currently visible or visible in the previous frame.
-	return isVisible() || (mVisible == sCurVisible - 1)  ;
+	BOOL vis = isVisible() || (sCurVisible - mVisible < MIN_VIS_FRAME_RANGE)  ;
+
+	if(!vis)
+	{
+		LLSpatialGroup* group = getSpatialGroup();
+		if (group && group->isRecentlyVisible())
+		{
+			mVisible = sCurVisible;
+			vis = TRUE ;
+		}
+	}
+
+	return vis ;
 }
+
 BOOL LLDrawable::isVisible() const
 {
 	if (mVisible == sCurVisible)

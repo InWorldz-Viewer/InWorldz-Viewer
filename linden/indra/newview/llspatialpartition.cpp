@@ -309,6 +309,11 @@ void LLSpatialGroup::clearDrawMap()
 	mDrawMap.clear();
 }
 
+BOOL LLSpatialGroup::isRecentlyVisible() const
+{
+	return (LLDrawable::getCurrentFrame() - mVisible) < LLDrawable::getMinVisFrameRange() ;
+}
+
 BOOL LLSpatialGroup::isVisible() const
 {
 	return mVisible == LLDrawable::getCurrentFrame() ? TRUE : FALSE;
@@ -763,6 +768,7 @@ BOOL LLSpatialGroup::removeObject(LLDrawable *drawablep, BOOL from_octree)
 	{
 		drawablep->setSpatialGroup(NULL);
 		setState(GEOM_DIRTY);
+
 		if (drawablep->isSpatialBridge())
 		{
 			for (bridge_list_t::iterator i = mBridgeList.begin(); i != mBridgeList.end(); ++i)
@@ -1157,6 +1163,7 @@ void LLSpatialGroup::handleChildRemoval(const OctreeNode* parent, const OctreeNo
 void LLSpatialGroup::destroyGL() 
 {
 	setState(LLSpatialGroup::GEOM_DIRTY | LLSpatialGroup::IMAGE_DIRTY);
+
 	mLastUpdateTime = gFrameTimeSeconds;
 	mVertexBuffer = NULL;
 	mBufferMap.clear();
@@ -2315,6 +2322,7 @@ void renderBoundingBox(LLDrawable* drawable, BOOL set_color = TRUE)
 						break;
 				case LL_PCODE_LEGACY_TREE:
 						gGL.color4f(0,0.5f,0,1);
+						break;
 				default:
 						gGL.color4f(1,0,1,1);
 						break;
