@@ -162,6 +162,7 @@ protected:
  */
 class LLSDRPCServer : public LLIOPipe
 {
+	LOG_CLASS(LLSDRPCServer);
 public:
 	LLSDRPCServer();
 	virtual ~LLSDRPCServer();

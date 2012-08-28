@@ -16,6 +16,14 @@ set(iw_imagebase_HEADER_FILES
     imagebaseforkdu.h
     )
 
+if(WORD_SIZE EQUAL 64)
+	if(WINDOWS)
+		add_definitions(/FIXED:NO)
+	else(WINDOWS) # not windows therefore gcc LINUX and DARWIN
+		add_definitions(-fPIC)
+	endif(WINDOWS)
+endif (WORD_SIZE EQUAL 64)
+
 set_source_files_properties(${iw_imagebase_HEADER_FILES}
                             PROPERTIES HEADER_FILE_ONLY TRUE)
 

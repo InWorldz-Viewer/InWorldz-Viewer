@@ -46,12 +46,9 @@ else (WINDOWS)
   #end Hack
 
   add_definitions(
-#	-g
-#	-c
-#	-shared
 	-fPIC
 	-D "IW_KDU_LOADER_EXPORTS"
-	)
+  )
 endif (WINDOWS)
 
 include_directories(

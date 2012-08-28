@@ -53,6 +53,7 @@ const S32 LL_MESSAGE_ERROR = -3;
 class LLMessageReader
 {
  public:
+	LOG_CLASS(LLMessageReader);
 
 	virtual ~LLMessageReader();
 

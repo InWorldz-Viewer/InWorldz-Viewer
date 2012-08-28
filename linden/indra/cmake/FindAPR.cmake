@@ -21,7 +21,7 @@ FIND_PATH(APR_INCLUDE_DIR apr.h
 SET(APR_NAMES ${APR_NAMES} apr-1)
 FIND_LIBRARY(APR_LIBRARY
   NAMES ${APR_NAMES}
-  PATHS /usr/lib /usr/local/lib
+  PATHS /usr/lib64 /usr/local/lib64 /usr/lib /usr/local/lib
   )
 
 IF (APR_LIBRARY AND APR_INCLUDE_DIR)

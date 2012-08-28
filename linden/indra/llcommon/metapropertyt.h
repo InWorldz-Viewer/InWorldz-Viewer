@@ -41,6 +41,7 @@
 template<class TProperty>
 class LLMetaPropertyT : public LLMetaProperty
 {
+LOG_CLASS(LLMetaPropertyT);
 public:
 	
 	virtual ~LLMetaPropertyT() {;}

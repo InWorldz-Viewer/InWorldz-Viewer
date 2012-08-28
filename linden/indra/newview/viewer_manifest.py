@@ -866,6 +866,12 @@ class LinuxManifest(ViewerManifest):
         self.path("licenses-linux.txt","licenses.txt")
         
         self.path("res/"+self.icon_name(),self.icon_name())
+
+# copy over another icon file but with the '.ico' suffix
+        if self.prefix("res", dst=""):
+            self.path("inworldz_icon-96.ico")
+            self.end_prefix("res")
+
         if self.prefix("linux_tools", dst=""):
             self.path("client-readme.txt","README-linux.txt")
             self.path("client-readme-voice.txt","README-linux-voice.txt")
@@ -914,7 +920,7 @@ class LinuxManifest(ViewerManifest):
         return mapping[self.viewer_branding_id()]
     
     def icon_name(self):
-        mapping={"inworldz":"inworldz_icon.png"}
+        mapping={"inworldz":"inworldz_icon-96.png"}
         return mapping[self.viewer_branding_id()]
 
     def package_finish(self):
@@ -1012,23 +1018,81 @@ class Linux_i686Manifest(LinuxManifest):
             self.end_prefix("lib")
 
             # Vivox runtimes
-            if self.prefix(src="vivox-runtime/i686-linux", dst="bin"):
+            if self.prefix(src="vivox-runtime/i686-linux", dst="voice"):
                     self.path("iwvoice")
-                    self.end_prefix()
-            if self.prefix(src="vivox-runtime/i686-linux", dst="lib"):
                     self.path("libortp.so")
                     self.path("libvivoxsdk.so")
-#                    self.path("libvivoxoal.so")
-#                    self.path("libvivoxplatform.so")
-#                    self.path("libsndfile.so")
-                    self.end_prefix("lib")
+                    self.end_prefix("voice")
 
 class Linux_x86_64Manifest(LinuxManifest):
     def construct(self):
         super(Linux_x86_64Manifest, self).construct()
 
-        # support file for valgrind debug tool
-        self.path("inworldz-i686.supp")
+# --- Kdu stuff goes here
+        # Try to install either the libkdu_a64R we built
+        try:
+            self.path(self.find_existing_file('../iw_kdu_loader/libiw_kdu_loader.so'),
+                  dst='bin/libiw_kdu_loader.so')
+
+            # keep this one to preserve syntax, open source mangling removes previous lines
+            pass
+        except:
+            print "Skipping libiw_kdu_loader.so - not found"
+
+            pass
+
+        try:
+            self.path(self.find_existing_file('../../libraries/kdu/source/lib/Linux-x86-64-gcc/libkdu_a64R.so'),
+                  dst='lib/libkdu_a64R.so')
+
+            # keep this one to preserve syntax, open source mangling removes previous lines
+            pass
+        except:
+            print "Skipping KDU library file - not found"
+            pass
+
+ 
+# --- normal lib moves here
+
+        if self.prefix("../../libraries/x86_64-linux/lib_release_client", dst="lib"):
+
+            self.path("libapr-1.so.0")
+            self.path("libaprutil-1.so.0")
+            self.path("libdb-4.2.so")
+            self.path("libcrypto.so.0.9.8")
+            self.path("libexpat.so.1")
+            self.path("libssl.so.0.9.8")
+            self.path("libuuid.so","libuuid.so.1")
+            self.path("libSDL-1.2.so.0")
+            self.path("libELFIO.so")
+            self.path("libopenjpeg.so.2")
+            self.path("libopenal.so.1")
+            self.path("libalut.so.0")
+            self.path("libjpeg.so.62.0.0", "libjpeg.so.62")
+            self.end_prefix("lib")
+
+# Vivox runtime libs move
+
+        if self.prefix(src="vivox-runtime/x86_64-linux", dst="voice"):
+            self.path("iwvoice")
+	    self.path("libvivoxsdk.so")
+            self.path("libortp.so")
+# 32bit libs for voice
+	    self.path("libalut.so")
+	    self.path("libalut.so.0")
+	    self.path("libalut.so.0.1.0")
+	    self.path("libidn.so.11")
+	    self.path("libopenal.so")
+	    self.path("libopenal.so.1")
+	    self.path("libopenal.so.1.12.854")
+	    self.path("libuuid.so.1")
+	    self.path("libz.so")
+	    self.path("libz.so.1")
+	    self.path("libz.so.1.2.3.4")
+#            self.path("libvivoxoal.so")
+#            self.path("libvivoxplatform.so")
+#            self.path("libsndfile.so")
+            self.end_prefix("voice")
 
 if __name__ == "__main__":
     main()
