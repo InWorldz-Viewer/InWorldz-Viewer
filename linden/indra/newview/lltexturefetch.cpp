@@ -242,6 +242,7 @@ private:
 	S32 mDecodedDiscard;
 	LLFrameTimer mRequestedTimer;
 	LLFrameTimer mFetchTimer;
+	LLFrameTimer mRequestRetryTimer;
 	LLTextureCache::handle_t mCacheReadHandle;
 	LLTextureCache::handle_t mCacheWriteHandle;
 	U8* mBuffer;
@@ -382,7 +383,7 @@ const char* LLTextureFetchWorker::sStateDescs[] = {
 	"DONE",
 };
 
-const F32 FETCH_TIMEOUT = 180.f; // -- MC
+const F32 FETCH_TIMEOUT = 60.f; // -- MC
 
 // called from MAIN THREAD
 
@@ -436,6 +437,11 @@ LLTextureFetchWorker::LLTextureFetchWorker(LLTextureFetch* fetcher,
 	  mImageCodec(IMG_CODEC_INVALID)
 {
 	mCanUseNET = mUrl.empty() ;
+
+	// I have no idea if this is what I want to use here
+	// but since this isn't documented anywhere...whee! -- MC
+	mRequestRetryTimer.reset();
+	mRequestRetryTimer.stop();
 
 	calcWorkPriority();
 	mType = host.isOk() ? LLImageBase::TYPE_AVATAR_BAKE : LLImageBase::TYPE_NORMAL;
@@ -629,6 +635,12 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		mFetchTimer.reset();
 	}
 
+	if ((mState != SEND_HTTP_REQ) ||
+		(mState != WAIT_HTTP_REQ))
+	{
+		mRequestRetryTimer.reset();
+	}
+
 	if (mState == INIT)
 	{
 		mRawImage = NULL ;
@@ -639,6 +651,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 		mFileSize = 0;
 		mCachedSize = 0;
 		mLoaded = FALSE;
+		mRequestRetryTimer.stop(); // needed?
 		mSentRequest = UNSENT;
 		mDecoded  = FALSE;
 		mWritten  = FALSE;
@@ -937,13 +950,19 @@ bool LLTextureFetchWorker::doWork(S32 param)
 	
 	if (mState == WAIT_HTTP_REQ)
 	{
+		// Is this the right way to check this? -- MC
+		if (mRequestRetryTimer.getStarted() && !mRequestRetryTimer.hasExpired())
+		{
+			return false;
+		}
+
 		if (mLoaded)
 		{
 			S32 cur_size = mFormattedImage.notNull() ? mFormattedImage->getDataSize() : 0;
 			if (mRequestedSize < 0)
 			{
 				S32 max_attempts;
-				if (mGetStatus == HTTP_NOT_FOUND || mGetStatus == 499 || mGetStatus == HTTP_SERVICE_UNAVAILABLE)
+				if (mGetStatus == HTTP_NOT_FOUND)
 				{
 					max_attempts = 2; // Retry once -- MC
 					++mHTTPFailCount;
@@ -951,7 +970,22 @@ bool LLTextureFetchWorker::doWork(S32 param)
 					{
 						llwarns << "Texture missing from server (404): " << mUrl << llendl;
 					}
-					else if (mGetStatus == 499) 
+				}
+				else if (mGetStatus == 499 || mGetStatus == HTTP_SERVICE_UNAVAILABLE)
+				{
+					// Retry three times, but only after a timer
+					// the max_attempts-2 is so mHTTPFailCount will equal max_attempts 
+					// when we reach here the last time -- MC
+					max_attempts = 3; 
+					if (mHTTPFailCount < max_attempts)
+					{
+						// 3 seconds first retry, 9 seconds last retry
+						mRequestRetryTimer.resetWithExpiry(max_attempts * (mHTTPFailCount+1));
+						mRequestRetryTimer.start();
+					}
+					++mHTTPFailCount;
+
+					if (mGetStatus == 499) 
 					{
 						llwarns << "No response from server (499): " << mUrl << llendl;
 					}
@@ -1072,11 +1106,15 @@ bool LLTextureFetchWorker::doWork(S32 param)
 			if (mRequestedTimer.getElapsedTimeF32() > FETCH_TIMEOUT)
 			{
 				llwarns << "Request timer exceeded timeout " << FETCH_TIMEOUT << ", trying to download " 
-						<< mID << " in state WAIT_HTTP_REQ. Skipping, setting state to DONE" 
+						<< mID << " in state WAIT_HTTP_REQ. Retrying from INIT" 
 						<< llendl;
 				mRequestedTimer.reset();
-				mState = DONE;
-				return true;
+				++mHTTPFailCount;
+				resetFormattedData();
+				setPriority(LLWorkerThread::PRIORITY_HIGH | mWorkPriority);
+				//mState = SEND_HTTP_REQ;
+				mState = INIT;
+				return false;
 			}
 
 			setPriority(LLWorkerThread::PRIORITY_LOW | mWorkPriority);
