@@ -147,7 +147,7 @@ public:
 	/*virtual*/ bool deleteOK(); // called from update() (WORK THREAD)
 
 	~LLTextureFetchWorker();
-	//void release() { --mActiveCount; }
+	void release() { --mActiveCount; }
 
 	S32 callbackHttpGet(const LLChannelDescriptors& channels,
 						 const LLIOPipe::buffer_ptr_t& buffer,
@@ -1019,7 +1019,7 @@ bool LLTextureFetchWorker::doWork(S32 param)
 					if (mCanUseNET)
 					{
 						llinfos << "Falling back to UDP fetch for texture " << mID << llendl;
-						mFetcher->removeFromHTTPQueue(mID);
+						//mFetcher->removeFromHTTPQueue(mID);
 						resetFormattedData();
 						mState = INIT;
 						mCanUseHTTP = false;
@@ -1545,7 +1545,7 @@ void LLTextureFetchWorker::callbackDecoded(bool success, LLImageRaw* raw, LLImag
 		removeFromCache();
 		mDecodedDiscard = -1; // Redundant, here for clarity and paranoia
 	}
-	//mDecoded = TRUE;
+	mDecoded = TRUE;
 	setPriority(LLWorkerThread::PRIORITY_HIGH | mWorkPriority);
 	// Set the decode flag at the end of the callback or we trigger race conditions between the fetch thread and the 
 	// decode threads that's calling this callback. The fetch thread might set mFormattedImage to NULL before we
@@ -2037,13 +2037,12 @@ void LLTextureFetch::sendRequestListToSimulators()
 	}
 	timer.reset();
 	
-	lockQueue();
-
 	// Send requests
 	typedef std::set<LLTextureFetchWorker*,LLTextureFetchWorker::Compare> request_list_t;
 	typedef std::map< LLHost, request_list_t > work_request_map_t;
 	work_request_map_t requests;
-	mNetworkQueueMutex.lock();
+	{
+	LLMutexLock lock2(&mNetworkQueueMutex);
 	for (queue_t::iterator iter = mNetworkQueue.begin(); iter != mNetworkQueue.end(); )
 	{
 		queue_t::iterator curiter = iter++;
@@ -2086,8 +2085,7 @@ void LLTextureFetch::sendRequestListToSimulators()
 			}
 		}
 	}
-	mNetworkQueueMutex.unlock();
-	unlockQueue();
+	}
 
 	for (work_request_map_t::iterator iter1 = requests.begin();
 		 iter1 != requests.end(); ++iter1)
@@ -2166,8 +2164,8 @@ void LLTextureFetch::sendRequestListToSimulators()
 	}
 	
 	// Send cancelations
-	lockQueue();
-	mNetworkQueueMutex.lock();
+	{
+	LLMutexLock lock2(&mNetworkQueueMutex);
 	if (gMessageSystem && !mCancelQueue.empty())
 	{
 		for (cancel_queue_t::iterator iter1 = mCancelQueue.begin();
@@ -2211,8 +2209,7 @@ void LLTextureFetch::sendRequestListToSimulators()
 		}
 		mCancelQueue.clear();
 	}
-	mNetworkQueueMutex.unlock();
-	unlockQueue();
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////////
