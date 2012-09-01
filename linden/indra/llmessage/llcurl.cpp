@@ -574,7 +574,6 @@ void LLCurl::Easy::prepRequest(const std::string& url,
 	}
 
 	mOutput.reset(new LLBufferArray);
-	mOutput->setThreaded(true);
 	setopt(CURLOPT_WRITEFUNCTION, (void*)&curlWriteCallback);
 	setopt(CURLOPT_WRITEDATA, (void*)this);
 
