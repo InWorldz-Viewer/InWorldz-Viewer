@@ -425,8 +425,13 @@ LLFontGL *LLFontRegistry::createFont(const LLFontDescriptor& desc)
 		file_name_it != file_names.end(); 
 		++file_name_it)
 	{
-		LLFontGL *fontp = new LLFontGL;
 		std::string font_path = local_path + *file_name_it;
+		if (!LLFile::isfile(font_path))
+		{
+			LL_DEBUGS("LLFontRegistry") << "File doesn't exist at path: " << font_path << llendl;
+			continue;
+		}
+		LLFontGL *fontp = new LLFontGL;
 		BOOL is_fallback = !is_first_found;
 		F32 extra_scale = (is_fallback)?fallback_scale:1.0;
 		if (!fontp->loadFace(font_path, extra_scale * point_size,
