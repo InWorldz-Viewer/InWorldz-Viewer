@@ -44,7 +44,6 @@
 #include "lliopipe.h"
 #include "llchainio.h"
 #include "llerror.h"
-#include "llcurl.h"
 
 class LLURLRequestDetail;
 
@@ -173,8 +172,6 @@ public:
      * @ brief Set the CURLOPT_PROXY header to the given value.
      */
 	void useProxy(const std::string& proxy);
-
-	/*virtual*/ bool isValid() ;
 
 public:
 	/** 

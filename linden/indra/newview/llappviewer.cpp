@@ -568,7 +568,7 @@ bool LLAppViewer::init()
 
     // *NOTE:Mani - LLCurl::initClass is not thread safe. 
     // Called before threads are created.
-    LLCurl::initClass(gSavedSettings.getF32("CurlRequestTimeOut"), gSavedSettings.getS32("CurlMaximumNumberOfHandles"), gSavedSettings.getBOOL("CurlUseMultipleThreads"));
+    LLCurl::initClass();
 	LL_INFOS("InitInfo") << "LLCurl initialized." << LL_ENDL ;
 
     initThreads();
@@ -1045,11 +1045,6 @@ bool LLAppViewer::mainLoop()
 						break;
 					}
 				}
-
-				if(!LLCurl::getCurlThread()->update(1))
-				{
-					LLCurl::getCurlThread()->pause() ; //nothing in the curl thread.
-				}
 				
 				 // Prevent the worker threads from running while rendering.
 				// if (LLThread::processorCount()==1) //pause() should only be required when on a single processor client...
@@ -1400,7 +1395,6 @@ bool LLAppViewer::cleanup()
 		pending += LLAppViewer::getTextureFetch()->update(1); // unpauses the texture fetch thread
 		pending += LLVFSThread::updateClass(0);
 		pending += LLLFSThread::updateClass(0);
-		pending += LLCurl::getCurlThread()->update(1);
 		if (pending == 0)
 		{
 			break;
@@ -1411,8 +1405,6 @@ bool LLAppViewer::cleanup()
 			break;
 		}
 	}
-
-	LLCurl::getCurlThread()->pause();
 	
 	// Delete workers first
 	// shotdown all worker threads before deleting them in case of co-dependencies
