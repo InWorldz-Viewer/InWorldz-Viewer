@@ -4,25 +4,31 @@
  * @date 2005-04-28
  * @brief Implementation of the URLRequest class and related classes.
  *
- * $LicenseInfo:firstyear=2005&license=viewerlgpl$
+ * $LicenseInfo:firstyear=2005&license=viewergpl$
+ * 
+ * Copyright (c) 2005-2009, Linden Research, Inc.
+ * 
  * Second Life Viewer Source Code
- * Copyright (C) 2010, Linden Research, Inc.
+ * The source code in this file ("Source Code") is provided by Linden Lab
+ * to you under the terms of the GNU General Public License, version 2.0
+ * ("GPL"), unless you have obtained a separate licensing agreement
+ * ("Other License"), formally executed by you and Linden Lab.  Terms of
+ * the GPL can be found in doc/GPL-license.txt in this distribution, or
+ * online at http://secondlifegrid.net/programs/open_source/licensing/gplv2
  * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License only.
+ * There are special exceptions to the terms and conditions of the GPL as
+ * it is applied to this Source Code. View the full text of the exception
+ * in the file doc/FLOSS-exception.txt in this software distribution, or
+ * online at
+ * http://secondlifegrid.net/programs/open_source/licensing/flossexception
  * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * By copying, modifying or distributing this software, you acknowledge
+ * that you have read and understood your obligations described above,
+ * and agree to abide by those obligations.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
- * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
+ * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
+ * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
+ * COMPLETENESS OR PERFORMANCE.
  * $/LicenseInfo$
  */
 
@@ -45,7 +51,6 @@ static const U32 HTTP_STATUS_PIPE_ERROR = 499;
  * String constants
  */
 const std::string CONTEXT_DEST_URI_SD_LABEL("dest_uri");
-const std::string CONTEXT_TRANSFERED_BYTES("transfered_bytes");
 
 
 static size_t headerCallback(void* data, size_t size, size_t nmemb, void* user);
@@ -60,7 +65,7 @@ public:
 	~LLURLRequestDetail();
 	std::string mURL;
 	LLCurlEasyRequest* mCurlRequest;
-	LLIOPipe::buffer_ptr_t mResponseBuffer;
+	LLBufferArray* mResponseBuffer;
 	LLChannelDescriptors mChannels;
 	U8* mLastRead;
 	U32 mBodyLimit;
@@ -70,6 +75,7 @@ public:
 
 LLURLRequestDetail::LLURLRequestDetail() :
 	mCurlRequest(NULL),
+	mResponseBuffer(NULL),
 	mLastRead(NULL),
 	mBodyLimit(0),
 	mByteAccumulator(0),
@@ -89,6 +95,7 @@ LLURLRequestDetail::~LLURLRequestDetail()
 {
 	LLMemType m1(LLMemType::MTYPE_IO_URL_REQUEST);
 	delete mCurlRequest;
+	mResponseBuffer = NULL;
 	mLastRead = NULL;
 }
 
@@ -96,26 +103,6 @@ LLURLRequestDetail::~LLURLRequestDetail()
 /**
  * class LLURLRequest
  */
-
-// static
-std::string LLURLRequest::actionAsVerb(LLURLRequest::ERequestAction action)
-{
-	static const std::string VERBS[] =
-	{
-		"(invalid)",
-		"HEAD",
-		"GET",
-		"PUT",
-		"POST",
-		"DELETE",
-		"MOVE"
-	};
-	if(((S32)action <=0) || ((S32)action >= REQUEST_ACTION_COUNT))
-	{
-		return VERBS[0];
-	}
-	return VERBS[action];
-}
 
 LLURLRequest::LLURLRequest(LLURLRequest::ERequestAction action) :
 	mAction(action)
@@ -264,29 +251,7 @@ LLIOPipe::EStatus LLURLRequest::process_impl(
 	PUMP_DEBUG;
 	LLMemType m1(LLMemType::MTYPE_IO_URL_REQUEST);
 	//llinfos << "LLURLRequest::process_impl()" << llendl;
-	if (!buffer) return STATUS_ERROR;
-	
-	// we're still waiting or prcessing, check how many
-	// bytes we have accumulated.
-	const S32 MIN_ACCUMULATION = 100000;
-	if(pump && (mDetail->mByteAccumulator > MIN_ACCUMULATION))
-	{
-		 // This is a pretty sloppy calculation, but this
-		 // tries to make the gross assumption that if data
-		 // is coming in at 56kb/s, then this transfer will
-		 // probably succeed. So, if we're accumlated
-		 // 100,000 bytes (MIN_ACCUMULATION) then let's
-		 // give this client another 2s to complete.
-		 const F32 TIMEOUT_ADJUSTMENT = 2.0f;
-		 mDetail->mByteAccumulator = 0;
-		 pump->adjustTimeoutSeconds(TIMEOUT_ADJUSTMENT);
-		 lldebugs << "LLURLRequest adjustTimeoutSeconds for request: " << mDetail->mURL << llendl;
-		 if (mState == STATE_INITIALIZED)
-		 {
-			  llinfos << "LLURLRequest adjustTimeoutSeconds called during upload" << llendl;
-		 }
-	}
-
+	if(!buffer) return STATUS_ERROR;
 	switch(mState)
 	{
 	case STATE_INITIALIZED:
@@ -302,7 +267,7 @@ LLIOPipe::EStatus LLURLRequest::process_impl(
 
 		// *FIX: bit of a hack, but it should work. The configure and
 		// callback method expect this information to be ready.
-		mDetail->mResponseBuffer = buffer;
+		mDetail->mResponseBuffer = buffer.get();
 		mDetail->mChannels = channels;
 		if(!configure())
 		{
@@ -325,22 +290,30 @@ LLIOPipe::EStatus LLURLRequest::process_impl(
 		while(1)
 		{
 			CURLcode result;
-
-			bool newmsg = false;
-			{
-				newmsg = mDetail->mCurlRequest->getResult(&result);
-			}
-		
+			bool newmsg = mDetail->mCurlRequest->getResult(&result);
 			if(!newmsg)
 			{
+				// we're still waiting or prcessing, check how many
+				// bytes we have accumulated.
+				const S32 MIN_ACCUMULATION = 100000;
+				if(pump && (mDetail->mByteAccumulator > MIN_ACCUMULATION))
+				{
+					// This is a pretty sloppy calculation, but this
+					// tries to make the gross assumption that if data
+					// is coming in at 56kb/s, then this transfer will
+					// probably succeed. So, if we're accumlated
+					// 100,000 bytes (MIN_ACCUMULATION) then let's
+					// give this client another 2s to complete.
+					const F32 TIMEOUT_ADJUSTMENT = 2.0f;
+					mDetail->mByteAccumulator = 0;
+					pump->adjustTimeoutSeconds(TIMEOUT_ADJUSTMENT);
+				}
+
 				// keep processing
 				break;
 			}
 
 			mState = STATE_HAVE_RESPONSE;
-			context[CONTEXT_REQUEST][CONTEXT_TRANSFERED_BYTES] = mRequestTransferedBytes;
-			context[CONTEXT_RESPONSE][CONTEXT_TRANSFERED_BYTES] = mResponseTransferedBytes;
-			lldebugs << this << "Setting context to " << context << llendl;
 			switch(result)
 			{
 				case CURLE_OK:
@@ -387,16 +360,10 @@ LLIOPipe::EStatus LLURLRequest::process_impl(
 		// we already stuffed everything into channel in in the curl
 		// callback, so we are done.
 		eos = true;
-		context[CONTEXT_REQUEST][CONTEXT_TRANSFERED_BYTES] = mRequestTransferedBytes;
-		context[CONTEXT_RESPONSE][CONTEXT_TRANSFERED_BYTES] = mResponseTransferedBytes;
-		lldebugs << this << "Setting context to " << context << llendl;
 		return STATUS_DONE;
 
 	default:
 		PUMP_DEBUG;
-		context[CONTEXT_REQUEST][CONTEXT_TRANSFERED_BYTES] = mRequestTransferedBytes;
-		context[CONTEXT_RESPONSE][CONTEXT_TRANSFERED_BYTES] = mResponseTransferedBytes;
-		lldebugs << this << "Setting context to " << context << llendl;
 		return STATUS_ERROR;
 	}
 }
@@ -415,8 +382,6 @@ void LLURLRequest::initialize()
 	mDetail->mCurlRequest->setopt(CURLOPT_NOSIGNAL, 1);
 	mDetail->mCurlRequest->setWriteCallback(&downCallback, (void*)this);
 	mDetail->mCurlRequest->setReadCallback(&upCallback, (void*)this);
-	mRequestTransferedBytes = 0;
-	mResponseTransferedBytes = 0;
 }
 
 bool LLURLRequest::configure()
@@ -525,7 +490,6 @@ size_t LLURLRequest::downCallback(
 		req->mDetail->mChannels.out(),
 		(U8*)data,
 		bytes);
-	req->mResponseTransferedBytes += bytes;
 	req->mDetail->mByteAccumulator += bytes;
 	return bytes;
 }
@@ -549,7 +513,6 @@ size_t LLURLRequest::upCallback(
 		req->mDetail->mLastRead,
 		(U8*)data,
 		bytes);
-	req->mRequestTransferedBytes += bytes;
 	return bytes;
 }
 
