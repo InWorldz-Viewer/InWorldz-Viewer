@@ -32,11 +32,16 @@
 
 #include "llviewerprecompiledheaders.h"
 
+// Going memleak hunting -- MC
 #if defined(_DEBUG)
-# if _MSC_VER >= 1400 // Visual C++ 2005 or later
-#	define WINDOWS_CRT_MEM_CHECKS 1
-# endif
+	#define _CRTDBG_MAP_ALLOC
+	#include <stdlib.h>
+	#include <crtdbg.h>
+#	if _MSC_VER >= 1400 // Visual C++ 2005 or later
+#		define WINDOWS_CRT_MEM_CHECKS 1
+#	endif
 #endif
+// end MC
 
 #include "llappviewerwin32.h"
 
@@ -158,6 +163,15 @@ int APIENTRY WINMAIN(HINSTANCE hInstance,
                      LPSTR     lpCmdLine,
                      int       nCmdShow)
 {
+#if defined(_DEBUG) // MC
+	_CrtSetReportMode( _CRT_WARN, _CRTDBG_MODE_FILE );
+	_CrtSetReportFile( _CRT_WARN, _CRTDBG_FILE_STDOUT );
+	_CrtSetReportMode( _CRT_ERROR, _CRTDBG_MODE_FILE );
+	_CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDOUT );
+	_CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
+	_CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDOUT );
+	_CrtSetDbgFlag ( _CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF );  // run _CrtDumpMemoryLeaks() on exit 
+#endif // MC
 	LLMemType mt1(LLMemType::MTYPE_STARTUP);
 
 	const S32 MAX_HEAPS = 255;
