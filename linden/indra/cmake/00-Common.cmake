@@ -160,7 +160,6 @@ if (LINUX)
       -fno-math-errno
       -fno-strict-aliasing
       -fsigned-char
-      -g
       -pthread
       )
 
@@ -200,7 +199,8 @@ if (LINUX)
     set(CMAKE_CXX_FLAGS_RELEASESSE2 "${CMAKE_CXX_FLAGS_RELEASESSE2} -msse2 -mfpmath=sse")
   endif (VIEWER)
 
-  set(CMAKE_CXX_FLAGS_DEBUG "-fno-inline ${CMAKE_CXX_FLAGS_DEBUG}")
+  set(CMAKE_CXX_FLAGS_DEBUG "-fno-inline -g ${CMAKE_CXX_FLAGS_DEBUG}")
+  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g ${CMAKE_CXX_FLAGS_RELWITHDEBINFO}")
   set(CMAKE_CXX_FLAGS_RELEASE "-O2 ${CMAKE_CXX_FLAGS_RELEASE}")
   set(CMAKE_CXX_FLAGS_RELEASEFAST "-O3 ${CMAKE_CXX_FLAGS_RELEASESSE2}")
   set(CMAKE_CXX_FLAGS_RELEASESSE2 "-O2 ${CMAKE_CXX_FLAGS_RELEASESSE2}")
