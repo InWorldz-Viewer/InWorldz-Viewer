@@ -586,7 +586,10 @@ void LLPanelFace::getState()
 			}
 			else
 			{
-				texture_ctrl->setCanApplyImmediately(FALSE);
+				// force it to "work" anyway, HACK HACK HACK -- MC
+				//texture_ctrl->setCanApplyImmediately(FALSE);
+				// Pretty confident this is the cause:
+				llwarns << "Couldn't set a selected node to valid when processing ObjectProperties or ObjectPropertiesFamily, most likely because selection became screwed up sim-side. Unexpected behavior is probably occurring throughout the viewer right now" << llendl;
 			}
 		}
 
