@@ -173,6 +173,7 @@ protected:
 	LLTextureCtrl*		mOwner;
 
 	LLUUID				mImageAssetID; // Currently selected texture
+	LLUUID				mPreviousImageAssetID; // Last-selected texture
 	std::string			mFallbackImageName; // What to show if currently selected texture is null.
 
 	LLUUID				mWhiteImageAssetID;
@@ -186,6 +187,7 @@ protected:
 	LLTextBox*			mResolutionLabel;
 
 	std::string			mPendingName;
+	std::string			mLoadingPlaceholderString;
 	BOOL				mIsDirty;
 	BOOL				mActive;
 
@@ -215,6 +217,7 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 		TEX_PICKER_MIN_WIDTH, TEX_PICKER_MIN_HEIGHT ),
 	mOwner( owner ),
 	mImageAssetID( owner->getImageAssetID() ),
+	mPreviousImageAssetID(LLUUID::null),
 	mFallbackImageName( fallback_image_name ),
 	mWhiteImageAssetID( gSavedSettings.getString( "UIImgWhiteUUID" ) ),
 	mInvisibleImageAssetID(gSavedSettings.getString("UIImgInvisibleUUID")),
@@ -227,14 +230,21 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 	mSearchEdit(NULL),
 	mImmediateFilterPermMask(immediate_filter_perm_mask),
 	mNonImmediateFilterPermMask(non_immediate_filter_perm_mask),
-	mContextConeOpacity(0.f)
+	mContextConeOpacity(0.f),
+	mLoadingPlaceholderString("")
 {
+	//grab textures first...
+	gInventory.startBackgroundFetch(gInventory.findCategoryUUIDForType(LLAssetType::AT_TEXTURE));
+	//...then start full inventory fetch.
+	gInventory.startBackgroundFetch();
+
 	LLUICtrlFactory::getInstance()->buildFloater(this,"floater_texture_ctrl.xml");
 
 	mTentativeLabel = getChild<LLTextBox>("Multiple");
 
 	mResolutionLabel = getChild<LLTextBox>("unknown");
 
+	mLoadingPlaceholderString = LLTrans::getString("texture_loading");
 
 	childSetAction("Default",LLFloaterTexturePicker::onBtnSetToDefault,this);
 	childSetAction("None", LLFloaterTexturePicker::onBtnNone,this);
@@ -300,6 +310,7 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 
 LLFloaterTexturePicker::~LLFloaterTexturePicker()
 {
+	mTexturep = NULL;
 }
 
 void LLFloaterTexturePicker::setImageID(const LLUUID& image_id)
@@ -360,21 +371,27 @@ void LLFloaterTexturePicker::updateImageStats()
 	if (mTexturep.notNull())
 	{
 		//RN: have we received header data for this image?
-		if (mTexturep->getWidth(0) > 0 && mTexturep->getHeight(0) > 0)
+		// A dimension of 1x1 is worthless -- MC
+		if ((mTexturep->getWidth(0) > 1) && (mTexturep->getHeight(0) > 1))
 		{
-			std::string formatted_dims = llformat("%d x %d", mTexturep->getWidth(0),mTexturep->getHeight(0));
+			std::string formatted_dims = llformat("%d x %d", mTexturep->getWidth(0), mTexturep->getHeight(0));
 			mResolutionLabel->setTextArg("[DIMENSIONS]", formatted_dims);
 		}
 		else
 		{
-			mResolutionLabel->setTextArg("[DIMENSIONS]", std::string("[? x ?]"));
+			mResolutionLabel->setTextArg("[DIMENSIONS]", std::string(""));
 		}
+
 		if (gAgent.isGodlike())
 		{
 			std::string tstring = "Pick: ";
 			tstring.append(mTexturep->getID().asString());
 			setTitle(tstring);
 		}
+	}
+	else
+	{
+		mResolutionLabel->setText(std::string(""));
 	}
 }
 
@@ -551,8 +568,6 @@ void LLFloaterTexturePicker::draw()
 		mContextConeOpacity = lerp(mContextConeOpacity, 0.f, LLCriticalDamp::getInterpolant(CONTEXT_FADE_TIME));
 	}
 
-	updateImageStats();
-
 	// if we're inactive, gray out "apply immediate" checkbox
 	childSetEnabled("show_folders_check", mActive && mCanApplyImmediately && !mNoCopyTextureSelected);
 	childSetEnabled("Select", mActive);
@@ -565,16 +580,26 @@ void LLFloaterTexturePicker::draw()
 	//BOOL allow_copy = FALSE;
 	if( mOwner ) 
 	{
-		mTexturep = NULL;
-		if(mImageAssetID.notNull())
+		// Did the ID change? -- MC
+		if (mPreviousImageAssetID.notNull() && (mPreviousImageAssetID != mImageAssetID))
+		{
+			mTexturep = NULL;
+		}
+
+		if (mImageAssetID.notNull())
 		{
 			mTexturep = gImageList.getImage(mImageAssetID, MIPMAP_YES, IMMEDIATE_NO);
 			mTexturep->setBoostLevel(LLViewerImageBoostLevel::BOOST_PREVIEW);
+			mTexturep->setDesiredDiscardLevel(0);
+			mTexturep->setDecodePriority(mTexturep->maxDecodePriority());
+			mPreviousImageAssetID = mImageAssetID;
 		}
 		else if (!mFallbackImageName.empty())
 		{
 			mTexturep = gImageList.getImageFromFile(mFallbackImageName);
 			mTexturep->setBoostLevel(LLViewerImageBoostLevel::BOOST_PREVIEW);
+			mTexturep->setDesiredDiscardLevel(0);
+			mTexturep->setDecodePriority(mTexturep->maxDecodePriority());
 		}
 
 		if (mTentativeLabel)
@@ -616,7 +641,13 @@ void LLFloaterTexturePicker::draw()
 			gl_draw_scaled_image( interior.mLeft, interior.mBottom, interior.getWidth(), interior.getHeight(), mTexturep );
 
 			// Pump the priority
-			mTexturep->addTextureStats( (F32)(interior.getWidth() * interior.getHeight()) );
+			F32 pixel_area = (F32)(interior.getWidth() * interior.getHeight() );
+			mTexturep->addTextureStats(pixel_area);
+			if (pixel_area > 0.f)
+			{
+				//boost the previewed image priority to the highest to make it to get loaded first.
+				mTexturep->setAdditionalDecodePriority(1.0f) ;
+			}
 
 			// Draw Tentative Label over the image
 			if( mOwner->getTentative() && !mIsDirty )
@@ -624,6 +655,8 @@ void LLFloaterTexturePicker::draw()
 				mTentativeLabel->setVisible( TRUE );
 				drawChild(mTentativeLabel);
 			}
+
+			updateImageStats();
 		}
 		else
 		{
@@ -631,6 +664,22 @@ void LLFloaterTexturePicker::draw()
 
 			// Draw X
 			gl_draw_x(interior, LLColor4::black );
+		}
+
+		// Show "Loading..." string if we're still decoding the image -- MC
+		if (!mLoadingPlaceholderString.empty() && 
+			(mTexturep->getWidth() == 1) &&
+			(mTexturep->getHeight() ==1))
+		{
+			LLFontGL* font = LLFontGL::getFontSansSerif();
+			font->renderUTF8(
+				mLoadingPlaceholderString, 0,
+				llfloor((interior.mLeft + interior.mRight) / 2), // about center-ish
+				llfloor(((interior.mTop + interior.mBottom) / 2) - (LLFontGL::getFontSansSerif()->getLineHeight() / 2) + 3), // llfont is broken here -- MC
+				LLColor4::white,
+				LLFontGL::HCENTER,
+				LLFontGL::BASELINE,
+				LLFontGL::DROP_SHADOW);
 		}
 	}
 }
@@ -769,6 +818,7 @@ void LLFloaterTexturePicker::onBtnSelect(void* userdata)
 	{
 		self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_SELECT);
 	}
+	gSavedSettings.setBOOL("ApplyTextureImmediately", self->childGetValue("apply_immediate_check").asBoolean());
 	self->close();
 }
 
@@ -1006,6 +1056,8 @@ LLTextureCtrl::LLTextureCtrl(
 
 LLTextureCtrl::~LLTextureCtrl()
 {
+	mTexturep = NULL;
+
 	closeFloater();
 }
 
@@ -1366,12 +1418,16 @@ void LLTextureCtrl::draw()
 	{
 		mTexturep = gImageList.getImage(mImageAssetID, MIPMAP_YES, IMMEDIATE_NO);
 		mTexturep->setBoostLevel(LLViewerImageBoostLevel::BOOST_PREVIEW);
+		mTexturep->setDesiredDiscardLevel(0);
+		mTexturep->setDecodePriority(mTexturep->maxDecodePriority());
 	}
 	else if (!mFallbackImageName.empty())
 	{
 		// Show fallback image.
 		mTexturep = gImageList.getImageFromFile(mFallbackImageName);
 		mTexturep->setBoostLevel(LLViewerImageBoostLevel::BOOST_PREVIEW);
+		mTexturep->setDesiredDiscardLevel(0);
+		mTexturep->setDecodePriority(mTexturep->maxDecodePriority());
 	}
 	else	// mImageAssetID == LLUUID::null
 	{
@@ -1394,7 +1450,14 @@ void LLTextureCtrl::draw()
 		}
 		
 		gl_draw_scaled_image( interior.mLeft, interior.mBottom, interior.getWidth(), interior.getHeight(), mTexturep);
-		mTexturep->addTextureStats( (F32)(interior.getWidth() * interior.getHeight()) );
+
+		F32 pixel_area = (F32)(interior.getWidth() * interior.getHeight() );
+		mTexturep->addTextureStats(pixel_area);
+		if (pixel_area > 0.f)
+		{
+			//boost the previewed image priority to the highest to make it to get loaded first.
+			mTexturep->setAdditionalDecodePriority(1.0f) ;
+		}
 	}
 	else
 	{
@@ -1415,11 +1478,11 @@ void LLTextureCtrl::draw()
 		 (mTexturep->getDiscardLevel() != 1) &&
 		 (mTexturep->getDiscardLevel() != 0))
 	{
-		LLFontGL* font = LLFontGL::getFontSansSerifLarge();
+		LLFontGL* font = LLFontGL::getFontSansSerif();
 		font->renderUTF8(
 			mLoadingPlaceholderString, 0,
-			llfloor(interior.mLeft+10), 
-			llfloor(interior.mTop-20),
+			llfloor(interior.mLeft + 2), // about center-ish 
+			llfloor((interior.mTop + interior.mBottom) / 2 - (LLFontGL::getFontSansSerif()->getLineHeight() /2) + 3), // llfont is broken here -- MC
 			LLColor4::white,
 			LLFontGL::LEFT,
 			LLFontGL::BASELINE,
