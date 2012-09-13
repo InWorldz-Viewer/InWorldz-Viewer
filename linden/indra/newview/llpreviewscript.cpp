@@ -140,11 +140,13 @@ const S32 TEXT_EDIT_COLUMN_HEIGHT = 16;
 const S32 MAX_HISTORY_COUNT = 10;
 const F32 LIVE_HELP_REFRESH_TIME = 1.f;
 
+/* not used any more??? - Avian
 static bool have_script_upload_cap(LLUUID& object_id)
 {
 	LLViewerObject* object = gObjectList.findObject(object_id);
 	return object && (! object->getRegion()->getCapability("UpdateScriptTask").empty());
 }
+*/
 
 /// ---------------------------------------------------------------------------
 

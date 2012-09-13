@@ -930,11 +930,23 @@ class LinuxManifest(ViewerManifest):
             installer_name_components = [self.installer_prefix(), self.args.get('arch')]
             installer_name_components.extend(self.args['version'])
             installer_name = "_".join(installer_name_components)
+
             if self.default_channel():
                 if not self.default_grid():
                     installer_name += '_' + self.args['grid'].upper()
             else:
                 installer_name += '_' + self.channel_oneword().upper()
+
+	# Add a suffix to the build name = Avian
+	if self.buildtype().lower() == "releasesse2":
+            suffix_name = "-SSE2"
+	elif  self.buildtype().lower() == "debug":
+            suffix_name = "-DBG"
+	elif  self.buildtype().lower() == "releasefast":
+            suffix_name = "-FAST"
+	else:  suffix_name = ""
+        installer_name += suffix_name
+	# end suffix
 
         # Fix access permissions
         self.run_command("""

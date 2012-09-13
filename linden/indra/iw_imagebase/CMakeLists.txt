@@ -2,6 +2,11 @@
 
 project(iw_imagebase)
 
+if (LINUX)
+    include(00-Common)
+    include(Variables)
+endif (LINUX)
+
 include_directories(
 	${IW_IMAGEBASE_INCLUDE_DIRS}
     )

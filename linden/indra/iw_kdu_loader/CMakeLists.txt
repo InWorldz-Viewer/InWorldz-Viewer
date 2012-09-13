@@ -4,6 +4,11 @@ cmake_minimum_required (VERSION 2.6)
 
 project (iw_kdu_loader)
 
+#This should work for Windows also - Avian
+if (NOT WINDOWS)
+  include (00-Common)
+endif (NOT WINDOWS)
+
 include(InWorldz)
 include(Variables)
 
@@ -90,10 +95,6 @@ if (WINDOWS)
   endif (NOT VS_DISABLE_FATAL_WARNINGS)
 	
 else (WINDOWS)
-  #Hack for linux/darwin build of 'iw_kdu_loader/stdadfx.h' - Avian
-  include (00-Common)
-  #end Hack
-
   add_definitions(
 	-fPIC
 	-D "IW_KDU_LOADER_EXPORTS"
@@ -173,8 +174,6 @@ elseif (LINUX)
 	set_target_properties(iw_kdu_loader
 		PROPERTIES
 		LINK_FLAGS "-shared -Wl"
-#		LINK_FLAGS "-shared -Wl, -soname "
-#		LINK_FLAGS_DEBUG "-shared -Wl, -soname, "
 		)
 elseif (DARWIN)
 	set(CMAKE_OSX_ARCHITECTURES "i386")

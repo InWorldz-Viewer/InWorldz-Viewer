@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#64bit buld script by Avian Overlord (aka LadyDi Andel)
+#64bit build script by Avian Overlord (aka LadyDi Andel)
 
 #Use this as a starting point to compile the 64bit Linux
 #version. It's here mostly as a guideline, but does work.
@@ -14,7 +14,7 @@ export LD_LIBRARY_PATH=/usr/lib64:usr/lib
 #clean out any previous build
 python develop.py -m64 clean
 
-#autoconfigi for a 64bit build (-m64)
+#autoconfig for a 64bit build
 python develop.py -m64 configure
 
 #build it
