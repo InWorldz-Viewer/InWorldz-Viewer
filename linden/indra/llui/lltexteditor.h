@@ -45,6 +45,7 @@
 #include "lldarray.h"
 
 #include "llpreeditor.h"
+#include "llmenugl.h"
 
 class LLFontGL;
 class LLScrollbar;
@@ -84,6 +85,7 @@ public:
 	virtual BOOL	handleHover(S32 x, S32 y, MASK mask);
 	virtual BOOL	handleScrollWheel(S32 x, S32 y, S32 clicks);
 	virtual BOOL	handleDoubleClick(S32 x, S32 y, MASK mask );
+	virtual BOOL	handleRightMouseDown( S32 x, S32 y, MASK mask );
 	virtual BOOL	handleMiddleMouseDown(S32 x,S32 y,MASK mask);
 
 	virtual BOOL	handleKeyHere(KEY key, MASK mask );
@@ -132,6 +134,19 @@ public:
 	virtual BOOL	canSelectAll()	const;
 	virtual void	deselect();
 	virtual BOOL	canDeselect() const;
+
+	static BOOL context_enable_cut(void* data);
+	static void context_cut(void* data);
+	static BOOL context_enable_copy(void* data);
+	static void context_copy(void* data);
+	static BOOL context_enable_paste(void* data);
+	static void context_paste(void* data);
+	static BOOL context_enable_delete(void* data);
+	static void context_delete(void* data);
+	static BOOL context_enable_selectall(void* data);
+	static void context_selectall(void* data);
+
+    	void defineMenuCallbacks(LLMenuGL* menu);
 
 	void			selectNext(const std::string& search_text_in, BOOL case_insensitive, BOOL wrap = TRUE);
 	BOOL			replaceText(const std::string& search_text, const std::string& replace_text, BOOL case_insensitive, BOOL wrap = TRUE);
@@ -263,13 +278,15 @@ public:
 	const LLTextSegment*	getPreviousSegment() const;
 	void getSelectedSegments(std::vector<const LLTextSegment*>& segments) const;
 
-	static bool		isPartOfWord(llwchar c) { return (c == '_') || LLStringOps::isAlnum((char)c); }
+	static bool		isPartOfWord(llwchar c) { return ( (c == '_')  || (c == '\'') || LLStringOps::isAlnum((char)c)); }
 
 	BOOL isReadOnly() { return mReadOnly; }
 protected:
 	//
 	// Methods
 	//
+
+	LLHandle<LLView>					mPopupMenuHandle;
 
 	S32				getLength() const { return mWText.length(); }
 	void			getSegmentAndOffset( S32 startpos, S32* segidxp, S32* offsetp ) const;
@@ -304,7 +321,7 @@ protected:
 	BOOL			handleEditKey(const KEY key, const MASK mask);
 
 	// <edit>
-	public:
+public:
 	// </edit>
 	BOOL			hasSelection() const		{ return (mSelectionStart !=mSelectionEnd); }
 	// <edit>
@@ -520,6 +537,8 @@ private:
 		}
 	};
 	typedef std::vector<line_info> line_list_t;
+	S32 mLastContextMenuX;
+	S32 mLastContextMenuY;
 	line_list_t mLineStartList;
 	BOOL			mReflowNeeded;
 	BOOL			mScrollNeeded;

@@ -57,7 +57,11 @@
 #include "llimagegl.h"
 #include "llwindow.h"
 #include "lltextparser.h"
+#include "lldir.h"
 #include <queue>
+
+#include "llmenugl.h"
+#include "../newview/llviewercontrol.h"
 
 // 
 // Globals
@@ -254,6 +258,7 @@ LLTextEditor::LLTextEditor(
 	LLUICtrl( name, rect, TRUE, NULL, NULL, FOLLOWS_TOP | FOLLOWS_LEFT ),
 	mTextIsUpToDate(TRUE),
 	mMaxTextByteLength( max_length ),
+	mPopupMenuHandle(),
 	mBaseDocIsPristine(TRUE),
 	mPristineCmd( NULL ),
 	mLastCmd( NULL ),
@@ -286,6 +291,8 @@ LLTextEditor::LLTextEditor(
 	mMouseDownY(0),
 	mLastSelectionX(-1),
 	mLastSelectionY(-1),
+	mLastContextMenuX(-1),
+	mLastContextMenuY(-1),
 	mReflowNeeded(FALSE),
 	mScrollNeeded(FALSE)
 {
@@ -339,8 +346,19 @@ LLTextEditor::LLTextEditor(
 
 	mParseHTML=FALSE;
 	mHTML.clear();
-}
 
+	// make the popup menu available
+
+	LLMenuGL* menu = LLUICtrlFactory::getInstance()->buildMenu("menu_rightclick_text.xml",this);
+	if (!menu)
+	{
+		menu = new LLMenuGL(LLStringUtil::null);
+	}
+
+	defineMenuCallbacks(menu);
+	mPopupMenuHandle = menu->getHandle();
+	menu->setBackgroundColor(gColors.getColor("MenuPopupBgColor"));
+}
 
 LLTextEditor::~LLTextEditor()
 {
@@ -357,7 +375,118 @@ LLTextEditor::~LLTextEditor()
 	std::for_each(mSegments.begin(), mSegments.end(), DeletePointer());
 
 	std::for_each(mUndoStack.begin(), mUndoStack.end(), DeletePointer());
+	LLView::deleteViewByHandle(mPopupMenuHandle);
 }
+
+BOOL LLTextEditor::context_enable_cut(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	return (line && line->canCut());
+}
+
+void LLTextEditor::context_cut(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	if(line)line->cut();
+}
+
+BOOL LLTextEditor::context_enable_copy(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	return (line && line->canCopy());
+}
+
+void LLTextEditor::context_copy(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	if(line)line->copy();
+}
+
+BOOL LLTextEditor::context_enable_paste(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	return(line && line->canPaste());
+}
+
+void LLTextEditor::context_paste(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	if(line)line->paste();
+}
+
+BOOL LLTextEditor::context_enable_delete(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	return (line && line->canDoDelete());
+}
+
+void LLTextEditor::context_delete(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	if(line)line->doDelete();
+}
+
+BOOL LLTextEditor::context_enable_selectall(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	return (line && line->canSelectAll());
+}
+
+void LLTextEditor::context_selectall(void* data)
+{
+	LLTextEditor* line = (LLTextEditor*)data;
+	if(line)line->selectAll();
+}
+
+// method to define the associated callbacks
+void LLTextEditor::defineMenuCallbacks(LLMenuGL* menu) {
+
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_ENABLE,
+			      "Cut Text",
+			      this,
+			      (void*)context_enable_cut);
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_CLICK,
+			      "Cut Text",
+			      this,
+			      (void*)context_cut);
+
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_ENABLE,
+			      "Copy Text",
+			      this,
+			      (void*)context_enable_copy);
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_CLICK,
+			      "Copy Text",
+			      this,
+			      (void*)context_copy);
+
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_ENABLE,
+			      "Paste Text",
+			      this,
+			      (void*)context_enable_paste);
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_CLICK,
+			      "Paste Text",
+			      this,
+			      (void*)context_paste);
+
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_ENABLE,
+			      "Delete Text",
+			      this,
+			      (void*)context_enable_delete);
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_CLICK,
+			      "Delete Text",
+			      this,
+			      (void*)context_delete);
+
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_ENABLE,
+			      "Select All Text",
+			      this,
+			      (void*)context_enable_selectall);
+	menu->setCtrlResponse(LLCallbackInformation::LL_MENU_ITEM_CALL_GL_ON_CLICK,
+			      "Select All Text",
+			      this,
+			      (void*)context_selectall);
+}
+
 
 void LLTextEditor::setTrackColor( const LLColor4& color )
 { 
@@ -1139,6 +1268,14 @@ BOOL LLTextEditor::handleMouseDown(S32 x, S32 y, MASK mask)
 {
 	BOOL	handled = FALSE;
 
+	// SL-51858: Key presses are not being passed to the Popup menu.
+	// A proper fix is non-trivial so instead just close the menu.
+	LLMenuGL* menu = (LLMenuGL*)mPopupMenuHandle.get();
+	if (menu && menu->isOpen())
+	{
+		LLMenuGL::sMenuContainer->hideMenus();
+	}
+
 	// Let scrollbar have first dibs
 	handled = LLView::childrenHandleMouseDown(x, y, mask) != NULL;
 
@@ -1212,6 +1349,21 @@ BOOL LLTextEditor::handleMouseDown(S32 x, S32 y, MASK mask)
 	resetKeystrokeTimer();
 
 	return handled;
+}
+BOOL LLTextEditor::handleRightMouseDown( S32 x, S32 y, MASK mask )
+{
+	setFocus(TRUE);
+
+	LLMenuGL* menu = (LLMenuGL*)mPopupMenuHandle.get();
+	if (menu)
+	{
+		mLastContextMenuX = x;
+		mLastContextMenuY = y;
+		menu->buildDrawLabels();
+		menu->updateParent(LLMenuGL::sMenuContainer);
+		LLMenuGL::showPopup(this, menu, x, y);
+	}
+	return TRUE;
 }
 
 
@@ -2264,6 +2416,13 @@ BOOL LLTextEditor::handleKeyHere(KEY key, MASK mask )
 	BOOL	selection_modified = FALSE;
 	BOOL	return_key_hit = FALSE;
 	BOOL	text_may_have_changed = TRUE;
+	// SL-51858: Key presses are not being passed to the Popup menu.
+	// A proper fix is non-trivial so instead just close the menu.
+	LLMenuGL* menu = (LLMenuGL*)mPopupMenuHandle.get();
+	if (menu && menu->isOpen())
+	{
+		LLMenuGL::sMenuContainer->hideMenus();
+	}
 
 	if ( gFocusMgr.getKeyboardFocus() == this )
 	{
@@ -2306,6 +2465,14 @@ BOOL LLTextEditor::handleKeyHere(KEY key, MASK mask )
 				selection_modified = TRUE;
 				text_may_have_changed = TRUE;
 			}
+		}
+
+		// SL-51858: Key presses are not being passed to the Popup menu.
+		// A proper fix is non-trivial so instead just close the menu.
+		LLMenuGL* menu = (LLMenuGL*)mPopupMenuHandle.get();
+		if (menu && menu->isOpen())
+		{
+			LLMenuGL::sMenuContainer->hideMenus();
 		}
 
 		// Handle most keys only if the text editor is writeable.
@@ -2744,8 +2911,7 @@ void LLTextEditor::drawSelectionBackground()
 
 void LLTextEditor::drawCursor()
 {
-	if( gFocusMgr.getKeyboardFocus() == this
-		&& gShowTextEditCursor && !mReadOnly)
+	if (!mReadOnly && (gFocusMgr.getKeyboardFocus() == this) && gShowTextEditCursor)
 	{
 		const LLWString &text = mWText;
 		const S32 text_len = getLength();
@@ -3634,7 +3800,10 @@ void LLTextEditor::appendColoredText(const std::string &new_text,
 									 const std::string& font_name)
 {
 	LLColor4 lcolor=color;
-	if (mParseHighlights)
+	// If LindenUserDir is empty then we didn't login yet.
+	// In that case we can't instantiate LLTextParser, which
+	// is initialized per user.
+	if (mParseHighlights && !gDirUtilp->getLindenUserDir(true).empty())
 	{
 		LLTextParser* highlight = LLTextParser::getInstance();
 		highlight->parseFullLineHighlights(new_text, &lcolor);
@@ -3712,7 +3881,10 @@ void LLTextEditor::appendHighlightedText(const std::string &new_text,
 										 S32  highlight_part,
 										 LLStyleSP stylep)
 {
-	if (mParseHighlights) 
+	// If LindenUserDir is empty then we didn't login yet.
+	// In that case we can't instantiate LLTextParser, which
+	// is initialized per user.
+	if (mParseHighlights && !gDirUtilp->getLindenUserDir(true).empty())
 	{
 		LLTextParser* highlight = LLTextParser::getInstance();
 		

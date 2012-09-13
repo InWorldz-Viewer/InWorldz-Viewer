@@ -55,6 +55,7 @@
 class LLFontGL;
 class LLLineEditorRollback;
 class LLButton;
+class LLMenuGL;
 
 typedef BOOL (*LLLinePrevalidateFunc)(const LLWString &wstr);
 
@@ -91,11 +92,13 @@ public:
 	/*virtual*/ BOOL	handleHover(S32 x, S32 y, MASK mask);
 	/*virtual*/ BOOL	handleDoubleClick(S32 x,S32 y,MASK mask);
 	/*virtual*/ BOOL	handleMiddleMouseDown(S32 x,S32 y,MASK mask);
+	/*virtual*/ BOOL	handleRightMouseDown( S32 x, S32 y, MASK mask );
 	/*virtual*/ BOOL	handleKeyHere(KEY key, MASK mask );
 	/*virtual*/ BOOL	handleUnicodeCharHere(llwchar uni_char);
 	/*virtual*/ void	onMouseCaptureLost();
 
-	// LLEditMenuHandler overrides
+	// LLEditMenuHandler overrides and menu set up methods.
+                void    defineMenuCallbacks(LLMenuGL* menu);
 	virtual void	cut();
 	virtual BOOL	canCut() const;
 
@@ -118,6 +121,17 @@ public:
 
 	virtual void	deselect();
 	virtual BOOL	canDeselect() const;
+
+	static BOOL context_enable_cut(void* data);
+	static void context_cut(void* data);
+	static BOOL context_enable_copy(void* data);
+	static void context_copy(void* data);
+	static BOOL context_enable_paste(void* data);
+	static void context_paste(void* data);
+	static BOOL context_enable_delete(void* data);
+	static void context_delete(void* data);
+	static BOOL context_enable_selectall(void* data);
+	static void context_selectall(void* data);
 
 	// view overrides
 	virtual void	draw();
@@ -212,6 +226,7 @@ public:
 	static BOOL		prevalidateAlphaNumSpace(const LLWString &str );
 	static BOOL		prevalidatePrintableNotPipe(const LLWString &str); 
 	static BOOL		prevalidatePrintableNoSpace(const LLWString &str);
+	static BOOL		prevalidatePrintableSpace(const LLWString &str);
 	static BOOL		prevalidateASCII(const LLWString &str);
 
 	static BOOL		postvalidateFloat(const std::string &str);
@@ -255,9 +270,11 @@ private:
 	virtual S32		getPreeditFontSize() const;
 
 protected:
+	LLHandle<LLView> mPopupMenuHandle;
 	LLUIString		mText;					// The string being edited.
 	std::string		mPrevText;				// Saved string for 'ESC' revert
 	LLUIString		mLabel;					// text label that is visible when no user text provided
+	S32 mLastContextMenuX;
 
 	// line history support:
 	BOOL		mHaveHistory;				// flag for enabled line history

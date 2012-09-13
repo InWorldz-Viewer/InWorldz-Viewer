@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+
+<menu drop_shadow="true"
+     mouse_opaque="false" name="Text Edit Menu" opaque="true">
+        <menu_item_call label="Cut" mouse_opaque="true"
+             name="Cut Text">
+                <on_click function="textfield_cut" userdata="about" />
+		<on_enable function="textfield_cut_enable" />
+        </menu_item_call>
+        <menu_item_call label="Copy" mouse_opaque="true"
+			name="Copy Text" >
+                <on_click function="textfield_copy" userdata="" />
+		<on_enable function="textfield_copy_enable"  />
+        </menu_item_call>
+        <menu_item_call label="Paste" mouse_opaque="true"
+			name="Paste Text" >
+                <on_click function="textfield_paste" userdata="" />
+		<on_enable function="textfield_paste_enable" />
+        </menu_item_call>
+		<menu_item_separator />
+        <menu_item_call label="Delete" mouse_opaque="true"
+			name="Delete Text" >
+                <on_click function="textfield_delete" userdata="" />
+		<on_enable function="textfield_delete_enable" />
+        </menu_item_call>
+        <menu_item_call label="Select All" mouse_opaque="true"
+			name="Select All Text" >
+                <on_click function="textfield_selectall" userdata="" />
+		<on_enable function="textfield_selectall_enable" />
+        </menu_item_call>
+</menu>
