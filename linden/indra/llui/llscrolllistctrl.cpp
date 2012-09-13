@@ -177,7 +177,10 @@ void LLScrollListIcon::setClickCallback(BOOL (*callback)(void*), void* user_data
 
 BOOL LLScrollListIcon::handleClick()
 {
-	if(mCallback) return mCallback(mUserData);
+	if (mCallback)
+	{
+		return mCallback(mUserData);
+	}
 	return FALSE;
 }
 // </edit>
@@ -3478,6 +3481,7 @@ LLScrollListItem* LLScrollListCtrl::addElement(const LLSD& value, EAddPosition p
 		if (type == "icon")
 		{
 			LLScrollListIcon* cell = new LLScrollListIcon(value, width);
+			cell->setClickCallback(NULL, NULL); // default to NULL -- MC
 			if (has_color)
 			{
 				cell->setColor(color);
