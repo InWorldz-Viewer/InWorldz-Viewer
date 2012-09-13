@@ -422,7 +422,7 @@ void LLPanelFriends::refreshRightsChangeList()
 		// to be consistent with context menus in inventory and because otherwise
 		// offline friends would be silently dropped from the session
 		childSetEnabled("im_btn", selected_friends_online || num_selected == 1);
-		childSetEnabled("offer_teleport_btn", can_offer_teleport);
+		childSetEnabled("offer_teleport_btn", selected_friends_online || (num_selected == 1)/*can_offer_teleport*/); // MC
 	}
 }
 
