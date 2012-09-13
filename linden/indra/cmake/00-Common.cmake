@@ -14,14 +14,17 @@ set(CMAKE_CXX_FLAGS_RELEASESSE2
     "-DLL_RELEASE=1 -DLL_RELEASE_FOR_DOWNLOAD=1 -D_SECURE_SCL=0 -DLL_SEND_CRASH_REPORTS=1 -DNDEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
     "-DLL_RELEASE=1 -D_SECURE_SCL=0 -DLL_SEND_CRASH_REPORTS=0 -DNDEBUG -DLL_RELEASE_WITH_DEBUG_INFO=1")
+
 # releasefast will use releasesse2 stuff later in the file
-set(CMAKE_CXX_FLAGS_RELEASEFAST "")
-
-
 # Don't bother with a MinSizeRel build.
-
-set(CMAKE_CONFIGURATION_TYPES "ReleaseFast;RelWithDebInfo;Release;ReleaseSSE2;Debug" CACHE STRING
+if (LINUX)
+    set(CMAKE_CXX_FLAGS_RELEASEFAST "")
+    set(CMAKE_CONFIGURATION_TYPES "ReleaseFast;RelWithDebInfo;Release;ReleaseSSE2;Debug" CACHE STRING
     "Supported build types." FORCE)
+else (LINUX)
+	set(CMAKE_CONFIGURATION_TYPES "RelWithDebInfo;Release;ReleaseSSE2;Debug" CACHE STRING
+    "Supported build types." FORCE)
+endif (LINUX)
 
 # Platform-specific compilation flags.
 
