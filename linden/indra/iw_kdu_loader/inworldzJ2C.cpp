@@ -53,7 +53,7 @@ const S32 MIN_BLOCK_SIZE = 4;                           // Min block dim is 4 ac
 
 // Note!  These CANNOT be changed without modifying simulator code
 // *TODO: change both to 1024 when SIM texture fetching is deprecated
-const S32 FIRST_PACKET_SIZE = 1024;
+const S32 FIRST_PACKET_SIZE = 600;
 
 
 class DecodeTimer

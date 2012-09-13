@@ -804,7 +804,7 @@ You need an account to enter [SECOND_LIFE]. Would you like to create one now?
  icon="alertmodal.tga"
  name="AddClassified"
  type="alertmodal">
-Classified ads appear in the &apos;Classified&apos; section of the Search directory and on www.secondlife.com for one week.
+Classified ads appear in the &apos;Classified&apos; section of the Search directory for one week.
 
 Fill out your ad, then click &apos;Publish...&apos; to add it to the directory.
 
@@ -5544,18 +5544,49 @@ If you want to view streaming media on parcels that support it you should go to 
 No Media Plugin was found to handle the "[MIME_TYPE]" mime type.  Media of this type will be unavailable.
 </notification>
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="MediaPluginFailed"
- type="alertmodal">
+ type="alert">
 The following Media Plugin has failed:
-[PLUGIN]
+     [PLUGIN]
 
 Please re-install the plugin or contact the vendor if you continue to experience problems.
+ <usetemplate
+   ignoretext="When a Media Plugin fails"
+   name="okignore"
+   yestext="OK"/>
+</notification>
+
+<notification
+ icon="alert.tga"
+ name="MediaPluginFailedWebkit"
+ type="alert">
+The following browser plugin has failed:
+     [PLUGIN]
+
+Make sure "Flash For Other Browsers" is installed.
+The latest version can be found at: 
+http://get.adobe.com/flashplayer/otherversions/
  <form name="form">
   <ignore name="ignore"
-    text="When a Media Plugin fails"/>
+    text="When the browser plugin fails"/>
  </form>
 </notification>
+
+<notification
+ icon="alert.tga"
+ name="MediaPluginFailedQuickTime"
+ type="alert">
+  The QuickTime Media Plugin has failed:
+  [PLUGIN]
+
+  If the error persists, reinstalling QuickTime might fix it.
+  <form name="form">
+    <ignore name="ignore"
+      text="When the QuickTime plugin fails"/>
+  </form>
+</notification>
+  
 <notification
  icon="notify.tga"
  name="OwnedObjectsReturned"

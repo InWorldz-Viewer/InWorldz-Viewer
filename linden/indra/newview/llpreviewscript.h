@@ -304,11 +304,6 @@ protected:
 	BOOL getIsModifiable() const { return mIsModifiable; } // Evaluated on load assert
 	
 private:
-
-	static void	onMonoCheckboxClicked(LLUICtrl*, void* userdata);
-	BOOL monoChecked() const;
-
-	LLCheckBoxCtrl*	mMonoCheckbox;
 	BOOL mIsModifiable;
 };
 

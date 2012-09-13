@@ -223,8 +223,17 @@ void LLPluginClassMedia::idle(void)
 			{
 				void *addr = mPlugin->getSharedMemoryAddress(mTextureSharedMemoryName);
 				
-				// clear texture memory to avoid random screen visual fuzz from uninitialized texture data
-				memset( addr, 0x00, newsize );
+				// clear texture memory to avoid random screen visual fuzz from
+				// uninitialized texture data
+				if (addr)
+				{
+					memset(addr, 0x00, newsize);
+				}
+				else
+				{
+					LL_WARNS("Plugin") << "No texture memory found for: "
+									   << mTextureSharedMemoryName << LL_ENDL;
+				}
 				
 				// We could do this to force an update, but textureValid() will still be returning false until the first roundtrip to the plugin,
 				// so it may not be worthwhile.
@@ -1378,6 +1387,15 @@ void LLPluginClassMedia::addCertificateFilePath(const std::string& path)
 	sendMessage(message);
 }
 
+#if LL_WINDOWS
+void LLPluginClassMedia::showConsole()
+{
+	LLPluginMessage message(LLPLUGIN_MESSAGE_CLASS_INTERNAL, "show_console");
+
+	sendMessage(message);
+}
+#endif
+
 void LLPluginClassMedia::crashPlugin()
 {
 	LLPluginMessage message(LLPLUGIN_MESSAGE_CLASS_INTERNAL, "crash");
@@ -1392,6 +1410,12 @@ void LLPluginClassMedia::hangPlugin()
 	sendMessage(message);
 }
 
+void LLPluginClassMedia::forceCleanUpPlugin()
+{
+	LLPluginMessage message(LLPLUGIN_MESSAGE_CLASS_BASE, "cleanup");
+
+	sendMessage(message);
+}
 
 ////////////////////////////////////////////////////////////
 // MARK: media_time class functions

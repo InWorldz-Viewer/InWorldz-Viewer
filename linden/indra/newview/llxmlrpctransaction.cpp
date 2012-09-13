@@ -229,14 +229,6 @@ void LLXMLRPCTransaction::Impl::init(XMLRPC_REQUEST request, bool useGzip)
 	{
 		mCurlRequest = new LLCurlEasyRequest();
 	}
-	if(!mCurlRequest->isValid())
-	{
-		llwarns << "mCurlRequest is invalid." << llendl ;
-
-		delete mCurlRequest ;
-		mCurlRequest = NULL ;
-		return ;
-	}
 	
 	if (LLSocks::getInstance()->isHttpProxyEnabled())
 	{
@@ -309,12 +301,9 @@ LLXMLRPCTransaction::Impl::~Impl()
 
 bool LLXMLRPCTransaction::Impl::process()
 {
-	if(!mCurlRequest || !mCurlRequest->isValid())
+	if(!mCurlRequest)
 	{
 		llwarns << "transaction failed." << llendl ;
-
-		delete mCurlRequest ;
-		mCurlRequest = NULL ;
 		return true ; //failed, quit.
 	}
 
@@ -340,9 +329,15 @@ bool LLXMLRPCTransaction::Impl::process()
 		}
 	}
 		
-	if(!mCurlRequest->wait())
+	const F32 MAX_PROCESSING_TIME = 0.05f;
+	LLTimer timer;
+
+	while (mCurlRequest->perform() > 0)
 	{
-		return false ;
+		if (timer.getElapsedTimeF32() >= MAX_PROCESSING_TIME)
+		{
+			return false;
+		}
 	}
 
 	while(1)

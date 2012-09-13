@@ -17,7 +17,7 @@ FIND_PATH(XMLRPCEPI_INCLUDE_DIR xmlrpc-epi/xmlrpc.h
 SET(XMLRPCEPI_NAMES ${XMLRPCEPI_NAMES} xmlrpc-epi)
 FIND_LIBRARY(XMLRPCEPI_LIBRARY
   NAMES ${XMLRPCEPI_NAMES}
-  PATHS /usr/lib /usr/local/lib
+  PATHS /usr/lib64 /usr/local/lib64 /usr/lib /usr/local/lib
   )
 
 IF (XMLRPCEPI_LIBRARY AND XMLRPCEPI_INCLUDE_DIR)

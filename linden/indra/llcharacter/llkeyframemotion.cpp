@@ -1159,9 +1159,12 @@ void LLKeyframeMotion::applyConstraint(JointConstraint* constraint, F32 time, U8
 	{
 		LLVector3 delta = source_to_target * weight;
 		LLPointer<LLJointState> current_joint_state = getJointState(shared_data->mJointStateIndices[0]);
-		LLQuaternion parent_rot = current_joint_state->getJoint()->getParent()->getWorldRotation();
-		delta = delta * ~parent_rot;
-		current_joint_state->setPosition(current_joint_state->getJoint()->getPosition() + delta);
+		if (current_joint_state->getJoint())
+		{
+			LLQuaternion parent_rot = current_joint_state->getJoint()->getParent()->getWorldRotation();
+			delta = delta * ~parent_rot;
+			current_joint_state->setPosition(current_joint_state->getJoint()->getPosition() + delta);
+		}
 	}
 }
 
@@ -1362,7 +1365,9 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 		else
 		{
 			llwarns << "joint not found: " << joint_name << llendl;
-			return FALSE;
+			// Returning here causes certain sits to fail on OpenSim, and this line is commented out of V2.
+			// Seems safe enough to comment out here -- MC
+			//return FALSE;
 		}
 
 		joint_motion->mJointName = joint_name;
@@ -1455,6 +1460,10 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 
 				LLQuaternion::Order ro = StringToOrder("ZYX");
 				rot_key.mRotation = mayaQ(rot_angles.mV[VX], rot_angles.mV[VY], rot_angles.mV[VZ], ro);
+				if(!(rot_key.mRotation.isFinite()))
+				{
+					return FALSE;
+				}
 			}
 			else
 			{
@@ -1533,6 +1542,10 @@ BOOL LLKeyframeMotion::deserialize(LLDataPacker& dp)
 			if (old_version)
 			{
 				success = dp.unpackVector3(pos_key.mPosition, "pos");
+				if(!(pos_key.mPosition.isFinite()))
+				{
+					return FALSE;
+				}
 			}
 			else
 			{

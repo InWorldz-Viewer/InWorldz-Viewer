@@ -41,6 +41,9 @@
 #include "llradiogroup.h"
 #include "llstylemap.h"
 
+#include "floatercommandline.h"
+#include "llchatbar.h"
+
 class LLPrefsChatImpl : public LLPanel
 {
 public:
@@ -49,6 +52,9 @@ public:
 
 	void apply();
 	void cancel();
+
+	static void onClickCommandLine(void* data);
+	static void onCommitCheckBox(LLUICtrl* ctrl, void* user_data);
 
 private:
 	void refreshValues();
@@ -107,6 +113,13 @@ LLPrefsChatImpl::LLPrefsChatImpl()
 	childSetValue("play_typing_animation", gSavedSettings.getBOOL("PlayTypingAnim"));
 	childSetValue("console_opacity", gSavedSettings.getF32("ConsoleBackgroundOpacity"));
 	childSetValue("bubble_chat_opacity", gSavedSettings.getF32("ChatBubbleOpacity"));
+// **Avian-Vertical Tab
+	childSetValue("vertical-imtabs-toggle", gSavedSettings.getBOOL("VerticalIMTabs"));
+// **Avian-Command Line Chat
+	childSetValue("command_line_check", gSavedSettings.getBOOL("CmdLineChatbarEnabled"));
+	childSetCommitCallback("command_line_check", onCommitCheckBox, this);
+	childSetAction("command_line_btn", onClickCommandLine, this);
+
 }
 
 void LLPrefsChatImpl::refreshValues()
@@ -189,6 +202,10 @@ void LLPrefsChatImpl::apply()
 	gSavedSettings.setF32("ConsoleBackgroundOpacity", childGetValue("console_opacity").asReal());
 	gSavedSettings.setF32("ChatBubbleOpacity", childGetValue("bubble_chat_opacity").asReal());
 
+// **Avian-Vertical Tab
+	gSavedSettings.setBOOL("VerticalIMTabs", childGetValue("vertical-imtabs-toggle").asBoolean());
+// **Avian-Command Line Chat
+	gSavedSettings.setBOOL("CmdLineChatbarEnabled", childGetValue("command_line_check").asBoolean());
 
 	refreshValues(); // member values become the official values and cancel becomes a no-op.
 }
@@ -219,3 +236,22 @@ LLPanel* LLPrefsChat::getPanel()
 {
 	return &impl;
 }
+
+// static
+void LLPrefsChatImpl::onClickCommandLine(void* data)
+{
+	FloaterCommandLine::getInstance()->open();
+	FloaterCommandLine::getInstance()->center();
+}
+
+//static
+void LLPrefsChatImpl::onCommitCheckBox(LLUICtrl* ctrl, void* user_data)
+{
+	LLPrefsChatImpl* self = (LLPrefsChatImpl*)user_data;
+	if (self)
+	{
+		self->refresh();
+	}
+}
+
+

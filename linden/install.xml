@@ -67,6 +67,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/SDL-1.2.12-linux-20081222c.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>214fe53a11b3cdef115d36cb95aae185</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/SDL-1.2.12-linux64-20091230.tar.bz2</uri>
+          </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
@@ -99,9 +106,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>1a7e1186855d48d8316ce86803095f70</string>
+            <string>5ee61e2cffc9b6f2a1bc5027cd51529e</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/apr_suite-1.2.8-linux64-20080909a.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/apr_suite-1.3.9-linux64-20091204.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -134,14 +141,14 @@
             <key>md5sum</key>
             <string>91694429e391efeea1de974df26032a2</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/ares-1.7.1-linux-20100527.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/ares-1.7.1-linux-20100527.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>c4242416e0b2e642c0bf062a19a250e4</string>
+            <string>c7ec29e8dfe856d74a15b66d557c3010</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/ares-1.3.0-linux64-20080909.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/ares-1.7.1-linux64-20101115.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -185,6 +192,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/boost-1.39.0-linux-20100222a.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>ebfaa439a8a78db7d99a26a73a70994a</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/boost-1.39.0-linux64-20100901.tar.bz2</uri>
+          </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
@@ -207,23 +221,23 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>aaea644191807f51051cefa2fac11069</string>
-			<key>url</key>
-			<uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/curl-7.21.1-darwin-20110316.tar.bz2</uri>
+            <string>c426dfaad3b662405e49ed3701a55d38</string>
+            <key>url</key>
+            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/curl-7.16.0-darwin-20080812.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
             <key>md5sum</key>
             <string>a20e73f2e7d6a032ff25a5161b1b7394</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/curl-7.20.1-linux-20100527.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/curl-7.20.1-linux-20100527.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>6994192cea7ab2d885a158a3de474273</string>
+            <string>1c9ff00e520748983a9bb0f131c30448</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/curl-7.16.4a-linux64-20090303.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/curl-7.21.2-linux64-20101115.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -270,6 +284,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/dbusglib-linux-20101031.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>09be41e3145e1a960e50f2f9ce0a5e7d</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/dbusglib-linux64-20101007.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>elfio</key>
@@ -284,6 +305,13 @@
             <string>82ea408af2f968cfe5f013ab241323ef</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/elfio-1.0.3-linux-20080812.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>e829a52ba67e02b011cf2e372914d32f</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/elfio-1.0.3-linux64-20091129.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -314,9 +342,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>278c61871419b9a4d50a4f88b7922403</string>
+            <string>fe25958da18039faf7a38845f2057561</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/expat-1.95.8-linux64-20080909.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/expat-2.0.1-linux64-20091204.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -342,7 +370,7 @@
             <key>md5sum</key>
             <string>0fc6d13b79a0c806f9d32c00f374de67</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/flac-1.2.1-darwin-20091107.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/flac-1.2.1-darwin-20091107.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -358,6 +386,13 @@
             <string>9af6a1ed39fa540bfcaa402b0ea22f78</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/fontconfig-2.2.3-linux-20080613.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>13b551e5deafbaa6cfd105fa072bdfba</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/fontconfig-2.7.3-linux64-20091230.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -398,14 +433,14 @@
             <key>md5sum</key>
             <string>efc845cf291073b1e4d381a271f194eb</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/freetype-2.3.11-linux-20091103.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/freetype-2.3.11-linux-20091103.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>35f6fa557ba90f9cda0a18d1af2055a4</string>
+            <string>1b4624ab06a7ba30e29d1994424db41e</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/freetype-2.1.5-linux64-20080909.tar.bz2</uri>
+            <uri>http://imprudenceviewer.org/download/libs/freetype-2.3.11-linux64-20091230.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -522,6 +557,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/google-linux-20080812.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>6a83ddce8673acb5057ed3a14769deee</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/google-linux64-20091203.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>gstreamer</key>
@@ -599,6 +641,13 @@
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/gtk-etc-linux-20101106.1.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>e8cb3f28379b7730004da44f04263936</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/gtk-etc-linux64-20091231.tar.bz2</uri>
+          </map>
         </map>
       </map>
       <key>jpeglib</key>
@@ -628,9 +677,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>0e7facf7d48531d20c0cd6a3c3f04021</string>
+            <string>8b5f413bdefec7cfe3d9ad2d69986bdc</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/jpeglib-6b-linux64-20080909.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/jpeglib-6b-linux64-20101012.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -654,9 +703,9 @@
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>1007ddeeca66145b75055f81462364cd</string>
+            <string>4c6b949778099a63550898f00f3e6a5e</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/jpeg-6b-darwin-20091108.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/jsoncpp-svn-r69-darwin-20090923.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -773,21 +822,21 @@ Portions copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura
             <key>md5sum</key>
             <string>23c41164df134e50c887ded186f8144e</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/liboil-0.3.15-darwin-20091107.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/liboil-0.3.15-darwin-20091107.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
             <key>md5sum</key>
             <string>85219034b4e4c17e792f8bb54a1973f7</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/liboil-0.3.16-linux-20091125.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/liboil-0.3.16-linux-20091125.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
             <key>md5sum</key>
             <string>15d8f97d5ec3a27f643708511ca8bee6</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/liboil-0.3.16-linux64-20091130.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/liboil-0.3.16-linux64-20091130.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -806,7 +855,7 @@ Portions copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura
             <key>md5sum</key>
             <string>13fd90d50a0bd7ea9b8c8db5bf97cc5e</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/libpng-1.2.35-darwin-20091107.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/libpng-1.2.35-darwin-20091107.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -847,6 +896,13 @@ Portions copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura
             <string>91b194aed4b38bc23493b198009a8c6a</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/libuuid-linux-20090417.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>3f2a0b553a2a72d3b9a39f528f057b18</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/libuuid-linux64-lenny-20091130.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -898,6 +954,13 @@ Portions copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura
             <string>96d1373934cb366deb3372be9904ab90</string>
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/llqtwebkit-linux-4.6-20101014.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>863f7b31556b1d368651f85457f4e46d</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/llqtwebkit-linux64-20101012.1.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
@@ -964,7 +1027,7 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
             <key>md5sum</key>
             <string>c8582be73def7f40fdc236ba9e33b4ac</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/neon-0.28.4-darwin-20091109.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/neon-0.28.4-darwin-20091109.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -992,6 +1055,13 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
             <key>url</key>
             <uri>http://inworldz.com/imprudence/libs/ndofdev-linux-0.2-20080828.tar.bz2</uri>
           </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>c5eb5b49d48ee370fc6ed8798e1fc58c</string>
+            <key>url</key>
+            <uri>http://download.kokuaviewer.org/files/libs/ndofdev-linux64-0.2-20091129.tar.bz2</uri>
+          </map>
           <key>windows</key>
           <map>
             <key>md5sum</key>
@@ -1016,7 +1086,7 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
             <key>md5sum</key>
             <string>30c75ce29c2ce2f6e8063067db31989d</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/ogg-vorbis-darwin-1.2.2-1.3.2-20110517.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/ogg-vorbis-darwin-1.2.2-1.3.2-20110517.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
@@ -1099,14 +1169,14 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
             <key>md5sum</key>
             <string>c8223e9454223e3d519fe40d71c3ddd2</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openal-linux-20091216-56cc0386.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/openal-linux-20091216-56cc0386.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
              <key>md5sum</key>
-            <string>ea42b868511e2d5fab2df11dceaf2b7e</string>
+            <string>8d1ba70a777b7961e06e70818a0060e9</string>
              <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/openal-linux64-20100428.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/openal-linux64-20091230.tar.bz2</uri>
            </map>
           <key>windows</key>
           <map>
@@ -1167,19 +1237,22 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
         <string>lgpl</string>
         <key>packages</key>
         <map>
-<!--          <key>linux</key>
+<!--
+          <key>linux</key>
           <map>
             <key>md5sum</key>
             <string>30cb00069fe2a545fbf7be1070386236</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/linux-pulse-headers-0.9.14.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/linux-pulse-headers-0.9.14.tar.bz2</uri>
           </map>
-          <key>linux64</key>--><key>common</key>
+          <key>linux64</key>
+-->
+	<key>common</key>
           <map>
             <key>md5sum</key>
             <string>c5c3b840bb77ee41fa06970663c15302</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/pulseaudio-headers-0.9.21-63-gd3efa-dirty.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/pulseaudio-headers-0.9.21-63-gd3efa-dirty.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -1250,21 +1323,21 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
             <key>md5sum</key>
             <string>ba438bfe25ada5c7be7051f9a91ca300</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/theora-1.0alpha5-darwin-20091107.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/theora-1.0alpha5-darwin-20091107.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
             <key>md5sum</key>
             <string>e01af61872bc77d74eb0620a9f4c9f4e</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/theora-linux-20091115.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/theora-linux-20091115.tar.bz2</uri>
           </map>
           <key>linux64</key>
           <map>
             <key>md5sum</key>
             <string>b1141b53eb3576cc0c32997bf0fb097c</string>
             <key>url</key>
-            <uri>http://imprudenceviewer.org/download/libs/theora-linux64-20091202.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/theora-linux64-20091202.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -1327,6 +1400,13 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
             <string>581abada85ae249a773e90dc96f615f9</string>
             <key>url</key>
             <uri>https://github.com/downloads/Avian-IW/InWorldz-Viewer/iwvoice-2.1-linux-20090310.tar.bz2</uri>
+          </map>
+          <key>linux64</key>
+          <map>
+            <key>md5sum</key>
+            <string>448c754d5bdf2ddd26f869c4d743cf22</string>
+            <key>url</key>
+            <uri>https://github.com/downloads/Avian-IW/InWorldz-Viewer/iwvoice-2.1-linux64-20120520.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>

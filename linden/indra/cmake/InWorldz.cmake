@@ -15,7 +15,6 @@ set(IW_IMAGEBASE_INCLUDE_DIRS
 
 set(IW_IMAGEBASE_LIBRARIES iw_imagebase)
 
-
 # # # # # # # # # # # # # # # # # # # # #
 # 
 #	kdu and iw_kdu_loader project
@@ -70,11 +69,11 @@ if (WINDOWS)
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/lib_x86)
     endif (ARCH EQUAL x86_64)
 elseif (LINUX)
-    if (ARCH EQUAL x86_64)
+    if (WORD_SIZE EQUAL 64)
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/source/lib/Linux-x86-64-gcc)
-    else (ARCH EQUAL x86_64)	
+    else (WORD_SIZE EQUAL 64)	
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/source/lib/Linux-x86-32-gcc)
-    endif (ARCH EQUAL x86_64)
+    endif (WORD_SIZE EQUAL 64)
 elseif (DARWIN)
     if (ARCH EQUAL x86_64)
 	set(KDU_LIB_DIR ${LIBS_PREBUILT_DIR}/kdu/lib)

@@ -17,7 +17,7 @@ FIND_PATH(CARES_INCLUDE_DIR ares.h
 SET(CARES_NAMES ${CARES_NAMES} cares)
 FIND_LIBRARY(CARES_LIBRARY
   NAMES ${CARES_NAMES}
-  PATHS /usr/lib /usr/local/lib
+  PATHS /usr/lib64 /usr/local/lib64 /usr/lib /usr/local/lib
   )
 
 IF (CARES_LIBRARY AND CARES_INCLUDE_DIR)

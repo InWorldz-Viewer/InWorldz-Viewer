@@ -764,7 +764,7 @@ void LLViewerImage::updateVirtualSize()
 	for(U32 i = 0 ; i < mNumFaces ; i++)
 	{				
 		LLFace* facep = mFaceList[i] ;
-		if(facep->getDrawable()->isRecentlyVisible())
+		if (facep && facep->getDrawable()->isRecentlyVisible())
 		{
 			addTextureStats(facep->getVirtualSize()) ;
 			setAdditionalDecodePriority(facep->getImportanceToCamera()) ;
@@ -819,7 +819,6 @@ F32 LLViewerImage::calcDecodePriority()
 		LLAppViewer::getTextureFetch()->mDebugCount++; // for setting breakpoints
 	}
 #endif
-	
 	if (mNeedsCreateTexture)
 	{
 		return mDecodePriority; // no change while waiting to create
@@ -1707,16 +1706,13 @@ void LLViewerImage::destroySavedRawImage()
 void LLViewerImage::destroyRawImage()
 {
 	if (mAuxRawImage.notNull()) sAuxCount--;
-
-	if (mRawImage.notNull())
+	if (mRawImage.notNull()) sRawCount--;
+		
+	if(mForceToSaveRawImage)
 	{
-		sRawCount--;
-		if(mForceToSaveRawImage)
-		{
-			saveRawImage() ;
-		}
-		setCachedRawImage() ;
+		saveRawImage() ;
 	}
+	setCachedRawImage() ;
 
 	mRawImage = NULL;
 	mAuxRawImage = NULL;

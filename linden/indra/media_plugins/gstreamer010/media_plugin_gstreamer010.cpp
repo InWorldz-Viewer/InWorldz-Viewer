@@ -68,7 +68,6 @@ class MediaPluginGStreamer010 : public MediaPluginBase
 {
 public:
 	MediaPluginGStreamer010(LLPluginInstance::sendMessageFunction host_send_func, void *host_user_data);
-	~MediaPluginGStreamer010();
 
 	/* virtual */ void receiveMessage(const char *message_string);
 
@@ -84,6 +83,8 @@ public:
 	static bool writeToLog(const char* str, ...);
 
 private:
+	~MediaPluginGStreamer010();
+
 	std::string getVersion();
 	bool navigateTo( const std::string urlIn );
 	bool seek( double time_sec );
@@ -210,15 +211,23 @@ bool MediaPluginGStreamer010::writeToLog(const char* str, ...)
 
 	time_t timeptr = time(NULL);
 	struct tm* ltime = localtime(&timeptr);
-	fprintf(fp, "[%d:%d:%d] ", ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
-    va_list arglist;
+	char strbuf[1024];
+	char strmsg[1024];
+	sprintf(strbuf, "[%d:%d:%d] ", ltime->tm_hour, ltime->tm_min, ltime->tm_sec);
+	va_list arglist;
     va_start(arglist, str);
-    vfprintf(fp, str, arglist);
-    va_end(arglist);
-    fprintf(fp, " \n");
+	vsprintf(strmsg, str, arglist);
+	strcat(strbuf, strmsg);
+
+	// write to log file
+	fprintf(fp, strbuf);
+	fprintf(fp, "\n");
 	fclose(fp);
 
-    return true;
+	// mirror in console window if we have one
+	puts(strbuf);
+
+	return true;
 }
 
 gboolean
@@ -635,7 +644,9 @@ MediaPluginGStreamer010::setVolume( float volume )
 	// possible, as many gst-plugins-base versions up to at least
 	// November 2008 have critical race-conditions in setting volume - sigh
 	if (mVolume == volume)
+	{
 		return true; // nothing to do, everything's fine
+	}
 
 	mVolume = volume;
 	if (mDoneInit && mPlaybin)
@@ -934,6 +945,11 @@ void MediaPluginGStreamer010::set_gst_plugin_path()
 	if( raw_dir != NULL )
 	{
 		imp_dir = std::string( raw_dir );
+		// add a trailing slash to the end if there isn't one
+		if (*(imp_dir.rbegin()) != '\\')
+		{
+			imp_dir += '\\';
+		}
 	}
 #elif LL_DARWIN
 	CFBundleRef main_bundle = CFBundleGetMainBundle();
@@ -978,7 +994,6 @@ void MediaPluginGStreamer010::set_gst_plugin_path()
 		old_plugin_path = separator + std::string( old_path );
 	}
 
-
 	// Search both Imprudence and Imprudence\lib\gstreamer-plugins.
 	// But we also want to search the path the user has set, if any.
 	std::string plugin_path =	
@@ -986,8 +1001,10 @@ void MediaPluginGStreamer010::set_gst_plugin_path()
 #if LL_WINDOWS
 		// On windows, the path should be maindir\llplugin\lib\gstreamer-plugins
 		// but getcwd() isn't reliable and can put us a directory higher sometimes
-		imp_dir + "\\lib\\gstreamer-plugins" + G_SEARCHPATH_SEPARATOR_S +
-		imp_dir + "llplugin\\lib\\gstreamer-plugins" +
+		// The third path is so we can load the plugins when running in Visual Studio
+		imp_dir + "lib\\gstreamer-plugins" + G_SEARCHPATH_SEPARATOR_S +
+		imp_dir + "llplugin\\lib\\gstreamer-plugins" + G_SEARCHPATH_SEPARATOR_S +
+		imp_dir + "..\\..\\..\\..\\newview\\lib\\gstreamer-plugins" +
 #elif LL_DARWIN
 		imp_dir + separator +
 		imp_dir + "/../Resources/lib/gstreamer-plugins" +
@@ -1065,12 +1082,15 @@ MediaPluginGStreamer010::sizeChanged()
 bool
 MediaPluginGStreamer010::closedown()
 {
+
 	if (!mDoneInit)
 		return false; // error
 
 //	ungrab_gst_syms();
 
 	mDoneInit = false;
+
+	writeToLog("GStreamer010 closed down");
 
 	return true;
 }
@@ -1081,7 +1101,7 @@ MediaPluginGStreamer010::~MediaPluginGStreamer010()
 
 	closedown();
 
-	writeToLog("GStreamer010 closing down");
+	writeToLog("GStreamer010 destructor");
 }
 
 
@@ -1145,8 +1165,19 @@ void MediaPluginGStreamer010::receiveMessage(const char *message_string)
 			}
 			else if(message_name == "cleanup")
 			{
+				writeToLog("MediaPluginGStreamer010::receiveMessage: cleanup");
 				unload();
 				closedown();
+
+				// Reply once we're done
+				LLPluginMessage message("base", "cleanup_reply");
+				sendMessage(message);
+
+				// Now suicide. Because It is the only honorable thing to do.
+				// JUST BE CAREFUL! 
+				// http://www.parashift.com/c++-faq-lite/delete-this.html	
+				delete this;
+				return;
 			}
 			else if(message_name == "shm_added")
 			{
@@ -1340,6 +1371,7 @@ void MediaPluginGStreamer010::receiveMessage(const char *message_string)
 			else if(message_name == "set_volume")
 			{
 				double volume = message_in.getValueReal("volume");
+				writeToLog("MediaPluginGStreamer010::receiveMessage: set_volume: %f", volume);
 				setVolume(volume);
 			}
 		}

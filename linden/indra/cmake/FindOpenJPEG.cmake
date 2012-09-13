@@ -19,7 +19,7 @@ FIND_PATH(OPENJPEG_INCLUDE_DIR openjpeg.h
 SET(OPENJPEG_NAMES ${OPENJPEG_NAMES} openjpeg)
 FIND_LIBRARY(OPENJPEG_LIBRARY
   NAMES ${OPENJPEG_NAMES}
-  PATHS /usr/lib /usr/local/lib
+  PATHS /usr/lib64 /usr/local/lib64 /usr/lib /usr/local/lib
   )
 
 IF (OPENJPEG_LIBRARY AND OPENJPEG_INCLUDE_DIR)

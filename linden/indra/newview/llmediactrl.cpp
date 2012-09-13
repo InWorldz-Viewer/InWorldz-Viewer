@@ -864,6 +864,25 @@ void LLMediaCtrl::handleMediaEvent(LLPluginClassMedia* self, EMediaEvent event)
 			LL_DEBUGS("Media") <<  "Mediactl event:  MEDIA_EVENT_GEOMETRY_CHANGE" << LL_ENDL;
 		};
 		break;
+
+		case MEDIA_EVENT_AUTH_REQUEST:
+		{
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_AUTH_REQUEST, url " << self->getAuthURL() << ", realm " << self->getAuthRealm() << LL_ENDL;
+		}
+		break;
+
+		case MEDIA_EVENT_DEBUG_MESSAGE:
+		{
+			// LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_DEBUG_MESSAGE " << LL_ENDL;
+		};
+		break;
+
+		case MEDIA_EVENT_LINK_HOVERED:
+		{
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_LINK_HOVERED, hover text is: " << self->getHoverText() << LL_ENDL;
+		};
+		break;
+
 	};
 
 	// chain all events to any potential observers of this object.
