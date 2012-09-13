@@ -140,11 +140,13 @@ const S32 TEXT_EDIT_COLUMN_HEIGHT = 16;
 const S32 MAX_HISTORY_COUNT = 10;
 const F32 LIVE_HELP_REFRESH_TIME = 1.f;
 
+/* not used any more??? - Avian
 static bool have_script_upload_cap(LLUUID& object_id)
 {
 	LLViewerObject* object = gObjectList.findObject(object_id);
 	return object && (! object->getRegion()->getCapability("UpdateScriptTask").empty());
 }
+*/
 
 /// ---------------------------------------------------------------------------
 
@@ -1586,14 +1588,9 @@ void LLPreviewLSL::uploadAssetViaCaps(const std::string& url,
 	llinfos << "Update Agent Inventory via capability" << llendl;
 	LLSD body;
 	body["item_id"] = item_id;
-	if (gSavedSettings.getBOOL("SaveInventoryScriptsAsMono"))
-	{
-		body["target"] = "mono";
-	}
-	else
-	{
-		body["target"] = "lsl2";
-	}
+	// For SL, this would be an option, but we don't use mono in IW -- MC
+	//body["target"] = "mono";
+	body["target"] = "lsl2";
 	LLHTTPClient::post(url, body, new LLUpdateAgentInventoryResponder(body, filename, LLAssetType::AT_LSL_TEXT));
 }
 
@@ -1912,10 +1909,6 @@ LLLiveLSLEditor::LLLiveLSLEditor(const std::string& name,
 	factory_map["script ed panel"] = LLCallbackMap(LLLiveLSLEditor::createScriptEdPanel, this);
 
 	LLUICtrlFactory::getInstance()->buildFloater(this,"floater_live_lsleditor.xml", &factory_map);
-	
-	mMonoCheckbox =	getChild<LLCheckBoxCtrl>("mono");
-	childSetCommitCallback("mono", &LLLiveLSLEditor::onMonoCheckboxClicked, this);
-	childSetEnabled("mono", FALSE);
 
 	childSetCommitCallback("running", LLLiveLSLEditor::onRunningCheckboxClicked, this);
 	childSetEnabled("running", FALSE);
@@ -2281,7 +2274,6 @@ void LLLiveLSLEditor::draw()
 				// incorrect after a release/claim cycle, but will be
 				// correct after clicking on it.
 				runningCheckbox->set(FALSE);
-				mMonoCheckbox->set(FALSE);
 			}
 		}
 		else
@@ -2294,7 +2286,6 @@ void LLLiveLSLEditor::draw()
 			// incorrect after a release/claim cycle, but will be
 			// correct after clicking on it.
 			runningCheckbox->set(FALSE);
-			mMonoCheckbox->setEnabled(FALSE);
 			// object may have fallen out of range.
 			mHaveRunningInfo = FALSE;
 		}
@@ -2447,7 +2438,7 @@ void LLLiveLSLEditor::uploadAssetViaCaps(const std::string& url,
 	body["task_id"] = task_id;
 	body["item_id"] = item_id;
 	body["is_script_running"] = is_running;
-	body["target"] = monoChecked() ? "mono" : "lsl2";
+	body["target"] = /*monoChecked() ? "mono" :*/ "lsl2"; // -- MC
 	LLHTTPClient::post(url, body,
 		new LLUpdateTaskInventoryResponder(body, filename, LLAssetType::AT_LSL_TEXT));
 }
@@ -2725,9 +2716,7 @@ void LLLiveLSLEditor::processScriptRunningReply(LLMessageSystem* msg, void**)
 		runningCheckbox->set(running);
 		BOOL mono;
 		msg->getBOOLFast(_PREHASH_Script, "Mono", mono);
-		LLCheckBoxCtrl* monoCheckbox = instance->getChild<LLCheckBoxCtrl>("mono");
-		monoCheckbox->setEnabled(instance->getIsModifiable() && have_script_upload_cap(object_id));
-		monoCheckbox->set(mono);
+		// Where the mono checkbox used to be
 	}
 }
 
@@ -2741,20 +2730,4 @@ void LLLiveLSLEditor::reshape(S32 width, S32 height, BOOL called_from_parent)
 		// (although not the same position).
 		gSavedSettings.setRect("PreviewScriptRect", getRect());
 	}
-}
-
-void LLLiveLSLEditor::onMonoCheckboxClicked(LLUICtrl*, void* userdata)
-{
-	LLLiveLSLEditor* self = static_cast<LLLiveLSLEditor*>(userdata);
-	self->mMonoCheckbox->setEnabled(have_script_upload_cap(self->mObjectID));
-	self->mScriptEd->enableSave(self->getIsModifiable());
-}
-
-BOOL LLLiveLSLEditor::monoChecked() const
-{
-	if(NULL != mMonoCheckbox)
-	{
-		return mMonoCheckbox->getValue()? TRUE : FALSE;
-	}
-	return FALSE;
 }

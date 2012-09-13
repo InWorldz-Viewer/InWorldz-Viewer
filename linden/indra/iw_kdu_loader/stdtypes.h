@@ -104,8 +104,8 @@ typedef U8 LLPCode;
 
 #define	LL_ARRAY_SIZE( _kArray ) ( sizeof( (_kArray) ) / sizeof( _kArray[0] ) )
 
-#if (defined(OS_LINUX) && defined(__GNUC__) <= 2)
-typedef int intptr_t;
+#if (defined(OS_LINUX) && (defined(__GNUC__) <= 2))
+//typedef int intptr_t;
 #endif
 
 #endif

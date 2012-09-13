@@ -29,7 +29,7 @@
 	<!--Try Impostors-->
 	<RenderUseImpostors value="TRUE"/>
 	<!--Default for now-->
-	<RenderVolumeLODFactor value="2.0"/>
+	<RenderVolumeLODFactor value="8.0"/>
 	<!--NO SHADERS-->
 	<RenderWaterReflections value="TRUE"/>
 	<!--NO SHADERS-->

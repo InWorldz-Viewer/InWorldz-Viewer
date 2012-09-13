@@ -193,36 +193,44 @@ void LLViewerParcelMedia::play(LLParcel* parcel)
 	S32 media_width = parcel->getMediaWidth();
 	S32 media_height = parcel->getMediaHeight();
 
-	// Debug print
-	// LL_DEBUGS("Media") << "Play media type : " << mime_type << ", url : " << media_url << LL_ENDL;
-
-	if (!sMediaImpl || (sMediaImpl &&
-						(sMediaImpl->getMediaURL() != media_url ||
-						 sMediaImpl->getMimeType() != mime_type ||
-						 sMediaImpl->getMediaTextureID() != placeholder_texture_id)))
+	if (mime_type == "none/none")
 	{
-		if (sMediaImpl)
-		{
-			// Delete the old media impl first so they don't fight over the texture.
-			sMediaImpl->stop();
-		}
-
-		LL_DEBUGS("Media") << "new media impl with mime type " << mime_type << ", url " << media_url << LL_ENDL;
-
-		// There is no media impl, or it has just been deprecated, make a new one
-		sMediaImpl = LLViewerMedia::newMediaImpl(media_url, placeholder_texture_id,
-			media_width, media_height, media_auto_scale,
-			media_loop, mime_type);
+		LL_WARNS("Media") << "Trying to play url " << media_url << " but mime type is none/none!" << LL_ENDL;
+		return;
 	}
 
-	// The url, mime type and texture are now the same, call play again
-	if (sMediaImpl->getMediaURL() == media_url
-		&& sMediaImpl->getMimeType() == mime_type
-		&& sMediaImpl->getMediaTextureID() == placeholder_texture_id)
-	{
-		LL_DEBUGS("Media") << "playing with existing url " << media_url << LL_ENDL;
+	// Debug print
+	LL_DEBUGS("Media") << "Attempting to play media type: " << mime_type << ", url: " << media_url << LL_ENDL;
 
-		sMediaImpl->play();
+	// Media plugin exists
+	if (sMediaImpl)
+	{
+		// Check if we're just replaying the same url
+		if ((sMediaImpl->getMediaURL() == media_url) &&
+			(sMediaImpl->getMediaTextureID() == placeholder_texture_id) &&
+			(sMediaImpl->getMimeType() == mime_type))
+		{
+			LL_DEBUGS("Media") << "Playing with existing url: " << media_url << LL_ENDL;
+
+			// we know all we need, play
+			sMediaImpl->play();
+		}
+		else
+		{
+			// Other viewers kill the plugin here rather than updating. Try it -- MC
+			sMediaImpl->stop();
+			sMediaImpl = NULL;
+		}
+	}
+
+	// Media plugin doesn't exist
+	if (!sMediaImpl)
+	{
+		LL_DEBUGS("Media") << "New media impl with mime type: " << mime_type << ", url: " << media_url << LL_ENDL;
+
+		sMediaImpl = LLViewerMedia::newMediaImpl(media_url, placeholder_texture_id, media_width, media_height, media_auto_scale, media_loop, mime_type);
+		// rediscover the mime type
+		sMediaImpl->navigateTo(media_url, mime_type, true);
 	}
 
 	LLFirstUse::useMedia();
@@ -233,7 +241,7 @@ void LLViewerParcelMedia::play(LLParcel* parcel)
 // static
 void LLViewerParcelMedia::stop()
 {
-	if(sMediaImpl.isNull())
+	if (sMediaImpl.isNull())
 	{
 		return;
 	}
@@ -249,7 +257,7 @@ void LLViewerParcelMedia::stop()
 // static
 void LLViewerParcelMedia::pause()
 {
-	if(sMediaImpl.isNull())
+	if (sMediaImpl.isNull())
 	{
 		return;
 	}
@@ -259,7 +267,7 @@ void LLViewerParcelMedia::pause()
 // static
 void LLViewerParcelMedia::start()
 {
-	if(sMediaImpl.isNull())
+	if (sMediaImpl.isNull())
 	{
 		return;
 	}
@@ -273,7 +281,7 @@ void LLViewerParcelMedia::start()
 // static
 void LLViewerParcelMedia::seek(F32 time)
 {
-	if(sMediaImpl.isNull())
+	if (sMediaImpl.isNull())
 	{
 		return;
 	}
@@ -287,11 +295,11 @@ void LLViewerParcelMedia::focus(bool focus)
 }
 
 // static
-LLViewerMediaImpl::EMediaStatus LLViewerParcelMedia::getStatus()
+LLPluginClassMediaOwner::EMediaStatus LLViewerParcelMedia::getStatus()
 {	
-	LLViewerMediaImpl::EMediaStatus result = LLViewerMediaImpl::MEDIA_NONE;
+	LLPluginClassMediaOwner::EMediaStatus result = LLPluginClassMediaOwner::MEDIA_NONE;
 	
-	if(sMediaImpl.notNull() && sMediaImpl->hasMedia())
+	if (sMediaImpl.notNull() && sMediaImpl->hasMedia())
 	{
 		result = sMediaImpl->getMediaPlugin()->getStatus();
 	}
@@ -457,12 +465,6 @@ void LLViewerParcelMedia::handleMediaEvent(LLPluginClassMedia* self, EMediaEvent
 {
 	switch(event)
 	{
-		case MEDIA_EVENT_DEBUG_MESSAGE:
-		{
-			// LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_DEBUG_MESSAGE " << LL_ENDL;
-		};
-		break;
-
 		case MEDIA_EVENT_CONTENT_UPDATED:
 		{
 			// LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_CONTENT_UPDATED " << LL_ENDL;
@@ -517,12 +519,6 @@ void LLViewerParcelMedia::handleMediaEvent(LLPluginClassMedia* self, EMediaEvent
 		};
 		break;
 
-		case MEDIA_EVENT_NAVIGATE_ERROR_PAGE:
-		{
-			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_NAVIGATE_ERROR_PAGE" << LL_ENDL;
-		};
-		break;
-
 		case MEDIA_EVENT_CLICK_LINK_HREF:
 		{
 			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_CLICK_LINK_HREF, target is \"" << self->getClickTarget() << "\", uri is " << self->getClickURL() << LL_ENDL;
@@ -568,15 +564,25 @@ void LLViewerParcelMedia::handleMediaEvent(LLPluginClassMedia* self, EMediaEvent
 			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_GEOMETRY_CHANGE" << LL_ENDL;
 		};
 		break;
+//ADDED: more scaffolding - Avian (needed for Linux/gcc compile)
+		case MEDIA_EVENT_NAVIGATE_ERROR_PAGE:
+		{
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_NAVIGATE_ERROR_PAGE" << LL_ENDL;
+		};
+		break;
 		case MEDIA_EVENT_AUTH_REQUEST:
 		{
-			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_AUTH_REQUEST, url " << self->getAuthURL() << ", realm " << self->getAuthRealm() << LL_ENDL;
-		}
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_AUTH_REQUEST" << LL_ENDL;
+		};
 		break;
-
+		case MEDIA_EVENT_DEBUG_MESSAGE:
+		{
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_DEBUG_MESSAGE" << LL_ENDL;
+		};
+		break;
 		case MEDIA_EVENT_LINK_HOVERED:
 		{
-			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_LINK_HOVERED, hover text is: " << self->getHoverText() << LL_ENDL;
+			LL_DEBUGS("Media") <<  "Media event:  MEDIA_EVENT_LINK_HOVERED" << LL_ENDL;
 		};
 		break;
 	};

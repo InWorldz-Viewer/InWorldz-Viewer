@@ -4,7 +4,13 @@ cmake_minimum_required (VERSION 2.6)
 
 project (iw_kdu_loader)
 
+#This should work for Windows also - Avian
+if (NOT WINDOWS)
+  include (00-Common)
+endif (NOT WINDOWS)
+
 include(InWorldz)
+include(Variables)
 
 # stdafx.h is technically our precompiled headers file, but
 # cmake doesn't seem to have a good way of handling this.
@@ -17,9 +23,35 @@ set(BUILD_SHARED_LIBS ON)
 # VS2005-specific, pare these down when we're sure cmake
 # does the right thing on, say, 2010
 if (WINDOWS)
+  set(BUILD_SHARED_LIBS ON)
+
+  set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Zi /MDd"
+      CACHE STRING "C++ compiler debug options" FORCE)
+  set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
+      "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} /Od /Zi /MD"
+      CACHE STRING "C++ compiler release-with-debug options" FORCE)
+  if (MSVC80)
+      set(CMAKE_CXX_FLAGS_RELEASE
+		"${CMAKE_CXX_FLAGS_RELEASE} /O2 /Ob2 /Oi /Ot /GT /Zi /MD"
+		CACHE STRING "C++ compiler release options" FORCE)
+	  set(CMAKE_CXX_FLAGS_RELEASESSE2
+		"${CMAKE_CXX_FLAGS_RELEASESSE2} /O2 /Ob2 /Oi /Ot /GT /Zi /MD /arch:SSE2"
+		CACHE STRING "C++ compiler release (SSE2 optimized) options" FORCE)
+  else (MSVC80)
+      set(CMAKE_CXX_FLAGS_RELEASE
+		"${CMAKE_CXX_FLAGS_RELEASE} ${LL_CXX_FLAGS} /O2 /Zi /MD"
+		CACHE STRING "C++ compiler release options" FORCE)
+	  set(CMAKE_CXX_FLAGS_RELEASESSE2
+		"${CMAKE_CXX_FLAGS_RELEASESSE2} ${LL_CXX_FLAGS} /O2 /Zi /MD /arch:SSE2"
+		CACHE STRING "C++ compiler release (SSE2 optimized) options" FORCE)
+  endif (MSVC80)
+  
+  set(CMAKE_CXX_STANDARD_LIBRARIES "")
+  set(CMAKE_C_STANDARD_LIBRARIES "")
+
   add_definitions(
-	/O2
 	/GL
+	/GF 
 	/D "WIN32"
 	/D "NDEBUG"
 	/D "_WINDOWS"
@@ -35,23 +67,38 @@ if (WINDOWS)
 	/W3
 	/nologo
 	/c
+	/W3
 	/Wp64
 	/Zi
 	/TP
+	/Oy-
+	/Gy
 	/errorReport:prompt
 	)
+	
+  if(MSVC80 OR MSVC90)
+    set(CMAKE_CXX_FLAGS_RELEASE
+      "${CMAKE_CXX_FLAGS_RELEASE} -D_SECURE_STL=0 -D_HAS_ITERATOR_DEBUGGING=0"
+      CACHE STRING "C++ compiler release options" FORCE)
+	set(CMAKE_CXX_FLAGS_RELEASESSE2
+	  "${CMAKE_CXX_FLAGS_RELEASESSE2} -D_SECURE_STL=0 -D_HAS_ITERATOR_DEBUGGING=0"
+	  CACHE STRING "C++ compiler release (SSE2 optimized) options" FORCE)
+   
+    add_definitions(
+      /Zc:wchar_t-
+      )
+  endif (MSVC80 OR MSVC90)
+  
+  # Are we using the crummy Visual Studio KDU build workaround?
+  if (NOT VS_DISABLE_FATAL_WARNINGS)
+    add_definitions(/WX)
+  endif (NOT VS_DISABLE_FATAL_WARNINGS)
+	
 else (WINDOWS)
-  #Hack for linux/darwin build of 'iw_kdu_loader/stdadfx.h' - Avian
-  include (00-Common)
-  #end Hack
-
   add_definitions(
-#	-g
-#	-c
-#	-shared
 	-fPIC
 	-D "IW_KDU_LOADER_EXPORTS"
-	)
+  )
 endif (WINDOWS)
 
 include_directories(
@@ -127,8 +174,6 @@ elseif (LINUX)
 	set_target_properties(iw_kdu_loader
 		PROPERTIES
 		LINK_FLAGS "-shared -Wl"
-#		LINK_FLAGS "-shared -Wl, -soname "
-#		LINK_FLAGS_DEBUG "-shared -Wl, -soname, "
 		)
 elseif (DARWIN)
 	set(CMAKE_OSX_ARCHITECTURES "i386")

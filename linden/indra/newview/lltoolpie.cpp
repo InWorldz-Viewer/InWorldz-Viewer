@@ -353,9 +353,10 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 			|| (object->isAttachment() && !object->isHUDAttachment() && !object->permYouOwner()))
 		{
 			// Find the attachment's avatar
-			while( object && object->isAttachment())
+			while (object->isAttachment())
 			{
 				object = (LLViewerObject*)object->getParent();
+				if (!object) return TRUE;	// Orphaned object ?
 			}
 
 			// Object is an avatar, so check for mute by id.

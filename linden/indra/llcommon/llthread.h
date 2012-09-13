@@ -165,18 +165,11 @@ public:
 	LLMutexLock(LLMutex* mutex)
 	{
 		mMutex = mutex;
-		
-		if(mMutex)
-		{
-			mMutex->lock();
-		}
+		mMutex->lock();
 	}
 	~LLMutexLock()
 	{
-		if(mMutex)
-		{
-			mMutex->unlock();
-		}
+		mMutex->unlock();
 	}
 private:
 	LLMutex* mMutex;

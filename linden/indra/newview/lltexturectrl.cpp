@@ -41,7 +41,10 @@
 #include "llcheckboxctrl.h"
 #include "llcombobox.h"
 #include "llbutton.h"
+#include "lldir.h"
 #include "lldraghandle.h"
+#include "llfilepicker.h"
+#include "llfloaterimagepreview.h"
 #include "llfocusmgr.h"
 #include "llviewerimage.h"
 #include "llfolderview.h"
@@ -152,6 +155,7 @@ public:
 	static void		onBtnSetToDefault( void* userdata );
 	static void		onBtnSelect( void* userdata );
 	static void		onBtnCancel( void* userdata );
+	static void		onBtnUpload( void* userdata );
 	static void		onBtnPipette( void* userdata );
 	//static void		onBtnRevert( void* userdata );
 	static void		onBtnWhite( void* userdata );
@@ -284,6 +288,7 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 	childSetAction("Pipette", LLFloaterTexturePicker::onBtnPipette,this);
 	childSetAction("Cancel", LLFloaterTexturePicker::onBtnCancel,this);
 	childSetAction("Select", LLFloaterTexturePicker::onBtnSelect,this);
+	childSetAction("Upload", LLFloaterTexturePicker::onBtnUpload, this);
 
 	// update permission filter once UI is fully initialized
 	updateFilterPermMask();
@@ -765,6 +770,27 @@ void LLFloaterTexturePicker::onBtnSelect(void* userdata)
 		self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_SELECT);
 	}
 	self->close();
+}
+
+// static
+void LLFloaterTexturePicker::onBtnUpload(void* userdata)
+{
+	LLFloaterTexturePicker* self = (LLFloaterTexturePicker*) userdata;
+	if (self)
+	{
+		LLFilePicker& picker = LLFilePicker::instance();
+		if (picker.getOpenFile(LLFilePicker::FFLOAD_IMAGE))
+		{
+			std::string filename = picker.getFirstFile();
+			if (!filename.empty())
+			{
+				LLFloaterImagePreview* floaterp = new LLFloaterImagePreview(filename);
+				LLUICtrlFactory::getInstance()->buildFloater(floaterp, "floater_image_preview.xml");
+				//self->mSearchEdit->setText(filename); // doesn't work -- MC
+				onSearchEdit(gDirUtilp->getBaseFileName(filename, true), self);
+			}
+		}
+	}
 }
 
 // static

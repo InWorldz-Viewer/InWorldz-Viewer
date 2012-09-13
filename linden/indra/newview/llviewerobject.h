@@ -74,6 +74,7 @@ class LLViewerPartSourceScript;
 class LLViewerRegion;
 class LLViewerObjectMedia;
 class LLVOInventoryListener;
+class LLVOAvatar;
 
 typedef enum e_object_update_type
 {
@@ -142,6 +143,8 @@ public:
 	BOOL isDead() const									{return mDead;}
 	BOOL isOrphaned() const								{ return mOrphaned; }
 	BOOL isParticleSource() const;
+
+	virtual LLVOAvatar* asAvatar();
 
 	static void initVOClasses();
 	static void cleanupVOClasses();

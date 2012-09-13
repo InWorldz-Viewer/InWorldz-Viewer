@@ -1324,7 +1324,8 @@ F32 LLFace::calcPixelArea(F32& cos_angle_to_view_dir, F32& radius)
 	radius = app_angle*LLDrawable::sCurPixelAngle;
 	F32 face_area = radius*radius * 3.14159f;
 
-	if(dist < mBoundingSphereRadius) //camera is very close
+	//camera is very close or the texture has alpha
+	if ((dist < mBoundingSphereRadius) || (mDrawablep->isState(LLDrawable::HAS_ALPHA)))
 	{
 		cos_angle_to_view_dir = 1.0f ;
 		mImportanceToCamera = 1.0f ;
@@ -1369,7 +1370,8 @@ F32 LLFace::adjustPartialOverlapPixelArea(F32 cos_angle_to_view_dir, F32 radius 
 
 const S8 FACE_IMPORTANCE_LEVEL = 4 ;
 const F32 FACE_IMPORTANCE_TO_CAMERA_OVER_DISTANCE[FACE_IMPORTANCE_LEVEL][2] = //{distance, importance_weight}
-	{{16.1f, 1.0f}, {32.1f, 0.5f}, {48.1f, 0.2f}, {96.1f, 0.05f} } ;
+	//{{16.1f, 1.0f}, {32.1f, 0.5f}, {48.1f, 0.2f}, {96.1f, 0.05f} } ; // old -- MC
+	{{16.1f, 1.0f}, {32.1f, 0.5f}, {64.1f, 0.2f}, {112.1f, 0.05f} } ; // new -- MC
 const F32 FACE_IMPORTANCE_TO_CAMERA_OVER_ANGLE[FACE_IMPORTANCE_LEVEL][2] =    //{cos(angle), importance_weight}
 	{{0.985f /*cos(10 degrees)*/, 1.0f}, {0.94f /*cos(20 degrees)*/, 0.8f}, {0.866f /*cos(30 degrees)*/, 0.64f}, {0.0f, 0.36f}} ;
 

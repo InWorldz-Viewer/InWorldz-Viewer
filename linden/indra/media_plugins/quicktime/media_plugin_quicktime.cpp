@@ -133,7 +133,7 @@ private:
 			if(result == 0)
 			{
 				// Don't return a 0 play rate, ever.
-				std::cerr << "Movie's preferred rate is 0, forcing to 1.0." << std::endl;
+				std::cout << "Movie's preferred rate is 0, forcing to 1.0." << std::endl;
 				result = X2Fix(1.0f);
 			}
 		}
@@ -268,7 +268,7 @@ private:
 				message.setValueS32("width", width);
 				message.setValueS32("height", height);
 				sendMessage(message);
-				//std::cerr << "<--- Sending size change request to application with name: " << mTextureSegmentName << " - size is " << width << " x " << height << std::endl;
+				std::cout << "<--- Sending size change request to application with name: " << mTextureSegmentName << " - size is " << width << " x " << height << std::endl;
 			}
 		}
 		
@@ -791,7 +791,7 @@ MediaPluginQuickTime::MediaPluginQuickTime(
 	mMinHeight( 0 ),
 	mMaxHeight( 2048 )
 {
-//	std::cerr << "MediaPluginQuickTime constructor" << std::endl;
+	std::cout << "MediaPluginQuickTime constructor" << std::endl;
 
 	mNaturalWidth = -1;
 	mNaturalHeight = -1;
@@ -810,20 +810,20 @@ MediaPluginQuickTime::MediaPluginQuickTime(
 
 MediaPluginQuickTime::~MediaPluginQuickTime()
 {
-//	std::cerr << "MediaPluginQuickTime destructor" << std::endl;
+	std::cout << "MediaPluginQuickTime destructor" << std::endl;
 
 	ExitMovies();
 
 #ifdef LL_WINDOWS
 	TerminateQTML();
-//		std::cerr << "QuickTime closing down" << std::endl;
+	std::cout << "QuickTime closing down" << std::endl;
 #endif
 }
 
 
 void MediaPluginQuickTime::receiveMessage(const char *message_string)
 {
-//	std::cerr << "MediaPluginQuickTime::receiveMessage: received message: \"" << message_string << "\"" << std::endl;
+//	std::cout << "MediaPluginQuickTime::receiveMessage: received message: \"" << message_string << "\"" << std::endl;
 	LLPluginMessage message_in;
 
 	if(message_in.parse(message_string) >= 0)
@@ -857,7 +857,7 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 				}
 				else
 				{
-					//std::cerr << "QuickTime initialized" << std::endl;
+					std::cout << "QuickTime initialized" << std::endl;
 				};
 				#endif
 
@@ -894,7 +894,7 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 				std::string name = message_in.getValue("name");
 
 
-//				std::cerr << "MediaPluginQuickTime::receiveMessage: shared memory added, name: " << name
+//				std::cout << "MediaPluginQuickTime::receiveMessage: shared memory added, name: " << name
 //					<< ", size: " << info.mSize
 //					<< ", address: " << info.mAddress
 //					<< std::endl;
@@ -906,7 +906,7 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 			{
 				std::string name = message_in.getValue("name");
 
-//				std::cerr << "MediaPluginQuickTime::receiveMessage: shared memory remove, name = " << name << std::endl;
+//				std::cout << "MediaPluginQuickTime::receiveMessage: shared memory remove, name = " << name << std::endl;
 
 				SharedSegmentMap::iterator iter = mSharedSegments.find(name);
 				if(iter != mSharedSegments.end())
@@ -924,7 +924,7 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 				}
 				else
 				{
-//					std::cerr << "MediaPluginQuickTime::receiveMessage: unknown shared memory region!" << std::endl;
+					std::cout << "MediaPluginQuickTime::receiveMessage: unknown shared memory region!" << std::endl;
 				}
 
 				// Send the response so it can be cleaned up.
@@ -934,7 +934,7 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 			}
 			else
 			{
-//				std::cerr << "MediaPluginQuickTime::receiveMessage: unknown base message: " << message_name << std::endl;
+				std::cout << "MediaPluginQuickTime::receiveMessage: unknown base message: " << message_name << std::endl;
 			}
 		}
 		else if(message_class == LLPLUGIN_MESSAGE_CLASS_MEDIA)
@@ -981,7 +981,7 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 				S32 texture_width = message_in.getValueS32("texture_width");
 				S32 texture_height = message_in.getValueS32("texture_height");
 
-				//std::cerr << "---->Got size change instruction from application with name: " << name << " - size is " << width << " x " << height << std::endl;
+				std::cout << "---->Got size change instruction from application with name: " << name << " - size is " << width << " x " << height << std::endl;
 
 				LLPluginMessage message(LLPLUGIN_MESSAGE_CLASS_MEDIA, "size_change_response");
 				message.setValue("name", name);
@@ -997,8 +997,8 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 					SharedSegmentMap::iterator iter = mSharedSegments.find(name);
 					if(iter != mSharedSegments.end())
 					{
-//						std::cerr << "%%% Got size change, new size is " << width << " by " << height << std::endl;
-//						std::cerr << "%%%%  texture size is " << texture_width << " by " << texture_height << std::endl;
+						std::cout << "%%% Got size change, new size is " << width << " by " << height << std::endl;
+						std::cout << "%%%%  texture size is " << texture_width << " by " << texture_height << std::endl;
 
 						mPixels = (unsigned char*)iter->second.mAddress;
 						mTextureSegmentName = name;
@@ -1079,7 +1079,7 @@ void MediaPluginQuickTime::receiveMessage(const char *message_string)
 		}
 		else
 		{
-//			std::cerr << "MediaPluginQuickTime::receiveMessage: unknown message class: " << message_class << std::endl;
+			std::cout << "MediaPluginQuickTime::receiveMessage: unknown message class: " << message_class << std::endl;
 		};
 	};
 }

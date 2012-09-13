@@ -4,25 +4,31 @@
  * @date 2005-07-31
  * @brief Sockets declarations for use with the io pipes
  *
- * $LicenseInfo:firstyear=2005&license=viewerlgpl$
+ * $LicenseInfo:firstyear=2005&license=viewergpl$
+ * 
+ * Copyright (c) 2005-2009, Linden Research, Inc.
+ * 
  * Second Life Viewer Source Code
- * Copyright (C) 2010, Linden Research, Inc.
+ * The source code in this file ("Source Code") is provided by Linden Lab
+ * to you under the terms of the GNU General Public License, version 2.0
+ * ("GPL"), unless you have obtained a separate licensing agreement
+ * ("Other License"), formally executed by you and Linden Lab.  Terms of
+ * the GPL can be found in doc/GPL-license.txt in this distribution, or
+ * online at http://secondlifegrid.net/programs/open_source/licensing/gplv2
  * 
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation;
- * version 2.1 of the License only.
+ * There are special exceptions to the terms and conditions of the GPL as
+ * it is applied to this Source Code. View the full text of the exception
+ * in the file doc/FLOSS-exception.txt in this software distribution, or
+ * online at
+ * http://secondlifegrid.net/programs/open_source/licensing/flossexception
  * 
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * By copying, modifying or distributing this software, you acknowledge
+ * that you have read and understood your obligations described above,
+ * and agree to abide by those obligations.
  * 
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- * 
- * Linden Research, Inc., 945 Battery Street, San Francisco, CA  94111  USA
+ * ALL LINDEN LAB SOURCE CODE IS PROVIDED "AS IS." LINDEN LAB MAKES NO
+ * WARRANTIES, EXPRESS, IMPLIED OR OTHERWISE, REGARDING ITS ACCURACY,
+ * COMPLETENESS OR PERFORMANCE.
  * $/LicenseInfo$
  */
 
@@ -191,7 +197,7 @@ LLSocket::ptr_t LLSocket::create(apr_pool_t* pool, EType type, U16 port)
 		port = PORT_EPHEMERAL;
 	}
 	rv->mPort = port;
-	rv->setNonBlocking();
+	rv->setOptions();
 	return rv;
 }
 
@@ -206,7 +212,7 @@ LLSocket::ptr_t LLSocket::create(apr_socket_t* socket, apr_pool_t* pool)
 	}
 	rv = ptr_t(new LLSocket(socket, pool));
 	rv->mPort = PORT_EPHEMERAL;
-	rv->setNonBlocking();
+	rv->setOptions();
 	return rv;
 }
 
@@ -227,10 +233,10 @@ bool LLSocket::blockingConnect(const LLHost& host)
 	{
 		return false;
 	}
-	setBlocking(1000);
+	apr_socket_timeout_set(mSocket, 1000);
 	ll_debug_socket("Blocking connect", mSocket);
 	if(ll_apr_warn_status(apr_socket_connect(mSocket, sa))) return false;
-	setNonBlocking();
+	setOptions();
 	return true;
 }
 
@@ -251,7 +257,6 @@ LLSocket::~LLSocket()
 	{
 		ll_debug_socket("Destroying socket", mSocket);
 		apr_socket_close(mSocket);
-		mSocket = NULL;
 	}
 	if(mPool)
 	{
@@ -259,27 +264,11 @@ LLSocket::~LLSocket()
 	}
 }
 
-// See http://dev.ariel-networks.com/apr/apr-tutorial/html/apr-tutorial-13.html#ss13.4
-// for an explanation of how to get non-blocking sockets and timeouts with
-// consistent behavior across platforms.
-
-void LLSocket::setBlocking(S32 timeout)
-{
-	LLMemType m1(LLMemType::MTYPE_IO_TCP);
-	// set up the socket options
-	ll_apr_warn_status(apr_socket_timeout_set(mSocket, timeout));
-	ll_apr_warn_status(apr_socket_opt_set(mSocket, APR_SO_NONBLOCK, 0));
-	ll_apr_warn_status(apr_socket_opt_set(mSocket, APR_SO_SNDBUF, LL_SEND_BUFFER_SIZE));
-	ll_apr_warn_status(apr_socket_opt_set(mSocket, APR_SO_RCVBUF, LL_RECV_BUFFER_SIZE));
-
-}
-
-void LLSocket::setNonBlocking()
+void LLSocket::setOptions()
 {
 	LLMemType m1(LLMemType::MTYPE_IO_TCP);
 	// set up the socket options
 	ll_apr_warn_status(apr_socket_timeout_set(mSocket, 0));
-	ll_apr_warn_status(apr_socket_opt_set(mSocket, APR_SO_NONBLOCK, 1));
 	ll_apr_warn_status(apr_socket_opt_set(mSocket, APR_SO_SNDBUF, LL_SEND_BUFFER_SIZE));
 	ll_apr_warn_status(apr_socket_opt_set(mSocket, APR_SO_RCVBUF, LL_RECV_BUFFER_SIZE));
 
@@ -440,7 +429,6 @@ LLIOPipe::EStatus LLIOSocketWriter::process_impl(
 	// efficient - not only because writev() is better, but also
 	// because we won't have to do as much work to find the start
 	// address.
-	buffer->lock();
 	LLBufferArray::segment_iterator_t it;
 	LLBufferArray::segment_iterator_t end = buffer->endSegment();
 	LLSegment segment;
@@ -520,8 +508,6 @@ LLIOPipe::EStatus LLIOSocketWriter::process_impl(
 		}
 
 	}
-	buffer->unlock();
-
 	PUMP_DEBUG;
 	if(done && eos)
 	{

@@ -69,7 +69,7 @@ class LLViewerParcelMedia : public LLViewerMediaObserver
 		static void seek(F32 time);
 		    // jump to timecode time
 
-		static LLViewerMediaImpl::EMediaStatus getStatus();
+		static LLPluginClassMediaOwner::EMediaStatus getStatus();
 		static std::string getMimeType();
 		static viewer_media_t getParcelMedia();
 

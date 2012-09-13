@@ -55,9 +55,10 @@
                 <!--<string>Inventory</string>-->
                 <!--<string>InventoryFetch</string>-->
                 <!--<string>isOwnedSelf</string>-->
+                <!--<string>LLFontRegistry</string>-->
                 <!--<string>MarkerFile</string>-->
-                <string>Media</string>
-                <string>MediaImpl</string>
+                <!--<string>Media</string>-->
+                <!--<string>MediaImpl</string>-->
                 <!--<string>MediaInfo</string>-->
                 <!--<string>MediaCallback</string>-->
                 <!--<string>MediaBuffering</string>-->
@@ -72,11 +73,10 @@
                 <!--<string>PluginInstance</string>-->
                 <!--<string>PluginPipe</string>-->
                 <!--<string>PluginChild</string>-->
+                <!--<string>PluginSocket</string>-->
                 <!--<string>PluginSpam</string>-->
                 <!--<string>PluginParent</string>-->
                 <!--<string>PluginViewerMedia</string>-->
-                <string>slplugin</string>
-                <!--<string>ShaderLoading</string>-->
                 <string>Rendering</string>
                 <!--<string>ShaderLoading</string>-->
 
@@ -87,11 +87,13 @@
                 <!--<string>http-texture</string>-->
                 <!--<string>Texture</string>-->
                 <!--<string>TextureCache</string>-->
+                <!--<string>TextureFetchWorker</string>-->
                 <!--<string>ViewerImages</string>-->
                 <!--<string>Volume</string>-->
                 <!--<string>Throttle</string>-->
                 <!--<string>Voice</string>-->
                 <!--<string>VivoxProtocolParser</string>-->
+                <!--<string>WaterHeight</string>-->
                 <!--<string>Wearables</string>-->
 
                 <!--<string>XMLNode</string>-->

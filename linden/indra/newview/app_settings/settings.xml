@@ -70,39 +70,6 @@
     <key>Value</key>
 	<string></string>
 	</map>
-    <key>CurlMaximumNumberOfHandles</key>
-  <map>
-    <key>Comment</key>
-    <string>Maximum number of handles curl can use (requires restart)</string>
-    <key>Persist</key>
-    <integer>1</integer>
-    <key>Type</key>
-    <string>S32</string>
-    <key>Value</key>
-    <integer>256</integer>
-  </map>
-  <key>CurlRequestTimeOut</key>
-  <map>
-    <key>Comment</key>
-    <string>Max idle time of a curl request before killed (requires restart)</string>
-    <key>Persist</key>
-    <integer>1</integer>
-    <key>Type</key>
-    <string>F32</string>
-    <key>Value</key>
-    <real>120.0</real>
-  </map>
-  <key>CurlUseMultipleThreads</key>
-  <map>
-    <key>Comment</key>
-    <string>Use background threads for executing curl_multi_perform (requires restart)</string>
-    <key>Persist</key>
-    <integer>1</integer>
-    <key>Type</key>
-    <string>Boolean</string>
-    <key>Value</key>
-    <integer>1</integer>
-  </map>
   <key>DecimalsForTools</key>
   <map>
     <key>Comment</key>
@@ -486,6 +453,17 @@
   <map>
     <key>Comment</key>
     <string>Attempts to rez objects in the lands group if you're apart of it</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>VerticalIMTabs</key>
+  <map>
+    <key>Comment</key>
+    <string>Enable vertical layout for IM tabs</string>
     <key>Persist</key>
     <integer>1</integer>
     <key>Type</key>
@@ -8903,17 +8881,6 @@
       <key>Value</key>
       <integer>0</integer>
     </map>
-    <key>SaveInventoryScriptsAsMono</key>
-    <map>
-      <key>Comment</key>
-      <string>When editing and saving a script in inventory, configure it to compile as mono when dragged into a task</string>
-      <key>Persist</key>
-      <integer>1</integer>
-      <key>Type</key>
-      <string>Boolean</string>
-      <key>Value</key>
-      <real>0</real>
-    </map>
     <key>SaveMinidump</key>
     <map>
       <key>Comment</key>
@@ -12969,5 +12936,257 @@
       <key>Value</key>
       <integer>1</integer>
     </map>
+
+  <!-- Begin: chatbar_as_cmdline -->
+
+  <key>CmdLineChatbarEnabled</key>
+  <map>
+    <key>Comment</key>
+    <string>Enable usage of chat bar as a command line</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>CmdLineChatbarMapToKeepPos</key>
+  <map>
+    <key>Comment</key>
+    <string>Whether to use current local pos on tp to the new sim</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>0</integer>
+  </map>
+  <key>CmdLineChatbarAO</key>
+  <map>
+    <key>Comment</key>
+    <string>Turn AO on/off</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>cao</string>
+  </map>
+  <key>CmdLineChatbarAutocorrect</key>
+  <map>
+    <key>Comment</key>
+    <string>Command for adding new entries to autocorrect</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>/addac</string>
+  </map>
+  <key>CmdLineChatbarMedia</key>
+  <map>
+    <key>Comment</key>
+    <string>Chat command for setting a media url</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>/media</string>
+  </map>
+  <key>CmdLineChatbarMusic</key>
+  <map>
+    <key>Comment</key>
+    <string>Chat command for setting a music url</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>/music</string>
+  </map>
+  <key>CmdLineChatbarClearChat</key>
+  <map>
+    <key>Comment</key>
+    <string>Clear chat hsitory to stop lag from chat spam</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>clrchat</string>
+  </map>
+  <key>CmdLineChatbarHeight</key>
+  <map>
+    <key>Comment</key>
+    <string>Teleport to height function command</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>gth</string>
+  </map>
+  <key>CmdLineChatbarPos</key>
+  <map>
+    <key>Comment</key>
+    <string>Teleport to position function command</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>gtp</string>
+  </map>
+  <key>CmdLineChatbarGround</key>
+  <map>
+    <key>Comment</key>
+    <string>Teleport to ground function command</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>flr</string>
+  </map>
+  <key>CmdLineChatbarTeleportHome</key>
+  <map>
+    <key>Comment</key>
+    <string>Teleport to home function command</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>tph</string>
+  </map>
+  <key>CmdLineChatbarRezPlatform</key>
+  <map>
+    <key>Comment</key>
+    <string>Rez a platform underneath you</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>rezplat</string>
+  </map>
+  <key>CmdLineChatbarPlatformSize</key>
+  <map>
+    <key>Comment</key>
+    <string>How wide the rezzed platform will appear to be.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>30</real>
+  </map>
+  <key>CmdLineChatbarMapTo</key>
+  <map>
+    <key>Comment</key>
+    <string>Teleport to a region by name rapidly</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>mapto</string>
+  </map>
+  <key>CmdLineChatbarDrawDistance</key>
+  <map>
+    <key>Comment</key>
+    <string>Change draw distance quickly</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>dd</string>
+  </map>
+  <key>CmdLineChatbarTeleportToCam</key>
+  <map>
+    <key>Comment</key>
+    <string>Teleport to your camera</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>tp2cam</string>
+  </map>
+  <key>CmdLineChatbarKeyToName</key>
+  <map>
+    <key>Comment</key>
+    <string>Use a fast key to name querry</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>key2name</string>
+  </map>
+  <key>CmdLineChatbarOfferTp</key>
+  <map>
+    <key>Comment</key>
+    <string>Offer a teleport to target avatar</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>offertp</string>
+  </map>
+  <key>CmdLineChatbarCalc</key>
+  <map>
+    <key>Comment</key>
+    <string>Calculates an expression</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>calc</string>
+  </map>
+  <key>CmdLineChatbarTP2</key>
+  <map>
+    <key>Comment</key>
+    <string>Teleport to a person by name, partials work.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>tp2</string>
+  </map>
+
+  <!-- End: chatbar_as_cmdline -->
+
+<!-- Begin: linden/inventory trees and grasses -->
+
+  <key>LastGrass</key>
+  <map>
+    <key>Comment</key>
+    <string>The last grass selected in the create dialog</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>Random</string>
+  </map>
+  <key>LastTree</key>
+  <map>
+    <key>Comment</key>
+    <string>The last tree selected in the create dialog</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>Random</string>
+  </map>
+
+
 </map>
 </llsd>

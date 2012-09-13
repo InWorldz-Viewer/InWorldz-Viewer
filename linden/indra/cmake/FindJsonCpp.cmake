@@ -29,7 +29,7 @@ IF (STANDALONE)
 ENDIF (STANDALONE)
 FIND_LIBRARY(JSONCPP_LIBRARY
   NAMES ${JSONCPP_NAMES}
-  PATHS /usr/lib /usr/local/lib
+  PATHS /usr/lib64 /usr/local/lib64 /usr/lib /usr/local/lib
   )
 
 IF (JSONCPP_LIBRARY AND JSONCPP_INCLUDE_DIR)

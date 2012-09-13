@@ -1287,7 +1287,7 @@ BOOL LLFilePicker::getOpenFile( ELoadFilter filter )
 		case FFLOAD_XML:
 			filtername = add_xml_filter_to_gtkchooser(picker);
 			break;
-		case FFLOAD_CSV"
+		case FFLOAD_CSV:
 			filtername = add_csv_filter_to_gtkchooser(picker);
 			break;
 		default:;

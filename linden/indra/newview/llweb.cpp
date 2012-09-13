@@ -98,6 +98,10 @@ std::string LLWeb::escapeURL(const std::string& url)
 		{
 			escaped_url += "%5C";
 		}
+		else if (c == '\'')
+		{
+			escaped_url += "%27";
+		}
 		else
 		{
 			escaped_url += c;

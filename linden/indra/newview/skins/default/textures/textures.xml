@@ -657,10 +657,10 @@ NOTE: If an image can't be found at "file_name" it'll be loaded as IMG_DEFAULT (
   
 <!-- MESSAGE LOG -->
 
-	<texture name="message_log_open.tga"					file_name="interface/message_log_open.tga"							preload="true"/>
-  <texture name="message_log_save.tga"					file_name="interface/message_log_save.tga"							preload="true"/>
-  <texture name="message_log_start.tga"					file_name="interface/message_log_start.tga"							preload="true"/>
-  <texture name="message_log_stop.tga"					file_name="interface/message_log_stop.tga"							preload="true"/>
+	<texture name="message_log_open.png"		file_name="interface/message_log_open.png"			preload="true"/>
+    <texture name="message_log_save.png"		file_name="interface/message_log_save.png"			preload="true"/>
+    <texture name="message_log_start.png"		file_name="interface/message_log_start.png"			preload="true"/>
+    <texture name="message_log_stop.png"		file_name="interface/message_log_stop.png"			preload="true"/>
 
 
 

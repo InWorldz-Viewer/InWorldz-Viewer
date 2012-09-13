@@ -31,8 +31,8 @@ include(Versions)
 include(UnixInstall)
 
 if (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING
-      "Build type.  One of: Debug Release ReleaseSSE2 RelWithDebInfo" FORCE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING
+      "Build type.  One of: Debug Release ReleaseSSE2 RelWithDebInfo ReleaseFast" FORCE)
 endif (NOT CMAKE_CONFIGURATION_TYPES AND NOT CMAKE_BUILD_TYPE)
 
 # Create a 'prepare' target in which to perform setup actions.  This
