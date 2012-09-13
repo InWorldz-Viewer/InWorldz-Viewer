@@ -36,4 +36,6 @@
 	<VertexShaderEnable value="FALSE"/>
 	<!--NO SHADERS-->
 	<WindLightUseAtmosShaders value="FALSE"/>
+  <!-- Object-Object Occlusion -->
+  <UseOcclusion value="FALSE" />
 </settings>

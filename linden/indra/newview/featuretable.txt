@@ -47,7 +47,7 @@ RenderVBOEnable				1	1
 RenderVolumeLODFactor		1	2.0
 RenderWaterReflections		1	1
 UseStartScreen				1	1
-UseOcclusion				1	1
+UseOcclusion				1	0
 VertexShaderEnable			1	1
 WindLightUseAtmosShaders	1	1
 WLSkyDetail					1	128

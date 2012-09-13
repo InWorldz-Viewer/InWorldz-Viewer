@@ -35,7 +35,7 @@ RenderRippleWater	1	1
 RenderTerrainDetail	1	2
 VertexShaderEnable	1	1
 RenderTextureMemoryMultiple		1	1.0
-UseOcclusion		1       1
+UseOcclusion		1       0
 RenderCubeMap		1       1
 
 //
