@@ -3700,7 +3700,7 @@ Default: 40
  label="Object Bonus"
  name="HelpRegionObjectBonus"
  type="alertmodal">
-The Object Bonus is a multiplier for primitives allowed on any given parcel. The range allowed is 1 to 10. Set at &apos;1&apos;, each 512m² parcel is allowed 117 objects. Set at &apos;2&apos;, each 512m² parcel is allowed 234, or twice as many, and so on. The max number of objects allowed per region remains 45,000 no matter what the Object Bonus is. Once set, be aware that lowering the Object Bonus may cause objects to be returned or deleted.
+The Object Bonus is a multiplier for primitives allowed on any given parcel. The range allowed is 1 to 10. Set at &apos;1&apos;, each 512m² parcel is allowed 117 objects. Set at &apos;2&apos;, each 512m² parcel is allowed 234, or twice as many, and so on. The max number of objects allowed per region remains 45,000 (non-tiered) no matter what the Object Bonus is. Once set, be aware that lowering the Object Bonus may cause objects to be returned or deleted.
 
 Default: 1.0
 </notification>
