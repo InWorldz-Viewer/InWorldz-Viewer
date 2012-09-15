@@ -7,11 +7,11 @@
 
 
 #clean out any previous build
-python develop.py -t=ReleaseFast clean
+python develop.py -t ReleaseFast clean
 
 #autoconfig
-python develop.py -t=ReleaseFast configure
+python develop.py -t ReleaseFast configure
 
 #build it
-python develop.py -t=ReleaseFast build
+python develop.py -t ReleaseFast build
 
