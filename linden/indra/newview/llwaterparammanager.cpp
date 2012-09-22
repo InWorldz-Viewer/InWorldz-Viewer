@@ -147,7 +147,7 @@ void LLWaterParamManager::loadPreset(const std::string & name,bool propagate)
 	if(!presetsXML)
 	{
 		pathName=gDirUtilp->getExpandedFilename( LL_PATH_USER_SETTINGS , "windlight/water", escaped_filename);
-		llinfos << "Loading User water setting from " << pathName << llendl;
+		LL_DEBUGS2("AppInit", "ShaderLoading") << "Loading User water setting from " << pathName << LL_ENDL;
 		presetsXML.open(pathName.c_str());
 	}
 
