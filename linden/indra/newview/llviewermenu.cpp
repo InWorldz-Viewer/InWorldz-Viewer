@@ -2626,6 +2626,7 @@ class LLAvatarEnableFreezeEject : public view_listener_t
 						
 			if (new_value)
 			{
+				LL_DEBUGS("isOwnedSelf")<< " viewermenu" << LL_ENDL; 
 				new_value = region->isOwnedSelf(pos);
 				if (!new_value || region->isOwnedGroup(pos))
 				{
