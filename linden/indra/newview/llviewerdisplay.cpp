@@ -784,6 +784,11 @@ void display(BOOL rebuild, F32 zoom_factor, int subfield, BOOL for_snapshot)
 		//}
 
 		LLPipeline::sUnderWaterRender = LLViewerCamera::getInstance()->cameraUnderWater() ? TRUE : FALSE;
+		
+		//Check for RenderWater
+		if (!gSavedSettings.getBOOL("RenderWater"))
+			LLPipeline::sUnderWaterRender = FALSE;
+		
 		LLPipeline::updateRenderDeferred();
 		
 		stop_glerror();
