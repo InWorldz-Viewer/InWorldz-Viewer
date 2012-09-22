@@ -4921,7 +4921,7 @@ void LLPipeline::setUseVBO(BOOL use_vbo)
 		}
 		
 		resetVertexBuffers();
-		LLVertexBuffer::initClass(use_vbo);
+		LLVertexBuffer::initClass(use_vbo && gGLManager.mHasVertexBufferObject);
 	}
 }
 
