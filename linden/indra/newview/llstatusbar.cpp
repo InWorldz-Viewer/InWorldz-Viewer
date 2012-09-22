@@ -612,6 +612,7 @@ void LLStatusBar::setVisibleForMouselook(bool visible)
 	mTextBalance->setVisible(visible);
 	mTextTime->setVisible(visible);
 	//childSetVisible("buycurrency", visible);
+	childSetVisible("buyland", visible);
 	mSGBandwidth->setVisible(visible);
 	mSGPacketLoss->setVisible(visible);
 	setBackgroundVisible(visible);
