@@ -3475,7 +3475,7 @@ void LLSelectMgr::deselectAllIfTooFar()
 	}
 
 	LLVector3d selectionCenter = getSelectionCenterGlobal();
-	if ((!gSavedSettings.getBOOL("DisableMaxBuildConstraints") && gSavedSettings.getBOOL("LimitSelectDistance"))
+	if (gSavedSettings.getBOOL("LimitSelectDistance")
 		&& (!mSelectedObjects->getPrimaryObject() || !mSelectedObjects->getPrimaryObject()->isAvatar())
 		&& !mSelectedObjects->isAttachment()
 		&& !selectionCenter.isExactlyZero())

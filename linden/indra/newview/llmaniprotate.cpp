@@ -1125,7 +1125,7 @@ BOOL LLManipRotate::updateVisiblity()
 			F32 z_dist = -1.f * (mCenterToCam * cameraAtAxis);
 
 			// Don't drag manip if object too far away
-			if (!gSavedSettings.getBOOL("DisableMaxBuildConstraints") && gSavedSettings.getBOOL("LimitSelectDistance"))
+			if (gSavedSettings.getBOOL("LimitSelectDistance"))
 			{
 				F32 max_select_distance = gSavedSettings.getF32("MaxSelectDistance");
 				if (dist_vec(gAgent.getPositionAgent(), center) > max_select_distance)

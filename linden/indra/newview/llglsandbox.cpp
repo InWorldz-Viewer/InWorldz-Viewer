@@ -216,7 +216,7 @@ void LLToolSelectRect::handleRectangleSelection(S32 x, S32 y, MASK mask)
 	glMatrixMode(GL_PROJECTION);
 	gGL.pushMatrix();
 
-	BOOL limit_select_distance = (!gSavedSettings.getBOOL("DisableMaxBuildConstraints") && gSavedSettings.getBOOL("LimitSelectDistance"));
+	BOOL limit_select_distance = gSavedSettings.getBOOL("LimitSelectDistance");
 	if (limit_select_distance)
 	{
 		// ...select distance from control
