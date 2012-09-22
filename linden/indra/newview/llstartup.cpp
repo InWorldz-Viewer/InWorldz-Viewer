@@ -212,6 +212,8 @@ std::string SCREEN_LAST_FILENAME = "screen_last.bmp";
 //
 extern S32 gStartImageWidth;
 extern S32 gStartImageHeight;
+extern std::string gSecondLife;
+extern std::string gWindowTitle;
 
 //
 // local globals
@@ -785,7 +787,7 @@ bool idle_startup()
 
 	if (STATE_LOGIN_SHOW == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_SHOW" << LL_ENDL
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_SHOW" << LL_ENDL;
 		LL_INFOS("AppInit") << "Initializing Window" << LL_ENDL;
 		
 		gViewerWindow->getWindow()->setCursor(UI_CURSOR_ARROW);
@@ -2127,6 +2129,35 @@ bool idle_startup()
 	if (STATE_INVENTORY_SEND == LLStartUp::getStartupState())
 	{
 		LL_DEBUGS("AppInitStartupState") << "STATE_INVENTORY_SEND" << LL_ENDL;
+
+		// Change the window title to include the avatar name if we're using multiple viewers -- MC
+		if (gSavedSettings.getBOOL("AllowMultipleViewers"))
+		{
+			std::string title_text = "";
+			std::string grid_name = LLViewerLogin::getInstance()->getGridLabel();
+			if (grid_name == LLViewerLogin::getInstance()->getKnownGridLabel(GRID_INFO_INWORLDZ))
+			{
+				LLStringUtil::format_map_t args;
+				args["[FIRST_NAME]"] = firstname;
+				args["[LAST_NAME]"] = lastname;
+				title_text = LLTrans::getString("TitleBarMultipleMainGrid", args);
+			}
+			else
+			{
+				LLStringUtil::format_map_t args;
+				args["[FIRST_NAME]"] = firstname;
+				args["[LAST_NAME]"] = lastname;
+				args["[GRID_NAME]"] = LLViewerLogin::getInstance()->getGridLabel();
+				title_text = LLTrans::getString("TitleBarMultiple", args);
+			}
+
+			if (!title_text.empty())
+			{
+				gWindowTitle = gSecondLife + " - " + title_text;
+				LLStringUtil::truncate(gWindowTitle, 255);
+				gViewerWindow->getWindow()->setWindowTitle(gWindowTitle);
+			}
+		}
 		// Inform simulator of our language preference
 		LLAgentLanguage::update();
 
