@@ -1737,6 +1737,7 @@ bool idle_startup()
 	{
 		LL_DEBUGS("AppInitStartupState") << "STATE_WORLD_INIT" << LL_ENDL;
 		set_startup_status(0.40f, LLTrans::getString("LoginInitializingWorld"), gAgent.mMOTD);
+		gDisconnected=FALSE;
 		display_startup();
 		// We should have an agent id by this point.
 		llassert(!(gAgentID == LLUUID::null));
