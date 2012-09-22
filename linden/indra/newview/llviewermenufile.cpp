@@ -567,7 +567,7 @@ void upload_new_resource(const std::string& src_filename, std::string name,
 				"No file extension for the file: '%s'\nPlease make sure the file has a correct file extension",
 				short_name.c_str());
 		args["FILE"] = short_name;
- 		upload_error(error_message, "NofileExtension", filename, args);
+		upload_error(error_message, "NoFileExtension", filename, args);
 		return;
 	}
 	else if( exten == "bmp")
@@ -785,7 +785,7 @@ void upload_new_resource(const std::string& src_filename, std::string name,
 	{
 		// Unknown extension
 		// *TODO: Translate?
-		error_message = llformat("Unknown file extension .%s\nExpected .wav, .tga, .bmp, .jpg, .jpeg, or .bvh", exten.c_str());
+		error_message = llformat("Unknown file extension .%s\nExpected .wav, .tga, .bmp, .jpg, .jpeg, .png, or .bvh", exten.c_str());
 		error = TRUE;;
 	}
 
