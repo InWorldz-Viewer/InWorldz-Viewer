@@ -57,6 +57,11 @@
 	     control_name="ObjectChatColor" enabled="true" follows="left|top"
 	     height="47"  label="Objects" left="148" mouse_opaque="true"
 	     name="objects" width="44" />
+  <color_swatch border_color="0.45098 0.517647 0.607843 1" bottom_delta="0"
+	     can_apply_immediately="true" color="0.7 0.9 0.7 1"
+       control_name="ObjectIMColor" enabled="true" follows="left|top"
+	     height="47" label="Obj IMs" left_delta="54" mouse_opaque="true"
+       name="object_ims" width="44" />
 	<color_swatch border_color="0.45098 0.517647 0.607843 1" bottom="-150"
 	     can_apply_immediately="true" color="0.7 0.9 0.7 1"
 	     enabled="true" follows="left|top"

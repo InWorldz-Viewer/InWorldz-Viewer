@@ -2154,7 +2154,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			{
 				return;
 			}
-			chat.mText = name + separator_string + message.substr(message_offset);
+			chat.mText = std::string("IM: ") + name + separator_string + message.substr(message_offset);
 			chat.mFromName = name;
 
 			// Build a link to open the object IM info window.
@@ -2204,11 +2204,11 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 					<< LLURI::mapToQueryString(query_string);
 
 			chat.mURL = link.str();
-			chat.mText = name + separator_string + message.substr(message_offset);
+			chat.mText = std::string("IM: ") + name + separator_string + message.substr(message_offset);
 
 			// Note: lie to LLFloaterChat::addChat(), pretending that this is NOT an IM, because
 			// IMs from objcts don't open IM sessions.
-			chat.mSourceType = CHAT_SOURCE_OBJECT;
+			chat.mSourceType = CHAT_SOURCE_OBJECT_IM;
 			LLFloaterChat::addChat(chat, FALSE, FALSE);
 		}
 		break;
