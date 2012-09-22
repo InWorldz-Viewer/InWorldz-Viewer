@@ -157,6 +157,7 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 	// didn't click in any UI object, so must have clicked in the world
 	LLViewerObject *object = mPick.getObject();
 	LLViewerObject *parent = NULL;
+	bool is_self = (object == gAgent.getAvatarObject());
 
 	if (mPick.mPickType != LLPickInfo::PICK_LAND)
 	{
@@ -293,8 +294,9 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 				break;
 			}
 			object = (LLViewerObject*)object->getParent();
+			is_self = (object == gAgent.getAvatarObject());//refresh since object changed
 		}
-		if (object && object == gAgent.getAvatarObject())
+		if (object && is_self)
 		{
 			// we left clicked on avatar, switch to focus mode
 			LLToolMgr::getInstance()->setTransientTool(LLToolCamera::getInstance());
