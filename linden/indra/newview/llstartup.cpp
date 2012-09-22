@@ -402,6 +402,7 @@ bool idle_startup()
 
 	if ( STATE_FIRST == LLStartUp::getStartupState() )
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_FIRST" << LL_ENDL;
 		gViewerWindow->showCursor();
 		gViewerWindow->getWindow()->setCursor(UI_CURSOR_WAIT);
 
@@ -771,7 +772,7 @@ bool idle_startup()
 	
 	if (STATE_BROWSER_INIT == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInit") << "STATE_BROWSER_INIT" << LL_ENDL;
+		LL_DEBUGS("AppInitStartupState") << "STATE_BROWSER_INIT" << LL_ENDL;
 		std::string msg = LLTrans::getString("LoginInitializingBrowser");
 		set_startup_status(0.03f, msg.c_str(), gAgent.mMOTD.c_str());
 		display_startup();
@@ -784,7 +785,8 @@ bool idle_startup()
 
 	if (STATE_LOGIN_SHOW == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInit") << "Initializing Window" << LL_ENDL;
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_SHOW" << LL_ENDL
+		LL_INFOS("AppInit") << "Initializing Window" << LL_ENDL;
 		
 		gViewerWindow->getWindow()->setCursor(UI_CURSOR_ARROW);
 
@@ -883,6 +885,7 @@ bool idle_startup()
 
 	if (STATE_LOGIN_WAIT == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_WAIT" << LL_ENDL;
 		// Don't do anything.  Wait for the login view to call the login_callback,
 		// which will push us to the next state.
 
@@ -893,6 +896,7 @@ bool idle_startup()
 
 	if (STATE_LOGIN_CLEANUP == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_CLEANUP" << LL_ENDL;
 	
 		// Post login screen, we should see if any settings have changed that may
 		// require us to either start/stop or change the socks proxy. As various communications
@@ -1079,12 +1083,14 @@ bool idle_startup()
 
 	if (STATE_UPDATE_CHECK == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_UPDATE_CHECK" << LL_ENDL;
 		// wait for user to give input via dialog box
 		return FALSE;
 	}
 
 	if(STATE_LOGIN_AUTH_INIT == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_AUTH_INIT" << LL_ENDL;
 //#define LL_MINIMIAL_REQUESTED_OPTIONS
 		gDebugInfo["GridName"] = LLViewerLogin::getInstance()->getGridLabel();
 
@@ -1133,7 +1139,7 @@ bool idle_startup()
 
 	if (STATE_LOGIN_AUTHENTICATE == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInit") << "STATE_LOGIN_AUTHENTICATE" << LL_ENDL;
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_AUTHENTICATE" << LL_ENDL;
 		set_startup_status(progress, auth_desc, auth_message);
 		progress += 0.02f;
 		display_startup();
@@ -1196,7 +1202,7 @@ bool idle_startup()
 
 	if(STATE_LOGIN_NO_DATA_YET == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInit") << "STATE_LOGIN_NO_DATA_YET" << LL_ENDL;
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_NO_DATA_YET" << LL_ENDL;
 		// If we get here we have gotten past the potential stall
 		// in curl, so take "may appear frozen" out of progress bar. JC
 		auth_desc = "Logging in...";
@@ -1221,7 +1227,7 @@ bool idle_startup()
 
 	if(STATE_LOGIN_DOWNLOADING == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInit") << "STATE_LOGIN_DOWNLOADING" << LL_ENDL;
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_DOWNLOADING" << LL_ENDL;
 		// Process messages to keep from dropping circuit.
 		LLMessageSystem* msg = gMessageSystem;
 		while (msg->checkAllMessages(gFrameCount, gServicePump))
@@ -1242,7 +1248,7 @@ bool idle_startup()
 
 	if(STATE_LOGIN_PROCESS_RESPONSE == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInit") << "STATE_LOGIN_PROCESS_RESPONSE" << LL_ENDL;
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_PROCESS_RESPONSE" << LL_ENDL;
 		std::ostringstream emsg;
 		bool quit = false;
 		bool update = false;
@@ -1729,6 +1735,7 @@ bool idle_startup()
 	//---------------------------------------------------------------------
 	if (STATE_WORLD_INIT == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_WORLD_INIT" << LL_ENDL;
 		set_startup_status(0.40f, LLTrans::getString("LoginInitializingWorld"), gAgent.mMOTD);
 		display_startup();
 		// We should have an agent id by this point.
@@ -1801,6 +1808,7 @@ bool idle_startup()
 	//---------------------------------------------------------------------
 	if (STATE_MULTIMEDIA_INIT == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_MULTIMEDIA_INIT" << LL_ENDL;
 		LLStartUp::multimediaInit();
 		LLStartUp::setStartupState( STATE_SEED_GRANTED_WAIT );
 		return FALSE;
@@ -1811,6 +1819,7 @@ bool idle_startup()
 	//---------------------------------------------------------------------
 	if(STATE_SEED_GRANTED_WAIT == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_SEED_GRANTED_WAIT" << LL_ENDL;
 		return FALSE;
 	}
 
@@ -1821,6 +1830,7 @@ bool idle_startup()
 	//---------------------------------------------------------------------
 	if (STATE_SEED_CAP_GRANTED == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_SEED_CAP_GRANTED" << LL_ENDL;
 		update_texture_fetch();
 
 		if ( gViewerWindow != NULL)
@@ -2083,6 +2093,7 @@ bool idle_startup()
 	//---------------------------------------------------------------------
 	if (STATE_AGENT_WAIT == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_AGENT_WAIT" << LL_ENDL;
 		LLMessageSystem* msg = gMessageSystem;
 		while (msg->checkAllMessages(gFrameCount, gServicePump))
 		{
@@ -2115,6 +2126,7 @@ bool idle_startup()
 	//---------------------------------------------------------------------
 	if (STATE_INVENTORY_SEND == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_INVENTORY_SEND" << LL_ENDL;
 		// Inform simulator of our language preference
 		LLAgentLanguage::update();
 
@@ -2313,6 +2325,7 @@ bool idle_startup()
 	//---------------------------------------------------------------------
 	if (STATE_MISC == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_MISC" << LL_ENDL;
 		// We have a region, and just did a big inventory download.
 		// We can estimate the user's connection speed, and set their
 		// max bandwidth accordingly.  JC
@@ -2500,6 +2513,7 @@ bool idle_startup()
 
 	if (STATE_PRECACHE == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_PRECACHE" << LL_ENDL;
 		F32 timeout_frac = timeout.getElapsedTimeF32()/PRECACHING_DELAY;
 
 		// We now have an inventory skeleton, so if this is a user's first
@@ -2556,6 +2570,8 @@ bool idle_startup()
 
 	if (STATE_WEARABLES_WAIT == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_WEARABLES_WAIT" << LL_ENDL;
+
 		static LLFrameTimer wearables_timer;
 
 		const F32 wearables_time = wearables_timer.getElapsedTimeF32();
@@ -2617,6 +2633,7 @@ bool idle_startup()
 
 	if (STATE_CLEANUP == LLStartUp::getStartupState())
 	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_CLEANUP" << LL_ENDL;
 		set_startup_status(1.0, "", "");
 
 		// Let the map know about the inventory.
