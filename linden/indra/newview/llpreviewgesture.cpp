@@ -564,14 +564,36 @@ void LLPreviewGesture::addModifiers()
 	combo->setCurrentByIndex(0);
 }
 
+std::string magic_key(KEY key)
+{
+	char buffer[2];		/* Flawfinder: ignore */
+	buffer[0] = key;
+	buffer[1] = '\0';
+	std::string res = std::string(buffer);
+	std::string lolk = LLKeyboard::stringFromKey(key);
+	if(res == lolk)
+	{
+		if( (key >= ' ') && (key <= '~' ) && (key != KEY_F1) )
+		{
+			return lolk;
+		}else
+		{
+			return "";
+		}
+	}
+	return lolk;
+}
 void LLPreviewGesture::addKeys()
 {
 	LLComboBox* combo = mKeyCombo;
 
 	combo->add( NONE_LABEL );
-	for (KEY key = KEY_F2; key <= KEY_F12; key++)
+	for (KEY key = ' '; key < KEY_NONE; key++)
 	{
-		combo->add( LLKeyboard::stringFromKey(key), ADD_BOTTOM );
+		if (key == KEY_F1) continue;
+
+		std::string keystr = magic_key(key);
+		if(keystr != "")combo->add( keystr, ADD_BOTTOM );
 	}
 	combo->setCurrentByIndex(0);
 }
