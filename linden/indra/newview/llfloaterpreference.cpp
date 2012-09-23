@@ -405,34 +405,37 @@ bool LLFloaterPreference::callbackReset(const LLSD& notification, const LLSD& re
 void LLFloaterPreference::onBtnOK( void* userdata )
 {
 	LLFloaterPreference *fp =(LLFloaterPreference *)userdata;
-	// commit any outstanding text entry
-	if (fp->hasFocus())
+	if (fp)
 	{
-		LLUICtrl* cur_focus = dynamic_cast<LLUICtrl*>(gFocusMgr.getKeyboardFocus());
-		if (cur_focus->acceptsTextInput())
+		// commit any outstanding text entry
+		if (fp->hasFocus())
 		{
-			cur_focus->onCommit();
+			LLUICtrl* cur_focus = dynamic_cast<LLUICtrl*>(gFocusMgr.getKeyboardFocus());
+			if (cur_focus->acceptsTextInput())
+			{
+				cur_focus->onCommit();
+			}
 		}
-	}
 
-	if (fp->canClose())
-	{
-		fp->apply();
-		fp->close(false);
+		if (fp->canClose())
+		{
+			fp->apply();
+			fp->close(false);
 
-		gSavedSettings.saveToFile( gSavedSettings.getString("ClientSettingsFile"), TRUE );
-		
-		std::string crash_settings_filename = gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, CRASH_SETTINGS_FILE);
-		// save all settings, even if equals defaults
-		gCrashSettings.saveToFile(crash_settings_filename, FALSE);
-	}
-	else
-	{
-		// Show beep, pop up dialog, etc.
-		llinfos << "Can't close preferences!" << llendl;
-	}
+			gSavedSettings.saveToFile( gSavedSettings.getString("ClientSettingsFile"), TRUE );
+			
+			std::string crash_settings_filename = gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS, CRASH_SETTINGS_FILE);
+			// save all settings, even if equals defaults
+			gCrashSettings.saveToFile(crash_settings_filename, FALSE);
+		}
+		else
+		{
+			// Show beep, pop up dialog, etc.
+			llinfos << "Can't close preferences!" << llendl;
+		}
 
-	LLPanelLogin::refreshLocation( false );
+		LLPanelLogin::refreshLocation( false );
+	}
 }
 
 
@@ -440,17 +443,20 @@ void LLFloaterPreference::onBtnOK( void* userdata )
 void LLFloaterPreference::onBtnApply( void* userdata )
 {
 	LLFloaterPreference *fp =(LLFloaterPreference *)userdata;
-	if (fp->hasFocus())
+	if (fp)
 	{
-		LLUICtrl* cur_focus = dynamic_cast<LLUICtrl*>(gFocusMgr.getKeyboardFocus());
-		if (cur_focus->acceptsTextInput())
+		if (fp->hasFocus())
 		{
-			cur_focus->onCommit();
+			LLUICtrl* cur_focus = dynamic_cast<LLUICtrl*>(gFocusMgr.getKeyboardFocus());
+			if (cur_focus->acceptsTextInput())
+			{
+				cur_focus->onCommit();
+			}
 		}
-	}
-	fp->apply();
+		fp->apply();
 
-	LLPanelLogin::refreshLocation( false );
+		LLPanelLogin::refreshLocation( false );
+	}
 }
 
 
@@ -466,15 +472,18 @@ void LLFloaterPreference::onClose(bool app_quitting)
 void LLFloaterPreference::onBtnCancel( void* userdata )
 {
 	LLFloaterPreference *fp =(LLFloaterPreference *)userdata;
-	if (fp->hasFocus())
+	if (fp)
 	{
-		LLUICtrl* cur_focus = dynamic_cast<LLUICtrl*>(gFocusMgr.getKeyboardFocus());
-		if (cur_focus->acceptsTextInput())
+		if (fp->hasFocus())
 		{
-			cur_focus->onCommit();
+			LLUICtrl* cur_focus = dynamic_cast<LLUICtrl*>(gFocusMgr.getKeyboardFocus());
+			if (cur_focus->acceptsTextInput())
+			{
+				cur_focus->onCommit();
+			}
 		}
+		fp->close(); // side effect will also cancel any unsaved changes.
 	}
-	fp->close(); // side effect will also cancel any unsaved changes.
 }
 
 
