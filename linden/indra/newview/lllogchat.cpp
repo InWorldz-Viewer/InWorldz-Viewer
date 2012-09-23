@@ -107,6 +107,9 @@ void LLLogChat::saveHistory(std::string filename, std::string line)
 		return;
 	}
 
+	//dont allow bad files names
+	filename = gDirUtilp->getScrubbedFileName(filename);
+
 	LLFILE* fp = LLFile::fopen(LLLogChat::makeLogFileName(filename), "a"); 		/*Flawfinder: ignore*/
 	if (!fp)
 	{
@@ -127,6 +130,9 @@ void LLLogChat::loadHistory(std::string filename , void (*callback)(ELogLineType
 		llwarns << "Filename is Empty!" << llendl;
 		return ;
 	}
+
+	//dont allow bad files names
+	filename = gDirUtilp->getScrubbedFileName(filename);
 
 	LLFILE* fptr = LLFile::fopen(makeLogFileName(filename), "r");		/*Flawfinder: ignore*/
 	if (!fptr)
