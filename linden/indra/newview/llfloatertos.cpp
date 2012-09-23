@@ -89,10 +89,10 @@ LLFloaterTOS::LLFloaterTOS(ETOSType type, const std::string & message)
 
 // helper class that trys to download a URL from a web site and calls a method 
 // on parent class indicating if the web server is working or not
-class LLIamHere : public LLHTTPClient::Responder
+class LLIamHereTOS : public LLHTTPClient::Responder
 {
 	private:
-		LLIamHere( LLFloaterTOS* parent ) :
+		LLIamHereTOS( LLFloaterTOS* parent ) :
 		   mParent( parent )
 		{}
 
@@ -100,9 +100,9 @@ class LLIamHere : public LLHTTPClient::Responder
 
 	public:
 
-		static boost::intrusive_ptr< LLIamHere > build( LLFloaterTOS* parent )
+		static boost::intrusive_ptr< LLIamHereTOS > build( LLFloaterTOS* parent )
 		{
-			return boost::intrusive_ptr< LLIamHere >( new LLIamHere( parent ) );
+			return boost::intrusive_ptr< LLIamHereTOS >( new LLIamHereTOS( parent ) );
 		};
 		
 		virtual void  setParent( LLFloaterTOS* parentIn )
@@ -131,7 +131,7 @@ class LLIamHere : public LLHTTPClient::Responder
 
 // this is global and not a class member to keep crud out of the header file
 namespace {
-	boost::intrusive_ptr< LLIamHere > gResponsePtr = 0;
+	boost::intrusive_ptr< LLIamHereTOS > gResponsePtr = 0;
 };
 
 BOOL LLFloaterTOS::postBuild()
@@ -165,7 +165,7 @@ BOOL LLFloaterTOS::postBuild()
 	if ( web_browser )
 	{
 		web_browser->addObserver(this);
-		gResponsePtr = LLIamHere::build( this );
+		gResponsePtr = LLIamHereTOS::build( this );
 		LLHTTPClient::get( getString( "real_url" ), gResponsePtr );
 	}
 
