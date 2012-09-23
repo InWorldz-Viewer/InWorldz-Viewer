@@ -124,6 +124,7 @@ protected:
 	LLAssetID			mMotionID;
 	LLTransactionID		mTransactionID;
 	BOOL				mEnabled;
+	BOOL				mInWorld;
 	LLAnimPauseRequest	mPauseRequest;
 
 	std::map<std::string, LLUUID>	mIDList;
