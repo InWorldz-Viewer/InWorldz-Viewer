@@ -6914,6 +6914,11 @@ BOOL LLAgent::isWearingItem( const LLUUID& item_id )
 // static
 void LLAgent::processAgentInitialWearablesUpdate( LLMessageSystem* mesgsys, void** user_data )
 {
+	if (gNoRender)
+	{
+		return;
+	}
+
 	// We should only receive this message a single time.  Ignore subsequent AgentWearablesUpdates
 	// that may result from AgentWearablesRequest having been sent more than once. 
 	static bool first = true;
