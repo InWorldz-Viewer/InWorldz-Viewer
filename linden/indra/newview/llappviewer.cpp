@@ -3514,8 +3514,11 @@ void LLAppViewer::idle()
 		// Check for away from keyboard, kick idle agents.
 		idle_afk_check();
 
-		//  Update statistics for this frame
-		update_statistics(gFrameCount);
+		if (!gDisconnected) //check again
+		{
+			//  Update statistics for this frame
+			update_statistics(gFrameCount);
+		}
 	}
 
 	////////////////////////////////////////
@@ -3942,6 +3945,7 @@ void LLAppViewer::idleNetwork()
 		return;
 
 	// Retransmit unacknowledged packets.
+	if (gXferManager)
 	gXferManager->retransmitUnackedPackets();
 	gAssetStorage->checkForTimeouts();
 	llpushcallstacks ;
