@@ -103,6 +103,22 @@
     <key>Value</key>
     <integer>1</integer>
   </map>
+  <key>FloaterDebugSettingsRect</key>
+    <map>
+      <key>Comment</key>
+      <string>Rectangle for Debug Settings floater</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Rect</string>
+      <key>Value</key>
+      <array>
+        <integer>0</integer>
+        <integer>0</integer>
+        <integer>0</integer>
+        <integer>0</integer>
+      </array>
+    </map>
   <key>FloaterGroupTitlesRect</key>
   <map>
     <key>Comment</key>

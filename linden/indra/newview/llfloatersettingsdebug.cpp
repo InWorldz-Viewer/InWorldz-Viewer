@@ -55,7 +55,6 @@ LLFloaterSettingsDebug::~LLFloaterSettingsDebug()
 
 BOOL LLFloaterSettingsDebug::postBuild()
 {
-	mSettingsNames.clear();
 	mComboNames = getChild<LLComboBox>("settings_combo");
 
 	struct f : public LLControlGroup::ApplyFunctor
@@ -78,7 +77,7 @@ BOOL LLFloaterSettingsDebug::postBuild()
 	mComboNames->sortByName();
 	mComboNames->setCommitCallback(onSettingSelect);
 	mComboNames->setCallbackUserData(this);
-	//mComboNames->updateSelection();
+	mComboNames->selectFirstItem();
 
 	childSetCommitCallback("val_spinner_1", onCommitSettings);
 	childSetUserData("val_spinner_1", this);
@@ -98,10 +97,6 @@ BOOL LLFloaterSettingsDebug::postBuild()
 	mComment = getChild<LLTextEditor>("comment_text");
 
 	getChild<LLSearchEditor>("control_search")->setSearchCallback(onSearchEdit, this);
-	
-	// There really are many better ways to do this, but laziness... she is powerful... -- MC
-	mComboNames->getAllData(mSettingsNames);
-	getChild<LLSearchEditor>("control_search")->setEnabled(!(mSettingsNames.empty()));
 
 	return TRUE;
 }
@@ -143,36 +138,43 @@ void LLFloaterSettingsDebug::onSettingSelect(LLUICtrl* ctrl, void* user_data)
 //static
 void LLFloaterSettingsDebug::onSearchEdit(const std::string& search_string, void* user_data)
 {
-	if (search_string.empty())
-	{
-		return;
-	}
-
 	LLFloaterSettingsDebug* self = (LLFloaterSettingsDebug*)user_data;
 	if (!self || !self->mComboNames)
 	{
 		return;
 	}
 
-	std::string search_text = search_string;
+	static std::string search_text;
+	search_text = search_string;
 	LLStringUtil::trim(search_text);
-	LLStringUtil::toUpper(search_text);
-
-	std::string settings_name("");
-	size_t found;
-	for (std::vector<LLScrollListItem*>::iterator vIt = self->mSettingsNames.begin();
-		 vIt != self->mSettingsNames.end(); ++vIt)
+	LLStringUtil::toLower(search_text);
+	
+	struct f : public LLControlGroup::ApplyFunctor
 	{
-		settings_name = (*vIt)->getValue().asString();
-		LLStringUtil::toUpper(settings_name);
-		found = settings_name.find(search_text);
-		if (found != std::string::npos)
+		LLComboBox* combo;
+		f(LLComboBox* c) : combo(c) {}
+		virtual void apply(const std::string& name, LLControlVariable* control)
 		{
-			// search and update combo on partial matches
-			self->mComboNames->selectByValue((*vIt)->getValue());
-			break;
+			if (!control->isHiddenFromSettingsEditor())
+			{
+				std::string setting_name = name;
+				LLStringUtil::toLower(setting_name);
+				if (search_text.empty() || setting_name.find(search_text) != std::string::npos)
+				{
+					combo->add(name, (void*)control);
+				}
+			}
 		}
-	}
+	} func(self->mComboNames);
+
+	self->mComboNames->removeall();
+
+	gSavedSettings.applyToAll(&func);
+	gSavedPerAccountSettings.applyToAll(&func);
+	gColors.applyToAll(&func);
+
+	self->mComboNames->sortByName();
+	self->mComboNames->selectFirstItem();
 }
 
 //static
