@@ -7073,7 +7073,10 @@ void LLAgent::recoverMissingWearable( EWearableType type )
 
 	S32 type_s32 = (S32) type;
 	mWearableEntry[type_s32].mWearable = new_wearable;
-	new_wearable->writeToAvatar( TRUE );
+	if (new_wearable)
+	{
+		new_wearable->writeToAvatar( TRUE );
+	}
 
 	// Add a new one in the lost and found folder.
 	// (We used to overwrite the "not found" one, but that could potentially
@@ -7645,34 +7648,37 @@ void LLAgent::setWearableOutfit(
 	for( i = 0; i < count; i++ )
 	{
 		LLWearable* new_wearable = wearables[i];
-		LLPointer<LLInventoryItem> new_item = items[i];
-
-		EWearableType type = new_wearable->getType();
-		wearables_to_remove[type] = FALSE;
-
-		LLWearable* old_wearable = mWearableEntry[ type ].mWearable;
-		if( old_wearable )
+		if (new_wearable)
 		{
-			const LLUUID& old_item_id = mWearableEntry[ type ].mItemID;
-			if( (old_wearable->getID() == new_wearable->getID()) &&
-				(old_item_id == new_item->getUUID()) )
+			LLPointer<LLInventoryItem> new_item = items[i];
+
+			EWearableType type = new_wearable->getType();
+			wearables_to_remove[type] = FALSE;
+
+			LLWearable* old_wearable = mWearableEntry[ type ].mWearable;
+			if( old_wearable )
 			{
-				lldebugs << "No change to wearable asset and item: " << LLWearable::typeToTypeName( type ) << llendl;
-				continue;
+				const LLUUID& old_item_id = mWearableEntry[ type ].mItemID;
+				if( (old_wearable->getID() == new_wearable->getID()) &&
+					(old_item_id == new_item->getUUID()) )
+				{
+					lldebugs << "No change to wearable asset and item: " << LLWearable::typeToTypeName( type ) << llendl;
+					continue;
+				}
+
+				gInventory.addChangedMask(LLInventoryObserver::LABEL, old_item_id);
+
+				// Assumes existing wearables are not dirty.
+				if( old_wearable->isDirty() )
+				{
+					llassert(0);
+					continue;
+				}
 			}
 
-			gInventory.addChangedMask(LLInventoryObserver::LABEL, old_item_id);
-
-			// Assumes existing wearables are not dirty.
-			if( old_wearable->isDirty() )
-			{
-				llassert(0);
-				continue;
-			}
+			mWearableEntry[ type ].mItemID = new_item->getUUID();
+			mWearableEntry[ type ].mWearable = new_wearable;
 		}
-
-		mWearableEntry[ type ].mItemID = new_item->getUUID();
-		mWearableEntry[ type ].mWearable = new_wearable;
 	}
 
 	std::vector<LLWearable*> wearables_being_removed;
@@ -7723,40 +7729,49 @@ void LLAgent::setWearableOutfit(
 // User has picked "wear on avatar" from a menu.
 void LLAgent::setWearable( LLInventoryItem* new_item, LLWearable* new_wearable )
 {
-	EWearableType type = new_wearable->getType();
-
-	LLWearable* old_wearable = mWearableEntry[ type ].mWearable;
-	if( old_wearable )
+	if (new_item && new_wearable)
 	{
-		const LLUUID& old_item_id = mWearableEntry[ type ].mItemID;
-		if( (old_wearable->getID() == new_wearable->getID()) &&
-			(old_item_id == new_item->getUUID()) )
+		EWearableType type = new_wearable->getType();
+
+		LLWearable* old_wearable = mWearableEntry[ type ].mWearable;
+		if( old_wearable )
 		{
-			lldebugs << "No change to wearable asset and item: " << LLWearable::typeToTypeName( type ) << llendl;
-			return;
+			const LLUUID& old_item_id = mWearableEntry[ type ].mItemID;
+			if( (old_wearable->getID() == new_wearable->getID()) &&
+				(old_item_id == new_item->getUUID()) )
+			{
+				lldebugs << "No change to wearable asset and item: " << LLWearable::typeToTypeName( type ) << llendl;
+				return;
+			}
+
+			if( old_wearable->isDirty() )
+			{
+				// Bring up modal dialog: Save changes? Yes, No, Cancel
+				LLSD payload;
+				payload["item_id"] = new_item->getUUID();
+				LLNotifications::instance().add( "WearableSave", LLSD(), payload, boost::bind(LLAgent::onSetWearableDialog, _1, _2, new_wearable));
+				return;
+			}
 		}
 
-		if( old_wearable->isDirty() )
-		{
-			// Bring up modal dialog: Save changes? Yes, No, Cancel
-			LLSD payload;
-			payload["item_id"] = new_item->getUUID();
-			LLNotifications::instance().add( "WearableSave", LLSD(), payload, boost::bind(LLAgent::onSetWearableDialog, _1, _2, new_wearable));
-			return;
-		}
+		setWearableFinal( new_item, new_wearable );
 	}
-
-	setWearableFinal( new_item, new_wearable );
 }
 
 // static 
 bool LLAgent::onSetWearableDialog( const LLSD& notification, const LLSD& response, LLWearable* wearable )
 {
+	if (!wearable)
+	{
+		return false;
+	}
+
 	S32 option = LLNotification::getSelectedOption(notification, response);
 	LLInventoryItem* new_item = gInventory.getItem( notification["payload"]["item_id"].asUUID());
 	if( !new_item )
 	{
 		delete wearable;
+		wearable = NULL;
 		return false;
 	}
 
@@ -7780,12 +7795,18 @@ bool LLAgent::onSetWearableDialog( const LLSD& notification, const LLSD& respons
 	}
 
 	delete wearable;
+	wearable = NULL;
 	return false;
 }
 
 // Called from setWearable() and onSetWearableDialog() to actually set the wearable.
 void LLAgent::setWearableFinal( LLInventoryItem* new_item, LLWearable* new_wearable )
 {
+	if (!new_wearable)
+	{
+		return;
+	}
+
 	EWearableType type = new_wearable->getType();
 
 	// Replace the old wearable with a new one.
