@@ -400,8 +400,6 @@ static void settings_to_globals()
 	gShowObjectUpdates = gSavedSettings.getBOOL("ShowObjectUpdates");
 	LLWorldMapView::sMapScale = gSavedSettings.getF32("MapScale");
 	LLHoverView::sShowHoverTips = gSavedSettings.getBOOL("ShowHoverTips");
-
-	LLCubeMap::sUseCubeMaps = LLFeatureManager::getInstance()->isFeatureAvailable("RenderCubeMap");
 }
 
 static void settings_modify()
@@ -743,6 +741,9 @@ bool LLAppViewer::init()
 	//
 	initWindow();
 	LL_INFOS("InitInfo") << "Window is initialized." << LL_ENDL ;
+
+	// initWindow also initializes the Feature List, so now we can initialize this global.
+	LLCubeMap::sUseCubeMaps = LLFeatureManager::getInstance()->isFeatureAvailable("RenderCubeMap");
 
 	// call all self-registered classes
 	LLInitClassList::instance().fireCallbacks();
