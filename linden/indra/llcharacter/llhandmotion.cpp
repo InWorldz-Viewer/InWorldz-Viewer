@@ -136,7 +136,7 @@ BOOL LLHandMotion::onUpdate(F32 time, U8* joint_mask)
 	// check to see if requested pose has changed
 	if (!requestedHandPose)
 	{
-		if (mNewPose != HAND_POSE_RELAXED && mNewPose != mCurrentPose)
+		if ((mNewPose != HAND_POSE_RELAXED) && (mNewPose != mCurrentPose))
 		{
 			mCharacter->setVisualParamWeight(getHandPoseName(mNewPose).c_str(), 0.f);
 		}
@@ -144,12 +144,20 @@ BOOL LLHandMotion::onUpdate(F32 time, U8* joint_mask)
 	}
 	else
 	{
-		// this is a new morph we didn't know about before
-		if (*requestedHandPose != mNewPose && mNewPose != mCurrentPose && mNewPose != HAND_POSE_SPREAD)
+		if (*requestedHandPose < NUM_HAND_POSES)
 		{
-			mCharacter->setVisualParamWeight(getHandPoseName(mNewPose).c_str(), 0.f);
+			// this is a new morph we didn't know about before
+			if ((*requestedHandPose != mNewPose) && (mNewPose != mCurrentPose) && (mNewPose != HAND_POSE_SPREAD))
+			{
+				mCharacter->setVisualParamWeight(getHandPoseName(mNewPose).c_str(), 0.f);
+			}
+			mNewPose = *requestedHandPose;
 		}
-		mNewPose = *requestedHandPose;
+		else
+		{
+			llwarns << "Invalid requested hand pose index; ignoring new hand pose." << llendl;
+			mNewPose = mCurrentPose;
+ 		}
 	}
 
 	mCharacter->removeAnimationData("Hand Pose");
