@@ -215,6 +215,7 @@ public:
 
 protected:
 	/*virtual*/ ~LLViewerImage();
+	bool	mIsLocalImage;
 	
 public:
 	LLViewerImage(const std::string& url, const LLUUID& id, BOOL usemipmaps = TRUE);
@@ -241,6 +242,8 @@ public:
 
 	BOOL isLargeImage() ;
 	BOOL isUpdateFrozen() ;
+	bool isLocalImage()						{ return mIsLocalImage;		}
+	void setAsLocalImage(bool is_local)		{ mIsLocalImage = is_local;	}
 
 	// Process image stats to determine priority/quality requirements.
 	void processTextureStats();

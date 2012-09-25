@@ -189,6 +189,7 @@ private:
 	BOOL					 mDirty;
 	BOOL					 mShowLoadingPlaceholder;
 	std::string				 mLoadingPlaceholderString;
+	LLTextBox*				 mLocalTextureLabel;
 };
 
 // XUI HACK: When floaters converted, switch this file to lltexturepicker.h/cpp

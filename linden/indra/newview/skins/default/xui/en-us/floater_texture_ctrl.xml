@@ -12,6 +12,12 @@
 	     mouse_opaque="true" name="Multiple" v_pad="0" width="163">
 		Multiple
 	</text>
+  <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
+	     bottom="-40" drop_shadow_visible="true" enabled="true" follows="left|top"
+	     font="SansSerifSmall" h_pad="0" halign="center" height="14" left="4"
+	     mouse_opaque="true" name="Local" v_pad="0" width="163">
+		Local Preview Texture
+	</text>
 	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
 	     bottom="-204" drop_shadow_visible="true" enabled="true" follows="left|top"
 	     font="SansSerifSmall" h_pad="0" halign="left" height="14" left="4"
@@ -34,12 +40,6 @@
 	     height="24" initial_value="true" label="Show Folders" left="175"
 	     mouse_opaque="true" name="show_folders_check" radio_style="false"
 	     width="201" />
-	<!--<search_editor bottom="-36" enabled="true" follows="left|top|right" height="16"
-	     label="Type here to search" left="175" mouse_opaque="true"
-	     name="inventory search editor" width="331" />
-	<inventory_panel allow_multi_select="false" border="true" bottom="-256" enabled="true"
-	     follows="left|top|right|bottom" height="216" left="175" mouse_opaque="true"
-	     name="inventory panel" sort_order="TexturePickerSortOrder" width="331" />-->
 	<check_box bottom="-282" enabled="true" follows="left|bottom" font="SansSerifSmall"
 	     height="20" initial_value="true" label="Apply Immediately" left="4"
 	     mouse_opaque="true" name="apply_immediate_check" radio_style="false"
@@ -70,7 +70,7 @@
 	         halign="center" height="22" label="Upload New..."
 	         left="3" mouse_opaque="true" name="Upload" scale_image="true" width="120" />
     </panel>
-    <panel border="false" bottom_delta="0" follows="left|top" height="260" label="Inworld Preview" left="175" mouse_opaque="false" name="local_tab" width="470">
+    <panel border="false" bottom_delta="0" follows="left|top" height="260" label="Local Preview" left="175" mouse_opaque="false" name="local_tab" width="470">
   <!-- tag: vaa emerald local_asset_browser [begin] -->
       <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
            bottom_delta="-20" drop_shadow_visible="true" enabled="true" follows="left|top"
@@ -86,9 +86,9 @@
               font="SansSerifSmall" halign="center" height="20" 
               label="Remove" left_delta="83" mouse_opaque="true" 
               name="Remove" scale_image="true" width="80" visible="true" />
-      <button bottom_delta="0" enabled="true" follows="left|top" 
+      <button bottom_delta="0" enabled="true" follows="right|top" 
               font="SansSerifSmall" halign="center" height="20" 
-              label="More Info..." left_delta="103" mouse_opaque="true" 
+              label="Browser..." right="-140" mouse_opaque="true" 
               name="Browser" scale_image="true" width="100" visible="true" />
       <scroll_list
               name="local_name_list"

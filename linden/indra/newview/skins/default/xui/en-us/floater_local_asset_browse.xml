@@ -18,7 +18,7 @@
 
   <button
     name="add_btn"
-    label="Add"
+    label="Add..."
     left="12.5"
     bottom="-45"
     width="90"
@@ -34,7 +34,7 @@
 		/>
   <button
     name="upload_btn"
-    label="Upload Image"
+    label="Upload Image..."
     right="-5"
     bottom_delta="0"
     width="170"
