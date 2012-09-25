@@ -8828,7 +8828,7 @@
     <key>RenderVolumeLODFactor</key>
     <map>
       <key>Comment</key>
-      <string>Controls level of detail of primitives (multiplier for current screen area when calculated level of detail)</string>
+      <string>The value set in PREFERENCES > GRAPHICS > OBJECTS. Controls level of detail of primitives (multiplier for current screen area when calculated level of detail). If you apply new preferences, THIS WILL CHANGE!</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
