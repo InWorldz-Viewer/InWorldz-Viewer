@@ -13,7 +13,7 @@
 		<menu_item_call label="社团邀请..." name="Invite..." />
 		<menu_item_call label="驱逐..." name="Eject..." />
 		<menu_item_call label="调试..." name="Debug..." />
-		<menu_item_call label="审查" name="Object Inspect"/>
+		<menu_item_call label="审查" name="Avatar Inspect"/>
 	</pie_menu>
 	<menu_item_call label="发送消息..." name="Send IM..." />
 </pie_menu>
