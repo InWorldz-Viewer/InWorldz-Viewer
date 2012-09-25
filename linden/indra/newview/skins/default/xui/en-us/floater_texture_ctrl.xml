@@ -66,9 +66,9 @@
         <inventory_panel allow_multi_select="false" border="true" bottom="-237" enabled="true"
 	         follows="left|top|right|bottom" height="215" left="0" mouse_opaque="true"
 	         name="inventory panel" sort_order="TexturePickerSortOrder" width="331" />
-      <button bottom="-261" enabled="true" follows="right|bottom" font="SansSerif"
-	         halign="center" height="22" label="Upload New..."
-	         left="3" mouse_opaque="true" name="Upload" scale_image="true" width="120" />
+      <button bottom="-261" enabled="true" follows="left|bottom" font="SansSerif"
+	         halign="center" height="22" label="Upload..."
+	         left="1" mouse_opaque="true" name="Upload" scale_image="true" width="120" />
     </panel>
     <panel border="false" bottom_delta="0" follows="left|top" height="260" label="Local Preview" left="175" mouse_opaque="false" name="local_tab" width="470">
   <!-- tag: vaa emerald local_asset_browser [begin] -->
@@ -107,9 +107,9 @@
 	      <column name="unit_name" label="Name" dynamicwidth="true" />
 	      <column name="unit_id_HIDDEN" label="ID" width="0" />
 	    </scroll_list>
-      <button bottom="-261" enabled="false" follows="right|bottom" font="SansSerif"
+      <button bottom="-261" enabled="false" follows="left|bottom" font="SansSerif"
 	            halign="center" height="22" label="Upload This..."
-	            left="3" mouse_opaque="true" name="Upload_From_Local" scale_image="true" width="120" />
+	            left="1" mouse_opaque="true" name="Upload_From_Local" scale_image="true" width="120" />
 	  <!-- tag: vaa emerald local_asset_browser [end] -->
     </panel>
   </tab_container>
