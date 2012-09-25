@@ -614,6 +614,10 @@ void LLFloaterTexturePicker::draw()
 	childSetEnabled("Pipette", mActive);
 	childSetValue("Pipette", LLToolMgr::getInstance()->getCurrentTool() == LLToolPipette::getInstance());
 
+	// base the cancel button on this checkbox, update the checkbox before here if needed
+	bool apply_immediate = childGetValue("apply_immediate_check").asBoolean();
+	childSetEnabled("Cancel", !apply_immediate);
+
 	//RN: reset search bar to reflect actual search query (all caps, for example)
 	mSearchEdit->setText(mInventoryPanel->getFilterSubString());
 
@@ -955,16 +959,17 @@ void LLFloaterTexturePicker::onLocalScrollCommit(LLUICtrl *ctrl, void *userdata)
 		self->childSetEnabled("Upload_From_Local", can_select);
 		if (can_select)
 		{
-			LLUUID id = (LLUUID)self->mLocalScrollCtrl->getSelectedItemLabel( LOCALLIST_COL_ID ); 
+			LLUUID id = (LLUUID)self->mLocalScrollCtrl->getSelectedItemLabel( LOCALLIST_COL_ID );
+
+			if ( self->mOwner->getEnabled() )
+			{
+				self->setImageID( id );
+			}
 
 			if ( self->childGetValue("apply_immediate_check").asBoolean() && self->mOwner )
 			{
 				self->mTexturep->setAsLocalImage(true);
 				self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_CHANGE, id); // calls an overridden function.
-				if ( self->mOwner->getEnabled() )
-				{
-					self->setImageID( id );
-				}
 			}
 		}
 	}
