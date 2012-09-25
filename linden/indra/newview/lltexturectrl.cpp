@@ -949,18 +949,22 @@ void LLFloaterTexturePicker::onBtnBrowser(void *userdata)
 void LLFloaterTexturePicker::onLocalScrollCommit(LLUICtrl *ctrl, void *userdata)
 {
 	LLFloaterTexturePicker* self = (LLFloaterTexturePicker*) userdata;
-	if (self)
+	if (self && self->mLocalScrollCtrl)
 	{
-		self->childSetEnabled("Upload_From_Local", (self->mLocalScrollCtrl->getFirstSelected() != NULL));
-		LLUUID id = (LLUUID)self->mLocalScrollCtrl->getSelectedItemLabel( LOCALLIST_COL_ID ); 
-
-		if ( self->childGetValue("apply_immediate_check").asBoolean() && self->mOwner )
+		bool can_select = (self->mLocalScrollCtrl->getFirstSelected() != NULL);
+		self->childSetEnabled("Upload_From_Local", can_select);
+		if (can_select)
 		{
-			self->mTexturep->setAsLocalImage(true);
-			self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_CHANGE, id); // calls an overridden function.
-			if ( self->mOwner->getEnabled() )
+			LLUUID id = (LLUUID)self->mLocalScrollCtrl->getSelectedItemLabel( LOCALLIST_COL_ID ); 
+
+			if ( self->childGetValue("apply_immediate_check").asBoolean() && self->mOwner )
 			{
-				self->setImageID( id );
+				self->mTexturep->setAsLocalImage(true);
+				self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_CHANGE, id); // calls an overridden function.
+				if ( self->mOwner->getEnabled() )
+				{
+					self->setImageID( id );
+				}
 			}
 		}
 	}
