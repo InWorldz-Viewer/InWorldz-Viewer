@@ -112,6 +112,7 @@ void QToolAlign::handleSelect()
 
 	//llwarns << "in select" << llendl;
 	LLSelectMgr::getInstance()->promoteSelectionToRoot();
+	LLSelectMgr::getInstance()->updateSelectionCenter();
 	gFloaterTools->setStatusText("align");
 }
 
