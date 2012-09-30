@@ -358,14 +358,7 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 			|| (object->isAttachment() && !object->isHUDAttachment() && !object->permYouOwner()))
 		{
 			// Toggle Inspect only for attachments
-			if (object->isAttachment())
-			{
-				gMenuHolder->childSetEnabled("Avatar Inspect", TRUE);
-			}
-			else
-			{
-				gMenuHolder->childSetEnabled("Avatar Inspect", FALSE);
-			}
+			gMenuHolder->childSetEnabled("Avatar Inspect", object->isAttachment());
 
 			// Find the attachment's avatar
 			while (object->isAttachment())
