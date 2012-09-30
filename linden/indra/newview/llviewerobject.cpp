@@ -61,9 +61,11 @@
 #include "llagent.h"
 #include "llbbox.h"
 #include "llbox.h"
+#include "llchat.h"
 #include "llcylinder.h"
 #include "lldrawable.h"
 #include "llface.h"
+#include "llfloaterchat.h"
 #include "llfloaterproperties.h"
 #include "llfollowcam.h"
 #include "llselectmgr.h"
@@ -381,49 +383,154 @@ void LLViewerObject::markDead()
 
 void LLViewerObject::dump() const
 {
-	llinfos << "Type: " << pCodeToString(mPrimitiveCode) << llendl;
-	llinfos << "Drawable: " << (LLDrawable *)mDrawable << llendl;
-	llinfos << "Update Age: " << LLFrameTimer::getElapsedSeconds() - mLastMessageUpdateSecs << llendl;
+	LLSelectNode* nodep = LLSelectMgr::getInstance()->getSelection()->getFirstRootNode();
+	if (!nodep)
+	{
+		nodep = LLSelectMgr::getInstance()->getSelection()->getFirstNode();
+	}
+	
+	std::string owner_name;
+	LLUUID owner_id;
+	LLSelectMgr::getInstance()->selectGetOwner(owner_id, owner_name);
 
-	llinfos << "Parent: " << getParent() << llendl;
-	llinfos << "ID: " << mID << llendl;
-	llinfos << "LocalID: " << mLocalID << llendl;
-	llinfos << "PositionRegion: " << getPositionRegion() << llendl;
-	llinfos << "PositionAgent: " << getPositionAgent() << llendl;
-	llinfos << "PositionGlobal: " << getPositionGlobal() << llendl;
-	llinfos << "Velocity: " << getVelocity() << llendl;
+	std::ostringstream str;
+	if (nodep)
+	{
+		str << "Name: " << nodep->mName << "\n";
+	}
+	str << "Owner: " << owner_name << "\n";
+	str << "Owner ID: " << owner_id << "\n";
+	//str << "Type: " << pCodeToString(mPrimitiveCode) << "\n";
+	str << "ID: " << mID << "\n";
+	str << "LocalID: " << mLocalID << "\n";
+	if (isAttachment())
+	{
+		LLViewerObject* obj = LLSelectMgr::getInstance()->getSelection()->getFirstRootObject();
+		if (obj)
+		{
+			str << "Parent ID: " << obj->getID() << "\n";
+
+			if (obj->getID() == mID)
+			{
+				str << "Attached Root Prim" << "\n";
+			}
+			else
+			{
+				str << "Attached Child Prim" << "\n";
+			}
+
+			// Find the id of the attached avatar
+			while (obj->isAttachment())
+			{
+				obj = (LLViewerObject*)obj->getParent();
+				if (!obj) break;	// Orphaned object ?
+			}
+
+			std::string id_str = "unknown";
+			if (obj)
+			{
+				// Object is an avatar, so check for mute by id.
+				LLVOAvatar* avatar = (LLVOAvatar*)obj;
+				id_str = avatar->getID().asString();
+				if (avatar->getID() == gAgent.getID())
+				{
+					id_str += " (self)";
+				}
+				else if (avatar->getID() == owner_id)
+				{
+					id_str += " (" + owner_name + ")";
+				}
+				else
+				{
+					std::string name;
+					gCacheName->getFullName(gAgent.getID(), name);
+					id_str += " (" + name + ")";
+				}
+			}
+
+			if (isHUDAttachment())
+			{
+				str << "Attached to HUD on Avatar ID: " << id_str << "\n";
+			}
+			else
+			{
+				str << "Attached to Avatar ID: " << id_str << "\n";
+			}
+		}
+		else
+		{
+			str << "Attached But Can't Find Root Object!" << "\n";
+		}
+	}
+	else
+	{
+		if (getParent())
+		{
+			LLViewerObject* obj = LLSelectMgr::getInstance()->getSelection()->getFirstRootObject();
+			if (obj)
+			{
+				str << "Parent ID: " << obj->getID() << "\n";
+				str << "Unattached Child Prim" << "\n";
+			}
+		}
+		else
+		{
+			str << "Unattached Root Prim" << "\n";
+		}
+	}
+	str << "Position Region: " << getPositionRegion() << "\n";
+	str << "Position Agent: " << getPositionAgent() << "\n";
+	str << "Position Global: " << getPositionGlobal() << "\n";
+	str << "Velocity: " << getVelocity() << "\n";
+	str << "Update Age: " << LLFrameTimer::getElapsedSeconds() - mLastMessageUpdateSecs << "\n";
+	if ((LLDrawable*)mDrawable)
+	{
+		str << "Drawable: True" << "\n";
+	}
+	else
+	{
+		str << "Drawable: False" << "\n";
+	}
 	if (mDrawable.notNull() && mDrawable->getNumFaces())
 	{
 		LLFacePool *poolp = mDrawable->getFace(0)->getPool();
 		if (poolp)
 		{
-			llinfos << "Pool: " << poolp << llendl;
-			llinfos << "Pool reference count: " << poolp->mReferences.size() << llendl;
+			str << "Pool: " << poolp << "\n";
+			str << "Pool Reference Count: " << poolp->mReferences.size() << "\n";
 		}
 	}
-	//llinfos << "BoxTree Min: " << mDrawable->getBox()->getMin() << llendl;
-	//llinfos << "BoxTree Max: " << mDrawable->getBox()->getMin() << llendl;
+	//str << "BoxTree Min: " << mDrawable->getBox()->getMin() << "\n";
+	//str << "BoxTree Max: " << mDrawable->getBox()->getMin() << "\n";
 	/*
-	llinfos << "Velocity: " << getVelocity() << llendl;
-	llinfos << "AnyOwner: " << permAnyOwner() << " YouOwner: " << permYouOwner() << " Edit: " << mPermEdit << llendl;
-	llinfos << "UsePhysics: " << usePhysics() << " CanSelect " << mbCanSelect << " UserSelected " << mUserSelected << llendl;
-	llinfos << "AppAngle: " << mAppAngle << llendl;
-	llinfos << "PixelArea: " << mPixelArea << llendl;
+	str << "AnyOwner: " << permAnyOwner() << " YouOwner: " << permYouOwner() << " Edit: " << mPermEdit << "\n";
+	str << "UsePhysics: " << usePhysics() << " CanSelect " << mbCanSelect << " UserSelected " << mUserSelected << "\n";
+	str << "AppAngle: " << mAppAngle << "\n";
+	str << "PixelArea: " << mPixelArea << "\n";
 
 	char buffer[1000];
 	char *key;
 	for (key = mNameValuePairs.getFirstKey(); key; key = mNameValuePairs.getNextKey() )
 	{
 		mNameValuePairs[key]->printNameValue(buffer);
-		llinfos << buffer << llendl;
+		str << buffer << "\n";
 	}
-	for (child_list_t::iterator iter = mChildList.begin();
+	for (child_list_t::const_iterator iter = mChildList.begin();
 		 iter != mChildList.end(); iter++)
 	{
 		LLViewerObject* child = *iter;
-		llinfos << "  child " << child->getID() << llendl;
+		if (child)
+		{
+			str << "\tChild ID: " << child->getID() << "\n";
+		}
 	}
 	*/
+
+	llinfos << str.str() << llendl;
+
+	LLChat chat;
+	chat.mText = str.str();
+	LLFloaterChat::addChat(chat);
 }
 
 void LLViewerObject::printNameValuePairs() const
