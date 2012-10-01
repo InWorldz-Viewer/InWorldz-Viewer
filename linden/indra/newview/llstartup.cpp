@@ -814,14 +814,13 @@ bool idle_startup()
 		std::string escaped_url = LLCurl::escapeSafe(url);
 		LLSD response = LLHTTPClient::blockingGet(url);
 
-		// check response and continue if there's an error
+		// check response and skip to login if there's an error
 		S32 status = response["status"].asInteger();
 		if ((status != 200) || !response["body"].isArray()) 
 		{
 			llinfos << "Version info check failed (" << status << "): "
 				<< (response["body"].isString()? response["body"].asString(): "<unknown error>")
 				<< llendl;
-			// skip to login
 			LLStartUp::setStartupState( STATE_LOGIN_SHOW );
 			return FALSE;
 		}
@@ -902,7 +901,7 @@ bool idle_startup()
 			llwarns << "Invalid version entries in " << url << llendl;
 		}
 
-		if (update || gSavedSettings.getBOOL("ForceMandatoryUpdate"))
+		if (update || gSavedSettings.getBOOL("ForceMandatoryUpdatePrelogin"))
 		{
 			// trigger an automatic update response
 			// directory shoudl always end in a "/"
@@ -1002,9 +1001,13 @@ bool idle_startup()
 			LLStartUp::setStartupState( STATE_LOGIN_CLEANUP );
 		}
 
-		gViewerWindow->setNormalControlsVisible( FALSE );	
-		gLoginMenuBarView->setVisible( TRUE );
-		gLoginMenuBarView->setEnabled( TRUE );
+		gViewerWindow->setNormalControlsVisible( FALSE );
+
+		if (gLoginMenuBarView)
+		{
+			gLoginMenuBarView->setVisible( TRUE );
+			gLoginMenuBarView->setEnabled( TRUE );
+		}
 
 		// Push our window frontmost
 		gViewerWindow->getWindow()->show();
@@ -1971,15 +1974,23 @@ bool idle_startup()
 		LL_DEBUGS("AppInitStartupState") << "STATE_SEED_CAP_GRANTED" << LL_ENDL;
 		update_texture_fetch();
 
-		if ( gViewerWindow != NULL)
+		if (gViewerWindow)
 		{	// This isn't the first logon attempt, so show the UI
 			gViewerWindow->setNormalControlsVisible( TRUE );
-		}	
-		gLoginMenuBarView->setVisible( FALSE );
-		gLoginMenuBarView->setEnabled( FALSE );
+		}
 
-		LLRect window(0, gViewerWindow->getWindowHeight(), gViewerWindow->getWindowWidth(), 0);
-		gViewerWindow->adjustControlRectanglesForFirstUse(window);
+		// do we need to do this here?
+		if (gLoginMenuBarView)
+		{
+			gLoginMenuBarView->setVisible( FALSE );
+			gLoginMenuBarView->setEnabled( FALSE );
+		}
+
+		if (gViewerWindow)
+		{
+			LLRect window(0, gViewerWindow->getWindowHeight(), gViewerWindow->getWindowWidth(), 0);
+			gViewerWindow->adjustControlRectanglesForFirstUse(window);
+		}
 
 		if(gSavedSettings.getBOOL("ShowMiniMap"))
 		{
@@ -2008,7 +2019,7 @@ bool idle_startup()
 			LLFloaterBeacons::showInstance();
 		}
 
-		if (!gNoRender)
+		if (!gNoRender && gViewerWindow)
 		{
 			// Move the progress view in front of the UI
 			gViewerWindow->moveProgressViewToFront();
@@ -3797,7 +3808,7 @@ void reset_login()
 {
 	LLStartUp::setStartupState( STATE_LOGIN_SHOW );
 
-	if ( gViewerWindow )
+	if ( gViewerWindow && gLoginMenuBarView )
 	{	// Hide menus and normal buttons
 		gViewerWindow->setNormalControlsVisible( FALSE );
 		gLoginMenuBarView->setVisible( TRUE );

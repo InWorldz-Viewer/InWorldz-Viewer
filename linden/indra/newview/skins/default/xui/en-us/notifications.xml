@@ -2712,7 +2712,7 @@ Please set the object for sale and try again.
 </notification>
 
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="FinishedRawDownload"
  type="alertmodal">
 Finished download of raw terrain file to:
@@ -2721,12 +2721,10 @@ Finished download of raw terrain file to:
 </notification>
 
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="DownloadWindowsMandatory"
  type="alertmodal">
-A new version of [VIEWER_NAME] is available.
-
-[MESSAGE]
+A new version of [VIEWER_NAME] is available. [MESSAGE]
 
 You must download this update to connect to [SECOND_LIFE].
   <usetemplate
@@ -2736,12 +2734,10 @@ You must download this update to connect to [SECOND_LIFE].
 </notification>
 
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="DownloadWindows"
  type="alertmodal">
-An updated version of [VIEWER_NAME] is available.
-
-[MESSAGE]
+An updated version of [VIEWER_NAME] is available. [MESSAGE]
 
 This update is not required, but we suggest you install it to improve performance and stability.
   <usetemplate
@@ -2751,12 +2747,10 @@ This update is not required, but we suggest you install it to improve performanc
 </notification>
 
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="DownloadWindowsReleaseForDownload"
  type="alertmodal">
-An updated version of [VIEWER_NAME] is available.
-
-[MESSAGE]
+An updated version of [VIEWER_NAME] is available. [MESSAGE]
 
 This update is not required, but we suggest you install it to improve performance and stability.
   <usetemplate
@@ -2766,12 +2760,10 @@ This update is not required, but we suggest you install it to improve performanc
 </notification>
 
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="DownloadMacMandatory"
  type="alertmodal">
-A new version of [VIEWER_NAME] is available.
-
-[MESSAGE]
+A new version of [VIEWER_NAME] is available. [MESSAGE]
 
 You must download this update to connect to [SECOND_LIFE].
 
@@ -2783,12 +2775,10 @@ Download to your Applications folder?
 </notification>
 
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="DownloadMac"
  type="alertmodal">
-An updated version of [VIEWER_NAME] is available.
-
-[MESSAGE]
+An updated version of [VIEWER_NAME] is available. [MESSAGE]
 
 This update is not required, but we suggest you install it to improve performance and stability.
 
@@ -2800,12 +2790,10 @@ Download to your Applications folder?
 </notification>
 
 <notification
- icon="alertmodal.tga"
+ icon="alert.tga"
  name="DownloadMacReleaseForDownload"
  type="alertmodal">
-An updated version of [VIEWER_NAME] is available.
-
-[MESSAGE]
+An updated version of [VIEWER_NAME] is available. [MESSAGE]
 
 This update is not required, but we suggest you install it to improve performance and stability.
 
