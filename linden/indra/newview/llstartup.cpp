@@ -902,7 +902,7 @@ bool idle_startup()
 			llwarns << "Invalid version entries in " << url << llendl;
 		}
 
-		if (update)
+		if (update || gSavedSettings.getBOOL("ForceMandatoryUpdate"))
 		{
 			// trigger an automatic update response
 			// directory shoudl always end in a "/"
