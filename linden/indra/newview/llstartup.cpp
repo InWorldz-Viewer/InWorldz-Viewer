@@ -242,7 +242,7 @@ void show_first_run_dialog();
 bool first_run_dialog_callback(const LLSD& notification, const LLSD& response);
 void set_startup_status(const F32 frac, const std::string& string, const std::string& msg);
 bool login_alert_status(const LLSD& notification, const LLSD& response);
-void update_app(BOOL mandatory, const std::string& message);
+void update_app(BOOL mandatory, const std::string& message, std::string update_url = "");
 bool update_dialog_callback(const LLSD& notification, const LLSD& response);
 void login_packet_failed(void**, S32 result);
 void use_circuit_callback(void**, S32 result);
@@ -780,7 +780,142 @@ bool idle_startup()
 		display_startup();
 		// LLViewerMedia::initBrowser();
 
-		LLStartUp::setStartupState( STATE_LOGIN_SHOW );
+		// formerly STATE_LOGIN_SHOW before the update check
+		LLStartUp::setStartupState( STATE_PRELOGIN_UPDATE_CHECK );
+		return FALSE;
+	}
+
+
+	if (STATE_PRELOGIN_UPDATE_CHECK == LLStartUp::getStartupState())
+	{
+		std::string key_to_check = "";
+#ifdef LL_WINDOWS
+		key_to_check = "Win32";
+		if (gSysCPU.hasSSE2()) key_to_check += "Optimized";
+#elif LL_DARWIN
+		key_to_check = "Mac32";
+#elif LL_LINUX
+		// Currently unsupported! Need a linux updater! -- MC
+		//key_to_check = "Linux32";
+#endif
+		if (key_to_check.empty())
+		{
+			// We don't have an updater for this OS
+			LLStartUp::setStartupState( STATE_LOGIN_SHOW );
+			return FALSE;
+		}
+
+		bool update = false;
+
+		std::string url = gSavedSettings.getString("VersionCheckURL");
+		llinfos << "Checking for new version in file " << url << llendl;
+
+		// query server
+		std::string escaped_url = LLCurl::escapeSafe(url);
+		LLSD response = LLHTTPClient::blockingGet(url);
+
+		// check response and continue if there's an error
+		S32 status = response["status"].asInteger();
+		if ((status != 200) || !response["body"].isArray()) 
+		{
+			llinfos << "Version info check failed (" << status << "): "
+				<< (response["body"].isString()? response["body"].asString(): "<unknown error>")
+				<< llendl;
+			// skip to login
+			LLStartUp::setStartupState( STATE_LOGIN_SHOW );
+			return FALSE;
+		}
+
+		// parse everything
+		LLSD version_all = response["body"];
+		S32 major = -1; 
+		S32 minor = -1;
+		S32 maint = -1;
+		S32 patch = -1;
+		std::string filename = "";
+		std::string directory = "";
+		for (LLSD::array_const_iterator it = version_all.beginArray(); it != version_all.endArray(); ++it) 
+		{
+			LLSD version_OS = *it;
+			if (version_OS.has(key_to_check))
+			{
+				// What to do if these aren't ints or strings?
+				LLSD info = version_OS[key_to_check];
+				if (info.has("LatestVersionMajor"))
+				{
+					major = info["LatestVersionMajor"].asInteger();
+				}
+				if (info.has("LatestVersionMinor"))
+				{
+					minor = info["LatestVersionMinor"].asInteger();
+				}
+				if (info.has("LatestVersionPatch"))
+				{
+					patch = info["LatestVersionPatch"].asInteger();
+				} 
+				if (info.has("LatestVersionMaint"))
+				{
+					maint = info["LatestVersionMaint"].asInteger();
+				}
+				if (info.has("LatestVersionBinaryName"))
+				{
+					filename = info["LatestVersionBinaryName"].asString();
+				} 
+				if (info.has("LatestVersionDirectory"))
+				{
+					directory = info["LatestVersionDirectory"].asString();
+				} 
+			}
+		}
+
+		// make sure we got everything we need
+		// todo: put these into a struct and override less than
+		if ((major >= 0) && (minor >= 0) && (maint >= 0) && (patch >= 0) && !filename.empty() && !directory.empty())
+		{
+			std::vector<S32> oldv;
+			std::vector<S32> newv;
+			newv.push_back(major); 
+			newv.push_back(minor); 
+			newv.push_back(patch); 
+			newv.push_back(maint); 
+			oldv.push_back(LL_VERSION_MAJOR); 
+			oldv.push_back(LL_VERSION_MINOR); 
+			oldv.push_back(LL_VERSION_PATCH); 
+			oldv.push_back(LL_VERSION_BUILD); 
+
+			if (std::lexicographical_compare(oldv.begin(), oldv.end(), newv.begin(), newv.end()))
+			{
+				update = true;
+				llinfos << "Found a newer version for " << key_to_check << " on the server: " 
+					<< major << "." << minor << "." << patch << "." << maint << ". Attempting to update"
+					<< llendl;
+			}
+			else
+			{
+				llinfos << "The latest version for " << key_to_check << " is " 
+					<< major << "." << minor << "." << patch << "." << maint << ", no update appears to be required" 
+					<< llendl;
+			}
+		}
+		else
+		{
+			llwarns << "Invalid version entries in " << url << llendl;
+		}
+
+		if (update)
+		{
+			// trigger an automatic update response
+			// directory shoudl always end in a "/"
+			// todo: add checking for that!
+			std::string update_url = directory+filename;
+			update_app(FALSE, "", update_url);
+			LLStartUp::setStartupState( STATE_UPDATE_CHECK );
+		}
+		else
+		{
+			// punt to login screen
+			LLStartUp::setStartupState( STATE_LOGIN_SHOW );
+		}
 		return FALSE;
 	}
 
@@ -3034,7 +3169,7 @@ bool login_alert_status(const LLSD& notification, const LLSD& response)
 	return false;
 }
 
-void update_app(BOOL mandatory, const std::string& auth_msg)
+void update_app(BOOL mandatory, const std::string& auth_msg, std::string update_url)
 {
 	// store off config state, as we might quit soon
 	gSavedSettings.saveToFile(gSavedSettings.getString("ClientSettingsFile"), TRUE);	
@@ -3053,6 +3188,10 @@ void update_app(BOOL mandatory, const std::string& auth_msg)
 	
 	LLSD payload;
 	payload["mandatory"] = mandatory;
+	if (!update_url.empty())
+	{
+		payload["update_url"] = update_url;
+	}
 
 /*
  We're constructing one of the following 6 strings here:
@@ -3118,7 +3257,15 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 		}
 		else
 		{
-			LLStartUp::setStartupState( STATE_LOGIN_AUTH_INIT );
+			if (LLStartUp::getStartupState() == STATE_PRELOGIN_UPDATE_CHECK)
+			{
+				LLStartUp::setStartupState( STATE_LOGIN_SHOW );
+			}
+			else
+			{
+				// in case we ever do post-login update checks -- MC
+				LLStartUp::setStartupState( STATE_LOGIN_AUTH_INIT );
+			}
 		}
 		return false;
 	}
@@ -3139,8 +3286,17 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 	query_map["userserver"] = LLViewerLogin::getInstance()->getGridLabel();
 	query_map["channel"] = gSavedSettings.getString("VersionChannelName");
 	// *TODO constantize this guy
-	// *NOTE: This URL is also used in win_setup/lldownloader.cpp
-	LLURI update_url = LLURI::buildHTTP("secondlife.com", 80, "update.php", query_map);
+	
+	LLURI update_url;
+	if (notification["payload"].has("update_url"))
+	{
+		update_url = LLURI(notification["payload"]["update_url"].asString());
+	}
+	else
+	{
+		// in case we ever do the serverside check on login -- MC
+		update_url = LLURI::buildHTTP("inworldz.com", 80, "update.php", query_map);
+	}
 	
 	if(LLAppViewer::sUpdaterInfo)
 	{
@@ -3165,7 +3321,7 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 
 	std::string updater_source = gDirUtilp->getAppRODataDir();
 	updater_source += gDirUtilp->getDirDelimiter();
-	updater_source += "updater.exe";
+	updater_source += "windows-updater.exe";
 
 	LL_DEBUGS("AppInit") << "Calling CopyFile source: " << updater_source
 			<< " dest: " << LLAppViewer::sUpdaterInfo->mUpdateExePath
@@ -3597,6 +3753,8 @@ std::string LLStartUp::startupStateToString(EStartupState state)
 #define RTNENUM(E) case E: return #E
 	switch(state){
 		RTNENUM( STATE_FIRST );
+		RTNENUM( STATE_BROWSER_INIT );
+		RTNENUM( STATE_PRELOGIN_UPDATE_CHECK);
 		RTNENUM( STATE_LOGIN_SHOW );
 		RTNENUM( STATE_LOGIN_WAIT );
 		RTNENUM( STATE_LOGIN_CLEANUP );

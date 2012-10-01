@@ -439,12 +439,12 @@ class WindowsManifest(ViewerManifest):
         #        "../win_crash_logger/releasesse2/windows-crash-logger.exe"),
         #        "../win_crash_logger/relwithdebinfo/windows-crash-logger.exe"),
         #          dst="win_crash_logger.exe")
-        #self.path(src=self.find_existing_file(
-        #        "../win_updater/debug/windows-updater.exe",
-        #        "../win_updater/release/windows-updater.exe",
-        #        "../win_updater/releasesse2/windows-updater.exe",
-        #        "../win_updater/relwithdebinfo/windows-updater.exe"),
-        #          dst="updater.exe")
+        self.path(src=self.find_existing_file(
+                 "../win_updater/debug/windows-updater.exe",
+                 "../win_updater/release/windows-updater.exe",
+                 "../win_updater/releasesse2/windows-updater.exe",
+                 "../win_updater/relwithdebinfo/windows-updater.exe"),
+                   dst="windows-updater.exe")
 
         # For google-perftools tcmalloc allocator.
         #if self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):

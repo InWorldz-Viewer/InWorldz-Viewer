@@ -726,6 +726,18 @@
   </map>
   
   <!-- End: clear cache -->
+  
+  <key>VersionCheckURL</key>
+  <map>
+    <key>Comment</key>
+    <string>Location to check for latest version</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>http://inworldz.com/imprudence/app/latest_version.xml</string>
+  </map>
 
   <!-- END INWORLDZ-SPECIFIC SETTINGS -->
 
