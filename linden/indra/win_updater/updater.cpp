@@ -154,7 +154,7 @@ HINTERNET Fetcher::openInet() const
     DEBUG("Calling InternetOpen");
     // Init wininet subsystem
     return check("InternetOpen",
-                 InternetOpen(L"LindenUpdater", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0));
+                 InternetOpen(L"InWorldzUpdater", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0));
 }
 
 HINTERNET Fetcher::openUrl(const std::wstring& uri) const
@@ -391,7 +391,7 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 	//EnumDisplaySettings(NULL, ENUM_CURRENT_SETTINGS, &dev_mode);
 	
 	gWindow = CreateWindowEx(NULL, win_class_name, 
-		L"Second Life Updater",
+		L"InWorldz Updater",
 		WS_OVERLAPPEDWINDOW, 
 		CW_USEDEFAULT, 
 		CW_USEDEFAULT, 
@@ -427,7 +427,7 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 		return 1;
 	}
     std::string update_exec_path(temp_path);
-	update_exec_path.append("Second_Life_Updater.exe");
+	update_exec_path.append("InWorldz_Updater.exe");
 
 	WCHAR update_uri[4096];
     mbstowcs(update_uri, gUpdateURL, sizeof(update_uri));
@@ -454,11 +454,11 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 	if (gTotalBytesRead < (1024 * 1024) && ! cancelled)
 	{
 		MessageBox(gWindow,
-			L"The Second Life auto-update has failed.\n"
+			L"The InWorldz updater has failed.\n"
 			L"The problem may be caused by other software installed \n"
 			L"on your computer, such as a firewall.\n"
-			L"Please visit http://secondlife.com/download/ \n"
-			L"to download the latest version of Second Life.\n",
+			L"Please visit http://inworldz.com \n"
+			L"to download the latest version of InWorldz.\n",
 			NULL, MB_OK);
 		return 1;
 	}
@@ -472,7 +472,7 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 	if (!success)
 	{
 		MessageBox(gWindow, 
-			L"Second Life download failed.\n"
+			L"InWorldz download failed.\n"
 			L"Please try again later.", 
 			NULL, MB_OK);
 		return 1;
@@ -482,7 +482,7 @@ WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nSho
 	//char params[256];		/* Flawfinder: ignore */
 	//sprintf(params, "/S");	/* Flawfinder: ignore */
 	//MessageBox(gWindow, 
-	//	L"Updating Second Life.\n\nSecond Life will automatically start once the update is complete.  This may take a minute...",
+	//	L"Updating InWorldz.\n\nInWorldz will automatically start once the update is complete.  This may take a minute...",
 	//	L"Download Complete",
 	//	MB_OK);
 		
