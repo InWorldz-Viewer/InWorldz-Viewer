@@ -391,3 +391,25 @@ begin
     Log('User already has VS 2008 SP1 x86 Redistributable installed, skipping.');
   end
 end;
+
+function InitializeSetup(): Boolean;
+var
+	ErrorCode: Integer;
+begin
+  // Windows 7 and above
+  ShellExec('open', 'taskkill.exe', '/f /im iwvoice.exe', '', SW_HIDE, ewNoWait, ErrorCode);
+  // Supposedly XP and below
+  ShellExec('open', 'tskill.exe', 'iwvoice', '', SW_HIDE, ewNoWait, ErrorCode);
+  result := True;
+end;
+
+function InitializeUninstall(): Boolean;
+var
+  ErrorCode: Integer;
+begin
+  // Windows 7 and above
+  ShellExec('open', 'taskkill.exe', '/f /im iwvoice.exe', '', SW_HIDE, ewNoWait, ErrorCode);
+  // Supposedly XP and below
+  ShellExec('open', 'tskill.exe', 'iwvoice', '', SW_HIDE, ewNoWait, ErrorCode);
+  result := True;
+end;
