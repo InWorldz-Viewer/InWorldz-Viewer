@@ -257,6 +257,11 @@ BOOL LLWearable::FileExportTextures( FILE* file )
 
 BOOL LLWearable::exportFile( LLFILE* file )
 {
+	// workaround for a bug I introduced -- MC
+	if ((mDefinitionVersion == 23) && (LLWearable::sCurrentDefinitionVersion == 22))
+	{
+		mDefinitionVersion = 22;
+	}
 	// header and version
 	if( fprintf( file, "LLWearable version %d\n", mDefinitionVersion ) < 0 )
 	{
@@ -345,6 +350,11 @@ BOOL LLWearable::importFile( LLFILE* file )
 
 	// read header and version 
 	fields_read = fscanf( file, "LLWearable version %d\n", &mDefinitionVersion );
+	// workaround to fix the bug I introduced -- MC
+	if ((mDefinitionVersion == 23) && (LLWearable::sCurrentDefinitionVersion == 22))
+	{
+		mDefinitionVersion = 22;
+	}
 	if( fields_read != 1 )
 	{
 		// Shouldn't really log the asset id for security reasons, but
