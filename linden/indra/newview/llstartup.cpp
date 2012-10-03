@@ -785,7 +785,7 @@ bool idle_startup()
 
 	if (STATE_LOGIN_SHOW == LLStartUp::getStartupState())
 	{
-		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_SHOW" << LL_ENDL
+		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_SHOW" << LL_ENDL;
 		LL_INFOS("AppInit") << "Initializing Window" << LL_ENDL;
 		
 		gViewerWindow->getWindow()->setCursor(UI_CURSOR_ARROW);
