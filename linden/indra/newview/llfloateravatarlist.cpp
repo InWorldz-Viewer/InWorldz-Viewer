@@ -446,7 +446,7 @@ void LLFloaterAvatarList::updateAvatarList()
 				{
 					// Avatar already in list, update position
 					F32 dist = (F32)(position - mypos).magVec();
-					mAvatars[avid].setPosition(position, (avatarp->getRegion() == gAgent.getRegion()), true, dist < 20.0, dist < 100.0);
+					mAvatars[avid].setPosition(position, (avatarp->getRegion() == gAgent.getRegion()), true, dist < 30.0, dist < 100.0);
 				}
 				else
 				{
@@ -480,7 +480,7 @@ void LLFloaterAvatarList::updateAvatarList()
 				{
 					// Avatar already in list, update position
 					F32 dist = (F32)(position - mypos).magVec();
-					mAvatars[avid].setPosition(position, gAgent.getRegion()->pointInRegionGlobal(position), false, dist < 20.0, dist < 100.0);
+					mAvatars[avid].setPosition(position, gAgent.getRegion()->pointInRegionGlobal(position), false, dist < 30.0, dist < 100.0);
 				}
 				else
 				{
@@ -649,7 +649,7 @@ void LLFloaterAvatarList::refreshAvatarList()
 			if (distance < 100.0)
 			{
 				snprintf(temp, sizeof(temp), "%.1f", distance);
-				if (distance > 20.0f)
+				if (distance > 30.0f)
 				{
 					color = LLColor4::yellow1;
 				}
