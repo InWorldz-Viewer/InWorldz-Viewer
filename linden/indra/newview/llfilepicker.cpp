@@ -1009,11 +1009,12 @@ void LLFilePicker::chooser_responder(GtkWidget *widget, gint response, gpointer 
 		g_slist_foreach(file_list, (GFunc)add_to_selectedfiles, user_data);
 		g_slist_foreach(file_list, (GFunc)g_free, NULL);
 		g_slist_free (file_list);
-	}
 
-	// set the default path for this usage context.
-	picker->mContextToPathMap[picker->mCurContextName] =
+		// Avian - fixed for GTK 'cancel file picker' crash
+		// set the default path for this usage context.
+		picker->mContextToPathMap[picker->mCurContextName] =
 		gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(widget));
+	}
 
 	gtk_widget_destroy(widget);
 	gtk_main_quit();
