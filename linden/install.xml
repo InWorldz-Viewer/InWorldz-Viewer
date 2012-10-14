@@ -287,9 +287,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>09be41e3145e1a960e50f2f9ce0a5e7d</string>
+            <string>2e7747255ed7efe9b6fac034322cb4bc</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/dbusglib-linux64-20101007.tar.bz2</uri>
+            <uri>http://205.196.121.128/a4d1q7s98xag/84epq8ex3r6xpdt/dbus_glib-0.76.d-linux64-20121012.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -516,9 +516,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>f181d42b6f7b2e9ca68174dbf3d282a5</string>
+            <string>01bcbd52ab6a923ec9f91da4dca243b8</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/test-builds/glib-2.24.2-Linux-x86_64-20110806.tar.bz2</uri>
+            <uri>http://205.196.122.13/sir8dm1yf6tg/u492eaz9y8z66ie/glib-2.25.17.d-linux-x86_64-20121014.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -644,9 +644,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>e373ea5a705ec84de48c0dd9306d3dd5</string>
+            <string>17c8d7ae51cdc06b1ceb2270b55e836a</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/test-builds/gtk-etc-Linux-x86_64-20110806.tar.bz2</uri>
+            <uri>http://199.91.153.243/o06f0vcldgeg/cjs0avc618c613k/gtk_etc-0.0.1d-linux-x86_64-20120609.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -1484,9 +1484,9 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>4bddfb2c6dd7b1470a3ed675ac14bd9a</string>
+            <string>ddc2ae5b3f5b7587e5b5d6e26128b486</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/zlib-1.2.3-linux64-20080909.tar.bz2</uri>
+            <uri>http://205.196.121.140/bg0zsy9ga3lg/5bm3oqo34xapswc/z-lib-1.2.5.d-Linux-x86_64-20121014.tar.bz2</uri>
           </map>
           <key>windows</key>
           <map>
