@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="US-ASCII" standalone="yes"?>
 <linden_avatar
  version="1.0"
- wearable_definition_version="23">  
+ wearable_definition_version="22"> 
+ <!-- This version increments the *format*, not the *file*. Only ever increment it if the format changes -->
+ <!-- Version 23 should never be used in InWorldz for backwards-compatibility reasons -->
  <!-- The wearable_definition_version is checked during asset upload. -->
  <!-- If you increment it, check indra/lib/python/indra/assetutil.py.  -->
    <skeleton

@@ -6039,8 +6039,12 @@ An object named [OBJECTFROMNAME] owned by (an unknown user) has given you a [OBJ
      index="1"
      name="Decline"
      text="Decline"/>
+    <button 
+      index="2" 
+      name="Profile" 
+      text="Profile"/>
     <button
-     index="2"
+     index="3"
      name="Ignore"
      text="Ignore"/>
   </form>
@@ -6063,7 +6067,11 @@ An object named [OBJECTFROMNAME] owned by (an unknown user) has given you a [OBJ
      name="Decline"
      text="Decline"/>
     <button
-     index="2"
+    index="2"
+    name="Profile"
+    text="Profile"/>
+    <button
+     index="3"
      name="Ignore"
      text="Ignore"/>
   </form>

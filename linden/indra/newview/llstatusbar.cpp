@@ -240,6 +240,9 @@ void LLStatusBar::draw()
 // Per-frame updates of visibility
 void LLStatusBar::refresh()
 {
+ 	if(gDisconnected)
+ 		return; //or crash if the sim crashes; because: already ~LLMenuBarGL()
+
 	// Adding Net Stat Meter back in
 	F32 bwtotal = gViewerThrottle.getMaxBandwidth() / 1000.f;
 	mSGBandwidth->setMin(0.f);
@@ -609,6 +612,7 @@ void LLStatusBar::setVisibleForMouselook(bool visible)
 	mTextBalance->setVisible(visible);
 	mTextTime->setVisible(visible);
 	//childSetVisible("buycurrency", visible);
+	childSetVisible("buyland", visible);
 	mSGBandwidth->setVisible(visible);
 	mSGPacketLoss->setVisible(visible);
 	setBackgroundVisible(visible);

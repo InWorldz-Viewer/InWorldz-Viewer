@@ -215,6 +215,7 @@ public:
 
 protected:
 	/*virtual*/ ~LLViewerImage();
+	bool	mIsLocalImage;
 	
 public:
 	LLViewerImage(const std::string& url, const LLUUID& id, BOOL usemipmaps = TRUE);
@@ -241,6 +242,8 @@ public:
 
 	BOOL isLargeImage() ;
 	BOOL isUpdateFrozen() ;
+	bool isLocalImage()						{ return mIsLocalImage;		}
+	void setAsLocalImage(bool is_local)		{ mIsLocalImage = is_local;	}
 
 	// Process image stats to determine priority/quality requirements.
 	void processTextureStats();
@@ -281,7 +284,7 @@ public:
 	void setDecodePriority(F32 priority = -1.0f);
 
 	bool updateFetch();
-	
+	BOOL hasFetcher() const { return mHasFetcher;}
 	// Override the computation of discard levels if we know the exact output
 	// size of the image.  Used for UI textures to not decode, even if we have
 	// more data.
@@ -328,6 +331,8 @@ public:
 	void reorganizeVolumeList() ;
 
 	void        setCanUseHTTP(bool can_use_http) { mCanUseHTTP = can_use_http; }
+
+	friend class LocalBitmap; // tag: vaa emerald local_asset_browser
 
 private:
 	/*virtual*/ void cleanup(); // Cleanup the LLViewerImage (so we can reinitialize it)

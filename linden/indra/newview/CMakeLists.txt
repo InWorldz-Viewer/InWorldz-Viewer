@@ -71,6 +71,7 @@ set(viewer_SOURCE_FILES
     floaterbusy.cpp
     floatercache.cpp
     floatercommandline.cpp
+    floaterlocalassetbrowse.cpp
     jcfloaterareasearch.cpp
     hbfloatergrouptitles.cpp
     llagent.cpp
@@ -500,6 +501,7 @@ set(viewer_HEADER_FILES
     floaterbusy.h
     floatercache.h
     floatercommandline.h
+    floaterlocalassetbrowse.h
     jcfloaterareasearch.h
     hbfloatergrouptitles.h
     llagent.h

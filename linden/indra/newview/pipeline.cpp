@@ -1016,8 +1016,8 @@ U32 LLPipeline::addObject(LLViewerObject *vobj)
 	{
 		return 0;
 	}
-
-	if (gSavedSettings.getBOOL("RenderDelayCreation"))
+	static BOOL sRenderDelayCreation = gSavedSettings.getBOOL("RenderDelayCreation");
+	if (sRenderDelayCreation)
 	{
 		mCreateQ.push_back(vobj);
 	}
@@ -1080,7 +1080,9 @@ void LLPipeline::createObject(LLViewerObject* vobj)
 
 	markRebuild(drawablep, LLDrawable::REBUILD_ALL, TRUE);
 
-	if (drawablep->getVOVolume() && gSavedSettings.getBOOL("RenderAnimateRes"))
+	static BOOL sRenderAnimateRes = gSavedSettings.getBOOL("RenderAnimateRes");
+
+	if (drawablep->getVOVolume() && sRenderAnimateRes)
 	{
 		// fun animated res
 		drawablep->updateXform(TRUE);
@@ -4919,7 +4921,7 @@ void LLPipeline::setUseVBO(BOOL use_vbo)
 		}
 		
 		resetVertexBuffers();
-		LLVertexBuffer::initClass(use_vbo);
+		LLVertexBuffer::initClass(use_vbo && gGLManager.mHasVertexBufferObject);
 	}
 }
 
@@ -5967,6 +5969,9 @@ void LLPipeline::generateWaterReflection(LLCamera& camera_in)
 			stop_glerror();
 
 			LLPipeline::sUnderWaterRender = LLViewerCamera::getInstance()->cameraUnderWater() ? FALSE : TRUE;
+			
+			if (!gSavedSettings.getBOOL("RenderWater"))
+				LLPipeline::sUnderWaterRender = FALSE;
 
 			if (LLPipeline::sUnderWaterRender)
 			{

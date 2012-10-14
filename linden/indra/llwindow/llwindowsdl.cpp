@@ -417,6 +417,11 @@ static int x11_detect_VRAM_kb()
 }
 #endif // LL_X11
 
+void LLWindowSDL::setWindowTitle(std::string &title)
+{
+	SDL_WM_SetCaption(title.c_str(), title.c_str());
+}
+
 BOOL LLWindowSDL::createContext(int x, int y, int width, int height, int bits, BOOL fullscreen, BOOL disable_vsync)
 {
 	//bool			glneedsinit = false;
@@ -2464,8 +2469,9 @@ std::vector<std::string> LLWindowSDL::getDynamicFallbackFontList()
 	if (sortpat)
 	{
 		// Sort the list of system fonts from most-to-least-desirable.
+		FcResult fresult;
 		fs = FcFontSort(NULL, sortpat, elide_unicode_coverage,
-				NULL, NULL);
+				NULL, &fresult);
 		FcPatternDestroy(sortpat);
 	}
 

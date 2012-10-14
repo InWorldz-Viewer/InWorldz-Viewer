@@ -166,7 +166,7 @@ U64 LLViewerObjectList::getIndex(const U32 local_id,
 
 BOOL LLViewerObjectList::removeFromLocalIDTable(const LLViewerObject &object)
 {
-	if(object.getRegion())
+	if (object.getRegion())
 	{
 		U32 local_id = object.mLocalID;
 		LLHost region_host = object.getRegion()->getHost();
@@ -822,6 +822,11 @@ void LLViewerObjectList::clearDebugText()
 
 void LLViewerObjectList::cleanupReferences(LLViewerObject *objectp)
 {
+	if (!objectp)
+	{
+		llwarns << "NULL object pointer passed." << llendl;
+		return;
+	}
 	LLMemType mt(LLMemType::MTYPE_OBJECT);
 	if (mDeadObjects.find(objectp->mID) != mDeadObjects.end())
 	{

@@ -15,8 +15,8 @@ export LD_LIBRARY_PATH=/usr/lib64:usr/lib
 python develop.py -m64 clean
 
 #autoconfig for a 64bit build
-python develop.py -m64 configure
+python develop.py -m64 -N configure
 
 #build it
-python develop.py -m64 build
+python develop.py -m64 -N build
 

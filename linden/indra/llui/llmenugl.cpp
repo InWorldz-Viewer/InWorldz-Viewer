@@ -3119,15 +3119,6 @@ LLMenuGL* LLMenuGL::getChildMenuByName(const std::string& name, BOOL recurse) co
 void LLMenuGL::setBackgroundColor( const LLColor4& color )
 {
 	mBackgroundColor = color;
-	item_list_t::iterator item_iter;
-	for (item_iter = mItems.begin(); item_iter != mItems.end(); ++item_iter)
-    {
-        if((*item_iter)->getType()=="menu")
-		{
-			LLMenuItemBranchGL *menuBranchItem = (LLMenuItemBranchGL*)(*item_iter);
-			menuBranchItem->getBranch()->setBackgroundColor(color);
-		}
-	}
 }
 
 

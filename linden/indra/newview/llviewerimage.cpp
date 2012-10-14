@@ -356,6 +356,8 @@ void LLViewerImage::init(bool firstinit)
 	mNumVolumes = 0;
 	mFaceList.clear() ;
 	mVolumeList.clear();
+
+	mIsLocalImage = false;
 }
 
 // virtual

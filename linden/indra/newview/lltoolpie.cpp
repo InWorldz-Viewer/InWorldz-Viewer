@@ -157,6 +157,7 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 	// didn't click in any UI object, so must have clicked in the world
 	LLViewerObject *object = mPick.getObject();
 	LLViewerObject *parent = NULL;
+	bool is_self = (object == gAgent.getAvatarObject());
 
 	if (mPick.mPickType != LLPickInfo::PICK_LAND)
 	{
@@ -293,15 +294,19 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 				break;
 			}
 			object = (LLViewerObject*)object->getParent();
+			is_self = (object == gAgent.getAvatarObject());//refresh since object changed
 		}
-		if (object && object == gAgent.getAvatarObject())
+		if (object && is_self)
 		{
 			// we left clicked on avatar, switch to focus mode
 			LLToolMgr::getInstance()->setTransientTool(LLToolCamera::getInstance());
 			gViewerWindow->hideCursor();
 			LLToolCamera::getInstance()->setMouseCapture(TRUE);
 			LLToolCamera::getInstance()->pickCallback(mPick);
-			gAgent.setFocusOnAvatar(TRUE, TRUE);
+			if (gSavedSettings.getBOOL("ResetFocusOnSelfClick"))
+			{
+				gAgent.setFocusOnAvatar(TRUE, TRUE);
+			}
 
 			return TRUE;
 		}
@@ -352,6 +357,16 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 		if (object->isAvatar() 
 			|| (object->isAttachment() && !object->isHUDAttachment() && !object->permYouOwner()))
 		{
+			// Toggle Inspect only for attachments
+			if (object->isAttachment())
+			{
+				gMenuHolder->childSetEnabled("Avatar Inspect", TRUE);
+			}
+			else
+			{
+				gMenuHolder->childSetEnabled("Avatar Inspect", FALSE);
+			}
+
 			// Find the attachment's avatar
 			while (object->isAttachment())
 			{

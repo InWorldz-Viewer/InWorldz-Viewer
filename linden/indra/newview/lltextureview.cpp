@@ -697,6 +697,10 @@ void LLTextureView::draw()
 			 iter != gImageList.mImageList.end(); )
 		{
 			LLPointer<LLViewerImage> imagep = *iter++;
+			if(!imagep->hasFetcher())
+			{
+				continue ;
+			}
 
 			S32 cur_discard = imagep->getDiscardLevel();
 			S32 desired_discard = imagep->mDesiredDiscardLevel;
