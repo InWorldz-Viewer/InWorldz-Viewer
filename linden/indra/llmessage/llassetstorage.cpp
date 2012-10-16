@@ -1269,6 +1269,7 @@ void LLAssetStorage::legacyGetDataCallback(LLVFS *vfs, const LLUUID &uuid, LLAss
 		std::string uuid_str;
 
 		uuid.toString(uuid_str);
+		// where .bodypart and other non-.wbl filenames get set -- MC
 		filename = llformat("%s.%s",gDirUtilp->getExpandedFilename(LL_PATH_CACHE,uuid_str).c_str(),LLAssetType::lookup(type));
 
 		LLFILE* fp = LLFile::fopen(filename, "wb");	/* Flawfinder: ignore */ 
