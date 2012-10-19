@@ -751,6 +751,13 @@ OSStatus	LLFilePicker::doNavSaveDialog(ESaveFilter filter, const std::string& fi
 			extension = CFSTR(".slg");
 			break;
 #endif		
+
+		case FFSAVE_XML:
+			type = '\?\?\?\?';
+			creator = '\?\?\?\?';
+			extension = CFSTR(".xml");
+			break;
+
 		case FFSAVE_RAW:
 			type = '\?\?\?\?';
 			creator = '\?\?\?\?';
