@@ -1027,6 +1027,7 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libopenal.so","libopenal.so.1")
 #            self.path("libalut.so.0.1.0","libalut.so.0")
             self.path("libalut.so")
+            self.path("libfontconfig.so")
             self.end_prefix("lib")
 
             # Vivox runtimes
@@ -1081,6 +1082,8 @@ class Linux_x86_64Manifest(LinuxManifest):
             self.path("libopenal.so.1")
             self.path("libalut.so.0")
             self.path("libjpeg.so.62.0.0", "libjpeg.so.62")
+            self.path("libfontconfig.so")
+            self.path("libfontconfig.so.1")
             self.end_prefix("lib")
 
 # Vivox runtime libs move
