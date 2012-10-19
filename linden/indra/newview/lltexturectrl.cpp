@@ -1683,7 +1683,7 @@ void LLTextureCtrl::draw()
 	// Interior
 	LLRect interior = border;
 	interior.stretch( -1 ); 
-
+	
 	if( mTexturep )
 	{
 		if( mTexturep->getComponents() == 4 )
@@ -1731,8 +1731,8 @@ void LLTextureCtrl::draw()
 	{
 		LLFontGL* font = LLFontGL::getFontSansSerif();
 		font->renderUTF8(
-			mLoadingPlaceholderString, 0,
-			llfloor(interior.mLeft + 2), // about center-ish 
+			mLoadingPlaceholderString, 0, 
+			llfloor((interior.getWidth() / 2) - (LLFontGL::getFontSansSerif()->getWidthF32(mLoadingPlaceholderString) / 2) + 1), // about center-ish 
 			llfloor((interior.mTop + interior.mBottom) / 2 - (LLFontGL::getFontSansSerif()->getLineHeight() /2) + 3), // llfont is broken here -- MC
 			LLColor4::white,
 			LLFontGL::LEFT,
