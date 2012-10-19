@@ -723,7 +723,7 @@ void LLFloaterTexturePicker::draw()
 		}
 
 		// Show "Loading..." string if we're still decoding the image -- MC
-		if (!mLoadingPlaceholderString.empty() && 
+		if (!mLoadingPlaceholderString.empty() && mTexturep &&
 			(mTexturep->getWidth() == 1) &&
 			(mTexturep->getHeight() ==1))
 		{
@@ -1525,7 +1525,7 @@ void LLTextureCtrl::onFloaterCommit(ETexturePickOp op)
 	{
 		// This is a hacky way to tell if we're in the inventory or local preview panels.
 		// If clicking 'select' in a preview, that should work differently
-		if (!floaterp->isOnLocalPanel())
+		if (!floaterp->isOnLocalPanel() && mTexturep)
 		{
 			mTexturep->setAsLocalImage(false);
 		}
@@ -1567,7 +1567,10 @@ void LLTextureCtrl::onFloaterCommit(ETexturePickOp op, LLUUID id)
 
 	if( floaterp && getEnabled())
 	{
-		mTexturep->setAsLocalImage(true);
+		if (mTexturep)
+		{
+			mTexturep->setAsLocalImage(true);
+		}
 		mImageItemID = id;
 		mImageAssetID = id; //floaterp->getAssetID(); // using same as on above func. 
 												// seems to work anyway.
@@ -1624,7 +1627,10 @@ BOOL LLTextureCtrl::handleDragAndDrop(S32 x, S32 y, MASK mask,
 				// This removes the 'Multiple' overlay, since
 				// there is now only one texture selected.
 				setTentative( FALSE );
-				mTexturep->setAsLocalImage(false);
+				if (mTexturep)
+				{
+					mTexturep->setAsLocalImage(false);
+				}
 				onCommit();
 			}
 		}
