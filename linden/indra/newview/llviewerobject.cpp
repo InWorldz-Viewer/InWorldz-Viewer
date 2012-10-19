@@ -383,40 +383,67 @@ void LLViewerObject::markDead()
 
 void LLViewerObject::dump() const
 {
+	// placeholders for ordering the info
+	LLUUID id = LLUUID::null;
+	U32 local_id = 0;
+	LLUUID owner_id = LLUUID::null;
+	LLUUID parent_id = LLUUID::null;
+	std::string name = "<unknown>";
+	std::string parent_name = "<unknown>";
+	std::string owner_name = "<unknown>";
+	std::string type = "<unknown>";
+	std::string attached_id_str = "<unknown>";
+	bool is_root = false;
+	bool is_attached = false;
+	bool is_attached_hud = false;
+	LLSelectNode* node_child = NULL; // null if this isn't a child
+
+	// final output string
+	std::ostringstream str;
+
+	LLSelectMgr::getInstance()->selectGetOwner(owner_id, owner_name);
+
 	LLSelectNode* nodep = LLSelectMgr::getInstance()->getSelection()->getFirstRootNode();
 	if (!nodep)
 	{
 		nodep = LLSelectMgr::getInstance()->getSelection()->getFirstNode();
 	}
-	
-	std::string owner_name;
-	LLUUID owner_id;
-	LLSelectMgr::getInstance()->selectGetOwner(owner_id, owner_name);
-
-	std::ostringstream str;
 	if (nodep)
 	{
-		str << "Name: " << nodep->mName << "\n";
+		name = nodep->mName;
 	}
-	str << "Owner: " << owner_name << "\n";
-	str << "Owner ID: " << owner_id << "\n";
-	//str << "Type: " << pCodeToString(mPrimitiveCode) << "\n";
-	str << "ID: " << mID << "\n";
-	str << "LocalID: " << mLocalID << "\n";
-	if (isAttachment())
+	id = mID;
+	local_id = mLocalID;
+	type = pCodeToString(mPrimitiveCode);
+	is_attached = isAttachment();
+	// separate just in case
+	is_attached_hud = isHUDAttachment();
+	if (is_attached)
 	{
 		LLViewerObject* obj = LLSelectMgr::getInstance()->getSelection()->getFirstRootObject();
 		if (obj)
 		{
-			str << "Parent ID: " << obj->getID() << "\n";
+			parent_id = obj->getID();
 
-			if (obj->getID() == mID)
+			if (parent_id == mID)
 			{
-				str << "Attached Root Prim" << "\n";
+				is_root = true;
 			}
 			else
 			{
-				str << "Attached Child Prim" << "\n";
+				is_root = false;
+				// Is there a better way to get the name of this object?
+				// Compares this' id to the selected id
+				struct f : public LLSelectedNodeFunctor
+				{
+					LLUUID mID;
+					f(const LLUUID& id) : mID(id) {}
+					virtual bool apply(LLSelectNode* node)
+					{
+						return (node->getObject() && node->getObject()->mID == mID);
+					}
+				} func(mID);
+				node_child = LLSelectMgr::getInstance()->getSelection()->getFirstNode(&func);
 			}
 
 			// Find the id of the attached avatar
@@ -426,58 +453,90 @@ void LLViewerObject::dump() const
 				if (!obj) break;	// Orphaned object ?
 			}
 
-			std::string id_str = "unknown";
 			if (obj)
 			{
 				// Object is an avatar, so check for mute by id.
 				LLVOAvatar* avatar = (LLVOAvatar*)obj;
-				id_str = avatar->getID().asString();
 				if (avatar->getID() == gAgent.getID())
 				{
-					id_str += " (self)";
+					attached_id_str = "self";
 				}
 				else if (avatar->getID() == owner_id)
 				{
-					id_str += " (" + owner_name + ")";
+					attached_id_str = owner_name;
 				}
 				else
 				{
-					std::string name;
-					gCacheName->getFullName(gAgent.getID(), name);
-					id_str += " (" + name + ")";
+					std::string av_name;
+					gCacheName->getFullName(gAgent.getID(), av_name);
+					attached_id_str = av_name;
 				}
-			}
-
-			if (isHUDAttachment())
-			{
-				str << "Attached to HUD on Avatar ID: " << id_str << "\n";
-			}
-			else
-			{
-				str << "Attached to Avatar ID: " << id_str << "\n";
+				attached_id_str = attached_id_str + " (" + avatar->getID().asString() + ")";
 			}
 		}
 		else
 		{
-			str << "Attached But Can't Find Root Object!" << "\n";
+			is_root = false;
+			attached_id_str = "unknown, can't find root object!";
 		}
 	}
 	else
 	{
-		if (getParent())
+		LLViewerObject* parent = (LLViewerObject*)getParent();
+		if (parent && (parent->getID() != mID))
 		{
+			is_root = false;
 			LLViewerObject* obj = LLSelectMgr::getInstance()->getSelection()->getFirstRootObject();
 			if (obj)
 			{
-				str << "Parent ID: " << obj->getID() << "\n";
-				str << "Unattached Child Prim" << "\n";
+				parent_id = obj->getID();
+				struct f : public LLSelectedNodeFunctor
+				{
+					LLUUID mID;
+					f(const LLUUID& id) : mID(id) {}
+					virtual bool apply(LLSelectNode* node)
+					{
+						return (node->getObject() && node->getObject()->mID == mID);
+					}
+				} func(mID);
+				node_child = LLSelectMgr::getInstance()->getSelection()->getFirstNode(&func);
 			}
 		}
 		else
 		{
-			str << "Unattached Root Prim" << "\n";
+			// ParentID is ID
+			parent_id = LLUUID::null;
+			is_root = true;
 		}
 	}
+
+	// no child node means the object doesn't have children
+	if (node_child)
+	{
+		str << "Name: " << node_child->mName << " (" << id.asString() << ")\n";
+		str << "Child Of Parent: " << name << " (" << parent_id.asString() << ")\n";
+		str << "LocalID: " << local_id << "\n";
+	}
+	else
+	{
+		str << "Name: " << name << " (" << id.asString()<< ")\n";
+		if (parent_id.notNull()) str << "Parent ID: " << parent_id.asString() << "\n";
+		str << "LocalID: " << local_id << "\n";
+	}
+
+	std::string root_str =			is_root ?			"Yes" : "No";
+	std::string attach_hud_str =	is_attached_hud ?	"Yes" : "No";
+	str << "Root: " << root_str << "\n";
+	if (is_attached)
+	{
+		str << "Attached to: " << attached_id_str << "\n";
+		str << "Attached to HUD: " << attach_hud_str << "\n";
+	}
+	else
+	{
+		str << "Attached: No\n"; 
+	}
+
 	str << "Position Region: " << getPositionRegion() << "\n";
 	str << "Position Agent: " << getPositionAgent() << "\n";
 	str << "Position Global: " << getPositionGlobal() << "\n";
@@ -485,11 +544,11 @@ void LLViewerObject::dump() const
 	str << "Update Age: " << LLFrameTimer::getElapsedSeconds() - mLastMessageUpdateSecs << "\n";
 	if ((LLDrawable*)mDrawable)
 	{
-		str << "Drawable: True" << "\n";
+		str << "Drawable: Yes" << "\n";
 	}
 	else
 	{
-		str << "Drawable: False" << "\n";
+		str << "Drawable: No" << "\n";
 	}
 	if (mDrawable.notNull() && mDrawable->getNumFaces())
 	{
@@ -521,7 +580,7 @@ void LLViewerObject::dump() const
 		LLViewerObject* child = *iter;
 		if (child)
 		{
-			str << "\tChild ID: " << child->getID() << "\n";
+			str << "Child ID: " << child->getID() << "\n";
 		}
 	}
 	*/
