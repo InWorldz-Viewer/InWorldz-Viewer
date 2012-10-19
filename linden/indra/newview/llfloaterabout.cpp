@@ -117,9 +117,8 @@ LLFloaterAbout::LLFloaterAbout()
 
 	// Version string
 	std::string version = LLAppViewer::instance()->getSecondLifeTitle()
-		+ llformat(" %d.%d.%d (%d) %s %s (%s)\n",
-				   LL_VERSION_MAJOR, LL_VERSION_MINOR, LL_VERSION_PATCH, LL_VIEWER_BUILD,
-				   __DATE__, __TIME__,
+		+ llformat(" %d.%d.%d(%d)-%s %s %s (%s)\n",
+				   LL_VERSION_MAJOR, LL_VERSION_MINOR, LL_VERSION_PATCH, LL_VERSION_BUILD, 					   IW_VIEWER_BUILD, __DATE__, __TIME__,
 				   gSavedSettings.getString("VersionChannelName").c_str());
 	support_widget->appendColoredText(version, FALSE, FALSE, gColors.getColor("TextFgReadOnlyColor"));
 	support_widget->appendStyledText(LLTrans::getString("ReleaseNotes"), false, false, viewer_link_style);
@@ -234,7 +233,6 @@ LLFloaterAbout::LLFloaterAbout()
 	support.append("None\n");
 #endif
 
-
 	support.append("libcurl Version: ");
 	support.append( LLCurl::getVersionString() );
 	support.append("\n");
@@ -252,6 +250,16 @@ LLFloaterAbout::LLFloaterAbout()
 
 	support.append("Qt Webkit Version: 4.7.1 (version number hard-coded)");
 	support.append("\n");
+
+	support.append("Compiled by: ");
+	support.append( IW_REPO_USER );
+	support.append("\n");
+
+	if( strcmp(IW_BUILD_DESC, "") ) {
+	    support.append("Build Desc: ");
+	    support.append( IW_BUILD_DESC );
+	    support.append("\n");
+	}
 
 	if (gPacketsIn > 0)
 	{

@@ -145,6 +145,8 @@ class ViewerManifest(LLManifest):
         # whether or not this is present
         return self.args.get('login_channel')
 
+    def iw_build_desc(self):
+        return self.args['iw_build_desc']
     def buildtype(self):
         return self.args['buildtype']
     def configuration(self):
@@ -461,6 +463,12 @@ class WindowsManifest(ViewerManifest):
 
         version = '.'.join(self.args['version'])
         base_filename = self.installer_prefix() + version + sse_string
+
+# Avian - Note to McCabe: This should work to add description to filename...
+        if self.iw_build_desc():
+            version += "-"
+            version += self.iw_build_desc()
+
         app_name = self.channel()
         app_ver_name="%s %s" % (app_name, version)
 
@@ -788,6 +796,11 @@ class DarwinManifest(ViewerManifest):
             # first look, etc
             imagename = imagename + '-' + self.channel_oneword().upper()
 
+# Avian - Note to McCabe: This should work to add description to filename...
+        if self.iw_build_desc():
+            imagename += "-"
+            imagename += self.iw_build_desc()
+
         sparsename = imagename + ".sparseimage"
         finalname = imagename + ".dmg"
         # make sure we don't have stale files laying about
@@ -937,16 +950,20 @@ class LinuxManifest(ViewerManifest):
             else:
                 installer_name += '_' + self.channel_oneword().upper()
 
-	# Add a suffix to the build name = Avian
-	if self.buildtype().lower() == "releasesse2":
+        # Add a suffix to the build name = Avian
+        if self.buildtype().lower() == "releasesse2":
             suffix_name = "-SSE2"
-	elif  self.buildtype().lower() == "debug":
+        elif  self.buildtype().lower() == "debug":
             suffix_name = "-DBG"
-	elif  self.buildtype().lower() == "releasefast":
+        elif  self.buildtype().lower() == "releasefast":
             suffix_name = "-FAST"
-	else:  suffix_name = ""
+        else:  suffix_name = ""
         installer_name += suffix_name
-	# end suffix
+        # end suffix
+
+        if self.iw_build_desc():
+            installer_name += "-"
+            installer_name += self.iw_build_desc()
 
         # Fix access permissions
         self.run_command("""
