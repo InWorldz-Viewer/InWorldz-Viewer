@@ -1,3 +1,4 @@
+include(BuildVersion)
 
 # Avian - Set up description for max of 10 characters and
 #         filter out non-filename characters
@@ -16,8 +17,6 @@ else ( NOT IW_BUILD_DESC )
     set(IW_BUILD_DESC_SHORT ${temp_var} CACHE STRING "The Usuable Build Description" FORCE)
 endif ( NOT IW_BUILD_DESC )
 
-
-include(BuildVersion)
 version_build_info()
 
 if(VIEWER)

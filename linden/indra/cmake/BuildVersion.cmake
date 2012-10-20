@@ -35,26 +35,32 @@ function (version_build_info)
         RESULT_VARIABLE temp_result
         OUTPUT_VARIABLE temp_output
         ERROR_VARIABLE temp_error)
-    string(STRIP ${temp_output} temp_output)
-    string(REGEX REPLACE "[^a-z^A-Z^0-9^_^-^(^)^.]" "_" temp_output ${temp_output})
-    string(LENGTH ${temp_output} temp_len)
-    if( temp_len )
-        set(IW_REPO_USER ${temp_output} CACHE INTERNAL "The GIT User Name")
-    else ( temp_len )
-        set(IW_REPO_USER "Unkown" CACHE INTERNAL "The GIT User Name")
-    endif  ( temp_len )
+    if (temp_output) 
+		# We have something
+		string(STRIP ${temp_output} temp_output)
+		string(REGEX REPLACE "[^a-z^A-Z^0-9^_^-^(^)^.]" "_" temp_output ${temp_output})
+		string(LENGTH ${temp_output} temp_len)
+		if( temp_len )
+			set(IW_REPO_USER ${temp_output} CACHE INTERNAL "The GIT User Name")
+		else ( temp_len )
+			set(IW_REPO_USER "Unkown" CACHE INTERNAL "The GIT User Name")
+		endif  ( temp_len )
 
-    execute_process(COMMAND ${temp_cmd} show -s --abbrev-commit --oneline --no-notes --format=%h 
-        WORKING_DIRECTORY ${temp_path} 
-        RESULT_VARIABLE temp_result 
-        OUTPUT_VARIABLE temp_output 
-        ERROR_VARIABLE temp_error)
-    string(STRIP ${temp_output} temp_output)
-    string(LENGTH ${temp_output} temp_len)
-    if( temp_len )
-        set(IW_REPO_SHA1 ${temp_output} CACHE INTERNAL "The GIT Commit SHA1")
-    else ( temp_len )
-        set(IW_REPO_SHA1 "0000000" CACHE INTERNAL "The GIT Commit SHA1")
-    endif ( temp_len )
+		execute_process(COMMAND ${temp_cmd} show -s --abbrev-commit --oneline --no-notes --format=%h 
+			WORKING_DIRECTORY ${temp_path} 
+			RESULT_VARIABLE temp_result 
+			OUTPUT_VARIABLE temp_output 
+			ERROR_VARIABLE temp_error)
+		string(STRIP ${temp_output} temp_output)
+		string(LENGTH ${temp_output} temp_len)
+		if( temp_len )
+			set(IW_REPO_SHA1 ${temp_output} CACHE INTERNAL "The GIT Commit SHA1")
+		else ( temp_len )
+			set(IW_REPO_SHA1 "0000000" CACHE INTERNAL "The GIT Commit SHA1")
+		endif ( temp_len )
+	else (temp_output)
+		# We don't have anything, bail out
+		message(WARNING "No output from git! To use commit hashes, a git executable must be in your PATH variable!")
+	endif (temp_output)    
 endfunction(version_build_info)
 
