@@ -1012,15 +1012,24 @@ void LLFilePicker::chooser_responder(GtkWidget *widget, gint response, gpointer 
 
 	if (response == GTK_RESPONSE_ACCEPT)
 	{
+	    // Avian - check for valid path - stops crash on GTK 'recently used'
+	    const char* gtkfilepath = gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(widget));
+	    if( gtkfilepath != NULL )
+	    {
 		GSList *file_list = gtk_file_chooser_get_filenames(GTK_FILE_CHOOSER(widget));
 		g_slist_foreach(file_list, (GFunc)add_to_selectedfiles, user_data);
 		g_slist_foreach(file_list, (GFunc)g_free, NULL);
 		g_slist_free (file_list);
-	}
 
-	// set the default path for this usage context.
-	picker->mContextToPathMap[picker->mCurContextName] =
-		gtk_file_chooser_get_current_folder(GTK_FILE_CHOOSER(widget));
+		// Avian - fixed for GTK 'cancel file picker' crash
+		// set the default path for this usage context.
+		picker->mContextToPathMap[picker->mCurContextName] = gtkfilepath;
+	    }
+	    else	// was null path 
+	    {
+		// Avian - error message should go here
+	    }
+	}
 
 	gtk_widget_destroy(widget);
 	gtk_main_quit();
@@ -1064,12 +1073,14 @@ GtkWindow* LLFilePicker::buildFilePicker(bool is_save, bool is_folder, std::stri
 				(GTK_FILE_CHOOSER(win),
 				 this_path->second.c_str());
 		}
+/*
 		else if (getenv("HOME"))
 		{
 			gtk_file_chooser_set_current_folder
 				(GTK_FILE_CHOOSER(win),
 				 getenv("HOME"));
 		}
+*/
 
 #  if LL_X11
 		// Make GTK tell the window manager to associate this
