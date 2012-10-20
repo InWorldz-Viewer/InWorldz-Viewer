@@ -68,7 +68,7 @@ function (version_build_info)
 		endif ( temp_len )
 	else (temp_output)
 		# We don't have anything, bail out
-		message(WARNING "No output from git! To use commit hashes, a git executable must be in your PATH variable!")
+		message(WARNING "No output from git! To use commit hashes, 'git' must be in your PATH!")
 	endif (temp_output)    
 endfunction(version_build_info)
 
