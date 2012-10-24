@@ -387,6 +387,7 @@ set(viewer_SOURCE_FILES
     lluserauth.cpp
     llvectorperfoptions.cpp
     llvelocitybar.cpp
+    llversionstring.cpp
     llviewchildren.cpp
     llviewerassetstorage.cpp
     llvieweraudio.cpp
@@ -821,6 +822,7 @@ set(viewer_HEADER_FILES
     lluserauth.h
     llvectorperfoptions.h
     llvelocitybar.h
+    llversionstring.h
     llviewchildren.h
     llviewerassetstorage.h
     llvieweraudio.h
@@ -1540,6 +1542,18 @@ if (WINDOWS)
 		  COMMENT "Copying iw_kdu_loader.dll to the runtime folder."
 		  )
   endif (IW_KDU)
+  
+  get_target_property(BUILT_WIN_UPDATER windows-updater LOCATION)
+  add_custom_command(
+      TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND}
+      ARGS
+      -E
+      copy_if_different
+      ${BUILT_WIN_UPDATER}
+      ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+      COMMENT "Copying windows updater to the runtime folder."
+      )
   
   get_target_property(BUILT_SLPLUGIN SLPlugin LOCATION)
   add_custom_command(

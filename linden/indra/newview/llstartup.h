@@ -47,8 +47,8 @@ extern std::string SCREEN_LAST_FILENAME;
 typedef enum {
 	STATE_FIRST,					// Initial startup
 	STATE_BROWSER_INIT,             // Initialize web browser for login screen
-	STATE_PRELOGIN_UPDATE_CHECK,	// Check for an update before the login screen
 	STATE_LOGIN_SHOW,				// Show login screen
+	STATE_PRELOGIN_UPDATE_CHECK,	// Check for an update before the login screen
 	STATE_LOGIN_WAIT,				// Wait for user input at login screen
 	STATE_LOGIN_CLEANUP,			// Get rid of login screen and start login
 	STATE_UPDATE_CHECK,				// Wait for user at a dialog box (updates, term-of-service, etc)
