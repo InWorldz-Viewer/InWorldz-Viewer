@@ -1014,7 +1014,7 @@ bool idle_startup()
 				std::string update_url = directory+filename;
 				LLCurl::escapeSafe(update_url);
 				update_app(mandatory, "", update_url);
-				LLStartUp::setStartupState( STATE_UPDATE_CHECK );
+				LLStartUp::setStartupState( STATE_PRELOGIN_UPDATE_WAIT );
 			}
 		}
 		else
@@ -1025,6 +1025,13 @@ bool idle_startup()
 		return FALSE;
 	}
 
+	if (STATE_PRELOGIN_UPDATE_WAIT == LLStartUp::getStartupState())
+	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_PRELOGIN_UPDATE_WAIT" << LL_ENDL;
+		// here we're waiting to see if a user's going to click the non-download button for updates
+		// if they click 'continue' we move on to STATE_LOGIN_WAIT
+		return FALSE;
+	}
 
 	if (STATE_LOGIN_WAIT == LLStartUp::getStartupState())
 	{
@@ -3271,7 +3278,7 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 		}
 		else
 		{
-			if (LLStartUp::getStartupState() == STATE_PRELOGIN_UPDATE_CHECK)
+			if (LLStartUp::getStartupState() == STATE_PRELOGIN_UPDATE_WAIT)
 			{
 				LLStartUp::setStartupState( STATE_LOGIN_WAIT );
 			}
@@ -3770,6 +3777,7 @@ std::string LLStartUp::startupStateToString(EStartupState state)
 		RTNENUM( STATE_BROWSER_INIT );
 		RTNENUM( STATE_LOGIN_SHOW );
 		RTNENUM( STATE_PRELOGIN_UPDATE_CHECK);
+		RTNENUM( STATE_PRELOGIN_UPDATE_WAIT);
 		RTNENUM( STATE_LOGIN_WAIT );
 		RTNENUM( STATE_LOGIN_CLEANUP );
 		RTNENUM( STATE_UPDATE_CHECK );
