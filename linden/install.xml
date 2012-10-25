@@ -390,9 +390,9 @@
           <key>linux64</key>
           <map>
             <key>md5sum</key>
-            <string>13b551e5deafbaa6cfd105fa072bdfba</string>
+            <string>520d7f6b7ef37a8a3ddf8084392256c6</string>
             <key>url</key>
-            <uri>http://download.kokuaviewer.org/files/libs/fontconfig-2.7.3-linux64-20091230.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/fontconfig-2.7.3-linux64-20091231.tar.bz2</uri>
           </map>
         </map>
       </map>
