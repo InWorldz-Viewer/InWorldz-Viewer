@@ -40,6 +40,8 @@
 #	include <sys/stat.h>		// mkdir()
 #endif
 
+#include <cstring>  	// Avian - needed for updater
+
 #include "llviewermedia_streamingaudio.h"
 #include "llaudioengine.h"
 
@@ -903,8 +905,14 @@ bool idle_startup()
 #elif LL_DARWIN
 		key_to_check = "Darwin32";
 #elif LL_LINUX
-		// Currently unsupported! Need a linux updater! -- MC
-		//key_to_check = "Linux32";
+
+# ifdef IW_BUILD_64BIT
+		    key_to_check = "Linux64";
+# else
+		    key_to_check = "Linux32";
+		    if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force update to SSE2/FAST???
+# endif
+
 #endif
 		if (key_to_check.empty())
 		{
@@ -3397,9 +3405,9 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 	system(LLAppViewer::sUpdaterInfo->mUpdateExePath.c_str()); /* Flawfinder: ignore */
 
 #elif LL_LINUX || LL_SOLARIS
-	OSMessageBox("Automatic updating is not yet implemented for Linux.\n"
-		"Please download the latest version from www.secondlife.com.",
-		LLStringUtil::null, OSMB_OK);
+	llinfos << "Linux update URL = " << update_url.asString() << llendl;
+	std::string avianTempStr= "Automatic updating is not yet implemented for Linux.\nPlease download the latest version from:\n" + update_url.asString();
+	OSMessageBox(avianTempStr.c_str(), LLStringUtil::null, OSMB_OK);
 #endif
 	LLAppViewer::instance()->forceQuit();
 	return false;
