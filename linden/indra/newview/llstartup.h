@@ -49,9 +49,10 @@ typedef enum {
 	STATE_BROWSER_INIT,             // Initialize web browser for login screen
 	STATE_LOGIN_SHOW,				// Show login screen
 	STATE_PRELOGIN_UPDATE_CHECK,	// Check for an update before the login screen
+	STATE_PRELOGIN_UPDATE_WAIT,		// Wait for user input if an update is prompted before login
 	STATE_LOGIN_WAIT,				// Wait for user input at login screen
 	STATE_LOGIN_CLEANUP,			// Get rid of login screen and start login
-	STATE_UPDATE_CHECK,				// Wait for user at a dialog box (updates, term-of-service, etc)
+	STATE_UPDATE_CHECK,				// Wait for user at a dialog box (updates, term-of-service, etc) during login
 	STATE_LOGIN_AUTH_INIT,			// Start login to SL servers
 	STATE_LOGIN_AUTHENTICATE,		// Do authentication voodoo
 	STATE_LOGIN_NO_DATA_YET,		// Waiting for authentication replies to start
