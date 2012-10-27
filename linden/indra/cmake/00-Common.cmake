@@ -260,6 +260,7 @@ if (LINUX OR DARWIN)
   elseif (WORD_SIZE EQUAL 64)
     if (LINUX)
       #force full optimization for 64 bit Linux builds as all(?) 64bit cpu's use SSE2 and -O3 opt
+      #send a flag to the compiler preprocessor to mark that it's a true 64bit build (for updater and other?)
       set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64 ${CMAKE_CXX_FLAGS_RELEASEFAST} -DIW_BUILD_64BIT")
       set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ${CMAKE_CXX_FLAGS_RELEASEFAST} -DIW_BUILD_64BIT")
     else (LINUX)
