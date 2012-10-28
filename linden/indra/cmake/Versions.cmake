@@ -17,6 +17,12 @@ else ( NOT IW_BUILD_DESC )
     set(IW_BUILD_DESC_SHORT ${temp_var} CACHE STRING "The Usuable Build Description" FORCE)
 endif ( NOT IW_BUILD_DESC )
 
+if ( NOT IW_BYPASS )
+    set(IW_BYPASS 0 CACHE BOOL "Bypass Manatory Download")
+else ( NOT IW_BYPASS )
+    set(IW_BYPASS 1 CACHE BOOL "Bypass Manatory Download" FORCE)
+endif ( NOT IW_BYPASS )
+
 version_build_info()
 
 if(VIEWER)

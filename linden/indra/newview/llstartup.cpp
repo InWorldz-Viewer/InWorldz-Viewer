@@ -979,7 +979,11 @@ bool idle_startup()
 					if (current_version < minimum_version)
 					{
 						update = true;
-						mandatory = true;
+						// Added by Avian to bypass mandatory for special builds
+						if ( iw_bypass )
+						    mandatory = false;
+						else
+						    mandatory = true;
 						llinfos << "Current version for " << key_to_check << " is less than the minimum required: " << minimum_version.getVersion() << ". Attempting to update to " 
 							<< latest_version.getVersion() << llendl;
 					}

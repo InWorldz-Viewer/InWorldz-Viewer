@@ -21,9 +21,9 @@ set(CMAKE_CXX_FLAGS_RELWITHDEBINFO
 #
 # Avian - set up the new build info for passing to the compiler
 if (LINUX)
-    set(CMAKE_CXX_FLAGS_VERSION_INFO "-DIW_BUILD_DESC=\\\"${IW_BUILD_DESC_SHORT}\\\" -DIW_REPO_USER=\\\"${IW_REPO_USER}\\\" -DIW_REPO_SHA1=\\\"${IW_REPO_SHA1}\\\"")
+    set(CMAKE_CXX_FLAGS_VERSION_INFO "-DIW_BUILD_DESC=\\\"${IW_BUILD_DESC_SHORT}\\\" -DIW_REPO_USER=\\\"${IW_REPO_USER}\\\" -DIW_REPO_SHA1=\\\"${IW_REPO_SHA1}\\\" -DIW_BYPASS=${IW_BYPASS}")
 else (LINUX)
-    set(CMAKE_CXX_FLAGS_VERSION_INFO "-DIW_BUILD_DESC=\\\"${IW_BUILD_DESC_SHORT}\\\" -DIW_REPO_USER=\\\"${IW_REPO_USER}\\\" -DIW_REPO_SHA1=\\\"${IW_REPO_SHA1}\\\"")
+    set(CMAKE_CXX_FLAGS_VERSION_INFO "-DIW_BUILD_DESC=\\\"${IW_BUILD_DESC_SHORT}\\\" -DIW_REPO_USER=\\\"${IW_REPO_USER}\\\" -DIW_REPO_SHA1=\\\"${IW_REPO_SHA1}\\\" -DIW_BYPASS=${IW_BYPASS}")
 endif (LINUX)
 
 # Avian - add the new build info into the build types
