@@ -910,7 +910,10 @@ bool idle_startup()
 		    key_to_check = "Linux64";
 # else
 		    key_to_check = "Linux32";
-		    if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force update to SSE2/FAST???
+//		    if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force update to SSE2/FAST???
+#    ifdef __SSE2__
+		    key_to_check += "Optimized"; // update with SSE2/FAST
+#    endif
 # endif
 
 #endif
