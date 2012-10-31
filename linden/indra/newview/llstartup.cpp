@@ -901,20 +901,20 @@ bool idle_startup()
 		std::string key_to_check = "";
 #ifdef LL_WINDOWS
 		key_to_check = "Win32";
-		if (gSysCPU.hasSSE2()) key_to_check += "Optimized";
+		if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force to SSE2/FAST if cpu is sse2
 #elif LL_DARWIN
 		key_to_check = "Darwin32";
 #elif LL_LINUX
 
-# ifdef IW_BUILD_64BIT
+#  ifdef IW_BUILD_64BIT
 		    key_to_check = "Linux64";
-# else
+#  else
 		    key_to_check = "Linux32";
-//		    if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force update to SSE2/FAST???
+//		    if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force to SSE2/FAST if cpu is sse2
 #    ifdef __SSE2__
-		    key_to_check += "Optimized"; // update with SSE2/FAST
+		    key_to_check += "Optimized"; // update with SSE2/FAST if current build is sse2
 #    endif
-# endif
+#  endif
 
 #endif
 		if (key_to_check.empty())
@@ -923,6 +923,8 @@ bool idle_startup()
 			LLStartUp::setStartupState( STATE_LOGIN_WAIT );
 			return FALSE;
 		}
+
+// should put '+= Optimized" here if it doesn't affect Darwin builds
 
 		std::string url = gSavedSettings.getString("VersionCheckURL");
 		llinfos << "Checking for new version in file " << url << llendl;
@@ -3413,7 +3415,8 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 
 #elif LL_LINUX || LL_SOLARIS
 	llinfos << "Linux update URL = " << update_url.asString() << llendl;
-	std::string avianTempStr= "Automatic updating is not yet implemented for Linux.\nPlease download the latest version from:\n" + update_url.asString();
+	LLWeb::loadURLExternal(update_url.asString());
+	std::string avianTempStr= "Your default browser should start downloading shortly.\nIf not, you may manually download from:\n" + update_url.asString();
 	OSMessageBox(avianTempStr.c_str(), LLStringUtil::null, OSMB_OK);
 #endif
 	LLAppViewer::instance()->forceQuit();
