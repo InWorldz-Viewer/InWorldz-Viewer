@@ -901,7 +901,10 @@ bool idle_startup()
 		std::string key_to_check = "";
 #ifdef LL_WINDOWS
 		key_to_check = "Win32";
-		if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force to SSE2/FAST if cpu is sse2
+//		if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force to SSE2/FAST if cpu is sse2
+#  ifdef __SSE2__
+		    key_to_check += "Optimized"; // update with SSE2 if current build is sse2
+#  endif
 #elif LL_DARWIN
 		key_to_check = "Darwin32";
 #elif LL_LINUX
