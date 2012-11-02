@@ -3231,6 +3231,7 @@ void update_app(BOOL mandatory, const std::string& auth_msg, std::string update_
 	payload["mandatory"] = mandatory;
 	if (!update_url.empty())
 	{
+		LLCurl::escapeSafe(update_url);
 		payload["update_url"] = update_url;
 	}
 
