@@ -7399,12 +7399,6 @@ void LLAgent::sendAgentSetAppearance()
 	// To guard against out of order packets
 	// Note: always start by sending 1.  This resets the server's count. 0 on the server means "uninitialized"
 	mAppearanceSerialNum++;
-	if (mAppearanceSerialNum == 0) 
-		llinfos << "mc: mAppearanceSerialNum is 0, supposedly uninitialized" << llendl;
-	else if (mAppearanceSerialNum == 1) 
-		llinfos << "mc: mAppearanceSerialNum is 1! Resets the server count" << llendl;
-	else
-		llinfos << "mc: Sending mAppearanceSerialNum: " << mAppearanceSerialNum << llendl;
 	msg->addU32Fast(_PREHASH_SerialNum, mAppearanceSerialNum );
 
 	// is texture data current relative to wearables?
@@ -7418,14 +7412,12 @@ void LLAgent::sendAgentSetAppearance()
 		// if we're not wearing a skirt, we don't need the texture to be baked
 		if (texture_index == TEX_SKIRT_BAKED && !mAvatarObject->isWearingWearableType(WT_SKIRT))
 		{
-			llwarns << "mc: texture_index == TEX_SKIRT_BAKED && !mAvatarObject->isWearingWearableType(WT_SKIRT)" << llendl;
 			continue;
 		}
 
 		// IMG_DEFAULT_AVATAR means not baked
 		if (!mAvatarObject->isTextureDefined(texture_index))
 		{
-			llwarns << "mc: !isTextureDefined for texture index " << texture_index << llendl;
 			textures_current = FALSE;
 			break;
 		}
@@ -7448,10 +7440,6 @@ void LLAgent::sendAgentSetAppearance()
 				{
 					hash ^= wearable->getID();
 				}
-				else
-				{
-					llwarns << "mc: not a wearable! " << wearable_type << llendl;
-				}
 			}
 			if (hash.notNull())
 			{
@@ -7473,9 +7461,7 @@ void LLAgent::sendAgentSetAppearance()
 		// This means the baked texture IDs on the server will be untouched.
 		// Once all textures are baked, another AvatarAppearance message will be sent to update the TEs
 		msg->nextBlockFast(_PREHASH_ObjectData);
-		gMessageSystem->addBinaryDataFast(_PREHASH_TextureEntry, NULL, 0);
-		llinfos << "mc: sending NULL for TextureEntry" << llendl;
-	}
+		gMessageSystem->addBinaryDataFast(_PREHASH_TextureEntry, NULL, 0);	}
 
 
 	S32 transmitted_params = 0;
@@ -7492,10 +7478,6 @@ void LLAgent::sendAgentSetAppearance()
 			const U8 new_weight = F32_to_U8(param_value, param->getMinWeight(), param->getMaxWeight());
 			msg->addU8Fast(_PREHASH_ParamValue, new_weight );
 			transmitted_params++;
-		}
-		else
-		{
-			llinfos << "mc: param->getGroup() != VISUAL_PARAM_GROUP_TWEAKABLE" << llendl;
 		}
 	}
 
