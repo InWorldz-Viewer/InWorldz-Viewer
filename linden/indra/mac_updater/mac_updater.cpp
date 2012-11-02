@@ -348,7 +348,7 @@ int parse_args(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	// We assume that all the logs we're looking for reside on the current drive
-	gDirUtilp->initAppDirs("SecondLife");
+	gDirUtilp->initAppDirs("InWorldz");
 
 	LLError::initForApplication( gDirUtilp->getExpandedFilename(LL_PATH_APP_SETTINGS, ""));
 
@@ -382,7 +382,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			gProductName = "Second Life";
+			gProductName = "InWorldz";
 		}
 		if (gBundleID)
 		{
@@ -390,7 +390,7 @@ int main(int argc, char **argv)
 		}
 		else
 		{
-			gBundleID = "com.secondlife.indra.viewer";
+			gBundleID = "com.inworldz.viewer";
 		}
 	}
 	
@@ -483,7 +483,7 @@ int main(int argc, char **argv)
 		err = CreateStandardAlert(
 				kAlertStopAlert,
 				CFSTR("Error"),
-				CFSTR("An error occurred while updating Second Life.  Please download the latest version from www.secondlife.com."),
+				CFSTR("An error occurred while updating InWorldz.  Please download the latest version from inworldz.com."),
 				&params,
 				&alert);
 		
@@ -592,7 +592,7 @@ int restoreObject(const char* aside, const char* target, const char* path, const
 	return true;
 }
 
-// Replace any mention of "Second Life" with the product name.
+// Replace any mention of "InWorldz" with the product name.
 void filterFile(const char* filename)
 {
 	char temp[PATH_MAX] = "";		/* Flawfinder: ignore */
@@ -602,7 +602,7 @@ void filterFile(const char* filename)
 
 	// Now run it through sed.
 	snprintf(temp, sizeof(temp), 		
-			"sed 's/Second Life/%s/g' '%s.tmp' > '%s'", gProductName, filename, filename);
+			"sed 's/InWorldz/%s/g' '%s.tmp' > '%s'", gProductName, filename, filename);
 	system(temp);		/* Flawfinder: ignore */
 }
 
@@ -661,7 +661,7 @@ static bool isFSRefViewerBundle(FSRef *targetRef)
 	return result;
 }
 
-// Search through the directory specified by 'parent' for an item that appears to be a Second Life viewer.
+// Search through the directory specified by 'parent' for an item that appears to be an InWorldz viewer.
 static OSErr findAppBundleOnDiskImage(FSRef *parent, FSRef *app)
 {
 	FSIterator		iterator;
@@ -748,8 +748,8 @@ void *updatethreadproc(void*)
 	
 	try
 	{
-		// Attempt to get a reference to the Second Life application bundle containing this updater.
-		// Any failures during this process will cause us to default to updating /Applications/Second Life.app
+		// Attempt to get a reference to the InWorldz application bundle containing this updater.
+		// Any failures during this process will cause us to default to updating /Applications/InWorldz.app
 		{
 			FSRef myBundle;
 
@@ -761,13 +761,13 @@ void *updatethreadproc(void*)
 
 			if(err == noErr)
 			{
-				// Sanity check:  Make sure the name of the item referenced by targetRef is "Second Life.app".
+				// Sanity check:  Make sure the name of the item referenced by targetRef is "InWorldz.app".
 				FSRefMakePath(&myBundle, (UInt8*)target, sizeof(target));
 				
 				llinfos << "Updater bundle location: " << target << llendl;
 			}
 			
-			// Our bundle should be in Second Life.app/Contents/Resources/AutoUpdater.app
+			// Our bundle should be in InWorldz.app/Contents/Resources/AutoUpdater.app
 			// so we need to go up 3 levels to get the path to the main application bundle.
 			if(err == noErr)
 			{
@@ -927,7 +927,7 @@ void *updatethreadproc(void*)
 
 #endif // 0 *HACK for DEV-11935
 		
-		strncat(temp, "/SecondLifeUpdate_XXXXXX", (sizeof(temp) - strlen(temp)) - 1);
+		strncat(temp, "/InWorldzUpdate_XXXXXX", (sizeof(temp) - strlen(temp)) - 1);
 		if(mkdtemp(temp) == NULL)
 		{
 			throw 0;
@@ -945,7 +945,7 @@ void *updatethreadproc(void*)
 				
 		chdir(tempDir);
 		
-		snprintf(temp, sizeof(temp), "SecondLife.dmg");		
+		snprintf(temp, sizeof(temp), "InWorldz.dmg");		
 		
 		downloadFile = LLFile::fopen(temp, "wb");		/* Flawfinder: ignore */
 		if(downloadFile == NULL)
@@ -992,7 +992,7 @@ void *updatethreadproc(void*)
 		// NOTE: we could add -private at the end of this command line to keep the image from showing up in the Finder,
 		//		but if our cleanup fails, this makes it much harder for the user to unmount the image.
 		std::string mountOutput;
-		FILE* mounter = popen("hdiutil attach SecondLife.dmg -mountpoint mnt", "r");		/* Flawfinder: ignore */
+		FILE* mounter = popen("hdiutil attach InWorldz.dmg -mountpoint mnt", "r");		/* Flawfinder: ignore */
 		
 		if(mounter == NULL)
 		{
