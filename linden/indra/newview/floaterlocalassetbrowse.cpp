@@ -233,13 +233,6 @@ void LocalBitmap::updateSelf()
 
 bool LocalBitmap::decodeSelf(LLImageRaw* rawimg)
 {
-#ifdef LL_DARWIN
-	if (decodeImageQuartz(filename, rawimg))
-	{
-		rawimg->biasedScaleToPowerOfTwo( LLViewerImage::MAX_IMAGE_SIZE_DEFAULT );
-		return true;
-	}
-#else
 	switch (this->extension)
 	{
 		case IMG_EXTEN_BMP:
@@ -288,7 +281,6 @@ bool LocalBitmap::decodeSelf(LLImageRaw* rawimg)
 		default:
 			break;
 	}
-#endif
 	return false;
 }
 
