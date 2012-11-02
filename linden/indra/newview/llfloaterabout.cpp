@@ -252,12 +252,12 @@ LLFloaterAbout::LLFloaterAbout()
 	support.append("\n");
 
 	support.append("Compiled by: ");
-	support.append( IW_REPO_USER );
+	support.append( IW_VERSION_USER );
 	support.append("\n");
 
-	if( strcmp(IW_BUILD_DESC, "") ) {
+	if( strcmp(IW_VERSION_DESC, "") ) {
 	    support.append("Build Desc: ");
-	    support.append( IW_BUILD_DESC );
+	    support.append( IW_VERSION_DESC );
 	    support.append("\n");
 	}
 

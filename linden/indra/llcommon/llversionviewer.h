@@ -33,15 +33,17 @@
 #ifndef LL_LLVERSIONVIEWER_H
 #define LL_LLVERSIONVIEWER_H
 
+#include "llpreprocessor.h"
+
 const S32 LL_VERSION_MAJOR = 1;
 const S32 LL_VERSION_MINOR = 5;
 const S32 LL_VERSION_PATCH = 0;
 const S32 LL_VERSION_BUILD = 0;
 
 // Avian - add more build info - hash becomes 'BUILD' number
-const char * const IW_VERSION_BUILD = IW_REPO_SHA1;  // hash from last commit of current branch
-const char * const IW_VERSION_DESC = IW_BUILD_DESC;  // added description from command line
-const char * const IW_VERSION_USER = IW_REPO_USER;   // local repo user name
+const char * const IW_VERSION_BUILD = IW_MACRO_STR(IW_REPO_SHA1);  // hash from last commit of current branch
+const char * const IW_VERSION_DESC = IW_MACRO_STR(IW_BUILD_DESC);  // added description from command line
+const char * const IW_VERSION_USER = IW_MACRO_STR(IW_REPO_USER);   // local repo user name
 #ifdef IW_BYPASS
     const bool iw_bypass = IW_BYPASS;
 #else
