@@ -43,16 +43,10 @@ const S32 LL_VERSION_BUILD = 0;
 // Viewer channel. Controls what channel automatic downloads look at 
 const char * const LL_CHANNEL = "InWorldz Release";
 
-// Avian - add more build info - hash becomes 'BUILD' number
-// Icky awful hack for windows string issue -- MC
-#ifdef LL_WINDOWS
-#ifdef IW_BUILD_DESC
-const char * const IW_VERSION_DESC = IW_BUILD_DESC;
-#endif
-#else // LL_WINDOWS
-	const char * const IW_VERSION_DESC = IW_MACRO_STR(IW_BUILD_DESC);  // added description from command line
-#endif
+// Strings like "beta1" etc.
+const char * const IW_VERSION_DESC = "";
 
+// Avian - add more build info - hash becomes 'BUILD' number
 #ifdef IW_REPO_SHA1
 	const char * const IW_VERSION_BUILD = IW_MACRO_STR(IW_REPO_SHA1);  // hash from last commit of current branch
 #else

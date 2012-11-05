@@ -9,7 +9,7 @@ function (build_version _target)
     string(REGEX REPLACE ".* = ([0-9]+);.*" "\\1" value "${line}")
     set(v${comp} "${value}")
   endforeach(line)
-
+  
   # Compose the version.
   set(temp_vers "${vMAJOR}.${vMINOR}.${vPATCH}.${vBUILD}")
   if (${temp_vers} MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$")
@@ -18,10 +18,6 @@ function (build_version _target)
     if (IW_REPO_SHA1)
 		# if we get the info from git
 		set(${_target}_VERSION_FULL "${${_target}_VERSION_FULL}.${IW_REPO_SHA1}")
-		if (IW_BUILD_DESC_SHORT)
-			# if we have a description
-			set(${_target}_VERSION_FULL "${${_target}_VERSION_FULL}-${IW_BUILD_DESC_SHORT}")
-		endif (IW_BUILD_DESC_SHORT)
 	endif (IW_REPO_SHA1)
   else (${temp_vers} MATCHES "^[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+$")
     message(FATAL_ERROR "Could not determine ${_target} version (${${_target}_VERSION})")

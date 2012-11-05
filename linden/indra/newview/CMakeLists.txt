@@ -1324,7 +1324,6 @@ if (WINDOWS)
           --build=${CMAKE_CURRENT_BINARY_DIR}
           --dest=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/packaged
           --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/touched.bat
-          --iw_build_desc=${IW_BUILD_DESC_SHORT}
         DEPENDS ${VIEWER_BINARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
         )
 
@@ -1401,7 +1400,6 @@ if (LINUX)
         --build=${CMAKE_CURRENT_BINARY_DIR}
         --dest=${CMAKE_CURRENT_BINARY_DIR}/packaged
         --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/.${product}.touched
-        --iw_build_desc=${IW_BUILD_DESC_SHORT}
         --buildtype=${CMAKE_BUILD_TYPE}
       DEPENDS inworldz-stripped ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
       )
@@ -1444,7 +1442,6 @@ if (DARWIN)
       --build=${CMAKE_CURRENT_BINARY_DIR}
       --dest=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${product}.app
       --buildtype=${CMAKE_BUILD_TYPE}
-      --iw_build_desc=${IW_BUILD_DESC_SHORT}
     DEPENDS ${VIEWER_BINARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
     )
 
@@ -1470,7 +1467,6 @@ if (DARWIN)
           --dest=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${product}.app
           --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/.${product}.touched
           --buildtype=${CMAKE_BUILD_TYPE}
-          --iw_build_desc=${IW_BUILD_DESC_SHORT}
         DEPENDS
           ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
       )
@@ -1492,7 +1488,6 @@ if (DARWIN)
           --dest=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${product}.app
           --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/.${product}.touched
           --buildtype=${CMAKE_BUILD_TYPE}
-          --iw_build_desc=${IW_BUILD_DESC_SHORT}
         DEPENDS
           ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
       )
