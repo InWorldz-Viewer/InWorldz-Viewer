@@ -64,7 +64,7 @@ protected:
 
 inline bool LLVersionString::operator==(const LLVersionString& other) const
 {
-	return (getVersion() != other.getVersion());
+	return (getVersion() == other.getVersion());
 }
 
 inline LLVersionString& LLVersionString::operator=(const LLVersionString& other)
