@@ -747,7 +747,7 @@ static void onClickParcelInfo(void* data)
 static void onClickBalance(void* data)
 {
 	//onClickBuyCurrency(data);
-	LLWeb::loadURLInternal(BUY_CURRENCY_URL);
+	show_buy_currency(NULL);
 }
 
 //static void onClickBuyCurrency(void* data)

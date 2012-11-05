@@ -4279,7 +4279,7 @@ bool callback_show_buy_currency(const LLSD& notification, const LLSD& response)
 	if (0 == option)
 	{
 		llinfos << "Loading page " << BUY_CURRENCY_URL << llendl;
-		LLWeb::loadURLInternal(BUY_CURRENCY_URL);
+		LLWeb::loadURL(BUY_CURRENCY_URL);
 	}
 	return false;
 }
@@ -4300,6 +4300,10 @@ void show_buy_currency(const char* extra)
 	if (extra != NULL)
 	{
 		args["EXTRA"] = extra;
+	}
+	else
+	{
+		args["EXTRA"] = "";
 	}
 	args["URL"] = BUY_CURRENCY_URL;
 	LLNotifications::instance().add("PromptGoToCurrencyPage", args, LLSD(), callback_show_buy_currency);
@@ -5699,7 +5703,7 @@ class LLShowFloater : public view_listener_t
 		{
 			//LLFloaterBuyCurrency::buyCurrency();
 			// We currently can only buy currency from the website -- MC
-			LLWeb::loadURLInternal(BUY_CURRENCY_URL);
+			show_buy_currency(NULL);
 		}
 		else if (floater_name == "about")
 		{
