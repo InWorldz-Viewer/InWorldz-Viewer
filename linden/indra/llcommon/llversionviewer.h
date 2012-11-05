@@ -40,20 +40,39 @@ const S32 LL_VERSION_MINOR = 5;
 const S32 LL_VERSION_PATCH = 0;
 const S32 LL_VERSION_BUILD = 0;
 
+// Viewer channel. Controls what channel automatic downloads look at 
+const char * const LL_CHANNEL = "InWorldz Release";
+
 // Avian - add more build info - hash becomes 'BUILD' number
-const char * const IW_VERSION_BUILD = IW_MACRO_STR(IW_REPO_SHA1);  // hash from last commit of current branch
-const char * const IW_VERSION_DESC = IW_MACRO_STR(IW_BUILD_DESC);  // added description from command line
-const char * const IW_VERSION_USER = IW_MACRO_STR(IW_REPO_USER);   // local repo user name
+// Icky awful hack for windows string issue -- MC
+#ifdef LL_WINDOWS
+#ifdef IW_BUILD_DESC
+const char * const IW_VERSION_DESC = IW_BUILD_DESC;
+#endif
+#else // LL_WINDOWS
+	const char * const IW_VERSION_DESC = IW_MACRO_STR(IW_BUILD_DESC);  // added description from command line
+#endif
+
+#ifdef IW_REPO_SHA1
+	const char * const IW_VERSION_BUILD = IW_MACRO_STR(IW_REPO_SHA1);  // hash from last commit of current branch
+#else
+	const char * const IW_VERSION_BUILD = "";
+#endif
+
+#ifdef IW_REPO_USER
+	const char * const IW_VERSION_USER = IW_MACRO_STR(IW_REPO_USER);   // local repo user name
+#else
+	const char * const IW_VERSION_USER = "";
+#endif
+
 #ifdef IW_BYPASS
     const bool iw_bypass = IW_BYPASS;
 #else
     const bool iw_bypass = FALSE;
 #endif
 
-const char * const LL_CHANNEL = "InWorldz Release";
-
 #if LL_DARWIN
-const char * const LL_VERSION_BUNDLE_ID = "com.inworldz.viewer";
+	const char * const LL_VERSION_BUNDLE_ID = "com.inworldz.viewer";
 #endif
 
 #endif
