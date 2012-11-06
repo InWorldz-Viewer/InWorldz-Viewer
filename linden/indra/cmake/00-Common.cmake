@@ -15,6 +15,22 @@ set(CMAKE_CXX_FLAGS_RELEASESSE2
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO 
     "-DLL_RELEASE=1 -D_SECURE_SCL=0 -DLL_SEND_CRASH_REPORTS=0 -DNDEBUG -DLL_RELEASE_WITH_DEBUG_INFO=1")
 
+#
+# Avian - set up the new build info for passing to the compiler
+if (LINUX)
+    set(CMAKE_CXX_FLAGS_VERSION_INFO "-DIW_REPO_USER=\"${IW_REPO_USER}\" -DIW_REPO_SHA1=\"${IW_REPO_SHA1}\" -DIW_BYPASS=${IW_BYPASS}")
+elseif (WINDOWS)
+    set(CMAKE_CXX_FLAGS_VERSION_INFO "-DIW_REPO_USER=${IW_REPO_USER} -DIW_REPO_SHA1=${IW_REPO_SHA1} -DIW_BYPASS=${IW_BYPASS}")
+elseif (DARWIN)
+	set(CMAKE_CXX_FLAGS_VERSION_INFO "-DIW_REPO_USER=\"${IW_REPO_USER}\" -DIW_REPO_SHA1=\"${IW_REPO_SHA1}\" -DIW_BYPASS=${IW_BYPASS}")
+endif (LINUX)
+
+# Avian - add the new build info into the build types
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} ${CMAKE_CXX_FLAGS_VERSION_INFO}")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} ${CMAKE_CXX_FLAGS_VERSION_INFO}")
+set(CMAKE_CXX_FLAGS_RELEASESSE2 "${CMAKE_CXX_FLAGS_RELEASESSE2} ${CMAKE_CXX_FLAGS_VERSION_INFO}")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} ${CMAKE_CXX_FLAGS_VERSION_INFO}")
+
 # releasefast will use releasesse2 stuff later in the file
 # Don't bother with a MinSizeRel build.
 if (LINUX)
@@ -241,8 +257,15 @@ if (LINUX OR DARWIN)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
   elseif (WORD_SIZE EQUAL 64)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
+    if (LINUX)
+      #force full optimization for 64 bit Linux builds as all(?) 64bit cpu's use SSE2 and -O3 opt
+      #send a flag to the compiler preprocessor to mark that it's a true 64bit build (for updater and other?)
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64 ${CMAKE_CXX_FLAGS_RELEASEFAST} -DIW_BUILD_64BIT")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 ${CMAKE_CXX_FLAGS_RELEASEFAST} -DIW_BUILD_64BIT")
+    else (LINUX)
+      set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64")
+    endif (LINUX)
   endif (WORD_SIZE EQUAL 32)
 endif (LINUX OR DARWIN)
 

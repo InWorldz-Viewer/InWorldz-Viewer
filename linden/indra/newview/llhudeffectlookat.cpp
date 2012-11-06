@@ -267,6 +267,33 @@ LLHUDEffectLookAt::~LLHUDEffectLookAt()
 //-----------------------------------------------------------------------------
 void LLHUDEffectLookAt::packData(LLMessageSystem *mesgsys)
 {
+	LLViewerObject* source_object = (LLViewerObject*)mSourceObject;
+	LLVOAvatar* source_avatar = NULL;
+
+	if (!source_object)//imprudence TODO: find out why this happens at all and fix there
+	{
+		LL_DEBUGS("HUDEffect")<<"NULL-Object HUDEffectLookAt message" <<  LL_ENDL;
+		markDead();
+		return;
+	}
+	if (source_object->isAvatar())
+	{
+		source_avatar = (LLVOAvatar*)source_object;
+	}
+	else //imprudence TODO: find out why this happens at all and fix there
+	{
+		LL_DEBUGS("HUDEffect")<<"Non-Avatar HUDEffectLookAt message for ID: " <<  source_object->getID().asString()<< LL_ENDL;
+		markDead();
+		return;
+	}
+
+	bool is_self = source_avatar->isSelf();
+	if (!is_self) //imprudence TODO: find out why this happens at all and fix there
+	{
+		LL_DEBUGS("HUDEffect")<< "Non-self Avatar HUDEffectLookAt message for ID: " << source_avatar->getID().asString() << LL_ENDL;
+		markDead();
+		return;
+	}
 	// Pack the default data
 	LLHUDEffect::packData(mesgsys);
 
@@ -366,6 +393,12 @@ void LLHUDEffectLookAt::unpackData(LLMessageSystem *mesgsys, S32 blocknum)
 
 	U8 lookAtTypeUnpacked = 0;
 	htonmemcpy(&lookAtTypeUnpacked, &(packed_data[LOOKAT_TYPE]), MVT_U8, 1);
+	if (lookAtTypeUnpacked > 10)
+	{
+		LL_DEBUGS("HUDEffect")<< "wrong lookAtTypeUnpacked: " << lookAtTypeUnpacked << LL_ENDL;
+		lookAtTypeUnpacked = 0;
+	}
+
 	mTargetType = (ELookAtType)lookAtTypeUnpacked;
 
 	if (mTargetType == LOOKAT_TARGET_NONE)

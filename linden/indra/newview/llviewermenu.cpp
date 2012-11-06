@@ -2029,6 +2029,44 @@ bool confirm_derender_callback(const LLSD& notification, const LLSD& response)
 	return false;
 }
 
+class LLObjectDumpInfo : public view_listener_t
+{
+    bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+    {
+		// make sure we have something selected
+		LLViewerObject* selection_object = LLSelectMgr::getInstance()->getSelection()->getFirstObject();
+		if (!selection_object)
+		{
+			return true;
+		}
+
+		LLObjectSelectionHandle selection = LLSelectMgr::getInstance()->getSelection();
+		for (LLObjectSelection::iterator iter = selection->begin(); iter != selection->end(); iter++)
+		{
+			LLSelectNode* node = (*iter);
+			if (node)
+			{
+				LLViewerObject* obj = node->getObject();
+				if (obj && !obj->isAvatar())
+				{
+					obj->dump();
+				}
+			}
+		}
+		return true;
+	}
+};
+
+class LLObjectEnableDumpInfo : public view_listener_t
+{
+	bool handleEvent(LLPointer<LLEvent> event, const LLSD& userdata)
+	{
+		bool new_value = gAgent.isGodlike();
+		gMenuHolder->findControl(userdata["control"].asString())->setValue(new_value);
+		return true;
+	}
+};
+
 
 //---------------------------------------------------------------------------
 // Land pie menu
@@ -4241,7 +4279,7 @@ bool callback_show_buy_currency(const LLSD& notification, const LLSD& response)
 	if (0 == option)
 	{
 		llinfos << "Loading page " << BUY_CURRENCY_URL << llendl;
-		LLWeb::loadURLInternal(BUY_CURRENCY_URL);
+		LLWeb::loadURL(BUY_CURRENCY_URL);
 	}
 	return false;
 }
@@ -4262,6 +4300,10 @@ void show_buy_currency(const char* extra)
 	if (extra != NULL)
 	{
 		args["EXTRA"] = extra;
+	}
+	else
+	{
+		args["EXTRA"] = "";
 	}
 	args["URL"] = BUY_CURRENCY_URL;
 	LLNotifications::instance().add("PromptGoToCurrencyPage", args, LLSD(), callback_show_buy_currency);
@@ -5661,7 +5703,7 @@ class LLShowFloater : public view_listener_t
 		{
 			//LLFloaterBuyCurrency::buyCurrency();
 			// We currently can only buy currency from the website -- MC
-			LLWeb::loadURLInternal(BUY_CURRENCY_URL);
+			show_buy_currency(NULL);
 		}
 		else if (floater_name == "about")
 		{
@@ -8163,6 +8205,7 @@ void initialize_menus()
 	addMenu(new LLObjectInspect(), "Object.Inspect");
 	addMenu(new LLObjectDerender(), "Object.DERENDER");
 	addMenu(new LLObjectExport(), "Object.Export");
+	addMenu(new LLObjectDumpInfo(), "Object.DumpInfo");
 
 	addMenu(new LLObjectEnableOpen(), "Object.EnableOpen");
 	addMenu(new LLObjectEnableTouch(), "Object.EnableTouch");
@@ -8174,6 +8217,7 @@ void initialize_menus()
 	addMenu(new LLObjectEnableMute(), "Object.EnableMute");
 	addMenu(new LLObjectEnableBuy(), "Object.EnableBuy");
 	addMenu(new LLObjectEnableExport(), "Object.EnableExport");
+	addMenu(new LLObjectEnableDumpInfo(), "Object.EnableDumpInfo"); // also controls visiblity -- MC
 
 	/*addMenu(new LLObjectVisibleTouch(), "Object.VisibleTouch");
 	addMenu(new LLObjectVisibleCustomTouch(), "Object.VisibleCustomTouch");

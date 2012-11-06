@@ -71,6 +71,7 @@ set(viewer_SOURCE_FILES
     floaterbusy.cpp
     floatercache.cpp
     floatercommandline.cpp
+    floaterlocalassetbrowse.cpp
     jcfloaterareasearch.cpp
     hbfloatergrouptitles.cpp
     llagent.cpp
@@ -386,6 +387,7 @@ set(viewer_SOURCE_FILES
     lluserauth.cpp
     llvectorperfoptions.cpp
     llvelocitybar.cpp
+    llversionstring.cpp
     llviewchildren.cpp
     llviewerassetstorage.cpp
     llvieweraudio.cpp
@@ -500,6 +502,7 @@ set(viewer_HEADER_FILES
     floaterbusy.h
     floatercache.h
     floatercommandline.h
+    floaterlocalassetbrowse.h
     jcfloaterareasearch.h
     hbfloatergrouptitles.h
     llagent.h
@@ -819,6 +822,7 @@ set(viewer_HEADER_FILES
     lluserauth.h
     llvectorperfoptions.h
     llvelocitybar.h
+    llversionstring.h
     llviewchildren.h
     llviewerassetstorage.h
     llvieweraudio.h
@@ -1316,10 +1320,10 @@ if (WINDOWS)
           --branding_id=${VIEWER_BRANDING_ID}
           --grid=${GRID}
           --source=${CMAKE_CURRENT_SOURCE_DIR}
-              --artwork=${ARTWORK_DIR}
-              --build=${CMAKE_CURRENT_BINARY_DIR}
-              --dest=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/packaged
-              --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/touched.bat
+          --artwork=${ARTWORK_DIR}
+          --build=${CMAKE_CURRENT_BINARY_DIR}
+          --dest=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/packaged
+          --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/touched.bat
         DEPENDS ${VIEWER_BINARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
         )
 
@@ -1533,6 +1537,18 @@ if (WINDOWS)
 		  COMMENT "Copying iw_kdu_loader.dll to the runtime folder."
 		  )
   endif (IW_KDU)
+  
+  get_target_property(BUILT_WIN_UPDATER windows-updater LOCATION)
+  add_custom_command(
+      TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND}
+      ARGS
+      -E
+      copy_if_different
+      ${BUILT_WIN_UPDATER}
+      ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+      COMMENT "Copying windows updater to the runtime folder."
+      )
   
   get_target_property(BUILT_SLPLUGIN SLPlugin LOCATION)
   add_custom_command(

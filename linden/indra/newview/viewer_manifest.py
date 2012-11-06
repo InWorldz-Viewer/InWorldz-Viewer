@@ -439,12 +439,12 @@ class WindowsManifest(ViewerManifest):
         #        "../win_crash_logger/releasesse2/windows-crash-logger.exe"),
         #        "../win_crash_logger/relwithdebinfo/windows-crash-logger.exe"),
         #          dst="win_crash_logger.exe")
-        #self.path(src=self.find_existing_file(
-        #        "../win_updater/debug/windows-updater.exe",
-        #        "../win_updater/release/windows-updater.exe",
-        #        "../win_updater/releasesse2/windows-updater.exe",
-        #        "../win_updater/relwithdebinfo/windows-updater.exe"),
-        #          dst="updater.exe")
+        self.path(src=self.find_existing_file(
+                 "../win_updater/debug/windows-updater.exe",
+                 "../win_updater/release/windows-updater.exe",
+                 "../win_updater/releasesse2/windows-updater.exe",
+                 "../win_updater/relwithdebinfo/windows-updater.exe"),
+                   dst="windows-updater.exe")
 
         # For google-perftools tcmalloc allocator.
         #if self.prefix(src="../../libraries/i686-win32/lib/release", dst=""):
@@ -461,6 +461,7 @@ class WindowsManifest(ViewerManifest):
 
         version = '.'.join(self.args['version'])
         base_filename = self.installer_prefix() + version + sse_string
+
         app_name = self.channel()
         app_ver_name="%s %s" % (app_name, version)
 
@@ -697,24 +698,24 @@ class DarwinManifest(ViewerManifest):
 
                 # our apps
                 #self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
-                #self.path("../mac_updater/" + self.args['configuration'] + "/mac-updater.app", "mac-updater.app")
+                self.path("../mac_updater/" + self.args['configuration'] + "/mac-updater.app", "mac-updater.app")
 
                 # our apps dependencies on shared libs
                 #mac_crash_logger_res_path = self.dst_path_of("mac-crash-logger.app/Contents/Resources")
-                #mac_updater_res_path = self.dst_path_of("mac-updater.app/Contents/Resources")
-                #for libfile in ("libllcommon.dylib",
-                 #               "libapr-1.0.3.7.dylib",
-                 #               "libaprutil-1.0.3.8.dylib",
-                 #               "libexpat.0.5.0.dylib"):
-                 #   target_lib = os.path.join('../../..', libfile)
+                mac_updater_res_path = self.dst_path_of("mac-updater.app/Contents/Resources")
+                for libfile in ("libllcommon.dylib",
+                                "libapr-1.0.3.7.dylib",
+                                "libaprutil-1.0.3.8.dylib",
+                                "libexpat.0.5.0.dylib"):
+                    target_lib = os.path.join('../../..', libfile)
                     #self.run_command("ln -sf %(target)r %(link)r" %
                     #                 {'target': target_lib,
                     #                  'link' : os.path.join(mac_crash_logger_res_path, libfile)}
                     #                 )
-                    #self.run_command("ln -sf %(target)r %(link)r" %
-                    #                 {'target': target_lib,
-                    #                  'link' : os.path.join(mac_updater_res_path, libfile)}
-                    #                 )
+                    self.run_command("ln -sf %(target)r %(link)r" %
+                                     {'target': target_lib,
+                                      'link' : os.path.join(mac_updater_res_path, libfile)}
+                                     )
 
                 # plugin launcher
                 self.path("../llplugin/slplugin/" + self.args['configuration'] + "/SLPlugin.app", "SLPlugin.app")
@@ -937,16 +938,16 @@ class LinuxManifest(ViewerManifest):
             else:
                 installer_name += '_' + self.channel_oneword().upper()
 
-	# Add a suffix to the build name = Avian
-	if self.buildtype().lower() == "releasesse2":
+        # Add a suffix to the build name = Avian
+        if self.buildtype().lower() == "releasesse2":
             suffix_name = "-SSE2"
-	elif  self.buildtype().lower() == "debug":
+        elif  self.buildtype().lower() == "debug":
             suffix_name = "-DBG"
-	elif  self.buildtype().lower() == "releasefast":
+        elif  self.buildtype().lower() == "releasefast":
             suffix_name = "-FAST"
-	else:  suffix_name = ""
+        else:  suffix_name = ""
         installer_name += suffix_name
-	# end suffix
+        # end suffix
 
         # Fix access permissions
         self.run_command("""
@@ -1027,6 +1028,7 @@ class Linux_i686Manifest(LinuxManifest):
             self.path("libopenal.so","libopenal.so.1")
 #            self.path("libalut.so.0.1.0","libalut.so.0")
             self.path("libalut.so")
+            self.path("libfontconfig.so")
             self.end_prefix("lib")
 
             # Vivox runtimes
@@ -1081,6 +1083,8 @@ class Linux_x86_64Manifest(LinuxManifest):
             self.path("libopenal.so.1")
             self.path("libalut.so.0")
             self.path("libjpeg.so.62.0.0", "libjpeg.so.62")
+            self.path("libfontconfig.so")
+            self.path("libfontconfig.so.1")
             self.end_prefix("lib")
 
 # Vivox runtime libs move

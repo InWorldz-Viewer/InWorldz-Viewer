@@ -6,7 +6,7 @@
 	<slider bottom="-20" can_edit_text="true" control_name="RenderFarClip"
        decimal_digits="0" enabled="true" height="18"
        increment="4" initial_val="160" label="Draw distance:"
-       label_width="74" left="4" max_val="1024" min_val="32" mouse_opaque="true"
+       label_width="74" left="4" max_val="512" min_val="32" mouse_opaque="true"
        name="DrawDistance" show_text="true" width="174" />
   <slider bottom_delta="-20" can_edit_text="true" control_name="RenderMaxPartCount"
        decimal_digits="0" enabled="true" follows="left|top" height="18"

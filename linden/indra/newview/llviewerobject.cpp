@@ -61,9 +61,11 @@
 #include "llagent.h"
 #include "llbbox.h"
 #include "llbox.h"
+#include "llchat.h"
 #include "llcylinder.h"
 #include "lldrawable.h"
 #include "llface.h"
+#include "llfloaterchat.h"
 #include "llfloaterproperties.h"
 #include "llfollowcam.h"
 #include "llselectmgr.h"
@@ -381,49 +383,213 @@ void LLViewerObject::markDead()
 
 void LLViewerObject::dump() const
 {
-	llinfos << "Type: " << pCodeToString(mPrimitiveCode) << llendl;
-	llinfos << "Drawable: " << (LLDrawable *)mDrawable << llendl;
-	llinfos << "Update Age: " << LLFrameTimer::getElapsedSeconds() - mLastMessageUpdateSecs << llendl;
+	// placeholders for ordering the info
+	LLUUID id = LLUUID::null;
+	U32 local_id = 0;
+	LLUUID owner_id = LLUUID::null;
+	LLUUID parent_id = LLUUID::null;
+	std::string name = "<unknown>";
+	std::string parent_name = "<unknown>";
+	std::string owner_name = "<unknown>";
+	std::string type = "<unknown>";
+	std::string attached_id_str = "<unknown>";
+	bool is_root = false;
+	bool is_attached = false;
+	bool is_attached_hud = false;
+	LLSelectNode* node_child = NULL; // null if this isn't a child
 
-	llinfos << "Parent: " << getParent() << llendl;
-	llinfos << "ID: " << mID << llendl;
-	llinfos << "LocalID: " << mLocalID << llendl;
-	llinfos << "PositionRegion: " << getPositionRegion() << llendl;
-	llinfos << "PositionAgent: " << getPositionAgent() << llendl;
-	llinfos << "PositionGlobal: " << getPositionGlobal() << llendl;
-	llinfos << "Velocity: " << getVelocity() << llendl;
+	// final output string
+	std::ostringstream str;
+
+	LLSelectMgr::getInstance()->selectGetOwner(owner_id, owner_name);
+
+	LLSelectNode* nodep = LLSelectMgr::getInstance()->getSelection()->getFirstRootNode();
+	if (!nodep)
+	{
+		nodep = LLSelectMgr::getInstance()->getSelection()->getFirstNode();
+	}
+	if (nodep)
+	{
+		name = nodep->mName;
+	}
+	id = mID;
+	local_id = mLocalID;
+	type = pCodeToString(mPrimitiveCode);
+	is_attached = isAttachment();
+	// separate just in case
+	is_attached_hud = isHUDAttachment();
+	if (is_attached)
+	{
+		LLViewerObject* obj = LLSelectMgr::getInstance()->getSelection()->getFirstRootObject();
+		if (obj)
+		{
+			parent_id = obj->getID();
+
+			if (parent_id == mID)
+			{
+				is_root = true;
+			}
+			else
+			{
+				is_root = false;
+				// Is there a better way to get the name of this object?
+				// Compares this' id to the selected id
+				struct f : public LLSelectedNodeFunctor
+				{
+					LLUUID mID;
+					f(const LLUUID& id) : mID(id) {}
+					virtual bool apply(LLSelectNode* node)
+					{
+						return (node->getObject() && node->getObject()->mID == mID);
+					}
+				} func(mID);
+				node_child = LLSelectMgr::getInstance()->getSelection()->getFirstNode(&func);
+			}
+
+			// Find the id of the attached avatar
+			while (obj->isAttachment())
+			{
+				obj = (LLViewerObject*)obj->getParent();
+				if (!obj) break;	// Orphaned object ?
+			}
+
+			if (obj)
+			{
+				// Object is an avatar, so check for mute by id.
+				LLVOAvatar* avatar = (LLVOAvatar*)obj;
+				if (avatar->getID() == gAgent.getID())
+				{
+					attached_id_str = "self";
+				}
+				else if (avatar->getID() == owner_id)
+				{
+					attached_id_str = owner_name;
+				}
+				else
+				{
+					std::string av_name;
+					gCacheName->getFullName(gAgent.getID(), av_name);
+					attached_id_str = av_name;
+				}
+				attached_id_str = attached_id_str + " (" + avatar->getID().asString() + ")";
+			}
+		}
+		else
+		{
+			is_root = false;
+			attached_id_str = "unknown, can't find root object!";
+		}
+	}
+	else
+	{
+		LLViewerObject* parent = (LLViewerObject*)getParent();
+		if (parent && (parent->getID() != mID))
+		{
+			is_root = false;
+			LLViewerObject* obj = LLSelectMgr::getInstance()->getSelection()->getFirstRootObject();
+			if (obj)
+			{
+				parent_id = obj->getID();
+				struct f : public LLSelectedNodeFunctor
+				{
+					LLUUID mID;
+					f(const LLUUID& id) : mID(id) {}
+					virtual bool apply(LLSelectNode* node)
+					{
+						return (node->getObject() && node->getObject()->mID == mID);
+					}
+				} func(mID);
+				node_child = LLSelectMgr::getInstance()->getSelection()->getFirstNode(&func);
+			}
+		}
+		else
+		{
+			// ParentID is ID
+			parent_id = LLUUID::null;
+			is_root = true;
+		}
+	}
+
+	// no child node means the object doesn't have children
+	if (node_child)
+	{
+		str << "Name: " << node_child->mName << " (" << id.asString() << ")\n";
+		str << "Child Of Parent: " << name << " (" << parent_id.asString() << ")\n";
+		str << "LocalID: " << local_id << "\n";
+	}
+	else
+	{
+		str << "Name: " << name << " (" << id.asString()<< ")\n";
+		if (parent_id.notNull()) str << "Parent ID: " << parent_id.asString() << "\n";
+		str << "LocalID: " << local_id << "\n";
+	}
+
+	std::string root_str =			is_root ?			"Yes" : "No";
+	std::string attach_hud_str =	is_attached_hud ?	"Yes" : "No";
+	str << "Root: " << root_str << "\n";
+	if (is_attached)
+	{
+		str << "Attached to: " << attached_id_str << "\n";
+		str << "Attached to HUD: " << attach_hud_str << "\n";
+	}
+	else
+	{
+		str << "Attached: No\n"; 
+	}
+
+	str << "Position Region: " << getPositionRegion() << "\n";
+	str << "Position Agent: " << getPositionAgent() << "\n";
+	str << "Position Global: " << getPositionGlobal() << "\n";
+	str << "Velocity: " << getVelocity() << "\n";
+	str << "Update Age: " << LLFrameTimer::getElapsedSeconds() - mLastMessageUpdateSecs << "\n";
+	if ((LLDrawable*)mDrawable)
+	{
+		str << "Drawable: Yes" << "\n";
+	}
+	else
+	{
+		str << "Drawable: No" << "\n";
+	}
 	if (mDrawable.notNull() && mDrawable->getNumFaces())
 	{
 		LLFacePool *poolp = mDrawable->getFace(0)->getPool();
 		if (poolp)
 		{
-			llinfos << "Pool: " << poolp << llendl;
-			llinfos << "Pool reference count: " << poolp->mReferences.size() << llendl;
+			str << "Pool: " << poolp << "\n";
+			str << "Pool Reference Count: " << poolp->mReferences.size() << "\n";
 		}
 	}
-	//llinfos << "BoxTree Min: " << mDrawable->getBox()->getMin() << llendl;
-	//llinfos << "BoxTree Max: " << mDrawable->getBox()->getMin() << llendl;
+	//str << "BoxTree Min: " << mDrawable->getBox()->getMin() << "\n";
+	//str << "BoxTree Max: " << mDrawable->getBox()->getMin() << "\n";
 	/*
-	llinfos << "Velocity: " << getVelocity() << llendl;
-	llinfos << "AnyOwner: " << permAnyOwner() << " YouOwner: " << permYouOwner() << " Edit: " << mPermEdit << llendl;
-	llinfos << "UsePhysics: " << usePhysics() << " CanSelect " << mbCanSelect << " UserSelected " << mUserSelected << llendl;
-	llinfos << "AppAngle: " << mAppAngle << llendl;
-	llinfos << "PixelArea: " << mPixelArea << llendl;
+	str << "AnyOwner: " << permAnyOwner() << " YouOwner: " << permYouOwner() << " Edit: " << mPermEdit << "\n";
+	str << "UsePhysics: " << usePhysics() << " CanSelect " << mbCanSelect << " UserSelected " << mUserSelected << "\n";
+	str << "AppAngle: " << mAppAngle << "\n";
+	str << "PixelArea: " << mPixelArea << "\n";
 
 	char buffer[1000];
 	char *key;
 	for (key = mNameValuePairs.getFirstKey(); key; key = mNameValuePairs.getNextKey() )
 	{
 		mNameValuePairs[key]->printNameValue(buffer);
-		llinfos << buffer << llendl;
+		str << buffer << "\n";
 	}
-	for (child_list_t::iterator iter = mChildList.begin();
+	for (child_list_t::const_iterator iter = mChildList.begin();
 		 iter != mChildList.end(); iter++)
 	{
 		LLViewerObject* child = *iter;
-		llinfos << "  child " << child->getID() << llendl;
+		if (child)
+		{
+			str << "Child ID: " << child->getID() << "\n";
+		}
 	}
 	*/
+
+	llinfos << str.str() << llendl;
+
+	LLChat chat;
+	chat.mText = str.str();
+	LLFloaterChat::addChat(chat);
 }
 
 void LLViewerObject::printNameValuePairs() const

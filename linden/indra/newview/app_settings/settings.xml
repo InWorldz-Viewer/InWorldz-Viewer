@@ -135,6 +135,17 @@
       <integer>0</integer>
     </array>
   </map>
+  <key>ForceMandatoryUpdatePrelogin</key>
+    <map>
+      <key>Comment</key>
+      <string>For QA: On next startup, forces the auto-updater to run before login</string>
+      <key>Persist</key>
+      <integer>1</integer>
+      <key>Type</key>
+      <string>Boolean</string>
+      <key>Value</key>
+      <integer>0</integer>
+    </map>
   <key>HTTPInventory</key>
   <map>
     <key>Comment</key>
@@ -366,6 +377,17 @@
     <key>Value</key>
     <string />
   </map>
+  <key>MapShowAgentCount</key>
+  <map>
+    <key>Comment</key>
+    <string>Show number of agents next to region names on world map</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
   <key>MiniMapShowObjects</key>
   <map>
     <key>Comment</key>
@@ -388,6 +410,22 @@
     <key>Value</key>
     <integer>0</integer>
   </map>
+  <key>ObjectIMColor</key>
+  <map>
+    <key>Comment</key>
+    <string>Color of IMs from objects</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Color4</string>
+    <key>Value</key>
+    <array>
+      <real>0.699999988079</real>
+      <real>0.899999976158</real>
+      <real>0.699999988079</real>
+      <real>1</real>
+    </array>
+  </map>
   <key>PluginAttachDebuggerToPlugins</key>
   <map>
     <key>Comment</key>
@@ -398,6 +436,39 @@
     <string>Boolean</string>
     <key>Value</key>
     <integer>0</integer>
+  </map>
+  <key>PreviewAnimInWorld</key>
+  <map>
+    <key>Comment</key>
+    <string>Play animation preview in-world when uploading</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>ResetFocusOnSelfClick</key>
+  <map>
+    <key>Comment</key>
+    <string>Setting this to TRUE resets your camera when you left-click your avatar</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
+  <key>ShowGroupNameInChatIM</key>
+  <map>
+    <key>Comment</key>
+    <string>Show the group name when receiving group IMs</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
   </map>
   <key>ShowStreamTitle</key>
   <map>
@@ -666,6 +737,18 @@
   </map>
   
   <!-- End: clear cache -->
+  
+  <key>VersionCheckURL</key>
+  <map>
+    <key>Comment</key>
+    <string>Location to check for latest version</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>String</string>
+    <key>Value</key>
+    <string>http://inworldz.com/imprudence/app/latest_version.xml</string>
+  </map>
 
   <!-- END INWORLDZ-SPECIFIC SETTINGS -->
 
@@ -8779,7 +8862,7 @@
     <key>RenderVolumeLODFactor</key>
     <map>
       <key>Comment</key>
-      <string>Controls level of detail of primitives (multiplier for current screen area when calculated level of detail)</string>
+      <string>The value set in PREFERENCES > GRAPHICS > OBJECTS. Controls level of detail of primitives (multiplier for current screen area when calculated level of detail). If you apply new preferences, THIS WILL CHANGE!</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>

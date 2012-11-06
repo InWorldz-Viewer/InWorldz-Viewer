@@ -240,6 +240,13 @@ bool friendship_offer_callback(const LLSD& notification, const LLSD& response)
 		msg->addUUIDFast(_PREHASH_TransactionID, payload["session_id"]);
 		msg->sendReliable(LLHost(payload["sender"].asString()));
 		break;
+	case 2:
+		// Push another notification
+		// Do we need to check for OfferFriendshipNoMessage here ever? -- MC
+		LLNotifications::instance().add("OfferFriendship", notification["substitutions"], notification["payload"]);
+  		LLURLDispatcher::dispatch(llformat("inworldz:///app/agent/%s/about",payload["from_id"].asString().c_str()), NULL, true);
+  		break;
+	case 3:
 	default:
 		// close button probably, possibly timed out
 		break;
@@ -2123,7 +2130,20 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			position,
 			true);
 
-		chat.mText = std::string("IM: ") + name + separator_string +  saved + message.substr(message_offset);
+		std::string group_name;
+		if (gAgent.isInGroup(session_id) && gSavedSettings.getBOOL("ShowGroupNameInChatIM"))
+		{
+			if (!(gCacheName->getGroupName(from_id, group_name)))
+			{
+				group_name = std::string((char*)binary_bucket);
+			}
+			chat.mText = std::string("IM [") + group_name + std::string("] ") + name 
+						+ separator_string + saved + message.substr(message_offset);
+		}
+		else
+		{
+			chat.mText = std::string("IM: ") + name + separator_string +  saved + message.substr(message_offset);
+		}
 		LLFloaterChat::addChat(chat, TRUE, is_this_agent);
 	}
 	break;
@@ -2134,7 +2154,7 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 			{
 				return;
 			}
-			chat.mText = name + separator_string + message.substr(message_offset);
+			chat.mText = std::string("IM: ") + name + separator_string + message.substr(message_offset);
 			chat.mFromName = name;
 
 			// Build a link to open the object IM info window.
@@ -2163,16 +2183,32 @@ void process_improved_im(LLMessageSystem *msg, void **user_data)
 				chat.mFromID = from_id ^ gAgent.getSessionID();
 			}
 
+				std::string tempname = name;
+		
+				size_t found = tempname.find(" ");
+				while(found != std::string::npos)
+				{
+					tempname.replace(found, 1, "");
+					found = tempname.find(" ");
+				}
+
+				if (tempname.length() < 1)
+				{
+					name = ">>";
+					chat.mFromName = name;
+					
+				}
+
 			std::ostringstream link;
 			link << "inworldz:///app/objectim/" << session_id
 					<< LLURI::mapToQueryString(query_string);
 
 			chat.mURL = link.str();
-			chat.mText = name + separator_string + message.substr(message_offset);
+			chat.mText = std::string("IM: ") + name + separator_string + message.substr(message_offset);
 
 			// Note: lie to LLFloaterChat::addChat(), pretending that this is NOT an IM, because
 			// IMs from objcts don't open IM sessions.
-			chat.mSourceType = CHAT_SOURCE_OBJECT;
+			chat.mSourceType = CHAT_SOURCE_OBJECT_IM;
 			LLFloaterChat::addChat(chat, FALSE, FALSE);
 		}
 		break;
@@ -2540,6 +2576,32 @@ void process_chat_from_simulator(LLMessageSystem *msg, void **user_data)
 		}
 
 		is_owned_by_me = chatter->permYouOwner();
+	}
+
+	if(chat.mSourceType == CHAT_SOURCE_OBJECT 
+		&& chat.mChatType != CHAT_TYPE_DEBUG_MSG
+		&& !owner_id.isNull()
+		&& owner_id != gAgent.getID())
+	{
+		std::string tempname = from_name;
+
+		size_t found = tempname.find(" ");
+		while(found != std::string::npos)
+		{
+			tempname.replace(found, 1, "");
+			found = tempname.find(" ");
+		}
+
+		if (tempname.length() < 1)
+		{
+			from_name = ">>";
+			chat.mFromName = from_name;
+		}
+
+		//        std::string ownername;
+		//        if(gCacheName->getFullName(owner_id,ownername))
+		//            from_name += (" (" + ownername + ")");
+		chat.mURL = llformat("inworldz:///app/agent/%s/about",owner_id.asString().c_str());
 	}
 
 	if (is_audible)
@@ -5508,6 +5570,10 @@ bool callback_script_dialog(const LLSD& notification, const LLSD& response)
 	// Didn't click "Ignore"
 	if (button_idx != -1)
 	{
+		if (notification["payload"].has("textbox"))
+		{
+			button = response["message"].asString();
+		}
 		LLMessageSystem* msg = gMessageSystem;
 		msg->newMessage("ScriptDialogReply");
 		msg->nextBlock("AgentData");
@@ -5590,11 +5656,29 @@ void process_script_dialog(LLMessageSystem* msg, void**)
 	}
 
 	LLNotificationForm form;
-	for (i = 0; i < button_count; i++)
+	std::string firstbutton;
+	msg->getString("Buttons", "ButtonLabel", firstbutton, 0);
+	form.addElement("button", std::string(firstbutton));
+	bool is_text_box = false;
+	std::string default_text;
+	if (firstbutton == "!!llTextBox!!")
 	{
-		std::string tdesc;
-		msg->getString("Buttons", "ButtonLabel", tdesc, i);
-		form.addElement("button", std::string(tdesc));
+		is_text_box = true;
+		for (i = 1; i < button_count; i++)
+		{
+			std::string tdesc;
+			msg->getString("Buttons", "ButtonLabel", tdesc, i);
+			default_text += tdesc;
+		}
+	}
+	else
+	{
+		for (i = 1; i < button_count; i++)
+		{
+			std::string tdesc;
+			msg->getString("Buttons", "ButtonLabel", tdesc, i);
+			form.addElement("button", std::string(tdesc));
+		}
 	}
 
 	LLSD args;
@@ -5605,8 +5689,18 @@ void process_script_dialog(LLMessageSystem* msg, void**)
 	{
 		args["FIRST"] = first_name;
 		args["LAST"] = last_name;
-		notification = LLNotifications::instance().add(
-			LLNotification::Params("ScriptDialog").substitutions(args).payload(payload).form_elements(form.asLLSD()));
+
+		if (is_text_box)
+		{
+			args["DEFAULT"] = default_text;
+			payload["textbox"] = "true";
+			LLNotifications::instance().add("ScriptTextBoxDialog", args, payload, callback_script_dialog);
+		}
+		else
+		{
+			notification = LLNotifications::instance().add(
+				LLNotification::Params("ScriptDialog").substitutions(args).payload(payload).form_elements(form.asLLSD()));
+		}
 	}
 	else
 	{

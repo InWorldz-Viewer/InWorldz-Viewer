@@ -697,6 +697,54 @@ void LLWorldMapView::draw()
 			{
 				mesg = llformat( "%s (%s)", info->mName.c_str(), sStringsMap["offline"].c_str());
 			}
+			else if (gSavedSettings.getBOOL("MapShowAgentCount") && gSavedSettings.getBOOL("MapShowPeople"))
+			{
+				// Display the agent count after the region name
+				S32 agent_count = LLWorldMap::getInstance()->mNumAgents[handle];
+				LLViewerRegion *region = gAgent.getRegion();
+
+				if (region && region->getHandle() == info->mHandle)
+				{
+					++agent_count; // Bump by 1 if we're in this region
+				}
+
+				if (agent_count > 0)
+				{
+					//TODO: move this and the tooltip strings into XML
+					std::string count = llformat("%d %s", agent_count, agent_count > 1 ? "avatars" : "avatar");
+					font->renderUTF8(
+						count, 0,
+						llfloor(left + 3), 
+						llfloor(bottom + 20),
+						LLColor4::white,
+						LLFontGL::LEFT,
+						LLFontGL::BASELINE,
+						LLFontGL::DROP_SHADOW);
+				}
+				mesg = info->mName;
+
+				// Add access level to region name
+				U8 access = info->mAccess;
+				switch(access)
+				{
+				case SIM_ACCESS_MIN:
+					// Don't show this due to different use based on different grids -- MC
+					//mesg += " (" + LLTrans::getString("SIM_ACCESS_MIN") +")";
+					break;
+				case SIM_ACCESS_PG:
+					mesg += " (" + LLTrans::getString("SIM_ACCESS_PG") +")";
+					break;
+				case SIM_ACCESS_MATURE:
+					mesg += " (" + LLTrans::getString("SIM_ACCESS_MATURE") +")";
+					break;
+				case SIM_ACCESS_ADULT:
+					mesg += " (" + LLTrans::getString("SIM_ACCESS_ADULT") +")";
+					break;
+				default:
+					mesg += llformat(" (Access: %d)", access);
+					break;
+				}
+			}
 			else
 			{
 				mesg = info->mName;
@@ -1228,11 +1276,11 @@ BOOL LLWorldMapView::handleToolTip( S32 x, S32 y, std::string& msg, LLRect* stic
 
 				if (agent_count == 1)
 				{
-					message += "person";
+					message += "avatar";
 				}
 				else
 				{
-					message += "people";
+					message += "avatars";
 				}
 			}
 		}

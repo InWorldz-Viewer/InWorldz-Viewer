@@ -40,6 +40,8 @@
 #	include <sys/stat.h>		// mkdir()
 #endif
 
+#include <cstring>  	// Avian - needed for updater
+
 #include "llviewermedia_streamingaudio.h"
 #include "llaudioengine.h"
 
@@ -150,6 +152,7 @@
 #include "llurlhistory.h"
 #include "llurlwhitelist.h"
 #include "lluserauth.h"
+#include "llversionstring.h"
 #include "llvieweraudio.h"
 #include "llviewerassetstorage.h"
 #include "llviewercamera.h"
@@ -212,6 +215,8 @@ std::string SCREEN_LAST_FILENAME = "screen_last.bmp";
 //
 extern S32 gStartImageWidth;
 extern S32 gStartImageHeight;
+extern std::string gSecondLife;
+extern std::string gWindowTitle;
 
 //
 // local globals
@@ -240,7 +245,7 @@ void show_first_run_dialog();
 bool first_run_dialog_callback(const LLSD& notification, const LLSD& response);
 void set_startup_status(const F32 frac, const std::string& string, const std::string& msg);
 bool login_alert_status(const LLSD& notification, const LLSD& response);
-void update_app(BOOL mandatory, const std::string& message);
+void update_app(BOOL mandatory, const std::string& message, std::string update_url = "");
 bool update_dialog_callback(const LLSD& notification, const LLSD& response);
 void login_packet_failed(void**, S32 result);
 void use_circuit_callback(void**, S32 result);
@@ -782,7 +787,6 @@ bool idle_startup()
 		return FALSE;
 	}
 
-
 	if (STATE_LOGIN_SHOW == LLStartUp::getStartupState())
 	{
 		LL_DEBUGS("AppInitStartupState") << "STATE_LOGIN_SHOW" << LL_ENDL;
@@ -857,7 +861,8 @@ bool idle_startup()
 
 			gSavedSettings.setBOOL("FirstRunThisInstall", FALSE);
 
-			LLStartUp::setStartupState( STATE_LOGIN_WAIT );		// Wait for user input
+			// formerly STATE_LOGIN_WAIT
+			LLStartUp::setStartupState(STATE_PRELOGIN_UPDATE_CHECK);
 		}
 		else
 		{
@@ -865,9 +870,13 @@ bool idle_startup()
 			LLStartUp::setStartupState( STATE_LOGIN_CLEANUP );
 		}
 
-		gViewerWindow->setNormalControlsVisible( FALSE );	
-		gLoginMenuBarView->setVisible( TRUE );
-		gLoginMenuBarView->setEnabled( TRUE );
+		gViewerWindow->setNormalControlsVisible( FALSE );
+
+		if (gLoginMenuBarView)
+		{
+			gLoginMenuBarView->setVisible( TRUE );
+			gLoginMenuBarView->setEnabled( TRUE );
+		}
 
 		// Push our window frontmost
 		gViewerWindow->getWindow()->show();
@@ -880,6 +889,167 @@ bool idle_startup()
 		while( PeekMessage( &msg, /*All hWnds owned by this thread */ NULL, WM_KEYFIRST, WM_KEYLAST, PM_REMOVE ) );
 #endif
 		timeout.reset();
+		return FALSE;
+	}
+
+	if (STATE_PRELOGIN_UPDATE_CHECK == LLStartUp::getStartupState())
+	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_PRELOGIN_UPDATE_CHECK" << LL_ENDL;
+		// Here we check for a viewer update before users login
+		// Updates are sorted by OS, then channel, then versions are compared
+		// Latest updates are uptional, min updates are mandatory
+		std::string key_to_check = "";
+#ifdef LL_WINDOWS
+		key_to_check = "Win32";
+//		if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force to SSE2/FAST if cpu is sse2
+#  ifdef __SSE2__
+		    key_to_check += "Optimized"; // update with SSE2 if current build is sse2
+#  endif
+#elif LL_DARWIN
+		key_to_check = "Darwin32";
+#elif LL_LINUX
+
+#  ifdef IW_BUILD_64BIT
+		    key_to_check = "Linux64";
+#  else
+		    key_to_check = "Linux32";
+//		    if (gSysCPU.hasSSE2()) key_to_check += "Optimized"; // Force to SSE2/FAST if cpu is sse2
+#    ifdef __SSE2__
+		    key_to_check += "Optimized"; // update with SSE2/FAST if current build is sse2
+#    endif
+#  endif
+
+#endif
+		if (key_to_check.empty())
+		{
+			// We don't have an updater for this OS
+			LLStartUp::setStartupState( STATE_LOGIN_WAIT );
+			return FALSE;
+		}
+
+// should put '+= Optimized" here if it doesn't affect Darwin builds
+
+		std::string url = gSavedSettings.getString("VersionCheckURL");
+		llinfos << "Checking for new version in file " << url << llendl;
+
+		// query server
+		std::string escaped_url = LLCurl::escapeSafe(url);
+		LLSD response = LLHTTPClient::blockingGet(url);
+
+#ifndef	LL_RELEASE_FOR_DOWNLOAD
+		LLSDXMLStreamer llsd_to_log(response, LLSDFormatter::OPTIONS_PRETTY);
+		llinfos << llsd_to_log << llendl;
+#endif
+
+		// check response and skip to login if there's an error
+		S32 status = response["status"].asInteger();
+		if ((status != 200) || !response["body"].isMap()) 
+		{
+			llinfos << "Version info check failed (" << status << "). Received: "
+				<< (response["body"].isString()? response["body"].asString(): "<unknown_error>")
+				<< llendl;
+			LLStartUp::setStartupState( STATE_LOGIN_WAIT );
+			return FALSE;
+		}
+
+		// parse everything
+		LLSD version_map = response["body"];
+		std::string filename = "";
+		std::string directory = "";
+		bool update = false;
+		bool mandatory = false;
+		if (version_map.isMap() && version_map.has(key_to_check))
+		{
+			LLSD channels = version_map[key_to_check];
+			if (!channels.has(LL_CHANNEL))
+			{					
+				llwarns << "Missing or corrupt channel in <key>" << key_to_check << "</key>! Skipping update checking!" << llendl;
+			}
+			else
+			{
+				LLSD info = channels[LL_CHANNEL];
+				if (!info.has("LatestVersion") || !info.has("LatestVersionBinName")
+					|| !info.has("LatestVersionBinPath") || !info.has("MinVersion") 
+					|| !info.has("MinVersionBinName") || !info.has("MinVersionBinPath"))
+				{
+					llwarns << "Missing or corrupt tags in <key>" << LL_CHANNEL << "</key>! Skipping update checking!" << llendl;
+				}
+				else
+				{
+					// We have everything we need, begin the checking!
+					// If a user has a version less than the minimum
+					// we'll shoot 'em up to the latest version for the update
+					LLVersionString latest_version(info["LatestVersion"].asString());
+					LLVersionString minimum_version(info["MinVersion"].asString());
+					LLVersionString current_version(LL_VERSION_MAJOR, LL_VERSION_MINOR, LL_VERSION_PATCH, LL_VERSION_BUILD, IW_VERSION_DESC);
+					filename = info["LatestVersionBinName"].asString();
+					directory = info["LatestVersionBinPath"].asString();
+					if (current_version < minimum_version)
+					{
+						update = true;
+						// Added by Avian to bypass mandatory for special builds
+						if ( iw_bypass )
+						    mandatory = false;
+						else
+						    mandatory = true;
+						llinfos << "Current version for " << key_to_check << " is less than the minimum required: " << minimum_version.getVersion() << ". Attempting to update to " 
+							<< latest_version.getVersion() << llendl;
+					}
+					else if (current_version < latest_version)
+					{
+						update = true;
+						mandatory = false;
+						llinfos << "A new option update exists for " << key_to_check << ": " 
+							<< minimum_version.getVersion() << ". Attempting to update to " 
+							<< latest_version.getVersion() << llendl;
+					}
+					else if (current_version == latest_version)
+					{
+						update = false;
+						llinfos << "The latest version for " << key_to_check << " is " 
+							<< latest_version.getVersion() << ", which matches this version: " 
+							<< current_version.getVersion() << ". No update appears to be required" 	
+							<< llendl;
+					}
+					else if (current_version > latest_version)
+					{
+						update = false;
+						llwarns << "Current version " << current_version.getVersion() << " is greater than the latest version on the server: " << latest_version.getVersion() << "! If you meant to change the version, please update " << gSavedSettings.getString("VersionCheckURL") << llendl;
+					}
+				}
+			}
+		} // end LLSD parsing
+
+		if (update || gSavedSettings.getBOOL("ForceMandatoryUpdatePrelogin"))
+		{
+			if (directory.empty() || filename.empty())
+			{
+				llwarns << "Trying to update, but bad link was created: " << directory << filename << ". Skipping." << llendl;
+				LLStartUp::setStartupState( STATE_LOGIN_WAIT );
+			}
+			else 
+			{
+				// build URL and trigger update
+				if ((*directory.rbegin()) != '/') directory += "/";
+				std::string update_url = directory+filename;
+				LLCurl::escapeSafe(update_url);
+				update_app(mandatory, "", update_url);
+				LLStartUp::setStartupState( STATE_PRELOGIN_UPDATE_WAIT );
+			}
+		}
+		else
+		{
+			// nothing to do, keep with the login screen and wait for user input
+			LLStartUp::setStartupState( STATE_LOGIN_WAIT );
+		}
+		return FALSE;
+	}
+
+	if (STATE_PRELOGIN_UPDATE_WAIT == LLStartUp::getStartupState())
+	{
+		LL_DEBUGS("AppInitStartupState") << "STATE_PRELOGIN_UPDATE_WAIT" << LL_ENDL;
+		// here we're waiting to see if a user's going to click the non-download button for updates
+		// if they click 'continue' we move on to STATE_LOGIN_WAIT
 		return FALSE;
 	}
 
@@ -1834,15 +2004,23 @@ bool idle_startup()
 		LL_DEBUGS("AppInitStartupState") << "STATE_SEED_CAP_GRANTED" << LL_ENDL;
 		update_texture_fetch();
 
-		if ( gViewerWindow != NULL)
+		if (gViewerWindow)
 		{	// This isn't the first logon attempt, so show the UI
 			gViewerWindow->setNormalControlsVisible( TRUE );
-		}	
-		gLoginMenuBarView->setVisible( FALSE );
-		gLoginMenuBarView->setEnabled( FALSE );
+		}
 
-		LLRect window(0, gViewerWindow->getWindowHeight(), gViewerWindow->getWindowWidth(), 0);
-		gViewerWindow->adjustControlRectanglesForFirstUse(window);
+		// do we need to do this here?
+		if (gLoginMenuBarView)
+		{
+			gLoginMenuBarView->setVisible( FALSE );
+			gLoginMenuBarView->setEnabled( FALSE );
+		}
+
+		if (gViewerWindow)
+		{
+			LLRect window(0, gViewerWindow->getWindowHeight(), gViewerWindow->getWindowWidth(), 0);
+			gViewerWindow->adjustControlRectanglesForFirstUse(window);
+		}
 
 		if(gSavedSettings.getBOOL("ShowMiniMap"))
 		{
@@ -1871,7 +2049,7 @@ bool idle_startup()
 			LLFloaterBeacons::showInstance();
 		}
 
-		if (!gNoRender)
+		if (!gNoRender && gViewerWindow)
 		{
 			// Move the progress view in front of the UI
 			gViewerWindow->moveProgressViewToFront();
@@ -2128,6 +2306,35 @@ bool idle_startup()
 	if (STATE_INVENTORY_SEND == LLStartUp::getStartupState())
 	{
 		LL_DEBUGS("AppInitStartupState") << "STATE_INVENTORY_SEND" << LL_ENDL;
+
+		// Change the window title to include the avatar name if we're using multiple viewers -- MC
+		if (gSavedSettings.getBOOL("AllowMultipleViewers"))
+		{
+			std::string title_text = "";
+			std::string grid_name = LLViewerLogin::getInstance()->getGridLabel();
+			if (grid_name == LLViewerLogin::getInstance()->getKnownGridLabel(GRID_INFO_INWORLDZ))
+			{
+				LLStringUtil::format_map_t args;
+				args["[FIRST_NAME]"] = firstname;
+				args["[LAST_NAME]"] = lastname;
+				title_text = LLTrans::getString("TitleBarMultipleMainGrid", args);
+			}
+			else
+			{
+				LLStringUtil::format_map_t args;
+				args["[FIRST_NAME]"] = firstname;
+				args["[LAST_NAME]"] = lastname;
+				args["[GRID_NAME]"] = LLViewerLogin::getInstance()->getGridLabel();
+				title_text = LLTrans::getString("TitleBarMultiple", args);
+			}
+
+			if (!title_text.empty())
+			{
+				gWindowTitle = gSecondLife + " - " + title_text;
+				LLStringUtil::truncate(gWindowTitle, 255);
+				gViewerWindow->getWindow()->setWindowTitle(gWindowTitle);
+			}
+		}
 		// Inform simulator of our language preference
 		LLAgentLanguage::update();
 
@@ -3003,7 +3210,7 @@ bool login_alert_status(const LLSD& notification, const LLSD& response)
 	return false;
 }
 
-void update_app(BOOL mandatory, const std::string& auth_msg)
+void update_app(BOOL mandatory, const std::string& auth_msg, std::string update_url)
 {
 	// store off config state, as we might quit soon
 	gSavedSettings.saveToFile(gSavedSettings.getString("ClientSettingsFile"), TRUE);	
@@ -3022,6 +3229,11 @@ void update_app(BOOL mandatory, const std::string& auth_msg)
 	
 	LLSD payload;
 	payload["mandatory"] = mandatory;
+	if (!update_url.empty())
+	{
+		LLCurl::escapeSafe(update_url);
+		payload["update_url"] = update_url;
+	}
 
 /*
  We're constructing one of the following 6 strings here:
@@ -3087,7 +3299,15 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 		}
 		else
 		{
-			LLStartUp::setStartupState( STATE_LOGIN_AUTH_INIT );
+			if (LLStartUp::getStartupState() == STATE_PRELOGIN_UPDATE_WAIT)
+			{
+				LLStartUp::setStartupState( STATE_LOGIN_WAIT );
+			}
+			else
+			{
+				// in case we ever do post-login update checks -- MC
+				LLStartUp::setStartupState( STATE_LOGIN_AUTH_INIT );
+			}
 		}
 		return false;
 	}
@@ -3108,8 +3328,17 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 	query_map["userserver"] = LLViewerLogin::getInstance()->getGridLabel();
 	query_map["channel"] = gSavedSettings.getString("VersionChannelName");
 	// *TODO constantize this guy
-	// *NOTE: This URL is also used in win_setup/lldownloader.cpp
-	LLURI update_url = LLURI::buildHTTP("secondlife.com", 80, "update.php", query_map);
+	
+	LLURI update_url;
+	if (notification["payload"].has("update_url"))
+	{
+		update_url = LLURI(notification["payload"]["update_url"].asString());
+	}
+	else
+	{
+		// in case we ever do the serverside check on login -- MC
+		update_url = LLURI::buildHTTP("inworldz.com", 80, "update.php", query_map);
+	}
 	
 	if(LLAppViewer::sUpdaterInfo)
 	{
@@ -3134,7 +3363,7 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 
 	std::string updater_source = gDirUtilp->getAppRODataDir();
 	updater_source += gDirUtilp->getDirDelimiter();
-	updater_source += "updater.exe";
+	updater_source += "windows-updater.exe";
 
 	LL_DEBUGS("AppInit") << "Calling CopyFile source: " << updater_source
 			<< " dest: " << LLAppViewer::sUpdaterInfo->mUpdateExePath
@@ -3189,9 +3418,10 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 	system(LLAppViewer::sUpdaterInfo->mUpdateExePath.c_str()); /* Flawfinder: ignore */
 
 #elif LL_LINUX || LL_SOLARIS
-	OSMessageBox("Automatic updating is not yet implemented for Linux.\n"
-		"Please download the latest version from www.secondlife.com.",
-		LLStringUtil::null, OSMB_OK);
+	llinfos << "Linux update URL = " << update_url.asString() << llendl;
+	LLWeb::loadURLExternal(update_url.asString());
+	std::string avianTempStr= "Your default browser should start downloading shortly.\nIf not, you may manually download from:\n" + update_url.asString();
+	OSMessageBox(avianTempStr.c_str(), LLStringUtil::null, OSMB_OK);
 #endif
 	LLAppViewer::instance()->forceQuit();
 	return false;
@@ -3566,7 +3796,10 @@ std::string LLStartUp::startupStateToString(EStartupState state)
 #define RTNENUM(E) case E: return #E
 	switch(state){
 		RTNENUM( STATE_FIRST );
+		RTNENUM( STATE_BROWSER_INIT );
 		RTNENUM( STATE_LOGIN_SHOW );
+		RTNENUM( STATE_PRELOGIN_UPDATE_CHECK);
+		RTNENUM( STATE_PRELOGIN_UPDATE_WAIT);
 		RTNENUM( STATE_LOGIN_WAIT );
 		RTNENUM( STATE_LOGIN_CLEANUP );
 		RTNENUM( STATE_UPDATE_CHECK );
@@ -3608,7 +3841,7 @@ void reset_login()
 {
 	LLStartUp::setStartupState( STATE_LOGIN_SHOW );
 
-	if ( gViewerWindow )
+	if ( gViewerWindow && gLoginMenuBarView )
 	{	// Hide menus and normal buttons
 		gViewerWindow->setNormalControlsVisible( FALSE );
 		gLoginMenuBarView->setVisible( TRUE );

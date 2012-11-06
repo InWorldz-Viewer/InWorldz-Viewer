@@ -10,7 +10,11 @@
 	<menu_item_call enabled="false" label="Go To" mouse_opaque="true" name="Go To">
 		<on_click function="GoToObject" />
 	</menu_item_call>
-	<menu_item_separator />
+	<menu_item_call enabled="true" label="Dump Info" mouse_opaque="true" name="Dump Info">
+				 <on_click function="Object.DumpInfo" />
+         <on_enable function="Object.EnableDumpInfo" />
+         <on_visible function="Object.EnableDumpInfo" />
+	</menu_item_call>
 	<menu_item_call enabled="false" label="Add Friend..." mouse_opaque="true" name="Add Friend">
 		<on_click function="Avatar.AddFriend" />
 		<on_enable function="Avatar.EnableAddFriend" />
@@ -42,7 +46,7 @@
 			<on_visible function="Avatar.VisibleDebug" />
 			<on_enable function="Avatar.EnableDebug" />
 		</menu_item_call>
-		<menu_item_call enabled="true" label="Inspect" mouse_opaque="true" name="Object Inspect">
+		<menu_item_call enabled="true" label="Inspect" mouse_opaque="true" name="Avatar Inspect">
 			<on_click function="Object.Inspect" />
 			<on_enable function="Object.EnableInspect" />
 		</menu_item_call>

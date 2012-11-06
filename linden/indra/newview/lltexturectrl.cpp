@@ -72,6 +72,12 @@
 #include "lluictrlfactory.h"
 #include "lltrans.h"
 
+// tag: vaa emerald local_asset_browser [begin]
+#include "floaterlocalassetbrowse.h"
+#include "llscrolllistctrl.h"
+#include "llfilepicker.h"
+#define	LOCALLIST_COL_ID 1
+// tag: vaa emerald local_asset_browser [end]
 
 static const S32 CLOSE_BTN_WIDTH = 100;
 const S32 PIPETTE_BTN_WIDTH = 32;
@@ -156,6 +162,7 @@ public:
 	static void		onBtnSelect( void* userdata );
 	static void		onBtnCancel( void* userdata );
 	static void		onBtnUpload( void* userdata );
+	static void		onBtnUploadFromLocal(void* userdata);
 	static void		onBtnPipette( void* userdata );
 	//static void		onBtnRevert( void* userdata );
 	static void		onBtnWhite( void* userdata );
@@ -167,6 +174,20 @@ public:
 	static void		onApplyImmediateCheck(LLUICtrl* ctrl, void* userdata);
 	static void		onSearchEdit(const std::string& search_string, void* user_data );
 	static void		onTextureSelect( const LLTextureEntry& te, void *data );
+
+	// tag: vaa emerald local_asset_browser [begin]
+//	static void     onBtnLocal( void* userdata );
+//	static void     onBtnServer( void* userdata );
+//	static void     switchModes( bool localmode, void* userdata );
+
+	static void     onBtnAdd( void* userdata );
+	static void     onBtnRemove( void* userdata );
+	static void     onBtnBrowser( void* userdata );
+
+	static void     onLocalScrollCommit ( LLUICtrl* ctrl, void *userdata );
+	// tag: vaa emerald local_asset_browser [end]
+
+	bool			isOnLocalPanel();
 
 protected:
 	LLPointer<LLViewerImage> mTexturep;
@@ -199,6 +220,9 @@ protected:
 	BOOL				mNoCopyTextureSelected;
 	F32					mContextConeOpacity;
 	LLSaveFolderState	mSavedFolderState;
+	LLScrollListCtrl*   mLocalScrollCtrl; // tag: vaa emerald local_asset_browser
+
+	LLTextBox*			mLocalTextureLabel;
 };
 
 LLFloaterTexturePicker::LLFloaterTexturePicker(	
@@ -231,7 +255,8 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 	mImmediateFilterPermMask(immediate_filter_perm_mask),
 	mNonImmediateFilterPermMask(non_immediate_filter_perm_mask),
 	mContextConeOpacity(0.f),
-	mLoadingPlaceholderString("")
+	mLoadingPlaceholderString(""),
+	mLocalTextureLabel(NULL)
 {
 	//grab textures first...
 	gInventory.startBackgroundFetch(gInventory.findCategoryUUIDForType(LLAssetType::AT_TEXTURE));
@@ -244,6 +269,8 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 
 	mResolutionLabel = getChild<LLTextBox>("unknown");
 
+	mLocalTextureLabel = getChild<LLTextBox>("Local");
+
 	mLoadingPlaceholderString = LLTrans::getString("texture_loading");
 
 	childSetAction("Default",LLFloaterTexturePicker::onBtnSetToDefault,this);
@@ -251,6 +278,18 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 	childSetAction("Blank", LLFloaterTexturePicker::onBtnWhite,this);
 	childSetAction("Invisible", LLFloaterTexturePicker::onBtnInvisible,this);
 
+	// tag: vaa emerald local_asset_browser [begin]
+//	childSetAction("Local", LLFloaterTexturePicker::onBtnLocal, this);  
+//	childSetAction("Server", LLFloaterTexturePicker::onBtnServer, this);
+	childSetAction("Add", LLFloaterTexturePicker::onBtnAdd, this);
+	childSetAction("Remove", LLFloaterTexturePicker::onBtnRemove, this);
+	childSetAction("Browser", LLFloaterTexturePicker::onBtnBrowser, this);
+
+	mLocalScrollCtrl = getChild<LLScrollListCtrl>("local_name_list");
+	mLocalScrollCtrl->setCallbackUserData(this);                            
+	mLocalScrollCtrl->setCommitCallback(onLocalScrollCommit);
+	LocalAssetBrowser::UpdateTextureCtrlList( mLocalScrollCtrl );
+	// tag: vaa emerald local_asset_browser [end]	
 		
 	childSetCommitCallback("show_folders_check", onShowFolders, this);
 	childSetVisible("show_folders_check", FALSE);
@@ -299,6 +338,7 @@ LLFloaterTexturePicker::LLFloaterTexturePicker(
 	childSetAction("Cancel", LLFloaterTexturePicker::onBtnCancel,this);
 	childSetAction("Select", LLFloaterTexturePicker::onBtnSelect,this);
 	childSetAction("Upload", LLFloaterTexturePicker::onBtnUpload, this);
+	childSetAction("Upload_From_Local", LLFloaterTexturePicker::onBtnUploadFromLocal, this);
 
 	// update permission filter once UI is fully initialized
 	updateFilterPermMask();
@@ -574,6 +614,10 @@ void LLFloaterTexturePicker::draw()
 	childSetEnabled("Pipette", mActive);
 	childSetValue("Pipette", LLToolMgr::getInstance()->getCurrentTool() == LLToolPipette::getInstance());
 
+	// base the cancel button on this checkbox, update the checkbox before here if needed
+	bool apply_immediate = childGetValue("apply_immediate_check").asBoolean();
+	childSetEnabled("Cancel", !apply_immediate);
+
 	//RN: reset search bar to reflect actual search query (all caps, for example)
 	mSearchEdit->setText(mInventoryPanel->getFilterSubString());
 
@@ -605,6 +649,11 @@ void LLFloaterTexturePicker::draw()
 		if (mTentativeLabel)
 		{
 			mTentativeLabel->setVisible( FALSE  );
+		}
+
+		if (mLocalTextureLabel)
+		{
+			mLocalTextureLabel->setVisible(FALSE);
 		}
 
 		childSetEnabled("Default",  mImageAssetID != mOwner->getDefaultImageAssetID());
@@ -649,10 +698,17 @@ void LLFloaterTexturePicker::draw()
 				mTexturep->setAdditionalDecodePriority(1.0f) ;
 			}
 
-			// Draw Tentative Label over the image
-			if( mOwner->getTentative() && !mIsDirty )
+			// Draw label over the image 
+			if (mTexturep->isLocalImage())
 			{
-				mTentativeLabel->setVisible( TRUE );
+				mLocalTextureLabel->setVisible(TRUE);
+				mTentativeLabel->setVisible(FALSE);
+				drawChild(mLocalTextureLabel);
+			}
+			else if( mOwner->getTentative() && !mIsDirty )
+			{
+				mLocalTextureLabel->setVisible(FALSE);
+				mTentativeLabel->setVisible(TRUE);
 				drawChild(mTentativeLabel);
 			}
 
@@ -667,7 +723,7 @@ void LLFloaterTexturePicker::draw()
 		}
 
 		// Show "Loading..." string if we're still decoding the image -- MC
-		if (!mLoadingPlaceholderString.empty() && 
+		if (!mLoadingPlaceholderString.empty() && mTexturep &&
 			(mTexturep->getWidth() == 1) &&
 			(mTexturep->getHeight() ==1))
 		{
@@ -748,6 +804,16 @@ void LLFloaterTexturePicker::commitIfImmediateSet()
 	}
 }
 
+bool LLFloaterTexturePicker::isOnLocalPanel()	
+{
+	LLTabContainer* tabs = getChild<LLTabContainer>("actions_tab_container");
+	if (tabs)
+	{
+		return tabs->getCurrentPanelIndex() == tabs->getIndexForPanel(tabs->getPanelByName("local_tab"));
+	}
+	return false;
+}
+
 // static
 void LLFloaterTexturePicker::onBtnSetToDefault(void* userdata)
 {
@@ -816,11 +882,101 @@ void LLFloaterTexturePicker::onBtnSelect(void* userdata)
 	LLFloaterTexturePicker* self = (LLFloaterTexturePicker*) userdata;
 	if (self->mOwner)
 	{
-		self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_SELECT);
+		// tag: vaa phoenix local_asset_browser ~
+		if ( !self->isOnLocalPanel() )
+		{
+			self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_SELECT); 
+		}
+		else if ( !self->mLocalScrollCtrl->isEmpty() )
+		{ 
+			self->mOwner->onFloaterCommit
+				(LLTextureCtrl::TEXTURE_CHANGE, 
+				(LLUUID)self->mLocalScrollCtrl->getSelectedItemLabel(LOCALLIST_COL_ID) ); 
+		} 
 	}
 	gSavedSettings.setBOOL("ApplyTextureImmediately", self->childGetValue("apply_immediate_check").asBoolean());
 	self->close();
 }
+
+// tag: vaa emerald local_asset_browser [begin]
+
+// static, switches between showing inventory instance for global bitmaps
+// to showing the scroll list for local ones and back.
+/*
+void LLFloaterTexturePicker::onBtnLocal(void *userdata)
+{
+	switchModes( true, userdata );
+}
+
+void LLFloaterTexturePicker::onBtnServer(void *userdata)
+{
+	switchModes( false, userdata );
+}
+
+void LLFloaterTexturePicker::switchModes(bool localmode, void *userdata)
+{
+	LLFloaterTexturePicker* self = (LLFloaterTexturePicker*) userdata;
+
+	// servermode widgets
+	self->childSetVisible("Local", !localmode);
+	self->childSetVisible("Default", !localmode);
+	self->childSetVisible("None", !localmode);
+	self->childSetVisible("Blank", !localmode);
+	self->mSearchEdit->setVisible(!localmode);
+	self->mInventoryPanel->setVisible(!localmode);
+	
+	// localmode widgets
+	self->childSetVisible("Server", localmode);
+	self->childSetVisible("Add", localmode);
+	self->childSetVisible("Remove", localmode);
+	self->childSetVisible("Browser", localmode);
+	self->mLocalScrollCtrl->setVisible(localmode);
+}
+*/
+void LLFloaterTexturePicker::onBtnAdd(void *userdata)
+{
+	LocalAssetBrowser::AddBitmap();	
+}
+
+void LLFloaterTexturePicker::onBtnRemove(void *userdata)
+{
+	LLFloaterTexturePicker* self = (LLFloaterTexturePicker*) userdata;
+	LocalAssetBrowser::DelBitmap( self->mLocalScrollCtrl->getAllSelected(), LOCALLIST_COL_ID );
+}
+
+void LLFloaterTexturePicker::onBtnBrowser(void *userdata)
+{
+	FloaterLocalAssetBrowser::show(NULL);
+}
+
+// static, reacts to user clicking a valid field in the local scroll list.
+void LLFloaterTexturePicker::onLocalScrollCommit(LLUICtrl *ctrl, void *userdata)
+{
+	LLFloaterTexturePicker* self = (LLFloaterTexturePicker*) userdata;
+	if (self && self->mLocalScrollCtrl)
+	{
+		bool can_select = (self->mLocalScrollCtrl->getFirstSelected() != NULL);
+		self->childSetEnabled("Upload_From_Local", can_select);
+		if (can_select)
+		{
+			LLUUID id = (LLUUID)self->mLocalScrollCtrl->getSelectedItemLabel( LOCALLIST_COL_ID );
+
+			if ( self->mOwner->getEnabled() )
+			{
+				self->setImageID( id );
+			}
+
+			if ( self->childGetValue("apply_immediate_check").asBoolean() && self->mOwner )
+			{
+				self->mTexturep->setAsLocalImage(true);
+				self->mOwner->onFloaterCommit(LLTextureCtrl::TEXTURE_CHANGE, id); // calls an overridden function.
+			}
+		}
+	}
+}
+
+// tag: vaa emerald local_asset_browser [end]
+
 
 // static
 void LLFloaterTexturePicker::onBtnUpload(void* userdata)
@@ -838,6 +994,33 @@ void LLFloaterTexturePicker::onBtnUpload(void* userdata)
 				LLUICtrlFactory::getInstance()->buildFloater(floaterp, "floater_image_preview.xml");
 				//self->mSearchEdit->setText(filename); // doesn't work -- MC
 				onSearchEdit(gDirUtilp->getBaseFileName(filename, true), self);
+			}
+		}
+	}
+}
+
+// static
+void LLFloaterTexturePicker::onBtnUploadFromLocal(void* userdata)
+{
+	LLFloaterTexturePicker* self = (LLFloaterTexturePicker*) userdata;
+	if (self)
+	{
+		if (self->isOnLocalPanel())
+		{
+			std::string filename = gLocalBrowser->getFilenameFromLocalID((LLUUID)self->mLocalScrollCtrl->getSelectedItemLabel(LOCALLIST_COL_ID));
+
+			if (!filename.empty())
+			{
+				LLFloaterImagePreview* floaterp = new LLFloaterImagePreview(filename);
+				LLUICtrlFactory::getInstance()->buildFloater(floaterp, "floater_image_preview.xml");
+
+				// in case we ever want to make switching back to the inventory tab work? -- MC
+				/*LLTabContainer* tabs = self->getChild<LLTabContainer>("actions_tab_container");
+				if (tabs)
+				{
+					tabs->setTab(tabs->getIndexForPanel(self->getChild<LLPanel>("Inventory")));
+					onSearchEdit(gDirUtilp->getBaseFileName(filename, true), self);
+				}*/
 			}
 		}
 	}
@@ -1042,6 +1225,16 @@ LLTextureCtrl::LLTextureCtrl(
 	mTentativeLabel->setHAlign( LLFontGL::HCENTER );
 	mTentativeLabel->setFollowsAll();
 	addChild( mTentativeLabel );
+
+	mLocalTextureLabel = new LLTextBox( std::string("Local\nPreview"), 
+		LLRect( 
+			0, image_middle + 8 + line_height / 2,
+			getRect().getWidth(), image_middle - line_height / 2 ),
+		std::string("Local\nPreview"),
+		LLFontGL::getFontSansSerifSmall() );
+	mLocalTextureLabel->setHAlign( LLFontGL::HCENTER );
+	mLocalTextureLabel->setFollowsAll();
+	addChild( mLocalTextureLabel );
 
 	LLRect border_rect(0, getRect().getHeight(), getRect().getWidth(), 0);
 	border_rect.mBottom += BTN_HEIGHT_SMALL;
@@ -1330,6 +1523,13 @@ void LLTextureCtrl::onFloaterCommit(ETexturePickOp op)
 
 	if( floaterp && getEnabled())
 	{
+		// This is a hacky way to tell if we're in the inventory or local preview panels.
+		// If clicking 'select' in a preview, that should work differently
+		if (!floaterp->isOnLocalPanel() && mTexturep)
+		{
+			mTexturep->setAsLocalImage(false);
+		}
+
 		mDirty = (op != TEXTURE_CANCEL);
 		if( floaterp->isDirty() )
 		{
@@ -1353,6 +1553,44 @@ void LLTextureCtrl::onFloaterCommit(ETexturePickOp op)
 		}
 	}
 }
+
+// tag: vaa emerald local_asset_browser [begin]
+
+/*
+   overriding onFloaterCommit to forcefeed it a uuid.
+   also, i still don't get the difference beween mImageItemID and mImageAssetID,
+   they seem to affect the same thing? using mImageAssetID.
+*/
+void LLTextureCtrl::onFloaterCommit(ETexturePickOp op, LLUUID id)
+{
+	LLFloaterTexturePicker* floaterp = (LLFloaterTexturePicker*)mFloaterHandle.get();
+
+	if( floaterp && getEnabled())
+	{
+		if (mTexturep)
+		{
+			mTexturep->setAsLocalImage(true);
+		}
+		mImageItemID = id;
+		mImageAssetID = id; //floaterp->getAssetID(); // using same as on above func. 
+												// seems to work anyway.
+
+		if (op == TEXTURE_SELECT && mOnSelectCallback)
+		{
+			mOnSelectCallback(this, mCallbackUserData);
+		}
+		else if (op == TEXTURE_CANCEL && mOnCancelCallback)
+		{
+			mOnCancelCallback(this, mCallbackUserData);
+		}
+		else
+		{
+			onCommit();
+		}
+	}
+}
+
+// tag: vaa emerald local_asset_browser [end]
 
 void LLTextureCtrl::setImageAssetID( const LLUUID& asset_id )
 {
@@ -1388,7 +1626,11 @@ BOOL LLTextureCtrl::handleDragAndDrop(S32 x, S32 y, MASK mask,
 			{
 				// This removes the 'Multiple' overlay, since
 				// there is now only one texture selected.
-				setTentative( FALSE ); 
+				setTentative( FALSE );
+				if (mTexturep)
+				{
+					mTexturep->setAsLocalImage(false);
+				}
 				onCommit();
 			}
 		}
@@ -1441,7 +1683,7 @@ void LLTextureCtrl::draw()
 	// Interior
 	LLRect interior = border;
 	interior.stretch( -1 ); 
-
+	
 	if( mTexturep )
 	{
 		if( mTexturep->getComponents() == 4 )
@@ -1467,7 +1709,16 @@ void LLTextureCtrl::draw()
 		gl_draw_x( interior, LLColor4::black );
 	}
 
-	mTentativeLabel->setVisible( !mTexturep.isNull() && getTentative() );
+	if (mTexturep.notNull() && mTexturep->isLocalImage())
+	{
+		mLocalTextureLabel->setVisible(TRUE);
+		mTentativeLabel->setVisible(FALSE);
+	}
+	else
+	{
+		mLocalTextureLabel->setVisible(FALSE);
+		mTentativeLabel->setVisible( mTexturep.notNull() && getTentative() );
+	}
 	
 	
 	// Show "Loading..." string on the top left corner while this texture is loading.
@@ -1480,8 +1731,8 @@ void LLTextureCtrl::draw()
 	{
 		LLFontGL* font = LLFontGL::getFontSansSerif();
 		font->renderUTF8(
-			mLoadingPlaceholderString, 0,
-			llfloor(interior.mLeft + 2), // about center-ish 
+			mLoadingPlaceholderString, 0, 
+			llfloor((interior.getWidth() / 2) - (LLFontGL::getFontSansSerif()->getWidthF32(mLoadingPlaceholderString) / 2) + 1), // about center-ish 
 			llfloor((interior.mTop + interior.mBottom) / 2 - (LLFontGL::getFontSansSerif()->getLineHeight() /2) + 3), // llfont is broken here -- MC
 			LLColor4::white,
 			LLFontGL::LEFT,

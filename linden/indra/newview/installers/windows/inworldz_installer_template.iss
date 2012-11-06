@@ -24,6 +24,7 @@ VersionInfoCopyright=2012
 
 ; These won't change
 VersionInfoCompany=InWorldz, LLC
+AppMutex=InWorldzAppMutex
 AppPublisher=InWorldz, LLC
 AppPublisherURL=http://inworldz.com
 AppSupportURL=http://inworldz.com

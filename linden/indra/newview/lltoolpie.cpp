@@ -303,7 +303,10 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 			gViewerWindow->hideCursor();
 			LLToolCamera::getInstance()->setMouseCapture(TRUE);
 			LLToolCamera::getInstance()->pickCallback(mPick);
-			gAgent.setFocusOnAvatar(TRUE, TRUE);
+			if (gSavedSettings.getBOOL("ResetFocusOnSelfClick"))
+			{
+				gAgent.setFocusOnAvatar(TRUE, TRUE);
+			}
 
 			return TRUE;
 		}
@@ -354,6 +357,9 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 		if (object->isAvatar() 
 			|| (object->isAttachment() && !object->isHUDAttachment() && !object->permYouOwner()))
 		{
+			// Toggle Inspect only for attachments
+			gMenuHolder->childSetEnabled("Avatar Inspect", object->isAttachment());
+
 			// Find the attachment's avatar
 			while (object->isAttachment())
 			{

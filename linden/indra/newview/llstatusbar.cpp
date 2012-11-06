@@ -612,6 +612,7 @@ void LLStatusBar::setVisibleForMouselook(bool visible)
 	mTextBalance->setVisible(visible);
 	mTextTime->setVisible(visible);
 	//childSetVisible("buycurrency", visible);
+	childSetVisible("buyland", visible);
 	mSGBandwidth->setVisible(visible);
 	mSGPacketLoss->setVisible(visible);
 	setBackgroundVisible(visible);
@@ -746,7 +747,7 @@ static void onClickParcelInfo(void* data)
 static void onClickBalance(void* data)
 {
 	//onClickBuyCurrency(data);
-	LLWeb::loadURLInternal(BUY_CURRENCY_URL);
+	show_buy_currency(NULL);
 }
 
 //static void onClickBuyCurrency(void* data)

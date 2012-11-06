@@ -453,6 +453,7 @@ void LLAgent::init()
 	mEffectColor = gSavedSettings.getColor4("EffectColor");
 	
 	mInitialized = TRUE;
+	LL_DEBUGS("VOAvatar")<< "ctor of LLAgent" << LL_ENDL;
 }
 
 //-----------------------------------------------------------------------------
@@ -474,6 +475,7 @@ void LLAgent::cleanup()
 	}
 	mRegionp = NULL;
 	setFocusObject(NULL);
+	LL_DEBUGS("VOAvatar")<< "LLAgent cleanup()" << LL_ENDL;
 }
 
 //-----------------------------------------------------------------------------
@@ -481,11 +483,13 @@ void LLAgent::cleanup()
 //-----------------------------------------------------------------------------
 LLAgent::~LLAgent()
 {
+	LL_DEBUGS("VOAvatar")<< "LLAgent dtor begin" << LL_ENDL;
 	cleanup();
 
 	delete [] mActiveCacheQueries;
 	mActiveCacheQueries = NULL;
 
+	LL_DEBUGS("VOAvatar")<< "LLAgent dtor end" << LL_ENDL;
 	// *Note: this is where LLViewerCamera::getInstance() used to be deleted.
 }
 
@@ -7457,8 +7461,7 @@ void LLAgent::sendAgentSetAppearance()
 		// This means the baked texture IDs on the server will be untouched.
 		// Once all textures are baked, another AvatarAppearance message will be sent to update the TEs
 		msg->nextBlockFast(_PREHASH_ObjectData);
-		gMessageSystem->addBinaryDataFast(_PREHASH_TextureEntry, NULL, 0);
-	}
+		gMessageSystem->addBinaryDataFast(_PREHASH_TextureEntry, NULL, 0);	}
 
 
 	S32 transmitted_params = 0;
@@ -7933,6 +7936,8 @@ void LLAgent::userRemoveAllClothesStep2( BOOL proceed, void* userdata )
 
 void LLAgent::userRemoveAllAttachments( void* userdata )
 {
+	LL_DEBUGS("VOAvatar")<< "userRemoveAllAttachments" << LL_ENDL;
+
 	LLVOAvatar* avatarp = gAgent.getAvatarObject();
 	if(!avatarp)
 	{

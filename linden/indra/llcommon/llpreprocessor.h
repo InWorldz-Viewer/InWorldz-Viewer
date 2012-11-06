@@ -150,4 +150,13 @@
 #define LL_COMMON_API LL_DLLIMPORT
 #endif // llcommon_EXPORTS
 
+// double expansion to get strings out of our macros -- MC
+#ifdef LL_WINDOWS
+#define IW_MACRO_STR_TO_EXPAND(iw_tok) #iw_tok
+#define IW_MACRO_STR(...) IW_MACRO_STR_TO_EXPAND(__VA_ARGS__)
+#else
+#define IW_MACRO_STR_TO_EXPAND(iw_tok) #iw_tok
+#define IW_MACRO_STR(iw_tok) IW_MACRO_STR_TO_EXPAND(iw_tok)
+#endif
+
 #endif	//	not LL_LINDEN_PREPROCESSOR_H

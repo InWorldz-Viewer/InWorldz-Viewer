@@ -12,7 +12,7 @@
 		<menu_item_call label="Invita in un gruppo..." name="Invite..."/>
 		<menu_item_call label="Eietta..." name="Eject..."/>
 		<menu_item_call label="Debug..." name="Debug..."/>
-		<menu_item_call label="Ispeziona" name="Object Inspect"/>
+		<menu_item_call label="Ispeziona" name="Avatar Inspect"/>
 	</pie_menu>
 	<menu_item_call label="Manda un IM..." name="Send IM..."/>
 </pie_menu>

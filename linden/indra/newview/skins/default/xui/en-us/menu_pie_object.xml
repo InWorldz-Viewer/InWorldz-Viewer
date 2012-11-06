@@ -74,7 +74,11 @@
           <on_enable function="Tools.EnableLink" />
         </menu_item_call>
         <menu_item_separator />
-        <menu_item_separator />
+        <menu_item_call enabled="true" label="Dump Info" mouse_opaque="true" name="Dump Info">
+				 <on_click function="Object.DumpInfo" />
+         <on_enable function="Object.EnableDumpInfo" />
+         <on_visible function="Object.EnableDumpInfo" />
+			  </menu_item_call>
         <menu_item_separator />
         <menu_item_call name="Unlink" enabled="false" label="Unlink">
           <on_click function="Tools.Unlink" userdata="" />
