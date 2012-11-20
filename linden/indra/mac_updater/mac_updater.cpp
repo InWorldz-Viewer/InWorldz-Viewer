@@ -67,6 +67,7 @@ const char *gProductName;
 const char *gBundleID;
 const char *gDmgFile;
 const char *gMarkerPath;
+const char *gFilename;
 
 void *updatethreadproc(void*);
 
@@ -345,10 +346,13 @@ int parse_args(int argc, char **argv)
 		}
 		else if ((!strcmp(argv[j], "-marker")) && (++j < argc)) 
 		{
-			gMarkerPath = argv[j];;
+			gMarkerPath = argv[j];
+		}
+		else if ((!strcmp(argv[j], "-filename")) && (++j < argc))
+		{
+			gFilename = argv[j];
 		}
 	}
-
 	return 0;
 }
 
@@ -376,10 +380,11 @@ int main(int argc, char **argv)
 	gBundleID = NULL;
 	gDmgFile = NULL;
 	gMarkerPath = NULL;
+	gFilename = NULL;
 	parse_args(argc, argv);
 	if ((gUpdateURL == NULL) && (gDmgFile == NULL))
 	{
-		llinfos << "Usage: mac_updater -url <url> | -dmg <dmg file> [-name <product_name>] [-program <program_name>]" << llendl;
+		llinfos << "Usage: mac_updater -url <url> | -dmg <local dmg file> [-name <product_name>] [-program <program_name>] [-filename <online dmg filename>]" << llendl;
 		exit(1);
 	}
 	else
@@ -405,6 +410,15 @@ int main(int argc, char **argv)
 		{
 			llinfos << "dmg file set to: " << gDmgFile << llendl;
 		}
+		if (gFilename)
+		{
+			llinfos << "temporary filename set to: " << gFilename << llendl;
+		}
+		else
+		{
+			gFilename = "InWorldz.dmg";
+		}
+		
 	}
 	
 	llinfos << "Starting " << gProductName << " Updater" << llendl;
@@ -967,7 +981,7 @@ void *updatethreadproc(void*)
 			goto begin_install;
 		} else {
 			// Continue on to download file.
-			dmgName = "InWorldz.dmg";
+			dmgName = gFilename;
 		}
 
 		
@@ -992,12 +1006,12 @@ void *updatethreadproc(void*)
 				
 		chdir(tempDir);
 		
-		snprintf(temp, sizeof(temp), "InWorldz.dmg");		
+		snprintf(temp, sizeof(temp), gFilename);		
 		
 		downloadFile = LLFile::fopen(temp, "wb");		/* Flawfinder: ignore */
 		if(downloadFile == NULL)
 		{
-			llwarns << "unable to open InWorldz.dmg file" << llendl;
+			llwarns << "unable to open " << gFilename << " file" << llendl;
 			throw 0;
 		}
 

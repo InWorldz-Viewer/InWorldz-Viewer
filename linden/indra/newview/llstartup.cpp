@@ -245,7 +245,7 @@ void show_first_run_dialog();
 bool first_run_dialog_callback(const LLSD& notification, const LLSD& response);
 void set_startup_status(const F32 frac, const std::string& string, const std::string& msg);
 bool login_alert_status(const LLSD& notification, const LLSD& response);
-void update_app(BOOL mandatory, const std::string& message, std::string update_url = "");
+void update_app(BOOL mandatory, const std::string& message, std::string update_url = "", std::string filename = "");
 bool update_dialog_callback(const LLSD& notification, const LLSD& response);
 void login_packet_failed(void**, S32 result);
 void use_circuit_callback(void**, S32 result);
@@ -1027,13 +1027,23 @@ bool idle_startup()
 				llwarns << "Trying to update, but bad link was created: " << directory << filename << ". Skipping." << llendl;
 				LLStartUp::setStartupState( STATE_LOGIN_WAIT );
 			}
+			if (filename.find(" ") != std::string::npos)
+			{
+				llwarns << "Filename contains a space, which will break the updater, skipping" << llendl;
+				LLStartUp::setStartupState( STATE_LOGIN_WAIT );
+			}
 			else 
 			{
 				// build URL and trigger update
 				if ((*directory.rbegin()) != '/') directory += "/";
 				std::string update_url = directory+filename;
-				LLCurl::escapeSafe(update_url);
+				// update_app escapes urls
+#ifdef LL_DARWIN
+				update_app(mandatory, "", update_url, filename);
+#else
+				// windows updates don't need a filename
 				update_app(mandatory, "", update_url);
+#endif
 				LLStartUp::setStartupState( STATE_PRELOGIN_UPDATE_WAIT );
 			}
 		}
@@ -3210,7 +3220,7 @@ bool login_alert_status(const LLSD& notification, const LLSD& response)
 	return false;
 }
 
-void update_app(BOOL mandatory, const std::string& auth_msg, std::string update_url)
+void update_app(BOOL mandatory, const std::string& auth_msg, std::string update_url, std::string filename)
 {
 	// store off config state, as we might quit soon
 	gSavedSettings.saveToFile(gSavedSettings.getString("ClientSettingsFile"), TRUE);	
@@ -3233,6 +3243,10 @@ void update_app(BOOL mandatory, const std::string& auth_msg, std::string update_
 	{
 		LLCurl::escapeSafe(update_url);
 		payload["update_url"] = update_url;
+	}
+	if (!filename.empty())
+	{
+		payload["filename"] = filename;
 	}
 
 /*
@@ -3340,6 +3354,12 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 		update_url = LLURI::buildHTTP("inworldz.com", 80, "update.php", query_map);
 	}
 	
+	std::string filename = "";
+	if (notification["payload"].has("filename"))
+	{
+		filename = notification["payload"]["filename"].asString();
+	}
+	
 	if(LLAppViewer::sUpdaterInfo)
 	{
 		delete LLAppViewer::sUpdaterInfo ;
@@ -3406,6 +3426,11 @@ bool update_dialog_callback(const LLSD& notification, const LLSD& response)
 	LLAppViewer::sUpdaterInfo->mUpdateExePath += gDirUtilp->getAppRODataDir();
 	LLAppViewer::sUpdaterInfo->mUpdateExePath += "/mac-updater.app/Contents/MacOS/mac-updater' -url \"";
 	LLAppViewer::sUpdaterInfo->mUpdateExePath += update_url.asString();
+	if (!filename.empty())
+	{
+		LLAppViewer::sUpdaterInfo->mUpdateExePath += "\" -filename \""; 
+		LLAppViewer::sUpdaterInfo->mUpdateExePath += filename;
+	}
 	LLAppViewer::sUpdaterInfo->mUpdateExePath += "\" -name \"";
 	LLAppViewer::sUpdaterInfo->mUpdateExePath += LLAppViewer::instance()->getSecondLifeTitle();
 	LLAppViewer::sUpdaterInfo->mUpdateExePath += "\" -bundleid \"";
