@@ -12186,7 +12186,7 @@
     <key>VivoxAutoPostCrashDumps</key>
     <map>
       <key>Comment</key>
-      <string>If true, SLVoice will automatically send crash dumps directly to Vivox.</string>
+      <string>If true, IWVoice will automatically send crash dumps directly to Vivox.</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -12263,7 +12263,7 @@
     <key>VoiceHost</key>
     <map>
       <key>Comment</key>
-      <string>Client SLVoice host to connect to</string>
+      <string>Client IWVoice host to connect to</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
@@ -12373,7 +12373,7 @@
     <key>VoicePort</key>
     <map>
       <key>Comment</key>
-      <string>Client SLVoice port to connect to</string>
+      <string>Client IWVoice port to connect to</string>
       <key>Persist</key>
       <integer>1</integer>
       <key>Type</key>
