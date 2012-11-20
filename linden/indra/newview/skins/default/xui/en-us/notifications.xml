@@ -1308,9 +1308,7 @@ Please move all objects to be acquired onto the same region.
  icon="alertmodal.tga"
  name="PromptGoToCurrencyPage"
  type="alertmodal">
-[EXTRA]
-
-Go to [URL] for information on purchasing currency?
+[EXTRA]Go to [URL] to purchase $I'z?
   <usetemplate
    name="okcancelbuttons"
    notext="Cancel"
