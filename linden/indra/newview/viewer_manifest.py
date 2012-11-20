@@ -659,7 +659,12 @@ class DarwinManifest(ViewerManifest):
                 
                 
                 # IW KDU
-                self.path("../iw_kdu_loader/" + self.args['configuration'] + "/libiw_kdu_loader.dylib", "libiw_kdu_loader.dylib")
+				try:
+					self.path("../iw_kdu_loader/" + self.args['configuration'] + "/libiw_kdu_loader.dylib", "libiw_kdu_loader.dylib")
+					pass
+				except:
+					print "Skipping libiw_kdu_loader.dylib"
+					pass
                 
                 kdu_lib = ''
                 if self.args['configuration'] == 'Debug':
