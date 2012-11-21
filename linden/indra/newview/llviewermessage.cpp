@@ -2676,7 +2676,11 @@ void process_chat_from_simulator(LLMessageSystem *msg, void **user_data)
 			case CHAT_TYPE_DEBUG_MSG:
 			case CHAT_TYPE_OWNER:
 			case CHAT_TYPE_NORMAL:
+			case CHAT_TYPE_REGIONSAYTO: // -- MC
 				verb = ": ";
+				break;
+			case CHAT_TYPE_REGION: // so we don't use default -- MC
+				verb = " ";
 				break;
 			case CHAT_TYPE_SHOUT:
 				verb = " " + LLTrans::getString("shout") + " ";
@@ -2687,7 +2691,7 @@ void process_chat_from_simulator(LLMessageSystem *msg, void **user_data)
 				break;
 			default:
 				LL_WARNS("Messaging") << "Unknown type " << chat.mChatType << " in chat!" << LL_ENDL;
-				verb = " say, ";
+				verb = ": "; // formerly " say, " -- MC
 				break;
 			}
 
