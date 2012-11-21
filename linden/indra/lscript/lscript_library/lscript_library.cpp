@@ -482,6 +482,7 @@ void LLScriptLibrary::init()
 	addFunction(10.f, 0.f, dummy_func, "iwGetLinkNotecardLine", "k", "isi");
 	addFunction(10.f, 0.f, dummy_func, "iwGetLinkNotecardSegment", "k", "isiii");
 	addFunction(10.f, 0.f, dummy_func, "iwActiveGroup", "i", "kk");
+	addFunction(10.f, 0.f, dummy_func, "llRegionSayTo", NULL, "kis");
 	// End InWorldz-specific functinos
 
 	/*

@@ -1786,4 +1786,10 @@ integer iwActiveGroup(key agent, key group)
 Returns TRUE if an avatar (agent) is in the same region and has the specified group active. Otherwise, returns FALSE.
 If group is NULL_KEY, returns TRUE if the avatar has no active group
   </string>
+  <string name="LSLTipText_llRegionSayTo">
+llRegionSayTo(key target, integer channel, string msg)
+Says string msg on integer channel to an object or avatar target in the same region as the script.
+Messages sent to an avatar on non-zero channels can be heard by any attachment on that avatar. 
+Messages sent on PUBLIC_CHANNEL are throttled.
+  </string>
 </strings>
