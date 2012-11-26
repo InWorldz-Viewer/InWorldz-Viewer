@@ -46,7 +46,7 @@
   </text>
   <line_editor bevel_style="in" border_style="line" border_thickness="1" bottom_delta="-26"
 	     follows="left|bottom" font="SansSerifLarge" handle_edit_keys_directly="true"
-	     height="24" left_delta="0" max_length="16" mouse_opaque="true"
+	     height="24" left_delta="0" max_length="64" mouse_opaque="true"
 	     name="password_edit" select_all_on_focus_received="true" width="120" />
   
   <!-- REMEMBER CHECKBOXES -->
