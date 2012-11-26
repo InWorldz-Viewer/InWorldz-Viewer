@@ -1390,9 +1390,9 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
           <key>darwin</key>
           <map>
             <key>md5sum</key>
-            <string>07afcc25e144e3f9cabc55e25a719b75</string>
+            <string>2cd59ff9eb51d532361dfcdb9fd021e4</string>
             <key>url</key>
-            <uri>http://inworldz.com/imprudence/libs/vivox-inworldz-3.2.0002.10426-darwin-20120122.tar.bz2</uri>
+            <uri>http://inworldz.com/imprudence/libs/vivox-inworldz-3.2.0002.9361-darwin-20121120.tar.bz2</uri>
           </map>
           <key>linux</key>
           <map>
