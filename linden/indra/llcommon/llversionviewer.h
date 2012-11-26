@@ -38,7 +38,7 @@
 const S32 LL_VERSION_MAJOR = 1;
 const S32 LL_VERSION_MINOR = 5;
 const S32 LL_VERSION_PATCH = 0;
-const S32 LL_VERSION_BUILD = 1;
+const S32 LL_VERSION_BUILD = 2;
 
 // Viewer channel. Controls what channel automatic downloads look at 
 const char * const LL_CHANNEL = "InWorldz Release";
