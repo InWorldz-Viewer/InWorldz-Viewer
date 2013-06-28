@@ -1254,9 +1254,9 @@ set(PACKAGE ${PACKAGE_DEFAULT} CACHE BOOL
 
 if (WINDOWS)
     if(MSVC71)
-        set(release_flags "/MAP:Release/${VIEWER_BINARY_NAME}.map /MAPINFO:LINES /LARGEADDRESSAWARE")
+        set(release_flags "/MAP:Release/${VIEWER_BINARY_NAME}.map /MAPINFO:LINES")
     else(MSVC71)
-        set(release_flags "/MAP:Release/${VIEWER_BINARY_NAME}.map /LARGEADDRESSAWARE")
+        set(release_flags "/MAP:Release/${VIEWER_BINARY_NAME}.map")
     endif(MSVC71)
     
     set_target_properties(${VIEWER_BINARY_NAME}

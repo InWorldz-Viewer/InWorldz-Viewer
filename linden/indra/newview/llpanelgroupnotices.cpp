@@ -178,7 +178,7 @@ std::string build_notice_date(const time_t& the_time)
 	tm* lt = localtime(&t);
 	//for some reason, the month is off by 1.  See other uses of
 	//"local" time in the code...
-	std::string buffer = llformat("%i/%i/%i", lt->tm_mon + 1, lt->tm_mday, lt->tm_year + 1900);
+	std::string buffer = llformat("%i/%i/%i", lt->tm_year + 1900, lt->tm_mon + 1, lt->tm_mday);
 	return buffer;
 }
 

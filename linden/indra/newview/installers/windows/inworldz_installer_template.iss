@@ -87,6 +87,7 @@ Source: %%PACKAGEFILES%%\openal32.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\OpenJPEG.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\README.txt; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\windows-updater.exe; DestDir: {app}; Flags: ignoreversion
 
 ; Gstreamer-specific files below
 Source: %%PACKAGEFILES%%\llplugin\lib\*; DestDir: {app}\llplugin\lib; Flags: ignoreversion recursesubdirs createallsubdirs
