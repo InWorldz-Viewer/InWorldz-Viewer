@@ -83,8 +83,11 @@ private:
 	static void onClickCancel(void* userdata);
 	static void onClickClear(void* userdata);
 	static void onClickReset(void* userdata);
+
+	static void onCheckLimitSelect(LLUICtrl* ctrl, void* userdata);
 	
 	void refreshItem();
+	void updateLimitCheck();
 };
 
 #endif

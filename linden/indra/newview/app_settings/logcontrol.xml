@@ -93,6 +93,7 @@
                 <!--<string>Volume</string>-->
                 <!--<string>Throttle</string>-->
                 <!--<string>Voice</string>-->
+				<!--<string>VoiceCurrentState</string>-->
                 <!--<string>VivoxProtocolParser</string>-->
                 <!--<string>WaterHeight</string>-->
                 <!--<string>Wearables</string>-->

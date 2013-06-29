@@ -430,8 +430,9 @@ void LLViewerImage::reinit(BOOL usemipmaps /* = TRUE */)
 // ONLY called from LLViewerImageList
 void LLViewerImage::destroyTexture() 
 {
-	if(sGlobalTextureMemoryInBytes < sMaxDesiredTextureMemInBytes)//not ready to release unused memory.
+	if (sGlobalTextureMemoryInBytes < (sMaxDesiredTextureMemInBytes * 0.80f))//not ready to release unused memory.
 	{
+		LL_DEBUGS("Texture") << "destroyTexture: sGlobalTextureMemoryInBytes (" << sGlobalTextureMemoryInBytes << ") < 80% sMaxDesiredTextureMemInBytes (" <<sMaxDesiredTextureMemInBytes * 0.80f << "), skipping destroy" << LL_ENDL;
 		return ;
 	}
 	if (mNeedsCreateTexture)//return if in the process of generating a new texture.

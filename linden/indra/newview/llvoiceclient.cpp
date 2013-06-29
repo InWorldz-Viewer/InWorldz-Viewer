@@ -270,6 +270,7 @@ protected:
 	int				numberOfAliases;
 	std::string		subscriptionHandle;
 	std::string		subscriptionType;
+	std::string     deviceString; // -- MC
 		
 
 	// Members for processing text between tags
@@ -331,11 +332,11 @@ LLVivoxProtocolParser::~LLVivoxProtocolParser()
 
 // virtual
 LLIOPipe::EStatus LLVivoxProtocolParser::process_impl(
-	const LLChannelDescriptors& channels,
-	buffer_ptr_t& buffer,
-	bool& eos,
-	LLSD& context,
-	LLPumpIO* pump)
+													  const LLChannelDescriptors& channels,
+													  buffer_ptr_t& buffer,
+													  bool& eos,
+													  LLSD& context,
+													  LLPumpIO* pump)
 {
 	LLBufferStream istr(channels, buffer.get());
 	std::ostringstream ostr;
@@ -372,7 +373,7 @@ LLIOPipe::EStatus LLVivoxProtocolParser::process_impl(
 	
 	if(start != 0)
 		mInput = mInput.substr(start);
-
+	
 	LL_DEBUGS("VivoxProtocolParser") << "at end, mInput is: " << mInput << LL_ENDL;
 	
 	if(!gVoiceClient->mConnected)
@@ -463,19 +464,27 @@ void LLVivoxProtocolParser::StartTag(const char *tag, const char **attr)
 		else
 		{
 			LL_DEBUGS("VivoxProtocolParser") << tag << " (" << responseDepth << ")"  << LL_ENDL;
-	
+			
 			// Ignore the InputXml stuff so we don't get confused
 			if (!stricmp("InputXml", tag))
 			{
 				ignoringTags = true;
 				ignoreDepth = responseDepth;
 				accumulateText = false;
-
+				
 				LL_DEBUGS("VivoxProtocolParser") << "starting ignore, ignoreDepth is " << ignoreDepth << LL_ENDL;
+			}
+			else if (!stricmp("CaptureDevice", tag)) // -- MC
+			{
+				deviceString.clear();
 			}
 			else if (!stricmp("CaptureDevices", tag))
 			{
 				gVoiceClient->clearCaptureDevices();
+			}
+			else if (!stricmp("RenderDevice", tag)) // -- MC
+			{
+				deviceString.clear();
 			}
 			else if (!stricmp("RenderDevices", tag))
 			{
@@ -505,9 +514,9 @@ void LLVivoxProtocolParser::EndTag(const char *tag)
 {
 	const std::string& string = textBuffer;
 	bool clearbuffer = true;
-
+	
 	responseDepth--;
-
+	
 	if (ignoringTags)
 	{
 		if (ignoreDepth == responseDepth)
@@ -524,7 +533,7 @@ void LLVivoxProtocolParser::EndTag(const char *tag)
 	if (!ignoringTags)
 	{
 		LL_DEBUGS("VivoxProtocolParser") << "processing tag " << tag << " (depth = " << responseDepth << ")" << LL_ENDL;
-
+		
 		// Closing a tag. Finalize the text we've accumulated and reset
 		if (!stricmp("ReturnCode", tag))
 			returnCode = strtol(string.c_str(), NULL, 10);
@@ -594,16 +603,17 @@ void LLVivoxProtocolParser::EndTag(const char *tag)
 			statusString = string;
 		else if (!stricmp("Device", tag))
 		{
+			deviceString = string;	
 			// This closing tag shouldn't clear the accumulated text.
 			clearbuffer = false;
 		}
 		else if (!stricmp("CaptureDevice", tag))
 		{
-			gVoiceClient->addCaptureDevice(textBuffer);
+			gVoiceClient->addCaptureDevice(deviceString);
 		}
 		else if (!stricmp("RenderDevice", tag))
 		{
-			gVoiceClient->addRenderDevice(textBuffer);
+			gVoiceClient->addRenderDevice(deviceString);
 		}
 		else if (!stricmp("Buddy", tag))
 		{
@@ -644,7 +654,7 @@ void LLVivoxProtocolParser::EndTag(const char *tag)
 		else if (!stricmp("SubscriptionType", tag))
 			subscriptionType = string;
 		
-
+		
 		if(clearbuffer)
 		{
 			textBuffer.clear();
@@ -664,12 +674,12 @@ void LLVivoxProtocolParser::EndTag(const char *tag)
 void LLVivoxProtocolParser::CharData(const char *buffer, int length)
 {
 	/*
-		This method is called for anything that isn't a tag, which can be text you
-		want that lies between tags, and a lot of stuff you don't want like file formatting
-		(tabs, spaces, CR/LF, etc).
-		
-		Only copy text if we are in accumulate mode...
-	*/
+	 This method is called for anything that isn't a tag, which can be text you
+	 want that lies between tags, and a lot of stuff you don't want like file formatting
+	 (tabs, spaces, CR/LF, etc).
+	 
+	 Only copy text if we are in accumulate mode...
+	 */
 	if (accumulateText)
 		textBuffer.append(buffer, length);
 }
@@ -679,14 +689,14 @@ void LLVivoxProtocolParser::CharData(const char *buffer, int length)
 void LLVivoxProtocolParser::processResponse(std::string tag)
 {
 	LL_DEBUGS("VivoxProtocolParser") << tag << LL_ENDL;
-
+	
 	// SLIM SDK: the SDK now returns a statusCode of "200" (OK) for success.  This is a change vs. previous SDKs.
 	// According to Mike S., "The actual API convention is that responses with return codes of 0 are successful, regardless of the status code returned",
 	// so I believe this will give correct behavior.
 	
 	if(returnCode == 0)
 		statusCode = 0;
-		
+	
 	if (isEvent)
 	{
 		const char *eventTypeCstr = eventTypeString.c_str();
@@ -697,15 +707,15 @@ void LLVivoxProtocolParser::processResponse(std::string tag)
 		else if (!stricmp(eventTypeCstr, "SessionAddedEvent"))
 		{
 			/*
-			<Event type="SessionAddedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
-				<SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
-				<Uri>sip:confctl-1408789@bhr.vivox.com</Uri>
-				<IsChannel>true</IsChannel>
-				<Incoming>false</Incoming>
-				<ChannelName />
-			</Event>
-			*/
+			 <Event type="SessionAddedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
+			 <SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
+			 <Uri>sip:confctl-1408789@bhr.vivox.com</Uri>
+			 <IsChannel>true</IsChannel>
+			 <Incoming>false</Incoming>
+			 <ChannelName />
+			 </Event>
+			 */
 			gVoiceClient->sessionAddedEvent(uriString, alias, sessionHandle, sessionGroupHandle, isChannel, incoming, nameString, applicationString);
 		}
 		else if (!stricmp(eventTypeCstr, "SessionRemovedEvent"))
@@ -719,69 +729,69 @@ void LLVivoxProtocolParser::processResponse(std::string tag)
 		else if (!stricmp(eventTypeCstr, "MediaStreamUpdatedEvent"))
 		{
 			/*
-			<Event type="MediaStreamUpdatedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
-				<SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
-				<StatusCode>200</StatusCode>
-				<StatusString>OK</StatusString>
-				<State>2</State>
-				<Incoming>false</Incoming>
-			</Event>
-			*/
+			 <Event type="MediaStreamUpdatedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
+			 <SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
+			 <StatusCode>200</StatusCode>
+			 <StatusString>OK</StatusString>
+			 <State>2</State>
+			 <Incoming>false</Incoming>
+			 </Event>
+			 */
 			gVoiceClient->mediaStreamUpdatedEvent(sessionHandle, sessionGroupHandle, statusCode, statusString, state, incoming);
 		}		
 		else if (!stricmp(eventTypeCstr, "TextStreamUpdatedEvent"))
 		{
 			/*
-			<Event type="TextStreamUpdatedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg1</SessionGroupHandle>
-				<SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==1</SessionHandle>
-				<Enabled>true</Enabled>
-				<State>1</State>
-				<Incoming>true</Incoming>
-			</Event>
-			*/
+			 <Event type="TextStreamUpdatedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg1</SessionGroupHandle>
+			 <SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==1</SessionHandle>
+			 <Enabled>true</Enabled>
+			 <State>1</State>
+			 <Incoming>true</Incoming>
+			 </Event>
+			 */
 			gVoiceClient->textStreamUpdatedEvent(sessionHandle, sessionGroupHandle, enabled, state, incoming);
 		}
 		else if (!stricmp(eventTypeCstr, "ParticipantAddedEvent"))
 		{
 			/* 
-			<Event type="ParticipantAddedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg4</SessionGroupHandle>
-				<SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==4</SessionHandle>
-				<ParticipantUri>sip:xI5auBZ60SJWIk606-1JGRQ==@bhr.vivox.com</ParticipantUri>
-				<AccountName>xI5auBZ60SJWIk606-1JGRQ==</AccountName>
-				<DisplayName />
-				<ParticipantType>0</ParticipantType>
-			</Event>
-			*/
+			 <Event type="ParticipantAddedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg4</SessionGroupHandle>
+			 <SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==4</SessionHandle>
+			 <ParticipantUri>sip:xI5auBZ60SJWIk606-1JGRQ==@bhr.vivox.com</ParticipantUri>
+			 <AccountName>xI5auBZ60SJWIk606-1JGRQ==</AccountName>
+			 <DisplayName />
+			 <ParticipantType>0</ParticipantType>
+			 </Event>
+			 */
 			gVoiceClient->participantAddedEvent(sessionHandle, sessionGroupHandle, uriString, alias, nameString, displayNameString, participantType);
 		}
 		else if (!stricmp(eventTypeCstr, "ParticipantRemovedEvent"))
 		{
 			/*
-			<Event type="ParticipantRemovedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg4</SessionGroupHandle>
-				<SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==4</SessionHandle>
-				<ParticipantUri>sip:xtx7YNV-3SGiG7rA1fo5Ndw==@bhr.vivox.com</ParticipantUri>
-				<AccountName>xtx7YNV-3SGiG7rA1fo5Ndw==</AccountName>
-			</Event>
-			*/
+			 <Event type="ParticipantRemovedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg4</SessionGroupHandle>
+			 <SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==4</SessionHandle>
+			 <ParticipantUri>sip:xtx7YNV-3SGiG7rA1fo5Ndw==@bhr.vivox.com</ParticipantUri>
+			 <AccountName>xtx7YNV-3SGiG7rA1fo5Ndw==</AccountName>
+			 </Event>
+			 */
 			gVoiceClient->participantRemovedEvent(sessionHandle, sessionGroupHandle, uriString, alias, nameString);
 		}
 		else if (!stricmp(eventTypeCstr, "ParticipantUpdatedEvent"))
 		{
 			/*
-			<Event type="ParticipantUpdatedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
-				<SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
-				<ParticipantUri>sip:xFnPP04IpREWNkuw1cOXlhw==@bhr.vivox.com</ParticipantUri>
-				<IsModeratorMuted>false</IsModeratorMuted>
-				<IsSpeaking>true</IsSpeaking>
-				<Volume>44</Volume>
-				<Energy>0.0879437</Energy>
-			</Event>
-			*/
+			 <Event type="ParticipantUpdatedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
+			 <SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
+			 <ParticipantUri>sip:xFnPP04IpREWNkuw1cOXlhw==@bhr.vivox.com</ParticipantUri>
+			 <IsModeratorMuted>false</IsModeratorMuted>
+			 <IsSpeaking>true</IsSpeaking>
+			 <Volume>44</Volume>
+			 <Energy>0.0879437</Energy>
+			 </Event>
+			 */
 			
 			// These happen so often that logging them is pretty useless.
 			squelchDebugOutput = true;
@@ -805,15 +815,15 @@ void LLVivoxProtocolParser::processResponse(std::string tag)
 		else if (!stricmp(eventTypeCstr, "BuddyChangedEvent"))
 		{
 			/*
-			<Event type="BuddyChangedEvent">
-				<AccountHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==</AccountHandle>
-				<BuddyURI>sip:x9fFHFZjOTN6OESF1DUPrZQ==@bhr.vivox.com</BuddyURI>
-				<DisplayName>Monroe Tester</DisplayName>
-				<BuddyData />
-				<GroupID>0</GroupID>
-				<ChangeType>Set</ChangeType>
-			</Event>
-			*/		
+			 <Event type="BuddyChangedEvent">
+			 <AccountHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==</AccountHandle>
+			 <BuddyURI>sip:x9fFHFZjOTN6OESF1DUPrZQ==@bhr.vivox.com</BuddyURI>
+			 <DisplayName>Monroe Tester</DisplayName>
+			 <BuddyData />
+			 <GroupID>0</GroupID>
+			 <ChangeType>Set</ChangeType>
+			 </Event>
+			 */		
 			// TODO: Question: Do we need to process this at all?
 		}
 		else if (!stricmp(eventTypeCstr, "MessageEvent"))  
@@ -831,28 +841,28 @@ void LLVivoxProtocolParser::processResponse(std::string tag)
 		else if (!stricmp(eventTypeCstr, "SessionUpdatedEvent"))  
 		{
 			/*
-			<Event type="SessionUpdatedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
-				<SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
-				<Uri>sip:confctl-9@bhd.vivox.com</Uri>
-				<IsMuted>0</IsMuted>
-				<Volume>50</Volume>
-				<TransmitEnabled>1</TransmitEnabled>
-				<IsFocused>0</IsFocused>
-				<SpeakerPosition><Position><X>0</X><Y>0</Y><Z>0</Z></Position></SpeakerPosition>
-				<SessionFontID>0</SessionFontID>
-			</Event>
-			*/
+			 <Event type="SessionUpdatedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
+			 <SessionHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==0</SessionHandle>
+			 <Uri>sip:confctl-9@bhd.vivox.com</Uri>
+			 <IsMuted>0</IsMuted>
+			 <Volume>50</Volume>
+			 <TransmitEnabled>1</TransmitEnabled>
+			 <IsFocused>0</IsFocused>
+			 <SpeakerPosition><Position><X>0</X><Y>0</Y><Z>0</Z></Position></SpeakerPosition>
+			 <SessionFontID>0</SessionFontID>
+			 </Event>
+			 */
 			// We don't need to process this, but we also shouldn't warn on it, since that confuses people.
 		}
 		
 		else if (!stricmp(eventTypeCstr, "SessionGroupRemovedEvent"))  
 		{
 			/*
-			<Event type="SessionGroupRemovedEvent">
-				<SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
-			</Event>
-			*/
+			 <Event type="SessionGroupRemovedEvent">
+			 <SessionGroupHandle>c1_m1000xFnPP04IpREWNkuw1cOXlhw==_sg0</SessionGroupHandle>
+			 </Event>
+			 */
 			// We don't need to process this, but we also shouldn't warn on it, since that confuses people.
 		}
 		else
@@ -904,84 +914,84 @@ void LLVivoxProtocolParser::processResponse(std::string tag)
 			// We don't need to process these, but they're so spammy we don't want to log them.
 			squelchDebugOutput = true;
 		}
-/*
-		else if (!stricmp(actionCstr, "Account.ChannelGetList.1"))
-		{
-			gVoiceClient->channelGetListResponse(statusCode, statusString);
-		}
-		else if (!stricmp(actionCstr, "Connector.AccountCreate.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Connector.MuteLocalMic.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Connector.MuteLocalSpeaker.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Connector.SetLocalMicVolume.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Connector.SetLocalSpeakerVolume.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Session.ListenerSetPosition.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Session.SpeakerSetPosition.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Session.AudioSourceSetPosition.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Session.GetChannelParticipants.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelCreate.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelUpdate.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelDelete.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelCreateAndInvite.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelFolderCreate.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelFolderUpdate.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelFolderDelete.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelAddModerator.1"))
-		{
-			
-		}
-		else if (!stricmp(actionCstr, "Account.ChannelDeleteModerator.1"))
-		{
-			
-		}
-*/
+		/*
+		 else if (!stricmp(actionCstr, "Account.ChannelGetList.1"))
+		 {
+		 gVoiceClient->channelGetListResponse(statusCode, statusString);
+		 }
+		 else if (!stricmp(actionCstr, "Connector.AccountCreate.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Connector.MuteLocalMic.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Connector.MuteLocalSpeaker.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Connector.SetLocalMicVolume.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Connector.SetLocalSpeakerVolume.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Session.ListenerSetPosition.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Session.SpeakerSetPosition.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Session.AudioSourceSetPosition.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Session.GetChannelParticipants.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelCreate.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelUpdate.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelDelete.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelCreateAndInvite.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelFolderCreate.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelFolderUpdate.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelFolderDelete.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelAddModerator.1"))
+		 {
+		 
+		 }
+		 else if (!stricmp(actionCstr, "Account.ChannelDeleteModerator.1"))
+		 {
+		 
+		 }
+		 */
 	}
 }
 
@@ -1089,6 +1099,7 @@ static bool isGatewayRunning()
 			result = true;
 		}
 	}
+	lldebugs << "Gateway PID " << sGatewayPID << " is running: " << result << llendl;
 	return result;
 }
 
@@ -1252,7 +1263,7 @@ bool LLVoiceClient::writeString(const std::string &str)
 		apr_size_t written = size;
 	
 		//MARK: Turn this on to log outgoing XML
-//		LL_DEBUGS("Voice") << "sending: " << str << LL_ENDL;
+		LL_DEBUGS("Voice") << "sending: " << str << LL_ENDL;
 
 		// check return code - sockets will fail (broken, etc.)
 		err = apr_socket_send(
@@ -1288,11 +1299,13 @@ bool LLVoiceClient::writeString(const std::string &str)
 // session control messages
 void LLVoiceClient::connectorCreate()
 {
+	LL_DEBUGS("Voice") << "connectorCreate()" << LL_ENDL;
 	std::ostringstream stream;
 	std::string logpath = gDirUtilp->getExpandedFilename(LL_PATH_LOGS, "");
 	std::string loglevel = "0";
 	
 	// Transition to stateConnectorStarted when the connector handle comes back.
+
 	setState(stateConnectorStarting);
 
 	std::string savedLogLevel = gSavedSettings.getString("VivoxDebugLevel");
@@ -1300,21 +1313,21 @@ void LLVoiceClient::connectorCreate()
 	if(savedLogLevel != "-1")
 	{
 		LL_DEBUGS("Voice") << "creating connector with logging enabled" << LL_ENDL;
-		loglevel = "10";
+		loglevel = savedLogLevel; // formerly "10" -- MC
 	}
 	
 	stream 
 	<< "<Request requestId=\"" << mCommandCookie++ << "\" action=\"Connector.Create.1\">"
-		<< "<ClientName>V2 SDK</ClientName>"
+		<< "<ClientName>V3 SDK</ClientName>"
 		<< "<AccountManagementServer>" << mVoiceAccountServerURI << "</AccountManagementServer>"
-		<< "<Mode>Normal</Mode>"
+		<< "<Mode>Normal</Mode>" // Legacy is the default in the sample app -- MC
 		<< "<Logging>"
 			<< "<Folder>" << logpath << "</Folder>"
 			<< "<FileNamePrefix>Connector</FileNamePrefix>"
 			<< "<FileNameSuffix>.log</FileNameSuffix>"
 			<< "<LogLevel>" << loglevel << "</LogLevel>"
 		<< "</Logging>"
-		<< "<Application>SecondLifeViewer.1</Application>"
+		<< "<Application>InWorldzViewer.1</Application>"
 	<< "</Request>\n\n\n";
 	
 	writeString(stream.str());
@@ -1414,12 +1427,12 @@ void LLVoiceClient::login(
 		if (sInMainGrid)
 		{
 			// Use the release account server
-			mVoiceSIPURIHostName = "bhr.vivox.com";
+			mVoiceSIPURIHostName = "osiwp.vivox.com";
 		}
 		else
 		{
 			// Use the development account server
-			mVoiceSIPURIHostName = "bhd.vivox.com";
+			mVoiceSIPURIHostName = "osiwp.vivox.com";
 		}
 	}
 	
@@ -1533,6 +1546,7 @@ void LLVoiceClient::setState(state inState)
 
 void LLVoiceClient::stateMachine()
 {
+	LL_DEBUGS("VoiceCurrentState") << "Current state: " << state2string(getState()) << LL_ENDL;
 	if(gDisconnected)
 	{
 		// The viewer has been disconnected from the sim.  Disable voice.
@@ -1611,7 +1625,16 @@ void LLVoiceClient::stateMachine()
 			// Clean up and reset everything. 
 			closeSocket();
 			deleteAllSessions();
-			deleteAllBuddies();		
+			deleteAllBuddies();
+			
+#ifndef LL_WINDOWS
+			// stateStart can get stuck in an infinite loop if iwvoice wasn't killed when disabling
+			// TODO: make sure this doesn't break windows -- MC
+			if (!mConnected && isGatewayRunning()) 
+			{
+				killGateway();
+			}
+#endif
 			
 			mConnectorHandle.clear();
 			mAccountHandle.clear();
@@ -1638,6 +1661,7 @@ void LLVoiceClient::stateMachine()
 			}
 			else if(!isGatewayRunning())
 			{
+				//llinfos << "!isGatewayRunning" << llendl;
 				if(true)
 				{
 					// Launch the voice daemon
@@ -1736,6 +1760,7 @@ void LLVoiceClient::stateMachine()
 								// If we reach this point, the exec failed.
 								// Use _exit() instead of exit() per the vfork man page.
 								_exit(0);
+								llwarns << "execv failed: " << exe_path.c_str() << ", args: " << fakeargv << llendl;
 							}
 
 							// parent
@@ -1978,6 +2003,9 @@ void LLVoiceClient::stateMachine()
 		//MARK: stateConnectorStarting
 		case stateConnectorStarting:	// waiting for connector handle
 			// connectorCreateResponse() will transition from here to stateConnectorStarted.
+			// if we never get the response, loop back and try again
+			// TODO: if we don't get it then, disable voice for this parcel -- MC
+
 		break;
 		
 		//MARK: stateConnectorStarted
@@ -2042,12 +2070,10 @@ void LLVoiceClient::stateMachine()
 		
 		//MARK: stateLoggingIn
 		case stateLoggingIn:			// waiting for account handle
-			// loginResponse() will transition from here to stateLoggedIn.
-		break;
+			// loginResponse() will transition from here to stateLoggedIn.		break;
 		
 		//MARK: stateLoggedIn
 		case stateLoggedIn:				// account handle received
-
 			notifyStatusObservers(LLVoiceClientStatusObserver::STATUS_LOGGED_IN);
 
 			// request the current set of block rules (we'll need them when updating the friends list)
@@ -2117,7 +2143,6 @@ void LLVoiceClient::stateMachine()
 					
 		//MARK: stateNoChannel
 		case stateNoChannel:
-			
 			LL_DEBUGS("Voice") << "State No Channel" << LL_ENDL;
 			// Do this here as well as inside sendPositionalUpdate().  
 			// Otherwise, if you log in but don't join a proximal channel (such as when your login location has voice disabled), your friends list won't sync.
@@ -2304,7 +2329,6 @@ void LLVoiceClient::stateMachine()
 
 		//MARK: stateSessionTerminated
 		case stateSessionTerminated:
-			
 			// Must do this first, since it uses mAudioSession.
 			notifyStatusObservers(LLVoiceClientStatusObserver::STATUS_LEFT_CHANNEL);
 			
@@ -2349,8 +2373,7 @@ void LLVoiceClient::stateMachine()
 		break;
 		
 		//MARK: stateLoggedOut
-		case stateLoggedOut:			// logout response received
-			
+		case stateLoggedOut:			// logout response received			
 			// Once we're logged out, all these things are invalid.
 			mAccountHandle.clear();
 			deleteAllSessions();
@@ -2437,12 +2460,14 @@ void LLVoiceClient::stateMachine()
 	
 	if(mAudioSession && mAudioSession->mParticipantsChanged)
 	{
+		LL_DEBUGS("Voice") << "Audio session participants changed" << LL_ENDL;
 		mAudioSession->mParticipantsChanged = false;
 		mAudioSessionChanged = true;
 	}
 	
 	if(mAudioSessionChanged)
 	{
+		LL_DEBUGS("Voice") << "Notifiying audio session observers" << LL_ENDL;
 		mAudioSessionChanged = false;
 		notifyParticipantObservers();
 	}

@@ -4,9 +4,9 @@
      width="517">
 	<text_editor type="string" length="1" allow_html="false" bg_readonly_color="0 0 0 0" bottom_delta="-26"
 	     embedded_items="false" enabled="false" follows="left|top"
-	     font="SansSerifSmall" height="20" hide_border="true" hide_scrollbar="true"
+	     font="SansSerifSmall" height="22" hide_border="true" hide_scrollbar="true"
 	     left_delta="8" max_length="65535" mouse_opaque="true"
-	     name="voice_unavailable" tab_stop="false" width="450" word_wrap="true">
+	     name="voice_unavailable" tab_stop="false" width="480" word_wrap="true">
 		Voice Chat Is Not Available
 	</text_editor>
 	<check_box bottom_delta="0" enabled="true"
@@ -29,9 +29,9 @@
 	     name="push_to_talk_heading" width="445" word_wrap="true">
 		Push To Talk
 	</text>
-	<text_editor type="string" length="1" allow_html="false" bg_readonly_color="0 0 0 0" bottom_delta="-60"
+	<text_editor type="string" length="1" allow_html="false" bg_readonly_color="0 0 0 0" bottom_delta="-70"
 	     embedded_items="false" enabled="false" follows="left|top"
-	     font="SansSerifSmall" height="65" hide_border="true" hide_scrollbar="true"
+	     font="SansSerifSmall" height="75" hide_border="true" hide_scrollbar="true"
 	     left_delta="20" max_length="65535" mouse_opaque="true"
 	     name="voice_chat_description" tab_stop="false" width="465" word_wrap="true">
 		Push-to-Talk mode lets you control when your voice is transmitted. When in toggle mode, press and release the push-to-talk trigger to switch your microphone on and off. When not in toggle mode, the microphone is active only when the trigger is held down.

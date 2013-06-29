@@ -118,7 +118,11 @@ BOOL LLFloaterBuildOptions::postBuild()
 	childSetValue("grouplandrez", gSavedSettings.getBOOL("RezWithLandGroup") );
 	childSetValue("GridSubUnit", gSavedSettings.getBOOL("GridSubUnit") );
 	childSetValue("GridCrossSection", gSavedSettings.getBOOL("GridCrossSections") );
+
 	childSetValue("limit_select_dist_check", gSavedSettings.getBOOL("LimitSelectDistance") );
+	childSetValue("max_select_dist", gSavedSettings.getF32("MaxSelectDistance") );
+	childSetCommitCallback("limit_select_dist_check", onCheckLimitSelect, this);
+	updateLimitCheck();
 
 	childSetValue("GridResolution", gSavedSettings.getF32("GridResolution") );
 	childSetValue("GridDrawSize", gSavedSettings.getF32("GridDrawSize") );
@@ -254,6 +258,21 @@ void LLFloaterBuildOptions::onClickReset(void* userdata)
 	self->refresh();
 }
 
+// static
+void LLFloaterBuildOptions::onCheckLimitSelect(LLUICtrl* ctrl, void* userdata)
+{
+	LLFloaterBuildOptions* self = (LLFloaterBuildOptions*)userdata;
+	if (self)
+	{
+		self->updateLimitCheck();
+	}
+}
+
+void LLFloaterBuildOptions::updateLimitCheck()
+{
+	childSetEnabled("max_select_dist", childGetValue("limit_select_dist_check").asBoolean());
+}
+
 void LLFloaterBuildOptions::apply()
 {
 	gSavedPerAccountSettings.setBOOL("BuildPrefs_ActualRoot", childGetValue("BuildPrefsActualRoot_toggle").asBoolean() );
@@ -303,6 +322,8 @@ void LLFloaterBuildOptions::apply()
 	gSavedSettings.setF32("GridDrawSize", childGetValue("GridDrawSize").asReal() );
 	gSavedSettings.setF32("GridOpacity", childGetValue("GridOpacity").asReal() );
 
+	gSavedSettings.setF32("MaxSelectDistance", childGetValue("max_select_dist").asReal() );
+
 	gSavedSettings.setU32("DecimalsForTools", childGetValue("spinner_decimal").asReal() );
 }
 
@@ -348,6 +369,8 @@ void LLFloaterBuildOptions::reset()
 	childSetValue("GridResolution", gSavedSettings.getControl("GridResolution")->getDefault() );
 	childSetValue("GridDrawSize", gSavedSettings.getControl("GridDrawSize")->getDefault() );
 	childSetValue("GridOpacity", gSavedSettings.getControl("GridOpacity")->getDefault() );
+
+	childSetValue("max_select_dist", gSavedSettings.getControl("MaxSelectDistance")->getDefault() );
 
 	childSetValue("spinner_decimal", gSavedSettings.getControl("DecimalsForTools")->getDefault() );
 }

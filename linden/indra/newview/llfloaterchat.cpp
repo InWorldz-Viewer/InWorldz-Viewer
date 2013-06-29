@@ -494,6 +494,11 @@ LLColor4 get_text_color(const LLChat& chat)
 			{
 				text_color = gSavedSettings.getColor4("llOwnerSayChatColor");
 			}
+			else if ( chat.mChatType == CHAT_TYPE_REGIONSAYTO )
+			{
+				// use object chat color for now -- MC
+				text_color = gSavedSettings.getColor4("ObjectChatColor");
+			}
 			else
 			{
 				text_color = gSavedSettings.getColor4("ObjectChatColor");

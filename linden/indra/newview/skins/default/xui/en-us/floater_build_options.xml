@@ -77,6 +77,11 @@
      label="Limit Select Distance" left_delta="0" mouse_opaque="true"
      tooltip=""
      name="limit_select_dist_check" radio_style="false" width="270" />
+  <spinner bottom_delta="-20" decimal_digits="0" 
+     tool_tip="Sets the max selection distance" 
+     follows="left|top" height="16" increment="1" initial_val="3"
+     label="Max select distance:" label_width="120" left_delta="0" max_val="4096"
+     min_val="1" mouse_opaque="true" name="max_select_dist" width="177" />
   <check_box bottom_delta="-20" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
      initial_value="false" label="Show axis on root prim" left_delta="0"
      mouse_opaque="true" tool_tip="Default behaviour is to show the axis on the center of mass of a linkset. If enabled, the axis will be shown on the root prim of the linkset instead."

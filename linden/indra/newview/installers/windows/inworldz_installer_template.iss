@@ -87,6 +87,7 @@ Source: %%PACKAGEFILES%%\openal32.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\OpenJPEG.dll; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\README.txt; DestDir: {app}; Flags: ignoreversion
 Source: %%PACKAGEFILES%%\SLPlugin.exe; DestDir: {app}; Flags: ignoreversion
+Source: %%PACKAGEFILES%%\windows-updater.exe; DestDir: {app}; Flags: ignoreversion
 
 ; Gstreamer-specific files below
 Source: %%PACKAGEFILES%%\llplugin\lib\*; DestDir: {app}\llplugin\lib; Flags: ignoreversion recursesubdirs createallsubdirs
@@ -204,16 +205,13 @@ Filename: {app}\redist\vcredist_x86_VS2010_SP1.exe; Parameters: /q /norestart; C
 Filename: {app}\inworldz.exe; WorkingDir: {app}; Flags: nowait postinstall
 
 [UninstallDelete]
-Name: {userappdata}\InWorldz\user_settings\password.dat; Type: files; Languages: 
-Name: {userappdata}\InWorldz\user_settings\settings.xml; Type: files; Languages: 
 ; 1.1 and lower cache location:
-Name: {userappdata}\InWorldz\cache; Type: filesandordirs
+Name: {userappdata}\InWorldz; Type: filesandordirs
 ; 1.2 and higher cache location:
-Name: {localappdata}\InWorldz\cache; Type: filesandordirs
-Name: {userappdata}\InWorldz\logs; Type: filesandordirs
-Name: {userappdata}\InWorldz\browser_profile; Type: filesandordirs
+Name: {localappdata}\InWorldz; Type: filesandordirs
 Name: C:\Users\{username}\.gstreamer-0.10; Type: filesandordirs
 Name: C:\Documents and Settings\{username}\.gstreamer-0.10; Type: filesandordirs
+Name: {app}; Type: dirifempty
 
 [InstallDelete]
 ; Name: {app}\*.dll; Type: files; Tasks: ; Languages:
